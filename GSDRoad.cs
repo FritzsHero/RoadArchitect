@@ -56,7 +56,7 @@ public class GSDRoad : MonoBehaviour{
 	public bool 	opt_UseDefaultMaterials = true;
 	public bool 	opt_AutoUpdateInEditor = true;
 	
-	public float 	opt_TerrainSubtract_Match = 0.01f;
+	public float 	opt_TerrainSubtract_Match = 0.1f;
 	public bool		opt_bGSDRoadRaise = false;
 	
 	public float 	opt_MatchHeightsDistance = 50f;
