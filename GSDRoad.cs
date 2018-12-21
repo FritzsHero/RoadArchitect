@@ -1390,11 +1390,21 @@ public class GSDRoad : MonoBehaviour{
                 MR.transform.localPosition = tVect;
             }
             else if (MR.transform.name.Contains("SCut") || MR.transform.name.Contains("RoadCut")
-                || MR.transform.name.Contains("Pavement") || MR.transform.name.Contains("ShoulderR")
+                || MR.transform.name.Contains("ShoulderR")
                 || MR.transform.name.Contains("ShoulderL"))
             {
                 tVect = MR.transform.position;
                 tVect.y += 0.01f;
+                MR.transform.position = tVect;
+            } else if (MR.transform.name.Contains("RoadMesh"))
+            {
+                tVect = MR.transform.position;
+                tVect.y += 0.02f;
+                MR.transform.position = tVect;
+            } else if (MR.transform.name.Contains("Pavement"))
+            {
+                tVect = MR.transform.position;
+                tVect.y -= 0.01f;
                 MR.transform.position = tVect;
             }
         }
