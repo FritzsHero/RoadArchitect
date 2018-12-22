@@ -1103,18 +1103,14 @@ public class GSDRoadEditor : Editor {
 					RaycastHit hitInfo;
 					if (Physics.Raycast (worldRay, out hitInfo)){
                         /* There used to be a check for whether this was a terrain */
-						if(true){
-							RS.Editor_MousePos = hitInfo.point;
-							RS.Editor_MouseTerrainHit = true;
-							if(RS.GSDSpline && RS.GSDSpline.PreviewSpline){
-								//Debug.Log("Drawing new node");
-								if(RS.GSDSpline.PreviewSpline.mNodes == null || RS.GSDSpline.PreviewSpline.mNodes.Count < 1){ RS.GSDSpline.Setup(); }
-								RS.GSDSpline.PreviewSpline.MousePos = hitInfo.point;
-								RS.GSDSpline.PreviewSpline.bGizmoDraw = true;
-								SceneView.RepaintAll();
-							}
-						}else{
-							RS.Editor_MouseTerrainHit = false;	
+						RS.Editor_MousePos = hitInfo.point;
+						RS.Editor_MouseTerrainHit = true;
+						if(RS.GSDSpline && RS.GSDSpline.PreviewSpline){
+							//Debug.Log("Drawing new node");
+							if(RS.GSDSpline.PreviewSpline.mNodes == null || RS.GSDSpline.PreviewSpline.mNodes.Count < 1){ RS.GSDSpline.Setup(); }
+							RS.GSDSpline.PreviewSpline.MousePos = hitInfo.point;
+							RS.GSDSpline.PreviewSpline.bGizmoDraw = true;
+							SceneView.RepaintAll();
 						}
 					}
 					
@@ -1124,21 +1120,19 @@ public class GSDRoadEditor : Editor {
 					RaycastHit hitInfo;
                     if (Physics.Raycast(worldRay, out hitInfo)) {
                         /* Used to check for terrain */
-                        if (true) {
 	//					if(hitInfo.collider.transform.name.ToLower().Contains("terrain")){
 							RS.Editor_MousePos = hitInfo.point;
 							RS.Editor_MouseTerrainHit = true;
 							if(RS.GSDSpline && RS.GSDSpline.PreviewSplineInsert){
-								//Debug.Log("Drawing insert node");
 								if(RS.GSDSpline.PreviewSplineInsert.mNodes == null || RS.GSDSpline.PreviewSplineInsert.mNodes.Count < 1){ RS.GSDSpline.PreviewSplineInsert.DetermineInsertNodes(); }
 								RS.GSDSpline.PreviewSplineInsert.MousePos = hitInfo.point;
 								RS.GSDSpline.PreviewSplineInsert.bGizmoDraw = true;
 								RS.GSDSpline.PreviewSplineInsert.UpdateActionNode();
 								SceneView.RepaintAll();
 							}
-						}else{
-							RS.Editor_MouseTerrainHit = false;	
-						}
+						//}else{
+						//	RS.Editor_MouseTerrainHit = false;	
+						//}
 					}
 					
 					GUI.changed = true;
