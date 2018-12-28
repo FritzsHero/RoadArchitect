@@ -33,14 +33,14 @@ This screenshot was made using free trees and grass from the Unity Asset Store, 
 - **Assets** - Includes several assets such as traffic light poles, street lights, traffic lights, stop signs and more. Most include rigid body versions for dynamic environments.
 
 ## Bridges
-![Bridges](ManualImages/Extra/SS4-640.jpg)
+![Bridges](ManualImages/Extra/arch_bridge.PNG)
 - **Bridge wizard** - Allows for instant creation of professional quality bridges such as causeway, arch, suspension and more. All bridge creation aspects are generated instantly allowing quick iteration.
 - **Customization** - Custom extrusion allows for mix and match of bridge parts. Over 50 bridge parts included.
 - **Details** - Many different types of railing, bases, center dividers included.
 - **Curvature** - Curvature of bridges supported including arch and suspension bridges.
 
 ## Railing and extrusions
-![Railing](ManualImages/Extra/SS5-640.jpg)
+![Railing](ManualImages/Extra/wbeam.PNG)
 - **Railing** - 12+ Railing types included such as K-Rails and W Beams.
 - **Center dividers** - Many center divider options including the most popular configurations such as K-Rails with blinders or street lights. All aspects of mesh extrusion are performed instantly allowing quick iteration.
 - **Collision barriers** - Water barrels and other collision barriers come with prefabricated rigid or static body configurations.
@@ -54,6 +54,6 @@ This screenshot was made using free trees and grass from the Unity Asset Store, 
 - **Future assets** - Assets will be added and freely available as time progresses.
 
 ## Quality
-![Quality](ManualImages/Extra/SS2-640.jpg)
+![Quality](ManualImages/Extra/quality_road.PNG)
 - **Speed** - All mesh extrusion, bridge extrusion and road asset placement actions are instantaneous. Optimized road generation results in an average 100ms per (2km road + 1 intersection). Multithreaded support.
 - **Quality** - Most road textures at least 1024x1024 resolution. Most materials include normal and specular maps. Most assets created to federal or state specification.
