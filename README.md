@@ -24,8 +24,9 @@ Road Architect is currently being developed with Unity 2018.2.0f1. If interested
 - Road Architect Tutorial #5: Splatmap Creation: http://youtu.be/qy71HXR4VBg
 - Tutorial playlist: http://www.youtube.com/playlist?list=PLr4BO0oWm3C85qgyakKca4pGSAgZyS3nl
 
+**NOTE:** Unless stated otherwise, all screenshots were made using free trees and grass from the Unity Asset Store, RoadArchitect, and the Unity Post-Processing Stack v1. 
+
 ## Intersections
-This screenshot was made using free trees and grass from the Unity Asset Store, RoadArchitect, and the Unity Post-Processing Stack v1.
 ![Newer intersection screenshot](ManualImages/Extra/newscreenshot1.PNG)
 - **Dynamic** - Procedurally generated based upon lanes, road width and angle of attack.
 - **Turn lanes** - Complete left and right optional turn lanes.
@@ -47,6 +48,7 @@ This screenshot was made using free trees and grass from the Unity Asset Store, 
 - **Custom extrusion** - Extrude any custom mesh along the spline with almost limitless customization.
 
 ## Assets
+NOTE: This screenshot has no other assets besides RoadArchitect.
 ![Assets](ManualImages/Extra/SS3-640.jpg)
 - **Road assets** - Several road assets are included such as street lights, double lights, stop signs and more. All aspects of road asset placement are done instantly, allowing for quick iterations.
 - **Custom assets** - Place any custom mesh along the spline with an extreme amount of customization options.
