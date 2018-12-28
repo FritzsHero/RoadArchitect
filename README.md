@@ -25,7 +25,8 @@ Road Architect is currently being developed with Unity 2018.2.0f1. If interested
 - Tutorial playlist: http://www.youtube.com/playlist?list=PLr4BO0oWm3C85qgyakKca4pGSAgZyS3nl
 
 ## Intersections
-![Intersections](ManualImages/Extra/SS6-640.jpg)
+This screenshot was made using free trees and grass from the Unity Asset Store, RoadArchitect, and the Unity Post-Processing Stack v1.
+![Newer intersection screenshot](ManualImages/Extra/newscreenshot1.PNG)
 - **Dynamic** - Procedurally generated based upon lanes, road width and angle of attack.
 - **Turn lanes** - Complete left and right optional turn lanes.
 - **Traffic lights** - Fully functioning and heavily detailed traffic light system including left on yield and right turn lane only lights.
