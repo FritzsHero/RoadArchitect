@@ -2,6 +2,7 @@
 [![GitHub release](https://img.shields.io/github/release/embeddedt/RoadArchitect.svg)]()
 [![Github All Releases](https://img.shields.io/github/downloads/embeddedt/RoadArchitect/total.svg)]()
 [![GitHub contributors](https://img.shields.io/github/contributors/embeddedt/RoadArchitect.svg)]()
+[![Join the chat at https://gitter.im/NewRoadArchitect/community](https://badges.gitter.im/NewRoadArchitect/community.svg)](https://gitter.im/NewRoadArchitect/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Road Architect for Unity. Road architect is a professional quality road system creator featuring dynamic intersections, bridges and many other road objects.
 
@@ -22,7 +23,7 @@ Road Architect is currently being developed with Unity 2018.2.0f1. If interested
 - Road Architect Tutorial #3: Intersections: http://youtu.be/05Pg7U1FHyg
 - Road Architect Tutorial #4: Extrusion & Edge Objects: http://youtu.be/jQT15NlWIV4
 - Road Architect Tutorial #5: Splatmap Creation: http://youtu.be/qy71HXR4VBg
-- Tutorial playlist: http://www.youtube.com/playlist?list=PLr4BO0oWm3C85qgyakKca4pGSAgZyS3nl
+- Tutorial playlist: https://www.youtube.com/playlist?list=PLnPqLrVfSAEIk_7Ug6IkknZCSW2GlR74g
 
 **NOTE:** Unless stated otherwise, all screenshots were made using Unity 2018.2.2f1 Personal. They utilize free trees and grass from the Unity Asset Store, RoadArchitect, and the Unity Post-Processing Stack v1. No paid products were used in the production of these screenshots.
 
