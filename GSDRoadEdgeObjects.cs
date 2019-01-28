@@ -110,6 +110,7 @@ namespace GSD.Roads.EdgeObjects
 
         public EdgeObjectEditorMaker EM;
 
+
         public EdgeObjectMaker Copy()
         {
             EdgeObjectMaker EOM = new EdgeObjectMaker();
@@ -185,7 +186,8 @@ namespace GSD.Roads.EdgeObjects
         public void UpdatePositions()
         {
             StartPos = tNode.GSDSpline.GetSplineValue( StartTime );
-            EndPos = tNode.GSDSpline.GetSplineValue( EndTime );
+            EndPos = tNode.GSDSpline.GetSplineValue( EndTime );     // FH EXPERIMENTAL fix for NodeEdgeObjectPlacement?
+            // This does not affect the 1f = -0.0001f bug
         }
 
 
@@ -784,13 +786,14 @@ namespace GSD.Roads.EdgeObjects
                 {
                     if ( EdgeObjectRotations[j] == default( Vector3 ) )
                     {
-                        tObj = (GameObject) GameObject.Instantiate( EdgeObject );
+                        tObj = GameObject.Instantiate( EdgeObject );            // (GameObject) removed; FH Experimental 25.01.19
                         tErrorObjs.Add( tObj );
                         tObj.transform.position = EdgeObjectLocations[j];
                     }
                     else
                     {
-                        tObj = (GameObject) GameObject.Instantiate( EdgeObject, EdgeObjectLocations[j], Quaternion.LookRotation( EdgeObjectRotations[j] ) );
+                        tObj = GameObject.Instantiate( EdgeObject, EdgeObjectLocations[j], Quaternion.LookRotation( EdgeObjectRotations[j] ) );
+                        // (GameObject) removed; FH Experimental 25.01.19
                         tErrorObjs.Add( tObj );
                     }
                     //					OrigRot = tObj.transform.rotation;
@@ -912,11 +915,15 @@ namespace GSD.Roads.EdgeObjects
                 xObj.transform.name = xObj.transform.name.Replace( "(Clone)", "" );
                 MeshFilter MF = xObj.GetComponent<MeshFilter>();
                 if ( MF == null )
-                { MF = xObj.AddComponent<MeshFilter>(); }
+                {
+                    MF = xObj.AddComponent<MeshFilter>();
+                }
                 MF.sharedMesh = GSDCombineMeshes( ref hVerts, ref hTris, ref hUV, OrigMVL, OrigTriCount );
                 MeshCollider MC = xObj.GetComponent<MeshCollider>();
                 if ( MC == null )
-                { MC = xObj.AddComponent<MeshCollider>(); }
+                {
+                    MC = xObj.AddComponent<MeshCollider>();
+                }
                 xObj.transform.position = tNode.transform.position;
                 xObj.transform.rotation = Quaternion.identity;
 
