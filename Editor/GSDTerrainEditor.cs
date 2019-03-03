@@ -1,10 +1,14 @@
+#region "Imports"
 using UnityEngine;
 using UnityEditor;
-using GSD;
+//using GSD;                                      // Unused
+#endregion
+
+
 [CustomEditor(typeof(GSDTerrain))]
 public class GSDTerrainEditor : Editor
 {
-    protected GSDTerrain GSDT { get { return (GSDTerrain)target; } }
+    protected GSDTerrain GSDT { get { return (GSDTerrain) target; } }
 
     //Serialized properties:
     SerializedProperty tSplatImageWidth;
@@ -43,13 +47,14 @@ public class GSDTerrainEditor : Editor
     };
 
     //Editor only variables:
-    string[] tRoads = null;
-    string[] tRoadsString = null;
-    Texture btnRefreshText = null;
-    GUIStyle GSDImageButton = null;
-    Texture2D LoadBtnBG = null;
-    Texture2D LoadBtnBGGlow = null;
-    GUIStyle GSDLoadButton = null;
+    private string[] tRoads = null;
+    private string[] tRoadsString = null;
+    private Texture btnRefreshText = null;
+    private GUIStyle GSDImageButton = null;
+    private Texture2D LoadBtnBG = null;
+    private Texture2D LoadBtnBGGlow = null;
+    private GUIStyle GSDLoadButton = null;
+
 
     private void OnEnable()
     {
@@ -65,6 +70,7 @@ public class GSDTerrainEditor : Editor
         tRoadSingleChoiceUID = serializedObject.FindProperty("RoadSingleChoiceUID");
     }
 
+
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
@@ -77,7 +83,7 @@ public class GSDTerrainEditor : Editor
         //Online manual button:
         if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+            Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(6f);
@@ -86,7 +92,7 @@ public class GSDTerrainEditor : Editor
         tSplatImageWidth.intValue = GSDT.SplatResoWidth;
         tSplatImageHeight.intValue = GSDT.SplatResoHeight;
         EditorGUILayout.BeginHorizontal();
-        tSplatReso = (SplatImageResoMatchingEnum)EditorGUILayout.Popup("Match resolutions:", (int)tSplatReso, TheSplatResoOptions);
+        tSplatReso = (SplatImageResoMatchingEnum) EditorGUILayout.Popup("Match resolutions:", (int) tSplatReso, TheSplatResoOptions);
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
             tSplatImageWidth.intValue = 1024;
@@ -108,8 +114,8 @@ public class GSDTerrainEditor : Editor
             }
             else if (tSplatReso == SplatImageResoMatchingEnum.MatchTerrainSize)
             {
-                tSplatImageWidth.intValue = (int)GSDT.tTerrain.terrainData.size.x;
-                tSplatImageHeight.intValue = (int)GSDT.tTerrain.terrainData.size.z;
+                tSplatImageWidth.intValue = (int) GSDT.tTerrain.terrainData.size.x;
+                tSplatImageHeight.intValue = (int) GSDT.tTerrain.terrainData.size.z;
             }
             else if (tSplatReso == SplatImageResoMatchingEnum.Match512x512)
             {
@@ -205,11 +211,12 @@ public class GSDTerrainEditor : Editor
         }
     }
 
-    void InitNullChecks()
+
+    private void InitNullChecks()
     {
         if (btnRefreshText == null)
         {
-            btnRefreshText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
         if (GSDImageButton == null)
         {
@@ -222,11 +229,11 @@ public class GSDTerrainEditor : Editor
         }
         if (LoadBtnBG == null)
         {
-            LoadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
         }
         if (GSDLoadButton == null)
         {
@@ -241,6 +248,7 @@ public class GSDTerrainEditor : Editor
             GSDLoadButton.padding = new RectOffset(0, 0, 0, 0);
         }
     }
+
 
     private void LoadSplatSingleChoice()
     {
@@ -258,6 +266,7 @@ public class GSDTerrainEditor : Editor
             xCounter += 1;
         }
     }
+
 
     private void GenerateSplatMap()
     {
@@ -282,7 +291,8 @@ public class GSDTerrainEditor : Editor
         }
     }
 
-    void Line()
+
+    private void Line()
     {
         GUILayout.Space(4f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1)); //Horizontal bar

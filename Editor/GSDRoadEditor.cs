@@ -1,11 +1,13 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using GSD.Roads;
 using GSD;
-[CustomEditor(typeof(GSDRoad))]
+//using System.Collections;                 // Unused
 #endregion
+
+
+[CustomEditor(typeof(GSDRoad))]
 public class GSDRoadEditor : Editor
 {
 
@@ -17,96 +19,99 @@ public class GSDRoadEditor : Editor
     };
 
 
-    protected GSDRoad RS { get { return (GSDRoad)target; } }
+    protected GSDRoad RS { get { return (GSDRoad) target; } }
 
     //Serialized properties:
-    SerializedProperty t_opt_GizmosEnabled;
-    SerializedProperty t_opt_Lanes;
-    SerializedProperty t_opt_LaneWidth;
-    SerializedProperty t_opt_bShouldersEnabled;
-    SerializedProperty t_opt_ShoulderWidth;
-    SerializedProperty t_opt_RoadDefinition;
-    SerializedProperty t_opt_UseDefaultMaterials;
-    SerializedProperty t_opt_bMaxGradeEnabled;
-    SerializedProperty t_opt_MaxGrade;
-    SerializedProperty t_opt_bMultithreading;
-    SerializedProperty t_opt_bSaveMeshes;
-    SerializedProperty t_opt_TerrainSubtract_Match;
-    SerializedProperty t_opt_MagnitudeThreshold;
-    SerializedProperty t_opt_HeightModEnabled;
-    SerializedProperty t_opt_DetailModEnabled;
-    SerializedProperty t_opt_TreeModEnabled;
-    SerializedProperty t_opt_MatchHeightsDistance;
-    SerializedProperty t_opt_ClearDetailsDistance;
-    SerializedProperty t_opt_ClearDetailsDistanceHeight;
-    SerializedProperty t_opt_ClearTreesDistance;
-    SerializedProperty t_opt_ClearTreesDistanceHeight;
-    SerializedProperty t_opt_SaveTerrainHistoryOnDisk;
-    SerializedProperty t_opt_bRoadCuts;
-    SerializedProperty t_opt_bDynamicCuts;
-    SerializedProperty t_opt_bShoulderCuts;
-    SerializedProperty t_bEditorCameraRotate;
-    SerializedProperty t_EditorCameraMetersPerSecond;
-    SerializedProperty t_opt_bUseMeshColliders;
-    SerializedProperty t_opt_tRoadMaterialDropdown;
-    SerializedProperty t_opt_bIsStatic;
-    SerializedProperty t_opt_bIsLightmapped;
+    private SerializedProperty t_opt_GizmosEnabled;
+    private SerializedProperty t_opt_Lanes;
+    private SerializedProperty t_opt_LaneWidth;
+    private SerializedProperty t_opt_bShouldersEnabled;
+    private SerializedProperty t_opt_ShoulderWidth;
+    private SerializedProperty t_opt_RoadDefinition;
+    private SerializedProperty t_opt_UseDefaultMaterials;
+    private SerializedProperty t_opt_bMaxGradeEnabled;
+    private SerializedProperty t_opt_MaxGrade;
+    private SerializedProperty t_opt_bMultithreading;
+    private SerializedProperty t_opt_bSaveMeshes;
+    private SerializedProperty t_opt_TerrainSubtract_Match;
+    private SerializedProperty t_opt_MagnitudeThreshold;
+    private SerializedProperty t_opt_HeightModEnabled;
+    private SerializedProperty t_opt_DetailModEnabled;
+    private SerializedProperty t_opt_TreeModEnabled;
+    private SerializedProperty t_opt_MatchHeightsDistance;
+    private SerializedProperty t_opt_ClearDetailsDistance;
+    private SerializedProperty t_opt_ClearDetailsDistanceHeight;
+    private SerializedProperty t_opt_ClearTreesDistance;
+    private SerializedProperty t_opt_ClearTreesDistanceHeight;
+    private SerializedProperty t_opt_SaveTerrainHistoryOnDisk;
+    private SerializedProperty t_opt_bRoadCuts;
+    private SerializedProperty t_opt_bDynamicCuts;
+    private SerializedProperty t_opt_bShoulderCuts;
+    private SerializedProperty t_bEditorCameraRotate;
+    private SerializedProperty t_EditorCameraMetersPerSecond;
+    private SerializedProperty t_opt_bUseMeshColliders;
+    private SerializedProperty t_opt_tRoadMaterialDropdown;
+    private SerializedProperty t_opt_bIsStatic;
+    private SerializedProperty t_opt_bIsLightmapped;
 
-    SerializedProperty t_RoadMaterial1;
-    SerializedProperty t_RoadMaterial2;
-    SerializedProperty t_RoadMaterial3;
-    SerializedProperty t_RoadMaterial4;
-    SerializedProperty t_RoadMaterialMarker1;
-    SerializedProperty t_RoadMaterialMarker2;
-    SerializedProperty t_RoadMaterialMarker3;
-    SerializedProperty t_RoadMaterialMarker4;
-    SerializedProperty t_ShoulderMaterial1;
-    SerializedProperty t_ShoulderMaterial2;
-    SerializedProperty t_ShoulderMaterial3;
-    SerializedProperty t_ShoulderMaterial4;
-    SerializedProperty t_ShoulderMaterialMarker1;
-    SerializedProperty t_ShoulderMaterialMarker2;
-    SerializedProperty t_ShoulderMaterialMarker3;
-    SerializedProperty t_ShoulderMaterialMarker4;
-    SerializedProperty t_RoadPhysicMaterial;
-    SerializedProperty t_ShoulderPhysicMaterial;
+    private SerializedProperty t_RoadMaterial1;
+    private SerializedProperty t_RoadMaterial2;
+    private SerializedProperty t_RoadMaterial3;
+    private SerializedProperty t_RoadMaterial4;
+    private SerializedProperty t_RoadMaterialMarker1;
+    private SerializedProperty t_RoadMaterialMarker2;
+    private SerializedProperty t_RoadMaterialMarker3;
+    private SerializedProperty t_RoadMaterialMarker4;
+    private SerializedProperty t_ShoulderMaterial1;
+    private SerializedProperty t_ShoulderMaterial2;
+    private SerializedProperty t_ShoulderMaterial3;
+    private SerializedProperty t_ShoulderMaterial4;
+    private SerializedProperty t_ShoulderMaterialMarker1;
+    private SerializedProperty t_ShoulderMaterialMarker2;
+    private SerializedProperty t_ShoulderMaterialMarker3;
+    private SerializedProperty t_ShoulderMaterialMarker4;
+    private SerializedProperty t_RoadPhysicMaterial;
+    private SerializedProperty t_ShoulderPhysicMaterial;
 
     //Editor only variables:
-    string status = "Show help";
-    const string tOnlineHelpDesc = "Visit the online manual for the most effective help.";
-    bool bShowCutsHelp = false;
-    bool bShowMatsHelp = false;
-    bool bShowHelpRoad = false;
-    bool bShowHelpTerrain = false;
-    bool bShowCameraHelp = false;
-    GUIStyle GSDLoadButton = null;
-    bool bResetTH = false;
+    private string status = "Show help";
+    private const string tOnlineHelpDesc = "Visit the online manual for the most effective help.";
+    private bool bShowCutsHelp = false;
+    private bool bShowMatsHelp = false;
+    private bool bShowHelpRoad = false;
+    private bool bShowHelpTerrain = false;
+    private bool bShowCameraHelp = false;
+    private GUIStyle GSDLoadButton = null;
+    private bool bResetTH = false;
     public enum tempEnum { Two, Four, Six };
-    Texture btnRefreshText = null;
-    Texture btnDeleteText = null;
-    Texture btnRefreshTextReal = null;
-    tempEnum LanesEnum = tempEnum.Two;
-    tempEnum tLanesEnum = tempEnum.Two;
+    private Texture btnRefreshText = null;
+    private Texture btnDeleteText = null;
+    private Texture btnRefreshTextReal = null;
+    private tempEnum LanesEnum = tempEnum.Two;
+    private tempEnum tLanesEnum = tempEnum.Two;
+
     private static string[] tempEnumDescriptions = new string[]{
         "Two",
         "Four",
         "Six"
     };
-    GUIStyle WarningLabelStyle;
-    Texture2D WarningLabelBG;
-    GUIStyle GSDImageButton = null;
-    GUIStyle GSDMaybeButton = null;
-    bool bHasInit = false;
-    Texture2D LoadBtnBG = null;
-    Texture2D LoadBtnBGGlow = null;
+
+    private GUIStyle WarningLabelStyle;
+    private Texture2D WarningLabelBG;
+    private GUIStyle GSDImageButton = null;
+    private GUIStyle GSDMaybeButton = null;
+    private bool bHasInit = false;
+    private Texture2D LoadBtnBG = null;
+    private Texture2D LoadBtnBGGlow = null;
 
     //Buffers:
-    //float TempChangeChecker = 0f;
-    //bool bMatChange = false;
-    bool bNeedRoadUpdate = false;
-    bool bSetDefaultMats = false;
-    bool bApplyMatsCheck = false;
-    bool t_bApplyMatsCheck = false;
+    //private float TempChangeChecker = 0f;
+    //private bool bMatChange = false;
+    private bool bNeedRoadUpdate = false;
+    private bool bSetDefaultMats = false;
+    private bool bApplyMatsCheck = false;
+    private bool t_bApplyMatsCheck = false;
+
 
     private void OnEnable()
     {
@@ -162,34 +167,35 @@ public class GSDRoadEditor : Editor
         t_ShoulderPhysicMaterial = serializedObject.FindProperty("ShoulderPhysicMaterial");
     }
 
-    void Init()
+
+    private void Init()
     {
         bHasInit = true;
         EditorStyles.label.wordWrap = true;
 
         if (WarningLabelBG == null)
         {
-            WarningLabelBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
+            WarningLabelBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
         }
         if (btnRefreshText == null)
         {
-            btnRefreshText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
         if (btnRefreshTextReal == null)
         {
-            btnRefreshTextReal = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
+            btnRefreshTextReal = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
         }
         if (LoadBtnBG == null)
         {
-            LoadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
         }
         if (btnDeleteText == null)
         {
-            btnDeleteText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            btnDeleteText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
 
         if (WarningLabelStyle == null)
@@ -234,6 +240,7 @@ public class GSDRoadEditor : Editor
         }
     }
 
+
     public override void OnInspectorGUI()
     {
         if (Event.current.type == EventType.ValidateCommand)
@@ -251,7 +258,10 @@ public class GSDRoadEditor : Editor
         bNeedRoadUpdate = false;
         bSetDefaultMats = false;
         //Graphic null checks:
-        if (!bHasInit) { Init(); }
+        if (!bHasInit)
+        {
+            Init();
+        }
 
 
 
@@ -277,7 +287,7 @@ public class GSDRoadEditor : Editor
         t_opt_GizmosEnabled.boolValue = EditorGUILayout.Toggle("Gizmos: ", RS.opt_GizmosEnabled);
         if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+            Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
         }
         EditorGUILayout.EndHorizontal();
 
@@ -294,7 +304,7 @@ public class GSDRoadEditor : Editor
         {
             LanesEnum = tempEnum.Six;
         }
-        tLanesEnum = (tempEnum)EditorGUILayout.Popup("Lanes: ", (int)LanesEnum, tempEnumDescriptions);
+        tLanesEnum = (tempEnum) EditorGUILayout.Popup("Lanes: ", (int) LanesEnum, tempEnumDescriptions);
         if (tLanesEnum == tempEnum.Two)
         {
             t_opt_Lanes.intValue = 2;
@@ -348,8 +358,8 @@ public class GSDRoadEditor : Editor
         //Dropdown:
         if (RS.opt_UseDefaultMaterials)
         {
-            int Old = (int)RS.opt_tRoadMaterialDropdown;
-            t_opt_tRoadMaterialDropdown.enumValueIndex = (int)EditorGUILayout.Popup("Road material: ", (int)RS.opt_tRoadMaterialDropdown, RoadMaterialDropdownEnumDesc, GUILayout.Width(250f));
+            int Old = (int) RS.opt_tRoadMaterialDropdown;
+            t_opt_tRoadMaterialDropdown.enumValueIndex = (int) EditorGUILayout.Popup("Road material: ", (int) RS.opt_tRoadMaterialDropdown, RoadMaterialDropdownEnumDesc, GUILayout.Width(250f));
             if (t_opt_tRoadMaterialDropdown.enumValueIndex != Old)
             {
                 if (t_opt_tRoadMaterialDropdown.enumValueIndex > 0)
@@ -436,45 +446,68 @@ public class GSDRoadEditor : Editor
             EditorGUILayout.LabelField("Road options quick help:", EditorStyles.boldLabel);
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
             {
-                Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+                Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.HelpBox(tOnlineHelpDesc, MessageType.Info);
 
-            GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Gizmos:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Enable or disable most gizmos for this road. Disable mesh collider gizmos via the unity menu if necessary or desired.", EditorStyles.miniLabel);
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Lanes:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Select the number of lanes for this road.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Lane width:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Modify the width per lane, in meters.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Road width:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Displays the road width without considering shoulders, in meters.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Shoulders enabled:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Enables or disables shoulders.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Shoulders width:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Modify the width of shoulders, in meters.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Road definition: ", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("The meter spacing between mesh triangles on the road and shoulder.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Use default materials: ", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("When enabled will use default materials for the road system, allowing certain aspects of generation to automatically determine the correct materials to utilize.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Max grade enforced: ", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("When enabled enforces a maximum grade on a per node basis.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Max road grade: ", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("The maximum road grade allowed on a per node basis.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Multithreading:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("When enabled allows for multi-threaded road generation.");
-            EditorGUILayout.EndVertical(); GUILayout.Space(4f); EditorGUILayout.BeginVertical();
+            EditorGUILayout.EndVertical();
+            GUILayout.Space(4f);
+            EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Save mesh assets:", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("When enabled saves all generated meshes as .asset files.");
             GUILayout.Space(4f);
@@ -590,7 +623,7 @@ public class GSDRoadEditor : Editor
             EditorGUILayout.LabelField("Terrain options quick help:", EditorStyles.boldLabel);
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
             {
-                Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+                Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.HelpBox(tOnlineHelpDesc, MessageType.Info);
@@ -689,7 +722,7 @@ public class GSDRoadEditor : Editor
             EditorGUILayout.LabelField("Road splitting quick help:", EditorStyles.boldLabel);
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
             {
-                Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+                Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.HelpBox(tOnlineHelpDesc, MessageType.Info);
@@ -765,7 +798,7 @@ public class GSDRoadEditor : Editor
         {
             RS.EditorCameraSetSingle();
         }
-        RS.EditorPlayCamera = (Camera)EditorGUILayout.ObjectField("Editor play camera:", RS.EditorPlayCamera, typeof(Camera), true);
+        RS.EditorPlayCamera = (Camera) EditorGUILayout.ObjectField("Editor play camera:", RS.EditorPlayCamera, typeof(Camera), true);
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Reset", GUILayout.Width(70f)))
         {
@@ -807,7 +840,7 @@ public class GSDRoadEditor : Editor
             EditorGUILayout.LabelField("Editor camera quick help:", EditorStyles.boldLabel);
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
             {
-                Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+                Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.HelpBox(tOnlineHelpDesc, MessageType.Info);
@@ -851,31 +884,34 @@ public class GSDRoadEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_RoadMaterial1, new GUIContent("  Mat #1: "));
-        if (RS.RoadMaterial1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterial1 = null; }
+        if (RS.RoadMaterial1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            RS.RoadMaterial1 = null; }
         EditorGUILayout.EndHorizontal();
         if (RS.RoadMaterial1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_RoadMaterial2, new GUIContent("  Mat #2: "));
-            if (RS.RoadMaterial2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterial2 = null; }
+            if (RS.RoadMaterial2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            { RS.RoadMaterial2 = null; }
             EditorGUILayout.EndHorizontal();
         }
         if (RS.RoadMaterial1 != null && RS.RoadMaterial2 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_RoadMaterial3, new GUIContent("  Mat #3: "));
-            if (RS.RoadMaterial3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterial3 = null; }
+            if (RS.RoadMaterial3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            { RS.RoadMaterial3 = null; }
             EditorGUILayout.EndHorizontal();
         }
         if (RS.RoadMaterial1 != null && RS.RoadMaterial2 != null && RS.RoadMaterial3 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_RoadMaterial4, new GUIContent("  Mat #4: "));
-            if (RS.RoadMaterial4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterial4 = null; }
+            if (RS.RoadMaterial4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            { RS.RoadMaterial4 = null; }
             EditorGUILayout.EndHorizontal();
         }
-
-
 
 
 
@@ -889,27 +925,35 @@ public class GSDRoadEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_RoadMaterialMarker1, new GUIContent("  Mat #1: "));
-        if (RS.RoadMaterialMarker1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterialMarker1 = null; }
+        if (RS.RoadMaterialMarker1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            RS.RoadMaterialMarker1 = null; }
         EditorGUILayout.EndHorizontal();
         if (RS.RoadMaterialMarker1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_RoadMaterialMarker2, new GUIContent("  Mat #2: "));
-            if (RS.RoadMaterialMarker2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterialMarker2 = null; }
+            if (RS.RoadMaterialMarker2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                RS.RoadMaterialMarker2 = null; }
             EditorGUILayout.EndHorizontal();
         }
         if (RS.RoadMaterialMarker1 != null && RS.RoadMaterialMarker2 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_RoadMaterialMarker3, new GUIContent("  Mat #3: "));
-            if (RS.RoadMaterialMarker3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterialMarker3 = null; }
+            if (RS.RoadMaterialMarker3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                RS.RoadMaterialMarker3 = null; }
             EditorGUILayout.EndHorizontal();
         }
         if (RS.RoadMaterialMarker1 != null && RS.RoadMaterialMarker2 != null && RS.RoadMaterialMarker3 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_RoadMaterialMarker4, new GUIContent("  Mat #4: "));
-            if (RS.RoadMaterialMarker4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.RoadMaterialMarker4 = null; }
+            if (RS.RoadMaterialMarker4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                RS.RoadMaterialMarker4 = null; }
             EditorGUILayout.EndHorizontal();
         }
 
@@ -927,27 +971,34 @@ public class GSDRoadEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_ShoulderMaterial1, new GUIContent("  Mat #1: "));
-            if (RS.ShoulderMaterial1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterial1 = null; }
+            if (RS.ShoulderMaterial1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                RS.ShoulderMaterial1 = null; }
             EditorGUILayout.EndHorizontal();
             if (RS.ShoulderMaterial1 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_ShoulderMaterial2, new GUIContent("  Mat #2: "));
-                if (RS.ShoulderMaterial2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterial2 = null; }
+                if (RS.ShoulderMaterial2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                { RS.ShoulderMaterial2 = null; }
                 EditorGUILayout.EndHorizontal();
             }
             if (RS.ShoulderMaterial1 != null && RS.ShoulderMaterial2 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_ShoulderMaterial3, new GUIContent("  Mat #3: "));
-                if (RS.ShoulderMaterial3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterial3 = null; }
+                if (RS.ShoulderMaterial3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    RS.ShoulderMaterial3 = null; }
                 EditorGUILayout.EndHorizontal();
             }
             if (RS.ShoulderMaterial1 != null && RS.ShoulderMaterial2 != null && RS.ShoulderMaterial3 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_ShoulderMaterial4, new GUIContent("  Mat #4: "));
-                if (RS.ShoulderMaterial4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterial4 = null; }
+                if (RS.ShoulderMaterial4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    RS.ShoulderMaterial4 = null; }
                 EditorGUILayout.EndHorizontal();
             }
         }
@@ -966,27 +1017,34 @@ public class GSDRoadEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_ShoulderMaterialMarker1, new GUIContent("  Mat #1: "));
-            if (RS.ShoulderMaterialMarker1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterialMarker1 = null; }
+            if (RS.ShoulderMaterialMarker1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                RS.ShoulderMaterialMarker1 = null; }
             EditorGUILayout.EndHorizontal();
             if (RS.ShoulderMaterialMarker1 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_ShoulderMaterialMarker2, new GUIContent("  Mat #2: "));
-                if (RS.ShoulderMaterialMarker2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterialMarker2 = null; }
+                if (RS.ShoulderMaterialMarker2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                { RS.ShoulderMaterialMarker2 = null; }
                 EditorGUILayout.EndHorizontal();
             }
             if (RS.ShoulderMaterialMarker1 != null && RS.ShoulderMaterialMarker2 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_ShoulderMaterialMarker3, new GUIContent("  Mat #3: "));
-                if (RS.ShoulderMaterialMarker3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterialMarker3 = null; }
+                if (RS.ShoulderMaterialMarker3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    RS.ShoulderMaterialMarker3 = null; }
                 EditorGUILayout.EndHorizontal();
             }
             if (RS.ShoulderMaterialMarker1 != null && RS.ShoulderMaterialMarker2 != null && RS.ShoulderMaterialMarker3 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_ShoulderMaterialMarker4, new GUIContent("  Mat #4: "));
-                if (RS.ShoulderMaterialMarker4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { RS.ShoulderMaterialMarker4 = null; }
+                if (RS.ShoulderMaterialMarker4 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    RS.ShoulderMaterialMarker4 = null; }
                 EditorGUILayout.EndHorizontal();
             }
         }
@@ -1216,12 +1274,16 @@ public class GSDRoadEditor : Editor
         }
     }
 
+
     public void OnSceneGUI()
     {
         Event current = Event.current;
         int controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
 
-        if (current.alt == true) { return; }
+        if (current.alt == true)
+        {
+            return;
+        }
 
         if (Selection.Contains(RS.transform.gameObject) && Selection.objects.Length > 1)
         {
@@ -1247,7 +1309,9 @@ public class GSDRoadEditor : Editor
                         if (RS.GSDSpline && RS.GSDSpline.PreviewSpline)
                         {
                             //Debug.Log("Drawing new node");
-                            if (RS.GSDSpline.PreviewSpline.mNodes == null || RS.GSDSpline.PreviewSpline.mNodes.Count < 1) { RS.GSDSpline.Setup(); }
+                            if (RS.GSDSpline.PreviewSpline.mNodes == null || RS.GSDSpline.PreviewSpline.mNodes.Count < 1)
+                            {
+                                RS.GSDSpline.Setup(); }
                             RS.GSDSpline.PreviewSpline.MousePos = hitInfo.point;
                             RS.GSDSpline.PreviewSpline.bGizmoDraw = true;
                             SceneView.RepaintAll();
@@ -1268,7 +1332,9 @@ public class GSDRoadEditor : Editor
                         RS.Editor_MouseTerrainHit = true;
                         if (RS.GSDSpline && RS.GSDSpline.PreviewSplineInsert)
                         {
-                            if (RS.GSDSpline.PreviewSplineInsert.mNodes == null || RS.GSDSpline.PreviewSplineInsert.mNodes.Count < 1) { RS.GSDSpline.PreviewSplineInsert.DetermineInsertNodes(); }
+                            if (RS.GSDSpline.PreviewSplineInsert.mNodes == null || RS.GSDSpline.PreviewSplineInsert.mNodes.Count < 1)
+                            {
+                                RS.GSDSpline.PreviewSplineInsert.DetermineInsertNodes(); }
                             RS.GSDSpline.PreviewSplineInsert.MousePos = hitInfo.point;
                             RS.GSDSpline.PreviewSplineInsert.bGizmoDraw = true;
                             RS.GSDSpline.PreviewSplineInsert.UpdateActionNode();
@@ -1283,7 +1349,11 @@ public class GSDRoadEditor : Editor
                 }
                 else
                 {
-                    if (RS.Editor_MouseTerrainHit) { RS.Editor_MouseTerrainHit = false; GUI.changed = true; }
+                    if (RS.Editor_MouseTerrainHit)
+                    {
+                        RS.Editor_MouseTerrainHit = false;
+                        GUI.changed = true;
+                    }
                     if (RS.GSDSpline && RS.GSDSpline.PreviewSpline)
                     {
                         //Debug.Log("not drawing new node");
@@ -1308,7 +1378,10 @@ public class GSDRoadEditor : Editor
 
 
 
-        if (current.shift && RS.GSDSpline.PreviewSpline != null) { RS.GSDSpline.PreviewSpline.bGizmoDraw = false; }
+        if (current.shift && RS.GSDSpline.PreviewSpline != null)
+        {
+            RS.GSDSpline.PreviewSpline.bGizmoDraw = false;
+        }
         bool bUsed = false;
         if (current.control)
         {
@@ -1401,12 +1474,14 @@ public class GSDRoadEditor : Editor
         }
     }
 
-    void SetSelectionToRoad()
+
+    private void SetSelectionToRoad()
     {
         GameObject[] tObjs = new GameObject[1];
         tObjs[0] = RS.transform.gameObject;
         Selection.objects = tObjs;
     }
+
 
     #region "Progress bar"
     /// <summary>
@@ -1418,7 +1493,7 @@ public class GSDRoadEditor : Editor
     /// <param name='tL'>
     /// Label of the progress bar.
     /// </param>
-    void GSDProgressBar(float tV, string tL)
+    private void GSDProgressBar(float tV, string tL)
     {
         // Get a rect for the progress bar using the same margins as a textfield:
         Rect rect = GUILayoutUtility.GetRect(18, 18, "TextField");
@@ -1427,19 +1502,21 @@ public class GSDRoadEditor : Editor
     }
     #endregion
 
-    void Line()
+
+    // FH_Tag Optimizable
+    private void Line()
     {
         GUILayout.Space(4f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1f)); //Horizontal bar
         GUILayout.Space(4f);
     }
 
-    void LineSmall()
+
+    private void LineSmall()
     {
         GUILayout.Space(1f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1f)); //Horizontal bar
         GUILayout.Space(1f);
     }
-
-
+    // FH_Tag Optimizable
 }

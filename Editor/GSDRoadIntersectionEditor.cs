@@ -1,69 +1,74 @@
+#region "Imports"
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using GSD;
+//using System.Collections.Generic;         // Unused
+#endregion
+
 
 [CustomEditor(typeof(GSDRoadIntersection))]
 public class GSDRoadIntersectionEditor : Editor
 {
-    protected GSDRoadIntersection tInter { get { return (GSDRoadIntersection)target; } }
+    protected GSDRoadIntersection tInter { get { return (GSDRoadIntersection) target; } }
 
-    SerializedProperty t_opt_AutoUpdateIntersections;
-    SerializedProperty t_bDrawGizmo;
-    SerializedProperty t_bLeftTurnYieldOnGreen;
-    SerializedProperty t_opt_FixedTime_RegularLightLength;
-    SerializedProperty t_opt_FixedTime_LeftTurnLightLength;
-    SerializedProperty t_opt_FixedTime_AllRedLightLength;
-    SerializedProperty t_opt_FixedTime_YellowLightLength;
-    SerializedProperty t_bTrafficPoleStreetLight;
-    SerializedProperty t_bTrafficLightGray;
-    SerializedProperty t_bRegularPoleAlignment;
-    SerializedProperty t_bLightsEnabled;
-    SerializedProperty t_StreetLight_Range;
-    SerializedProperty t_StreetLight_Intensity;
-    SerializedProperty t_StreetLight_Color;
-    SerializedProperty t_ScalingSense;
-    SerializedProperty t_GradeMod;
-    SerializedProperty t_bUseDefaultMaterials;
-    SerializedProperty t_MarkerCenter1;
-    SerializedProperty t_MarkerCenter2;
-    SerializedProperty t_MarkerCenter3;
-    SerializedProperty t_MarkerExt_Stretch1;
-    SerializedProperty t_MarkerExt_Stretch2;
-    SerializedProperty t_MarkerExt_Stretch3;
-    SerializedProperty t_MarkerExt_Tiled1;
-    SerializedProperty t_MarkerExt_Tiled2;
-    SerializedProperty t_MarkerExt_Tiled3;
-    SerializedProperty t_Lane0Mat1;
-    SerializedProperty t_Lane0Mat2;
-    SerializedProperty t_Lane1Mat1;
-    SerializedProperty t_Lane1Mat2;
-    SerializedProperty t_Lane2Mat1;
-    SerializedProperty t_Lane2Mat2;
-    SerializedProperty t_Lane3Mat1;
-    SerializedProperty t_Lane3Mat2;
-    SerializedProperty t_rType;
-    SerializedProperty t_iStopType;
-    SerializedProperty t_lType;
+    private SerializedProperty t_opt_AutoUpdateIntersections;
+    private SerializedProperty t_bDrawGizmo;
+    private SerializedProperty t_bLeftTurnYieldOnGreen;
+    private SerializedProperty t_opt_FixedTime_RegularLightLength;
+    private SerializedProperty t_opt_FixedTime_LeftTurnLightLength;
+    private SerializedProperty t_opt_FixedTime_AllRedLightLength;
+    private SerializedProperty t_opt_FixedTime_YellowLightLength;
+    private SerializedProperty t_bTrafficPoleStreetLight;
+    private SerializedProperty t_bTrafficLightGray;
+    private SerializedProperty t_bRegularPoleAlignment;
+    private SerializedProperty t_bLightsEnabled;
+    private SerializedProperty t_StreetLight_Range;
+    private SerializedProperty t_StreetLight_Intensity;
+    private SerializedProperty t_StreetLight_Color;
+    private SerializedProperty t_ScalingSense;
+    private SerializedProperty t_GradeMod;
+    private SerializedProperty t_bUseDefaultMaterials;
+    private SerializedProperty t_MarkerCenter1;
+    private SerializedProperty t_MarkerCenter2;
+    private SerializedProperty t_MarkerCenter3;
+    private SerializedProperty t_MarkerExt_Stretch1;
+    private SerializedProperty t_MarkerExt_Stretch2;
+    private SerializedProperty t_MarkerExt_Stretch3;
+    private SerializedProperty t_MarkerExt_Tiled1;
+    private SerializedProperty t_MarkerExt_Tiled2;
+    private SerializedProperty t_MarkerExt_Tiled3;
+    private SerializedProperty t_Lane0Mat1;
+    private SerializedProperty t_Lane0Mat2;
+    private SerializedProperty t_Lane1Mat1;
+    private SerializedProperty t_Lane1Mat2;
+    private SerializedProperty t_Lane2Mat1;
+    private SerializedProperty t_Lane2Mat2;
+    private SerializedProperty t_Lane3Mat1;
+    private SerializedProperty t_Lane3Mat2;
+    private SerializedProperty t_rType;
+    private SerializedProperty t_iStopType;
+    private SerializedProperty t_lType;
+
 
     #region "Editor only variables"
     //Editor only variables
-    const bool bDebug = false;
-    bool bShowMarkerStretch = false;
-    bool bShowMarkerTiled = false;
-    bool bShowMarkerCenter = false;
-    bool bShowTLSense = false;
-    bool bShowTLPole = false;
-    bool bShowLightHelp = false;
-    bool bShowLanes = false;
-    bool bGradeCorrect = false;
-    bool bShowDefaultMatHelp = false;
-    bool bShowHelpLeftTurnGreen = false;
-    string status = "Show help";
+    private const bool bDebug = false;
+    private bool bShowMarkerStretch = false;
+    private bool bShowMarkerTiled = false;
+    private bool bShowMarkerCenter = false;
+    private bool bShowTLSense = false;
+    private bool bShowTLPole = false;
+    private bool bShowLightHelp = false;
+    private bool bShowLanes = false;
+    private bool bGradeCorrect = false;
+    private bool bShowDefaultMatHelp = false;
+    private bool bShowHelpLeftTurnGreen = false;
+    private string status = "Show help";
 
-    GUIStyle GSDImageButton = null;
-    Texture btnRefreshText = null;
-    Texture btnDeleteText = null;
+    private GUIStyle GSDImageButton = null;
+    private Texture btnRefreshText = null;
+    private Texture btnDeleteText = null;
+
 
     private static string[] rTypeDescriptions = new string[]{
         "No turn lanes",
@@ -71,10 +76,12 @@ public class GSDRoadIntersectionEditor : Editor
         "Both left and right turn lanes"
     };
 
+
     private static string[] rTypeDescriptions_3Way = new string[]{
         "No turn lanes",
         "Left turn lane only"
     };
+
 
     private static string[] iStopTypeEnumDescriptions = new string[]{
         "Stop signs",
@@ -83,20 +90,23 @@ public class GSDRoadIntersectionEditor : Editor
 //		"Traffic lights #2"
 	};
 
+
     private static string[] iTrafficLightSequenceTypeDesc = new string[]{
         "Fixed time",
         "Other"
     };
 
-    const string HelpText1 = "Each material added is rendered on top of the previous. Combine with transparent shaders which accept shadows to allow for easy marking.";
+
+    private const string HelpText1 = "Each material added is rendered on top of the previous. Combine with transparent shaders which accept shadows to allow for easy marking.";
 
     //Checkers:
-    Texture2D LoadBtnBG = null;
-    Texture2D LoadBtnBGGlow = null;
+    private Texture2D LoadBtnBG = null;
+    private Texture2D LoadBtnBGGlow = null;
 
-    GUIStyle GSDLoadButton = null;
-    bool bHasInit = false;
+    private GUIStyle GSDLoadButton = null;
+    private bool bHasInit = false;
     #endregion
+
 
     private void OnEnable()
     {
@@ -139,6 +149,7 @@ public class GSDRoadIntersectionEditor : Editor
         t_lType = serializedObject.FindProperty("lType");
     }
 
+
     public override void OnInspectorGUI()
     {
         if (Event.current.type == EventType.ValidateCommand)
@@ -154,7 +165,10 @@ public class GSDRoadIntersectionEditor : Editor
         serializedObject.Update();
 
         //Graphic null checks:
-        if (!bHasInit) { Init(); }
+        if (!bHasInit)
+        {
+            Init();
+        }
 
         Line();
         EditorGUILayout.BeginHorizontal();
@@ -192,7 +206,7 @@ public class GSDRoadIntersectionEditor : Editor
         }
         if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+            Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
         }
         EditorGUILayout.EndHorizontal();
         Line();
@@ -211,11 +225,11 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.LabelField("Intersection turn lane options:");
         if (tInter.iType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
         {
-            t_rType.enumValueIndex = (int)EditorGUILayout.Popup((int)tInter.rType, rTypeDescriptions_3Way);
+            t_rType.enumValueIndex = (int) EditorGUILayout.Popup((int) tInter.rType, rTypeDescriptions_3Way);
         }
         else
         {
-            t_rType.enumValueIndex = (int)EditorGUILayout.Popup((int)tInter.rType, rTypeDescriptions);
+            t_rType.enumValueIndex = (int) EditorGUILayout.Popup((int) tInter.rType, rTypeDescriptions);
         }
 
         //Option: Left yield on green:
@@ -235,13 +249,13 @@ public class GSDRoadIntersectionEditor : Editor
 
 
         //Option: Intersection stop type:
-        t_iStopType.enumValueIndex = (int)EditorGUILayout.Popup("Intersection stop type:", (int)tInter.iStopType, iStopTypeEnumDescriptions);
+        t_iStopType.enumValueIndex = (int) EditorGUILayout.Popup("Intersection stop type:", (int) tInter.iStopType, iStopTypeEnumDescriptions);
 
 
         if (tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
         {
             //Option: Traffic light timing type:
-            t_lType.enumValueIndex = (int)EditorGUILayout.Popup("Traffic light timing:", (int)tInter.lType, iTrafficLightSequenceTypeDesc);
+            t_lType.enumValueIndex = (int) EditorGUILayout.Popup("Traffic light timing:", (int) tInter.lType, iTrafficLightSequenceTypeDesc);
 
             //Options: Traffic fixed light timings:
             if (tInter.lType == GSDRoadIntersection.LightTypeEnum.Timed)
@@ -249,25 +263,37 @@ public class GSDRoadIntersectionEditor : Editor
                 EditorGUILayout.LabelField("Traffic light fixed time lengths (in seconds):");
                 EditorGUILayout.BeginHorizontal();
                 t_opt_FixedTime_RegularLightLength.floatValue = EditorGUILayout.Slider("Green length: ", tInter.opt_FixedTime_RegularLightLength, 0.1f, 180f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f))) { t_opt_FixedTime_RegularLightLength.floatValue = 30f; }
+                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    t_opt_FixedTime_RegularLightLength.floatValue = 30f;
+                }
                 EditorGUILayout.EndHorizontal();
 
                 if (tInter.rType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                 {
                     EditorGUILayout.BeginHorizontal();
                     t_opt_FixedTime_LeftTurnLightLength.floatValue = EditorGUILayout.Slider("Left turn only length: ", tInter.opt_FixedTime_LeftTurnLightLength, 0.1f, 180f);
-                    if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f))) { t_opt_FixedTime_LeftTurnLightLength.floatValue = 10f; }
+                    if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                    {
+                        t_opt_FixedTime_LeftTurnLightLength.floatValue = 10f;
+                    }
                     EditorGUILayout.EndHorizontal();
                 }
 
                 EditorGUILayout.BeginHorizontal();
                 t_opt_FixedTime_AllRedLightLength.floatValue = EditorGUILayout.Slider("All red length: ", tInter.opt_FixedTime_AllRedLightLength, 0.1f, 180f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f))) { t_opt_FixedTime_AllRedLightLength.floatValue = 1f; }
+                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    t_opt_FixedTime_AllRedLightLength.floatValue = 1f;
+                }
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
                 t_opt_FixedTime_YellowLightLength.floatValue = EditorGUILayout.Slider("Yellow light length: ", tInter.opt_FixedTime_YellowLightLength, 0.1f, 180f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f))) { t_opt_FixedTime_YellowLightLength.floatValue = 3f; }
+                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    t_opt_FixedTime_YellowLightLength.floatValue = 3f;
+                }
                 EditorGUILayout.EndHorizontal();
             }
         }
@@ -330,7 +356,7 @@ public class GSDRoadIntersectionEditor : Editor
                 t_StreetLight_Color.colorValue = EditorGUILayout.ColorField("  Street light color: ", tInter.StreetLight_Color);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_StreetLight_Color.colorValue = new Color(1f, 0.7451f, 0.27451f, 1f); ;
+                    t_StreetLight_Color.colorValue = new Color(1f, 0.7451f, 0.27451f, 1f);
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -363,7 +389,8 @@ public class GSDRoadIntersectionEditor : Editor
             {
                 t_ScalingSense.floatValue = 170f;
             }
-            EditorGUILayout.EndHorizontal(); GUILayout.Space(4f);
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(4f);
             EditorGUILayout.BeginHorizontal();
             bShowTLSense = EditorGUILayout.Foldout(bShowTLSense, status);
             if (GUILayout.Button("Manually update intersection", EditorStyles.miniButton, GUILayout.Width(170f)))
@@ -445,7 +472,8 @@ public class GSDRoadIntersectionEditor : Editor
         {
             tInter.ResetMaterials_Center();
         }
-        EditorGUILayout.EndHorizontal(); GUILayout.Space(4f);
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Space(4f);
         //Options: Center materials:
         //		EditorGUILayout.BeginHorizontal();
         //		EditorGUILayout.PropertyField (t_MarkerCenter1, new GUIContent ("Center material #1:"));
@@ -466,21 +494,30 @@ public class GSDRoadIntersectionEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_MarkerCenter1, new GUIContent("  Mat #1: "));
-        if (tInter.MarkerCenter1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerCenter1 = null; }
+        if (tInter.MarkerCenter1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            tInter.MarkerCenter1 = null;
+        }
         EditorGUILayout.EndHorizontal();
 
         if (tInter.MarkerCenter1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_MarkerCenter2, new GUIContent("  Mat #2: "));
-            if (tInter.MarkerCenter2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerCenter2 = null; }
+            if (tInter.MarkerCenter2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.MarkerCenter2 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
         if (tInter.MarkerCenter2 != null && tInter.MarkerCenter1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_MarkerCenter3, new GUIContent("  Mat #3: "));
-            if (tInter.MarkerCenter3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerCenter3 = null; }
+            if (tInter.MarkerCenter3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.MarkerCenter3 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
 
@@ -506,21 +543,30 @@ public class GSDRoadIntersectionEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_MarkerExt_Stretch1, new GUIContent("  Mat #1: "));
-        if (tInter.MarkerExt_Stretch1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerExt_Stretch1 = null; }
+        if (tInter.MarkerExt_Stretch1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            tInter.MarkerExt_Stretch1 = null;
+        }
         EditorGUILayout.EndHorizontal();
 
         if (tInter.MarkerExt_Stretch1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_MarkerExt_Stretch2, new GUIContent("  Mat #2: "));
-            if (tInter.MarkerExt_Stretch2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerExt_Stretch2 = null; }
+            if (tInter.MarkerExt_Stretch2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.MarkerExt_Stretch2 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
         if (tInter.MarkerExt_Stretch2 != null && tInter.MarkerExt_Stretch1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_MarkerExt_Stretch3, new GUIContent("  Mat #3: "));
-            if (tInter.MarkerExt_Stretch3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerExt_Stretch3 = null; }
+            if (tInter.MarkerExt_Stretch3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.MarkerExt_Stretch3 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
 
@@ -542,25 +588,35 @@ public class GSDRoadIntersectionEditor : Editor
         {
             tInter.ResetMaterials_Ext_Tiled();
         }
-        EditorGUILayout.EndHorizontal(); GUILayout.Space(4f);
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Space(4f);
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_MarkerExt_Tiled1, new GUIContent("  Mat #1: "));
-        if (tInter.MarkerExt_Tiled1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerExt_Tiled1 = null; }
+        if (tInter.MarkerExt_Tiled1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            tInter.MarkerExt_Tiled1 = null;
+        }
         EditorGUILayout.EndHorizontal();
 
         if (tInter.MarkerExt_Tiled1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_MarkerExt_Tiled2, new GUIContent("  Mat #2: "));
-            if (tInter.MarkerExt_Tiled2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerExt_Tiled2 = null; }
+            if (tInter.MarkerExt_Tiled2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.MarkerExt_Tiled2 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
         if (tInter.MarkerExt_Tiled2 != null && tInter.MarkerExt_Tiled1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_MarkerExt_Tiled3, new GUIContent("  Mat #3: "));
-            if (tInter.MarkerExt_Tiled3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.MarkerExt_Tiled3 = null; }
+            if (tInter.MarkerExt_Tiled3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.MarkerExt_Tiled3 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
 
@@ -582,17 +638,24 @@ public class GSDRoadIntersectionEditor : Editor
         {
             tInter.ResetMaterials_Lanes();
         }
-        EditorGUILayout.EndHorizontal(); GUILayout.Space(4f);
+        EditorGUILayout.EndHorizontal();
+        GUILayout.Space(4f);
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_Lane0Mat1, new GUIContent("Lane section 0 mat #1:"));
-        if (tInter.Lane0Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane0Mat1 = null; }
+        if (tInter.Lane0Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            tInter.Lane0Mat1 = null;
+        }
         EditorGUILayout.EndHorizontal();
         if (tInter.Lane0Mat1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_Lane0Mat2, new GUIContent("Lane section 0 mat #2:"));
-            if (tInter.Lane0Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane0Mat2 = null; }
+            if (tInter.Lane0Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.Lane0Mat2 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
 
@@ -600,13 +663,19 @@ public class GSDRoadIntersectionEditor : Editor
         //Option: Lane section 1:
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(t_Lane1Mat1, new GUIContent("Lane section 1 mat #1:"));
-        if (tInter.Lane1Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane1Mat1 = null; }
+        if (tInter.Lane1Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        {
+            tInter.Lane1Mat1 = null;
+        }
         EditorGUILayout.EndHorizontal();
         if (tInter.Lane1Mat1 != null)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_Lane1Mat2, new GUIContent("Lane section 1 mat #2:"));
-            if (tInter.Lane1Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane1Mat2 = null; }
+            if (tInter.Lane1Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.Lane1Mat2 = null;
+            }
             EditorGUILayout.EndHorizontal();
         }
 
@@ -615,13 +684,19 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_Lane2Mat1, new GUIContent("Lane section 2 mat #1:"));
-            if (tInter.Lane2Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane2Mat1 = null; }
+            if (tInter.Lane2Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.Lane2Mat1 = null;
+            }
             EditorGUILayout.EndHorizontal();
             if (tInter.Lane2Mat1 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_Lane2Mat2, new GUIContent("Lane section 2 mat #2:"));
-                if (tInter.Lane2Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane2Mat2 = null; }
+                if (tInter.Lane2Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    tInter.Lane2Mat2 = null;
+                }
                 EditorGUILayout.EndHorizontal();
             }
         }
@@ -632,13 +707,19 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(t_Lane3Mat1, new GUIContent("Lane section 3 mat #1:"));
-            if (tInter.Lane3Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane3Mat1 = null; }
+            if (tInter.Lane3Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            {
+                tInter.Lane3Mat1 = null;
+            }
             EditorGUILayout.EndHorizontal();
             if (tInter.Lane3Mat1 != null)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(t_Lane3Mat2, new GUIContent("Lane section 3 mat #2:"));
-                if (tInter.Lane3Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { tInter.Lane3Mat2 = null; }
+                if (tInter.Lane3Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                {
+                    tInter.Lane3Mat2 = null;
+                }
                 EditorGUILayout.EndHorizontal();
             }
         }
@@ -713,7 +794,7 @@ public class GSDRoadIntersectionEditor : Editor
             }
 
             //Option: Intersection turn lane options
-            if ((int)tInter.rType != t_rType.enumValueIndex)
+            if ((int) tInter.rType != t_rType.enumValueIndex)
             {
                 bMatChange = true;
                 bRoadUpdate = true;
@@ -726,7 +807,7 @@ public class GSDRoadIntersectionEditor : Editor
             }
 
             //Option: Intersection stop type:
-            if (t_iStopType.enumValueIndex != (int)tInter.iStopType)
+            if (t_iStopType.enumValueIndex != (int) tInter.iStopType)
             {
                 bRoadUpdate = true;
             }
@@ -779,41 +860,143 @@ public class GSDRoadIntersectionEditor : Editor
                 bMatChange = true;
             }
 
-            if (t_MarkerCenter1 == null || t_MarkerCenter1.objectReferenceValue == null) { tInter.MarkerCenter1 = null; }
-            if (t_MarkerCenter2 == null || t_MarkerCenter2.objectReferenceValue == null) { tInter.MarkerCenter2 = null; }
-            if (t_MarkerCenter3 == null || t_MarkerCenter3.objectReferenceValue == null) { tInter.MarkerCenter3 = null; }
-            if (t_MarkerExt_Stretch1 == null || t_MarkerExt_Stretch1.objectReferenceValue == null) { tInter.MarkerExt_Stretch1 = null; }
-            if (t_MarkerExt_Stretch2 == null || t_MarkerExt_Stretch2.objectReferenceValue == null) { tInter.MarkerExt_Stretch2 = null; }
-            if (t_MarkerExt_Stretch3 == null || t_MarkerExt_Stretch3.objectReferenceValue == null) { tInter.MarkerExt_Stretch3 = null; }
-            if (t_MarkerExt_Tiled1 == null || t_MarkerExt_Tiled1.objectReferenceValue == null) { tInter.MarkerExt_Tiled1 = null; }
-            if (t_MarkerExt_Tiled2 == null || t_MarkerExt_Tiled2.objectReferenceValue == null) { tInter.MarkerExt_Tiled2 = null; }
-            if (t_MarkerExt_Tiled3 == null || t_MarkerExt_Tiled3.objectReferenceValue == null) { tInter.MarkerExt_Tiled3 = null; }
-            if (t_Lane0Mat1 == null || t_Lane0Mat1.objectReferenceValue == null) { tInter.Lane0Mat1 = null; }
-            if (t_Lane0Mat2 == null || t_Lane0Mat2.objectReferenceValue == null) { tInter.Lane0Mat2 = null; }
-            if (t_Lane1Mat1 == null || t_Lane1Mat1.objectReferenceValue == null) { tInter.Lane1Mat1 = null; }
-            if (t_Lane1Mat2 == null || t_Lane1Mat2.objectReferenceValue == null) { tInter.Lane1Mat2 = null; }
-            if (t_Lane2Mat1 == null || t_Lane2Mat1.objectReferenceValue == null) { tInter.Lane2Mat1 = null; }
-            if (t_Lane2Mat2 == null || t_Lane2Mat2.objectReferenceValue == null) { tInter.Lane2Mat2 = null; }
-            if (t_Lane3Mat1 == null || t_Lane3Mat1.objectReferenceValue == null) { tInter.Lane3Mat1 = null; }
-            if (t_Lane3Mat2 == null || t_Lane3Mat2.objectReferenceValue == null) { tInter.Lane3Mat2 = null; }
+            if (t_MarkerCenter1 == null || t_MarkerCenter1.objectReferenceValue == null)
+            {
+                tInter.MarkerCenter1 = null;
+            }
+            if (t_MarkerCenter2 == null || t_MarkerCenter2.objectReferenceValue == null)
+            {
+                tInter.MarkerCenter2 = null;
+            }
+            if (t_MarkerCenter3 == null || t_MarkerCenter3.objectReferenceValue == null)
+            {
+                tInter.MarkerCenter3 = null;
+            }
+            if (t_MarkerExt_Stretch1 == null || t_MarkerExt_Stretch1.objectReferenceValue == null)
+            {
+                tInter.MarkerExt_Stretch1 = null;
+            }
+            if (t_MarkerExt_Stretch2 == null || t_MarkerExt_Stretch2.objectReferenceValue == null)
+            {
+                tInter.MarkerExt_Stretch2 = null;
+            }
+            if (t_MarkerExt_Stretch3 == null || t_MarkerExt_Stretch3.objectReferenceValue == null)
+            {
+                tInter.MarkerExt_Stretch3 = null;
+            }
+            if (t_MarkerExt_Tiled1 == null || t_MarkerExt_Tiled1.objectReferenceValue == null)
+            {
+                tInter.MarkerExt_Tiled1 = null;
+            }
+            if (t_MarkerExt_Tiled2 == null || t_MarkerExt_Tiled2.objectReferenceValue == null)
+            {
+                tInter.MarkerExt_Tiled2 = null;
+            }
+            if (t_MarkerExt_Tiled3 == null || t_MarkerExt_Tiled3.objectReferenceValue == null)
+            {
+                tInter.MarkerExt_Tiled3 = null;
+            }
+            if (t_Lane0Mat1 == null || t_Lane0Mat1.objectReferenceValue == null)
+            {
+                tInter.Lane0Mat1 = null;
+            }
+            if (t_Lane0Mat2 == null || t_Lane0Mat2.objectReferenceValue == null)
+            {
+                tInter.Lane0Mat2 = null;
+            }
+            if (t_Lane1Mat1 == null || t_Lane1Mat1.objectReferenceValue == null)
+            {
+                tInter.Lane1Mat1 = null;
+            }
+            if (t_Lane1Mat2 == null || t_Lane1Mat2.objectReferenceValue == null)
+            {
+                tInter.Lane1Mat2 = null;
+            }
+            if (t_Lane2Mat1 == null || t_Lane2Mat1.objectReferenceValue == null)
+            {
+                tInter.Lane2Mat1 = null;
+            }
+            if (t_Lane2Mat2 == null || t_Lane2Mat2.objectReferenceValue == null)
+            {
+                tInter.Lane2Mat2 = null;
+            }
+            if (t_Lane3Mat1 == null || t_Lane3Mat1.objectReferenceValue == null)
+            {
+                tInter.Lane3Mat1 = null;
+            }
+            if (t_Lane3Mat2 == null || t_Lane3Mat2.objectReferenceValue == null)
+            {
+                tInter.Lane3Mat2 = null;
+            }
 
-            if (tInter.MarkerCenter1 != null && t_MarkerCenter1.objectReferenceValue != tInter.MarkerCenter1) { bMatChange = true; }
-            if (tInter.MarkerCenter2 != null && t_MarkerCenter2.objectReferenceValue != tInter.MarkerCenter2) { bMatChange = true; }
-            if (tInter.MarkerCenter3 != null && t_MarkerCenter3.objectReferenceValue != tInter.MarkerCenter3) { bMatChange = true; }
-            if (tInter.MarkerExt_Stretch1 != null && t_MarkerExt_Stretch1.objectReferenceValue != tInter.MarkerExt_Stretch1) { bMatChange = true; }
-            if (tInter.MarkerExt_Stretch2 != null && t_MarkerExt_Stretch2.objectReferenceValue != tInter.MarkerExt_Stretch2) { bMatChange = true; }
-            if (tInter.MarkerExt_Stretch3 != null && t_MarkerExt_Stretch3.objectReferenceValue != tInter.MarkerExt_Stretch3) { bMatChange = true; }
-            if (tInter.MarkerExt_Tiled1 != null && t_MarkerExt_Tiled1.objectReferenceValue != tInter.MarkerExt_Tiled1) { bMatChange = true; }
-            if (tInter.MarkerExt_Tiled2 != null && t_MarkerExt_Tiled2.objectReferenceValue != tInter.MarkerExt_Tiled2) { bMatChange = true; }
-            if (tInter.MarkerExt_Tiled3 != null && t_MarkerExt_Tiled3.objectReferenceValue != tInter.MarkerExt_Tiled3) { bMatChange = true; }
-            if (tInter.Lane0Mat1 != null && t_Lane0Mat1.objectReferenceValue != tInter.Lane0Mat1) { bMatChange = true; }
-            if (tInter.Lane0Mat2 != null && t_Lane0Mat2.objectReferenceValue != tInter.Lane0Mat2) { bMatChange = true; }
-            if (tInter.Lane1Mat1 != null && t_Lane1Mat1.objectReferenceValue != tInter.Lane1Mat1) { bMatChange = true; }
-            if (tInter.Lane1Mat2 != null && t_Lane1Mat2.objectReferenceValue != tInter.Lane1Mat2) { bMatChange = true; }
-            if (tInter.Lane2Mat1 != null && t_Lane2Mat1.objectReferenceValue != tInter.Lane2Mat1) { bMatChange = true; }
-            if (tInter.Lane2Mat2 != null && t_Lane2Mat2.objectReferenceValue != tInter.Lane2Mat2) { bMatChange = true; }
-            if (tInter.Lane3Mat1 != null && t_Lane3Mat1.objectReferenceValue != tInter.Lane3Mat1) { bMatChange = true; }
-            if (tInter.Lane3Mat2 != null && t_Lane3Mat2.objectReferenceValue != tInter.Lane3Mat2) { bMatChange = true; }
+            if (tInter.MarkerCenter1 != null && t_MarkerCenter1.objectReferenceValue != tInter.MarkerCenter1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerCenter2 != null && t_MarkerCenter2.objectReferenceValue != tInter.MarkerCenter2)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerCenter3 != null && t_MarkerCenter3.objectReferenceValue != tInter.MarkerCenter3)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerExt_Stretch1 != null && t_MarkerExt_Stretch1.objectReferenceValue != tInter.MarkerExt_Stretch1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerExt_Stretch2 != null && t_MarkerExt_Stretch2.objectReferenceValue != tInter.MarkerExt_Stretch2)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerExt_Stretch3 != null && t_MarkerExt_Stretch3.objectReferenceValue != tInter.MarkerExt_Stretch3)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerExt_Tiled1 != null && t_MarkerExt_Tiled1.objectReferenceValue != tInter.MarkerExt_Tiled1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerExt_Tiled2 != null && t_MarkerExt_Tiled2.objectReferenceValue != tInter.MarkerExt_Tiled2)
+            {
+                bMatChange = true;
+            }
+            if (tInter.MarkerExt_Tiled3 != null && t_MarkerExt_Tiled3.objectReferenceValue != tInter.MarkerExt_Tiled3)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane0Mat1 != null && t_Lane0Mat1.objectReferenceValue != tInter.Lane0Mat1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane0Mat2 != null && t_Lane0Mat2.objectReferenceValue != tInter.Lane0Mat2)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane1Mat1 != null && t_Lane1Mat1.objectReferenceValue != tInter.Lane1Mat1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane1Mat2 != null && t_Lane1Mat2.objectReferenceValue != tInter.Lane1Mat2)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane2Mat1 != null && t_Lane2Mat1.objectReferenceValue != tInter.Lane2Mat1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane2Mat2 != null && t_Lane2Mat2.objectReferenceValue != tInter.Lane2Mat2)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane3Mat1 != null && t_Lane3Mat1.objectReferenceValue != tInter.Lane3Mat1)
+            {
+                bMatChange = true;
+            }
+            if (tInter.Lane3Mat2 != null && t_Lane3Mat2.objectReferenceValue != tInter.Lane3Mat2)
+            {
+                bMatChange = true;
+            }
 
 
             //Apply changes:
@@ -861,6 +1044,7 @@ public class GSDRoadIntersectionEditor : Editor
             EditorUtility.SetDirty(tInter);
         }
     }
+
 
     public void OnSceneGUI()
     {
@@ -937,12 +1121,19 @@ public class GSDRoadIntersectionEditor : Editor
         {
             //Do nothing	
         }
-        if (GUI.changed) { EditorUtility.SetDirty(tInter); }
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(tInter);
+        }
     }
+
 
     private void TriggerRoadUpdate(bool bForce = false)
     {
-        if (!bForce && !tInter.opt_AutoUpdateIntersections) { return; }
+        if (!bForce && !tInter.opt_AutoUpdateIntersections)
+        {
+            return;
+        }
 
         if (tInter != null && tInter.Node1 != null && tInter.Node2 != null)
         {
@@ -958,25 +1149,26 @@ public class GSDRoadIntersectionEditor : Editor
         }
     }
 
-    void Init()
+
+    private void Init()
     {
         EditorStyles.label.wordWrap = true;
         bHasInit = true;
         if (btnRefreshText == null)
         {
-            btnRefreshText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
         if (btnDeleteText == null)
         {
-            btnDeleteText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            btnDeleteText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
         if (LoadBtnBG == null)
         {
-            LoadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
         }
 
         if (GSDImageButton == null)
@@ -1002,7 +1194,8 @@ public class GSDRoadIntersectionEditor : Editor
         }
     }
 
-    void DoDefaultHelpMat()
+
+    private void DoDefaultHelpMat()
     {
         GUILayout.Space(4f);
         EditorGUILayout.BeginHorizontal();
@@ -1014,7 +1207,8 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 
-    void DoDeleteHelpMat()
+
+    private void DoDeleteHelpMat()
     {
         GUILayout.Space(4f);
         EditorGUILayout.BeginHorizontal();
@@ -1026,7 +1220,8 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 
-    void Line()
+
+    private void Line()
     {
         GUILayout.Space(4f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1)); //Horizontal bar

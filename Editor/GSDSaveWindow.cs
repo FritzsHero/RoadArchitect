@@ -1,11 +1,13 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GSD;
+//using System.Collections;                         // Unused
+//using System.Collections.Generic;             // Unused
 #endregion
+
+
 public class GSDSaveWindow : EditorWindow
 {
     public enum WindowTypeEnum
@@ -14,33 +16,34 @@ public class GSDSaveWindow : EditorWindow
         Edge,
         BridgeWizard
     };
-    WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
+    private WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
 
-    Texture2D temp2D = null;
-    Texture2D temp2D_2 = null;
-    string ThumbString = "";
-    string Desc = "";
-    string tFilename = "DefaultName";
-    string tDisplayName = "DefaultName";
-    string tDisplayName2 = "";
-    string TitleText = "";
-    //	string tPath = "";
-    bool bFileExists = false;
-    bool bIsBridge = false;
-    //	bool bIsDefault = false;
+    private Texture2D temp2D = null;
+    private Texture2D temp2D_2 = null;
+    private string ThumbString = "";
+    private string Desc = "";
+    private string tFilename = "DefaultName";
+    private string tDisplayName = "DefaultName";
+    private string tDisplayName2 = "";
+    private string TitleText = "";
+    //	private string tPath = "";
+    private bool bFileExists = false;
+    private bool bIsBridge = false;
+    //	private bool bIsDefault = false;
 
-    GSD.Roads.Splination.SplinatedMeshMaker[] tSMMs = null;
-    GSD.Roads.EdgeObjects.EdgeObjectMaker[] tEOMs = null;
-    const int titleLabelHeight = 20;
+    private GSD.Roads.Splination.SplinatedMeshMaker[] tSMMs = null;
+    private GSD.Roads.EdgeObjects.EdgeObjectMaker[] tEOMs = null;
+    private const int titleLabelHeight = 20;
 
-    string xPath = "";
+    private string xPath = "";
 
-    void OnGUI()
+
+    private void OnGUI()
     {
         GUILayout.Space(4f);
         EditorGUILayout.LabelField(TitleText, EditorStyles.boldLabel);
 
-        temp2D_2 = (Texture2D)EditorGUILayout.ObjectField("Square thumb (optional):", temp2D, typeof(Texture2D), false);
+        temp2D_2 = (Texture2D) EditorGUILayout.ObjectField("Square thumb (optional):", temp2D, typeof(Texture2D), false);
         if (temp2D_2 != temp2D)
         {
             temp2D = temp2D_2;
@@ -157,7 +160,8 @@ public class GSDSaveWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
-    void DoExtrusion()
+
+    private void DoExtrusion()
     {
         if (GUILayout.Button("Save extrusion"))
         {
@@ -171,7 +175,8 @@ public class GSDSaveWindow : EditorWindow
         }
     }
 
-    void DoEdgeObject()
+
+    private void DoEdgeObject()
     {
         if (GUILayout.Button("Save edge object"))
         {
@@ -185,7 +190,8 @@ public class GSDSaveWindow : EditorWindow
         }
     }
 
-    void DoBridge()
+
+    private void DoBridge()
     {
         if (GUILayout.Button("Save group"))
         {
@@ -203,7 +209,8 @@ public class GSDSaveWindow : EditorWindow
         }
     }
 
-    void SanitizeFilename()
+
+    private void SanitizeFilename()
     {
         Regex rgx = new Regex("[^a-zA-Z0-9 -]");
         tFilename = rgx.Replace(tDisplayName, "");
@@ -211,18 +218,31 @@ public class GSDSaveWindow : EditorWindow
         tFilename = tFilename.Replace("_", "-");
     }
 
+
     #region "Init"
     public void Initialize(ref Rect tRect, WindowTypeEnum _tWindowType, GSDSplineN tNode, GSD.Roads.Splination.SplinatedMeshMaker SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null)
     {
         int Rheight = 300;
         int Rwidth = 360;
-        float Rx = ((float)tRect.width / 2f) - ((float)Rwidth / 2f) + tRect.x;
-        float Ry = ((float)tRect.height / 2f) - ((float)Rheight / 2f) + tRect.y;
+        float Rx = ((float) tRect.width / 2f) - ((float) Rwidth / 2f) + tRect.x;
+        float Ry = ((float) tRect.height / 2f) - ((float) Rheight / 2f) + tRect.y;
 
-        if (Rx < 0) { Rx = tRect.x; }
-        if (Ry < 0) { Ry = tRect.y; }
-        if (Rx > (tRect.width + tRect.x)) { Rx = tRect.x; }
-        if (Ry > (tRect.height + tRect.y)) { Ry = tRect.y; }
+        if (Rx < 0)
+        {
+            Rx = tRect.x;
+        }
+        if (Ry < 0)
+        {
+            Ry = tRect.y;
+        }
+        if (Rx > (tRect.width + tRect.x))
+        {
+            Rx = tRect.x;
+        }
+        if (Ry > (tRect.height + tRect.y))
+        {
+            Ry = tRect.y;
+        }
 
         Rect fRect = new Rect(Rx, Ry, Rwidth, Rheight);
 

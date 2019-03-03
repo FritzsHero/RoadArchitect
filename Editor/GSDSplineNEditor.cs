@@ -1,44 +1,48 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 using GSD;
-[CustomEditor(typeof(GSDSplineN))]
+//using System.Collections;                     // Unused
 #endregion
+
 
 //=====================================================
 //==   NOTE THAT CUSTOM SERIALIZATION IS USED HERE   ==
 //==     SOLELY TO COMPLY WITH UNDO REQUIREMENTS 	 ==
 //=====================================================
 
+[CustomEditor(typeof(GSDSplineN))]
 public class GSDSplineNEditor : Editor
 {
     #region "Vars"
-    protected GSDSplineN tNode { get { return (GSDSplineN)target; } }
-    const string tOnlineHelpDesc = "Visit the online manual for the most effective help.";
-    bool bMouseDragHasProcessed = true;
-    int eCount = -1;
-    int currentCount = 0;
+    protected GSDSplineN tNode { get { return (GSDSplineN) target; } }
+    private const string tOnlineHelpDesc = "Visit the online manual for the most effective help.";
+    private bool bMouseDragHasProcessed = true;
+    private int eCount = -1;
+    private int currentCount = 0;
     public bool bSplinatedObjectHelp = false;
     public bool bEdgeObjectHelp = false;
-    bool bRemoveAll = false;
-    float HorizRoadMax = 0;
+    private bool bRemoveAll = false;
+    private float HorizRoadMax = 0;
 
-    //Button icons:
-    Texture btnDeleteText = null;
-    Texture btnCopyText = null;
-    Texture btnSaveText = null;
-    Texture btnLoadText = null;
-    Texture btnExtrudeText = null;
-    Texture btnEdgeText = null;
-    Texture btnHelpText = null;
-    Texture btnRefreshText = null;
-    Texture btnDefaultText = null;
-    Texture2D LoadBtnBG = null;
-    Texture2D GSDTextAreaBG = null;
-    Texture2D LoadBtnBGGlow = null;
-    Texture2D ManualBG = null;
+
+    #region Button icons:
+    private Texture btnDeleteText = null;
+    private Texture btnCopyText = null;
+    private Texture btnSaveText = null;
+    private Texture btnLoadText = null;
+    private Texture btnExtrudeText = null;
+    private Texture btnEdgeText = null;
+    private Texture btnHelpText = null;
+    private Texture btnRefreshText = null;
+    private Texture btnDefaultText = null;
+    private Texture2D LoadBtnBG = null;
+    private Texture2D GSDTextAreaBG = null;
+    private Texture2D LoadBtnBGGlow = null;
+    private Texture2D ManualBG = null;
+    #endregion
+
 
     public bool bLoadingEOS = false;
     public int LoadingEOSIndex = 0;
@@ -51,16 +55,15 @@ public class GSDSplineNEditor : Editor
     public List<string> LoadingEOMPaths = null;
 
     //Checkers:
-    //	float ChangeChecker = -1f;
-    //	bool bChangeChecker = false;
-    //	Vector3 vChangeChecker = default(Vector3);
-    //	GameObject tObj = null;
-    //	Material tMat = null;
-    GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
+    //	private float ChangeChecker = -1f;
+    //	private bool bChangeChecker = false;
+    //	private Vector3 vChangeChecker = default(Vector3);
+    //	private GameObject tObj = null;
+    //	private Material tMat = null;
+    private GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
 
 
-
-
+    #region "Enums"
     public enum EndObjectsDefaultsEnum
     {
         None,
@@ -74,7 +77,10 @@ public class GSDSplineNEditor : Editor
         Barrel7_Static,
         Barrel7_Rigid
     };
-    EndObjectsDefaultsEnum tEndObjectAdd = EndObjectsDefaultsEnum.None;
+
+
+    private EndObjectsDefaultsEnum tEndObjectAdd = EndObjectsDefaultsEnum.None;
+
 
     private static string[] EndObjectsDefaultsEnumDesc = new string[]{
         "Quick add",
@@ -89,6 +95,7 @@ public class GSDSplineNEditor : Editor
         "7 Sand barrels Rigid"
     };
 
+
     public enum SMMDefaultsEnum
     {
         None, Custom,
@@ -102,7 +109,10 @@ public class GSDSplineNEditor : Editor
         RailingBase05m,
         RailingBase1m
     };
-    SMMDefaultsEnum tSMMQuickAdd = SMMDefaultsEnum.None;
+
+
+    private SMMDefaultsEnum tSMMQuickAdd = SMMDefaultsEnum.None;
+
 
     public enum BridgeTopBaseDefaultsEnum
     {
@@ -112,7 +122,10 @@ public class GSDSplineNEditor : Editor
         Base2MOver,
         Base3MDeep,
     };
-    BridgeTopBaseDefaultsEnum tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
+
+
+    private BridgeTopBaseDefaultsEnum tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
+
 
     public enum BridgeBottomBaseDefaultsEnum
     {
@@ -127,7 +140,10 @@ public class GSDSplineNEditor : Editor
         BridgeBase4,
         BridgeBase5,
     };
-    BridgeBottomBaseDefaultsEnum tBridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
+
+
+    private BridgeBottomBaseDefaultsEnum tBridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
+
 
     public enum BridgeWizardDefaultsEnum
     {
@@ -159,24 +175,32 @@ public class GSDSplineNEditor : Editor
         MatchRoadRight,
         MatchShoulderRight
     };
-    HorizMatchingDefaultsEnum tHorizMatching = HorizMatchingDefaultsEnum.None;
+
+
+    private HorizMatchingDefaultsEnum tHorizMatching = HorizMatchingDefaultsEnum.None;
+
 
     public enum EOMDefaultsEnum { None, Custom, StreetLightSingle, StreetLightDouble };
+    #endregion
+
 
     //GSD.Roads.Splination.CollisionTypeEnum tCollisionTypeSpline = GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle;
     //GSD.Roads.Splination.RepeatUVTypeEnum tRepeatUVType = GSD.Roads.Splination.RepeatUVTypeEnum.None;
-    GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
+    private GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
+
 
     private static string[] TheAxisDescriptions_Spline = new string[]{
         "X axis",
         "Z axis"
     };
 
+
     private static string[] RepeatUVTypeDescriptions_Spline = new string[]{
         "None",
         "X axis",
         "Y axis"
     };
+
 
     private static string[] TheCollisionTypeEnumDescSpline = new string[]{
         "None",
@@ -186,26 +210,32 @@ public class GSDSplineNEditor : Editor
         "Straight line box collider"
     };
 
+
     private string[] HorizMatchSubTypeDescriptions;
     #endregion
 
-    GUIStyle GSDImageButton = null;
-    GUIStyle GSDLoadButton = null;
-    GUIStyle GSDManualButton = null;
-    GUIStyle GSDUrl = null;
+    private GUIStyle GSDImageButton = null;
+    private GUIStyle GSDLoadButton = null;
+    private GUIStyle GSDManualButton = null;
+    private GUIStyle GSDUrl = null;
 
-    bool bSceneRectSet = false;
-    Rect tSceneRect = default(Rect);
-    bool bHasInit = false;
+    private bool bSceneRectSet = false;
+    private Rect tSceneRect = default(Rect);
+
+    private bool bHasInit = false;
 
     //Buffers:
-    //	bool t_opt_GizmosEnabled = false;
-    bool t_opt_GizmosEnabled = false;
-    bool t_bIsBridgeStart = false;
-    bool t_bIsBridgeEnd = false;
-    bool t_bRoadCut = false;
+    //	private bool t_opt_GizmosEnabled = false;
+    private bool t_opt_GizmosEnabled = false;
 
-    void Init()
+    // Bridge
+    private bool t_bIsBridgeStart = false;
+    private bool t_bIsBridgeEnd = false;
+
+    private bool t_bRoadCut = false;
+
+
+    private void Init()
     {
         bHasInit = true;
         EditorStyles.label.wordWrap = true;
@@ -213,55 +243,55 @@ public class GSDSplineNEditor : Editor
 
         if (btnDeleteText == null)
         {
-            btnDeleteText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            btnDeleteText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
         if (btnCopyText == null)
         {
-            btnCopyText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
+            btnCopyText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
         }
         if (btnLoadText == null)
         {
-            btnLoadText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
+            btnLoadText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
         }
         if (btnSaveText == null)
         {
-            btnSaveText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
+            btnSaveText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
         }
         if (btnExtrudeText == null)
         {
-            btnExtrudeText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
+            btnExtrudeText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
         }
         if (btnEdgeText == null)
         {
-            btnEdgeText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
+            btnEdgeText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
         }
         if (btnHelpText == null)
         {
-            btnHelpText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
+            btnHelpText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
         }
         if (GSDTextAreaBG == null)
         {
-            GSDTextAreaBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
+            GSDTextAreaBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBG == null)
         {
-            LoadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
         }
         if (ManualBG == null)
         {
-            ManualBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
+            ManualBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (btnRefreshText == null)
         {
-            btnRefreshText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
+            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
         }
         if (btnDefaultText == null)
         {
-            btnDefaultText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            btnDefaultText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
 
         if (GSDImageButton == null)
@@ -325,9 +355,12 @@ public class GSDSplineNEditor : Editor
         HorizRoadMax = tNode.GSDSpline.tRoad.RoadWidth() * 20;
     }
 
-    GSDSplineN iNode1 = null;
-    GSDSplineN iNode2 = null;
-    bool bCreateIntersection = false;
+
+    private GSDSplineN iNode1 = null;
+    private GSDSplineN iNode2 = null;
+    private bool bCreateIntersection = false;
+
+
     public override void OnInspectorGUI()
     {
         if (Event.current.type == EventType.ValidateCommand)
@@ -355,20 +388,26 @@ public class GSDSplineNEditor : Editor
         }
 
         //Graphic null checks:
-        if (!bHasInit) { Init(); }
+        if (!bHasInit)
+        {
+            Init();
+        }
 
         Line();
 
+        #region Online Manual on Top of SplineN Scripts
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField(tNode.EditorDisplayString, EditorStyles.boldLabel);
 
         if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(128f)))
         {
-            Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+            Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");        // formerly, which redirect to the master github http://microgsd.com/Support/RoadArchitectManual.aspx
         }
         EditorGUILayout.EndHorizontal();
+        #endregion
 
-        //Option: Gizmo options, Convoluted due to submission compliance for undo rules:
+
+        #region Option: Gizmo options, Convoluted due to submission compliance for undo rules:
         if (tNode.GSDSpline.tRoad.opt_GizmosEnabled != tNode.opt_GizmosEnabled)
         {
             tNode.GSDSpline.tRoad.opt_GizmosEnabled = tNode.opt_GizmosEnabled;
@@ -376,8 +415,10 @@ public class GSDSplineNEditor : Editor
             tNode.GSDSpline.tRoad.Wireframes_Toggle();
         }
         t_opt_GizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", tNode.GSDSpline.tRoad.opt_GizmosEnabled);
+        #endregion
 
-        //Option: Manual road cut:
+
+        #region Option: Manual road cut:
         if (tNode.idOnSpline > 0 && tNode.idOnSpline < (tNode.GSDSpline.GetNodeCount() - 1) && !tNode.bIsIntersection && !tNode.bSpecialEndNode)
         { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
             if (tNode.GSDSpline.tRoad.opt_bDynamicCuts)
@@ -387,6 +428,8 @@ public class GSDSplineNEditor : Editor
             }
             Line();
         }
+        #endregion
+
 
         //Option: Bridge options
         bool bDidBridge = false;
@@ -410,6 +453,8 @@ public class GSDSplineNEditor : Editor
                 Line();
             }
         }
+
+
 
         if ((Selection.objects.Length == 1 && Selection.objects[0] is GSDSplineN) || (tNode.SpecialNodeCounterpart == null && !tNode.bSpecialRoadConnPrimary))
         {
@@ -521,14 +566,17 @@ public class GSDSplineNEditor : Editor
         }
     }
 
-    void OnSelectionChanged()
+
+    private void OnSelectionChanged()
     {
         Repaint();
     }
 
+
     //GUIStyle SectionBG;
 
-    void DoExtAndEdgeOverview()
+
+    private void DoExtAndEdgeOverview()
     {
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Extrusion & edge objects", EditorStyles.boldLabel);
@@ -566,8 +614,14 @@ public class GSDSplineNEditor : Editor
         if (GUILayout.Button("Open Wizard", GSDLoadButton, GUILayout.Width(128f)))
         {// || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
             GSDWizard tWiz = EditorWindow.GetWindow<GSDWizard>();
-            if (tSceneRect.x < 0) { tSceneRect.x = 0f; }
-            if (tSceneRect.y < 0) { tSceneRect.y = 0f; }
+            if (tSceneRect.x < 0)
+            {
+                tSceneRect.x = 0f;
+            }
+            if (tSceneRect.y < 0)
+            {
+                tSceneRect.y = 0f;
+            }
             tWiz.xRect = tSceneRect;
             if (tNode.bIsBridgeStart)
             {
@@ -585,7 +639,8 @@ public class GSDSplineNEditor : Editor
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnExtrudeText, GSDImageButton, GUILayout.Width(32f))) { }
+            if (GUILayout.Button(btnExtrudeText, GSDImageButton, GUILayout.Width(32f)))
+            { }
             EditorGUILayout.LabelField("= Extrusion objects", EditorStyles.miniLabel);
             EditorGUILayout.LabelField("");
             EditorGUILayout.EndHorizontal();
@@ -594,7 +649,8 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnEdgeText, GSDImageButton, GUILayout.Width(32f))) { }
+            if (GUILayout.Button(btnEdgeText, GSDImageButton, GUILayout.Width(32f)))
+            { }
             EditorGUILayout.LabelField("= Edge objects", EditorStyles.miniLabel);
             EditorGUILayout.LabelField("");
             EditorGUILayout.EndHorizontal();
@@ -603,35 +659,40 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnSaveText, GSDImageButton, GUILayout.Width(16f))) { }
+            if (GUILayout.Button(btnSaveText, GSDImageButton, GUILayout.Width(16f)))
+            { }
             EditorGUILayout.LabelField("= Saves object config to library for use on other nodes.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnCopyText, GSDImageButton, GUILayout.Width(16f))) { }
+            if (GUILayout.Button(btnCopyText, GSDImageButton, GUILayout.Width(16f)))
+            { }
             EditorGUILayout.LabelField("= Duplicates object onto current node.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f))) { }
+            if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            { }
             EditorGUILayout.LabelField("= Deletes object.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f))) { }
+            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+            { }
             EditorGUILayout.LabelField("= Refreshes object.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f))) { }
+            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            { }
             EditorGUILayout.LabelField("= Resets setting(s) to default.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
@@ -686,7 +747,8 @@ public class GSDSplineNEditor : Editor
         Line();
     }
 
-    void DoStats()
+
+    private void DoStats()
     {
         EditorGUILayout.LabelField("Statistics:");
         EditorGUILayout.BeginVertical("box");
@@ -707,20 +769,30 @@ public class GSDSplineNEditor : Editor
         EditorGUILayout.SelectableLabel("UID: " + tNode.UID);
     }
 
+
     public void DoSplineObjects()
     {
-        if (!tNode.CanSplinate()) { return; }
-        if (tNode.SplinatedObjects == null) { tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>(); }
+        if (!tNode.CanSplinate())
+        {
+            return;
+        }
+        if (tNode.SplinatedObjects == null)
+        {
+            tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+        }
         eCount = tNode.SplinatedObjects.Count;
 
         SMM = null;
         eCount = tNode.SplinatedObjects.Count;
-        if (eCount == 0) { }
+        if (eCount == 0)
+        {
 
-        for (int i = 0; i < tNode.SplinatedObjects.Count; i++)
+        }
+
+        for (int index = 0; index < tNode.SplinatedObjects.Count; index++)
         {
             currentCount += 1;
-            SMM = tNode.SplinatedObjects[i];
+            SMM = tNode.SplinatedObjects[index];
             if (SMM.EM == null)
             {
                 SMM.EM = new GSD.Roads.Splination.SplinatedMeshMaker.SplinatedMeshEditorMaker();
@@ -731,7 +803,10 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("TextArea");
 
-            if (SMM.bNeedsUpdate) { SMM.Setup(true); }
+            if (SMM.bNeedsUpdate)
+            {
+                SMM.Setup(true);
+            }
 
 
             EditorGUILayout.BeginHorizontal();
@@ -761,18 +836,22 @@ public class GSDSplineNEditor : Editor
             if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
                 Undo.RecordObject(tNode, "Delete");
-                tNode.RemoveSplinatedObject(i);
+                tNode.RemoveSplinatedObject(index);
                 EditorUtility.SetDirty(tNode);
             }
             EditorGUILayout.EndHorizontal();
-            if (!SMM.bToggle) { EditorGUILayout.EndVertical(); continue; }
+            if (!SMM.bToggle)
+            {
+                EditorGUILayout.EndVertical();
+                continue;
+            }
 
             GUILayout.Space(8f);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("General options:");
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
             {
-                Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+                Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
             }
             EditorGUILayout.EndHorizontal();
 
@@ -782,10 +861,10 @@ public class GSDSplineNEditor : Editor
             SMM.EM.tName = EditorGUILayout.TextField("Name:", SMM.tName);
 
             //Game object (prefab):
-            SMM.EM.CurrentSplination = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.CurrentSplination, typeof(GameObject), false);
+            SMM.EM.CurrentSplination = (GameObject) EditorGUILayout.ObjectField("Prefab:", SMM.CurrentSplination, typeof(GameObject), false);
 
             //Game object (prefab start cap):
-            SMM.EM.CurrentSplinationCap1 = (GameObject)EditorGUILayout.ObjectField("Prefab start cap:", SMM.CurrentSplinationCap1, typeof(GameObject), false);
+            SMM.EM.CurrentSplinationCap1 = (GameObject) EditorGUILayout.ObjectField("Prefab start cap:", SMM.CurrentSplinationCap1, typeof(GameObject), false);
             //Prefab start cap height offset:
             if (SMM.CurrentSplinationCap1 != null)
             {
@@ -793,7 +872,7 @@ public class GSDSplineNEditor : Editor
             }
 
             //Game object (prefab end cap):
-            SMM.EM.CurrentSplinationCap2 = (GameObject)EditorGUILayout.ObjectField("Prefab end cap:", SMM.CurrentSplinationCap2, typeof(GameObject), false);
+            SMM.EM.CurrentSplinationCap2 = (GameObject) EditorGUILayout.ObjectField("Prefab end cap:", SMM.CurrentSplinationCap2, typeof(GameObject), false);
             //Prefab end cap height offset:
             if (SMM.CurrentSplinationCap2 != null)
             {
@@ -804,24 +883,35 @@ public class GSDSplineNEditor : Editor
             SMM.EM.bMaterialOverride = EditorGUILayout.Toggle("Material override: ", SMM.bMaterialOverride);
             if (SMM.bMaterialOverride)
             {
-                SMM.EM.SplinatedMaterial1 = (Material)EditorGUILayout.ObjectField("Override mat #1: ", SMM.SplinatedMaterial1, typeof(Material), false);
-                SMM.EM.SplinatedMaterial2 = (Material)EditorGUILayout.ObjectField("Override mat #2: ", SMM.SplinatedMaterial2, typeof(Material), false);
+                SMM.EM.SplinatedMaterial1 = (Material) EditorGUILayout.ObjectField("Override mat #1: ", SMM.SplinatedMaterial1, typeof(Material), false);
+                SMM.EM.SplinatedMaterial2 = (Material) EditorGUILayout.ObjectField("Override mat #2: ", SMM.SplinatedMaterial2, typeof(Material), false);
             }
 
             //Axis:
-            SMM.EM.Axis = (GSD.Roads.Splination.AxisTypeEnum)EditorGUILayout.Popup("Extrusion axis: ", (int)SMM.Axis, TheAxisDescriptions_Spline, GUILayout.Width(250f));
+            SMM.EM.Axis = (GSD.Roads.Splination.AxisTypeEnum) EditorGUILayout.Popup("Extrusion axis: ", (int) SMM.Axis, TheAxisDescriptions_Spline, GUILayout.Width(250f));
 
             //Start time:
-            if (SMM.StartTime < tNode.MinSplination) { SMM.StartTime = tNode.MinSplination; }
-            if (SMM.EndTime > tNode.MaxSplination) { SMM.EndTime = tNode.MaxSplination; }
+            if (SMM.StartTime < tNode.MinSplination)
+            {
+                SMM.StartTime = tNode.MinSplination;
+            }
+            if (SMM.EndTime > tNode.MaxSplination)
+            {
+                SMM.EndTime = tNode.MaxSplination;
+            }
             EditorGUILayout.BeginHorizontal();
+
             SMM.EM.StartTime = EditorGUILayout.Slider("Start param: ", SMM.StartTime, tNode.MinSplination, tNode.MaxSplination - 0.01f);
             if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
             {
                 SMM.EM.StartTime = tNode.tTime;
             }
-            if (SMM.EM.StartTime >= SMM.EM.EndTime) { SMM.EM.EndTime = (SMM.EM.StartTime + 0.01f); }
+            if (SMM.EM.StartTime >= SMM.EM.EndTime)
+            {
+                SMM.EM.EndTime = (SMM.EM.StartTime + 0.01f);
+            }
             EditorGUILayout.EndHorizontal();
+
 
             //End time:
             EditorGUILayout.BeginHorizontal();
@@ -830,8 +920,12 @@ public class GSDSplineNEditor : Editor
             {
                 SMM.EM.EndTime = tNode.NextTime;
             }
-            if (SMM.EM.StartTime >= SMM.EM.EndTime) { SMM.EM.EndTime = (SMM.EM.StartTime + 0.01f); }
+            if (SMM.EM.StartTime >= SMM.EM.EndTime)
+            {
+                SMM.EM.EndTime = (SMM.EM.StartTime + 0.01f);
+            }
             EditorGUILayout.EndHorizontal();
+
 
             //Straight line options:
             if (tNode.IsStraight())
@@ -849,7 +943,7 @@ public class GSDSplineNEditor : Editor
                     SMM.EM.Stretch_UVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.Stretch_UVThreshold, 0.01f, 0.5f);
 
                     //UV repeats:
-                    SMM.EM.RepeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV stretch axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
+                    SMM.EM.RepeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV stretch axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
                     EditorGUILayout.EndVertical();
                 }
             }
@@ -859,11 +953,15 @@ public class GSDSplineNEditor : Editor
             }
 
 
+
             SMM.EM.bTrimStart = EditorGUILayout.Toggle("Trim start:", SMM.bTrimStart);
             SMM.EM.bTrimEnd = EditorGUILayout.Toggle("Trim end:", SMM.bTrimEnd);
 
+
+
             //Static option:
             SMM.EM.bStatic = EditorGUILayout.Toggle("Static: ", SMM.bStatic);
+
 
             //Splination method
             //			SMM.EM.bMatchRoadIncrements = EditorGUILayout.Toggle("Match road increments: ",SMM.bMatchRoadIncrements); 
@@ -890,7 +988,7 @@ public class GSDSplineNEditor : Editor
             //UV repeats:
             if (!SMM.bIsStretch)
             {
-                SMM.EM.RepeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV repeat axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
+                SMM.EM.RepeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV repeat axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
             }
 
             if (SMM.bMatchRoadDefinition)
@@ -925,7 +1023,8 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.EndVertical();
 
-            //Vertical offset:
+
+            #region Vertical offset:
             EditorGUILayout.LabelField("Vertical options:");
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
@@ -935,9 +1034,12 @@ public class GSDSplineNEditor : Editor
                 SMM.EM.VerticalRaise = 0f;
             }
             EditorGUILayout.EndHorizontal();
+            #endregion
 
-            //Vertical curve:
-            if (SMM.VerticalCurve == null || SMM.VerticalCurve.keys.Length < 2) { EnforceCurve(ref SMM.VerticalCurve); }
+
+            #region Vertical curve:
+            if (SMM.VerticalCurve == null || SMM.VerticalCurve.keys.Length < 2)
+            { EnforceCurve(ref SMM.VerticalCurve); }
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VerticalCurve = EditorGUILayout.CurveField("Curve: ", SMM.VerticalCurve);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
@@ -945,14 +1047,16 @@ public class GSDSplineNEditor : Editor
                 ResetCurve(ref SMM.EM.VerticalCurve);
             }
             EditorGUILayout.EndHorizontal();
+            #endregion
             EditorGUILayout.EndVertical();
 
-            //Horizontal offsets:
+
+            #region Horizontal offsets:
             SMM.EM.HorizontalSep = SMM.HorizontalSep;
             EditorGUILayout.LabelField("Horizontal offset options:");
             EditorGUILayout.BeginVertical("box");
             tHorizMatching = HorizMatchingDefaultsEnum.None;
-            tHorizMatching = (HorizMatchingDefaultsEnum)EditorGUILayout.Popup((int)tHorizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
+            tHorizMatching = (HorizMatchingDefaultsEnum) EditorGUILayout.Popup((int) tHorizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
             if (tHorizMatching != HorizMatchingDefaultsEnum.None)
             {
                 if (tHorizMatching == HorizMatchingDefaultsEnum.MatchCenter)
@@ -984,9 +1088,14 @@ public class GSDSplineNEditor : Editor
                 SMM.EM.HorizontalSep = 0f;
             }
             EditorGUILayout.EndHorizontal();
+            #endregion
+
 
             //Horizontal curve:
-            if (SMM.HorizontalCurve == null || SMM.HorizontalCurve.keys.Length < 2) { EnforceCurve(ref SMM.HorizontalCurve); }
+            if (SMM.HorizontalCurve == null || SMM.HorizontalCurve.keys.Length < 2)
+            {
+                EnforceCurve(ref SMM.HorizontalCurve);
+            }
 
             EditorGUILayout.BeginHorizontal();
             SMM.EM.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", SMM.HorizontalCurve);
@@ -1047,7 +1156,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Start object:");
-            tEndObjectAdd = (EndObjectsDefaultsEnum)EditorGUILayout.Popup((int)tEndObjectAdd, EndObjectsDefaultsEnumDesc);
+            tEndObjectAdd = (EndObjectsDefaultsEnum) EditorGUILayout.Popup((int) tEndObjectAdd, EndObjectsDefaultsEnumDesc);
             if (tEndObjectAdd != EndObjectsDefaultsEnum.None)
             {
                 SMM.EM.EndCapStart = GetEndObjectQuickAdd();
@@ -1056,7 +1165,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.EndHorizontal();
 
 
-            SMM.EM.EndCapStart = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.EndCapStart, typeof(GameObject), false);
+            SMM.EM.EndCapStart = (GameObject) EditorGUILayout.ObjectField("Prefab:", SMM.EndCapStart, typeof(GameObject), false);
             if (SMM.EndCapStart != null)
             {
                 SMM.EM.EndCapCustomOffsetStart = EditorGUILayout.Vector3Field("Position offset:", SMM.EndCapCustomOffsetStart);
@@ -1068,7 +1177,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("End object:");
-            tEndObjectAdd = (EndObjectsDefaultsEnum)EditorGUILayout.Popup((int)tEndObjectAdd, EndObjectsDefaultsEnumDesc);
+            tEndObjectAdd = (EndObjectsDefaultsEnum) EditorGUILayout.Popup((int) tEndObjectAdd, EndObjectsDefaultsEnumDesc);
             if (tEndObjectAdd != EndObjectsDefaultsEnum.None)
             {
                 SMM.EM.EndCapEnd = GetEndObjectQuickAdd();
@@ -1078,7 +1187,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.EndHorizontal();
 
 
-            SMM.EM.EndCapEnd = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.EndCapEnd, typeof(GameObject), false);
+            SMM.EM.EndCapEnd = (GameObject) EditorGUILayout.ObjectField("Prefab:", SMM.EndCapEnd, typeof(GameObject), false);
             if (SMM.EndCapEnd != null)
             {
                 SMM.EM.EndCapCustomOffsetEnd = EditorGUILayout.Vector3Field("Position offset:", SMM.EndCapCustomOffsetEnd);
@@ -1091,7 +1200,7 @@ public class GSDSplineNEditor : Editor
             //Collision:
             EditorGUILayout.LabelField("Collision options:");
             EditorGUILayout.BeginVertical("box");
-            SMM.EM.CollisionType = (GSD.Roads.Splination.CollisionTypeEnum)EditorGUILayout.Popup("Collision type: ", (int)SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
+            SMM.EM.CollisionType = (GSD.Roads.Splination.CollisionTypeEnum) EditorGUILayout.Popup("Collision type: ", (int) SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
             //Mesh collison convex option
             if (SMM.CollisionType != GSD.Roads.Splination.CollisionTypeEnum.None && SMM.CollisionType != GSD.Roads.Splination.CollisionTypeEnum.BoxCollision)
             {
@@ -1201,14 +1310,21 @@ public class GSDSplineNEditor : Editor
         }
     }
 
+
     public void UpdateSplineObjects()
     {
-        if (!tNode.CanSplinate()) { return; }
-        if (tNode.SplinatedObjects == null) { tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>(); }
-        eCount = tNode.SplinatedObjects.Count;
-        for (int i = 0; i < eCount; i++)
+        if (!tNode.CanSplinate())
         {
-            SMM = tNode.SplinatedObjects[i];
+            return;
+        }
+        if (tNode.SplinatedObjects == null)
+        {
+            tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+        }
+        eCount = tNode.SplinatedObjects.Count;
+        for (int index = 0; index < eCount; index++)
+        {
+            SMM = tNode.SplinatedObjects[index];
             if (SMM.EM != null)
             {
                 if (!SMM.EM.IsEqualToSMM(SMM))
@@ -1239,22 +1355,29 @@ public class GSDSplineNEditor : Editor
         }
     }
 
+
     public void UpdateSplineObjects_OnUndo()
     {
-        if (!tNode.CanSplinate()) { return; }
-        if (tNode.SplinatedObjects == null) { tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>(); }
+        if (!tNode.CanSplinate())
+        {
+            return;
+        }
+        if (tNode.SplinatedObjects == null)
+        {
+            tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+        }
 
         //Destroy all children:
-        for (int i = tNode.transform.childCount - 1; i >= 0; i--)
+        for (int index = tNode.transform.childCount - 1; index >= 0; index--)
         {
-            Object.DestroyImmediate(tNode.transform.GetChild(i).gameObject);
+            Object.DestroyImmediate(tNode.transform.GetChild(index).gameObject);
         }
 
         //Re-setup the SMM:
         eCount = tNode.SplinatedObjects.Count;
-        for (int i = 0; i < eCount; i++)
+        for (int index = 0; index < eCount; index++)
         {
-            SMM = tNode.SplinatedObjects[i];
+            SMM = tNode.SplinatedObjects[index];
             SMM.UpdatePositions();
             //if(SMM.bIsStretch != SMM.bIsStretch){ 
             if (SMM.bIsStretch)
@@ -1276,9 +1399,13 @@ public class GSDSplineNEditor : Editor
         UpdateEdgeObjects_OnUndo();
     }
 
+
     public void DoEdgeObjects()
     {
-        if (!tNode.CanSplinate()) { return; }
+        if (!tNode.CanSplinate())
+        {
+            return;
+        }
 
         if (tNode.EdgeObjects == null)
         {
@@ -1288,9 +1415,9 @@ public class GSDSplineNEditor : Editor
 
         EOM = null;
 
-        for (int i = 0; i < tNode.EdgeObjects.Count; i++)
+        for (int index = 0; index < tNode.EdgeObjects.Count; index++)
         {
-            EOM = tNode.EdgeObjects[i];
+            EOM = tNode.EdgeObjects[index];
             if (EOM.EM == null)
             {
                 EOM.EM = new GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
@@ -1301,7 +1428,10 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("TextArea");
 
 
-            if (EOM.bNeedsUpdate) { EOM.Setup(); }
+            if (EOM.bNeedsUpdate)
+            {
+                EOM.Setup();
+            }
             EOM.bNeedsUpdate = false;
 
             EditorGUILayout.BeginHorizontal();
@@ -1325,25 +1455,29 @@ public class GSDSplineNEditor : Editor
             if (GUILayout.Button(btnCopyText, GSDImageButton, GUILayout.Width(16f)))
             {
                 Undo.RecordObject(tNode, "Copy");
-                tNode.CopyEdgeObject(i);
+                tNode.CopyEdgeObject(index);
                 EditorUtility.SetDirty(tNode);
             }
             if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
                 Undo.RecordObject(tNode, "Delete");
-                tNode.RemoveEdgeObject(i);
+                tNode.RemoveEdgeObject(index);
                 EditorUtility.SetDirty(tNode);
             }
             EditorGUILayout.EndHorizontal();
 
-            if (!EOM.bToggle) { EditorGUILayout.EndVertical(); continue; }
+            if (!EOM.bToggle)
+            {
+                EditorGUILayout.EndVertical();
+                continue;
+            }
 
             GUILayout.Space(8f);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("General options:");
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
             {
-                Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+                Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
             }
             EditorGUILayout.EndHorizontal();
 
@@ -1352,14 +1486,15 @@ public class GSDSplineNEditor : Editor
             EOM.EM.tName = EditorGUILayout.TextField("Name: ", EOM.tName);
 
             //Edge object:
-            EOM.EM.EdgeObject = (GameObject)EditorGUILayout.ObjectField("Edge object: ", EOM.EdgeObject, typeof(GameObject), false);
+            EOM.EM.EdgeObject = (GameObject) EditorGUILayout.ObjectField("Edge object: ", EOM.EdgeObject, typeof(GameObject), false);
             if (EOM.EM.EdgeObject != EOM.EdgeObject)
             {
                 EOM.bEdgeSignLabelInit = false;
                 EOM.bEdgeSignLabel = false;
             }
 
-            //Material override:
+
+            #region Material override:
             EOM.EM.bMaterialOverride = EditorGUILayout.Toggle("Material override: ", EOM.bMaterialOverride);
             if (!EOM.bMaterialOverride)
             {
@@ -1440,10 +1575,13 @@ public class GSDSplineNEditor : Editor
                     EditorGUILayout.TextField("Material search term: ", EOM.EdgeSignLabel);
                 }
 
-                EOM.EM.EdgeMaterial1 = (Material)EditorGUILayout.ObjectField("Override mat #1: ", EOM.EdgeMaterial1, typeof(Material), false);
-                EOM.EM.EdgeMaterial2 = (Material)EditorGUILayout.ObjectField("Override mat #2: ", EOM.EdgeMaterial2, typeof(Material), false);
+                EOM.EM.EdgeMaterial1 = (Material) EditorGUILayout.ObjectField("Override mat #1: ", EOM.EdgeMaterial1, typeof(Material), false);
+                EOM.EM.EdgeMaterial2 = (Material) EditorGUILayout.ObjectField("Override mat #2: ", EOM.EdgeMaterial2, typeof(Material), false);
             }
+            #endregion
 
+
+            #region Combine Mesh / MeshCollider
             if (EOM.bSingle)
             {
                 EOM.EM.bCombineMesh = false;
@@ -1457,7 +1595,10 @@ public class GSDSplineNEditor : Editor
                     EOM.EM.bCombineMeshCollider = EditorGUILayout.Toggle("Combined mesh collider: ", EOM.bCombineMeshCollider);
                 }
             }
+            #endregion
 
+
+            #region SingleObject
             EOM.EM.bSingle = EditorGUILayout.Toggle("Single object only: ", EOM.bSingle);
             if (EOM.EM.bSingle != EOM.bSingle)
             {
@@ -1485,8 +1626,12 @@ public class GSDSplineNEditor : Editor
                     }
                 }
             }
+            #endregion
+
 
             EOM.EM.bStatic = EditorGUILayout.Toggle("Static: ", EOM.bStatic);
+
+
             EOM.EM.bMatchTerrain = EditorGUILayout.Toggle("Match ground height: ", EOM.bMatchTerrain);
 
             if (!EOM.bSingle)
@@ -1494,6 +1639,8 @@ public class GSDSplineNEditor : Editor
                 EOM.EM.MeterSep = EditorGUILayout.Slider("Dist between objects: ", EOM.MeterSep, 1f, 256f);
             }
 
+
+            #region Match Road
             EOM.EM.bStartMatchRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", EOM.bStartMatchRoadDefinition);
             if (EOM.bStartMatchRoadDefinition)
             {
@@ -1503,40 +1650,73 @@ public class GSDSplineNEditor : Editor
                     EOM.EM.StartMatchRoadDef = Mathf.Clamp(EOM.EM.StartMatchRoadDef, 0f, 1f);
                 }
             }
+            #endregion
+
 
             if (!EOM.bSingle)
             {
-                if (EOM.EM.StartTime < tNode.MinSplination) { EOM.EM.StartTime = tNode.MinSplination; }
-                if (EOM.EM.EndTime > tNode.MaxSplination) { EOM.EM.EndTime = tNode.MaxSplination; }
+                if (EOM.EM.StartTime < tNode.MinSplination)
+                {
+                    EOM.EM.StartTime = tNode.MinSplination;
+                }
+                if (EOM.EM.EndTime > tNode.MaxSplination)
+                {
+                    EOM.EM.EndTime = tNode.MaxSplination;
+                }
 
+
+                #region Start param
                 EditorGUILayout.BeginHorizontal();
-                EOM.EM.StartTime = EditorGUILayout.Slider("Start param: ", EOM.StartTime, tNode.MinSplination, EOM.EndTime);
+                EOM.EM.StartTime = EditorGUILayout.Slider("Start param: ", EOM.StartTime, tNode.MinSplination, EOM.EndTime);  // EndTime = 1f??
+
                 if (EOM.EM.EndTime < EOM.EM.StartTime)
                 {
                     EOM.EM.EndTime = Mathf.Clamp(EOM.StartTime + 0.01f, 0f, 1f);
                 }
+
+
                 if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
                     EOM.EM.StartTime = tNode.tTime;
                 }
                 EditorGUILayout.EndHorizontal();
+                #endregion
 
+
+                #region End param
                 EditorGUILayout.BeginHorizontal();
                 EOM.EM.EndTime = EditorGUILayout.Slider("End param: ", EOM.EndTime, EOM.StartTime, tNode.MaxSplination);
+                //Mathf.Clamp(EditorGUILayout.Slider( "End param: ", EOM.EndTime, 0f/*EOM.StartTime*/, 1f/*tNode.MaxSplination*/ ), 0f, 1f);
+                // FH EXPERIMENTAL fix for EdgeObjects???
+
+                /*
+                if(EOM.EndTime != 1f) // Does not fix the problem, anyway a really dirty and shitty bugfix...
+                {
+                    EOM.EndTime = 1f;
+                }
+                */
+
                 if (EOM.EM.StartTime > EOM.EM.EndTime)
                 {
                     EOM.EM.StartTime = Mathf.Clamp(EOM.EndTime - 0.01f, 0f, 1f);
                 }
+
+
+
+
                 if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
                     EOM.EM.EndTime = tNode.NextTime;
                 }
                 EditorGUILayout.EndHorizontal();
+                #endregion
             }
+
 
             EditorGUILayout.EndVertical();
 
-            //Vertical offset:
+
+            #region Vertical offset:
             EditorGUILayout.LabelField("Vertical options:");
             EditorGUILayout.BeginVertical("box");
 
@@ -1548,7 +1728,10 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.EndHorizontal();
 
-            if (EOM.VerticalCurve == null || EOM.VerticalCurve.keys.Length < 2) { EnforceCurve(ref EOM.VerticalCurve); }
+            if (EOM.VerticalCurve == null || EOM.VerticalCurve.keys.Length < 2)
+            {
+                EnforceCurve(ref EOM.VerticalCurve);
+            }
             EditorGUILayout.BeginHorizontal();
             EOM.EM.VerticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.VerticalCurve);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
@@ -1557,12 +1740,14 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
+            #endregion
 
-            //Horizontal offsets:
+
+            #region Horizontal offsets:
             EditorGUILayout.LabelField("Horizontal offset options:");
             EditorGUILayout.BeginVertical("box");
             tHorizMatching = HorizMatchingDefaultsEnum.None;
-            tHorizMatching = (HorizMatchingDefaultsEnum)EditorGUILayout.Popup((int)tHorizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
+            tHorizMatching = (HorizMatchingDefaultsEnum) EditorGUILayout.Popup((int) tHorizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
             if (tHorizMatching != HorizMatchingDefaultsEnum.None)
             {
                 if (tHorizMatching == HorizMatchingDefaultsEnum.MatchCenter)
@@ -1618,7 +1803,8 @@ public class GSDSplineNEditor : Editor
                 EOM.EM.HorizontalSep = Mathf.Clamp(EOM.EM.HorizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
             }
             EditorGUILayout.EndHorizontal();
-            if (EOM.HorizontalCurve == null || EOM.HorizontalCurve.keys.Length < 2) { EnforceCurve(ref EOM.HorizontalCurve); }
+            if (EOM.HorizontalCurve == null || EOM.HorizontalCurve.keys.Length < 2)
+            { EnforceCurve(ref EOM.HorizontalCurve); }
             EditorGUILayout.BeginHorizontal();
             EOM.EM.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.HorizontalCurve);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
@@ -1627,7 +1813,10 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
+            #endregion
 
+
+            #region Rotation/scale options
             EditorGUILayout.LabelField("Rotation/scale options:");
             EditorGUILayout.BeginVertical("box");
             if (EOM.HorizontalSep < 0f)
@@ -1658,16 +1847,21 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical(); /* scale */
             EditorGUILayout.EndVertical();
+            #endregion
         }
     }
 
+
     public void UpdateEdgeObjects()
     {
-        if (!tNode.CanSplinate()) { return; }
-        eCount = tNode.EdgeObjects.Count;
-        for (int i = 0; i < tNode.EdgeObjects.Count; i++)
+        if (!tNode.CanSplinate())
         {
-            EOM = tNode.EdgeObjects[i];
+            return;
+        }
+        eCount = tNode.EdgeObjects.Count;
+        for (int index = 0; index < tNode.EdgeObjects.Count; index++)
+        {
+            EOM = tNode.EdgeObjects[index];
             if (EOM.EM != null)
             {
                 if (!EOM.EM.IsEqual(EOM))
@@ -1681,22 +1875,29 @@ public class GSDSplineNEditor : Editor
         }
     }
 
+
     public void UpdateEdgeObjects_OnUndo()
     {
-        if (!tNode.CanSplinate()) { return; }
-        eCount = tNode.EdgeObjects.Count;
-        for (int i = 0; i < tNode.EdgeObjects.Count; i++)
+        if (!tNode.CanSplinate())
         {
-            EOM = tNode.EdgeObjects[i];
+            return;
+        }
+        eCount = tNode.EdgeObjects.Count;
+        for (int index = 0; index < tNode.EdgeObjects.Count; index++)
+        {
+            EOM = tNode.EdgeObjects[index];
             EOM.Setup();
         }
     }
+
 
     #region "Quick adds"
     private void BridgeAdd_TopBase(float tHorizSep = 0f, float tVertRaise = -0.01f, string tMat = "", bool bOverridePrefab = false, string OverridePrefab = "")
     {
         if (tMat == "")
+        {
             tMat = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDConcrete2.mat";
+        }
         SMM = tNode.AddSplinatedObject();
         string tBridgeTopBaseToAdd = "";
         string tName = "";
@@ -1770,10 +1971,13 @@ public class GSDSplineNEditor : Editor
             }
         }
 
-        if (bOverridePrefab) { tBridgeTopBaseToAdd = OverridePrefab; }
+        if (bOverridePrefab)
+        {
+            tBridgeTopBaseToAdd = OverridePrefab;
+        }
 
         SMM.tName = tName;
-        SMM.CurrentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
+        SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
         SMM.HorizontalSep = tHorizSep;
         SMM.VerticalRaise = tVertRaise;
         SMM.bMaterialOverride = true;
@@ -1781,14 +1985,23 @@ public class GSDSplineNEditor : Editor
         SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
 
         tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
-        if (SMM.StartTime < tNode.MinSplination) { SMM.StartTime = tNode.MinSplination; }
-        if (SMM.EndTime > tNode.MaxSplination) { SMM.EndTime = tNode.MaxSplination; }
+        if (SMM.StartTime < tNode.MinSplination)
+        {
+            SMM.StartTime = tNode.MinSplination;
+        }
+        if (SMM.EndTime > tNode.MaxSplination)
+        {
+            SMM.EndTime = tNode.MaxSplination;
+        }
     }
+
 
     private void BridgeAdd_BottomBase(float tHorizSep = 0f, float tVertRaise = -1.01f, string tMat = "", bool bOverridePrefab = false, string OverridePrefab = "")
     {
         if (tMat == "")
+        {
             tMat = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDConcrete2.mat";
+        }
         SMM = tNode.AddSplinatedObject();
         string tBridgeBottomBaseToAdd = "";
         string tName = "";
@@ -1937,9 +2150,12 @@ public class GSDSplineNEditor : Editor
             }
         }
 
-        if (bOverridePrefab) { tBridgeBottomBaseToAdd = OverridePrefab; }
+        if (bOverridePrefab)
+        {
+            tBridgeBottomBaseToAdd = OverridePrefab;
+        }
 
-        SMM.CurrentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
+        SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
         SMM.HorizontalSep = tHorizSep;
         SMM.VerticalRaise = tVertRaise;
         SMM.bMaterialOverride = true;
@@ -1985,9 +2201,16 @@ public class GSDSplineNEditor : Editor
         SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
 
         tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
-        if (SMM.StartTime < tNode.MinSplination) { SMM.StartTime = tNode.MinSplination; }
-        if (SMM.EndTime > tNode.MaxSplination) { SMM.EndTime = tNode.MaxSplination; }
+        if (SMM.StartTime < tNode.MinSplination)
+        {
+            SMM.StartTime = tNode.MinSplination;
+        }
+        if (SMM.EndTime > tNode.MaxSplination)
+        {
+            SMM.EndTime = tNode.MaxSplination;
+        }
     }
+
 
     private void ExtrusionQuickAdd(bool bHorizOverride = false, float tHorizSep = 0f, bool bVertOverride = false, float tVertRaise = 0f)
     {
@@ -1995,12 +2218,13 @@ public class GSDSplineNEditor : Editor
         {
             ExtrusionQuickAdd_Do();
         }
-        catch (System.Exception e)
+        catch (System.Exception exception)
         {
             tSMMQuickAdd = SMMDefaultsEnum.None;
-            throw e;
+            throw exception;
         }
     }
+
 
     private void ExtrusionQuickAdd_Do()
     {
@@ -2010,10 +2234,11 @@ public class GSDSplineNEditor : Editor
         }
     }
 
+
     private void ExtrudeHelper(string tPath, string tName, float DefaultHoriz, GSD.Roads.Splination.AxisTypeEnum tAxis = GSD.Roads.Splination.AxisTypeEnum.Z, bool bHorizOverride = false, float tHorizSep = 0f, bool bVertOverride = false, float tVertRaise = 0f, bool bFlipRot = false)
     {
         SMM = tNode.AddSplinatedObject();
-        SMM.CurrentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject));
+        SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject));
 
         if (bHorizOverride)
         {
@@ -2030,16 +2255,26 @@ public class GSDSplineNEditor : Editor
         }
         else
         {
-            if (tNode.bIsBridgeStart) { SMM.VerticalRaise = -0.01f; }
+            if (tNode.bIsBridgeStart)
+            {
+                SMM.VerticalRaise = -0.01f;
+            }
         }
 
         SMM.bFlipRotation = bFlipRot;
         SMM.Axis = tAxis;
-        if (SMM.StartTime < tNode.MinSplination) { SMM.StartTime = tNode.MinSplination; }
-        if (SMM.EndTime > tNode.MaxSplination) { SMM.EndTime = tNode.MaxSplination; }
+        if (SMM.StartTime < tNode.MinSplination)
+        {
+            SMM.StartTime = tNode.MinSplination;
+        }
+        if (SMM.EndTime > tNode.MaxSplination)
+        {
+            SMM.EndTime = tNode.MaxSplination;
+        }
         SMM.tName = tName;
     }
     #endregion
+
 
     public void OnSceneGUI()
     {
@@ -2075,7 +2310,10 @@ public class GSDSplineNEditor : Editor
             }
         }
 
-        if (controlID != tNode.GetHashCode()) { tNode.bEditorSelected = false; }
+        if (controlID != tNode.GetHashCode())
+        {
+            tNode.bEditorSelected = false;
+        }
 
         //Drag with left click:
         if (Event.current.type == EventType.MouseDrag && Event.current.button == 0)
@@ -2092,8 +2330,14 @@ public class GSDSplineNEditor : Editor
             {
                 if (Vector3.Distance(xNode.transform.position, tNode.transform.position) < 2f)
                 {
-                    if (xNode == tNode) { continue; }
-                    if (tNode.bSpecialEndNode || xNode.bSpecialEndNode) { continue; }
+                    if (xNode == tNode)
+                    {
+                        continue;
+                    }
+                    if (tNode.bSpecialEndNode || xNode.bSpecialEndNode)
+                    {
+                        continue;
+                    }
                     if (xNode.bIsEndPoint && tNode.bIsEndPoint)
                     {
                         //End point connection.
@@ -2103,9 +2347,18 @@ public class GSDSplineNEditor : Editor
                         bUsed = true;
                         break;
                     }
-                    if (xNode.bIsIntersection) { continue; }
-                    if (xNode.bNeverIntersect) { continue; }
-                    if (tNode.bIsEndPoint && xNode.bIsEndPoint) { continue; }
+                    if (xNode.bIsIntersection)
+                    {
+                        continue;
+                    }
+                    if (xNode.bNeverIntersect)
+                    {
+                        continue;
+                    }
+                    if (tNode.bIsEndPoint && xNode.bIsEndPoint)
+                    {
+                        continue;
+                    }
                     if (xNode.GSDSpline == tNode.GSDSpline)
                     { //Don't let intersection be created on consecutive nodes:
                         if ((tNode.idOnSpline + 1) == xNode.idOnSpline || (tNode.idOnSpline - 1) == xNode.idOnSpline)
@@ -2127,7 +2380,10 @@ public class GSDSplineNEditor : Editor
             {
                 if (Vector3.Distance(connector.transform.position, tNode.transform.position) < 2f)
                 {
-                    if (connector.connectedNode != null) continue;
+                    if (connector.connectedNode != null)
+                    {
+                        continue;
+                    }
                     connector.ConnectToNode(tNode);
                     break;
                 }
@@ -2188,6 +2444,7 @@ public class GSDSplineNEditor : Editor
         }
     }
 
+
     private bool VectorDiff(Vector3 tVect1, Vector3 tVect2)
     {
         if (!GSDRootUtil.IsApproximately(tVect1.x, tVect2.x, 0.0001f))
@@ -2205,10 +2462,13 @@ public class GSDSplineNEditor : Editor
         return false;
     }
 
+
+    #region Triggers Interesctions; Connections; Update
     private void TriggerRoadConnection(GSDSplineN tNode1, GSDSplineN tNode2)
     {
         tNode.GSDSpline.ActivateEndNodeConnection(tNode1, tNode2);
     }
+
 
     private void TriggerIntersection(GSDSplineN tNode1, GSDSplineN tNode2)
     {
@@ -2218,6 +2478,7 @@ public class GSDSplineNEditor : Editor
         Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(tNode1, tNode2);
     }
 
+
     private void TriggerRoadUpdate()
     {
         if (tNode != null)
@@ -2225,36 +2486,44 @@ public class GSDSplineNEditor : Editor
             tNode.GSDSpline.tRoad.EditorUpdateMe = true;
         }
     }
+    #endregion
 
-    void Line()
+
+    #region Optimizable // LineGUILayout
+    private void Line()
     {
         GUILayout.Space(4f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1f)); //Horizontal bar
         GUILayout.Space(4f);
     }
 
-    void LineSmall()
+
+    private void LineSmall()
     {
         GUILayout.Space(2f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1f)); //Horizontal bar
         GUILayout.Space(2f);
     }
 
-    void BigLine()
+
+    private void BigLine()
     {
         GUILayout.Space(4f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(4f)); //Horizontal bar
         GUILayout.Space(4f);
     }
+    #endregion
 
-    void ResetCurve(ref AnimationCurve tCurve)
+
+    private void ResetCurve(ref AnimationCurve tCurve)
     {
         tCurve = null;
         tCurve = new AnimationCurve();
         EnforceCurve(ref tCurve);
     }
 
-    bool V3Equal(ref Vector3 V1, ref Vector3 V2)
+
+    private bool V3Equal(ref Vector3 V1, ref Vector3 V2)
     {
         if (!GSDRootUtil.IsApproximately(V1.x, V2.x, 0.001f))
         {
@@ -2271,10 +2540,13 @@ public class GSDSplineNEditor : Editor
         return true;
     }
 
-    void EnforceCurve(ref AnimationCurve tCurve)
+
+    private void EnforceCurve(ref AnimationCurve tCurve)
     {
         if (tCurve == null)
+        {
             return;
+        }
         if (tCurve.keys.Length == 0)
         {
             tCurve.AddKey(0f, 1f);
@@ -2287,7 +2559,8 @@ public class GSDSplineNEditor : Editor
         }
     }
 
-    GameObject GetEndObjectQuickAdd()
+
+    private GameObject GetEndObjectQuickAdd()
     {
         string tPath = "";
         if (tEndObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)
@@ -2331,6 +2604,6 @@ public class GSDSplineNEditor : Editor
             return null;
         }
 
-        return (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject)) as GameObject;
+        return (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject)) as GameObject;
     }
 }

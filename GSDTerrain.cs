@@ -1,7 +1,11 @@
+#region "Imports"
 using UnityEngine;
 #if UNITY_EDITOR
 using System.Collections.Generic;
 #endif
+#endregion
+
+
 [ExecuteInEditMode]
 public class GSDTerrain : MonoBehaviour
 {
@@ -34,11 +38,16 @@ public class GSDTerrain : MonoBehaviour
     public int SplatSingleChoiceIndex = 0;
     public string RoadSingleChoiceUID = "";
 
-    void OnEnable()
+
+    private void OnEnable()
     {
         CheckID();
-        if (!tTerrain) { tTerrain = transform.gameObject.GetComponent<Terrain>(); }
+        if (!tTerrain)
+        {
+            tTerrain = transform.gameObject.GetComponent<Terrain>();
+        }
     }
+
 
     public void CheckID()
     {
@@ -48,9 +57,14 @@ public class GSDTerrain : MonoBehaviour
             {
                 mGSDID = GetNewID();
             }
-            if (!tTerrain) { tTerrain = transform.gameObject.GetComponent<Terrain>(); }
+            if (!tTerrain)
+            {
+                tTerrain = transform.gameObject.GetComponent<Terrain>();
+            }
         }
     }
+
+
     private int GetNewID()
     {
         Object[] tTerrainObjs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
@@ -87,12 +101,16 @@ public class GSDTerrain : MonoBehaviour
     }
 #endif
 
-    void Start()
+
+    private void Start()
     {
 #if UNITY_EDITOR
         this.enabled = true;
         CheckID();
-        if (!tTerrain) { tTerrain = transform.gameObject.GetComponent<Terrain>(); }
+        if (!tTerrain)
+        {
+            tTerrain = transform.gameObject.GetComponent<Terrain>();
+        }
 #else
 		this.enabled = false;
 #endif

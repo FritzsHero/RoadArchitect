@@ -1,14 +1,16 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
 using System.Collections.Generic;
 using GSD.Roads.Splination;
 using GSD.Roads.EdgeObjects;
 using GSD;
 using System.IO;
 using GSD.Roads;
+//using System.Collections;                     // Unused
 #endregion
+
+
 public class GSDWizard : EditorWindow
 {
     public enum WindowTypeEnum
@@ -18,51 +20,68 @@ public class GSDWizard : EditorWindow
         BridgeComplete,
         Groups
     };
+
+
     public enum WindowTypeEnumShort
     {
         Extrusion,
         Edge,
         Groups
     };
+
+
     private static string[] WindowTypeDescBridge = new string[]{
         "Extrusion items",
         "Edge objects",
         "Complete bridges",
         "Other groups"
     };
+
+
     private static string[] WindowTypeDesc = new string[]{
         "Extrusion items",
         "Edge objects",
         "Other groups"
     };
-    WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
-    WindowTypeEnum xWindowType = WindowTypeEnum.Extrusion;
-    WindowTypeEnumShort StWindowType = WindowTypeEnumShort.Extrusion;
-    WindowTypeEnumShort SxWindowType = WindowTypeEnumShort.Extrusion;
-    static string xPath = "";
 
-    GUIStyle ThumbStyle;
-    Vector2 scrollPos = new Vector2(0f, 25f);
-    GSDSplineN tNode = null;
-    List<GSDRoadUtil.WizardObject> oList = null;
-    bool bNoGUI = false;
 
-    void OnGUI()
+    private WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
+    private WindowTypeEnum xWindowType = WindowTypeEnum.Extrusion;
+    private WindowTypeEnumShort StWindowType = WindowTypeEnumShort.Extrusion;
+    private WindowTypeEnumShort SxWindowType = WindowTypeEnumShort.Extrusion;
+    private static string xPath = "";
+
+    private GUIStyle ThumbStyle;
+    private Vector2 scrollPos = new Vector2(0f, 25f);
+    private GSDSplineN tNode = null;
+    private List<GSDRoadUtil.WizardObject> oList = null;
+    private bool bNoGUI = false;
+
+
+    private void OnGUI()
     {
         DoGUI();
     }
 
+
     private void DoGUI()
     {
-        if (bNoGUI) { return; }
-        if (oList == null) { Close(); return; }
+        if (bNoGUI)
+        {
+            return;
+        }
+        if (oList == null)
+        {
+            Close();
+            return;
+        }
 
         GUILayout.Space(4f);
         EditorGUILayout.BeginHorizontal();
 
         if (tNode.bIsBridgeStart)
         {
-            xWindowType = (WindowTypeEnum)EditorGUILayout.Popup("Category: ", (int)tWindowType, WindowTypeDescBridge, GUILayout.Width(312f));
+            xWindowType = (WindowTypeEnum) EditorGUILayout.Popup("Category: ", (int) tWindowType, WindowTypeDescBridge, GUILayout.Width(312f));
         }
         else
         {
@@ -80,7 +99,7 @@ public class GSDWizard : EditorWindow
                 SxWindowType = WindowTypeEnumShort.Groups;
             }
 
-            SxWindowType = (WindowTypeEnumShort)EditorGUILayout.Popup("Category: ", (int)StWindowType, WindowTypeDesc, GUILayout.Width(312f));
+            SxWindowType = (WindowTypeEnumShort) EditorGUILayout.Popup("Category: ", (int) StWindowType, WindowTypeDesc, GUILayout.Width(312f));
 
             if (SxWindowType == WindowTypeEnumShort.Extrusion)
             {
@@ -112,7 +131,10 @@ public class GSDWizard : EditorWindow
 
 
         EditorGUILayout.EndHorizontal();
-        if (oList.Count == 0) { return; }
+        if (oList.Count == 0)
+        {
+            return;
+        }
         int oCount = oList.Count;
 
         int WidthSpacing = 160;
@@ -122,7 +144,7 @@ public class GSDWizard : EditorWindow
 
         int xCount = 0;
         int yCount = 0;
-        int yMod = Mathf.FloorToInt((float)position.width / 142f) - 1;
+        int yMod = Mathf.FloorToInt((float) position.width / 142f) - 1;
 
         int yMax = 0;
         if (yMod == 0)
@@ -131,7 +153,7 @@ public class GSDWizard : EditorWindow
         }
         else
         {
-            yMax = Mathf.CeilToInt((float)oCount / (float)yMod);
+            yMax = Mathf.CeilToInt((float) oCount / (float) yMod);
         }
 
         bool bScrolling = false;
@@ -151,11 +173,15 @@ public class GSDWizard : EditorWindow
             {
                 if (yMod == 0)
                 {
-                    EditorGUILayout.EndHorizontal(); EditorGUILayout.BeginHorizontal(); yCount += 1; xCount = 0;
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    yCount += 1;
+                    xCount = 0;
                 }
                 else
                 {
-                    if (i % yMod == 0) { EditorGUILayout.EndHorizontal(); EditorGUILayout.BeginHorizontal(); yCount += 1; xCount = 0; }
+                    if (i % yMod == 0)
+                    { EditorGUILayout.EndHorizontal(); EditorGUILayout.BeginHorizontal(); yCount += 1; xCount = 0; }
                 }
             }
 
@@ -195,7 +221,8 @@ public class GSDWizard : EditorWindow
                     tNode.LoadWizardObjectsFromLibrary(oList[i].FileName, oList[i].bIsDefault, oList[i].bIsBridge);
                 }
                 tNode.bQuitGUI = true;
-                oList.Clear(); oList = null;
+                oList.Clear();
+                oList = null;
                 EditorGUILayout.EndHorizontal();
                 if (bScrolling)
                 {
@@ -216,7 +243,8 @@ public class GSDWizard : EditorWindow
         }
     }
 
-    bool DoItem(int x1, int y1, int i)
+
+    private bool DoItem(int x1, int y1, int i)
     {
         if (oList[i].Thumb != null)
         {
@@ -239,8 +267,11 @@ public class GSDWizard : EditorWindow
         return false;
     }
 
+
     #region "Init"
     public Rect xRect;
+
+
     public void Initialize(WindowTypeEnum _tWindowType, GSDSplineN _tNode)
     {
         if (xRect.width < 1f && xRect.height < 1f)
@@ -258,9 +289,14 @@ public class GSDWizard : EditorWindow
         Show();
     }
 
+
     private void InitWindow()
     {
-        if (oList != null) { oList.Clear(); oList = null; }
+        if (oList != null)
+        {
+            oList.Clear();
+            oList = null;
+        }
         oList = new List<GSDRoadUtil.WizardObject>();
         if (tWindowType == WindowTypeEnum.Extrusion)
         {
@@ -298,6 +334,7 @@ public class GSDWizard : EditorWindow
         GUI.skin.label.wordWrap = true;
     }
 
+
     #region "Init complete bridges"
     private void InitGroups(bool bIsBridge)
     {
@@ -311,6 +348,7 @@ public class GSDWizard : EditorWindow
         LoadGroupObjs(ref tNames, ref tPaths, bIsBridge);
     }
 
+
     private void LoadGroupObjs(ref string[] tNames, ref string[] tPaths, bool bIsBridge)
     {
         int tCount = tNames.Length;
@@ -319,20 +357,26 @@ public class GSDWizard : EditorWindow
         //		string tDesc = "";
         //		string tDisplayName = "";
         //		string ThumbString = "";
-        for (int i = 0; i < tCount; i++)
+        for (int index = 0; index < tCount; index++)
         {
-            GSDRoadUtil.WizardObject tO = GSDRoadUtil.WizardObject.LoadFromLibrary(tPaths[i]);
-            if (tO == null) { continue; }
-            if (tO.bIsBridge != bIsBridge) { continue; }
+            GSDRoadUtil.WizardObject tO = GSDRoadUtil.WizardObject.LoadFromLibrary(tPaths[index]);
+            if (tO == null)
+            {
+                continue;
+            }
+            if (tO.bIsBridge != bIsBridge)
+            {
+                continue;
+            }
             try
             {
-                tO.Thumb = (Texture2D)AssetDatabase.LoadAssetAtPath(tO.ThumbString, typeof(Texture2D)) as Texture2D;
+                tO.Thumb = (Texture2D) AssetDatabase.LoadAssetAtPath(tO.ThumbString, typeof(Texture2D)) as Texture2D;
             }
             catch
             {
                 tO.Thumb = null;
             }
-            tO.FileName = tNames[i];
+            tO.FileName = tNames[index];
             tO.FullPath = tPath;
 
             if (tO.bIsDefault && bIsBridge)
@@ -457,6 +501,7 @@ public class GSDWizard : EditorWindow
         oListSort();
     }
 
+
     public static void GetGroupListing(out string[] tNames, out string[] tPaths, int Lanes, bool bIsDefault = false)
     {
 
@@ -532,6 +577,7 @@ public class GSDWizard : EditorWindow
     }
     #endregion
 
+
     #region "Init objs"
     private void InitObjs()
     {
@@ -559,6 +605,7 @@ public class GSDWizard : EditorWindow
         LoadObjs(ref tNames, ref tPaths, true);
     }
 
+
     private void LoadObjs(ref string[] tNames, ref string[] tPaths, bool bIsDefault = false)
     {
         int tCount = tNames.Length;
@@ -575,8 +622,11 @@ public class GSDWizard : EditorWindow
 
             if (tWindowType == WindowTypeEnum.Extrusion)
             {
-                SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = (SplinatedMeshMaker.SplinatedMeshLibraryMaker)GSDRootUtil.LoadXML<SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref tPath);
-                if (SLM == null) { continue; }
+                SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = (SplinatedMeshMaker.SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref tPath);
+                if (SLM == null)
+                {
+                    continue;
+                }
                 tStringPath = SLM.CurrentSplinationString;
                 tDesc = SLM.Desc;
                 tDisplayName = SLM.DisplayName;
@@ -585,8 +635,11 @@ public class GSDWizard : EditorWindow
             }
             else if (tWindowType == WindowTypeEnum.Edge)
             {
-                EdgeObjectMaker.EdgeObjectLibraryMaker ELM = (EdgeObjectMaker.EdgeObjectLibraryMaker)GSDRootUtil.LoadXML<EdgeObjectMaker.EdgeObjectLibraryMaker>(ref tPath);
-                if (ELM == null) { continue; }
+                EdgeObjectMaker.EdgeObjectLibraryMaker ELM = (EdgeObjectMaker.EdgeObjectLibraryMaker) GSDRootUtil.LoadXML<EdgeObjectMaker.EdgeObjectLibraryMaker>(ref tPath);
+                if (ELM == null)
+                {
+                    continue;
+                }
                 tStringPath = ELM.EdgeObjectString;
                 tDesc = ELM.Desc;
                 tDisplayName = ELM.DisplayName;
@@ -595,12 +648,15 @@ public class GSDWizard : EditorWindow
             }
 
             //Don't continue if bridge pieces and this is not a bridge piece:
-            if (tWindowType == WindowTypeEnum.Extrusion && bIsBridge) { continue; }
+            if (tWindowType == WindowTypeEnum.Extrusion && bIsBridge)
+            {
+                continue;
+            }
 
             GSDRoadUtil.WizardObject tO = new GSDRoadUtil.WizardObject();
             try
             {
-                tO.Thumb = (Texture2D)AssetDatabase.LoadAssetAtPath(ThumbString, typeof(Texture2D)) as Texture2D;
+                tO.Thumb = (Texture2D) AssetDatabase.LoadAssetAtPath(ThumbString, typeof(Texture2D)) as Texture2D;
             }
             catch
             {
@@ -610,7 +666,7 @@ public class GSDWizard : EditorWindow
             {
                 try
                 {
-                    GameObject xObj = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tStringPath, typeof(GameObject)) as GameObject;
+                    GameObject xObj = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tStringPath, typeof(GameObject)) as GameObject;
                     tO.Thumb = AssetPreview.GetAssetPreview(xObj);
                 }
                 catch
@@ -933,7 +989,8 @@ public class GSDWizard : EditorWindow
         oListSort();
     }
 
-    void oListSort()
+
+    private void oListSort()
     {
         oList.Sort((GSDRoadUtil.WizardObject t1, GSDRoadUtil.WizardObject t2) =>
         {

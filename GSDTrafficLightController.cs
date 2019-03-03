@@ -1,5 +1,8 @@
+#region "Imports"
 using UnityEngine;
-using System.Collections;
+//using System.Collections;                 // Unused
+#endregion
+
 
 [System.Serializable]
 public class GSDTrafficLightController
@@ -34,12 +37,13 @@ public class GSDTrafficLightController
     public iLightStatusEnum iLightStatus = iLightStatusEnum.Red;
     public iLightSubStatusEnum iLightSubStatus = iLightSubStatusEnum.Green;
 
-    bool bLeft = false;
-    bool bRight = false;
-    bool bMain = false;
-    bool bUseSharedMaterial = false;
-    bool bLeftTurnYieldOnGreen = true;
-    bool bLightsEnabled = true;
+    private bool bLeft = false;
+    private bool bRight = false;
+    private bool bMain = false;
+    private bool bUseSharedMaterial = false;
+    private bool bLeftTurnYieldOnGreen = true;
+    private bool bLightsEnabled = true;
+
 
     #region "Constructor"
     public GSDTrafficLightController(ref GameObject _LightLeft, ref GameObject _LightRight, ref GameObject[] _Lights, ref MeshRenderer _MR_Left, ref MeshRenderer _MR_Right, ref MeshRenderer[] MR_Mains)
@@ -97,27 +101,28 @@ public class GSDTrafficLightController
         Lights_R = new Light[mCount];
         Lights_Y = new Light[mCount];
         Lights_G = new Light[mCount];
-        for (int i = 0; i < mCount; i++)
+        for (int index = 0; index < mCount; index++)
         {
-            tLights = LightsObj[i].transform.GetComponentsInChildren<Light>();
+            tLights = LightsObj[index].transform.GetComponentsInChildren<Light>();
             foreach (Light tLight in tLights)
             {
                 if (tLight.transform.name.ToLower().Contains("redlight"))
                 {
-                    Lights_R[i] = tLight;
+                    Lights_R[index] = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("yellowlight"))
                 {
-                    Lights_Y[i] = tLight;
+                    Lights_Y[index] = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("greenl"))
                 {
-                    Lights_G[i] = tLight;
+                    Lights_G[index] = tLight;
                 }
             }
         }
     }
     #endregion
+
 
     #region "Update"
     public void UpdateLights(iLightStatusEnum tLightStatus, iLightSubStatusEnum tLightSubStatus, bool _bLightsEnabled)
@@ -147,15 +152,16 @@ public class GSDTrafficLightController
     }
     #endregion
 
+
     #region "Triggers"
     private void TriggerRegular()
     {
         if (bMain)
         {
             MRChange(ref MR_Main, iLightSubStatus);
-            for (int i = 1; i < MR_MainsStorage.Length; i++)
+            for (int index = 1; index < MR_MainsStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[i], iLightSubStatus);
+                MRChange(ref MR_MainsStorage[index], iLightSubStatus);
             }
             LightChange(0, iLightSubStatus);
         }
@@ -184,6 +190,7 @@ public class GSDTrafficLightController
             LightChange(2, iLightSubStatusEnum.Red);
         }
     }
+
 
     private void TriggerLeftTurn()
     {
@@ -223,14 +230,15 @@ public class GSDTrafficLightController
         }
     }
 
+
     private void TriggerMasterLeft()
     {
         if (bMain)
         {
             MRChange(ref MR_Main, iLightSubStatus);
-            for (int i = 1; i < MR_MainsStorage.Length; i++)
+            for (int index = 1; index < MR_MainsStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[i], iLightSubStatus);
+                MRChange(ref MR_MainsStorage[index], iLightSubStatus);
             }
             LightChange(0, iLightSubStatus);
         }
@@ -253,14 +261,15 @@ public class GSDTrafficLightController
         }
     }
 
+
     private void TriggerRightTurn()
     {
         if (bMain)
         {
             MRChange(ref MR_Main, iLightSubStatusEnum.Red);
-            for (int i = 1; i < MR_MainsStorage.Length; i++)
+            for (int index = 1; index < MR_MainsStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[i], iLightSubStatusEnum.Red);
+                MRChange(ref MR_MainsStorage[index], iLightSubStatusEnum.Red);
             }
             LightChange(0, iLightSubStatusEnum.Red);
         }
@@ -276,14 +285,15 @@ public class GSDTrafficLightController
         }
     }
 
+
     private void TriggerRed()
     {
         if (bMain)
         {
             MRChange(ref MR_Main, iLightSubStatusEnum.Red);
-            for (int i = 1; i < MR_MainsStorage.Length; i++)
+            for (int index = 1; index < MR_MainsStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[i], iLightSubStatusEnum.Red);
+                MRChange(ref MR_MainsStorage[index], iLightSubStatusEnum.Red);
             }
             LightChange(0, iLightSubStatusEnum.Red);
         }
@@ -299,6 +309,7 @@ public class GSDTrafficLightController
         }
     }
     #endregion
+
 
     private void MRChange(ref MeshRenderer MR, iLightSubStatusEnum iLSSE)
     {
@@ -333,6 +344,7 @@ public class GSDTrafficLightController
             }
         }
     }
+
 
     private void MRChangeLeftYield(ref MeshRenderer MR, iLightYieldSubStatusEnum iLYSSE)
     {
@@ -384,23 +396,42 @@ public class GSDTrafficLightController
         }
     }
 
+
     private void LightChange(int tIndex, iLightSubStatusEnum iLSSE)
     {
         if (!bLightsEnabled)
         {
             int mCount = MR_MainsStorage.Length;
-            for (int i = 0; i < mCount; i++)
+            for (int index = 0; index < mCount; index++)
             {
-                Lights_R[i].enabled = false;
-                Lights_Y[i].enabled = false;
-                Lights_G[i].enabled = false;
+                Lights_R[index].enabled = false;
+                Lights_Y[index].enabled = false;
+                Lights_G[index].enabled = false;
             }
-            if (LightLeft_R != null) { LightLeft_R.enabled = false; }
-            if (LightLeft_Y != null) { LightLeft_Y.enabled = false; }
-            if (LightLeft_G != null) { LightLeft_G.enabled = false; }
-            if (LightRight_R != null) { LightRight_R.enabled = false; }
-            if (LightRight_Y != null) { LightRight_Y.enabled = false; }
-            if (LightRight_G != null) { LightRight_G.enabled = false; }
+            if (LightLeft_R != null)
+            {
+                LightLeft_R.enabled = false;
+            }
+            if (LightLeft_Y != null)
+            {
+                LightLeft_Y.enabled = false;
+            }
+            if (LightLeft_G != null)
+            {
+                LightLeft_G.enabled = false;
+            }
+            if (LightRight_R != null)
+            {
+                LightRight_R.enabled = false;
+            }
+            if (LightRight_Y != null)
+            {
+                LightRight_Y.enabled = false;
+            }
+            if (LightRight_G != null)
+            {
+                LightRight_G.enabled = false;
+            }
             return;
         }
 
@@ -408,9 +439,9 @@ public class GSDTrafficLightController
         {
             //Main:
             int mCount = MR_MainsStorage.Length;
-            for (int i = 0; i < mCount; i++)
+            for (int index = 0; index < mCount; index++)
             {
-                LightChangeHelper(ref Lights_R[i], ref Lights_Y[i], ref Lights_G[i], iLSSE);
+                LightChangeHelper(ref Lights_R[index], ref Lights_Y[index], ref Lights_G[index], iLSSE);
             }
         }
         else if (tIndex == 1)
@@ -424,6 +455,7 @@ public class GSDTrafficLightController
             LightChangeHelper(ref LightRight_R, ref LightRight_Y, ref LightRight_G, iLSSE);
         }
     }
+
 
     private void LightChangeHelper(ref Light tRed, ref Light tYellow, ref Light tGreen, iLightSubStatusEnum iLSSE)
     {
@@ -447,6 +479,7 @@ public class GSDTrafficLightController
         }
     }
 
+
     #region "Setup"
     public void Setup(bool bLeftYield)
     {
@@ -459,25 +492,32 @@ public class GSDTrafficLightController
         bLeftTurnYieldOnGreen = bLeftYield;
     }
 
+
     private void SetupMainObjects()
     {
-        if (MR_Main == null) { return; }
+        if (MR_Main == null)
+        {
+            return;
+        }
         int mCount = MR_MainsStorage.Length;
-        if (mCount == 0) { return; }
+        if (mCount == 0)
+        {
+            return;
+        }
         SetupObject(MR_Main);
         if (mCount > 1)
         {
-            for (int i = 1; i < mCount; i++)
+            for (int index = 1; index < mCount; index++)
             {
                 if (bUseSharedMaterial)
                 {
-                    MR_MainsStorage[i].sharedMaterial = MR_Main.sharedMaterial;
+                    MR_MainsStorage[index].sharedMaterial = MR_Main.sharedMaterial;
                 }
                 else
                 {
                     Material[] materials = new Material[1];
                     materials[0] = MR_Main.materials[0];
-                    MR_MainsStorage[i].materials = materials;
+                    MR_MainsStorage[index].materials = materials;
 
                 }
 
@@ -485,9 +525,13 @@ public class GSDTrafficLightController
         }
     }
 
+
     private void SetupObject(MeshRenderer MR)
     {
-        if (MR != null) { MR.material = MR.material; }
+        if (MR != null)
+        {
+            MR.material = MR.material;
+        }
     }
     #endregion
 }
@@ -499,6 +543,7 @@ public class GSDTrafficLightSequence
     public GSDTrafficLightController.iLightSubStatusEnum iLightSubcontroller = GSDTrafficLightController.iLightSubStatusEnum.Green;
     public float tTime = 10f;
 
+
     public GSDTrafficLightSequence(bool bPath1, GSDTrafficLightController.iLightControllerEnum tLightController, GSDTrafficLightController.iLightSubStatusEnum tLightSubcontroller, float xTime)
     {
         bLightMasterPath1 = bPath1;
@@ -506,6 +551,7 @@ public class GSDTrafficLightSequence
         iLightSubcontroller = tLightSubcontroller;
         tTime = xTime;
     }
+
 
     public string ToStringGSD()
     {

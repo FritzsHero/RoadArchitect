@@ -1,9 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region "Imports"
+//using System.Collections;                                 // Unused
+//using System.Collections.Generic;                 // Unused
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
+#endregion
+
+
 [ExecuteInEditMode]
 public class GSDRoadConnector : MonoBehaviour
 {
@@ -11,17 +15,21 @@ public class GSDRoadConnector : MonoBehaviour
     [HideInInspector]
     public GSDOffRoadObject obj { get { return transform.parent.GetComponent<GSDOffRoadObject>(); } }
 
+
 #if UNITY_EDITOR
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = GSDOffRoadObject.Color_NodeOffRoadColor;
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6f, 0f), new Vector3(2f, 11f, 2f));
     }
-    void OnDrawGizmosSelected()
+
+
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = GSDOffRoadObject.Color_NodeOffRoadSelectedColor;
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
     }
+
 
     public void ConnectToNode(GSDSplineN node)
     {
@@ -31,8 +39,9 @@ public class GSDRoadConnector : MonoBehaviour
         connectedNode.GSDSpline.tRoad.UpdateRoad();
     }
 
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (connectedNode != null)
         {
@@ -50,11 +59,14 @@ public class GSDRoadConnector : MonoBehaviour
 #endif
 }
 
+
 #if UNITY_EDITOR
 [CustomEditor(typeof(GSDRoadConnector))]
 public class GSDRoadConnectorEditor : Editor
 {
-    public GSDRoadConnector tConnector { get { return (GSDRoadConnector)target; } }
+    public GSDRoadConnector tConnector { get { return (GSDRoadConnector) target; } }
+
+
     public override void OnInspectorGUI()
     {
         if (tConnector.connectedNode != null)

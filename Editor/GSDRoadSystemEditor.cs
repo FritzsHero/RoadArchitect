@@ -1,47 +1,53 @@
+#region "Imports"
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
-using GSD;
+//using System.Collections.Generic;           // Unused
+//using GSD;                                                  // Unused
+#endregion
+
+
 [CustomEditor(typeof(GSDRoadSystem))]
 public class GSDRoadSystemEditor : Editor
 {
     //Main target for this editor file:
-    protected GSDRoadSystem GSDRS { get { return (GSDRoadSystem)target; } }
+    protected GSDRoadSystem GSDRS { get { return (GSDRoadSystem) target; } }
 
     //Serialized properties:
-    SerializedProperty bTempMultithreading;
-    SerializedProperty bTempSaveMeshAssets;
+    private SerializedProperty bTempMultithreading;
+    private SerializedProperty bTempSaveMeshAssets;
 
     //Editor only variables:
-    bool bUpdateGlobal_Multithread = false;
-    bool bUpdateGlobal_SaveMesh = false;
+    private bool bUpdateGlobal_Multithread = false;
+    private bool bUpdateGlobal_SaveMesh = false;
 
     //	//Editor only camera variables:
-    //	GSDRoadIntersection[] tInters = null;
-    //	int tInterIndex = 0;
-    //	GSDSplineN[] tBridges = null;
-    //	int tBridgesIndex = 0;
-    //	bool bHasBridgeInit = false;
-    //	bool bHasInterInit = false;
-    //	bool bHasDoneEither = false;
-    //	bool bFlipEditorCamera = false;
-    //	float CameraZoomFactor = 1f;
-    //	float CameraHeightOffset = 1f;
-    //	bool bCameraCustomRot = false;
-    //	Vector3 CameraCustomRot = new Vector3(0.5f,0f,-0.5f);
+    //	private GSDRoadIntersection[] tInters = null;
+    //	private int tInterIndex = 0;
+    //	private GSDSplineN[] tBridges = null;
+    //	private int tBridgesIndex = 0;
+    //	private bool bHasBridgeInit = false;
+    //	private bool bHasInterInit = false;
+    //	private bool bHasDoneEither = false;
+    //	private bool bFlipEditorCamera = false;
+    //	private float CameraZoomFactor = 1f;
+    //	private float CameraHeightOffset = 1f;
+    //	private bool bCameraCustomRot = false;
+    //	private Vector3 CameraCustomRot = new Vector3(0.5f,0f,-0.5f);
 
     //Editor only graphic variables:
-    Texture2D LoadBtnBG = null;
-    Texture2D LoadBtnBGGlow = null;
-    GUIStyle WarningLabelStyle;
-    Texture2D WarningLabelBG;
-    GUIStyle GSDLoadButton = null;
+    private Texture2D LoadBtnBG = null;
+    private Texture2D LoadBtnBGGlow = null;
+    private GUIStyle WarningLabelStyle;
+    private Texture2D WarningLabelBG;
+    private GUIStyle GSDLoadButton = null;
+
 
     private void OnEnable()
     {
         bTempMultithreading = serializedObject.FindProperty("opt_bMultithreading");
         bTempSaveMeshAssets = serializedObject.FindProperty("opt_bSaveMeshes");
     }
+
 
     public override void OnInspectorGUI()
     {
@@ -63,7 +69,10 @@ public class GSDRoadSystemEditor : Editor
         //Multi-threading input:
         EditorGUILayout.BeginHorizontal();
         bTempMultithreading.boolValue = EditorGUILayout.Toggle("Multi-threading enabled", GSDRS.opt_bMultithreading);
-        if (bTempMultithreading.boolValue != GSDRS.opt_bMultithreading) { bUpdateGlobal_Multithread = true; }
+        if (bTempMultithreading.boolValue != GSDRS.opt_bMultithreading)
+        {
+            bUpdateGlobal_Multithread = true;
+        }
 
         //Update all roads button:
         if (GUILayout.Button("Update all roads", EditorStyles.miniButton, GUILayout.Width(120f)))
@@ -74,7 +83,10 @@ public class GSDRoadSystemEditor : Editor
 
         //Save mesh assets input:
         bTempSaveMeshAssets.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", GSDRS.opt_bSaveMeshes);
-        if (bTempSaveMeshAssets.boolValue != GSDRS.opt_bSaveMeshes) { bUpdateGlobal_SaveMesh = true; }
+        if (bTempSaveMeshAssets.boolValue != GSDRS.opt_bSaveMeshes)
+        {
+            bUpdateGlobal_SaveMesh = true;
+        }
         if (GSDRS.opt_bSaveMeshes || bTempSaveMeshAssets.boolValue)
         {
             GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", WarningLabelStyle);
@@ -84,7 +96,7 @@ public class GSDRoadSystemEditor : Editor
         GUILayout.Space(4f);
         if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL("http://microgsd.com/Support/RoadArchitectManual.aspx");
+            Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");  // formerly http://microgsd.com/Support/RoadArchitectManual.aspx
         }
 
         if (GSDRS.EditorPlayCamera == null)
@@ -125,19 +137,20 @@ public class GSDRoadSystemEditor : Editor
         }
     }
 
-    void InitChecks()
+
+    private void InitChecks()
     {
         if (WarningLabelBG == null)
         {
-            WarningLabelBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
+            WarningLabelBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBG == null)
         {
-            LoadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (LoadBtnBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
+            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
         }
 
         if (GSDLoadButton == null)
@@ -167,7 +180,8 @@ public class GSDRoadSystemEditor : Editor
         }
     }
 
-    //	void DoInter(){
+
+    //	private void DoInter(){
     //		//View intersection
     //		if(!bHasInterInit){
     //			bHasInterInit = true;
@@ -188,7 +202,8 @@ public class GSDRoadSystemEditor : Editor
     //		}
     //	}
     //	
-    //	void IncrementIntersection(){
+    //
+    //	private void IncrementIntersection(){
     //		if(tInters != null && tInters.Length > 0){
     //			tInterIndex+=1;
     //			if(tInterIndex >= tInters.Length){ tInterIndex = 0; }
@@ -196,7 +211,8 @@ public class GSDRoadSystemEditor : Editor
     //		}
     //	}
     //	
-    //	void DoBridges(){
+    //
+    //	private void DoBridges(){
     //		//View bridges
     //		if(!bHasBridgeInit){
     //			bHasBridgeInit = true;
@@ -263,7 +279,8 @@ public class GSDRoadSystemEditor : Editor
     //		}
     //	}
     //	
-    //	void IncrementBridge(){
+    //
+    //	private void IncrementBridge(){
     //		if(tBridges != null && tBridges.Length > 0){
     //			tBridgesIndex+=1;
     //			if(tBridgesIndex >= tBridges.Length){ tBridgesIndex = 0; }
@@ -271,7 +288,8 @@ public class GSDRoadSystemEditor : Editor
     //		}
     //	}
     //	
-    //	void ShowIntersection(int i){	
+    //
+    //	private void ShowIntersection(int i){	
     //		if(EditorApplication.isPlaying && GSDRS.EditorPlayCamera != null){
     //			GSDRS.EditorPlayCamera.transform.position = tInters[i].transform.position + new Vector3(-40f,20f,-40f);
     //			GSDRS.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tInters[i].transform.position - (tInters[i].transform.position + new Vector3(-40f,20f,-40f)));
@@ -281,7 +299,8 @@ public class GSDRoadSystemEditor : Editor
     //		}
     //	}
     //	
-    //	void ShowBridge(int i){
+    //
+    //	private void ShowBridge(int i){
     //		if(EditorApplication.isPlaying && GSDRS.EditorPlayCamera != null){
     //			Vector3 tBridgePos = ((tBridges[i].pos - tBridges[i].BridgeCounterpartNode.pos)*0.5f)+tBridges[i].BridgeCounterpartNode.pos;
     //			float tBridgeLength = Vector3.Distance(tBridges[i].pos,tBridges[i].BridgeCounterpartNode.pos);
@@ -308,12 +327,14 @@ public class GSDRoadSystemEditor : Editor
     //		}
     //	}
 
-    void Line()
+
+    private void Line()
     {
         GUILayout.Space(4f);
         GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1)); //Horizontal bar
         GUILayout.Space(4f);
     }
+
 
     //	bool bCtrl = false;
     public void OnSceneGUI()
@@ -321,7 +342,8 @@ public class GSDRoadSystemEditor : Editor
         DoHotKeyCheck();
     }
 
-    void DoHotKeyCheck()
+
+    private void DoHotKeyCheck()
     {
         bool bUsed = false;
         Event current = Event.current;
@@ -347,6 +369,9 @@ public class GSDRoadSystemEditor : Editor
             }
         }
 
-        if (GUI.changed) { EditorUtility.SetDirty(GSDRS); }
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(GSDRS);
+        }
     }
 }

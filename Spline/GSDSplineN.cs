@@ -1,14 +1,15 @@
+#region "Imports"
+//using System.Collections;         // Unused
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using GSD.Roads.Splination;
 using GSD.Roads.EdgeObjects;
 using GSD;
+#endregion
+
 
 public class GSDSplineN : MonoBehaviour
 {
-
-
     public Vector3 pos;
     public Quaternion rot;
     public Vector3 tangent;
@@ -73,12 +74,15 @@ public class GSDSplineN : MonoBehaviour
     public bool bIgnore = false;
     public bool opt_GizmosEnabled = true;
 
-    //Tunnels:
+
+    #region Tunnels:
     public bool bIsTunnel = false;
     public bool bIsTunnelStart = false;
     public bool bIsTunnelEnd = false;
     public bool bIsTunnelMatched = false;
     public GSDSplineN TunnelCounterpartNode = null;
+    #endregion
+
 
     //Bridges:
     public bool bIsBridge = false;
@@ -91,21 +95,27 @@ public class GSDSplineN : MonoBehaviour
 #if UNITY_EDITOR
     public GSD.Roads.GSDIntersections.iConstructionMaker iConstruction;
 
+
     #region "Edge Objects"
     public List<EdgeObjectMaker> EdgeObjects;
 
+
     public void SetupEdgeObjects(bool bCollect = true)
     {
-        if (EdgeObjects == null) { EdgeObjects = new List<EdgeObjectMaker>(); }
+        if (EdgeObjects == null)
+        {
+            EdgeObjects = new List<EdgeObjectMaker>();
+        }
         int eCount = EdgeObjects.Count;
         EdgeObjectMaker EOM = null;
-        for (int i = 0; i < eCount; i++)
+        for (int index = 0; index < eCount; index++)
         {
-            EOM = EdgeObjects[i];
+            EOM = EdgeObjects[index];
             EOM.tNode = this;
             EOM.Setup(bCollect);
         }
     }
+
 
     public EdgeObjectMaker AddEdgeObject()
     {
@@ -118,6 +128,7 @@ public class GSDSplineN : MonoBehaviour
         return EOM;
     }
 
+
     public void EdgeObjectQuickAdd(string tName)
     {
         EdgeObjectMaker EOM = AddEdgeObject();
@@ -127,10 +138,17 @@ public class GSDSplineN : MonoBehaviour
         EOM.Setup();
     }
 
+
     public void RemoveEdgeObject(int tIndex = -1, bool bSkipUpdate = false)
     {
-        if (EdgeObjects == null) { return; }
-        if (EdgeObjects.Count == 0) { return; }
+        if (EdgeObjects == null)
+        {
+            return;
+        }
+        if (EdgeObjects.Count == 0)
+        {
+            return;
+        }
         if (tIndex < 0)
         {
             if (EdgeObjects.Count > 0)
@@ -153,6 +171,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void RemoveAllEdgeObjects(bool bSkipUpdate = false)
     {
         int SpamCheck = 0;
@@ -163,6 +182,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void CopyEdgeObject(int tIndex)
     {
         EdgeObjectMaker EOM = EdgeObjects[tIndex].Copy();
@@ -170,9 +190,13 @@ public class GSDSplineN : MonoBehaviour
         SetupEdgeObjects();
     }
 
+
     public void EdgeObjectLoadFromLibrary(int i, string tName)
     {
-        if (EdgeObjects == null) { EdgeObjects = new List<EdgeObjectMaker>(); }
+        if (EdgeObjects == null)
+        {
+            EdgeObjects = new List<EdgeObjectMaker>();
+        }
         int eCount = EdgeObjects.Count;
         if (i > -1 && i < eCount)
         {
@@ -190,57 +214,70 @@ public class GSDSplineN : MonoBehaviour
         int mCount = EdgeObjects.Count;
         List<int> InvalidList = new List<int>();
 
-        for (int i = 0; i < mCount; i++)
+        for (int index = 0; index < mCount; index++)
         {
-            if (EdgeObjects[i].EdgeObject == null)
+            if (EdgeObjects[index].EdgeObject == null)
             {
-                InvalidList.Add(i);
+                InvalidList.Add(index);
             }
         }
 
-        for (int i = (InvalidList.Count - 1); i >= 0; i--)
+        for (int index = (InvalidList.Count - 1); index >= 0; index--)
         {
-            RemoveEdgeObject(InvalidList[i], true);
+            RemoveEdgeObject(InvalidList[index], true);
         }
 
         SetupEdgeObjects();
     }
     #endregion
 
+
     #region "Extruded objects"
     public List<SplinatedMeshMaker> SplinatedObjects;
 
+
     public void SetupSplinatedMeshes(bool bCollect = true)
     {
-        if (SplinatedObjects == null) { SplinatedObjects = new List<SplinatedMeshMaker>(); }
+        if (SplinatedObjects == null)
+        {
+            SplinatedObjects = new List<SplinatedMeshMaker>();
+        }
         int eCount = SplinatedObjects.Count;
         SplinatedMeshMaker SMM = null;
-        for (int i = 0; i < eCount; i++)
+        for (int index = 0; index < eCount; index++)
         {
-            SMM = SplinatedObjects[i];
+            SMM = SplinatedObjects[index];
             SMM.Setup(true, bCollect);
         }
     }
 
+
     public int SplinatedMeshGetIndex(ref string UID)
     {
-        if (SplinatedObjects == null) { SplinatedObjects = new List<SplinatedMeshMaker>(); }
+        if (SplinatedObjects == null)
+        {
+            SplinatedObjects = new List<SplinatedMeshMaker>();
+        }
         int eCount = SplinatedObjects.Count;
         SplinatedMeshMaker SMM = null;
-        for (int i = 0; i < eCount; i++)
+        for (int index = 0; index < eCount; index++)
         {
-            SMM = SplinatedObjects[i];
+            SMM = SplinatedObjects[index];
             if (string.CompareOrdinal(SMM.UID, UID) == 0)
             {
-                return i;
+                return index;
             }
         }
         return -1;
     }
 
+
     public void SetupSplinatedMesh(int i, bool bGetStrings = false)
     {
-        if (SplinatedObjects == null) { SplinatedObjects = new List<SplinatedMeshMaker>(); }
+        if (SplinatedObjects == null)
+        {
+            SplinatedObjects = new List<SplinatedMeshMaker>();
+        }
         int eCount = SplinatedObjects.Count;
         if (i > -1 && i < eCount)
         {
@@ -249,9 +286,13 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public SplinatedMeshMaker AddSplinatedObject()
     {
-        if (SplinatedObjects == null) { SplinatedObjects = new List<SplinatedMeshMaker>(); }
+        if (SplinatedObjects == null)
+        {
+            SplinatedObjects = new List<SplinatedMeshMaker>();
+        }
         SplinatedMeshMaker SMM = new SplinatedMeshMaker();
         SMM.Init(GSDSpline, this, transform);
         SplinatedObjects.Add(SMM);
@@ -261,6 +302,7 @@ public class GSDSplineN : MonoBehaviour
         return SMM;
     }
 
+
     public void SplinatedObjectQuickAdd(string tName)
     {
         SplinatedMeshMaker SMM = AddSplinatedObject();
@@ -269,9 +311,13 @@ public class GSDSplineN : MonoBehaviour
         SMM.Setup(true);
     }
 
+
     public void SplinatedObjectLoadFromLibrary(int i, string tName)
     {
-        if (SplinatedObjects == null) { SplinatedObjects = new List<SplinatedMeshMaker>(); }
+        if (SplinatedObjects == null)
+        {
+            SplinatedObjects = new List<SplinatedMeshMaker>();
+        }
         int eCount = SplinatedObjects.Count;
         if (i > -1 && i < eCount)
         {
@@ -282,6 +328,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void CopySplinatedObject(ref SplinatedMeshMaker tSMM)
     {
         SplinatedMeshMaker SMM = tSMM.Copy();
@@ -289,10 +336,17 @@ public class GSDSplineN : MonoBehaviour
         SetupSplinatedMeshes();
     }
 
+
     public void RemoveSplinatedObject(int tIndex = -1, bool bSkipUpdate = false)
     {
-        if (SplinatedObjects == null) { return; }
-        if (SplinatedObjects.Count == 0) { return; }
+        if (SplinatedObjects == null)
+        {
+            return;
+        }
+        if (SplinatedObjects.Count == 0)
+        {
+            return;
+        }
         SplinatedMeshMaker SMM = null;
         if (tIndex < 0)
         {
@@ -320,6 +374,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void RemoveAllSplinatedObjects(bool bSkipUpdate = false)
     {
         int SpamCheck = 0;
@@ -333,27 +388,29 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void DetectInvalidSplinatedObjects()
     {
         int mCount = SplinatedObjects.Count;
         List<int> InvalidList = new List<int>();
 
-        for (int i = 0; i < mCount; i++)
+        for (int index = 0; index < mCount; index++)
         {
-            if (SplinatedObjects[i].Output == null)
+            if (SplinatedObjects[index].Output == null)
             {
-                InvalidList.Add(i);
+                InvalidList.Add(index);
             }
         }
 
-        for (int i = (InvalidList.Count - 1); i >= 0; i--)
+        for (int index = (InvalidList.Count - 1); index >= 0; index--)
         {
-            RemoveSplinatedObject(InvalidList[i], true);
+            RemoveSplinatedObject(InvalidList[index], true);
         }
 
         SetupSplinatedMeshes();
     }
     #endregion
+
 
     public void LoadWizardObjectsFromLibrary(string tFileName, bool _bIsDefault, bool _bIsBridge)
     {
@@ -365,16 +422,24 @@ public class GSDSplineN : MonoBehaviour
         GSD.Roads.GSDRoadUtil.LoadNodeObjects(tFileName, this, _bIsDefault, _bIsBridge);
     }
 
+
     public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _tTime, string _name)
     {
-        if (!Application.isEditor) { return; }
+        if (!Application.isEditor)
+        {
+            return;
+        }
         pos = _p;
         rot = _q;
         EaseIO = _io;
         tTime = _tTime;
         name = _name;
-        if (EdgeObjects == null) { EdgeObjects = new List<EdgeObjectMaker>(); }
+        if (EdgeObjects == null)
+        {
+            EdgeObjects = new List<EdgeObjectMaker>();
+        }
     }
+
 
     public void SetupUniqueIdentifier()
     {
@@ -383,6 +448,7 @@ public class GSDSplineN : MonoBehaviour
             UID = System.Guid.NewGuid().ToString();
         }
     }
+
 
     #region "Gizmos"
     //	private void TerrainDebugging(){
@@ -521,19 +587,42 @@ public class GSDSplineN : MonoBehaviour
     ////			Gizmos.DrawCube(tPos,new Vector3(0.3f,0.3f,0.3f));
     //	}
     //	
+
     public List<GSD.Roads.GSDRoadUtil.Construction3DTri> tTriList;
     public List<Vector3> tHMList;
     public bool bGizmoDrawIntersectionHighlight = false;
 
-    void OnDrawGizmos()
+
+    private void OnDrawGizmos()
     {
-        if (GSDSpline == null) { return; }
-        if (GSDSpline.tRoad == null) { return; }
-        if (!GSDSpline.tRoad.opt_GizmosEnabled) { return; }
-        if (bIgnore) { return; }
-        if (bIsIntersection) { return; }
-        if (bSpecialEndNode) { return; }
-        if (bSpecialEndNode_IsEnd || bSpecialEndNode_IsStart) { return; }
+        if (GSDSpline == null)
+        {
+            return;
+        }
+        if (GSDSpline.tRoad == null)
+        {
+            return;
+        }
+        if (!GSDSpline.tRoad.opt_GizmosEnabled)
+        {
+            return;
+        }
+        if (bIgnore)
+        {
+            return;
+        }
+        if (bIsIntersection)
+        {
+            return;
+        }
+        if (bSpecialEndNode)
+        {
+            return;
+        }
+        if (bSpecialEndNode_IsEnd || bSpecialEndNode_IsStart)
+        {
+            return;
+        }
         if (bGizmoDrawIntersectionHighlight && !bSpecialEndNode && bIsIntersection)
         {
             Gizmos.color = GSDSpline.tRoad.Color_NodeInter;
@@ -552,13 +641,29 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
+
+    private void OnDrawGizmosSelected()
     {
-        if (!GSDSpline.tRoad.opt_GizmosEnabled) { return; }
-        if (bIgnore) { return; }
-        if (bIsIntersection) { return; }
-        if (bSpecialEndNode) { return; }
-        if (bSpecialEndNode_IsEnd || bSpecialEndNode_IsStart) { return; }
+        if (!GSDSpline.tRoad.opt_GizmosEnabled)
+        {
+            return;
+        }
+        if (bIgnore)
+        {
+            return;
+        }
+        if (bIsIntersection)
+        {
+            return;
+        }
+        if (bSpecialEndNode)
+        {
+            return;
+        }
+        if (bSpecialEndNode_IsEnd || bSpecialEndNode_IsStart)
+        {
+            return;
+        }
         if (bGizmoDrawIntersectionHighlight && !bSpecialEndNode && bIsIntersection)
         {
             Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
@@ -568,6 +673,7 @@ public class GSDSplineN : MonoBehaviour
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
     }
     #endregion
+
 
     #region "Grade"
     public void SetGradePercent(int mCount)
@@ -637,6 +743,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public Vector3 FilterMaxGradeHeight(Vector3 tPos, out float MinY, out float MaxY)
     {
         Vector3 tVect = tPos;
@@ -667,9 +774,13 @@ public class GSDSplineN : MonoBehaviour
         return tPos;
     }
 
+
     public void EnsureGradeValidity(int iStart = -1, bool bIsAddToEnd = false)
     {
-        if (GSDSpline == null) { return; }
+        if (GSDSpline == null)
+        {
+            return;
+        }
         GSDSplineN PrevNode = null;
         GSDSplineN NextNode = null;
 
@@ -688,7 +799,10 @@ public class GSDSplineN : MonoBehaviour
                 PrevNode = GSDSpline.GetPrevLegitimateNode(iStart);
             }
         }
-        if (PrevNode == null) { return; }
+        if (PrevNode == null)
+        {
+            return;
+        }
         Vector3 tVect = transform.position;
 
         float tMinY1 = 0f;
@@ -759,6 +873,7 @@ public class GSDSplineN : MonoBehaviour
     }
     #endregion
 
+
     #region "Util"
     public void ResetNavigationData()
     {
@@ -767,6 +882,7 @@ public class GSDSplineN : MonoBehaviour
         node_connected = null;
         node_connected = new List<GSDSplineN>();
     }
+
 
     public void BreakConnection()
     {
@@ -817,6 +933,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void SetupSplinationLimits()
     {
         //Disallowed nodes:
@@ -830,9 +947,9 @@ public class GSDSplineN : MonoBehaviour
         //Figure out min splination:
         GSDSplineN tNode = null;
         MinSplination = tTime;
-        for (int i = idOnSpline; i >= 0; i--)
+        for (int index = idOnSpline; index >= 0; index--)
         {
-            tNode = GSDSpline.mNodes[i];
+            tNode = GSDSpline.mNodes[index];
             if (tNode.CanSplinate())
             {
                 MinSplination = tNode.tTime;
@@ -846,9 +963,9 @@ public class GSDSplineN : MonoBehaviour
         //Figure out max splination:
         MaxSplination = tTime;
         int mCount = GSDSpline.GetNodeCount();
-        for (int i = idOnSpline; i < mCount; i++)
+        for (int index = idOnSpline; index < mCount; index++)
         {
-            tNode = GSDSpline.mNodes[i];
+            tNode = GSDSpline.mNodes[index];
             if (tNode.CanSplinate())
             {
                 MaxSplination = tNode.tTime;
@@ -860,6 +977,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
     #endregion
+
 
     #region "Cut materials storage and setting"
     public GameObject RoadCut_world = null;
@@ -880,6 +998,7 @@ public class GSDSplineN : MonoBehaviour
     public PhysicMaterial ShoulderCutR_PhysicMat;
     public PhysicMaterial ShoulderCutL_PhysicMat;
 
+
     /// <summary>
     /// Stores the cut materials. For use in UpdateCuts(). See UpdateCuts() in this code file for further description of this system.
     /// </summary>
@@ -894,46 +1013,75 @@ public class GSDSplineN : MonoBehaviour
         {
             MR = RoadCut_world.GetComponent<MeshRenderer>();
             MC = RoadCut_world.GetComponent<MeshCollider>();
-            if (MR != null) { RoadCut_world_Mats = MR.sharedMaterials; }
-            if (MC != null) { RoadCut_PhysicMat = MC.material; }
+            if (MR != null)
+            {
+                RoadCut_world_Mats = MR.sharedMaterials;
+            }
+            if (MC != null)
+            {
+                RoadCut_PhysicMat = MC.material;
+            }
             RoadCut_world = null;//Nullify reference only
         }
         if (ShoulderCutR_world != null)
         {
             MR = ShoulderCutR_world.GetComponent<MeshRenderer>();
             MC = ShoulderCutR_world.GetComponent<MeshCollider>();
-            if (MR != null) { ShoulderCutR_world_Mats = MR.sharedMaterials; }
-            if (MC != null) { ShoulderCutR_PhysicMat = MC.material; }
+            if (MR != null)
+            {
+                ShoulderCutR_world_Mats = MR.sharedMaterials;
+            }
+            if (MC != null)
+            {
+                ShoulderCutR_PhysicMat = MC.material;
+            }
             ShoulderCutR_world = null;
         }
         if (ShoulderCutL_world != null)
         {
             MR = ShoulderCutL_world.GetComponent<MeshRenderer>();
             MC = ShoulderCutL_world.GetComponent<MeshCollider>();
-            if (MR != null) { ShoulderCutL_world_Mats = MR.sharedMaterials; }
-            if (MC != null) { ShoulderCutL_PhysicMat = MC.material; }
+            if (MR != null)
+            {
+                ShoulderCutL_world_Mats = MR.sharedMaterials;
+            }
+            if (MC != null)
+            {
+                ShoulderCutL_PhysicMat = MC.material;
+            }
             ShoulderCutL_world = null;
         }
         //Markers:
         if (RoadCut_marker != null)
         {
             MR = RoadCut_marker.GetComponent<MeshRenderer>();
-            if (MR != null) { RoadCut_marker_Mats = MR.sharedMaterials; }
+            if (MR != null)
+            {
+                RoadCut_marker_Mats = MR.sharedMaterials;
+            }
             RoadCut_marker = null;
         }
         if (ShoulderCutR_marker != null)
         {
             MR = ShoulderCutR_marker.GetComponent<MeshRenderer>();
-            if (MR != null) { ShoulderCutR_marker_Mats = MR.sharedMaterials; }
+            if (MR != null)
+            {
+                ShoulderCutR_marker_Mats = MR.sharedMaterials;
+            }
             ShoulderCutR_marker = null;
         }
         if (ShoulderCutL_marker != null)
         {
             MR = ShoulderCutL_marker.GetComponent<MeshRenderer>();
-            if (MR != null) { ShoulderCutL_marker_Mats = MR.sharedMaterials; }
+            if (MR != null)
+            {
+                ShoulderCutL_marker_Mats = MR.sharedMaterials;
+            }
             ShoulderCutL_marker = null;
         }
     }
+
+
     /// <summary>
     /// Updates the cut materials. Called upon creation of the cuts to set the newly cut materials to previously set materials.
     /// For instance, if the user set a material on a road cut, and then regenerated the road, this function will apply the mats that the user applied.
@@ -948,57 +1096,102 @@ public class GSDSplineN : MonoBehaviour
         if (RoadCut_world_Mats != null && RoadCut_world_Mats.Length > 0 && RoadCut_world)
         {
             MR = RoadCut_world.GetComponent<MeshRenderer>();
-            if (!MR) { RoadCut_world.AddComponent<MeshRenderer>(); }
-            if (MR != null) { MR.materials = RoadCut_world_Mats; }
+            if (!MR)
+            {
+                RoadCut_world.AddComponent<MeshRenderer>();
+            }
+            if (MR != null)
+            {
+                MR.materials = RoadCut_world_Mats;
+            }
         }
         if (RoadCut_PhysicMat != null && RoadCut_world)
         {
             MC = RoadCut_world.GetComponent<MeshCollider>();
-            if (MC != null) { MC.material = RoadCut_PhysicMat; }
+            if (MC != null)
+            {
+                MC.material = RoadCut_PhysicMat;
+            }
         }
 
         if (ShoulderCutR_world_Mats != null && ShoulderCutR_world_Mats.Length > 0 && ShoulderCutR_world)
         {
             MR = ShoulderCutR_world.GetComponent<MeshRenderer>();
-            if (!MR) { ShoulderCutR_world.AddComponent<MeshRenderer>(); }
-            if (MR != null) { MR.materials = ShoulderCutR_world_Mats; }
+            if (!MR)
+            {
+                ShoulderCutR_world.AddComponent<MeshRenderer>();
+            }
+            if (MR != null)
+            {
+                MR.materials = ShoulderCutR_world_Mats;
+            }
         }
         if (ShoulderCutR_PhysicMat != null && ShoulderCutR_world)
         {
             MC = ShoulderCutR_world.GetComponent<MeshCollider>();
-            if (MC != null) { MC.material = ShoulderCutR_PhysicMat; }
+            if (MC != null)
+            {
+                MC.material = ShoulderCutR_PhysicMat;
+            }
         }
 
         if (ShoulderCutL_world_Mats != null && ShoulderCutL_world_Mats.Length > 0 && ShoulderCutL_world)
         {
             MR = ShoulderCutL_world.GetComponent<MeshRenderer>();
-            if (!MR) { ShoulderCutL_world.AddComponent<MeshRenderer>(); }
-            if (MR != null) { MR.materials = ShoulderCutL_world_Mats; }
+            if (!MR)
+            {
+                ShoulderCutL_world.AddComponent<MeshRenderer>();
+            }
+            if (MR != null)
+            {
+                MR.materials = ShoulderCutL_world_Mats;
+            }
         }
         if (ShoulderCutL_PhysicMat != null && ShoulderCutL_world)
         {
             MC = ShoulderCutL_world.GetComponent<MeshCollider>();
-            if (MC != null) { MC.material = ShoulderCutL_PhysicMat; }
+            if (MC != null)
+            {
+                MC.material = ShoulderCutL_PhysicMat;
+            }
         }
 
         //Markers:
         if (RoadCut_marker_Mats != null && RoadCut_marker_Mats.Length > 0 && RoadCut_marker)
         {
             MR = RoadCut_marker.GetComponent<MeshRenderer>();
-            if (!MR) { RoadCut_marker.AddComponent<MeshRenderer>(); }
-            if (MR != null) { MR.materials = RoadCut_marker_Mats; }
+            if (!MR)
+            {
+                RoadCut_marker.AddComponent<MeshRenderer>();
+            }
+            if (MR != null)
+            {
+                MR.materials = RoadCut_marker_Mats;
+            }
         }
         if (ShoulderCutR_marker_Mats != null && ShoulderCutR_marker_Mats.Length > 0 && ShoulderCutR_marker)
         {
             MR = ShoulderCutR_marker.GetComponent<MeshRenderer>();
-            if (!MR) { ShoulderCutR_marker.AddComponent<MeshRenderer>(); }
-            if (MR != null) { MR.materials = ShoulderCutR_marker_Mats; }
+            if (!MR)
+            {
+                ShoulderCutR_marker.AddComponent<MeshRenderer>();
+            }
+            if (MR != null)
+            {
+                MR.materials = ShoulderCutR_marker_Mats;
+            }
         }
         if (ShoulderCutL_marker_Mats != null && ShoulderCutL_marker_Mats.Length > 0 && ShoulderCutL_marker)
         {
             MR = ShoulderCutL_marker.GetComponent<MeshRenderer>();
-            if (!MR) { ShoulderCutL_marker.AddComponent<MeshRenderer>(); }
-            if (MR != null) { MR.materials = ShoulderCutL_marker_Mats; }
+            if (!MR)
+            {
+                ShoulderCutL_marker.AddComponent<MeshRenderer>();
+            }
+            if (MR != null)
+            {
+                MR.materials = ShoulderCutL_marker_Mats;
+            }
         }
 
         if (RoadCut_marker != null)
@@ -1027,6 +1220,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Clears the cut materials. Called when user hits button on road editor inspector gui.
     /// </summary>
@@ -1044,6 +1238,7 @@ public class GSDSplineN : MonoBehaviour
     }
     #endregion
 
+
     #region "Bridges"
     public void BridgeToggleStart()
     {
@@ -1058,6 +1253,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void BridgeToggleEnd()
     {
         //If switching to end, find associated bridge 
@@ -1071,7 +1267,8 @@ public class GSDSplineN : MonoBehaviour
                 if (tNode.bIsBridgeStart && !tNode.bIsBridgeMatched)
                 {
                     tNode.BridgeToggleStart();
-                    if (tNode.bIsBridgeMatched && tNode.BridgeCounterpartNode == this) { return; }
+                    if (tNode.bIsBridgeMatched && tNode.BridgeCounterpartNode == this)
+                    { return; }
                 }
             }
         }
@@ -1080,6 +1277,7 @@ public class GSDSplineN : MonoBehaviour
             BridgeDestroy();
         }
     }
+
 
     private void BridgeStart()
     {
@@ -1138,6 +1336,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     private void BridgeDestroy()
     {
         if (BridgeCounterpartNode != null)
@@ -1148,6 +1347,7 @@ public class GSDSplineN : MonoBehaviour
         GSDSpline.Setup_Trigger();
     }
 
+
     public void BridgeResetValues()
     {
         bIsBridge = false;
@@ -1157,11 +1357,21 @@ public class GSDSplineN : MonoBehaviour
         BridgeCounterpartNode = null;
     }
 
+
     public bool CanBridgeStart()
     {
-        if (bIsBridgeStart) { return true; }
-        if (bIsBridgeEnd) { return false; }
-        if (bIsEndPoint) { return false; }
+        if (bIsBridgeStart)
+        {
+            return true;
+        }
+        if (bIsBridgeEnd)
+        {
+            return false;
+        }
+        if (bIsEndPoint)
+        {
+            return false;
+        }
 
         int mCount = GSDSpline.GetNodeCount();
 
@@ -1204,11 +1414,15 @@ public class GSDSplineN : MonoBehaviour
         return true;
     }
 
+
     public bool CanBridgeEnd()
     {
-        if (bIsBridgeEnd) { return true; }
-        if (bIsBridgeStart) { return false; }
-        if (bIsEndPoint) { return false; }
+        if (bIsBridgeEnd)
+        { return true; }
+        if (bIsBridgeStart)
+        { return false; }
+        if (bIsEndPoint)
+        { return false; }
 
         int mCount = GSDSpline.GetNodeCount();
 
@@ -1249,6 +1463,7 @@ public class GSDSplineN : MonoBehaviour
     }
     #endregion
 
+
     #region "Tunnels"
     public void TunnelToggleStart()
     {
@@ -1263,6 +1478,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public void TunnelToggleEnd()
     {
         //If switching to end, find associated Tunnel 
@@ -1270,13 +1486,16 @@ public class GSDSplineN : MonoBehaviour
         {
             int mCount = GSDSpline.GetNodeCount();
             GSDSplineN tNode = null;
-            for (int i = 1; i < (mCount - 1); i++)
+            for (int index = 1; index < (mCount - 1); index++)
             {
-                tNode = GSDSpline.mNodes[i];
+                tNode = GSDSpline.mNodes[index];
                 if (tNode.bIsTunnelStart && !tNode.bIsTunnelMatched)
                 {
                     tNode.TunnelToggleStart();
-                    if (tNode.bIsTunnelMatched && tNode.TunnelCounterpartNode == this) { return; }
+                    if (tNode.bIsTunnelMatched && tNode.TunnelCounterpartNode == this)
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -1285,6 +1504,7 @@ public class GSDSplineN : MonoBehaviour
             TunnelDestroy();
         }
     }
+
 
     private void TunnelStart()
     {
@@ -1343,6 +1563,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     private void TunnelDestroy()
     {
         if (TunnelCounterpartNode != null)
@@ -1353,6 +1574,7 @@ public class GSDSplineN : MonoBehaviour
         GSDSpline.Setup_Trigger();
     }
 
+
     public void TunnelResetValues()
     {
         bIsTunnel = false;
@@ -1362,11 +1584,15 @@ public class GSDSplineN : MonoBehaviour
         TunnelCounterpartNode = null;
     }
 
+
     public bool CanTunnelStart()
     {
-        if (bIsTunnelStart) { return true; }
-        if (bIsTunnelEnd) { return false; }
-        if (bIsEndPoint) { return false; }
+        if (bIsTunnelStart)
+        { return true; }
+        if (bIsTunnelEnd)
+        { return false; }
+        if (bIsEndPoint)
+        { return false; }
 
         int mCount = GSDSpline.GetNodeCount();
 
@@ -1409,11 +1635,15 @@ public class GSDSplineN : MonoBehaviour
         return true;
     }
 
+
     public bool CanTunnelEnd()
     {
-        if (bIsTunnelEnd) { return true; }
-        if (bIsTunnelStart) { return false; }
-        if (bIsEndPoint) { return false; }
+        if (bIsTunnelEnd)
+        { return true; }
+        if (bIsTunnelStart)
+        { return false; }
+        if (bIsEndPoint)
+        { return false; }
 
         int mCount = GSDSpline.GetNodeCount();
 
@@ -1454,6 +1684,7 @@ public class GSDSplineN : MonoBehaviour
     }
     #endregion
 
+
     #region "Is straight line to next node"
     public bool IsStraight()
     {
@@ -1489,6 +1720,7 @@ public class GSDSplineN : MonoBehaviour
         return true;
     }
 
+
     private static bool IsApproxTwoThirds(ref Vector3 V1, Vector3 V2)
     {
         int cCount = 0;
@@ -1516,6 +1748,8 @@ public class GSDSplineN : MonoBehaviour
     }
     #endregion
 #endif
+
+
     #region "Non-editor util"
     public bool CanSplinate()
     {
@@ -1529,6 +1763,7 @@ public class GSDSplineN : MonoBehaviour
         }
     }
 
+
     public bool IsLegitimate()
     {
         if (bIsIntersection || bSpecialEndNode)
@@ -1540,6 +1775,8 @@ public class GSDSplineN : MonoBehaviour
             return true;
         }
     }
+
+
     public bool IsLegitimateGrade()
     {
         if (bSpecialEndNode)
@@ -1553,7 +1790,8 @@ public class GSDSplineN : MonoBehaviour
     }
     #endregion
 
-    void Start()
+
+    private void Start()
     {
 #if UNITY_EDITOR
         //Do nothing.
@@ -1561,6 +1799,7 @@ public class GSDSplineN : MonoBehaviour
 			this.enabled = false;
 #endif
     }
+
 
     public void ToggleHideFlags(bool bIsHidden)
     {

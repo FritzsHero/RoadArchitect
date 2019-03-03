@@ -1,9 +1,13 @@
+#region "Imports"
 using UnityEngine;
-using System.Collections;
+//using System.Collections;                                     // Unused
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Text;
+#endregion
+
+
 namespace GSD
 {
     public static class GSDRootUtil
@@ -17,6 +21,7 @@ namespace GSD
         {
             float f;
             float s;
+
 
             f = k1 * 2 / Mathf.PI + k2 - k1 + (1.0f - k2) * 2 / Mathf.PI;
 
@@ -35,6 +40,7 @@ namespace GSD
 
             return (s / f);
         }
+
 
         /// <summary>
         /// Returns true if the lines intersect, otherwise false. 
@@ -95,17 +101,20 @@ namespace GSD
             return tString;
         }
 
+
         #region "Float comparisons"
         public static bool IsApproximately(float a, float b)
         {
             return IsApproximately(a, b, 0.01f);
         }
 
+
         public static bool IsApproximately(float a, float b, float tolerance)
         {
             return Mathf.Abs(a - b) < tolerance;
         }
         #endregion
+
 
         #region "XML"
         public static void CreateXML<T>(ref string tPath, object pObject)
@@ -130,11 +139,13 @@ namespace GSD
 #endif
         }
 
+
         public static string GetString<T>(object pObject)
         {
             string tData = SerializeObject<T>(ref pObject);
             return tData;
         }
+
 
         public static object LoadXML<T>(ref string tPath)
         {
@@ -149,11 +160,13 @@ namespace GSD
 #endif
         }
 
+
         public static object LoadData<T>(ref string _info)
         {
             object tObject = DeserializeObject<T>(_info);
             return tObject;
         }
+
 
         public static void DeleteLibraryXML(string tName, bool bIsExtrusion)
         {
@@ -176,6 +189,7 @@ namespace GSD
 #endif
         }
 
+
         private static string SerializeObject<T>(ref object pObject)
         {
             string XmlizedString = null;
@@ -183,10 +197,11 @@ namespace GSD
             XmlSerializer xs = new XmlSerializer(typeof(T));
             XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
             xs.Serialize(xmlTextWriter, pObject);
-            memoryStream = (MemoryStream)xmlTextWriter.BaseStream;
+            memoryStream = (MemoryStream) xmlTextWriter.BaseStream;
             XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
             return XmlizedString;
         }
+
 
         private static object DeserializeObject<T>(string pXmlizedString)
         {
@@ -195,12 +210,14 @@ namespace GSD
             return xs.Deserialize(memoryStream);
         }
 
+
         private static string UTF8ByteArrayToString(byte[] characters)
         {
             UTF8Encoding encoding = new UTF8Encoding();
             string constructedString = encoding.GetString(characters);
             return (constructedString);
         }
+
 
         private static byte[] StringToUTF8ByteArray(string pXmlString)
         {
@@ -210,12 +227,16 @@ namespace GSD
         }
         #endregion
 
+
         #region "Mesh tangents"
         //Thread safe because local scope and by val params
         public static Vector4[] ProcessTangents(int[] tris, Vector3[] normals, Vector2[] uvs, Vector3[] verts)
         {
             int MVL = verts.Length;
-            if (MVL == 0) { return new Vector4[0]; }
+            if (MVL == 0)
+            {
+                return new Vector4[0];
+            }
             int triangleCount = tris.Length;// mesh.triangles.Length / 3;
             Vector3[] tan1 = new Vector3[MVL];
             Vector3[] tan2 = new Vector3[MVL];
@@ -269,16 +290,16 @@ namespace GSD
             }
 
             Vector3 n, t;//,tmp;
-            for (int i = 0; i < MVL; i++)
+            for (int index = 0; index < MVL; index++)
             {
-                n = normals[i];
-                t = tan1[i];
+                n = normals[index];
+                t = tan1[index];
 
                 Vector3.OrthoNormalize(ref n, ref t);
-                tangents[i].x = t.x;
-                tangents[i].y = t.y;
-                tangents[i].z = t.z;
-                tangents[i].w = (Vector3.Dot(Vector3.Cross(n, t), tan2[i]) < 0.0f) ? -1.0f : 1.0f;
+                tangents[index].x = t.x;
+                tangents[index].y = t.y;
+                tangents[index].z = t.z;
+                tangents[index].w = (Vector3.Dot(Vector3.Cross(n, t), tan2[index]) < 0.0f) ? -1.0f : 1.0f;
 
                 //				tmp = (t - n * Vector3.Dot(n, t)).normalized;
                 //				tangents[i] = new Vector4(tmp.x, tmp.y, tmp.z);
@@ -287,6 +308,7 @@ namespace GSD
 
             return tangents;
         }
+
 
         public static void ProcessTangents(ref Mesh tMesh)
         {
@@ -299,11 +321,14 @@ namespace GSD
         }
         #endregion
 
+
         #region "Default directory for library etc"
         public static string Dir_GetBase()
         {
             return Application.dataPath.Replace("/Assets", "/GSD/");
         }
+
+
         public static string Dir_GetTH()
         {
             string xPath = Dir_GetBase() + "TH/";
@@ -314,10 +339,13 @@ namespace GSD
             return xPath;
         }
 
+
         public static string Dir_GetLibraryBase()
         {
             return GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Library/";
         }
+
+
         public static string Dir_GetLibrary()
         {
             string xPath = Dir_GetLibraryBase();
@@ -327,6 +355,7 @@ namespace GSD
             }
             return xPath;
         }
+
 
         public static void Dir_GetLibrary_CheckSpecialDirs()
         {
@@ -352,6 +381,7 @@ namespace GSD
             }
         }
         #endregion
+
 
         public static void ForceCollection(bool bWait = false)
         {
