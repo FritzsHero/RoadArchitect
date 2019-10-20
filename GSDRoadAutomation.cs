@@ -28,15 +28,15 @@ namespace GSD.Roads
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="NodeLocation">The location of the newly created node.</param>
         /// <returns></returns>
-        public static GSDRoad CreateRoad_Programmatically(GSDRoadSystem GSDRS, ref List<Vector3> tLocs)
+        public static GSDRoad CreateRoadProgrammatically(GSDRoadSystem _RoadSys, ref List<Vector3> _positions)
         {
-            GameObject tRoadObj = GSDRS.AddRoad(false);
+            GameObject tRoadObj = _RoadSys.AddRoad(false);
             GSDRoad tRoad = tRoadObj.GetComponent<GSDRoad>();
 
-            int hCount = tLocs.Count;
-            for (int index = 0; index < hCount; index++)
+            int count = _positions.Count;
+            for (int index = 0; index < count; index++)
             {
-                CreateNode_Programmatically(tRoad, tLocs[index]);
+                CreateNodeProgrammatically(tRoad, _positions[index]);
             }
 
             return tRoad;
@@ -47,114 +47,116 @@ namespace GSD.Roads
         /// Use this to create nodes via coding while in editor mode. Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates.
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
-        /// <param name="NodeLocation">The location of the newly created node.</param>
+        /// <param name="_nodePosition">The location of the newly created node.</param>
         /// <returns></returns>
-        public static GSDSplineN CreateNode_Programmatically(GSDRoad tRoad, Vector3 NodeLocation)
+        public static GSDSplineN CreateNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
         {
-            int SplineChildCount = tRoad.GSDSpline.transform.childCount;
-            GameObject tNodeObj = new GameObject("Node" + (SplineChildCount + 1).ToString());
-            GSDSplineN tNode = tNodeObj.AddComponent<GSDSplineN>(); //Add the node component.
+            int splineChildCount = _road.spline.transform.childCount;
+            //Add the node
+            GameObject nodeObj = new GameObject("Node" + (splineChildCount + 1).ToString());
+            GSDSplineN node = nodeObj.AddComponent<GSDSplineN>();
 
             //Set node location:
-            if (NodeLocation.y < 0.03f)
+            //Make sure it doesn't try to create a node below 0 height
+            if (_nodePosition.y < 0.03f)
             {
-                NodeLocation.y = 0.03f;
-            }     //Make sure it doesn't try to create a node below 0 height.
-            tNodeObj.transform.position = NodeLocation;
+                _nodePosition.y = 0.03f;
+            }
+            nodeObj.transform.position = _nodePosition;
 
             //Set the node's parent:
-            tNodeObj.transform.parent = tRoad.GSDSplineObj.transform;
+            nodeObj.transform.parent = _road.GSDSplineObj.transform;
 
             //Set the idOnSpline:
-            tNode.idOnSpline = (SplineChildCount + 1);
-            tNode.GSDSpline = tRoad.GSDSpline;
+            node.idOnSpline = (splineChildCount + 1);
+            node.GSDSpline = _road.spline;
 
             //Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates
-            tRoad.UpdateRoad();
+            _road.UpdateRoad();
 
-            return tNode;
+            return node;
         }
 
 
         /// <summary>
         /// Use this to insert nodes via coding while in editor mode. Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates.
         /// </summary>
-        /// <param name="RS">The road system to insert nodes in.</param>
-        /// <param name="NodeLocation">The location of the newly inserted node.</param>
+        /// <param name="_road">The road system to insert nodes in.</param>
+        /// <param name="_nodePosition">The location of the newly inserted node.</param>
         /// <returns></returns>
-		public static GSDSplineN InsertNode_Programmatically(GSDRoad RS, Vector3 NodeLocation)
+		public static GSDSplineN InsertNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
         {
-            GameObject tNodeObj;
-            Object[] tWorldNodeCount = GameObject.FindObjectsOfType(typeof(GSDSplineN));
-            tNodeObj = new GameObject("Node" + tWorldNodeCount.Length.ToString());
+            GameObject nodeObj;
+            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(GSDSplineN));
+            nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             //Set node location:
-            if (NodeLocation.y < 0.03f)
+            if (_nodePosition.y < 0.03f)
             {
-                NodeLocation.y = 0.03f; //Make sure it doesn't try to create a node below 0 height.
+                _nodePosition.y = 0.03f; //Make sure it doesn't try to create a node below 0 height.
             }
-            tNodeObj.transform.position = NodeLocation;
+            nodeObj.transform.position = _nodePosition;
 
             //Set the node's parent:
-            tNodeObj.transform.parent = RS.GSDSplineObj.transform;
+            nodeObj.transform.parent = _road.GSDSplineObj.transform;
 
-            int cCount = RS.GSDSpline.mNodes.Count;
+            int nodesCount = _road.spline.mNodes.Count;
 
             //Get the closet param on spline:
-            float tParam = RS.GSDSpline.GetClosestParam(NodeLocation, false, true);
+            float param = _road.spline.GetClosestParam(_nodePosition, false, true);
 
-            bool bEndInsert = false;
-            bool bZeroInsert = false;
-            int iStart = 0;
-            if (GSDRootUtil.IsApproximately(tParam, 0f, 0.0001f))
+            bool isInsertEnded = false;
+            bool isInsertZero = false;
+            int start = 0;
+            if (GSDRootUtil.IsApproximately(param, 0f, 0.0001f))
             {
-                bZeroInsert = true;
-                iStart = 0;
+                isInsertZero = true;
+                start = 0;
             }
-            else if (GSDRootUtil.IsApproximately(tParam, 1f, 0.0001f))
+            else if (GSDRootUtil.IsApproximately(param, 1f, 0.0001f))
             {
                 //Inserted at end, switch to create node instead:
-                Object.DestroyImmediate(tNodeObj);
-                return CreateNode_Programmatically(RS, NodeLocation);
+                Object.DestroyImmediate(nodeObj);
+                return CreateNodeProgrammatically(_road, _nodePosition);
             }
 
             //Figure out where to insert the node:
-            for (int index = 0; index < cCount; index++)
+            for (int index = 0; index < nodesCount; index++)
             {
-                GSDSplineN xNode = RS.GSDSpline.mNodes[index];
-                if (!bZeroInsert && !bEndInsert)
+                GSDSplineN node = _road.spline.mNodes[index];
+                if (!isInsertZero && !isInsertEnded)
                 {
-                    if (tParam > xNode.tTime)
+                    if (param > node.tTime)
                     {
-                        iStart = xNode.idOnSpline + 1;
+                        start = node.idOnSpline + 1;
                     }
                 }
             }
-            for (int index = iStart; index < cCount; index++)
+            for (int index = start; index < nodesCount; index++)
             {
-                RS.GSDSpline.mNodes[index].idOnSpline += 1;
+                _road.spline.mNodes[index].idOnSpline += 1;
             }
 
-            GSDSplineN tNode = tNodeObj.AddComponent<GSDSplineN>();
-            tNode.GSDSpline = RS.GSDSpline;
-            tNode.idOnSpline = iStart;
-            tNode.pos = NodeLocation;
-            RS.GSDSpline.mNodes.Insert(iStart, tNode);
+            GSDSplineN newNode = nodeObj.AddComponent<GSDSplineN>();
+            newNode.GSDSpline = _road.spline;
+            newNode.idOnSpline = start;
+            newNode.pos = _nodePosition;
+            _road.spline.mNodes.Insert(start, newNode);
 
             //Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates
-            RS.UpdateRoad();
+            _road.UpdateRoad();
 
-            return tNode;
+            return newNode;
         }
 
 
         /// <summary>
         /// Creates intersections where this road intersects with other roads.
         /// </summary>
-        /// <param name="tRoad">The primary road to create intersections for.</param>
-        /// <param name="iStopType">Stop signs, traffic lights #1 (US) or traffic lights #2 (Euro). Defaults to none.</param>
-        /// <param name="rType">Intersection type: No turn lane, left turn lane or both turn lanes. Defaults to no turn lane.</param>
-        public static void CreateIntersections_ProgrammaticallyForRoad(GSDRoad tRoad, GSDRoadIntersection.iStopTypeEnum iStopType = GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum rType = GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+        /// <param name="_road">The primary road to create intersections for.</param>
+        /// <param name="_iStopType">Stop signs, traffic lights #1 (US) or traffic lights #2 (Euro). Defaults to none.</param>
+        /// <param name="_roadType">Intersection type: No turn lane, left turn lane or both turn lanes. Defaults to no turn lane.</param>
+        public static void CreateIntersectionsProgrammaticallyForRoad(GSDRoad _road, GSDRoadIntersection.iStopTypeEnum _iStopType = GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum _roadType = GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
         {
             /*
             General logic:
@@ -168,38 +170,38 @@ namespace GSD.Roads
              create intersection with above two nodes
             */
 
-            Object[] GSDRoadObjs = Object.FindObjectsOfType<GSDRoad>();
+            Object[] roadObjs = Object.FindObjectsOfType<GSDRoad>();
 
             //20m increments to gather collection of which roads intersect
-            List<GSDRoad> xRoads = new List<GSDRoad>();
-            foreach (GSDRoad xRoad in GSDRoadObjs)
+            List<GSDRoad> roads = new List<GSDRoad>();
+            foreach (GSDRoad road in roadObjs)
             {
-                if (tRoad != xRoad)
+                if (_road != road)
                 {
-                    float EarlyDistanceCheckMeters = 10f;
-                    float EarlyDistanceCheckThreshold = 50f;
-                    bool EarlyDistanceFound = false;
-                    float tRoadMod = EarlyDistanceCheckMeters / tRoad.GSDSpline.distance;
-                    float xRoadMod = EarlyDistanceCheckMeters / xRoad.GSDSpline.distance;
-                    Vector3 tVect1 = default(Vector3);
-                    Vector3 tVect2 = default(Vector3);
-                    for (float index = 0f; index < 1.0000001f; index += tRoadMod)
+                    float earlyDistanceCheckMeters = 10f;
+                    float earlyDistanceCheckThreshold = 50f;
+                    bool isEarlyDistanceFound = false;
+                    float tempRoadMod = earlyDistanceCheckMeters / _road.spline.distance;
+                    float roadMod = earlyDistanceCheckMeters / road.spline.distance;
+                    Vector3 vector1 = default(Vector3);
+                    Vector3 vector2 = default(Vector3);
+                    for (float index = 0f; index < 1.0000001f; index += tempRoadMod)
                     {
-                        tVect1 = tRoad.GSDSpline.GetSplineValue(index);
-                        for (float x = 0f; x < 1.000001f; x += xRoadMod)
+                        vector1 = _road.spline.GetSplineValue(index);
+                        for (float x = 0f; x < 1.000001f; x += roadMod)
                         {
-                            tVect2 = xRoad.GSDSpline.GetSplineValue(x);
-                            if (Vector3.Distance(tVect1, tVect2) < EarlyDistanceCheckThreshold)
+                            vector2 = road.spline.GetSplineValue(x);
+                            if (Vector3.Distance(vector1, vector2) < earlyDistanceCheckThreshold)
                             {
-                                if (!xRoads.Contains(xRoad))
+                                if (!roads.Contains(road))
                                 {
-                                    xRoads.Add(xRoad);
+                                    roads.Add(road);
                                 }
-                                EarlyDistanceFound = true;
+                                isEarlyDistanceFound = true;
                                 break;
                             }
                         }
-                        if (EarlyDistanceFound)
+                        if (isEarlyDistanceFound)
                         {
                             break;
                         }
@@ -208,97 +210,97 @@ namespace GSD.Roads
             }
 
             //See if any end point nodes are on top of each other already since T might not intersect all the time.:
-            List<KeyValuePair<GSDSplineN, GSDSplineN>> tKVP = new List<KeyValuePair<GSDSplineN, GSDSplineN>>();
-            foreach (GSDRoad xRoad in xRoads)
+            List<KeyValuePair<GSDSplineN, GSDSplineN>> keyValuePairs = new List<KeyValuePair<GSDSplineN, GSDSplineN>>();
+            foreach (GSDRoad road in roads)
             {
-                foreach (GSDSplineN IntersectionNode1 in tRoad.GSDSpline.mNodes)
+                foreach (GSDSplineN intersectionNode1 in _road.spline.mNodes)
                 {
-                    if (IntersectionNode1.bIsIntersection || !IntersectionNode1.IsLegitimate())
+                    if (intersectionNode1.bIsIntersection || !intersectionNode1.IsLegitimate())
                     {
                         continue;
                     }
-                    foreach (GSDSplineN IntersectionNode2 in xRoad.GSDSpline.mNodes)
+                    foreach (GSDSplineN intersectionNode2 in road.spline.mNodes)
                     {
-                        if (IntersectionNode2.bIsIntersection || !IntersectionNode2.IsLegitimate())
+                        if (intersectionNode2.bIsIntersection || !intersectionNode2.IsLegitimate())
                         {
                             continue;
                         }
-                        if (IntersectionNode1.transform.position == IntersectionNode2.transform.position)
+                        if (intersectionNode1.transform.position == intersectionNode2.transform.position)
                         {
                             //Only do T intersections and let the next algorithm handle the +, since T might not intersect all the time.
-                            if (IntersectionNode1.bIsEndPoint || IntersectionNode2.bIsEndPoint)
+                            if (intersectionNode1.bIsEndPoint || intersectionNode2.bIsEndPoint)
                             {
-                                tKVP.Add(new KeyValuePair<GSDSplineN, GSDSplineN>(IntersectionNode1, IntersectionNode2));
+                                keyValuePairs.Add(new KeyValuePair<GSDSplineN, GSDSplineN>(intersectionNode1, intersectionNode2));
                             }
                         }
                     }
                 }
             }
-            foreach (KeyValuePair<GSDSplineN, GSDSplineN> KVP in tKVP)
+            foreach (KeyValuePair<GSDSplineN, GSDSplineN> KVP in keyValuePairs)
             {
                 //Now create the fucking intersection:
                 GameObject tInter = GSD.Roads.GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
                 GSDRoadIntersection GSDRI_JustCreated = tInter.GetComponent<GSDRoadIntersection>();
-                GSDRI_JustCreated.iStopType = iStopType;
-                GSDRI_JustCreated.rType = rType;
+                GSDRI_JustCreated.iStopType = _iStopType;
+                GSDRI_JustCreated.rType = _roadType;
             }
 
             //Main algorithm: 2m increments to find actual intersection point:
-            foreach (GSDRoad xRoad in xRoads)
+            foreach (GSDRoad road in roads)
             {
-                if (tRoad != xRoad)
+                if (_road != road)
                 {
                     //Debug.Log("Checking road: " + xRoad.transform.name);
-                    float DistanceCheckMeters = 2f;
-                    bool EarlyDistanceFound = false;
-                    float tRoadMod = DistanceCheckMeters / tRoad.GSDSpline.distance;
-                    float xRoadMod = DistanceCheckMeters / xRoad.GSDSpline.distance;
-                    Vector3 tVect = default(Vector3);
-                    Vector2 iVect1 = default(Vector2);
-                    Vector2 iVect2 = default(Vector2);
-                    Vector2 xVect1 = default(Vector2);
-                    Vector2 xVect2 = default(Vector2);
-                    Vector2 IntersectPoint2D = default(Vector2);
+                    float distanceCheckMeters = 2f;
+                    bool isEarlyDistanceFound = false;
+                    float tempRoadMod = distanceCheckMeters / _road.spline.distance;
+                    float roadMod = distanceCheckMeters / road.spline.distance;
+                    Vector3 vector = default(Vector3);
+                    Vector2 vector1 = default(Vector2);
+                    Vector2 vector2 = default(Vector2);
+                    Vector2 xVector1 = default(Vector2);
+                    Vector2 xVector2 = default(Vector2);
+                    Vector2 intersectPoint2D = default(Vector2);
                     float i2 = 0f;
-                    for (float index = 0f; index < 1.0000001f; index += tRoadMod)
+                    for (float index = 0f; index < 1.0000001f; index += tempRoadMod)
                     {
-                        i2 = (index + tRoadMod);
+                        i2 = (index + tempRoadMod);
                         if (i2 > 1f)
                         {
                             i2 = 1f;
                         }
-                        tVect = tRoad.GSDSpline.GetSplineValue(index);
-                        iVect1 = new Vector2(tVect.x, tVect.z);
-                        tVect = tRoad.GSDSpline.GetSplineValue(i2);
-                        iVect2 = new Vector2(tVect.x, tVect.z);
+                        vector = _road.spline.GetSplineValue(index);
+                        vector1 = new Vector2(vector.x, vector.z);
+                        vector = _road.spline.GetSplineValue(i2);
+                        vector2 = new Vector2(vector.x, vector.z);
 
                         float x2 = 0f;
-                        for (float x = 0f; x < 1.000001f; x += xRoadMod)
+                        for (float x = 0f; x < 1.000001f; x += roadMod)
                         {
-                            x2 = (x + xRoadMod);
+                            x2 = (x + roadMod);
                             if (x2 > 1f)
                             {
                                 x2 = 1f;
                             }
-                            tVect = xRoad.GSDSpline.GetSplineValue(x);
-                            xVect1 = new Vector2(tVect.x, tVect.z);
-                            tVect = xRoad.GSDSpline.GetSplineValue(x2);
-                            xVect2 = new Vector2(tVect.x, tVect.z);
+                            vector = road.spline.GetSplineValue(x);
+                            xVector1 = new Vector2(vector.x, vector.z);
+                            vector = road.spline.GetSplineValue(x2);
+                            xVector2 = new Vector2(vector.x, vector.z);
 
                             //Now see if these two lines intersect:
-                            if (GSD.GSDRootUtil.Intersects2D(ref iVect1, ref iVect2, ref xVect1, ref xVect2, out IntersectPoint2D))
+                            if (GSD.GSDRootUtil.Intersects2D(ref vector1, ref vector2, ref xVector1, ref xVector2, out intersectPoint2D))
                             {
                                 //Get height of intersection on primary road:
-                                float tHeight = 0f;
-                                float hParam = tRoad.GSDSpline.GetClosestParam(new Vector3(IntersectPoint2D.x, 0f, IntersectPoint2D.y));
-                                Vector3 hVect = tRoad.GSDSpline.GetSplineValue(hParam);
-                                tHeight = hVect.y;
+                                float height = 0f;
+                                float param = _road.spline.GetClosestParam(new Vector3(intersectPoint2D.x, 0f, intersectPoint2D.y));
+                                Vector3 paramVector = _road.spline.GetSplineValue(param);
+                                height = paramVector.y;
 
                                 //if any intersections already within 75m or 100m, dont create intersection here
-                                Object[] AllInterectionObjects = Object.FindObjectsOfType<GSDRoadIntersection>();
-                                foreach (GSDRoadIntersection GSDRI in AllInterectionObjects)
+                                Object[] allInterectionObjects = Object.FindObjectsOfType<GSDRoadIntersection>();
+                                foreach (GSDRoadIntersection roadIntersection in allInterectionObjects)
                                 {
-                                    if (Vector2.Distance(new Vector2(GSDRI.transform.position.x, GSDRI.transform.position.z), IntersectPoint2D) < 100f)
+                                    if (Vector2.Distance(new Vector2(roadIntersection.transform.position.x, roadIntersection.transform.position.z), intersectPoint2D) < 100f)
                                     {
                                         goto NoIntersectionCreation;
                                     }
@@ -306,17 +308,17 @@ namespace GSD.Roads
 
                                 GSDSplineN IntersectionNode1 = null;
                                 GSDSplineN IntersectionNode2 = null;
-                                Vector3 IntersectionPoint3D = new Vector3(IntersectPoint2D.x, tHeight, IntersectPoint2D.y);
+                                Vector3 IntersectionPoint3D = new Vector3(intersectPoint2D.x, height, intersectPoint2D.y);
                                 //Debug.Log("Instersect found road: " + xRoad.transform.name + " at point: " + IntersectionPoint3D.ToString());
 
                                 //Check primary road if any nodes are nearby and usable for intersection
-                                foreach (GSDSplineN tNode in tRoad.GSDSpline.mNodes)
+                                foreach (GSDSplineN node in _road.spline.mNodes)
                                 {
-                                    if (tNode.IsLegitimate())
+                                    if (node.IsLegitimate())
                                     {
-                                        if (Vector2.Distance(new Vector2(tNode.transform.position.x, tNode.transform.position.z), IntersectPoint2D) < 30f)
+                                        if (Vector2.Distance(new Vector2(node.transform.position.x, node.transform.position.z), intersectPoint2D) < 30f)
                                         {
-                                            IntersectionNode1 = tNode;
+                                            IntersectionNode1 = node;
                                             IntersectionNode1.transform.position = IntersectionPoint3D;
                                             IntersectionNode1.pos = IntersectionPoint3D;
                                             break;
@@ -325,13 +327,13 @@ namespace GSD.Roads
                                 }
 
                                 //Check secondary road if any nodes are nearby and usable for intersection
-                                foreach (GSDSplineN tNode in xRoad.GSDSpline.mNodes)
+                                foreach (GSDSplineN node in road.spline.mNodes)
                                 {
-                                    if (tNode.IsLegitimate())
+                                    if (node.IsLegitimate())
                                     {
-                                        if (Vector2.Distance(new Vector2(tNode.transform.position.x, tNode.transform.position.z), IntersectPoint2D) < 30f)
+                                        if (Vector2.Distance(new Vector2(node.transform.position.x, node.transform.position.z), intersectPoint2D) < 30f)
                                         {
-                                            IntersectionNode2 = tNode;
+                                            IntersectionNode2 = node;
                                             IntersectionNode2.transform.position = IntersectionPoint3D;
                                             IntersectionNode2.pos = IntersectionPoint3D;
                                             break;
@@ -342,18 +344,18 @@ namespace GSD.Roads
                                 //Check if any of the nodes are null. If so, need to insert node. And maybe update it.
                                 if (IntersectionNode1 == null)
                                 {
-                                    IntersectionNode1 = InsertNode_Programmatically(tRoad, IntersectionPoint3D);
+                                    IntersectionNode1 = InsertNodeProgrammatically(_road, IntersectionPoint3D);
                                 }
                                 if (IntersectionNode2 == null)
                                 {
-                                    IntersectionNode2 = InsertNode_Programmatically(xRoad, IntersectionPoint3D);
+                                    IntersectionNode2 = InsertNodeProgrammatically(road, IntersectionPoint3D);
                                 }
 
                                 //Now create the fucking intersection:
-                                GameObject tInter = GSD.Roads.GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
-                                GSDRoadIntersection GSDRI_JustCreated = tInter.GetComponent<GSDRoadIntersection>();
-                                GSDRI_JustCreated.iStopType = iStopType;
-                                GSDRI_JustCreated.rType = rType;
+                                GameObject intersection = GSD.Roads.GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
+                                GSDRoadIntersection newRoadIntersection = intersection.GetComponent<GSDRoadIntersection>();
+                                newRoadIntersection.iStopType = _iStopType;
+                                newRoadIntersection.rType = _roadType;
                             }
 
                             NoIntersectionCreation:
@@ -364,7 +366,7 @@ namespace GSD.Roads
                                 xxx = 2;
                             }
                         }
-                        if (EarlyDistanceFound)
+                        if (isEarlyDistanceFound)
                         {
                             break;
                         }

@@ -18,14 +18,14 @@ public class GSDRoadConnector : MonoBehaviour
     #region "Gizmos"
     private void OnDrawGizmos()
     {
-        Gizmos.color = GSDOffRoadObject.Color_NodeOffRoadColor;
+        Gizmos.color = GSDOffRoadObject.offRoadNodeColor;
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6f, 0f), new Vector3(2f, 11f, 2f));
     }
 
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = GSDOffRoadObject.Color_NodeOffRoadSelectedColor;
+        Gizmos.color = GSDOffRoadObject.offRoadSelectedNodeColor;
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
     }
     #endregion

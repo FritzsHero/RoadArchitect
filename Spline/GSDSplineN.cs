@@ -602,7 +602,7 @@ public class GSDSplineN : MonoBehaviour
         {
             return;
         }
-        if (!GSDSpline.tRoad.opt_GizmosEnabled)
+        if (!GSDSpline.tRoad.isGizmosEnabled)
         {
             return;
         }
@@ -635,7 +635,7 @@ public class GSDSplineN : MonoBehaviour
         }
         else
         {
-            Gizmos.color = GSDSpline.tRoad.Color_NodeDefaultColor;
+            Gizmos.color = GSDSpline.tRoad.defaultNodeColor;
             Gizmos.DrawCube(transform.position + new Vector3(0f, 6f, 0f), new Vector3(2f, 11f, 2f));
         }
     }
@@ -643,7 +643,7 @@ public class GSDSplineN : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (!GSDSpline.tRoad.opt_GizmosEnabled)
+        if (!GSDSpline.tRoad.isGizmosEnabled)
         {
             return;
         }
@@ -752,8 +752,8 @@ public class GSDSplineN : MonoBehaviour
         //		float CurrentYDiff = tPos.y - pos.y;
         //		float CurrentGrade = CurrentYDiff/CurrentDistance;
         //Get max/min grade height position for this currrent tDist distance:
-        MaxY = (GSDSpline.tRoad.opt_MaxGrade * CurrentDistance) + pos.y;
-        MinY = pos.y - (GSDSpline.tRoad.opt_MaxGrade * CurrentDistance);
+        MaxY = (GSDSpline.tRoad.maxGrade * CurrentDistance) + pos.y;
+        MinY = pos.y - (GSDSpline.tRoad.maxGrade * CurrentDistance);
 
         //(tPos.y-pos.y)/CurrentDistance
 

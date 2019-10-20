@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class GSDRigidBody : MonoBehaviour
 {
-    public float MinCollVelocity = 2f;
-    //	bool bIsForcedSleeping = false;
-    private Rigidbody rigidBody;            // Formerly RB // FH 29.01.19
-    //	bool bIgnoreRB = false;
+    [UnityEngine.Serialization.FormerlySerializedAsAttribute("MinCollVelocity")]
+    public float minCollisionVelocity = 2f;
+    //[UnityEngine.Serialization.FormerlySerializedAsAttribute("bIsForcedSleeping")]
+    //bool isForcedSleeping = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("RB")]
+    private Rigidbody rigidBody;
+    //[UnityEngine.Serialization.FormerlySerializedAsAttribute("bIgnoreRB")]
+    //bool isIgnoringRigidBody = false;
 
 
     private void Awake()
@@ -24,21 +28,21 @@ public class GSDRigidBody : MonoBehaviour
     /*
     private void OnCollisionEnter(Collision collision)
     {
-        if ( bIgnoreRB || !bIsForcedSleeping )
+        if ( isIgnoringRigidBody || !isForcedSleeping )
         {
             return;
         }
         Debug.Log( collision.relativeVelocity.magnitude );
         if ( rigidbody != null )
         {
-            if ( collision.relativeVelocity.magnitude <= MinCollVelocity )
+            if ( collision.relativeVelocity.magnitude <= minCollisionVelocity )
             {
                 rigidbody.Sleep();
             }
             else
             {
                 //RB.isKinematic = false;
-                bIsForcedSleeping = false;
+                isForcedSleeping = false;
                 //RB.AddForce(collision.relativeVelocity*collision.relativeVelocity.magnitude*(RB.mass*0.3f));
             }
         }
@@ -47,9 +51,11 @@ public class GSDRigidBody : MonoBehaviour
 
     private void OnCollisionExit(Collision collisionInfo)
     {
-        if ( bIgnoreRB || !bIsForcedSleeping )
-        { return; }
-        if ( bIsForcedSleeping && rigidbody != null )
+        if ( isIgnoringRigidBody || !isForcedSleeping )
+        {
+            return;
+        }
+        if ( isForcedSleeping && rigidbody != null )
         {
             rigidbody.Sleep();
         }
@@ -62,7 +68,7 @@ public class GSDRigidBody : MonoBehaviour
 
     private void Update()
     {
-        if ( bIsForcedSleeping )
+        if ( isForcedSleeping )
         {
             TimerNow += Time.deltaTime;
             if ( TimerNow > TimerMax )

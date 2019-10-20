@@ -118,39 +118,39 @@ namespace GSD.Roads
             }
 
             //Get road system create road:
-            GSDRoad tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
 
             //Bridge0: (Arch)
-            tRoad.GSDSpline.mNodes[4].bIsBridgeStart = true;
-            tRoad.GSDSpline.mNodes[4].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[7].bIsBridgeEnd = true;
-            tRoad.GSDSpline.mNodes[7].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[4].BridgeCounterpartNode = tRoad.GSDSpline.mNodes[7];
-            tRoad.GSDSpline.mNodes[4].LoadWizardObjectsFromLibrary("Arch12m-2L", true, true);
+            tRoad.spline.mNodes[4].bIsBridgeStart = true;
+            tRoad.spline.mNodes[4].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[7].bIsBridgeEnd = true;
+            tRoad.spline.mNodes[7].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[4].BridgeCounterpartNode = tRoad.spline.mNodes[7];
+            tRoad.spline.mNodes[4].LoadWizardObjectsFromLibrary("Arch12m-2L", true, true);
 
             //Bridge1: (Federal causeway)
-            tRoad.GSDSpline.mNodes[8].bIsBridgeStart = true;
-            tRoad.GSDSpline.mNodes[8].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[8].BridgeCounterpartNode = tRoad.GSDSpline.mNodes[10];
-            tRoad.GSDSpline.mNodes[8].LoadWizardObjectsFromLibrary("Causeway1-2L", true, true);
-            tRoad.GSDSpline.mNodes[10].bIsBridgeEnd = true;
-            tRoad.GSDSpline.mNodes[10].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[8].bIsBridgeStart = true;
+            tRoad.spline.mNodes[8].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[8].BridgeCounterpartNode = tRoad.spline.mNodes[10];
+            tRoad.spline.mNodes[8].LoadWizardObjectsFromLibrary("Causeway1-2L", true, true);
+            tRoad.spline.mNodes[10].bIsBridgeEnd = true;
+            tRoad.spline.mNodes[10].bIsBridgeMatched = true;
 
             //Bridge2: (Steel)
-            tRoad.GSDSpline.mNodes[11].bIsBridgeStart = true;
-            tRoad.GSDSpline.mNodes[11].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[11].BridgeCounterpartNode = tRoad.GSDSpline.mNodes[13];
-            tRoad.GSDSpline.mNodes[11].LoadWizardObjectsFromLibrary("Steel-2L", true, true);
-            tRoad.GSDSpline.mNodes[13].bIsBridgeEnd = true;
-            tRoad.GSDSpline.mNodes[13].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[11].bIsBridgeStart = true;
+            tRoad.spline.mNodes[11].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[11].BridgeCounterpartNode = tRoad.spline.mNodes[13];
+            tRoad.spline.mNodes[11].LoadWizardObjectsFromLibrary("Steel-2L", true, true);
+            tRoad.spline.mNodes[13].bIsBridgeEnd = true;
+            tRoad.spline.mNodes[13].bIsBridgeMatched = true;
 
             //Bridge3: (Causeway)
-            tRoad.GSDSpline.mNodes[14].bIsBridgeStart = true;
-            tRoad.GSDSpline.mNodes[14].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[16].bIsBridgeEnd = true;
-            tRoad.GSDSpline.mNodes[16].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[14].BridgeCounterpartNode = tRoad.GSDSpline.mNodes[16];
-            tRoad.GSDSpline.mNodes[14].LoadWizardObjectsFromLibrary("Causeway4-2L", true, true);
+            tRoad.spline.mNodes[14].bIsBridgeStart = true;
+            tRoad.spline.mNodes[14].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[16].bIsBridgeEnd = true;
+            tRoad.spline.mNodes[16].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[14].BridgeCounterpartNode = tRoad.spline.mNodes[16];
+            tRoad.spline.mNodes[14].LoadWizardObjectsFromLibrary("Causeway4-2L", true, true);
         }
 
 
@@ -177,7 +177,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (index * 200f), tHeight, 600f));
             }
-            bRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            bRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
 
             //Get road system, create road #1:
             nodeLocations.Clear();
@@ -185,7 +185,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX, tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #2:
@@ -194,7 +194,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 2f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
             //Get road system, create road #3:
@@ -203,7 +203,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 4f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.BothTurnLanes);
 
             //Get road system, create road #4:
@@ -212,7 +212,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 6f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
             //Get road system, create road #4:
@@ -221,14 +221,14 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 8f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
-            GSDRoadAutomation.CreateIntersections_ProgrammaticallyForRoad(bRoad, GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            GSDRoadAutomation.CreateIntersectionsProgrammaticallyForRoad(bRoad, GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
-            foreach (GSDSplineN tNode in bRoad.GSDSpline.mNodes)
+            foreach (GSDSplineN tNode in bRoad.spline.mNodes)
             {
                 if (tNode.bIsIntersection)
                 {
@@ -251,9 +251,9 @@ namespace GSD.Roads
         {
             GSDSplineN tInter1 = null;
             GSDSplineN tInter2 = null;
-            foreach (GSDSplineN tNode in bRoad.GSDSpline.mNodes)
+            foreach (GSDSplineN tNode in bRoad.spline.mNodes)
             {
-                foreach (GSDSplineN xNode in tRoad.GSDSpline.mNodes)
+                foreach (GSDSplineN xNode in tRoad.spline.mNodes)
                 {
                     if (GSDRootUtil.IsApproximately(Vector3.Distance(tNode.transform.position, xNode.transform.position), 0f, 0.05f))
                     {
@@ -293,8 +293,8 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (index * StartLocYSep), tHeight, StartLocY + (StartLocYSep * 2f)));
             }
-            bRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
-            bRoad.opt_Lanes = 4;
+            bRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            bRoad.laneAmount = 4;
 
 
             //Get road system, create road #1:
@@ -303,8 +303,8 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX, tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
-            tRoad.opt_Lanes = 4;
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            tRoad.laneAmount = 4;
             UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #2:
@@ -313,8 +313,8 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 2f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
-            tRoad.opt_Lanes = 4;
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            tRoad.laneAmount = 4;
             UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #3:
@@ -323,8 +323,8 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 4f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
-            tRoad.opt_Lanes = 4;
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            tRoad.laneAmount = 4;
             UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #4:
@@ -333,8 +333,8 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 6f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
-            tRoad.opt_Lanes = 4;
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            tRoad.laneAmount = 4;
             UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #5:
@@ -343,13 +343,13 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 8f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
-            tRoad.opt_Lanes = 4;
+            tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            tRoad.laneAmount = 4;
             UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
-            foreach (GSDSplineN tNode in bRoad.GSDSpline.mNodes)
+            foreach (GSDSplineN tNode in bRoad.spline.mNodes)
             {
                 if (tNode.bIsIntersection)
                 {
@@ -372,15 +372,15 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(3500f, 90f, 200f + (800f * index)));
             }
-            GSDRoad tRoad = GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
 
             //Suspension bridge:
-            tRoad.GSDSpline.mNodes[1].bIsBridgeStart = true;
-            tRoad.GSDSpline.mNodes[1].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[3].bIsBridgeEnd = true;
-            tRoad.GSDSpline.mNodes[3].bIsBridgeMatched = true;
-            tRoad.GSDSpline.mNodes[1].BridgeCounterpartNode = tRoad.GSDSpline.mNodes[3];
-            tRoad.GSDSpline.mNodes[1].LoadWizardObjectsFromLibrary("SuspL-2L", true, true);
+            tRoad.spline.mNodes[1].bIsBridgeStart = true;
+            tRoad.spline.mNodes[1].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[3].bIsBridgeEnd = true;
+            tRoad.spline.mNodes[3].bIsBridgeMatched = true;
+            tRoad.spline.mNodes[1].BridgeCounterpartNode = tRoad.spline.mNodes[3];
+            tRoad.spline.mNodes[1].LoadWizardObjectsFromLibrary("SuspL-2L", true, true);
         }
 
 
@@ -401,7 +401,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(30, 30f, 3960f - (79f * index)));
             }
-            GSDRoadAutomation.CreateRoad_Programmatically(RoadSystem, ref nodeLocations);
+            GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
         }
     }
 #endif

@@ -278,9 +278,9 @@ public class GSDSplineC : MonoBehaviour
 
         //Get bounds of road system:
         float[] tMaxEffects = new float[3];
-        tMaxEffects[0] = tRoad.opt_MatchHeightsDistance;
-        tMaxEffects[1] = tRoad.opt_ClearDetailsDistance;
-        tMaxEffects[2] = tRoad.opt_ClearTreesDistance;
+        tMaxEffects[0] = tRoad.matchHeightsDistance;
+        tMaxEffects[1] = tRoad.clearDetailsDistance;
+        tMaxEffects[2] = tRoad.clearTreesDistance;
         float MaxEffectDistance = Mathf.Max(tMaxEffects) * 2f; //Add min/max clear diff to bound checks
         int mCount1 = GetNodeCount();
         float[] tMinMaxX = new float[mCount1];
@@ -550,7 +550,7 @@ public class GSDSplineC : MonoBehaviour
         float step = tMod / distance;
         Vector3 cPos = GetSplineValue(0f);
         Vector3 prevPos = cPos;
-        float tempDistanceModMax = tRoad.opt_RoadDefinition - step;
+        float tempDistanceModMax = tRoad.roadDefinition - step;
         float tempDistanceMod = 0f;
         float tempTotalDistance = 0f;
         float tempDistanceHolder = 0f;
@@ -1236,7 +1236,7 @@ public class GSDSplineC : MonoBehaviour
         //Tangents:
         Vector3 xVect1 = (P1 - P2) * tension;
         Vector3 xVect2 = (P3 - P0) * tension;
-        float tMaxMag = tRoad.opt_MagnitudeThreshold;
+        float tMaxMag = tRoad.magnitudeThreshold;
 
         if (Vector3.Distance(P1, P3) > tMaxMag)
         {
@@ -1429,7 +1429,7 @@ public class GSDSplineC : MonoBehaviour
     {
         int mCount = GetNodeCount();
         GSDSplineN tNode;
-        float MetersToCheck = 75f * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+        float MetersToCheck = 75f * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
         float tDist;
         for (int index = 0; index < mCount; index++)
         {
@@ -1450,7 +1450,7 @@ public class GSDSplineC : MonoBehaviour
                 {
                     if (bUseSQ)
                     {
-                        MetersToCheck = MetersToCheck_NoTurnLaneSQ * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+                        MetersToCheck = MetersToCheck_NoTurnLaneSQ * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
                     }
                     //					else{
                     //						MetersToCheck = MetersToCheck_NoTurnLane;
@@ -1460,7 +1460,7 @@ public class GSDSplineC : MonoBehaviour
                 {
                     if (bUseSQ)
                     {
-                        MetersToCheck = MetersToCheck_TurnLaneSQ * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+                        MetersToCheck = MetersToCheck_TurnLaneSQ * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
                         ;
                     }
                     //					else{
@@ -1471,7 +1471,7 @@ public class GSDSplineC : MonoBehaviour
                 {
                     if (bUseSQ)
                     {
-                        MetersToCheck = MetersToCheck_BothTurnLaneSQ * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+                        MetersToCheck = MetersToCheck_BothTurnLaneSQ * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
                         ;
                     }
                     //					else{
@@ -1480,11 +1480,11 @@ public class GSDSplineC : MonoBehaviour
                 }
 
                 MetersToCheck *= 0.8f;
-                if (tRoad.opt_Lanes == 4)
+                if (tRoad.laneAmount == 4)
                 {
                     MetersToCheck *= 1.25f;
                 }
-                else if (tRoad.opt_Lanes == 6)
+                else if (tRoad.laneAmount == 6)
                 {
                     MetersToCheck *= 1.35f;
                 }
@@ -1507,7 +1507,7 @@ public class GSDSplineC : MonoBehaviour
         float tDist;
         GSDSplineN tNode;
 
-        float MetersToCheck = 75f * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+        float MetersToCheck = 75f * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
 
         for (int index = 0; index < mCount; index++)
         {
@@ -1528,7 +1528,7 @@ public class GSDSplineC : MonoBehaviour
                 {
                     if (bUseSQ)
                     {
-                        MetersToCheck = MetersToCheck_NoTurnLaneSQ * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+                        MetersToCheck = MetersToCheck_NoTurnLaneSQ * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
                     }
                     //					else{
                     //						MetersToCheck = MetersToCheck_NoTurnLane;
@@ -1538,7 +1538,7 @@ public class GSDSplineC : MonoBehaviour
                 {
                     if (bUseSQ)
                     {
-                        MetersToCheck = MetersToCheck_TurnLaneSQ * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+                        MetersToCheck = MetersToCheck_TurnLaneSQ * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
                     }
                     //					else{
                     //						MetersToCheck = MetersToCheck_TurnLane;
@@ -1548,17 +1548,17 @@ public class GSDSplineC : MonoBehaviour
                 {
                     if (bUseSQ)
                     {
-                        MetersToCheck = MetersToCheck_BothTurnLaneSQ * ((tRoad.opt_LaneWidth / 5f) * (tRoad.opt_LaneWidth / 5f));
+                        MetersToCheck = MetersToCheck_BothTurnLaneSQ * ((tRoad.laneWidth / 5f) * (tRoad.laneWidth / 5f));
                     }
                     //					else{
                     //						MetersToCheck = MetersToCheck_BothTurnLane;
                     //					}
                 }
-                if (tRoad.opt_Lanes == 4)
+                if (tRoad.laneAmount == 4)
                 {
                     MetersToCheck *= 1.25f;
                 }
-                else if (tRoad.opt_Lanes == 6)
+                else if (tRoad.laneAmount == 6)
                 {
                     MetersToCheck *= 1.35f;
                 }
@@ -1743,21 +1743,21 @@ public class GSDSplineC : MonoBehaviour
             {
                 if (tNode != null)
                 {
-                    tNode.GSDSpline.tRoad.bUpdateSpline = true;
+                    tNode.GSDSpline.tRoad.isUpdatingSpline = true;
                 }
                 if (tNode.Intersection_OtherNode != null)
                 {
-                    tNode.Intersection_OtherNode.GSDSpline.tRoad.bUpdateSpline = true;
+                    tNode.Intersection_OtherNode.GSDSpline.tRoad.isUpdatingSpline = true;
                 }
             }
             else
             {
-                tNode.GSDSpline.tRoad.bUpdateSpline = true;
+                tNode.GSDSpline.tRoad.isUpdatingSpline = true;
             }
         }
         else if (tNode != null)
         {
-            tNode.GSDSpline.tRoad.bUpdateSpline = true;
+            tNode.GSDSpline.tRoad.isUpdatingSpline = true;
         }
     }
     #endregion
@@ -2115,20 +2115,20 @@ public class GSDSplineC : MonoBehaviour
         NodeCreated1.SpecialNodeCounterpart = NodeCreated2;
         NodeCreated2.SpecialNodeCounterpart = NodeCreated1;
 
-        float lWidth1 = tNode1.GSDSpline.tRoad.opt_LaneWidth;
-        float lWidth2 = tNode2.GSDSpline.tRoad.opt_LaneWidth;
+        float lWidth1 = tNode1.GSDSpline.tRoad.laneWidth;
+        float lWidth2 = tNode2.GSDSpline.tRoad.laneWidth;
         float xWidth = Mathf.Max(lWidth1, lWidth2);
 
         float tDelay = 0f;
-        if (tNode1.GSDSpline.tRoad.opt_Lanes > tNode2.GSDSpline.tRoad.opt_Lanes)
+        if (tNode1.GSDSpline.tRoad.laneAmount > tNode2.GSDSpline.tRoad.laneAmount)
         {
             tNode2.bSpecialRoadConnPrimary = true;
             NodeCreated2.bSpecialRoadConnPrimary = true;
-            if (tNode2.GSDSpline.tRoad.opt_Lanes == 4)
+            if (tNode2.GSDSpline.tRoad.laneAmount == 4)
             {
                 xWidth *= 2f;
             }
-            tDelay = (tNode1.GSDSpline.tRoad.opt_Lanes - tNode2.GSDSpline.tRoad.opt_Lanes) * xWidth;
+            tDelay = (tNode1.GSDSpline.tRoad.laneAmount - tNode2.GSDSpline.tRoad.laneAmount) * xWidth;
             if (tDelay < 10f)
             {
                 tDelay = 10f;
@@ -2148,13 +2148,13 @@ public class GSDSplineC : MonoBehaviour
                 tNode2.GSDSpline.SpecialEndNode_End_OtherSpline = tNode1.GSDSpline;
             }
         }
-        else if (tNode2.GSDSpline.tRoad.opt_Lanes > tNode1.GSDSpline.tRoad.opt_Lanes)
+        else if (tNode2.GSDSpline.tRoad.laneAmount > tNode1.GSDSpline.tRoad.laneAmount)
         {
             tNode1.bSpecialRoadConnPrimary = true;
             NodeCreated1.bSpecialRoadConnPrimary = true;
-            if (tNode1.GSDSpline.tRoad.opt_Lanes == 4)
+            if (tNode1.GSDSpline.tRoad.laneAmount == 4)
             { xWidth *= 2f; }
-            tDelay = (tNode2.GSDSpline.tRoad.opt_Lanes - tNode1.GSDSpline.tRoad.opt_Lanes) * xWidth;
+            tDelay = (tNode2.GSDSpline.tRoad.laneAmount - tNode1.GSDSpline.tRoad.laneAmount) * xWidth;
             if (tDelay < 10f)
             {
                 tDelay = 10f;
@@ -2218,7 +2218,7 @@ public class GSDSplineC : MonoBehaviour
                 tNode1.GSDSpline.tRoad.PiggyBacks = new GSDSplineC[1];
                 tNode1.GSDSpline.tRoad.PiggyBacks[0] = tNode2.GSDSpline;
             }
-            tNode1.GSDSpline.tRoad.EditorUpdateMe = true;
+            tNode1.GSDSpline.tRoad.isUpdateRequired = true;
         }
         PreviewSpline.bGizmoDraw = false;
         xSpline.PreviewSpline.bGizmoDraw = false;

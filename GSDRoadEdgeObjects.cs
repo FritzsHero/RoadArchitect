@@ -1063,7 +1063,7 @@ namespace GSD.Roads.EdgeObjects
 
             if (bCollect)
             {
-                tNode.GSDSpline.tRoad.bTriggerGC = true;
+                tNode.GSDSpline.tRoad.isTriggeringGC = true;
             }
 #endif
         }

@@ -392,7 +392,7 @@ namespace GSD
         #region "Profiling"
         public static void StartProfiling(GSDRoad _road, string _profileName)
         {
-            if (_road.bProfiling)
+            if (_road.isProfiling)
             {
                 UnityEngine.Profiling.Profiler.BeginSample(_profileName);
             }
@@ -401,7 +401,7 @@ namespace GSD
 
         public static void EndProfiling(GSDRoad _road)
         {
-            if (_road.bProfiling)
+            if (_road.isProfiling)
             {
                 UnityEngine.Profiling.Profiler.EndSample();
             }
@@ -410,7 +410,7 @@ namespace GSD
 
         public static void EndStartProfiling(GSDRoad _road, string _profileName)
         {
-            if (_road.bProfiling)
+            if (_road.isProfiling)
             {
                 UnityEngine.Profiling.Profiler.EndSample();
                 UnityEngine.Profiling.Profiler.BeginSample(_profileName);

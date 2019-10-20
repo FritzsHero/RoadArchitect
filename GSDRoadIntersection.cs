@@ -525,7 +525,7 @@ public class GSDRoadIntersection : MonoBehaviour
     public void ResetMaterials_Center(bool bUpdate = true)
     {
         string tLanes = "-2L";
-        Lanes = Node1.GSDSpline.tRoad.opt_Lanes;
+        Lanes = Node1.GSDSpline.tRoad.laneAmount;
         if (Lanes == 4)
         {
             tLanes = "-4L";
@@ -573,7 +573,7 @@ public class GSDRoadIntersection : MonoBehaviour
     public void ResetMaterials_Ext_Stretched(bool bUpdate = true)
     {
         string tLanes = "-2L";
-        Lanes = Node1.GSDSpline.tRoad.opt_Lanes;
+        Lanes = Node1.GSDSpline.tRoad.laneAmount;
         if (Lanes == 4)
         {
             tLanes = "-4L";
@@ -638,7 +638,7 @@ public class GSDRoadIntersection : MonoBehaviour
     public void ResetMaterials_Lanes(bool bUpdate = true)
     {
         string tLanes = "";
-        Lanes = Node1.GSDSpline.tRoad.opt_Lanes;
+        Lanes = Node1.GSDSpline.tRoad.laneAmount;
         if (Lanes == 4)
         {
             tLanes = "-4L";

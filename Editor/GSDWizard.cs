@@ -343,10 +343,10 @@ public class GSDWizard : EditorWindow
         string[] tNames = null;
         string[] tPaths = null;
         //Load user custom ones first:
-        GetGroupListing(out tNames, out tPaths, thisNode.GSDSpline.tRoad.opt_Lanes, false);
+        GetGroupListing(out tNames, out tPaths, thisNode.GSDSpline.tRoad.laneAmount, false);
         LoadGroupObjs(ref tNames, ref tPaths, bIsBridge);
         //Load GSD ones last:
-        GetGroupListing(out tNames, out tPaths, thisNode.GSDSpline.tRoad.opt_Lanes, true);
+        GetGroupListing(out tNames, out tPaths, thisNode.GSDSpline.tRoad.laneAmount, true);
         LoadGroupObjs(ref tNames, ref tPaths, bIsBridge);
     }
 

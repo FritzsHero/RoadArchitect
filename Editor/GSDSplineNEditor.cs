@@ -341,10 +341,10 @@ public class GSDSplineNEditor : Editor
         HorizMatchSubTypeDescriptions[2] = "Match road left edge: -" + tRoadWidthHalf.ToString("F1") + " meters";
         HorizMatchSubTypeDescriptions[4] = "Match road right edge: " + tRoadWidthHalf.ToString("F1") + " meters";
 
-        if (tNode.GSDSpline.tRoad.opt_bShouldersEnabled)
+        if (tNode.GSDSpline.tRoad.isShouldersEnabled)
         {
-            HorizMatchSubTypeDescriptions[3] = "Match shoulder left edge: -" + (tRoadWidthHalf + tNode.GSDSpline.tRoad.opt_ShoulderWidth).ToString("F1") + " meters";
-            HorizMatchSubTypeDescriptions[5] = "Match shoulder right edge: " + (tRoadWidthHalf + tNode.GSDSpline.tRoad.opt_ShoulderWidth).ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[3] = "Match shoulder left edge: -" + (tRoadWidthHalf + tNode.GSDSpline.tRoad.shoulderWidth).ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[5] = "Match shoulder right edge: " + (tRoadWidthHalf + tNode.GSDSpline.tRoad.shoulderWidth).ToString("F1") + " meters";
         }
         else
         {
@@ -412,20 +412,20 @@ public class GSDSplineNEditor : Editor
 
 
         #region Option: Gizmo options, Convoluted due to submission compliance for undo rules:
-        if (tNode.GSDSpline.tRoad.opt_GizmosEnabled != tNode.opt_GizmosEnabled)
+        if (tNode.GSDSpline.tRoad.isGizmosEnabled != tNode.opt_GizmosEnabled)
         {
-            tNode.GSDSpline.tRoad.opt_GizmosEnabled = tNode.opt_GizmosEnabled;
+            tNode.GSDSpline.tRoad.isGizmosEnabled = tNode.opt_GizmosEnabled;
             tNode.GSDSpline.tRoad.UpdateGizmoOptions();
             tNode.GSDSpline.tRoad.Wireframes_Toggle();
         }
-        t_opt_GizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", tNode.GSDSpline.tRoad.opt_GizmosEnabled);
+        t_opt_GizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", tNode.GSDSpline.tRoad.isGizmosEnabled);
         #endregion
 
 
         #region "Option: Manual road cut"
         if (tNode.idOnSpline > 0 && tNode.idOnSpline < (tNode.GSDSpline.GetNodeCount() - 1) && !tNode.bIsIntersection && !tNode.bSpecialEndNode)
         { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
-            if (tNode.GSDSpline.tRoad.opt_bDynamicCuts)
+            if (tNode.GSDSpline.tRoad.isDynamicCutsEnabled)
             {
                 RAEditorUtilitys.Line();
                 t_bRoadCut = EditorGUILayout.Toggle("Cut road at this node: ", tNode.bRoadCut);
@@ -517,9 +517,9 @@ public class GSDSplineNEditor : Editor
             Undo.RecordObject(tNode, "Modify node");
 
             //Option: Gizmo options, Convoluted due to submission compliance for undo rules:
-            if (t_opt_GizmosEnabled != tNode.GSDSpline.tRoad.opt_GizmosEnabled)
+            if (t_opt_GizmosEnabled != tNode.GSDSpline.tRoad.isGizmosEnabled)
             {
-                tNode.GSDSpline.tRoad.opt_GizmosEnabled = t_opt_GizmosEnabled;
+                tNode.GSDSpline.tRoad.isGizmosEnabled = t_opt_GizmosEnabled;
                 tNode.GSDSpline.tRoad.UpdateGizmoOptions();
                 tNode.GSDSpline.tRoad.Wireframes_Toggle();
                 SceneView.RepaintAll();
@@ -528,7 +528,7 @@ public class GSDSplineNEditor : Editor
             //Option: Manual cut:
             if (tNode.idOnSpline > 0 && tNode.idOnSpline < (tNode.GSDSpline.GetNodeCount() - 1) && !tNode.bIsIntersection && !tNode.bSpecialEndNode)
             { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
-                if (tNode.GSDSpline.tRoad.opt_bDynamicCuts)
+                if (tNode.GSDSpline.tRoad.isDynamicCutsEnabled)
                 {
                     if (t_bRoadCut != tNode.bRoadCut)
                     {
@@ -1068,7 +1068,7 @@ public class GSDSplineNEditor : Editor
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                 {
-                    SMM.EM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() / 2) + tNode.GSDSpline.tRoad.opt_ShoulderWidth) * -1;
+                    SMM.EM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() / 2) + tNode.GSDSpline.tRoad.shoulderWidth) * -1;
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
                 {
@@ -1076,7 +1076,7 @@ public class GSDSplineNEditor : Editor
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                 {
-                    SMM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() / 2) + tNode.GSDSpline.tRoad.opt_ShoulderWidth;
+                    SMM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() / 2) + tNode.GSDSpline.tRoad.shoulderWidth;
                 }
                 tHorizMatching = HorizMatchingDefaultsEnum.None;
             }
@@ -1753,9 +1753,9 @@ public class GSDSplineNEditor : Editor
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                 {
-                    if (tNode.GSDSpline.tRoad.opt_bShouldersEnabled)
+                    if (tNode.GSDSpline.tRoad.isShouldersEnabled)
                     {
-                        EOM.EM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.opt_ShoulderWidth) * -1;
+                        EOM.EM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.shoulderWidth) * -1;
                     }
                     else
                     {
@@ -1768,9 +1768,9 @@ public class GSDSplineNEditor : Editor
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                 {
-                    if (tNode.GSDSpline.tRoad.opt_bShouldersEnabled)
+                    if (tNode.GSDSpline.tRoad.isShouldersEnabled)
                     {
-                        EOM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.opt_ShoulderWidth;
+                        EOM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.shoulderWidth;
                     }
                     else
                     {
@@ -1894,7 +1894,7 @@ public class GSDSplineNEditor : Editor
         SMM = tNode.AddSplinatedObject();
         string tBridgeTopBaseToAdd = "";
         string tName = "";
-        if (tNode.GSDSpline.tRoad.opt_Lanes == 2)
+        if (tNode.GSDSpline.tRoad.laneAmount == 2)
         {
             if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
             {
@@ -1917,7 +1917,7 @@ public class GSDSplineNEditor : Editor
                 tName = "BridgeTop0M-1M";
             }
         }
-        else if (tNode.GSDSpline.tRoad.opt_Lanes == 4)
+        else if (tNode.GSDSpline.tRoad.laneAmount == 4)
         {
             if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
             {
@@ -1998,7 +1998,7 @@ public class GSDSplineNEditor : Editor
         SMM = tNode.AddSplinatedObject();
         string tBridgeBottomBaseToAdd = "";
         string tName = "";
-        if (tNode.GSDSpline.tRoad.opt_Lanes == 2)
+        if (tNode.GSDSpline.tRoad.laneAmount == 2)
         {
             if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
@@ -2046,7 +2046,7 @@ public class GSDSplineNEditor : Editor
                 tName = "BridgeSteelBeams";
             }
         }
-        else if (tNode.GSDSpline.tRoad.opt_Lanes == 4)
+        else if (tNode.GSDSpline.tRoad.laneAmount == 4)
         {
             if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
@@ -2239,7 +2239,7 @@ public class GSDSplineNEditor : Editor
         }
         else
         {
-            SMM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() / 2) + tNode.GSDSpline.tRoad.opt_ShoulderWidth) * -1f;
+            SMM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() / 2) + tNode.GSDSpline.tRoad.shoulderWidth) * -1f;
         }
 
         if (bVertOverride)
@@ -2385,7 +2385,7 @@ public class GSDSplineNEditor : Editor
             if (!bMouseDragHasProcessed)
             {
                 //Enforce maximum road grade:
-                if (tNode.IsLegitimate() && tNode.GSDSpline.tRoad.opt_bMaxGradeEnabled)
+                if (tNode.IsLegitimate() && tNode.GSDSpline.tRoad.isMaxGradeEnabled)
                 {
                     tNode.EnsureGradeValidity();
                 }
@@ -2405,7 +2405,7 @@ public class GSDSplineNEditor : Editor
             if (VectorDiff(vChangeChecker, tNode.pos))
             {
                 tNode.pos = vChangeChecker;
-                if (tNode.IsLegitimate() && tNode.GSDSpline.tRoad.opt_bMaxGradeEnabled)
+                if (tNode.IsLegitimate() && tNode.GSDSpline.tRoad.isMaxGradeEnabled)
                 {
                     tNode.EnsureGradeValidity();
                 }
@@ -2476,7 +2476,7 @@ public class GSDSplineNEditor : Editor
     {
         if (tNode != null)
         {
-            tNode.GSDSpline.tRoad.EditorUpdateMe = true;
+            tNode.GSDSpline.tRoad.isUpdateRequired = true;
         }
     }
     #endregion

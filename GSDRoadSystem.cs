@@ -27,9 +27,9 @@ public class GSDRoadSystem : MonoBehaviour
         //Spline:
         GameObject tSplineObj = new GameObject("Spline");
         tSplineObj.transform.parent = tRoad.transform;
-        tRoad.GSDSpline = tSplineObj.AddComponent<GSDSplineC>();
-        tRoad.GSDSpline.mSplineRoot = tSplineObj;
-        tRoad.GSDSpline.tRoad = tRoad;
+        tRoad.spline = tSplineObj.AddComponent<GSDSplineC>();
+        tRoad.spline.mSplineRoot = tSplineObj;
+        tRoad.spline.tRoad = tRoad;
         tRoad.GSDSplineObj = tSplineObj;
         tRoad.GSDRS = this;
         tRoad.SetupUniqueIdentifier();
@@ -76,7 +76,7 @@ public class GSDRoadSystem : MonoBehaviour
             for (int h = 0; h < RoadCount; h++)
             {
                 tRoad = tRoadObjs[h];
-                tPiggys[h] = tRoad.GSDSpline;
+                tPiggys[h] = tRoad.spline;
             }
         }
 
@@ -100,7 +100,7 @@ public class GSDRoadSystem : MonoBehaviour
             tRoad = tRoadObjs[h];
             if (tRoad != null)
             {
-                tRoad.opt_bMultithreading = opt_bMultithreading;
+                tRoad.isUsingMultithreading = opt_bMultithreading;
             }
         }
     }
@@ -117,7 +117,7 @@ public class GSDRoadSystem : MonoBehaviour
             tRoad = tRoadObjs[h];
             if (tRoad != null)
             {
-                tRoad.opt_bSaveMeshes = opt_bSaveMeshes;
+                tRoad.isSavingMeshes = opt_bSaveMeshes;
             }
         }
     }

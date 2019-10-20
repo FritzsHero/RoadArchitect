@@ -68,7 +68,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
             singleRoad = allRoadObjects[count];
             if (count > 0)
             {
-                tPiggys[count - 1] = singleRoad.GSDSpline;
+                tPiggys[count - 1] = singleRoad.spline;
             }
         }
 

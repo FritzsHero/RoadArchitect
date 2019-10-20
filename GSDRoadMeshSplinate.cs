@@ -2454,20 +2454,20 @@ namespace GSD.Roads.Splination
             //Road definition matching:
             if (bMatchRoadDefinition)
             {
-                float RoadDefStart = (tSpline.tRoad.opt_RoadDefinition / 2f) * -1;
-                float UVChange = tSpline.tRoad.opt_RoadDefinition / mMaxDiff;
+                float RoadDefStart = (tSpline.tRoad.roadDefinition / 2f) * -1;
+                float UVChange = tSpline.tRoad.roadDefinition / mMaxDiff;
                 foreach (KeyValuePair<int, int> KVP in MatchingIndices)
                 {
                     //Vertex change:
                     if (Axis == AxisTypeEnum.X)
                     {
                         OrigVerts[KVP.Value].x = RoadDefStart;
-                        OrigVerts[KVP.Key].x = (OrigVerts[KVP.Value].x + tSpline.tRoad.opt_RoadDefinition);
+                        OrigVerts[KVP.Key].x = (OrigVerts[KVP.Value].x + tSpline.tRoad.roadDefinition);
                     }
                     else if (Axis == AxisTypeEnum.Z)
                     {
                         OrigVerts[KVP.Value].z = RoadDefStart;
-                        OrigVerts[KVP.Key].z = (OrigVerts[KVP.Value].z + tSpline.tRoad.opt_RoadDefinition);
+                        OrigVerts[KVP.Key].z = (OrigVerts[KVP.Value].z + tSpline.tRoad.roadDefinition);
                     }
                     //UV Change:
                     if (RepeatUVType == RepeatUVTypeEnum.X)
@@ -3833,7 +3833,7 @@ namespace GSD.Roads.Splination
 
             if (bCollect)
             {
-                tNode.GSDSpline.tRoad.bTriggerGC = true;
+                tNode.GSDSpline.tRoad.isTriggeringGC = true;
             }
 #endif
         }

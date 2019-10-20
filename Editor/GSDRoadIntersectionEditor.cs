@@ -1137,14 +1137,14 @@ public class GSDRoadIntersectionEditor : Editor
 
         if (tInter != null && tInter.Node1 != null && tInter.Node2 != null)
         {
-            if (!tInter.Node1.GSDSpline.tRoad.Editor_bIsConstructing && !tInter.Node2.GSDSpline.tRoad.Editor_bIsConstructing)
+            if (!tInter.Node1.GSDSpline.tRoad.isEditorConstructing && !tInter.Node2.GSDSpline.tRoad.isEditorConstructing)
             {
                 if (!tInter.bSameSpline)
                 {
                     tInter.Node1.GSDSpline.tRoad.PiggyBacks = new GSDSplineC[1];
                     tInter.Node1.GSDSpline.tRoad.PiggyBacks[0] = tInter.Node2.GSDSpline;
                 }
-                tInter.Node1.GSDSpline.tRoad.EditorUpdateMe = true;
+                tInter.Node1.GSDSpline.tRoad.isUpdateRequired = true;
             }
         }
     }
