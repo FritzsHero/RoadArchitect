@@ -1996,7 +1996,7 @@ namespace GSD.Roads.Splination
 
             if (EndTime < StartTime)
             {
-                EndTime = node.NextTime;
+                EndTime = node.nextTime;
                 EndPos = spline.GetSplineValue(EndTime, false);
             }
             if (EndTime > 0.99995f)
@@ -2585,20 +2585,20 @@ namespace GSD.Roads.Splination
             //Road definition matching:
             if (isMatchingRoadDefinition)
             {
-                float RoadDefStart = (spline.tRoad.roadDefinition / 2f) * -1;
-                float UVChange = spline.tRoad.roadDefinition / mMaxDiff;
+                float RoadDefStart = (spline.road.roadDefinition / 2f) * -1;
+                float UVChange = spline.road.roadDefinition / mMaxDiff;
                 foreach (KeyValuePair<int, int> KVP in MatchingIndices)
                 {
                     //Vertex change:
                     if (Axis == AxisTypeEnum.X)
                     {
                         OrigVerts[KVP.Value].x = RoadDefStart;
-                        OrigVerts[KVP.Key].x = (OrigVerts[KVP.Value].x + spline.tRoad.roadDefinition);
+                        OrigVerts[KVP.Key].x = (OrigVerts[KVP.Value].x + spline.road.roadDefinition);
                     }
                     else if (Axis == AxisTypeEnum.Z)
                     {
                         OrigVerts[KVP.Value].z = RoadDefStart;
-                        OrigVerts[KVP.Key].z = (OrigVerts[KVP.Value].z + spline.tRoad.roadDefinition);
+                        OrigVerts[KVP.Key].z = (OrigVerts[KVP.Value].z + spline.road.roadDefinition);
                     }
                     //UV Change:
                     if (RepeatUVType == RepeatUVTypeEnum.X)
@@ -2740,7 +2740,7 @@ namespace GSD.Roads.Splination
 
             while (cTime < EndTime && SpamGuardCounter < SpamGuard)
             {
-                spline.GetSplineValue_Both(cTime, out tVect1, out tDir);
+                spline.GetSplineValueBoth(cTime, out tVect1, out tDir);
                 fHeight = HorizontalCurve.Evaluate((cTime - StartTime) / pDiffTime);
                 CurrentH = fHeight * HorizontalSep;
 
@@ -2865,7 +2865,7 @@ namespace GSD.Roads.Splination
             for (int i = 0; i < vSeriesCount; i++)
             {
                 cTime = tTimes[i];
-                spline.GetSplineValue_Both(cTime, out tVect1, out tVect2);
+                spline.GetSplineValueBoth(cTime, out tVect1, out tVect2);
                 tOrigHeights.Add(tVect1.y);
 
                 //Horizontal offset:
@@ -3724,7 +3724,7 @@ namespace GSD.Roads.Splination
             MF = Output.AddComponent<MeshFilter>();
             MF.sharedMesh = xMesh;
 
-            if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
+            if (node.spline.road.GSDRS.isSavingMeshes)
             {
                 SaveMesh(ref xMesh, false);
             }
@@ -3746,7 +3746,7 @@ namespace GSD.Roads.Splination
                 {
                     MC.convex = isCollisionConvex;
                     MC.isTrigger = isCollisionTrigger;
-                    if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
+                    if (node.spline.road.GSDRS.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
                         cMesh.tangents = GSDRootUtil.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
@@ -3769,7 +3769,7 @@ namespace GSD.Roads.Splination
                 {
                     MC.convex = isCollisionConvex;
                     MC.isTrigger = isCollisionTrigger;
-                    if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
+                    if (node.spline.road.GSDRS.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
                         cMesh.tangents = GSDRootUtil.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
@@ -3811,10 +3811,10 @@ namespace GSD.Roads.Splination
                 //					BCCenter.y -= (mMaxHeight*0.5f);
                 //				}else{
                 Vector3 POS = default(Vector3);
-                spline.GetSplineValue_Both(StartTime, out tVect1, out POS);
+                spline.GetSplineValueBoth(StartTime, out tVect1, out POS);
                 //Goes right if not neg:
                 tVect1 = (tVect1 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
-                spline.GetSplineValue_Both(EndTime, out tVect2, out POS);
+                spline.GetSplineValueBoth(EndTime, out tVect2, out POS);
                 tVect2 = (tVect2 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
                 tVect1.y += VerticalRaise;
                 tVect2.y += VerticalRaise;
@@ -3844,7 +3844,7 @@ namespace GSD.Roads.Splination
 
                 BC.center = BCCenter2;
 
-                tFloat1 = Vector3.Distance(node.pos, node.BridgeCounterpartNode.pos);
+                tFloat1 = Vector3.Distance(node.pos, node.bridgeCounterpartNode.pos);
 
                 if (isStretchSize)
                 {
@@ -3964,7 +3964,7 @@ namespace GSD.Roads.Splination
 
             if (_isCollecting)
             {
-                node.GSDSpline.tRoad.isTriggeringGC = true;
+                node.spline.road.isTriggeringGC = true;
             }
 #endif
         }
@@ -3973,7 +3973,7 @@ namespace GSD.Roads.Splination
         private void SaveMesh(ref Mesh _mesh, bool _isCollider)
         {
 #if UNITY_EDITOR
-            if (!node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
+            if (!node.spline.road.GSDRS.isSavingMeshes)
             {
                 return;
             }
@@ -3982,7 +3982,7 @@ namespace GSD.Roads.Splination
             tSceneName = tSceneName.Replace("/", "");
             tSceneName = tSceneName.Replace(".", "");
             string tFolderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/Extrusions/";
-            string tRoadName = node.GSDSpline.tRoad.transform.name;
+            string tRoadName = node.spline.road.transform.name;
             string FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + ".asset";
             if (_isCollider)
             {
@@ -4023,11 +4023,11 @@ namespace GSD.Roads.Splination
             Vector3 tDir = node.tangent;
 
             //if(!bStraightLineMatchStartEnd){
-            spline.GetSplineValue_Both(StartTime, out tVect1, out POS);
+            spline.GetSplineValueBoth(StartTime, out tVect1, out POS);
             //Goes right if not neg:
             tVect1 = (tVect1 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
 
-            spline.GetSplineValue_Both(EndTime, out tVect2, out POS);
+            spline.GetSplineValueBoth(EndTime, out tVect2, out POS);
             tVect2 = (tVect2 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
 
             tVect1.y += VerticalRaise;

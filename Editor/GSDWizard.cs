@@ -81,7 +81,7 @@ public class GSDWizard : EditorWindow
         GUILayout.Space(4f);
         EditorGUILayout.BeginHorizontal();
 
-        if (thisNode.bIsBridgeStart)
+        if (thisNode.isBridgeStart)
         {
             xWindowType = (WindowTypeEnum) EditorGUILayout.Popup("Category: ", (int) tWindowType, WindowTypeDescBridge, GUILayout.Width(312f));
         }
@@ -201,7 +201,7 @@ public class GSDWizard : EditorWindow
                 if (tWindowType == WindowTypeEnum.Extrusion)
                 {
                     GSD.Roads.Splination.SplinatedMeshMaker SMM = thisNode.AddSplinatedObject();
-                    SMM.SetDefaultTimes(thisNode.bIsEndPoint, thisNode.tTime, thisNode.NextTime, thisNode.idOnSpline, thisNode.GSDSpline.distance);
+                    SMM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
                     SMM.LoadFromLibrary(oList[i].fileName, oList[i].isDefault);
                     SMM.isGSD = oList[i].isDefault;
                     SMM.Setup(true);
@@ -209,7 +209,7 @@ public class GSDWizard : EditorWindow
                 else if (tWindowType == WindowTypeEnum.Edge)
                 {
                     GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = thisNode.AddEdgeObject();
-                    EOM.SetDefaultTimes(thisNode.bIsEndPoint, thisNode.tTime, thisNode.NextTime, thisNode.idOnSpline, thisNode.GSDSpline.distance);
+                    EOM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
                     EOM.LoadFromLibrary(oList[i].fileName, oList[i].isDefault);
                     EOM.isGSD = oList[i].isDefault;
                     EOM.Setup();
@@ -222,7 +222,7 @@ public class GSDWizard : EditorWindow
                 {
                     thisNode.LoadWizardObjectsFromLibrary(oList[i].fileName, oList[i].isDefault, oList[i].isBridge);
                 }
-                thisNode.bQuitGUI = true;
+                thisNode.isQuitGUI = true;
                 oList.Clear();
                 oList = null;
                 EditorGUILayout.EndHorizontal();
@@ -343,10 +343,10 @@ public class GSDWizard : EditorWindow
         string[] tNames = null;
         string[] tPaths = null;
         //Load user custom ones first:
-        GetGroupListing(out tNames, out tPaths, thisNode.GSDSpline.tRoad.laneAmount, false);
+        GetGroupListing(out tNames, out tPaths, thisNode.spline.road.laneAmount, false);
         LoadGroupObjs(ref tNames, ref tPaths, bIsBridge);
         //Load GSD ones last:
-        GetGroupListing(out tNames, out tPaths, thisNode.GSDSpline.tRoad.laneAmount, true);
+        GetGroupListing(out tNames, out tPaths, thisNode.spline.road.laneAmount, true);
         LoadGroupObjs(ref tNames, ref tPaths, bIsBridge);
     }
 

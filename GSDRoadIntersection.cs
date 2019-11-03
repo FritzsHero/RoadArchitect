@@ -286,7 +286,7 @@ public class GSDRoadIntersection : MonoBehaviour
     #region "Setup"
     public void Setup(GSDSplineN _node1, GSDSplineN _node2)
     {
-        if (_node1.GSDSpline == _node2.GSDSpline)
+        if (_node1.spline == _node2.spline)
         {
             isSameSpline = true;
         }
@@ -310,18 +310,18 @@ public class GSDRoadIntersection : MonoBehaviour
             node2 = _node2;
         }
 
-        node1.Intersection_OtherNode = node2;
-        node2.Intersection_OtherNode = node1;
+        node1.intersectionOtherNode = node2;
+        node2.intersectionOtherNode = node1;
 
         node1.ToggleHideFlags(true);
         node2.ToggleHideFlags(true);
 
-        node1uID = node1.UID;
-        node2uID = node2.UID;
-        node1.bIsIntersection = true;
-        node2.bIsIntersection = true;
-        node1.GSDRI = this;
-        node2.GSDRI = this;
+        node1uID = node1.uID;
+        node2uID = node2.uID;
+        node1.isIntersection = true;
+        node2.isIntersection = true;
+        node1.intersection = this;
+        node2.intersection = this;
     }
 
 
@@ -353,13 +353,13 @@ public class GSDRoadIntersection : MonoBehaviour
         if (!isSameSpline)
         {
             GSDSplineC[] piggys = new GSDSplineC[1];
-            piggys[0] = node2.GSDSpline;
-            node1.GSDSpline.tRoad.PiggyBacks = piggys;
-            node1.GSDSpline.Setup_Trigger();
+            piggys[0] = node2.spline;
+            node1.spline.road.PiggyBacks = piggys;
+            node1.spline.TriggerSetup();
         }
         else
         {
-            node1.GSDSpline.Setup_Trigger();
+            node1.spline.TriggerSetup();
         }
 #endif
     }
@@ -642,7 +642,7 @@ public class GSDRoadIntersection : MonoBehaviour
     public void ResetCenterMaterials(bool _isUpdate = true)
     {
         string lanesNumber = "-2L";
-        lanesAmount = node1.GSDSpline.tRoad.laneAmount;
+        lanesAmount = node1.spline.road.laneAmount;
         if (lanesAmount == 4)
         {
             lanesNumber = "-4L";
@@ -692,7 +692,7 @@ public class GSDRoadIntersection : MonoBehaviour
     public void ResetExtStrechtedMaterials(bool _isUpdate = true)
     {
         string lanesNumber = "-2L";
-        lanesAmount = node1.GSDSpline.tRoad.laneAmount;
+        lanesAmount = node1.spline.road.laneAmount;
         if (lanesAmount == 4)
         {
             lanesNumber = "-4L";
@@ -757,7 +757,7 @@ public class GSDRoadIntersection : MonoBehaviour
     public void ResetLanesMaterials(bool _isUpdate = true)
     {
         string lanesNumber = "";
-        lanesAmount = node1.GSDSpline.tRoad.laneAmount;
+        lanesAmount = node1.spline.road.laneAmount;
         if (lanesAmount == 4)
         {
             lanesNumber = "-4L";

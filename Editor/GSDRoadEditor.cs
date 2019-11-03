@@ -1267,7 +1267,7 @@ public class GSDRoadEditor : Editor
             //Update road:
             if (isNeedingRoadUpdate)
             {
-                road.spline.Setup_Trigger();
+                road.spline.TriggerSetup();
             }
 
             //Option: Set mats to defaults:
@@ -1321,15 +1321,15 @@ public class GSDRoadEditor : Editor
                         /* There used to be a check for whether this was a terrain */
                         road.editorMousePos = hitInfo.point;
                         road.isEditorMouseHittingTerrain = true;
-                        if (road.spline && road.spline.PreviewSpline)
+                        if (road.spline && road.spline.previewSpline)
                         {
                             //Debug.Log("Drawing new node");
-                            if (road.spline.PreviewSpline.mNodes == null || road.spline.PreviewSpline.mNodes.Count < 1)
+                            if (road.spline.previewSpline.nodes == null || road.spline.previewSpline.nodes.Count < 1)
                             {
                                 road.spline.Setup();
                             }
-                            road.spline.PreviewSpline.MousePos = hitInfo.point;
-                            road.spline.PreviewSpline.bGizmoDraw = true;
+                            road.spline.previewSpline.mousePos = hitInfo.point;
+                            road.spline.previewSpline.isDrawingGizmos = true;
                             SceneView.RepaintAll();
                         }
                     }
@@ -1346,15 +1346,15 @@ public class GSDRoadEditor : Editor
                         //					if(hitInfo.collider.transform.name.ToLower().Contains("terrain")){
                         road.editorMousePos = hitInfo.point;
                         road.isEditorMouseHittingTerrain = true;
-                        if (road.spline && road.spline.PreviewSplineInsert)
+                        if (road.spline && road.spline.previewSplineInsert)
                         {
-                            if (road.spline.PreviewSplineInsert.mNodes == null || road.spline.PreviewSplineInsert.mNodes.Count < 1)
+                            if (road.spline.previewSplineInsert.nodes == null || road.spline.previewSplineInsert.nodes.Count < 1)
                             {
-                                road.spline.PreviewSplineInsert.DetermineInsertNodes();
+                                road.spline.previewSplineInsert.DetermineInsertNodes();
                             }
-                            road.spline.PreviewSplineInsert.MousePos = hitInfo.point;
-                            road.spline.PreviewSplineInsert.bGizmoDraw = true;
-                            road.spline.PreviewSplineInsert.UpdateActionNode();
+                            road.spline.previewSplineInsert.mousePos = hitInfo.point;
+                            road.spline.previewSplineInsert.isDrawingGizmos = true;
+                            road.spline.previewSplineInsert.UpdateActionNode();
                             SceneView.RepaintAll();
                         }
                         //}else{
@@ -1371,15 +1371,15 @@ public class GSDRoadEditor : Editor
                         road.isEditorMouseHittingTerrain = false;
                         GUI.changed = true;
                     }
-                    if (road.spline && road.spline.PreviewSpline)
+                    if (road.spline && road.spline.previewSpline)
                     {
                         //Debug.Log("not drawing new node");
-                        road.spline.PreviewSpline.bGizmoDraw = false;
+                        road.spline.previewSpline.isDrawingGizmos = false;
                     }
-                    if (road.spline && road.spline.PreviewSplineInsert)
+                    if (road.spline && road.spline.previewSplineInsert)
                     {
                         //Debug.Log("not drawing insert node");
-                        road.spline.PreviewSplineInsert.bGizmoDraw = false;
+                        road.spline.previewSplineInsert.isDrawingGizmos = false;
                     }
                 }
             }
@@ -1387,17 +1387,17 @@ public class GSDRoadEditor : Editor
         else
         {
             road.isEditorSelected = false;
-            if (road.spline.PreviewSpline)
+            if (road.spline.previewSpline)
             {
-                road.spline.PreviewSpline.bGizmoDraw = false;
+                road.spline.previewSpline.isDrawingGizmos = false;
             }
         }
 
 
 
-        if (current.shift && road.spline.PreviewSpline != null)
+        if (current.shift && road.spline.previewSpline != null)
         {
-            road.spline.PreviewSpline.bGizmoDraw = false;
+            road.spline.previewSpline.isDrawingGizmos = false;
         }
         bool bUsed = false;
         if (current.control)

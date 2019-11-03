@@ -33,8 +33,8 @@ public class GSDRoadSystem : MonoBehaviour
         GameObject splineObj = new GameObject("Spline");
         splineObj.transform.parent = road.transform;
         road.spline = splineObj.AddComponent<GSDSplineC>();
-        road.spline.mSplineRoot = splineObj;
-        road.spline.tRoad = road;
+        road.spline.splineRoot = splineObj;
+        road.spline.road = road;
         road.GSDSplineObj = splineObj;
         road.GSDRS = this;
         road.SetupUniqueIdentifier();

@@ -173,8 +173,8 @@ public class GSDRoadIntersectionEditor : Editor
         RAEditorUtilitys.Line();
         EditorGUILayout.BeginHorizontal();
         {
-            GSDRoad road1 = intersection.node1.GSDSpline.transform.parent.GetComponent<GSDRoad>();
-            GSDRoad road2 = intersection.node2.GSDSpline.transform.parent.GetComponent<GSDRoad>();
+            GSDRoad road1 = intersection.node1.spline.transform.parent.GetComponent<GSDRoad>();
+            GSDRoad road2 = intersection.node2.spline.transform.parent.GetComponent<GSDRoad>();
             EditorGUILayout.LabelField("First road: " + road1.name + " node: " + intersection.node1.name);
             EditorGUILayout.LabelField("Second road: " + road2.name + " node: " + intersection.node2.name);
         }
@@ -1137,14 +1137,14 @@ public class GSDRoadIntersectionEditor : Editor
 
         if (intersection != null && intersection.node1 != null && intersection.node2 != null)
         {
-            if (!intersection.node1.GSDSpline.tRoad.isEditorConstructing && !intersection.node2.GSDSpline.tRoad.isEditorConstructing)
+            if (!intersection.node1.spline.road.isEditorConstructing && !intersection.node2.spline.road.isEditorConstructing)
             {
                 if (!intersection.isSameSpline)
                 {
-                    intersection.node1.GSDSpline.tRoad.PiggyBacks = new GSDSplineC[1];
-                    intersection.node1.GSDSpline.tRoad.PiggyBacks[0] = intersection.node2.GSDSpline;
+                    intersection.node1.spline.road.PiggyBacks = new GSDSplineC[1];
+                    intersection.node1.spline.road.PiggyBacks[0] = intersection.node2.spline;
                 }
-                intersection.node1.GSDSpline.tRoad.isUpdateRequired = true;
+                intersection.node1.spline.road.isUpdateRequired = true;
             }
         }
     }

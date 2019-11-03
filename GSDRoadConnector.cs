@@ -36,7 +36,7 @@ public class GSDRoadConnector : MonoBehaviour
         Debug.Log("Would connect to " + _node);
         connectedNode = _node;
         connectedNode.transform.position = transform.position;
-        connectedNode.GSDSpline.tRoad.UpdateRoad();
+        connectedNode.spline.road.UpdateRoad();
     }
 
 
@@ -52,7 +52,7 @@ public class GSDRoadConnector : MonoBehaviour
             if (connectedNode.transform.position != transform.position)
             {
                 connectedNode.transform.position = transform.position;
-                connectedNode.GSDSpline.tRoad.UpdateRoad();
+                connectedNode.spline.road.UpdateRoad();
             }
         }
     }
@@ -73,7 +73,7 @@ public class GSDRoadConnectorEditor : Editor
         {
             EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Off-road connection:", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField(connector.connectedNode.GSDSpline.tRoad.name + " to " + connector.obj.name);
+            EditorGUILayout.LabelField(connector.connectedNode.spline.road.name + " to " + connector.obj.name);
             if (GUILayout.Button("Break connection"))
             {
                 connector.connectedNode = null;

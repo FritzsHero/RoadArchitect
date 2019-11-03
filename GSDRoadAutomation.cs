@@ -69,7 +69,7 @@ namespace GSD.Roads
 
             //Set the idOnSpline:
             node.idOnSpline = (splineChildCount + 1);
-            node.GSDSpline = _road.spline;
+            node.spline = _road.spline;
 
             //Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates
             _road.UpdateRoad();
@@ -100,7 +100,7 @@ namespace GSD.Roads
             //Set the node's parent:
             nodeObj.transform.parent = _road.GSDSplineObj.transform;
 
-            int nodesCount = _road.spline.mNodes.Count;
+            int nodesCount = _road.spline.nodes.Count;
 
             //Get the closet param on spline:
             float param = _road.spline.GetClosestParam(_nodePosition, false, true);
@@ -123,10 +123,10 @@ namespace GSD.Roads
             //Figure out where to insert the node:
             for (int index = 0; index < nodesCount; index++)
             {
-                GSDSplineN node = _road.spline.mNodes[index];
+                GSDSplineN node = _road.spline.nodes[index];
                 if (!isInsertZero && !isInsertEnded)
                 {
-                    if (param > node.tTime)
+                    if (param > node.time)
                     {
                         start = node.idOnSpline + 1;
                     }
@@ -134,14 +134,14 @@ namespace GSD.Roads
             }
             for (int index = start; index < nodesCount; index++)
             {
-                _road.spline.mNodes[index].idOnSpline += 1;
+                _road.spline.nodes[index].idOnSpline += 1;
             }
 
             GSDSplineN newNode = nodeObj.AddComponent<GSDSplineN>();
-            newNode.GSDSpline = _road.spline;
+            newNode.spline = _road.spline;
             newNode.idOnSpline = start;
             newNode.pos = _nodePosition;
-            _road.spline.mNodes.Insert(start, newNode);
+            _road.spline.nodes.Insert(start, newNode);
 
             //Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates
             _road.UpdateRoad();
@@ -213,22 +213,22 @@ namespace GSD.Roads
             List<KeyValuePair<GSDSplineN, GSDSplineN>> keyValuePairs = new List<KeyValuePair<GSDSplineN, GSDSplineN>>();
             foreach (GSDRoad road in roads)
             {
-                foreach (GSDSplineN intersectionNode1 in _road.spline.mNodes)
+                foreach (GSDSplineN intersectionNode1 in _road.spline.nodes)
                 {
-                    if (intersectionNode1.bIsIntersection || !intersectionNode1.IsLegitimate())
+                    if (intersectionNode1.isIntersection || !intersectionNode1.IsLegitimate())
                     {
                         continue;
                     }
-                    foreach (GSDSplineN intersectionNode2 in road.spline.mNodes)
+                    foreach (GSDSplineN intersectionNode2 in road.spline.nodes)
                     {
-                        if (intersectionNode2.bIsIntersection || !intersectionNode2.IsLegitimate())
+                        if (intersectionNode2.isIntersection || !intersectionNode2.IsLegitimate())
                         {
                             continue;
                         }
                         if (intersectionNode1.transform.position == intersectionNode2.transform.position)
                         {
                             //Only do T intersections and let the next algorithm handle the +, since T might not intersect all the time.
-                            if (intersectionNode1.bIsEndPoint || intersectionNode2.bIsEndPoint)
+                            if (intersectionNode1.isEndPoint || intersectionNode2.isEndPoint)
                             {
                                 keyValuePairs.Add(new KeyValuePair<GSDSplineN, GSDSplineN>(intersectionNode1, intersectionNode2));
                             }
@@ -312,7 +312,7 @@ namespace GSD.Roads
                                 //Debug.Log("Instersect found road: " + xRoad.transform.name + " at point: " + IntersectionPoint3D.ToString());
 
                                 //Check primary road if any nodes are nearby and usable for intersection
-                                foreach (GSDSplineN node in _road.spline.mNodes)
+                                foreach (GSDSplineN node in _road.spline.nodes)
                                 {
                                     if (node.IsLegitimate())
                                     {
@@ -327,7 +327,7 @@ namespace GSD.Roads
                                 }
 
                                 //Check secondary road if any nodes are nearby and usable for intersection
-                                foreach (GSDSplineN node in road.spline.mNodes)
+                                foreach (GSDSplineN node in road.spline.nodes)
                                 {
                                     if (node.IsLegitimate())
                                     {

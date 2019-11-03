@@ -238,8 +238,8 @@ namespace GSD.Roads.EdgeObjects
 
         public void UpdatePositions()
         {
-            startPos = node.GSDSpline.GetSplineValue(startTime);
-            endPos = node.GSDSpline.GetSplineValue(endTime);
+            startPos = node.spline.GetSplineValue(startTime);
+            endPos = node.spline.GetSplineValue(endTime);
         }
 
 
@@ -381,7 +381,7 @@ namespace GSD.Roads.EdgeObjects
         private void SaveMesh(Mesh _mesh, bool _isCollider)
         {
 #if UNITY_EDITOR
-            if (!node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
+            if (!node.spline.road.GSDRS.isSavingMeshes)
             {
                 return;
             }
@@ -393,7 +393,7 @@ namespace GSD.Roads.EdgeObjects
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
             string folderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
-            string roadName = node.GSDSpline.tRoad.transform.name;
+            string roadName = node.spline.road.transform.name;
             string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
             if (_isCollider)
             {
@@ -1149,7 +1149,7 @@ namespace GSD.Roads.EdgeObjects
                     }
                 }
 
-                if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes && MF != null && isCombinedMesh)
+                if (node.spline.road.GSDRS.isSavingMeshes && MF != null && isCombinedMesh)
                 {
                     SaveMesh(MF.sharedMesh, false);
                     if (MC != null)
@@ -1178,7 +1178,7 @@ namespace GSD.Roads.EdgeObjects
 
             if (_isCollecting)
             {
-                node.GSDSpline.tRoad.isTriggeringGC = true;
+                node.spline.road.isTriggeringGC = true;
             }
 #endif
         }
@@ -1187,18 +1187,18 @@ namespace GSD.Roads.EdgeObjects
         private void SetupLocations()
         {
             float origHeight = 0f;
-            startTime = node.GSDSpline.GetClosestParam(startPos);
-            endTime = node.GSDSpline.GetClosestParam(endPos);
+            startTime = node.spline.GetClosestParam(startPos);
+            endTime = node.spline.GetClosestParam(endPos);
 
             float fakeStartTime = startTime;
             if (isStartMatchRoadDefinition)
             {
-                int index = node.GSDSpline.GetClosestRoadDefIndex(startTime, false, true);
-                float time1 = node.GSDSpline.TranslateInverseParamToFloat(node.GSDSpline.RoadDefKeysArray[index]);
+                int index = node.spline.GetClosestRoadDefIndex(startTime, false, true);
+                float time1 = node.spline.TranslateInverseParamToFloat(node.spline.RoadDefKeysArray[index]);
                 float time2 = time1;
-                if (index + 1 < node.GSDSpline.RoadDefKeysArray.Length)
+                if (index + 1 < node.spline.RoadDefKeysArray.Length)
                 {
-                    time2 = node.GSDSpline.TranslateInverseParamToFloat(node.GSDSpline.RoadDefKeysArray[index + 1]);
+                    time2 = node.spline.TranslateInverseParamToFloat(node.spline.RoadDefKeysArray[index + 1]);
                 }
                 fakeStartTime = time1 + ((time2 - time1) * startMatchRoadDef);
             }
@@ -1208,7 +1208,7 @@ namespace GSD.Roads.EdgeObjects
             //Vector3 rVect = default(Vector3);
             //Vector3 lVect = default(Vector3);
             //float fTimeMax = -1f;
-            int mCount = node.GSDSpline.GetNodeCount();
+            int mCount = node.spline.GetNodeCount();
             if (node.idOnSpline >= mCount - 1)
             {
                 return;
@@ -1248,7 +1248,7 @@ namespace GSD.Roads.EdgeObjects
                 // If the Object is a SingleObject
 
 
-                node.GSDSpline.GetSplineValue_Both(singlePosition, out tVect, out POS);
+                node.spline.GetSplineValueBoth(singlePosition, out tVect, out POS);
                 origHeight = tVect.y;
 
                 //Horizontal offset:
@@ -1310,7 +1310,7 @@ namespace GSD.Roads.EdgeObjects
                 Vector3 xVect = default(Vector3);
                 while (cTime < endTime && SpamGuardCounter < SpamGuard)
                 {
-                    node.GSDSpline.GetSplineValue_Both(cTime, out tVect, out POS);
+                    node.spline.GetSplineValueBoth(cTime, out tVect, out POS);
 
                     fHeight = horizontalCurve.Evaluate((cTime - fakeStartTime) / pDiffTime);
                     CurrentH = fHeight * horizontalSep;
@@ -1335,7 +1335,7 @@ namespace GSD.Roads.EdgeObjects
 
                     xVect = (POS.normalized * meterSep) + tVect;
 
-                    cTime = node.GSDSpline.GetClosestParam(xVect, false, false);
+                    cTime = node.spline.GetClosestParam(xVect, false, false);
 
                     if (cTime > endTime)
                     {
@@ -1351,7 +1351,7 @@ namespace GSD.Roads.EdgeObjects
                 float percent = 0;
                 for (int index = 0; index < vSeriesCount; index++)
                 {
-                    node.GSDSpline.GetSplineValue_Both(tTimes[index], out tVect, out POS);
+                    node.spline.GetSplineValueBoth(tTimes[index], out tVect, out POS);
 
                     percent = ((tTimes[index] - min) / (max - min));
 
@@ -1395,8 +1395,8 @@ namespace GSD.Roads.EdgeObjects
                     edgeObjectLocations.Add(tVect);
                     edgeObjectRotations.Add(POS);
                 }
-                startPos = node.GSDSpline.GetSplineValue(startTime);
-                endPos = node.GSDSpline.GetSplineValue(endTime);
+                startPos = node.spline.GetSplineValue(startTime);
+                endPos = node.spline.GetSplineValue(endTime);
             }
         }
 

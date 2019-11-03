@@ -20,9 +20,9 @@ public class GSDSplineCEditor : Editor
         browseNode = EditorGUILayout.IntField(browseNode);
         if (GUILayout.Button("Browse"))
         {
-            if (browseNode < thisSpline.mNodes.Count)
+            if (browseNode < thisSpline.nodes.Count)
             {
-                Selection.objects = new Object[1] { thisSpline.mNodes[browseNode] };
+                Selection.objects = new Object[1] { thisSpline.nodes[browseNode] };
             }
         }
         EditorGUILayout.EndHorizontal();

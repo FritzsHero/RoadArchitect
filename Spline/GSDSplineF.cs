@@ -13,66 +13,79 @@ public class GSDSplineF : MonoBehaviour
         public Vector3 pos;
         public Quaternion rot;
         public Vector3 tangent;
-        public Vector2 EaseIO;
-        public float tTime = 0f;
-        public float OldTime = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("EaseIO")]
+        public Vector2 easeIO;
+        [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
+        public float time = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("OldTime")]
+        public float oldTime = 0f;
 
         public string name = "Node-1";
 
-        public bool tempTime = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("tempTime")]
+        public bool isTempTime = false;
 
         public float tempSegmentTime = 0f;
         public float tempMinDistance = 5000f;
         public float tempMinTime = 0f;
 
         public int idOnSpline;
-        public GSDSplineC GSDSpline;
-        public bool bDestroyed = false;
-        public bool bPreviewNode = false;
-
+        [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
+        public GSDSplineC spline;
+        [UnityEngine.Serialization.FormerlySerializedAs("bDestroyed")]
+        public bool isDestroyed = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bPreviewNode")]
+        public bool isPreviewNode = false;
 
 
         public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _tTime, string _name)
         {
             pos = _p;
             rot = _q;
-            EaseIO = _io;
-            tTime = _tTime;
+            easeIO = _io;
+            time = _tTime;
             name = _name;
         }
     }
 
 
-    public int tCount = 0;
-    public List<GSDSplineFN> mNodes = new List<GSDSplineFN>();
-    public bool bClosed = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
+    public int count = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
+    public List<GSDSplineFN> nodes = new List<GSDSplineFN>();
+    [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
+    public bool isClosed = false;
     public float distance = -1f;
-    public Vector3 MousePos = new Vector3(0f, 0f, 0f);
-    public GSDSplineC GSDSpline;
+    [UnityEngine.Serialization.FormerlySerializedAs("MousePos")]
+    public Vector3 mousePos = new Vector3(0f, 0f, 0f);
+    [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
+    public GSDSplineC spline;
 
 
     #region "Gizmos"
-    public bool bGizmoDraw = false;
-    private float GizmoDrawMeters = 1f;
+    [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDraw")]
+    public bool isDrawingGizmos = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("GizmoDrawMeters")]
+    private float gizmoDrawMeters = 1f;
 
 
     private void OnDrawGizmos()
     {
-        if (!bGizmoDraw)
+        if (!isDrawingGizmos)
         {
             return;
         }
-        if (mNodes == null || mNodes.Count < 2)
+        if (nodes == null || nodes.Count < 2)
         {
             return;
         }
 
         //Debug.Log ("lawl2");
-        mNodes[mNodes.Count - 1].pos = MousePos;
+        nodes[nodes.Count - 1].pos = mousePos;
         //Debug.Log ("lawl23");
         //Setup_SplineLength();
 
-        float DistanceFromCam = Vector3.Distance(Camera.current.transform.position, mNodes[0].pos);
+        float DistanceFromCam = Vector3.Distance(Camera.current.transform.position, nodes[0].pos);
 
         if (DistanceFromCam > 2048)
         {
@@ -80,43 +93,43 @@ public class GSDSplineF : MonoBehaviour
         }
         else if (DistanceFromCam > 1024)
         {
-            GizmoDrawMeters = 32f;
+            gizmoDrawMeters = 32f;
         }
         else if (DistanceFromCam > 512)
         {
-            GizmoDrawMeters = 16f;
+            gizmoDrawMeters = 16f;
         }
         else if (DistanceFromCam > 256)
         {
-            GizmoDrawMeters = 8f;
+            gizmoDrawMeters = 8f;
         }
         else if (DistanceFromCam > 128)
         {
-            GizmoDrawMeters = 2f;
+            gizmoDrawMeters = 2f;
         }
         else if (DistanceFromCam > 64)
         {
-            GizmoDrawMeters = 0.5f;
+            gizmoDrawMeters = 0.5f;
         }
         else
         {
-            GizmoDrawMeters = 0.1f;
+            gizmoDrawMeters = 0.1f;
         }
 
 
-        Vector3 prevPos = mNodes[0].pos;
+        Vector3 prevPos = nodes[0].pos;
         Vector3 tempVect = new Vector3(0f, 0f, 0f);
         //GizmoDrawMeters = 40f;
-        float step = GizmoDrawMeters / distance;
+        float step = gizmoDrawMeters / distance;
         step = Mathf.Clamp(step, 0f, 1f);
         Gizmos.color = new Color(0f, 0f, 1f, 1f);
         float index = 0f;
         Vector3 cPos;
 
         float startI = 0f;
-        if (mNodes.Count > 4)
+        if (nodes.Count > 4)
         {
-            startI = mNodes[mNodes.Count - 4].tTime;
+            startI = nodes[nodes.Count - 4].time;
         }
 
         prevPos = GetSplineValue(startI);
@@ -136,64 +149,64 @@ public class GSDSplineF : MonoBehaviour
 
 
     #region "Setup"
-    public void Setup(ref Vector3[] tVects)
+    public void Setup(ref Vector3[] _vects)
     {
         //Create spline nodes:
-        Setup_Nodes(ref tVects);
+        SetupNodes(ref _vects);
 
         //Setup spline length, if more than 1 node:
         if (GetNodeCount() > 1)
         {
-            Setup_SplineLength();
+            SetupSplineLength();
         }
 
-        tCount = mNodes.Count;
+        count = nodes.Count;
     }
 
 
-    private void Setup_Nodes(ref Vector3[] tVects)
+    private void SetupNodes(ref Vector3[] _vects)
     {
         //Process nodes:
         int index = 0;
-        if (mNodes != null)
+        if (nodes != null)
         {
-            mNodes.Clear();
-            mNodes = null;
+            nodes.Clear();
+            nodes = null;
         }
 
-        mNodes = new List<GSDSplineFN>();
+        nodes = new List<GSDSplineFN>();
         GSDSplineFN tNode;
-        for (index = 0; index < tVects.Length; index++)
+        for (index = 0; index < _vects.Length; index++)
         {
             tNode = new GSDSplineFN();
-            tNode.pos = tVects[index];
-            mNodes.Add(tNode);
+            tNode.pos = _vects[index];
+            nodes.Add(tNode);
         }
 
         float step;
         Quaternion rot;
-        step = (bClosed) ? 1f / mNodes.Count : 1f / (mNodes.Count - 1);
-        for (index = 0; index < mNodes.Count; index++)
+        step = (isClosed) ? 1f / nodes.Count : 1f / (nodes.Count - 1);
+        for (index = 0; index < nodes.Count; index++)
         {
-            tNode = mNodes[index];
+            tNode = nodes[index];
 
             rot = Quaternion.identity;
-            if (index != mNodes.Count - 1)
+            if (index != nodes.Count - 1)
             {
-                if (mNodes[index + 1].pos - tNode.pos == Vector3.zero)
+                if (nodes[index + 1].pos - tNode.pos == Vector3.zero)
                 {
                     rot = Quaternion.identity;
                 }
                 else
                 {
-                    rot = Quaternion.LookRotation(mNodes[index + 1].pos - tNode.pos, transform.up);
+                    rot = Quaternion.LookRotation(nodes[index + 1].pos - tNode.pos, transform.up);
                 }
 
                 //rot = Quaternion.LookRotation(mNodes[i+1].pos - tNode.pos, transform.up);
             }
-            else if (bClosed)
+            else if (isClosed)
             {
-                rot = Quaternion.LookRotation(mNodes[0].pos - tNode.pos, transform.up);
+                rot = Quaternion.LookRotation(nodes[0].pos - tNode.pos, transform.up);
             }
             else
             {
@@ -203,25 +216,23 @@ public class GSDSplineF : MonoBehaviour
             tNode.Setup(tNode.pos, rot, new Vector2(0, 1), step * index, "pNode");
         }
         tNode = null;
-        tVects = null;
+        _vects = null;
     }
 
 
-    /// <summary>
-    /// I think this is the general Length of the Spline?
-    /// </summary>
-    private void Setup_SplineLength()
+    /// <summary> I think this is the general Length of the Spline? </summary>
+    private void SetupSplineLength()
     {
         //First lets get the general distance, node to node:
-        mNodes[0].tTime = 0f;
-        mNodes[mNodes.Count - 1].tTime = 1f;
+        nodes[0].time = 0f;
+        nodes[nodes.Count - 1].time = 1f;
         Vector3 tVect1 = new Vector3(0f, 0f, 0f);
         Vector3 tVect2 = new Vector3(0f, 0f, 0f);
         float mDistance = 0f;
         float mDistance_NoMod = 0f;
-        for (int j = 0; j < mNodes.Count; j++)
+        for (int j = 0; j < nodes.Count; j++)
         {
-            tVect2 = mNodes[j].pos;
+            tVect2 = nodes[j].pos;
             if (j > 0)
             {
                 mDistance += Vector3.Distance(tVect1, tVect2);
@@ -234,13 +245,13 @@ public class GSDSplineF : MonoBehaviour
 
         //Get a slightly more accurate portrayal of the time:
         float tTime = 0f;
-        for (int j = 0; j < (mNodes.Count - 1); j++)
+        for (int j = 0; j < (nodes.Count - 1); j++)
         {
-            tVect2 = mNodes[j].pos;
+            tVect2 = nodes[j].pos;
             if (j > 0)
             {
                 tTime += (Vector3.Distance(tVect1, tVect2) / mDistance_NoMod);
-                mNodes[j].tTime = tTime;
+                nodes[j].time = tTime;
             }
             tVect1 = tVect2;
         }
@@ -250,27 +261,22 @@ public class GSDSplineF : MonoBehaviour
 
 
     #region "Hermite math"
-    /// <summary>
-    /// Gets the spline value.
-    /// </summary>
-    /// <param name='_value'>
-    /// The relevant param (0-1) of the spline.
-    /// </param>
-    /// <param name='_isTangent'>
-    /// True for is tangent, false (default) for vector3 position.
-    /// </param>
-    public Vector3 GetSplineValue(float _value, bool _isTangent = false)    // FH 03.02.19 // f is now _value // b is now_isTangent
+    /// <summary> Gets the spline value. </summary>
+    /// <param name='_value'> The relevant param (0-1) of the spline. </param>
+    /// <param name='_isTangent'> True for is tangent, false (default) for vector3 position. </param>
+    /// FH / f is now _value // _isTangent is now_isTangent
+    public Vector3 GetSplineValue(float _value, bool _isTangent = false)
     {
         int index;
         int idx = -1;
 
-        if (mNodes.Count == 0)
+        if (nodes.Count == 0)
         {
             return default(Vector3);
         }
-        if (mNodes.Count == 1)
+        if (nodes.Count == 1)
         {
-            return mNodes[0].pos;
+            return nodes[0].pos;
         }
 
 
@@ -303,14 +309,14 @@ public class GSDSplineF : MonoBehaviour
         */
 
 
-        for (index = 1; index < mNodes.Count; index++)
+        for (index = 1; index < nodes.Count; index++)
         {
-            if (index == mNodes.Count - 1)
+            if (index == nodes.Count - 1)
             {
                 idx = index - 1;
                 break;
             }
-            if (mNodes[index].tTime >= _value)
+            if (nodes[index].time >= _value)
             {
                 idx = index - 1;
                 break;
@@ -322,31 +328,32 @@ public class GSDSplineF : MonoBehaviour
         }
         //		}
 
-        float param = (_value - mNodes[idx].tTime) / (mNodes[idx + 1].tTime - mNodes[idx].tTime);
-        param = GSD.GSDRootUtil.Ease(param, mNodes[idx].EaseIO.x, mNodes[idx].EaseIO.y);
+        float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
+        param = GSD.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
         return GetHermiteInternal(idx, param, _isTangent);
     }
 
 
-    public Vector3 GetSplineValue_SkipOpt(float f, bool b = false)
+    /// FH / f is now _value // _isTangent is now_isTangent
+    public Vector3 GetSplineValueSkipOpt(float _value, bool _isTangent = false)
     {
         int i;
         int idx = -1;
 
-        if (mNodes.Count == 0)
+        if (nodes.Count == 0)
         {
             return default(Vector3);
         }
-        if (mNodes.Count == 1)
+        if (nodes.Count == 1)
         {
-            return mNodes[0].pos;
+            return nodes[0].pos;
         }
 
 
         /* 
         if (GSDRootUtil.IsApproximately(f, 0f, 0.00001f))
         {
-            if (b)
+            if (_isTangent)
             {
                 return mNodes[0].tangent;
             }
@@ -358,7 +365,7 @@ public class GSDSplineF : MonoBehaviour
         else
         if (GSDRootUtil.IsApproximately(f, 1f, 0.00001f) || f > 1f)
         {
-            if (b)
+            if (_isTangent)
             {
                 return mNodes[mNodes.Count - 1].tangent;
             }
@@ -372,14 +379,14 @@ public class GSDSplineF : MonoBehaviour
         */
 
 
-        for (i = 1; i < mNodes.Count; i++)
+        for (i = 1; i < nodes.Count; i++)
         {
-            if (i == mNodes.Count - 1)
+            if (i == nodes.Count - 1)
             {
                 idx = i - 1;
                 break;
             }
-            if (mNodes[i].tTime >= f)
+            if (nodes[i].time >= _value)
             {
                 idx = i - 1;
                 break;
@@ -391,35 +398,35 @@ public class GSDSplineF : MonoBehaviour
         }
         //		}
 
-        float param = (f - mNodes[idx].tTime) / (mNodes[idx + 1].tTime - mNodes[idx].tTime);
-        param = GSD.GSDRootUtil.Ease(param, mNodes[idx].EaseIO.x, mNodes[idx].EaseIO.y);
-        return GetHermiteInternal(idx, param, b);
+        float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
+        param = GSD.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+        return GetHermiteInternal(idx, param, _isTangent);
     }
 
 
-    private Vector3 GetHermiteInternal(int i, double t, bool bTangent = false)
+    private Vector3 GetHermiteInternal(int _i, double _t, bool _isTangent = false)
     {
         double t2, t3;
         float BL0, BL1, BL2, BL3, tension;
 
-        if (!bTangent)
+        if (!_isTangent)
         {
-            t2 = t * t;
-            t3 = t2 * t;
+            t2 = _t * _t;
+            t3 = t2 * _t;
         }
         else
         {
-            t2 = t * t;
-            t = t * 2.0;
+            t2 = _t * _t;
+            _t = _t * 2.0;
             t2 = t2 * 3.0;
             t3 = 0; //Necessary for compiler error.
         }
 
         //Vectors:
-        Vector3 P0 = mNodes[NGI(i, NI[0])].pos;
-        Vector3 P1 = mNodes[NGI(i, NI[1])].pos;
-        Vector3 P2 = mNodes[NGI(i, NI[2])].pos;
-        Vector3 P3 = mNodes[NGI(i, NI[3])].pos;
+        Vector3 P0 = nodes[NGI(_i, NI[0])].pos;
+        Vector3 P1 = nodes[NGI(_i, NI[1])].pos;
+        Vector3 P2 = nodes[NGI(_i, NI[2])].pos;
+        Vector3 P3 = nodes[NGI(_i, NI[3])].pos;
 
         //Tension:
         tension = 0.5f; // 0.5 equivale a catmull-rom
@@ -428,19 +435,19 @@ public class GSDSplineF : MonoBehaviour
         P2 = (P1 - P2) * tension;
         P3 = (P3 - P0) * tension;
 
-        if (!bTangent)
+        if (!_isTangent)
         {
-            BL0 = (float) (CM[0] * t3 + CM[1] * t2 + CM[2] * t + CM[3]);
-            BL1 = (float) (CM[4] * t3 + CM[5] * t2 + CM[6] * t + CM[7]);
-            BL2 = (float) (CM[8] * t3 + CM[9] * t2 + CM[10] * t + CM[11]);
-            BL3 = (float) (CM[12] * t3 + CM[13] * t2 + CM[14] * t + CM[15]);
+            BL0 = (float) (CM[0] * t3 + CM[1] * t2 + CM[2] * _t + CM[3]);
+            BL1 = (float) (CM[4] * t3 + CM[5] * t2 + CM[6] * _t + CM[7]);
+            BL2 = (float) (CM[8] * t3 + CM[9] * t2 + CM[10] * _t + CM[11]);
+            BL3 = (float) (CM[12] * t3 + CM[13] * t2 + CM[14] * _t + CM[15]);
         }
         else
         {
-            BL0 = (float) (CM[0] * t2 + CM[1] * t + CM[2]);
-            BL1 = (float) (CM[4] * t2 + CM[5] * t + CM[6]);
-            BL2 = (float) (CM[8] * t2 + CM[9] * t + CM[10]);
-            BL3 = (float) (CM[12] * t2 + CM[13] * t + CM[14]);
+            BL0 = (float) (CM[0] * t2 + CM[1] * _t + CM[2]);
+            BL1 = (float) (CM[4] * t2 + CM[5] * _t + CM[6]);
+            BL2 = (float) (CM[8] * t2 + CM[9] * _t + CM[10]);
+            BL3 = (float) (CM[12] * t2 + CM[13] * _t + CM[14]);
         }
 
         return BL0 * P0 + BL1 * P1 + BL2 * P2 + BL3 * P3;
@@ -461,13 +468,13 @@ public class GSDSplineF : MonoBehaviour
     private int NGI(int i, int o)
     {
         int NGITI = i + o;
-        if (bClosed)
+        if (isClosed)
         {
-            return (NGITI % mNodes.Count + mNodes.Count) % mNodes.Count;
+            return (NGITI % nodes.Count + nodes.Count) % nodes.Count;
         }
         else
         {
-            return Mathf.Clamp(NGITI, 0, mNodes.Count - 1);
+            return Mathf.Clamp(NGITI, 0, nodes.Count - 1);
         }
     }
     #endregion
@@ -475,7 +482,7 @@ public class GSDSplineF : MonoBehaviour
 
     public int GetNodeCount()
     {
-        return mNodes.Count;
+        return nodes.Count;
     }
 
 

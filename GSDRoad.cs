@@ -206,7 +206,7 @@ public class GSDRoad : MonoBehaviour
         UnityEditor.EditorApplication.hierarchyWindowChanged += delegate { hWindowChanged(); };
 #endif
         //}
-        if (spline == null || spline.mNodes == null)
+        if (spline == null || spline.nodes == null)
         {
             MostRecentNodeCount = 0;
         }
@@ -221,7 +221,7 @@ public class GSDRoad : MonoBehaviour
 
     public void Awake()
     {
-        if (spline == null || spline.mNodes == null)
+        if (spline == null || spline.nodes == null)
         {
             MostRecentNodeCount = 0;
         }
@@ -342,7 +342,7 @@ public class GSDRoad : MonoBehaviour
             if (isUpdateRequired && !isEditorConstructing)
             {
                 isUpdateRequired = false;
-                spline.Setup_Trigger();
+                spline.TriggerSetup();
             }
         }
 
@@ -362,8 +362,8 @@ public class GSDRoad : MonoBehaviour
             {
                 editorTimerSpline = 0;
                 isUpdatingSpline = false;
-                spline.Setup_Trigger();
-                MostRecentNodeCount = spline.mNodes.Count;
+                spline.TriggerSetup();
+                MostRecentNodeCount = spline.nodes.Count;
             }
         }
 
@@ -407,13 +407,13 @@ public class GSDRoad : MonoBehaviour
         if (!isEditorCameraSetup)
         {
             isEditorCameraSetup = true;
-            if (spline.bSpecialEndControlNode)
+            if (spline.isSpecialEndControlNode)
             {   //If control node, start after the control node:
-                EditorCameraEndPos = spline.mNodes[spline.GetNodeCount() - 2].tTime;
+                EditorCameraEndPos = spline.nodes[spline.GetNodeCount() - 2].time;
             }
-            if (spline.bSpecialStartControlNode)
+            if (spline.isSpecialStartControlNode)
             {   //If ends in control node, end construction before the control node:
-                EditorCameraStartPos = spline.mNodes[1].tTime;
+                EditorCameraStartPos = spline.nodes[1].time;
             }
             //			EditorCameraPos_Full = 0f;
             ChangeEditorCameraMetersPerSec();
@@ -440,7 +440,7 @@ public class GSDRoad : MonoBehaviour
             EditorCameraPos = EditorCameraStartPos;
         }
 
-        spline.GetSplineValue_Both(EditorCameraPos, out EditorCameraV1, out EditorCameraV2);
+        spline.GetSplineValueBoth(EditorCameraPos, out EditorCameraV1, out EditorCameraV2);
 
         if (EditorApplication.isPlaying)
         {
@@ -526,7 +526,7 @@ public class GSDRoad : MonoBehaviour
         }
 
         int count = 0;
-        if (spline != null && spline.mNodes != null)
+        if (spline != null && spline.nodes != null)
         {
             count = spline.GetNodeCountNonNull();
         }
@@ -638,7 +638,7 @@ public class GSDRoad : MonoBehaviour
             {
                 //try
                 //{
-                node = spline.mNodes[i];
+                node = spline.nodes[i];
                 //}
                 //catch
                 //{
@@ -648,28 +648,28 @@ public class GSDRoad : MonoBehaviour
                 //}
 
                 //If node is intersection with an invalid GSDRI, mark it at non-intersection. Just-in-case.
-                if (node.bIsIntersection && node.GSDRI == null)
+                if (node.isIntersection && node.intersection == null)
                 {
-                    node.bIsIntersection = false;
-                    node.id_intersection_othernode = -1;
-                    node.Intersection_OtherNode = null;
+                    node.isIntersection = false;
+                    node.intersectionOtherNodeID = -1;
+                    node.intersectionOtherNode = null;
                 }
                 //If node is intersection, re-setup:
-                if (node.bIsIntersection && node.GSDRI != null)
+                if (node.isIntersection && node.intersection != null)
                 {
-                    node1 = node.GSDRI.node1;
-                    node2 = node.GSDRI.node2;
-                    node.GSDRI.Setup(node1, node2);
-                    node.GSDRI.DeleteRelevantChildren(node, node.GSDSpline.tRoad.transform.name);
+                    node1 = node.intersection.node1;
+                    node2 = node.intersection.node2;
+                    node.intersection.Setup(node1, node2);
+                    node.intersection.DeleteRelevantChildren(node, node.spline.road.transform.name);
                     //If primary node on intersection, do more re-setup:
-                    if (node.GSDRI.node1 == node)
+                    if (node.intersection.node1 == node)
                     {
-                        node.GSDRI.lanesAmount = laneAmount;
-                        node.GSDRI.name = node.GSDRI.transform.name;
+                        node.intersection.lanesAmount = laneAmount;
+                        node.intersection.name = node.intersection.transform.name;
                     }
                     //Setup construction objects:
-                    node.GSDRI.node1.iConstruction = new GSD.Roads.GSDIntersections.iConstructionMaker();
-                    node.GSDRI.node2.iConstruction = new GSD.Roads.GSDIntersections.iConstructionMaker();
+                    node.intersection.node1.intersectionConstruction = new GSD.Roads.GSDIntersections.iConstructionMaker();
+                    node.intersection.node2.intersectionConstruction = new GSD.Roads.GSDIntersections.iConstructionMaker();
                 }
 
                 //Store materials and physical materials for road and or shoulder cuts on each node, if necessary:
@@ -685,7 +685,7 @@ public class GSDRoad : MonoBehaviour
         //GSDRootUtil.EndProfiling(this);
         nodeCount = spline.GetNodeCount();
 
-        if (spline == null || spline.mNodes == null)
+        if (spline == null || spline.nodes == null)
         {
             MostRecentNodeCount = 0;
         }
@@ -708,10 +708,10 @@ public class GSDRoad : MonoBehaviour
         //Hiding in hierarchy:
         for (int i = 0; i < nodeCount; i++)
         {
-            node = spline.mNodes[i];
+            node = spline.nodes[i];
             if (node != null)
             {
-                if (node.bIsIntersection || node.bSpecialEndNode)
+                if (node.isIntersection || node.isSpecialEndNode)
                 {
                     node.ToggleHideFlags(true);
                 }
@@ -808,11 +808,11 @@ public class GSDRoad : MonoBehaviour
 
 
         //Check if road takes place on only 1 terrain:
-        Terrain terrain = GSD.Roads.GSDRoadUtil.GetTerrain(spline.mNodes[0].pos);
+        Terrain terrain = GSD.Roads.GSDRoadUtil.GetTerrain(spline.nodes[0].pos);
         bool isSameTerrain = true;
         for (int i = 1; i < nodeCount; i++)
         {
-            if (terrain != GSD.Roads.GSDRoadUtil.GetTerrain(spline.mNodes[0].pos))
+            if (terrain != GSD.Roads.GSDRoadUtil.GetTerrain(spline.nodes[0].pos))
             {
                 isSameTerrain = false;
                 break;
@@ -1046,13 +1046,13 @@ public class GSDRoad : MonoBehaviour
         GSDSplineN node;
         for (int i = 0; i < nodeCount; i++)
         {
-            node = spline.mNodes[i];
-            if (node.bIsIntersection)
+            node = spline.nodes[i];
+            if (node.isIntersection)
             {
-                if (node.iConstruction != null)
+                if (node.intersectionConstruction != null)
                 {
-                    node.iConstruction.Nullify();
-                    node.iConstruction = null;
+                    node.intersectionConstruction.Nullify();
+                    node.intersectionConstruction = null;
                 }
             }
             node.SetupSplinationLimits();
@@ -1120,10 +1120,10 @@ public class GSDRoad : MonoBehaviour
 
                 if (NewPiggys != null)
                 {
-                    tPiggy.tRoad.PiggyBacks = NewPiggys;
+                    tPiggy.road.PiggyBacks = NewPiggys;
                 }
                 NewPiggys = null;
-                tPiggy.Setup_Trigger();
+                tPiggy.TriggerSetup();
             }
         }
     }
@@ -1715,9 +1715,9 @@ public class GSDRoad : MonoBehaviour
         int nodeCount = spline.GetNodeCount();
         for (int i = 0; i < nodeCount; i++)
         {
-            if (spline.mNodes[i] && spline.mNodes[i].bIsIntersection && spline.mNodes[i].GSDRI != null && spline.mNodes[i].GSDRI.isUsingDefaultMaterials)
+            if (spline.nodes[i] && spline.nodes[i].isIntersection && spline.nodes[i].intersection != null && spline.nodes[i].intersection.isUsingDefaultMaterials)
             {
-                spline.mNodes[i].GSDRI.ResetMaterialsAll();
+                spline.nodes[i].intersection.ResetMaterialsAll();
             }
         }
     }
@@ -1776,10 +1776,10 @@ public class GSDRoad : MonoBehaviour
         int nodeCount = spline.GetNodeCount();
         for (int i = 0; i < nodeCount; i++)
         {
-            node = spline.mNodes[i];
+            node = spline.nodes[i];
             if (node != null)
             {
-                node.opt_GizmosEnabled = isGizmosEnabled;
+                node.isGizmosEnabled = isGizmosEnabled;
             }
         }
     }
@@ -1863,7 +1863,7 @@ public class GSDRoad : MonoBehaviour
         road.RoadPhysicMaterial = RoadPhysicMaterial;
         road.ShoulderPhysicMaterial = ShoulderPhysicMaterial;
 
-        road.spline.Setup_Trigger();
+        road.spline.TriggerSetup();
 
         Selection.activeGameObject = road.transform.gameObject;
     }

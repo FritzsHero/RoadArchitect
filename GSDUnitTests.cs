@@ -124,36 +124,36 @@ namespace GSD.Roads
             GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
 
             //Bridge0: (Arch)
-            tRoad.spline.mNodes[4].bIsBridgeStart = true;
-            tRoad.spline.mNodes[4].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[7].bIsBridgeEnd = true;
-            tRoad.spline.mNodes[7].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[4].BridgeCounterpartNode = tRoad.spline.mNodes[7];
-            tRoad.spline.mNodes[4].LoadWizardObjectsFromLibrary("Arch12m-2L", true, true);
+            tRoad.spline.nodes[4].isBridgeStart = true;
+            tRoad.spline.nodes[4].isBridgeMatched = true;
+            tRoad.spline.nodes[7].isBridgeEnd = true;
+            tRoad.spline.nodes[7].isBridgeMatched = true;
+            tRoad.spline.nodes[4].bridgeCounterpartNode = tRoad.spline.nodes[7];
+            tRoad.spline.nodes[4].LoadWizardObjectsFromLibrary("Arch12m-2L", true, true);
 
             //Bridge1: (Federal causeway)
-            tRoad.spline.mNodes[8].bIsBridgeStart = true;
-            tRoad.spline.mNodes[8].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[8].BridgeCounterpartNode = tRoad.spline.mNodes[10];
-            tRoad.spline.mNodes[8].LoadWizardObjectsFromLibrary("Causeway1-2L", true, true);
-            tRoad.spline.mNodes[10].bIsBridgeEnd = true;
-            tRoad.spline.mNodes[10].bIsBridgeMatched = true;
+            tRoad.spline.nodes[8].isBridgeStart = true;
+            tRoad.spline.nodes[8].isBridgeMatched = true;
+            tRoad.spline.nodes[8].bridgeCounterpartNode = tRoad.spline.nodes[10];
+            tRoad.spline.nodes[8].LoadWizardObjectsFromLibrary("Causeway1-2L", true, true);
+            tRoad.spline.nodes[10].isBridgeEnd = true;
+            tRoad.spline.nodes[10].isBridgeMatched = true;
 
             //Bridge2: (Steel)
-            tRoad.spline.mNodes[11].bIsBridgeStart = true;
-            tRoad.spline.mNodes[11].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[11].BridgeCounterpartNode = tRoad.spline.mNodes[13];
-            tRoad.spline.mNodes[11].LoadWizardObjectsFromLibrary("Steel-2L", true, true);
-            tRoad.spline.mNodes[13].bIsBridgeEnd = true;
-            tRoad.spline.mNodes[13].bIsBridgeMatched = true;
+            tRoad.spline.nodes[11].isBridgeStart = true;
+            tRoad.spline.nodes[11].isBridgeMatched = true;
+            tRoad.spline.nodes[11].bridgeCounterpartNode = tRoad.spline.nodes[13];
+            tRoad.spline.nodes[11].LoadWizardObjectsFromLibrary("Steel-2L", true, true);
+            tRoad.spline.nodes[13].isBridgeEnd = true;
+            tRoad.spline.nodes[13].isBridgeMatched = true;
 
             //Bridge3: (Causeway)
-            tRoad.spline.mNodes[14].bIsBridgeStart = true;
-            tRoad.spline.mNodes[14].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[16].bIsBridgeEnd = true;
-            tRoad.spline.mNodes[16].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[14].BridgeCounterpartNode = tRoad.spline.mNodes[16];
-            tRoad.spline.mNodes[14].LoadWizardObjectsFromLibrary("Causeway4-2L", true, true);
+            tRoad.spline.nodes[14].isBridgeStart = true;
+            tRoad.spline.nodes[14].isBridgeMatched = true;
+            tRoad.spline.nodes[16].isBridgeEnd = true;
+            tRoad.spline.nodes[16].isBridgeMatched = true;
+            tRoad.spline.nodes[14].bridgeCounterpartNode = tRoad.spline.nodes[16];
+            tRoad.spline.nodes[14].LoadWizardObjectsFromLibrary("Causeway4-2L", true, true);
         }
 
 
@@ -229,9 +229,9 @@ namespace GSD.Roads
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
-            foreach (GSDSplineN tNode in road1.spline.mNodes)
+            foreach (GSDSplineN tNode in road1.spline.nodes)
             {
-                if (tNode.bIsIntersection)
+                if (tNode.isIntersection)
                 {
                     iCount += 1;
                 }
@@ -248,9 +248,9 @@ namespace GSD.Roads
         {
             GSDSplineN nodeInter1 = null;
             GSDSplineN nodeInter2 = null;
-            foreach (GSDSplineN node in _road1.spline.mNodes)
+            foreach (GSDSplineN node in _road1.spline.nodes)
             {
-                foreach (GSDSplineN xNode in _road2.spline.mNodes)
+                foreach (GSDSplineN xNode in _road2.spline.nodes)
                 {
                     if (GSDRootUtil.IsApproximately(Vector3.Distance(node.transform.position, xNode.transform.position), 0f, 0.05f))
                     {
@@ -344,9 +344,9 @@ namespace GSD.Roads
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
-            foreach (GSDSplineN node in road1.spline.mNodes)
+            foreach (GSDSplineN node in road1.spline.nodes)
             {
-                if (node.bIsIntersection)
+                if (node.isIntersection)
                 {
                     iCount += 1;
                 }
@@ -370,12 +370,12 @@ namespace GSD.Roads
             GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
 
             //Suspension bridge:
-            tRoad.spline.mNodes[1].bIsBridgeStart = true;
-            tRoad.spline.mNodes[1].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[3].bIsBridgeEnd = true;
-            tRoad.spline.mNodes[3].bIsBridgeMatched = true;
-            tRoad.spline.mNodes[1].BridgeCounterpartNode = tRoad.spline.mNodes[3];
-            tRoad.spline.mNodes[1].LoadWizardObjectsFromLibrary("SuspL-2L", true, true);
+            tRoad.spline.nodes[1].isBridgeStart = true;
+            tRoad.spline.nodes[1].isBridgeMatched = true;
+            tRoad.spline.nodes[3].isBridgeEnd = true;
+            tRoad.spline.nodes[3].isBridgeMatched = true;
+            tRoad.spline.nodes[1].bridgeCounterpartNode = tRoad.spline.nodes[3];
+            tRoad.spline.nodes[1].LoadWizardObjectsFromLibrary("SuspL-2L", true, true);
         }
 
 

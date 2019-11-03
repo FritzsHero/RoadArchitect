@@ -11,8 +11,8 @@ public class GSDSplineRepair : MonoBehaviour
     public void RemoveLastNode()
     {
         GSDSplineC spline = GetComponent<GSDSplineC>();
-        spline.mNodes.RemoveAt(spline.mNodes.Count - 1);
-        spline.tRoad.UpdateRoad();
+        spline.nodes.RemoveAt(spline.nodes.Count - 1);
+        spline.road.UpdateRoad();
     }
 }
 
