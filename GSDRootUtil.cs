@@ -16,108 +16,106 @@ namespace GSD
         /// If less than k1 ir greater than k2, it uses a sin.
         /// Between k1 and k2 it uses linear interp.
         /// </summary>
-        public static float Ease(float t, float k1, float k2)
+        public static float Ease(float _t, float _k1, float _k2)
         {
             float f;
             float s;
 
 
-            f = k1 * 2 / Mathf.PI + k2 - k1 + (1.0f - k2) * 2 / Mathf.PI;
+            f = _k1 * 2 / Mathf.PI + _k2 - _k1 + (1.0f - _k2) * 2 / Mathf.PI;
 
-            if (t < k1)
+            if (_t < _k1)
             {
-                s = k1 * (2 / Mathf.PI) * (Mathf.Sin((t / k1) * Mathf.PI / 2 - Mathf.PI / 2) + 1);
+                s = _k1 * (2 / Mathf.PI) * (Mathf.Sin((_t / _k1) * Mathf.PI / 2 - Mathf.PI / 2) + 1);
             }
-            else if (t < k2)
+            else if (_t < _k2)
             {
-                s = (2 * k1 / Mathf.PI + t - k1);
+                s = (2 * _k1 / Mathf.PI + _t - _k1);
             }
             else
             {
-                s = 2 * k1 / Mathf.PI + k2 - k1 + ((1 - k2) * (2 / Mathf.PI)) * Mathf.Sin(((t - k2) / (1.0f - k2)) * Mathf.PI / 2);
+                s = 2 * _k1 / Mathf.PI + _k2 - _k1 + ((1 - _k2) * (2 / Mathf.PI)) * Mathf.Sin(((_t - _k2) / (1.0f - _k2)) * Mathf.PI / 2);
             }
 
             return (s / f);
         }
 
 
-        /// <summary>
-        /// Returns true if the lines intersect, otherwise false. 
-        /// </summary>
-        /// <param name="Line1S">Line 1 start.</param>
-        /// <param name="Line1E">Line 1 end.</param>
-        /// <param name="Line2S">Line 2 start.</param>
-        /// <param name="Line2E">Line 2 end.</param>
-        /// <param name="intersectionPoint">If the lines intersect, intersectionPoint holds the intersection point.</param>
-        /// <returns></returns>
-        public static bool Intersects2D(ref Vector2 Line1S, ref Vector2 Line1E, ref Vector2 Line2S, ref Vector2 Line2E, out Vector2 intersectionPoint)
+        /// <summary> Returns true if the lines intersect, otherwise false.  </summary>
+        /// <param name="_line1S">Line 1 start.</param>
+        /// <param name="_line1E">Line 1 end.</param>
+        /// <param name="_line2S">Line 2 start.</param>
+        /// <param name="_line2E">Line 2 end.</param>
+        /// <param name="_intersectionPoint">If the lines intersect, intersectionPoint holds the intersection point.</param>
+        public static bool Intersects2D(ref Vector2 _line1S, ref Vector2 _line1E, ref Vector2 _line2S, ref Vector2 _line2E, out Vector2 _intersectionPoint)
         {
             float firstLineSlopeX, firstLineSlopeY, secondLineSlopeX, secondLineSlopeY;
 
-            firstLineSlopeX = Line1E.x - Line1S.x;
-            firstLineSlopeY = Line1E.y - Line1S.y;
+            firstLineSlopeX = _line1E.x - _line1S.x;
+            firstLineSlopeY = _line1E.y - _line1S.y;
 
-            secondLineSlopeX = Line2E.x - Line2S.x;
-            secondLineSlopeY = Line2E.y - Line2S.y;
+            secondLineSlopeX = _line2E.x - _line2S.x;
+            secondLineSlopeY = _line2E.y - _line2S.y;
 
             float s, t;
-            s = (-firstLineSlopeY * (Line1S.x - Line2S.x) + firstLineSlopeX * (Line1S.y - Line2S.y)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
-            t = (secondLineSlopeX * (Line1S.y - Line2S.y) - secondLineSlopeY * (Line1S.x - Line2S.x)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
+            s = (-firstLineSlopeY * (_line1S.x - _line2S.x) + firstLineSlopeX * (_line1S.y - _line2S.y)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
+            t = (secondLineSlopeX * (_line1S.y - _line2S.y) - secondLineSlopeY * (_line1S.x - _line2S.x)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
 
             if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
             {
-                float intersectionPointX = Line1S.x + (t * firstLineSlopeX);
-                float intersectionPointY = Line1S.y + (t * firstLineSlopeY);
+                float intersectionPointX = _line1S.x + (t * firstLineSlopeX);
+                float intersectionPointY = _line1S.y + (t * firstLineSlopeY);
 
                 // Collision detected
-                intersectionPoint = new Vector2(intersectionPointX, intersectionPointY);
+                _intersectionPoint = new Vector2(intersectionPointX, intersectionPointY);
                 return true;
             }
 
-            intersectionPoint = Vector2.zero;
-            return false; // No collision
+            _intersectionPoint = Vector2.zero;
+            // No collision
+            return false;
         }
 
 
-        public static string GetPrefabString(GameObject tObj)
+        public static string GetPrefabString(GameObject _object)
         {
-            string tString = "";
+            string path = "";
 #if UNITY_EDITOR
-            if (tObj != null)
+            if (_object != null)
             {
-                tString = UnityEditor.AssetDatabase.GetAssetPath(tObj);
-                if (tString == null || tString.Length < 1)
+                path = UnityEditor.AssetDatabase.GetAssetPath(_object);
+                if (path == null || path.Length < 1)
                 {
 #if UNITY_2018_2_OR_NEWER
-                    Object parentObject = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(tObj);
+                    Object parentObject = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(_object);
 #else
                     Object parentObject = UnityEditor.PrefabUtility.GetPrefabParent(tObj);
 #endif
-                    tString = UnityEditor.AssetDatabase.GetAssetPath(parentObject);
+                    path = UnityEditor.AssetDatabase.GetAssetPath(parentObject);
                 }
             }
 #endif
-            return tString;
+            return path;
         }
 
 
         #region "Float comparisons"
-        public static bool IsApproximately(float a, float b, float _tolerance = 0.01f)
+        public static bool IsApproximately(float _a, float _b, float _tolerance = 0.01f)
         {
-            return Mathf.Abs(a - b) < _tolerance;
+            return Mathf.Abs(_a - _b) < _tolerance;
         }
         #endregion
 
 
         #region "XML"
-        public static void CreateXML<T>(ref string tPath, object pObject)
+        public static void CreateXML<T>(ref string _path, object _object)
         {
 #if UNITY_WEBPLAYER
 			return;
 #else
-            string tData = SerializeObject<T>(ref pObject);
+            string tData = SerializeObject<T>(ref _object);
             StreamWriter writer;
-            FileInfo t = new FileInfo(tPath);
+            FileInfo t = new FileInfo(_path);
             if (!t.Exists)
             {
                 writer = t.CreateText();
@@ -133,19 +131,19 @@ namespace GSD
         }
 
 
-        public static string GetString<T>(object pObject)
+        public static string GetString<T>(object _object)
         {
-            string tData = SerializeObject<T>(ref pObject);
+            string tData = SerializeObject<T>(ref _object);
             return tData;
         }
 
 
-        public static object LoadXML<T>(ref string tPath)
+        public static object LoadXML<T>(ref string _path)
         {
 #if UNITY_WEBPLAYER
 			return null;
 #else
-            StreamReader r = File.OpenText(tPath);
+            StreamReader r = File.OpenText(_path);
             string _info = r.ReadToEnd();
             r.Close();
             object tObject = DeserializeObject<T>(_info);
@@ -161,61 +159,61 @@ namespace GSD
         }
 
 
-        public static void DeleteLibraryXML(string tName, bool bIsExtrusion)
+        public static void DeleteLibraryXML(string _name, bool _isExtrusion)
         {
 #if UNITY_WEBPLAYER
 			return;
 #else
-            string tPath;
-            if (bIsExtrusion)
+            string path;
+            if (_isExtrusion)
             {
-                tPath = Application.dataPath + "/RoadArchitect/Library/ESO" + tName + ".gsd";
+                path = Application.dataPath + "/RoadArchitect/Library/ESO" + _name + ".gsd";
             }
             else
             {
-                tPath = Application.dataPath + "/RoadArchitect/Library/EOM" + tName + ".gsd";
+                path = Application.dataPath + "/RoadArchitect/Library/EOM" + _name + ".gsd";
             }
-            if (File.Exists(tPath))
+            if (File.Exists(path))
             {
-                File.Delete(tPath);
+                File.Delete(path);
             }
 #endif
         }
 
 
-        private static string SerializeObject<T>(ref object pObject)
+        private static string SerializeObject<T>(ref object _object)
         {
             string XmlizedString = null;
             MemoryStream memoryStream = new MemoryStream();
             XmlSerializer xs = new XmlSerializer(typeof(T));
             XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
-            xs.Serialize(xmlTextWriter, pObject);
+            xs.Serialize(xmlTextWriter, _object);
             memoryStream = (MemoryStream) xmlTextWriter.BaseStream;
             XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
             return XmlizedString;
         }
 
 
-        private static object DeserializeObject<T>(string pXmlizedString)
+        private static object DeserializeObject<T>(string _xmlString)
         {
             XmlSerializer xs = new XmlSerializer(typeof(T));
-            MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(pXmlizedString));
+            MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(_xmlString));
             return xs.Deserialize(memoryStream);
         }
 
 
-        private static string UTF8ByteArrayToString(byte[] characters)
+        private static string UTF8ByteArrayToString(byte[] _characters)
         {
             UTF8Encoding encoding = new UTF8Encoding();
-            string constructedString = encoding.GetString(characters);
+            string constructedString = encoding.GetString(_characters);
             return (constructedString);
         }
 
 
-        private static byte[] StringToUTF8ByteArray(string pXmlString)
+        private static byte[] StringToUTF8ByteArray(string _xmlString)
         {
             UTF8Encoding encoding = new UTF8Encoding();
-            byte[] byteArray = encoding.GetBytes(pXmlString);
+            byte[] byteArray = encoding.GetBytes(_xmlString);
             return byteArray;
         }
         #endregion
@@ -223,14 +221,15 @@ namespace GSD
 
         #region "Mesh tangents"
         //Thread safe because local scope and by val params
-        public static Vector4[] ProcessTangents(int[] tris, Vector3[] normals, Vector2[] uvs, Vector3[] verts)
+        public static Vector4[] ProcessTangents(int[] _tris, Vector3[] _normals, Vector2[] _uvs, Vector3[] _verts)
         {
-            int MVL = verts.Length;
+            int MVL = _verts.Length;
             if (MVL == 0)
             {
                 return new Vector4[0];
             }
-            int triangleCount = tris.Length;// mesh.triangles.Length / 3;
+            // mesh.triangles.Length / 3;
+            int triangleCount = _tris.Length;
             Vector3[] tan1 = new Vector3[MVL];
             Vector3[] tan2 = new Vector3[MVL];
             Vector4[] tangents = new Vector4[MVL];
@@ -242,17 +241,17 @@ namespace GSD
             float div = 0f;
             for (int a = 0; a < triangleCount; a += 3)
             {
-                i1 = tris[a + 0];
-                i2 = tris[a + 1];
-                i3 = tris[a + 2];
+                i1 = _tris[a + 0];
+                i2 = _tris[a + 1];
+                i3 = _tris[a + 2];
 
-                v1 = verts[i1];
-                v2 = verts[i2];
-                v3 = verts[i3];
+                v1 = _verts[i1];
+                v2 = _verts[i2];
+                v3 = _verts[i3];
 
-                w1 = uvs[i1];
-                w2 = uvs[i2];
-                w3 = uvs[i3];
+                w1 = _uvs[i1];
+                w2 = _uvs[i2];
+                w3 = _uvs[i3];
 
                 x1 = v2.x - v1.x;
                 x2 = v3.x - v1.x;
@@ -266,7 +265,7 @@ namespace GSD
                 t1 = w2.y - w1.y;
                 t2 = w3.y - w1.y;
 
-                //				r = 1.0f / (s1 * t2 - s2 * t1);
+                //r = 1.0f / (s1 * t2 - s2 * t1);
                 div = (s1 * t2 - s2 * t1);
                 r = div == 0.0f ? 0.0f : 1.0f / div;
 
@@ -282,10 +281,11 @@ namespace GSD
                 tan2[i3] += tdir;
             }
 
-            Vector3 n, t;//,tmp;
+            Vector3 n;
+            Vector3 t;
             for (int index = 0; index < MVL; index++)
             {
-                n = normals[index];
+                n = _normals[index];
                 t = tan1[index];
 
                 Vector3.OrthoNormalize(ref n, ref t);
@@ -294,37 +294,37 @@ namespace GSD
                 tangents[index].z = t.z;
                 tangents[index].w = (Vector3.Dot(Vector3.Cross(n, t), tan2[index]) < 0.0f) ? -1.0f : 1.0f;
 
-                //				tmp = (t - n * Vector3.Dot(n, t)).normalized;
-                //				tangents[i] = new Vector4(tmp.x, tmp.y, tmp.z);
-                //				tangents[i].w = (Vector3.Dot(Vector3.Cross(n, t), tan2[i]) < 0.0f) ? -1.0f : 1.0f;
+                //tmp = (t - n * Vector3.Dot(n, t)).normalized;
+                //tangents[i] = new Vector4(tmp.x, tmp.y, tmp.z);
+                //tangents[i].w = (Vector3.Dot(Vector3.Cross(n, t), tan2[i]) < 0.0f) ? -1.0f : 1.0f;
             }
 
             return tangents;
         }
 
 
-        public static void ProcessTangents(ref Mesh tMesh)
+        public static void ProcessTangents(ref Mesh _mesh)
         {
-            Vector3[] tVerts = tMesh.vertices;
-            Vector2[] tUV = tMesh.uv;
-            Vector3[] tNormals = tMesh.normals;
-            int[] tTris = tMesh.triangles;
+            Vector3[] vertices = _mesh.vertices;
+            Vector2[] uv = _mesh.uv;
+            Vector3[] normals = _mesh.normals;
+            int[] triangles = _mesh.triangles;
 
-            tMesh.tangents = ProcessTangents(tTris, tNormals, tUV, tVerts);
+            _mesh.tangents = ProcessTangents(triangles, normals, uv, vertices);
         }
         #endregion
 
 
         #region "Default directory for library etc"
-        public static string Dir_GetBase()
+        public static string GetDirBase()
         {
             return Application.dataPath.Replace("/Assets", "/GSD/");
         }
 
 
-        public static string Dir_GetTH()
+        public static string GetTHDir()
         {
-            string xPath = Dir_GetBase() + "TH/";
+            string xPath = GetDirBase() + "TH/";
             if (!Directory.Exists(xPath))
             {
                 Directory.CreateDirectory(xPath);
@@ -333,15 +333,15 @@ namespace GSD
         }
 
 
-        public static string Dir_GetLibraryBase()
+        public static string GetDirLibraryBase()
         {
             return GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Library/";
         }
 
 
-        public static string Dir_GetLibrary()
+        public static string GetDirLibrary()
         {
-            string xPath = Dir_GetLibraryBase();
+            string xPath = GetDirLibraryBase();
             if (!Directory.Exists(xPath))
             {
                 Directory.CreateDirectory(xPath);
@@ -350,24 +350,24 @@ namespace GSD
         }
 
 
-        public static void Dir_GetLibrary_CheckSpecialDirs()
+        public static void GetDirLibraryCheckSpecialDirs()
         {
-            string xPath = Dir_GetLibraryBase() + "Q/";
+            string xPath = GetDirLibraryBase() + "Q/";
             if (!Directory.Exists(xPath))
             {
                 Directory.CreateDirectory(xPath);
             }
-            xPath = Dir_GetLibraryBase() + "W/";
+            xPath = GetDirLibraryBase() + "W/";
             if (!Directory.Exists(xPath))
             {
                 Directory.CreateDirectory(xPath);
             }
-            xPath = Dir_GetLibraryBase() + "B/";
+            xPath = GetDirLibraryBase() + "B/";
             if (!Directory.Exists(xPath))
             {
                 Directory.CreateDirectory(xPath);
             }
-            xPath = Dir_GetLibraryBase() + "B/W/";
+            xPath = GetDirLibraryBase() + "B/W/";
             if (!Directory.Exists(xPath))
             {
                 Directory.CreateDirectory(xPath);
@@ -376,11 +376,11 @@ namespace GSD
         #endregion
 
 
-        public static void ForceCollection(bool bWait = false)
+        public static void ForceCollection(bool _isWait = false)
         {
 #if UNITY_EDITOR
             System.GC.Collect();
-            if (bWait)
+            if (_isWait)
             {
                 System.GC.WaitForPendingFinalizers();
             }

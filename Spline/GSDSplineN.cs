@@ -110,7 +110,7 @@ public class GSDSplineN : MonoBehaviour
         for (int index = 0; index < eCount; index++)
         {
             EOM = EdgeObjects[index];
-            EOM.tNode = this;
+            EOM.node = this;
             EOM.Setup(bCollect);
         }
     }
@@ -119,10 +119,10 @@ public class GSDSplineN : MonoBehaviour
     public EdgeObjectMaker AddEdgeObject()
     {
         EdgeObjectMaker EOM = new EdgeObjectMaker();
-        EOM.tNode = this;
+        EOM.node = this;
         EOM.SetDefaultTimes(bIsEndPoint, tTime, NextTime, idOnSpline, GSDSpline.distance);
-        EOM.StartPos = GSDSpline.GetSplineValue(EOM.StartTime);
-        EOM.EndPos = GSDSpline.GetSplineValue(EOM.EndTime);
+        EOM.startPos = GSDSpline.GetSplineValue(EOM.startTime);
+        EOM.endPos = GSDSpline.GetSplineValue(EOM.endTime);
         EdgeObjects.Add(EOM);
         return EOM;
     }
@@ -133,7 +133,7 @@ public class GSDSplineN : MonoBehaviour
         EdgeObjectMaker EOM = AddEdgeObject();
         EOM.LoadFromLibrary(tName, true);
         EOM.SetDefaultTimes(bIsEndPoint, tTime, NextTime, idOnSpline, GSDSpline.distance);
-        EOM.tNode = this;
+        EOM.node = this;
         EOM.Setup();
     }
 
@@ -202,7 +202,7 @@ public class GSDSplineN : MonoBehaviour
             EdgeObjectMaker EOM = EdgeObjects[i];
             EOM.LoadFromLibrary(tName);
             EOM.SetDefaultTimes(bIsEndPoint, tTime, NextTime, idOnSpline, GSDSpline.distance);
-            EOM.tNode = this;
+            EOM.node = this;
             EOM.Setup();
         }
     }
@@ -215,7 +215,7 @@ public class GSDSplineN : MonoBehaviour
 
         for (int index = 0; index < mCount; index++)
         {
-            if (EdgeObjects[index].EdgeObject == null)
+            if (EdgeObjects[index].edgeObject == null)
             {
                 InvalidList.Add(index);
             }
@@ -262,7 +262,7 @@ public class GSDSplineN : MonoBehaviour
         for (int index = 0; index < eCount; index++)
         {
             SMM = SplinatedObjects[index];
-            if (string.CompareOrdinal(SMM.UID, UID) == 0)
+            if (string.CompareOrdinal(SMM.uID, UID) == 0)
             {
                 return index;
             }

@@ -31,10 +31,10 @@ public class GSDRoadConnector : MonoBehaviour
     #endregion
 
 
-    public void ConnectToNode(GSDSplineN node)
+    public void ConnectToNode(GSDSplineN _node)
     {
-        Debug.Log("Would connect to " + node);
-        connectedNode = node;
+        Debug.Log("Would connect to " + _node);
+        connectedNode = _node;
         connectedNode.transform.position = transform.position;
         connectedNode.GSDSpline.tRoad.UpdateRoad();
     }
@@ -64,19 +64,19 @@ public class GSDRoadConnector : MonoBehaviour
 [CustomEditor(typeof(GSDRoadConnector))]
 public class GSDRoadConnectorEditor : Editor
 {
-    public GSDRoadConnector tConnector { get { return (GSDRoadConnector) target; } }
+    public GSDRoadConnector connector { get { return (GSDRoadConnector) target; } }
 
 
     public override void OnInspectorGUI()
     {
-        if (tConnector.connectedNode != null)
+        if (connector.connectedNode != null)
         {
             EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Off-road connection:", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField(tConnector.connectedNode.GSDSpline.tRoad.name + " to " + tConnector.obj.name);
+            EditorGUILayout.LabelField(connector.connectedNode.GSDSpline.tRoad.name + " to " + connector.obj.name);
             if (GUILayout.Button("Break connection"))
             {
-                tConnector.connectedNode = null;
+                connector.connectedNode = null;
             }
             EditorGUILayout.EndVertical();
         }

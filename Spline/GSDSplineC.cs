@@ -1436,7 +1436,7 @@ public class GSDSplineC : MonoBehaviour
             tNode = mNodes[index];
             if (tNode.bIsIntersection)
             {
-                tNode.GSDRI.Height = tNode.pos.y;
+                tNode.GSDRI.height = tNode.pos.y;
 
                 if (bUseSQ)
                 {
@@ -1446,7 +1446,7 @@ public class GSDSplineC : MonoBehaviour
                 //					tDist = Vector3.Distance(tPos,tNode.pos);
                 //				}
 
-                if (tNode.GSDRI.rType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                if (tNode.GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                 {
                     if (bUseSQ)
                     {
@@ -1456,7 +1456,7 @@ public class GSDSplineC : MonoBehaviour
                     //						MetersToCheck = MetersToCheck_NoTurnLane;
                     //					}
                 }
-                else if (tNode.GSDRI.rType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                else if (tNode.GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                 {
                     if (bUseSQ)
                     {
@@ -1467,7 +1467,7 @@ public class GSDSplineC : MonoBehaviour
                     //						MetersToCheck = MetersToCheck_TurnLane;
                     //					}
                 }
-                else if (tNode.GSDRI.rType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                else if (tNode.GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     if (bUseSQ)
                     {
@@ -1514,7 +1514,7 @@ public class GSDSplineC : MonoBehaviour
             tNode = mNodes[index];
             if (tNode.bIsIntersection)
             {
-                tNode.GSDRI.Height = tNode.pos.y;
+                tNode.GSDRI.height = tNode.pos.y;
                 GSDSplineN xNode;
                 if (bUseSQ)
                 {
@@ -1524,7 +1524,7 @@ public class GSDSplineC : MonoBehaviour
                 //					tDist = Vector3.Distance(tPos,tNode.pos);
                 //				}
 
-                if (tNode.GSDRI.rType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                if (tNode.GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                 {
                     if (bUseSQ)
                     {
@@ -1534,7 +1534,7 @@ public class GSDSplineC : MonoBehaviour
                     //						MetersToCheck = MetersToCheck_NoTurnLane;
                     //					}
                 }
-                else if (tNode.GSDRI.rType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                else if (tNode.GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                 {
                     if (bUseSQ)
                     {
@@ -1544,7 +1544,7 @@ public class GSDSplineC : MonoBehaviour
                     //						MetersToCheck = MetersToCheck_TurnLane;
                     //					}
                 }
-                else if (tNode.GSDRI.rType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                else if (tNode.GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     if (bUseSQ)
                     {
@@ -1565,15 +1565,15 @@ public class GSDSplineC : MonoBehaviour
 
                 if (tDist <= MetersToCheck)
                 {
-                    if (tNode.GSDRI.bSameSpline)
+                    if (tNode.GSDRI.isSameSpline)
                     {
-                        if (tNode.GSDRI.Node1.UID != tNode.UID)
+                        if (tNode.GSDRI.node1.UID != tNode.UID)
                         {
-                            xNode = tNode.GSDRI.Node1;
+                            xNode = tNode.GSDRI.node1;
                         }
                         else
                         {
-                            xNode = tNode.GSDRI.Node2;
+                            xNode = tNode.GSDRI.node2;
                         }
 
                         float P1 = tNode.tTime - p;

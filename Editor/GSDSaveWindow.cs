@@ -57,7 +57,7 @@ public class GSDSaveWindow : EditorWindow
 
         if (xPath.Length < 5)
         {
-            xPath = GSDRootUtil.Dir_GetLibrary();
+            xPath = GSDRootUtil.GetDirLibrary();
         }
 
         EditorGUILayout.LabelField("Short description (optional):");
@@ -171,7 +171,7 @@ public class GSDSaveWindow : EditorWindow
         if (GUILayout.Button("Save extrusion"))
         {
             SanitizeFilename();
-            tSMMs[0].bIsBridge = isBridge;
+            tSMMs[0].isBridge = isBridge;
             tSMMs[0].ThumbString = ThumbString;
             tSMMs[0].Desc = Desc;
             tSMMs[0].DisplayName = displayName;
@@ -186,10 +186,10 @@ public class GSDSaveWindow : EditorWindow
         if (GUILayout.Button("Save edge object"))
         {
             SanitizeFilename();
-            tEOMs[0].bIsBridge = isBridge;
-            tEOMs[0].ThumbString = ThumbString;
-            tEOMs[0].Desc = Desc;
-            tEOMs[0].DisplayName = displayName;
+            tEOMs[0].isBridge = isBridge;
+            tEOMs[0].thumbString = ThumbString;
+            tEOMs[0].desc = Desc;
+            tEOMs[0].displayName = displayName;
             tEOMs[0].SaveToLibrary(fileName, false);
             Close();
         }
@@ -202,12 +202,12 @@ public class GSDSaveWindow : EditorWindow
         {
             SanitizeFilename();
             GSD.Roads.GSDRoadUtil.WizardObject WO = new GSD.Roads.GSDRoadUtil.WizardObject();
-            WO.ThumbString = ThumbString;
-            WO.Desc = Desc;
-            WO.DisplayName = displayName;
-            WO.FileName = fileName;
-            WO.bIsBridge = isBridge;
-            WO.bIsDefault = false;
+            WO.thumbString = ThumbString;
+            WO.desc = Desc;
+            WO.displayName = displayName;
+            WO.fileName = fileName;
+            WO.isBridge = isBridge;
+            WO.isDefault = false;
 
             GSD.Roads.GSDRoadUtil.SaveNodeObjects(ref tSMMs, ref tEOMs, ref WO);
             Close();
@@ -284,7 +284,7 @@ public class GSDSaveWindow : EditorWindow
             tEOMs[0] = _EOM;
             if (_EOM != null)
             {
-                fileName = _EOM.tName;
+                fileName = _EOM.objectName;
                 displayName = fileName;
             }
         }
@@ -300,7 +300,7 @@ public class GSDSaveWindow : EditorWindow
 
         if (xPath.Length < 5)
         {
-            xPath = GSDRootUtil.Dir_GetLibrary();
+            xPath = GSDRootUtil.GetDirLibrary();
         }
 
         if (tWindowType == WindowTypeEnum.Edge)

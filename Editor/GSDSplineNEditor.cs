@@ -807,7 +807,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("TextArea");
 
-            if (SMM.bNeedsUpdate)
+            if (SMM.isRequiringUpdate)
             {
                 SMM.Setup(true);
             }
@@ -815,7 +815,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
 
-            SMM.bToggle = EditorGUILayout.Foldout(SMM.bToggle, "#" + currentCount.ToString() + ": " + SMM.tName);
+            SMM.isToggled = EditorGUILayout.Foldout(SMM.isToggled, "#" + currentCount.ToString() + ": " + SMM.tName);
 
             if (GUILayout.Button(btnExtrudeText, GSDImageButton, GUILayout.Width(32f)))
             {
@@ -844,7 +844,7 @@ public class GSDSplineNEditor : Editor
                 EditorUtility.SetDirty(tNode);
             }
             EditorGUILayout.EndHorizontal();
-            if (!SMM.bToggle)
+            if (!SMM.isToggled)
             {
                 EditorGUILayout.EndVertical();
                 continue;
@@ -855,30 +855,30 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             //Name:
-            SMM.EM.tName = EditorGUILayout.TextField("Name:", SMM.tName);
+            SMM.EM.objectName = EditorGUILayout.TextField("Name:", SMM.tName);
 
             //Game object (prefab):
-            SMM.EM.CurrentSplination = (GameObject) EditorGUILayout.ObjectField("Prefab:", SMM.CurrentSplination, typeof(GameObject), false);
+            SMM.EM.CurrentSplination = (GameObject) EditorGUILayout.ObjectField("Prefab:", SMM.currentSplination, typeof(GameObject), false);
 
             //Game object (prefab start cap):
-            SMM.EM.CurrentSplinationCap1 = (GameObject) EditorGUILayout.ObjectField("Prefab start cap:", SMM.CurrentSplinationCap1, typeof(GameObject), false);
+            SMM.EM.CurrentSplinationCap1 = (GameObject) EditorGUILayout.ObjectField("Prefab start cap:", SMM.currentSplinationCap1, typeof(GameObject), false);
             //Prefab start cap height offset:
-            if (SMM.CurrentSplinationCap1 != null)
+            if (SMM.currentSplinationCap1 != null)
             {
-                SMM.EM.CapHeightOffset1 = EditorGUILayout.FloatField("  Height offset:", SMM.CapHeightOffset1);
+                SMM.EM.CapHeightOffset1 = EditorGUILayout.FloatField("  Height offset:", SMM.capHeightOffset1);
             }
 
             //Game object (prefab end cap):
-            SMM.EM.CurrentSplinationCap2 = (GameObject) EditorGUILayout.ObjectField("Prefab end cap:", SMM.CurrentSplinationCap2, typeof(GameObject), false);
+            SMM.EM.CurrentSplinationCap2 = (GameObject) EditorGUILayout.ObjectField("Prefab end cap:", SMM.currentSplinationCap2, typeof(GameObject), false);
             //Prefab end cap height offset:
-            if (SMM.CurrentSplinationCap2 != null)
+            if (SMM.currentSplinationCap2 != null)
             {
-                SMM.EM.CapHeightOffset2 = EditorGUILayout.FloatField("  Height offset:", SMM.CapHeightOffset2);
+                SMM.EM.CapHeightOffset2 = EditorGUILayout.FloatField("  Height offset:", SMM.capHeightOffset2);
             }
 
             //Material overrides:
-            SMM.EM.bMaterialOverride = EditorGUILayout.Toggle("Material override: ", SMM.bMaterialOverride);
-            if (SMM.bMaterialOverride)
+            SMM.EM.isMaterialOverriden = EditorGUILayout.Toggle("Material override: ", SMM.isMaterialOverriden);
+            if (SMM.isMaterialOverriden)
             {
                 SMM.EM.SplinatedMaterial1 = (Material) EditorGUILayout.ObjectField("Override mat #1: ", SMM.SplinatedMaterial1, typeof(Material), false);
                 SMM.EM.SplinatedMaterial2 = (Material) EditorGUILayout.ObjectField("Override mat #2: ", SMM.SplinatedMaterial2, typeof(Material), false);
@@ -927,46 +927,46 @@ public class GSDSplineNEditor : Editor
             //Straight line options:
             if (tNode.IsStraight())
             {
-                if (!SMM.bIsStretch)
+                if (!SMM.isStretch)
                 {
-                    SMM.EM.bIsStretch = EditorGUILayout.Toggle("Straight line stretch:", SMM.bIsStretch);
+                    SMM.EM.isStretched = EditorGUILayout.Toggle("Straight line stretch:", SMM.isStretch);
                 }
                 else
                 {
                     EditorGUILayout.BeginVertical("box");
-                    SMM.EM.bIsStretch = EditorGUILayout.Toggle("Straight line stretch:", SMM.bIsStretch);
+                    SMM.EM.isStretched = EditorGUILayout.Toggle("Straight line stretch:", SMM.isStretch);
 
                     //Stretch_UVThreshold:
-                    SMM.EM.Stretch_UVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.Stretch_UVThreshold, 0.01f, 0.5f);
+                    SMM.EM.stretchedUVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.stretchUVThreshold, 0.01f, 0.5f);
 
                     //UV repeats:
-                    SMM.EM.RepeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV stretch axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
+                    SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV stretch axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
                     EditorGUILayout.EndVertical();
                 }
             }
             else
             {
-                SMM.EM.bIsStretch = false;
+                SMM.EM.isStretched = false;
             }
 
 
 
-            SMM.EM.bTrimStart = EditorGUILayout.Toggle("Trim start:", SMM.bTrimStart);
-            SMM.EM.bTrimEnd = EditorGUILayout.Toggle("Trim end:", SMM.bTrimEnd);
+            SMM.EM.isTrimStart = EditorGUILayout.Toggle("Trim start:", SMM.isTrimStart);
+            SMM.EM.isTrimEnd = EditorGUILayout.Toggle("Trim end:", SMM.isTrimEnd);
 
 
 
             //Static option:
-            SMM.EM.bStatic = EditorGUILayout.Toggle("Static: ", SMM.bStatic);
+            SMM.EM.isStatic = EditorGUILayout.Toggle("Static: ", SMM.isStatic);
 
 
             //Splination method
             //			SMM.EM.bMatchRoadIncrements = EditorGUILayout.Toggle("Match road increments: ",SMM.bMatchRoadIncrements); 
-            SMM.EM.bMatchTerrain = EditorGUILayout.Toggle("Match ground: ", SMM.bMatchTerrain);
+            SMM.EM.isMatchingTerrain = EditorGUILayout.Toggle("Match ground: ", SMM.isMatchingTerrain);
 
             //Vector min/max threshold: 
             EditorGUILayout.BeginHorizontal();
-            SMM.EM.MinMaxMod = EditorGUILayout.Slider("Vertex min/max threshold: ", SMM.MinMaxMod, 0.01f, 0.2f);
+            SMM.EM.MinMaxMod = EditorGUILayout.Slider("Vertex min/max threshold: ", SMM.minMaxMod, 0.01f, 0.2f);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.MinMaxMod = 0.05f;
@@ -975,7 +975,7 @@ public class GSDSplineNEditor : Editor
 
             //Vertex matching precision:
             EditorGUILayout.BeginHorizontal();
-            SMM.EM.VertexMatchingPrecision = EditorGUILayout.Slider("Vertex matching precision: ", SMM.VertexMatchingPrecision, 0f, 0.01f);
+            SMM.EM.VertexMatchingPrecision = EditorGUILayout.Slider("Vertex matching precision: ", SMM.vertexMatchingPrecision, 0f, 0.01f);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.VertexMatchingPrecision = 0.005f;
@@ -983,38 +983,38 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.EndHorizontal();
 
             //UV repeats:
-            if (!SMM.bIsStretch)
+            if (!SMM.isStretch)
             {
-                SMM.EM.RepeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV repeat axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
+                SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV repeat axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
             }
 
-            if (SMM.bMatchRoadDefinition)
+            if (SMM.isMatchingRoadDefinition)
             {
                 EditorGUILayout.BeginVertical("TextArea");
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.bMatchRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.bMatchRoadDefinition);
+                SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
                 if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.bMatchRoadDefinition = false;
+                    SMM.EM.isMatchingRoadDefinition = false;
                 }
                 EditorGUILayout.EndHorizontal();
-                if (SMM.bMatchRoadDefinition)
+                if (SMM.isMatchingRoadDefinition)
                 {
                     EditorGUILayout.LabelField("  Only use this option if object length doesn't match the road definition.", EditorStyles.miniLabel);
                     EditorGUILayout.LabelField("  Matching road definition requires a UV repeat type.", EditorStyles.miniLabel);
                     EditorGUILayout.LabelField("  If the material fails to scale properly, try flipping the Y rotation.", EditorStyles.miniLabel);
                 }
                 //Flip rotation option:
-                SMM.EM.bFlipRotation = EditorGUILayout.Toggle("  Flip Y rotation: ", SMM.bFlipRotation);
+                SMM.EM.isFlippedRotation = EditorGUILayout.Toggle("  Flip Y rotation: ", SMM.isFlippingRotation);
                 EditorGUILayout.EndVertical();
             }
             else
             {
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.bMatchRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.bMatchRoadDefinition);
+                SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
                 if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.bMatchRoadDefinition = false;
+                    SMM.EM.isMatchingRoadDefinition = false;
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -1108,13 +1108,13 @@ public class GSDSplineNEditor : Editor
             //Vertical cutoff:
             EditorGUILayout.LabelField("Vertical cutoff:");
             EditorGUILayout.BeginVertical("box");
-            SMM.EM.bVerticalCutoff = EditorGUILayout.Toggle("Height cutoff enabled:", SMM.bVerticalCutoff);
-            if (SMM.bVerticalCutoff)
+            SMM.EM.isVerticalCutoff = EditorGUILayout.Toggle("Height cutoff enabled:", SMM.isVerticalCutoff);
+            if (SMM.isVerticalCutoff)
             {
-                SMM.EM.bVerticalCutoff_MatchZero = EditorGUILayout.Toggle("Match spline height:", SMM.bVerticalCutoff_MatchZero);
-                SMM.EM.bVerticalCutoffDownwards = EditorGUILayout.Toggle("Cut direction toggle:", SMM.bVerticalCutoffDownwards);
+                SMM.EM.isVerticalCutoffMatchingZero = EditorGUILayout.Toggle("Match spline height:", SMM.isVerticalCutoffMatchingZero);
+                SMM.EM.isVerticalCutoffDownwards = EditorGUILayout.Toggle("Cut direction toggle:", SMM.isVerticalCutoffDownwards);
                 SMM.EM.VerticalCutoff = EditorGUILayout.Slider("Height cut offset: ", SMM.VerticalCutoff, -50f, 50f);
-                SMM.EM.bVerticalMeshCutoff_OppositeDir = EditorGUILayout.Toggle("Opposite dir mesh cut:", SMM.bVerticalMeshCutoff_OppositeDir);
+                SMM.EM.isVerticalMeshCutoffOppositeDir = EditorGUILayout.Toggle("Opposite dir mesh cut:", SMM.isVerticalMeshCutoffOppositeDir);
                 SMM.EM.VerticalMeshCutoffOffset = EditorGUILayout.Slider("Mesh cut offset: ", SMM.VerticalMeshCutoffOffset, -5f, 5f);
             }
             EditorGUILayout.EndVertical();
@@ -1122,22 +1122,22 @@ public class GSDSplineNEditor : Editor
             //End type:
             EditorGUILayout.LabelField("Extrusion ending options:");
             EditorGUILayout.BeginVertical("box");
-            SMM.EM.bStartDown = EditorGUILayout.Toggle("Push start down:", SMM.bStartDown);
-            SMM.EM.bEndDown = EditorGUILayout.Toggle("Push end down:", SMM.bEndDown);
-            if (SMM.bStartDown)
+            SMM.EM.isStartDown = EditorGUILayout.Toggle("Push start down:", SMM.isStartDown);
+            SMM.EM.isEndDown = EditorGUILayout.Toggle("Push end down:", SMM.isEndDown);
+            if (SMM.isStartDown)
             {
-                SMM.EM.bStartTypeDownOverride = EditorGUILayout.Toggle("Override start down value: ", SMM.bStartTypeDownOverride);
-                if (SMM.bStartTypeDownOverride)
+                SMM.EM.isStartTypeDownOverriden = EditorGUILayout.Toggle("Override start down value: ", SMM.isStartTypeDownOverriden);
+                if (SMM.isStartTypeDownOverriden)
                 {
-                    SMM.EM.StartTypeDownOverride = EditorGUILayout.Slider("Downward movement: ", SMM.StartTypeDownOverride, -10f, 10f);
+                    SMM.EM.startTypeDownOverriden = EditorGUILayout.Slider("Downward movement: ", SMM.startTypeDownOverride, -10f, 10f);
                 }
             }
-            if (SMM.bEndDown)
+            if (SMM.isEndDown)
             {
-                SMM.EM.bEndTypeDownOverride = EditorGUILayout.Toggle("Override end down value: ", SMM.bEndTypeDownOverride);
-                if (SMM.bEndTypeDownOverride)
+                SMM.EM.isEndTypeDownOverriden = EditorGUILayout.Toggle("Override end down value: ", SMM.isEndTypeDownOverriden);
+                if (SMM.isEndTypeDownOverriden)
                 {
-                    SMM.EM.EndTypeDownOverride = EditorGUILayout.Slider("Downward movement: ", SMM.EndTypeDownOverride, -10f, 10f);
+                    SMM.EM.endTypeDownOverriden = EditorGUILayout.Slider("Downward movement: ", SMM.endTypeDownOverride, -10f, 10f);
                 }
             }
             EditorGUILayout.EndVertical();
@@ -1146,10 +1146,10 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.LabelField("Start & end objects:");
             EditorGUILayout.BeginVertical("box");
             //End cap custom match start:
-            SMM.EM.bEndCapCustomMatchStart = EditorGUILayout.Toggle("Match objects to ends:", SMM.bEndCapCustomMatchStart);
+            SMM.EM.isEndCapCustomMatchingStart = EditorGUILayout.Toggle("Match objects to ends:", SMM.bEndCapCustomMatchStart);
 
             //End objects match ground:
-            SMM.EM.bEndObjectsMatchGround = EditorGUILayout.Toggle("Force origins to ground:", SMM.bEndObjectsMatchGround);
+            SMM.EM.isEndObjectsMatchingGround = EditorGUILayout.Toggle("Force origins to ground:", SMM.bEndObjectsMatchGround);
 
             //Start cap:
             EditorGUILayout.BeginVertical("box");
@@ -1199,20 +1199,20 @@ public class GSDSplineNEditor : Editor
             //Collision:
             EditorGUILayout.LabelField("Collision options:");
             EditorGUILayout.BeginVertical("box");
-            SMM.EM.CollisionType = (GSD.Roads.Splination.CollisionTypeEnum) EditorGUILayout.Popup("Collision type: ", (int) SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
+            SMM.EM.collisionType = (GSD.Roads.Splination.CollisionTypeEnum) EditorGUILayout.Popup("Collision type: ", (int) SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
             //Mesh collison convex option
             if (SMM.CollisionType != GSD.Roads.Splination.CollisionTypeEnum.None && SMM.CollisionType != GSD.Roads.Splination.CollisionTypeEnum.BoxCollision)
             {
-                SMM.EM.bCollisionConvex = EditorGUILayout.Toggle(" Convex: ", SMM.bCollisionConvex);
-                SMM.EM.bCollisionTrigger = EditorGUILayout.Toggle(" Trigger: ", SMM.bCollisionTrigger);
+                SMM.EM.isCollisionConvex = EditorGUILayout.Toggle(" Convex: ", SMM.isCollisionConvex);
+                SMM.EM.isCollisionTriggered = EditorGUILayout.Toggle(" Trigger: ", SMM.isCollisionTrigger);
             }
 
             if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle || SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
             {
-                SMM.EM.bSimpleCollisionAutomatic = EditorGUILayout.Toggle(" Automatic simple collision: ", SMM.bSimpleCollisionAutomatic);
+                SMM.EM.isSimpleCollisionAutomatic = EditorGUILayout.Toggle(" Automatic simple collision: ", SMM.isSimpleCollisionAutomatic);
             }
             //If not automatic simple collisions:
-            if (!SMM.bSimpleCollisionAutomatic)
+            if (!SMM.isSimpleCollisionAutomatic)
             {
                 if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle)
                 {
@@ -1247,15 +1247,15 @@ public class GSDSplineNEditor : Editor
 
             if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.BoxCollision)
             {
-                SMM.EM.StretchBC_LocOffset = EditorGUILayout.Vector3Field("Box collider center offset:", SMM.StretchBC_LocOffset);
-                SMM.EM.bBCFlipX = EditorGUILayout.Toggle("Flip center X:", SMM.bBCFlipX);
-                SMM.EM.bBCFlipZ = EditorGUILayout.Toggle("Flip center Z:", SMM.bBCFlipZ);
+                SMM.EM.stretchedBCLocOffset = EditorGUILayout.Vector3Field("Box collider center offset:", SMM.StretchBC_LocOffset);
+                SMM.EM.isBCFlippedX = EditorGUILayout.Toggle("Flip center X:", SMM.isBCFlipX);
+                SMM.EM.isBCFlippedZ = EditorGUILayout.Toggle("Flip center Z:", SMM.isBCFlipZ);
 
 
-                SMM.EM.bStretchSize = EditorGUILayout.Toggle("Box collider size edit:", SMM.bStretchSize);
-                if (SMM.bStretchSize)
+                SMM.EM.isStretchedSize = EditorGUILayout.Toggle("Box collider size edit:", SMM.isStretchSize);
+                if (SMM.isStretchSize)
                 {
-                    SMM.EM.StretchBC_Size = EditorGUILayout.Vector3Field("Size:", SMM.StretchBC_Size);
+                    SMM.EM.stretchedBCSize = EditorGUILayout.Vector3Field("Size:", SMM.StretchBC_Size);
                 }
                 else
                 {
@@ -1273,13 +1273,13 @@ public class GSDSplineNEditor : Editor
             //EOM.CustomRotation = EditorGUILayout.Vector3Field("Custom rotation: ",EOM.CustomRotation);
             EditorGUILayout.BeginHorizontal();
             //Flip rotation option:
-            if (SMM.EM.bFlipRotation != SMM.bFlipRotation)
+            if (SMM.EM.isFlippedRotation != SMM.isFlippingRotation)
             {
-                SMM.EM.bFlipRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.EM.bFlipRotation);
+                SMM.EM.isFlippedRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.EM.isFlippedRotation);
             }
             else
             {
-                SMM.EM.bFlipRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.bFlipRotation);
+                SMM.EM.isFlippedRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.isFlippingRotation);
             }
 
 
@@ -1301,7 +1301,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.LabelField("Deprecated options:");
             EditorGUILayout.BeginVertical("box");
-            SMM.EM.bExactSplination = EditorGUILayout.Toggle("Directional extrusion: ", SMM.bExactSplination);
+            SMM.EM.isExactSplination = EditorGUILayout.Toggle("Directional extrusion: ", SMM.isExactSplination);
 
             EditorGUILayout.EndVertical();
             RAEditorUtilitys.Line(4f, 4f);  // Big Lines
@@ -1331,19 +1331,19 @@ public class GSDSplineNEditor : Editor
                     SMM.EM.LoadToSMM(SMM);
 
                     SMM.UpdatePositions();
-                    if (SMM.EM.bIsStretch != SMM.bIsStretch)
+                    if (SMM.EM.isStretched != SMM.isStretch)
                     {
-                        if (SMM.bIsStretch)
+                        if (SMM.isStretch)
                         {
                             SMM.CollisionType = GSD.Roads.Splination.CollisionTypeEnum.BoxCollision;
-                            SMM.bMatchRoadDefinition = false;
-                            SMM.bMatchTerrain = false;
-                            SMM.bCollisionConvex = false;
-                            SMM.bStartDown = false;
-                            SMM.bEndDown = false;
-                            SMM.bVerticalCutoff = false;
-                            SMM.bExactSplination = false;
-                            SMM.bEndTypeDownOverride = false;
+                            SMM.isMatchingRoadDefinition = false;
+                            SMM.isMatchingTerrain = false;
+                            SMM.isCollisionConvex = false;
+                            SMM.isStartDown = false;
+                            SMM.isEndDown = false;
+                            SMM.isVerticalCutoff = false;
+                            SMM.isExactSplination = false;
+                            SMM.isEndTypeDownOverriden = false;
                         }
                     }
 
@@ -1379,17 +1379,17 @@ public class GSDSplineNEditor : Editor
             SMM = tNode.SplinatedObjects[index];
             SMM.UpdatePositions();
             //if(SMM.bIsStretch != SMM.bIsStretch){ 
-            if (SMM.bIsStretch)
+            if (SMM.isStretch)
             {
                 SMM.CollisionType = GSD.Roads.Splination.CollisionTypeEnum.BoxCollision;
-                SMM.bMatchRoadDefinition = false;
-                SMM.bMatchTerrain = false;
-                SMM.bCollisionConvex = false;
-                SMM.bStartDown = false;
-                SMM.bEndDown = false;
-                SMM.bVerticalCutoff = false;
-                SMM.bExactSplination = false;
-                SMM.bEndTypeDownOverride = false;
+                SMM.isMatchingRoadDefinition = false;
+                SMM.isMatchingTerrain = false;
+                SMM.isCollisionConvex = false;
+                SMM.isStartDown = false;
+                SMM.isEndDown = false;
+                SMM.isVerticalCutoff = false;
+                SMM.isExactSplination = false;
+                SMM.isEndTypeDownOverriden = false;
             }
             //}				
             SMM.Setup(true);
@@ -1417,25 +1417,25 @@ public class GSDSplineNEditor : Editor
         for (int index = 0; index < tNode.EdgeObjects.Count; index++)
         {
             EOM = tNode.EdgeObjects[index];
-            if (EOM.EM == null)
+            if (EOM.edgeMaker == null)
             {
-                EOM.EM = new GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
+                EOM.edgeMaker = new GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
             }
-            EOM.EM.Setup(EOM);
+            EOM.edgeMaker.Setup(EOM);
 
             currentCount += 1;
             EditorGUILayout.BeginVertical("TextArea");
 
 
-            if (EOM.bNeedsUpdate)
+            if (EOM.isRequiringUpdate)
             {
                 EOM.Setup();
             }
-            EOM.bNeedsUpdate = false;
+            EOM.isRequiringUpdate = false;
 
             EditorGUILayout.BeginHorizontal();
 
-            EOM.bToggle = EditorGUILayout.Foldout(EOM.bToggle, "#" + currentCount.ToString() + ": " + EOM.tName);
+            EOM.isToggled = EditorGUILayout.Foldout(EOM.isToggled, "#" + currentCount.ToString() + ": " + EOM.objectName);
 
             if (GUILayout.Button(btnEdgeText, GSDImageButton, GUILayout.Width(32f)))
             {
@@ -1465,7 +1465,7 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.EndHorizontal();
 
-            if (!EOM.bToggle)
+            if (!EOM.isToggled)
             {
                 EditorGUILayout.EndVertical();
                 continue;
@@ -1476,201 +1476,201 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             //Name:
-            EOM.EM.tName = EditorGUILayout.TextField("Name: ", EOM.tName);
+            EOM.edgeMaker.objectName = EditorGUILayout.TextField("Name: ", EOM.objectName);
 
             //Edge object:
-            EOM.EM.EdgeObject = (GameObject) EditorGUILayout.ObjectField("Edge object: ", EOM.EdgeObject, typeof(GameObject), false);
-            if (EOM.EM.EdgeObject != EOM.EdgeObject)
+            EOM.edgeMaker.edgeObject = (GameObject) EditorGUILayout.ObjectField("Edge object: ", EOM.edgeObject, typeof(GameObject), false);
+            if (EOM.edgeMaker.edgeObject != EOM.edgeObject)
             {
-                EOM.bEdgeSignLabelInit = false;
-                EOM.bEdgeSignLabel = false;
+                EOM.isEdgeSignLabelInit = false;
+                EOM.isEdgeSignLabel = false;
             }
 
 
             #region "Material override"
-            EOM.EM.bMaterialOverride = EditorGUILayout.Toggle("Material override: ", EOM.bMaterialOverride);
-            if (!EOM.bMaterialOverride)
+            EOM.edgeMaker.isMaterialOverriden = EditorGUILayout.Toggle("Material override: ", EOM.isMaterialOverriden);
+            if (!EOM.isMaterialOverriden)
             {
-                EOM.EM.EdgeMaterial1 = null;
-                EOM.EM.EdgeMaterial2 = null;
+                EOM.edgeMaker.edgeMaterial1 = null;
+                EOM.edgeMaker.edgeMaterial2 = null;
             }
 
-            if (!EOM.bEdgeSignLabelInit && EOM.EM.EdgeObject != null)
+            if (!EOM.isEdgeSignLabelInit && EOM.edgeMaker.edgeObject != null)
             {
-                EOM.bEdgeSignLabel = false;
-                if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSignDiamond") == 0)
+                EOM.isEdgeSignLabel = false;
+                if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignDiamond") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-diamond";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-diamond";
 
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSignSquare-Small") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignSquare-Small") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-Square";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-Square";
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSignSquare") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignSquare") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-Square";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-Square";
 
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign988-Small") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign988-Small") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-988";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-988";
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign988") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign988") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-988";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-988";
 
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign861-Small") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign861-Small") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-861";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-861";
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign861") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign861") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-861";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-861";
 
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign617-Small") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign617-Small") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-617";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-617";
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign617") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign617") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-617";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-617";
 
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign396") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign396") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-396";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-396";
 
                 }
-                else if (string.CompareOrdinal(EOM.EM.EdgeObject.name, "GSDSign330") == 0)
+                else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign330") == 0)
                 {
-                    EOM.bEdgeSignLabel = true;
-                    EOM.EdgeSignLabel = "GSDFedSign-330";
+                    EOM.isEdgeSignLabel = true;
+                    EOM.edgeSignLabel = "GSDFedSign-330";
                 }
             }
 
-            if (EOM.bMaterialOverride)
+            if (EOM.isMaterialOverriden)
             {
-                if (EOM.bEdgeSignLabel)
+                if (EOM.isEdgeSignLabel)
                 {
-                    EditorGUILayout.TextField("Material search term: ", EOM.EdgeSignLabel);
+                    EditorGUILayout.TextField("Material search term: ", EOM.edgeSignLabel);
                 }
 
-                EOM.EM.EdgeMaterial1 = (Material) EditorGUILayout.ObjectField("Override mat #1: ", EOM.EdgeMaterial1, typeof(Material), false);
-                EOM.EM.EdgeMaterial2 = (Material) EditorGUILayout.ObjectField("Override mat #2: ", EOM.EdgeMaterial2, typeof(Material), false);
+                EOM.edgeMaker.edgeMaterial1 = (Material) EditorGUILayout.ObjectField("Override mat #1: ", EOM.edgeMaterial1, typeof(Material), false);
+                EOM.edgeMaker.edgeMaterial2 = (Material) EditorGUILayout.ObjectField("Override mat #2: ", EOM.edgeMaterial2, typeof(Material), false);
             }
             #endregion
 
 
             #region "Combine Mesh / MeshCollider"
-            if (EOM.bSingle)
+            if (EOM.isSingle)
             {
-                EOM.EM.bCombineMesh = false;
+                EOM.edgeMaker.isCombinedMesh = false;
             }
             else
             {
-                EOM.EM.bCombineMesh = EditorGUILayout.Toggle("Combine meshes: ", EOM.bCombineMesh);
+                EOM.edgeMaker.isCombinedMesh = EditorGUILayout.Toggle("Combine meshes: ", EOM.isCombinedMesh);
 
-                if (EOM.bCombineMesh)
+                if (EOM.isCombinedMesh)
                 {
-                    EOM.EM.bCombineMeshCollider = EditorGUILayout.Toggle("Combined mesh collider: ", EOM.bCombineMeshCollider);
+                    EOM.edgeMaker.isCombinedMeshCollider = EditorGUILayout.Toggle("Combined mesh collider: ", EOM.isCombinedMeshCollider);
                 }
             }
             #endregion
 
 
             #region "SingleObject"
-            EOM.EM.bSingle = EditorGUILayout.Toggle("Single object only: ", EOM.bSingle);
-            if (EOM.EM.bSingle != EOM.bSingle)
+            EOM.edgeMaker.isSingle = EditorGUILayout.Toggle("Single object only: ", EOM.isSingle);
+            if (EOM.edgeMaker.isSingle != EOM.isSingle)
             {
-                EOM.EM.EndTime = tNode.NextTime;
+                EOM.edgeMaker.endTime = tNode.NextTime;
                 //				EOM.EM.EndPos = tNode.GSDSpline.GetSplineValue(EOM.EM.EndTime,false);
-                EOM.EM.SinglePosition = tNode.tTime + 0.025f;
-                if (EOM.EM.bSingle)
+                EOM.edgeMaker.singlePosition = tNode.tTime + 0.025f;
+                if (EOM.edgeMaker.isSingle)
                 {
-                    EOM.EM.bCombineMesh = false;
+                    EOM.edgeMaker.isCombinedMesh = false;
                 }
             }
 
-            if (EOM.bSingle)
+            if (EOM.isSingle)
             {
-                EOM.EM.SinglePosition = EditorGUILayout.Slider("Single location: ", EOM.SinglePosition, tNode.tTime, 1f);
+                EOM.edgeMaker.singlePosition = EditorGUILayout.Slider("Single location: ", EOM.singlePosition, tNode.tTime, 1f);
 
                 if (tNode.bIsBridgeStart && tNode.bIsBridgeMatched)
                 {
-                    EOM.EM.SingleOnlyBridgePercent = EditorGUILayout.Slider("Bridge %: ", EOM.SingleOnlyBridgePercent, 0f, 1f);
-                    if (!GSDRootUtil.IsApproximately(EOM.SingleOnlyBridgePercent, EOM.EM.SingleOnlyBridgePercent, 0.001f))
+                    EOM.edgeMaker.singleOnlyBridgePercent = EditorGUILayout.Slider("Bridge %: ", EOM.singleOnlyBridgePercent, 0f, 1f);
+                    if (!GSDRootUtil.IsApproximately(EOM.singleOnlyBridgePercent, EOM.edgeMaker.singleOnlyBridgePercent, 0.001f))
                     {
-                        EOM.EM.SingleOnlyBridgePercent = Mathf.Clamp(EOM.EM.SingleOnlyBridgePercent, 0f, 1f);
-                        float tDist = (EOM.EM.SingleOnlyBridgePercent * (tNode.BridgeCounterpartNode.tDist - tNode.tDist) + tNode.tDist);
-                        EOM.EM.SinglePosition = tNode.GSDSpline.TranslateDistBasedToParam(tDist);
+                        EOM.edgeMaker.singleOnlyBridgePercent = Mathf.Clamp(EOM.edgeMaker.singleOnlyBridgePercent, 0f, 1f);
+                        float tDist = (EOM.edgeMaker.singleOnlyBridgePercent * (tNode.BridgeCounterpartNode.tDist - tNode.tDist) + tNode.tDist);
+                        EOM.edgeMaker.singlePosition = tNode.GSDSpline.TranslateDistBasedToParam(tDist);
                     }
                 }
             }
             #endregion
 
 
-            EOM.EM.bStatic = EditorGUILayout.Toggle("Static: ", EOM.bStatic);
+            EOM.edgeMaker.isStatic = EditorGUILayout.Toggle("Static: ", EOM.isStatic);
 
 
-            EOM.EM.bMatchTerrain = EditorGUILayout.Toggle("Match ground height: ", EOM.bMatchTerrain);
+            EOM.edgeMaker.isMatchingTerrain = EditorGUILayout.Toggle("Match ground height: ", EOM.isMatchingTerrain);
 
-            if (!EOM.bSingle)
+            if (!EOM.isSingle)
             {
-                EOM.EM.MeterSep = EditorGUILayout.Slider("Dist between objects: ", EOM.MeterSep, 1f, 256f);
+                EOM.edgeMaker.meterSep = EditorGUILayout.Slider("Dist between objects: ", EOM.meterSep, 1f, 256f);
             }
 
 
             #region "Match Road"
-            EOM.EM.bStartMatchRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", EOM.bStartMatchRoadDefinition);
-            if (EOM.bStartMatchRoadDefinition)
+            EOM.edgeMaker.isStartMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", EOM.isStartMatchRoadDefinition);
+            if (EOM.isStartMatchRoadDefinition)
             {
-                EOM.EM.StartMatchRoadDef = EditorGUILayout.Slider("Position fine tuning: ", EOM.StartMatchRoadDef, 0f, 1f);
-                if (!GSDRootUtil.IsApproximately(EOM.EM.StartMatchRoadDef, EOM.StartMatchRoadDef, 0.001f))
+                EOM.edgeMaker.startMatchRoadDef = EditorGUILayout.Slider("Position fine tuning: ", EOM.startMatchRoadDef, 0f, 1f);
+                if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.startMatchRoadDef, EOM.startMatchRoadDef, 0.001f))
                 {
-                    EOM.EM.StartMatchRoadDef = Mathf.Clamp(EOM.EM.StartMatchRoadDef, 0f, 1f);
+                    EOM.edgeMaker.startMatchRoadDef = Mathf.Clamp(EOM.edgeMaker.startMatchRoadDef, 0f, 1f);
                 }
             }
             #endregion
 
 
-            if (!EOM.bSingle)
+            if (!EOM.isSingle)
             {
-                if (EOM.EM.StartTime < tNode.MinSplination)
+                if (EOM.edgeMaker.startTime < tNode.MinSplination)
                 {
-                    EOM.EM.StartTime = tNode.MinSplination;
+                    EOM.edgeMaker.startTime = tNode.MinSplination;
                 }
-                if (EOM.EM.EndTime > tNode.MaxSplination)
+                if (EOM.edgeMaker.endTime > tNode.MaxSplination)
                 {
-                    EOM.EM.EndTime = tNode.MaxSplination;
+                    EOM.edgeMaker.endTime = tNode.MaxSplination;
                 }
 
 
                 #region "Start param"
                 EditorGUILayout.BeginHorizontal();
-                EOM.EM.StartTime = EditorGUILayout.Slider("Start param: ", EOM.StartTime, tNode.MinSplination, EOM.EndTime);  // EndTime = 1f??
+                EOM.edgeMaker.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, tNode.MinSplination, EOM.endTime);  // EndTime = 1f??
 
-                if (EOM.EM.EndTime < EOM.EM.StartTime)
+                if (EOM.edgeMaker.endTime < EOM.edgeMaker.startTime)
                 {
-                    EOM.EM.EndTime = Mathf.Clamp(EOM.StartTime + 0.01f, 0f, 1f);
+                    EOM.edgeMaker.endTime = Mathf.Clamp(EOM.startTime + 0.01f, 0f, 1f);
                 }
 
 
                 if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
-                    EOM.EM.StartTime = tNode.tTime;
+                    EOM.edgeMaker.startTime = tNode.tTime;
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
@@ -1678,7 +1678,7 @@ public class GSDSplineNEditor : Editor
 
                 #region "End param"
                 EditorGUILayout.BeginHorizontal();
-                EOM.EM.EndTime = EditorGUILayout.Slider("End param: ", EOM.EndTime, EOM.StartTime, tNode.MaxSplination);
+                EOM.edgeMaker.endTime = EditorGUILayout.Slider("End param: ", EOM.endTime, EOM.startTime, tNode.MaxSplination);
                 //Mathf.Clamp(EditorGUILayout.Slider( "End param: ", EOM.EndTime, 0f/*EOM.StartTime*/, 1f/*tNode.MaxSplination*/ ), 0f, 1f);
                 // FH EXPERIMENTAL fix for EdgeObjects???
 
@@ -1689,9 +1689,9 @@ public class GSDSplineNEditor : Editor
                 }
                 */
 
-                if (EOM.EM.StartTime > EOM.EM.EndTime)
+                if (EOM.edgeMaker.startTime > EOM.edgeMaker.endTime)
                 {
-                    EOM.EM.StartTime = Mathf.Clamp(EOM.EndTime - 0.01f, 0f, 1f);
+                    EOM.edgeMaker.startTime = Mathf.Clamp(EOM.endTime - 0.01f, 0f, 1f);
                 }
 
 
@@ -1699,7 +1699,7 @@ public class GSDSplineNEditor : Editor
 
                 if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
-                    EOM.EM.EndTime = tNode.NextTime;
+                    EOM.edgeMaker.endTime = tNode.NextTime;
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
@@ -1714,22 +1714,22 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
 
             EditorGUILayout.BeginHorizontal();
-            EOM.EM.VerticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", EOM.VerticalRaise, -512f, 512f);
+            EOM.edgeMaker.verticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", EOM.verticalRaise, -512f, 512f);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
-                EOM.EM.VerticalRaise = 0f;
+                EOM.edgeMaker.verticalRaise = 0f;
             }
             EditorGUILayout.EndHorizontal();
 
-            if (EOM.VerticalCurve == null || EOM.VerticalCurve.keys.Length < 2)
+            if (EOM.verticalCurve == null || EOM.verticalCurve.keys.Length < 2)
             {
-                EnforceCurve(ref EOM.VerticalCurve);
+                EnforceCurve(ref EOM.verticalCurve);
             }
             EditorGUILayout.BeginHorizontal();
-            EOM.EM.VerticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.VerticalCurve);
+            EOM.edgeMaker.verticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.verticalCurve);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
-                ResetCurve(ref EOM.EM.VerticalCurve);
+                ResetCurve(ref EOM.edgeMaker.verticalCurve);
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
@@ -1745,64 +1745,64 @@ public class GSDSplineNEditor : Editor
             {
                 if (tHorizMatching == HorizMatchingDefaultsEnum.MatchCenter)
                 {
-                    EOM.EM.HorizontalSep = 0f;
+                    EOM.edgeMaker.horizontalSep = 0f;
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
                 {
-                    EOM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) * -1;
+                    EOM.edgeMaker.horizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) * -1;
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                 {
                     if (tNode.GSDSpline.tRoad.isShouldersEnabled)
                     {
-                        EOM.EM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.shoulderWidth) * -1;
+                        EOM.edgeMaker.horizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.shoulderWidth) * -1;
                     }
                     else
                     {
-                        EOM.EM.HorizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() * 0.5f)) * -1;
+                        EOM.edgeMaker.horizontalSep = ((tNode.GSDSpline.tRoad.RoadWidth() * 0.5f)) * -1;
                     }
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
                 {
-                    EOM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f);
+                    EOM.edgeMaker.horizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f);
                 }
                 else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                 {
                     if (tNode.GSDSpline.tRoad.isShouldersEnabled)
                     {
-                        EOM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.shoulderWidth;
+                        EOM.edgeMaker.horizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f) + tNode.GSDSpline.tRoad.shoulderWidth;
                     }
                     else
                     {
-                        EOM.EM.HorizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f);
+                        EOM.edgeMaker.horizontalSep = (tNode.GSDSpline.tRoad.RoadWidth() * 0.5f);
                     }
                 }
                 tHorizMatching = HorizMatchingDefaultsEnum.None;
             }
-            if (!GSDRootUtil.IsApproximately(EOM.EM.HorizontalSep, EOM.HorizontalSep))
+            if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
             {
-                EOM.EM.HorizontalSep = Mathf.Clamp(EOM.EM.HorizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
+                EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
             }
 
 
             EditorGUILayout.BeginHorizontal();
-            EOM.EM.HorizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.EM.HorizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
+            EOM.edgeMaker.horizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.edgeMaker.horizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
-                EOM.EM.HorizontalSep = 0f;
+                EOM.edgeMaker.horizontalSep = 0f;
             }
-            if (!GSDRootUtil.IsApproximately(EOM.EM.HorizontalSep, EOM.HorizontalSep))
+            if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
             {
-                EOM.EM.HorizontalSep = Mathf.Clamp(EOM.EM.HorizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
+                EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
             }
             EditorGUILayout.EndHorizontal();
-            if (EOM.HorizontalCurve == null || EOM.HorizontalCurve.keys.Length < 2)
-            { EnforceCurve(ref EOM.HorizontalCurve); }
+            if (EOM.horizontalCurve == null || EOM.horizontalCurve.keys.Length < 2)
+            { EnforceCurve(ref EOM.horizontalCurve); }
             EditorGUILayout.BeginHorizontal();
-            EOM.EM.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.HorizontalCurve);
+            EOM.edgeMaker.horizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.horizontalCurve);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
-                ResetCurve(ref EOM.EM.HorizontalCurve);
+                ResetCurve(ref EOM.edgeMaker.horizontalCurve);
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
@@ -1812,30 +1812,30 @@ public class GSDSplineNEditor : Editor
             #region "Rotation/scale options"
             EditorGUILayout.LabelField("Rotation/scale options:");
             EditorGUILayout.BeginVertical("box");
-            if (EOM.HorizontalSep < 0f)
+            if (EOM.horizontalSep < 0f)
             {
-                EOM.EM.bOncomingRotation = EditorGUILayout.Toggle("Auto rotate oncoming objects: ", EOM.bOncomingRotation);
+                EOM.edgeMaker.isOncomingRotation = EditorGUILayout.Toggle("Auto rotate oncoming objects: ", EOM.isOncomingRotation);
             }
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Custom rotation: ");
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
-                EOM.EM.CustomRotation = new Vector3(0f, 0f, 0f);
+                EOM.edgeMaker.customRotation = new Vector3(0f, 0f, 0f);
             }
             EditorGUILayout.EndHorizontal();
 
-            EOM.EM.CustomRotation.x = EditorGUILayout.Slider("x-axis: ", EOM.CustomRotation.x, -360f, 360f);
-            EOM.EM.CustomRotation.y = EditorGUILayout.Slider("y-axis: ", EOM.CustomRotation.y, -360f, 360f);
-            EOM.EM.CustomRotation.z = EditorGUILayout.Slider("z-axis: ", EOM.CustomRotation.z, -360f, 360f);
+            EOM.edgeMaker.customRotation.x = EditorGUILayout.Slider("x-axis: ", EOM.customRotation.x, -360f, 360f);
+            EOM.edgeMaker.customRotation.y = EditorGUILayout.Slider("y-axis: ", EOM.customRotation.y, -360f, 360f);
+            EOM.edgeMaker.customRotation.z = EditorGUILayout.Slider("z-axis: ", EOM.customRotation.z, -360f, 360f);
             EditorGUILayout.EndVertical();
             EditorGUILayout.BeginVertical("box"); /* scale */
             EditorGUILayout.BeginHorizontal();
-            float scale = EditorGUILayout.Slider("Custom scale: ", EOM.CustomScale.x, 1f, 10f);
-            EOM.EM.CustomScale = new Vector3(scale, scale, scale);
+            float scale = EditorGUILayout.Slider("Custom scale: ", EOM.customScale.x, 1f, 10f);
+            EOM.edgeMaker.customScale = new Vector3(scale, scale, scale);
             if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
             {
-                EOM.EM.CustomScale = new Vector3(1f, 1f, 1f);
+                EOM.edgeMaker.customScale = new Vector3(1f, 1f, 1f);
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical(); /* scale */
@@ -1855,11 +1855,11 @@ public class GSDSplineNEditor : Editor
         for (int index = 0; index < tNode.EdgeObjects.Count; index++)
         {
             EOM = tNode.EdgeObjects[index];
-            if (EOM.EM != null)
+            if (EOM.edgeMaker != null)
             {
-                if (!EOM.EM.IsEqual(EOM))
+                if (!EOM.edgeMaker.IsEqual(EOM))
                 {
-                    EOM.EM.LoadTo(EOM);
+                    EOM.edgeMaker.LoadTo(EOM);
                     EOM.UpdatePositions();
                     EOM.Setup();
                     //					Debug.Log ("Setup EOM"); 
@@ -1970,11 +1970,11 @@ public class GSDSplineNEditor : Editor
         }
 
         SMM.tName = tName;
-        SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
+        SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
         SMM.HorizontalSep = tHorizSep;
         SMM.VerticalRaise = tVertRaise;
-        SMM.bMaterialOverride = true;
-        SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+        SMM.isMaterialOverriden = true;
+        SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
 
         tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
@@ -2148,47 +2148,47 @@ public class GSDSplineNEditor : Editor
             tBridgeBottomBaseToAdd = OverridePrefab;
         }
 
-        SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
+        SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
         SMM.HorizontalSep = tHorizSep;
         SMM.VerticalRaise = tVertRaise;
-        SMM.bMaterialOverride = true;
+        SMM.isMaterialOverriden = true;
         SMM.tName = tName;
 
         if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDSteel7.mat");
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDSteel7.mat");
         }
         else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDSteel7.mat");
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDSteel7.mat");
         }
 
         SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
@@ -2231,7 +2231,7 @@ public class GSDSplineNEditor : Editor
     private void ExtrudeHelper(string tPath, string tName, float DefaultHoriz, GSD.Roads.Splination.AxisTypeEnum tAxis = GSD.Roads.Splination.AxisTypeEnum.Z, bool bHorizOverride = false, float tHorizSep = 0f, bool bVertOverride = false, float tVertRaise = 0f, bool bFlipRot = false)
     {
         SMM = tNode.AddSplinatedObject();
-        SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject));
+        SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject));
 
         if (bHorizOverride)
         {
@@ -2254,7 +2254,7 @@ public class GSDSplineNEditor : Editor
             }
         }
 
-        SMM.bFlipRotation = bFlipRot;
+        SMM.isFlippingRotation = bFlipRot;
         SMM.Axis = tAxis;
         if (SMM.StartTime < tNode.MinSplination)
         {

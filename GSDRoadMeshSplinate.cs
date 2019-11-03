@@ -17,53 +17,90 @@ namespace GSD.Roads.Splination
     [System.Serializable]
     public class SplinatedMeshMaker
     {
-        public bool bNeedsUpdate = false;
-        public string UID = "";
-        public bool bIsGSD = false;
+        #region "Vars"
+        [UnityEngine.Serialization.FormerlySerializedAs("UID")]
+        public string uID = "";
 
-        public Transform MasterObjTrans = null;
-        public GameObject CurrentSplination = null;
-        public string CurrentSplinationString = "";
-        public GameObject CurrentSplinationCap1 = null;
-        public string CurrentSplinationCap1String = "";
-        public GameObject CurrentSplinationCap2 = null;
-        public string CurrentSplinationCap2String = "";
-        public float CapHeightOffset1 = 0f;
-        public float CapHeightOffset2 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("bNeedsUpdate")]
+        public bool isRequiringUpdate = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
+        public bool isGSD = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
+        public bool isMaterialOverriden = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bExactSplination")]
+        public bool isExactSplination = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadDefinition")]
+        public bool isMatchingRoadDefinition = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadIncrements")]
+        public bool isMatchingRoadIncrements = true;
+        [UnityEngine.Serialization.FormerlySerializedAs("bTrimEnd")]
+        public bool isTrimEnd = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bTrimStart")]
+        public bool isTrimStart = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
+        public bool isToggled = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
+        public bool isMatchingTerrain = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
+        public bool isBridge = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bIsStretch")]
+        public bool isStretch = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStretchLocOffset")]
+        public bool isStretchLocOffset = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
+        public bool isStretchSize = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
+        public bool isBCFlipX = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
+        public bool isBCFlipZ = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
+        public bool isStraightLineMatchStartEnd = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bFlipRotation")]
+        public bool isFlippingRotation = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
+        public bool isStatic = true;
+        [UnityEngine.Serialization.FormerlySerializedAs("bNoCenterMode")]
+        public bool isNotCenterMode = true;
+
+        [UnityEngine.Serialization.FormerlySerializedAs("MasterObjTrans")]
+        public Transform masterObjTrans = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplination")]
+        public GameObject currentSplination = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap1")]
+        public GameObject currentSplinationCap1 = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap2")]
+        public GameObject currentSplinationCap2 = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationString")]
+        public string currentSplinationString = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap1String")]
+        public string currentSplinationCap1String = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap2String")]
+        public string currentSplinationCap2String = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("CapHeightOffset1")]
+        public float capHeightOffset1 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("CapHeightOffset2")]
+        public float capHeightOffset2 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("MinMaxMod")]
+        public float minMaxMod = 0.002f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VertexMatchingPrecision")]
+        public float vertexMatchingPrecision = 0.005f;
+        [UnityEngine.Serialization.FormerlySerializedAs("Stretch_UVThreshold")]
+        public float stretchUVThreshold = 0.05f;
 
         public GameObject Output = null;
         public Mesh tMesh = null;
-        public bool bMaterialOverride = false;
         public Material SplinatedMaterial1 = null;
         public Material SplinatedMaterial2 = null;
         public string SplinatedMaterial1String = "";
         public string SplinatedMaterial2String = "";
-        public float MinMaxMod = 0.002f;
-        public float VertexMatchingPrecision = 0.005f;
 
-        public bool bExactSplination = false;
-        public bool bMatchRoadDefinition = false;
-        public bool bMatchRoadIncrements = true;
-        public bool bTrimEnd = false;
-        public bool bTrimStart = false;
-        public bool bToggle = false;
-        public bool bMatchTerrain = false;
-        public bool bIsBridge = false;
-
-        public bool bIsStretch = false;
-        public bool bStretchLocOffset = false;
-        public bool bStretchSize = false;
         public Vector3 StretchBC_LocOffset = default(Vector3);
         public Vector3 StretchBC_Size = default(Vector3);
-        public float Stretch_UVThreshold = 0.05f;
-        public bool bStraightLineMatchStartEnd = false;
-        public bool bBCFlipX = false;
-        public bool bBCFlipZ = false;
 
 
         #region "Horizontal offsets"
-        public float HorizontalSep = 0f;
         public AnimationCurve HorizontalCurve;
+        public float HorizontalSep = 0f;
         public float HorizCurve_tempchecker1 = 0f;
         public float HorizCurve_tempchecker2 = 0f;
         public float HorizCurve_tempchecker3 = 0f;
@@ -76,8 +113,8 @@ namespace GSD.Roads.Splination
 
 
         #region "Vertical offsets"
-        public float VerticalRaise = 0f;
         public AnimationCurve VerticalCurve;
+        public float VerticalRaise = 0f;
         public float VerticalCurve_tempchecker1 = 0f;
         public float VerticalCurve_tempchecker2 = 0f;
         public float VerticalCurve_tempchecker3 = 0f;
@@ -91,26 +128,21 @@ namespace GSD.Roads.Splination
 
         #region "Vertical cutoff"
         public float VerticalCutoff = 0f;
-        public bool bVerticalCutoff = false;
-        public bool bVerticalCutoffDownwards = false;
-        public bool bVerticalMeshCutoff_OppositeDir = false;
         public float VerticalMeshCutoffOffset = 0.04f;
-        public bool bVerticalCutoff_MatchZero = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff")]
+        public bool isVerticalCutoff = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoffDownwards")]
+        public bool isVerticalCutoffDownwards = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalMeshCutoff_OppositeDir")]
+        public bool isVerticalMeshCutoffOppositeDir = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff_MatchZero")]
+        public bool isVerticalCutoffMatchingZero = false;
         #endregion
 
 
         public float RoadRaise = 0f;
-        public Vector3 CustomRotation = default(Vector3);
-        public bool bFlipRotation = false;
-        public bool bStatic = true;
-        public Vector3 StartPos = default(Vector3);
-        public Vector3 EndPos = default(Vector3);
         public float StartTime = 0f;
         public float EndTime = 1f;
-        public GSDSplineC tSpline = null;
-        public GSDSplineN tNode = null;
-        public AxisTypeEnum Axis = AxisTypeEnum.X;
-
         public float mMaxX = -1f;
         public float mMinX = -1f;
         public float mMaxY = -1f;
@@ -118,8 +150,16 @@ namespace GSD.Roads.Splination
         public float mMaxZ = -1f;
         public float mMinZ = -1f;
 
+        public Vector3 CustomRotation = default(Vector3);
+        public Vector3 StartPos = default(Vector3);
+        public Vector3 EndPos = default(Vector3);
+        [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
+        public GSDSplineC spline = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
+        public GSDSplineN node = null;
+        public AxisTypeEnum Axis = AxisTypeEnum.X;
+
         public RepeatUVTypeEnum RepeatUVType = RepeatUVTypeEnum.None;
-        public bool bNoCenterMode = true;
 
 
         #region "End objects"
@@ -139,21 +179,31 @@ namespace GSD.Roads.Splination
 
 
         #region "Endings down"
-        public bool bStartDown = false;
-        public bool bStartTypeDownOverride = false;
-        public float StartTypeDownOverride = 0f;
-        public bool bEndDown = false;
-        public bool bEndTypeDownOverride = false;
-        public float EndTypeDownOverride = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStartDown")]
+        public bool isStartDown = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStartTypeDownOverride")]
+        public bool isStartTypeDownOverriden = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("StartTypeDownOverride")]
+        public float startTypeDownOverride = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("bEndDown")]
+        public bool isEndDown = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bEndTypeDownOverride")]
+        public bool isEndTypeDownOverriden = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("EndTypeDownOverride")]
+        public float endTypeDownOverride = 0f;
         #endregion
 
 
         #region "Collision"
         public CollisionTypeEnum CollisionType = CollisionTypeEnum.SimpleMeshTriangle;
-        public bool bCollisionConvex = false;
-        public bool bSimpleCollisionAutomatic = true;
-        public bool bCollisionExtrude = false;
-        public bool bCollisionTrigger = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bCollisionConvex")]
+        public bool isCollisionConvex = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bSimpleCollisionAutomatic")]
+        public bool isSimpleCollisionAutomatic = true;
+        [UnityEngine.Serialization.FormerlySerializedAs("bCollisionExtrude")]
+        public bool isCollisionExtrude = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bCollisionTrigger")]
+        public bool isCollisionTrigger = false;
 
         public Vector3 CollisionBoxBL = default(Vector3);
         public Vector3 CollisionBoxBR = default(Vector3);
@@ -172,13 +222,14 @@ namespace GSD.Roads.Splination
         public string DisplayName = "";
 
         public SplinatedMeshEditorMaker EM = null;
+        #endregion
 
 
-        public void Init(GSDSplineC _tSpline, GSDSplineN _tNode, Transform tTrans)
+        public void Init(GSDSplineC _spline, GSDSplineN _node, Transform _transform)
         {
-            tSpline = _tSpline;
-            tNode = _tNode;
-            MasterObjTrans = tTrans;
+            spline = _spline;
+            node = _node;
+            masterObjTrans = _transform;
             SetupUniqueIdentifier();
         }
 
@@ -186,45 +237,45 @@ namespace GSD.Roads.Splination
         public SplinatedMeshMaker Copy()
         {
             SplinatedMeshMaker SMM = new SplinatedMeshMaker();
-            SMM.Init(tSpline, tNode, MasterObjTrans);
-            SMM.MasterObjTrans = MasterObjTrans;
-            SMM.bIsGSD = bIsGSD;
+            SMM.Init(spline, node, masterObjTrans);
+            SMM.masterObjTrans = masterObjTrans;
+            SMM.isGSD = isGSD;
 
-            SMM.CurrentSplination = CurrentSplination;
-            SMM.CurrentSplinationString = CurrentSplinationString;
+            SMM.currentSplination = currentSplination;
+            SMM.currentSplinationString = currentSplinationString;
 
-            SMM.CurrentSplinationCap1 = CurrentSplinationCap1;
-            SMM.CurrentSplinationCap1String = CurrentSplinationCap1String;
-            SMM.CurrentSplinationCap2 = CurrentSplinationCap2;
-            SMM.CurrentSplinationCap2String = CurrentSplinationCap2String;
-            SMM.CapHeightOffset1 = CapHeightOffset1;
-            SMM.CapHeightOffset1 = CapHeightOffset2;
+            SMM.currentSplinationCap1 = currentSplinationCap1;
+            SMM.currentSplinationCap1String = currentSplinationCap1String;
+            SMM.currentSplinationCap2 = currentSplinationCap2;
+            SMM.currentSplinationCap2String = currentSplinationCap2String;
+            SMM.capHeightOffset1 = capHeightOffset1;
+            SMM.capHeightOffset1 = capHeightOffset2;
 
             SMM.Output = Output;
             SMM.tMesh = tMesh;
-            SMM.bMaterialOverride = bMaterialOverride;
+            SMM.isMaterialOverriden = isMaterialOverriden;
             SMM.SplinatedMaterial1 = SplinatedMaterial1;
             SMM.SplinatedMaterial2 = SplinatedMaterial2;
             SMM.SplinatedMaterial1String = SplinatedMaterial1String;
             SMM.SplinatedMaterial2String = SplinatedMaterial2String;
-            SMM.bExactSplination = bExactSplination;
-            SMM.bMatchRoadDefinition = bMatchRoadDefinition;
-            SMM.bMatchRoadIncrements = bMatchRoadIncrements;
-            SMM.bTrimStart = bTrimStart;
-            SMM.bTrimEnd = bTrimEnd;
-            SMM.bMatchTerrain = bMatchTerrain;
-            SMM.MinMaxMod = MinMaxMod;
-            SMM.VertexMatchingPrecision = VertexMatchingPrecision;
+            SMM.isExactSplination = isExactSplination;
+            SMM.isMatchingRoadDefinition = isMatchingRoadDefinition;
+            SMM.isMatchingRoadIncrements = isMatchingRoadIncrements;
+            SMM.isTrimStart = isTrimStart;
+            SMM.isTrimEnd = isTrimEnd;
+            SMM.isMatchingTerrain = isMatchingTerrain;
+            SMM.minMaxMod = minMaxMod;
+            SMM.vertexMatchingPrecision = vertexMatchingPrecision;
 
-            SMM.bIsStretch = bIsStretch;
-            SMM.bStretchLocOffset = bStretchLocOffset;
-            SMM.bStretchSize = bStretchSize;
+            SMM.isStretch = isStretch;
+            SMM.isStretchLocOffset = isStretchLocOffset;
+            SMM.isStretchSize = isStretchSize;
             SMM.StretchBC_LocOffset = StretchBC_LocOffset;
             SMM.StretchBC_Size = StretchBC_Size;
-            SMM.Stretch_UVThreshold = Stretch_UVThreshold;
-            SMM.bStraightLineMatchStartEnd = bStraightLineMatchStartEnd;
-            SMM.bBCFlipX = bBCFlipX;
-            SMM.bBCFlipZ = bBCFlipZ;
+            SMM.stretchUVThreshold = stretchUVThreshold;
+            SMM.isStraightLineMatchStartEnd = isStraightLineMatchStartEnd;
+            SMM.isBCFlipX = isBCFlipX;
+            SMM.isBCFlipZ = isBCFlipZ;
 
             //Horizontal offsets:
             SMM.HorizontalSep = HorizontalSep;
@@ -248,17 +299,17 @@ namespace GSD.Roads.Splination
             }
 
             //Vertical cutoff:
-            SMM.bVerticalCutoff = bVerticalCutoff;
+            SMM.isVerticalCutoff = isVerticalCutoff;
             SMM.VerticalCutoff = VerticalCutoff;
-            SMM.bVerticalCutoffDownwards = bVerticalCutoffDownwards;
-            SMM.bVerticalMeshCutoff_OppositeDir = bVerticalMeshCutoff_OppositeDir;
+            SMM.isVerticalCutoffDownwards = isVerticalCutoffDownwards;
+            SMM.isVerticalMeshCutoffOppositeDir = isVerticalMeshCutoffOppositeDir;
             SMM.VerticalMeshCutoffOffset = VerticalMeshCutoffOffset;
-            SMM.bVerticalCutoff_MatchZero = bVerticalCutoff_MatchZero;
+            SMM.isVerticalCutoffMatchingZero = isVerticalCutoffMatchingZero;
 
             SMM.RoadRaise = RoadRaise;
             SMM.CustomRotation = CustomRotation;
-            SMM.bFlipRotation = bFlipRotation;
-            SMM.bStatic = bStatic;
+            SMM.isFlippingRotation = isFlippingRotation;
+            SMM.isStatic = isStatic;
             SMM.StartTime = StartTime;
             SMM.EndTime = EndTime;
             SMM.StartPos = StartPos;
@@ -285,20 +336,20 @@ namespace GSD.Roads.Splination
             SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
             SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
             SMM.bEndObjectsMatchGround = bEndObjectsMatchGround;
-            SMM.bIsBridge = bIsBridge;
+            SMM.isBridge = isBridge;
             //End down:
-            SMM.bStartDown = bStartDown;
-            SMM.bStartTypeDownOverride = bStartTypeDownOverride;
-            SMM.StartTypeDownOverride = StartTypeDownOverride;
-            SMM.bEndDown = bEndDown;
-            SMM.bEndTypeDownOverride = bEndTypeDownOverride;
-            SMM.EndTypeDownOverride = EndTypeDownOverride;
+            SMM.isStartDown = isStartDown;
+            SMM.isStartTypeDownOverriden = isStartTypeDownOverriden;
+            SMM.startTypeDownOverride = startTypeDownOverride;
+            SMM.isEndDown = isEndDown;
+            SMM.isEndTypeDownOverriden = isEndTypeDownOverriden;
+            SMM.endTypeDownOverride = endTypeDownOverride;
 
             //Collision:
             SMM.CollisionType = CollisionType;
-            SMM.bCollisionConvex = bCollisionConvex;
-            SMM.bSimpleCollisionAutomatic = bSimpleCollisionAutomatic;
-            SMM.bCollisionTrigger = bCollisionTrigger;
+            SMM.isCollisionConvex = isCollisionConvex;
+            SMM.isSimpleCollisionAutomatic = isSimpleCollisionAutomatic;
+            SMM.isCollisionTrigger = isCollisionTrigger;
 
             SMM.CollisionBoxBL = CollisionBoxBL;
             SMM.CollisionBoxBR = CollisionBoxBR;
@@ -320,24 +371,24 @@ namespace GSD.Roads.Splination
         }
 
 
-        public void SetDefaultTimes(bool bIsEndPoint, float tTime, float tTimeNext, int idOnSpline, float tDist)
+        public void SetDefaultTimes(bool _isEndPoint, float _time, float _timeNext, int _idOnSpline, float _dist)
         {
-            if (!bIsEndPoint)
+            if (!_isEndPoint)
             {
-                StartTime = tTime;
-                EndTime = tTimeNext;
+                StartTime = _time;
+                EndTime = _timeNext;
             }
             else
             {
-                if (idOnSpline < 2)
+                if (_idOnSpline < 2)
                 {
-                    StartTime = tTime;
-                    EndTime = tTimeNext;
+                    StartTime = _time;
+                    EndTime = _timeNext;
                 }
                 else
                 {
-                    StartTime = tTime;
-                    EndTime = tTime - (125f / tDist);
+                    StartTime = _time;
+                    EndTime = _time - (125f / _dist);
                 }
             }
         }
@@ -345,71 +396,71 @@ namespace GSD.Roads.Splination
 
         public void UpdatePositions()
         {
-            StartPos = tSpline.GetSplineValue(StartTime);
-            EndPos = tSpline.GetSplineValue(EndTime);
+            StartPos = spline.GetSplineValue(StartTime);
+            EndPos = spline.GetSplineValue(EndTime);
         }
 
 
-        public void SaveToLibrary(string fName = "", bool bIsDefault = false)
+        public void SaveToLibrary(string _name = "", bool _isDefault = false)
         {
             SplinatedMeshLibraryMaker SLM = new SplinatedMeshLibraryMaker();
             SLM.Setup(this);
-            GSDRootUtil.Dir_GetLibrary_CheckSpecialDirs();
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            string tPath = xPath + "ESO" + tName + ".gsd";
-            if (fName.Length > 0)
+            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            string basePath = GSDRootUtil.GetDirLibrary();
+            string filePath = basePath + "ESO" + tName + ".gsd";
+            if (_name.Length > 0)
             {
-                if (bIsDefault)
+                if (_isDefault)
                 {
-                    tPath = xPath + "Q/ESO" + fName + ".gsd";
+                    filePath = basePath + "Q/ESO" + _name + ".gsd";
                 }
                 else
                 {
-                    tPath = xPath + "ESO" + fName + ".gsd";
+                    filePath = basePath + "ESO" + _name + ".gsd";
                 }
             }
-            GSDRootUtil.CreateXML<SplinatedMeshLibraryMaker>(ref tPath, SLM);
+            GSDRootUtil.CreateXML<SplinatedMeshLibraryMaker>(ref filePath, SLM);
         }
 
 
-        public void LoadFromLibrary(string xName, bool bIsQuickAdd = false)
+        public void LoadFromLibrary(string _name, bool _isQuickAdd = false)
         {
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            string tPath = xPath + "ESO" + xName + ".gsd";
-            if (bIsQuickAdd)
+            string basePath = GSDRootUtil.GetDirLibrary();
+            string filePath = basePath + "ESO" + _name + ".gsd";
+            if (_isQuickAdd)
             {
-                GSDRootUtil.Dir_GetLibrary_CheckSpecialDirs();
-                tPath = xPath + "Q/ESO" + xName + ".gsd";
+                GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+                filePath = basePath + "Q/ESO" + _name + ".gsd";
             }
-            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref tPath);
+            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
-            bNeedsUpdate = true;
+            isRequiringUpdate = true;
         }
 
 
-        public void LoadFromLibraryWizard(string xName)
+        public void LoadFromLibraryWizard(string _name)
         {
-            GSDRootUtil.Dir_GetLibrary_CheckSpecialDirs();
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            string tPath = xPath + "W/" + xName + ".gsd";
-            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref tPath);
+            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            string basePath = GSDRootUtil.GetDirLibrary();
+            string filePath = basePath + "W/" + _name + ".gsd";
+            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
-            bNeedsUpdate = true;
+            isRequiringUpdate = true;
         }
 
 
-        public void LoadFromLibraryBulk(ref SplinatedMeshLibraryMaker SLM)
+        public void LoadFromLibraryBulk(ref SplinatedMeshLibraryMaker _SMLM)
         {
-            SLM.LoadToSMM(this);
-            //			bNeedsUpdate = true;
+            _SMLM.LoadToSMM(this);
+            //bNeedsUpdate = true;
         }
 
 
-        public static SplinatedMeshLibraryMaker SLMFromData(string tData)
+        public static SplinatedMeshLibraryMaker SLMFromData(string _data)
         {
             try
             {
-                SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadData<SplinatedMeshLibraryMaker>(ref tData);
+                SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadData<SplinatedMeshLibraryMaker>(ref _data);
                 return SLM;
             }
             catch
@@ -427,7 +478,7 @@ namespace GSD.Roads.Splination
         }
 
 
-        public static void GetLibraryFiles(out string[] tNames, out string[] tPaths, bool bIsDefault = false)
+        public static void GetLibraryFiles(out string[] _names, out string[] _paths, bool _isDefault = false)
         {
 #if UNITY_WEBPLAYER
 			tNames = null;
@@ -435,38 +486,38 @@ namespace GSD.Roads.Splination
 			return;
 #else
 
-            tNames = null;
-            tPaths = null;
+            _names = null;
+            _paths = null;
             DirectoryInfo info;
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            if (bIsDefault)
+            string basePath = GSDRootUtil.GetDirLibrary();
+            if (_isDefault)
             {
-                info = new DirectoryInfo(xPath + "Q/");
+                info = new DirectoryInfo(basePath + "Q/");
             }
             else
             {
-                info = new DirectoryInfo(xPath);
+                info = new DirectoryInfo(basePath);
             }
-            FileInfo[] fileInfo = info.GetFiles();
-            int tCount = 0;
-            foreach (FileInfo tInfo in fileInfo)
+            FileInfo[] fileInfos = info.GetFiles();
+            int esoCount = 0;
+            foreach (FileInfo fileInfo in fileInfos)
             {
-                if (tInfo.Name.Contains("ESO") && tInfo.Extension.ToLower().Contains("gsd"))
+                if (fileInfo.Name.Contains("ESO") && fileInfo.Extension.ToLower().Contains("gsd"))
                 {
-                    tCount += 1;
+                    esoCount += 1;
                 }
             }
 
-            tNames = new string[tCount];
-            tPaths = new string[tCount];
-            tCount = 0;
-            foreach (FileInfo tInfo in fileInfo)
+            _names = new string[esoCount];
+            _paths = new string[esoCount];
+            esoCount = 0;
+            foreach (FileInfo fileInfo in fileInfos)
             {
-                if (tInfo.Name.Contains("ESO") && tInfo.Extension.ToLower().Contains("gsd"))
+                if (fileInfo.Name.Contains("ESO") && fileInfo.Extension.ToLower().Contains("gsd"))
                 {
-                    tNames[tCount] = tInfo.Name.Replace(".gsd", "").Replace("ESO", "");
-                    tPaths[tCount] = tInfo.FullName;
-                    tCount += 1;
+                    _names[esoCount] = fileInfo.Name.Replace(".gsd", "").Replace("ESO", "");
+                    _paths[esoCount] = fileInfo.FullName;
+                    esoCount += 1;
                 }
             }
 #endif
@@ -496,32 +547,47 @@ namespace GSD.Roads.Splination
             public string CurrentSplinationString = "";
             public string CurrentSplinationCap1String = "";
             public string CurrentSplinationCap2String = "";
-            public bool bIsGSD = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
+            public bool isGSD = false;
 
-            public bool bMaterialOverride = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
+            public bool isMaterialOverriden = false;
             public string SplinatedMaterial1String = "";
             public string SplinatedMaterial2String = "";
             public float CapHeightOffset1 = 0f;
             public float CapHeightOffset2 = 0f;
-            public bool bExactSplination = false;
-            public bool bMatchRoadDefinition = false;
-            public bool bMatchRoadIncrements = true;
-            public bool bTrimStart = false;
-            public bool bTrimEnd = false;
-            public bool bToggle = false;
-            public bool bMatchTerrain = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bExactSplination")]
+            public bool isExactSplination = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadDefinition")]
+            public bool isMatchingRoadDefinition = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadIncrements")]
+            public bool isMatchingRoadIncrements = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bTrimStart")]
+            public bool isTrimStart = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bTrimEnd")]
+            public bool isTrimEnd = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
+            public bool isToggled = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
+            public bool isMatchingTerrain = false;
             public float MinMaxMod = 0.002f;
             public float VertexMatchingPrecision = 0.005f;
 
-            public bool bIsStretch = false;
-            public bool bStretchLocOffset = false;
-            public bool bStretchSize = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsStretch")]
+            public bool isStretched = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStretchLocOffset")]
+            public bool isStretchedLocOffset = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
+            public bool isStretchedSize = false;
             public Vector3 StretchBC_LocOffset = default(Vector3);
             public Vector3 StretchBC_Size = default(Vector3);
             public float Stretch_UVThreshold = 0.05f;
-            public bool bStraightLineMatchStartEnd = false;
-            public bool bBCFlipX = false;
-            public bool bBCFlipZ = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
+            public bool isStraightLineMatchingStartEnd = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
+            public bool isBCFlippedX = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
+            public bool isBCFlippedZ = false;
 
             //Horizontal offsets:
             public float HorizontalSep = 5f;
@@ -531,20 +597,27 @@ namespace GSD.Roads.Splination
             public AnimationCurve VerticalCurve;
             //Vertical cutoff:
             public float VerticalCutoff = 0f;
-            public bool bVerticalCutoff = false;
-            public bool bVerticalCutoffDownwards = false;
-            public bool bVerticalMeshCutoff_OppositeDir = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff")]
+            public bool isVerticalCutoff = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoffDownwards")]
+            public bool isVerticalCutoffDownwards = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalMeshCutoff_OppositeDir")]
+            public bool isVerticalMeshCutoffOppositeDir = false;
             public float VerticalMeshCutoffOffset = 0.04f;
-            public bool bVerticalCutoff_MatchZero = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff_MatchZero")]
+            public bool isVerticalCutoffMatchingZero = false;
 
             public float RoadRaise = 0f;
             public Vector3 CustomRotation = default(Vector3);
-            public bool bFlipRotation = false;
-            public bool bStatic = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bFlipRotation")]
+            public bool isFlippedRotation = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
+            public bool isStatic = true;
             public float StartTime = 0f;
             public float EndTime = 1f;
             public int Axis = 0;
-            public bool bIsBridge = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
+            public bool isBridge = false;
 
             public float mMaxX = -1f;
             public float mMinX = -1f;
@@ -554,7 +627,8 @@ namespace GSD.Roads.Splination
             public float mMinZ = -1f;
 
             public int RepeatUVType = 0;
-            public bool bNoCenterMode = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bNoCenterMode")]
+            public bool isNotCenterMode = true;
 
             //End objects:
             public string EndCapStartString = "";
@@ -564,20 +638,28 @@ namespace GSD.Roads.Splination
             public Vector3 EndCapCustomOffsetEnd = default(Vector3);
             public Vector3 EndCapCustomRotOffsetStart = default(Vector3);
             public Vector3 EndCapCustomRotOffsetEnd = default(Vector3);
-            public bool bEndObjectsMatchGround = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndObjectsMatchGround")]
+            public bool isEndObjectsMatchingGround = false;
             //Endings down:
-            public bool bStartDown = false;
-            public bool bStartTypeDownOverride = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStartDown")]
+            public bool isStartDown = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStartTypeDownOverride")]
+            public bool isStartTypeDownOverriden = false;
             public float StartTypeDownOverride = 0f;
-            public bool bEndDown = false;
-            public bool bEndTypeDownOverride = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndDown")]
+            public bool isEndDown = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndTypeDownOverride")]
+            public bool isEndTypeDownOverriden = false;
             public float EndTypeDownOverride = 0f;
 
             //Collision:
             public int CollisionType = 0;
-            public bool bCollisionConvex = false;
-            public bool bSimpleCollisionAutomatic = true;
-            public bool bCollisionTrigger = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCollisionConvex")]
+            public bool isCollisionConvex = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bSimpleCollisionAutomatic")]
+            public bool isSimpleCollisionAutomatic = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCollisionTrigger")]
+            public bool isCollisionTrigger = false;
 
             public Vector3 CollisionBoxBL = default(Vector3);
             public Vector3 CollisionBoxBR = default(Vector3);
@@ -588,276 +670,282 @@ namespace GSD.Roads.Splination
             public Vector3 CollisionTriBR = default(Vector3);
             public Vector3 CollisionTriT = default(Vector3);
 
-            public string tName = "ExtrudedObject";
-            public string ThumbString = "";
-            public string Desc = "";
-            public string DisplayName = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+            public string objectName = "ExtrudedObject";
+            [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
+            public string thumbString = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
+            public string desc = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
+            public string displayName = "";
 
-            public void Setup(SplinatedMeshMaker SMM)
+
+            public void Setup(SplinatedMeshMaker _SMM)
             {
-                CurrentSplinationString = SMM.CurrentSplinationString;
-                if (SMM.CurrentSplinationCap1 == null)
+                CurrentSplinationString = _SMM.currentSplinationString;
+                if (_SMM.currentSplinationCap1 == null)
                 {
                     CurrentSplinationCap1String = "";
                 }
                 else
                 {
-                    CurrentSplinationCap1String = SMM.CurrentSplinationCap1String;
+                    CurrentSplinationCap1String = _SMM.currentSplinationCap1String;
                 }
 
-                if (SMM.CurrentSplinationCap2 == null)
+                if (_SMM.currentSplinationCap2 == null)
                 {
                     CurrentSplinationCap2String = "";
                 }
                 else
                 {
-                    CurrentSplinationCap2String = SMM.CurrentSplinationCap2String;
+                    CurrentSplinationCap2String = _SMM.currentSplinationCap2String;
                 }
-                bIsGSD = SMM.bIsGSD;
+                isGSD = _SMM.isGSD;
 
-                CapHeightOffset1 = SMM.CapHeightOffset1;
-                CapHeightOffset2 = SMM.CapHeightOffset2;
+                CapHeightOffset1 = _SMM.capHeightOffset1;
+                CapHeightOffset2 = _SMM.capHeightOffset2;
 
-                bMaterialOverride = SMM.bMaterialOverride;
-                SplinatedMaterial1String = SMM.SplinatedMaterial1String;
-                SplinatedMaterial2String = SMM.SplinatedMaterial2String;
-                bExactSplination = SMM.bExactSplination;
-                bMatchRoadDefinition = SMM.bMatchRoadDefinition;
-                bMatchRoadIncrements = SMM.bMatchRoadIncrements;
-                bTrimStart = SMM.bTrimStart;
-                bTrimEnd = SMM.bTrimEnd;
-                bMatchTerrain = SMM.bMatchTerrain;
-                MinMaxMod = SMM.MinMaxMod;
-                bIsBridge = SMM.bIsBridge;
-                VertexMatchingPrecision = SMM.VertexMatchingPrecision;
+                isMaterialOverriden = _SMM.isMaterialOverriden;
+                SplinatedMaterial1String = _SMM.SplinatedMaterial1String;
+                SplinatedMaterial2String = _SMM.SplinatedMaterial2String;
+                isExactSplination = _SMM.isExactSplination;
+                isMatchingRoadDefinition = _SMM.isMatchingRoadDefinition;
+                isMatchingRoadIncrements = _SMM.isMatchingRoadIncrements;
+                isTrimStart = _SMM.isTrimStart;
+                isTrimEnd = _SMM.isTrimEnd;
+                isMatchingTerrain = _SMM.isMatchingTerrain;
+                MinMaxMod = _SMM.minMaxMod;
+                isBridge = _SMM.isBridge;
+                VertexMatchingPrecision = _SMM.vertexMatchingPrecision;
 
-                bIsStretch = SMM.bIsStretch;
-                bStretchLocOffset = SMM.bStretchLocOffset;
-                bStretchSize = SMM.bStretchSize;
-                StretchBC_LocOffset = SMM.StretchBC_LocOffset;
-                StretchBC_Size = SMM.StretchBC_Size;
-                Stretch_UVThreshold = SMM.Stretch_UVThreshold;
-                bStraightLineMatchStartEnd = SMM.bStraightLineMatchStartEnd;
-                bBCFlipX = SMM.bBCFlipX;
-                bBCFlipZ = SMM.bBCFlipZ;
+                isStretched = _SMM.isStretch;
+                isStretchedLocOffset = _SMM.isStretchLocOffset;
+                isStretchedSize = _SMM.isStretchSize;
+                StretchBC_LocOffset = _SMM.StretchBC_LocOffset;
+                StretchBC_Size = _SMM.StretchBC_Size;
+                Stretch_UVThreshold = _SMM.stretchUVThreshold;
+                isStraightLineMatchingStartEnd = _SMM.isStraightLineMatchStartEnd;
+                isBCFlippedX = _SMM.isBCFlipX;
+                isBCFlippedZ = _SMM.isBCFlipZ;
 
                 //Horizontal offsets:
-                HorizontalSep = SMM.HorizontalSep;
-                HorizontalCurve = SMM.HorizontalCurve;
+                HorizontalSep = _SMM.HorizontalSep;
+                HorizontalCurve = _SMM.HorizontalCurve;
                 //Vertical offset:
-                VerticalRaise = SMM.VerticalRaise;
-                VerticalCurve = SMM.VerticalCurve;
+                VerticalRaise = _SMM.VerticalRaise;
+                VerticalCurve = _SMM.VerticalCurve;
                 //Vertical cutoff
-                VerticalCutoff = SMM.VerticalCutoff;
-                bVerticalCutoff = SMM.bVerticalCutoff;
-                bVerticalCutoffDownwards = SMM.bVerticalCutoffDownwards;
-                bVerticalMeshCutoff_OppositeDir = SMM.bVerticalMeshCutoff_OppositeDir;
-                VerticalMeshCutoffOffset = SMM.VerticalMeshCutoffOffset;
-                bVerticalCutoff_MatchZero = SMM.bVerticalCutoff_MatchZero;
+                VerticalCutoff = _SMM.VerticalCutoff;
+                isVerticalCutoff = _SMM.isVerticalCutoff;
+                isVerticalCutoffDownwards = _SMM.isVerticalCutoffDownwards;
+                isVerticalMeshCutoffOppositeDir = _SMM.isVerticalMeshCutoffOppositeDir;
+                VerticalMeshCutoffOffset = _SMM.VerticalMeshCutoffOffset;
+                isVerticalCutoffMatchingZero = _SMM.isVerticalCutoffMatchingZero;
 
-                RoadRaise = SMM.RoadRaise;
-                CustomRotation = SMM.CustomRotation;
-                bFlipRotation = SMM.bFlipRotation;
-                bStatic = SMM.bStatic;
-                StartTime = SMM.StartTime;
-                EndTime = SMM.EndTime;
-                Axis = (int) SMM.Axis;
+                RoadRaise = _SMM.RoadRaise;
+                CustomRotation = _SMM.CustomRotation;
+                isFlippedRotation = _SMM.isFlippingRotation;
+                isStatic = _SMM.isStatic;
+                StartTime = _SMM.StartTime;
+                EndTime = _SMM.EndTime;
+                Axis = (int) _SMM.Axis;
 
-                RepeatUVType = (int) SMM.RepeatUVType;
+                RepeatUVType = (int) _SMM.RepeatUVType;
 
-                mMaxX = SMM.mMaxX;
-                mMinX = SMM.mMinX;
-                mMaxY = SMM.mMaxY;
-                mMinY = SMM.mMinY;
-                mMaxZ = SMM.mMaxZ;
-                mMinZ = SMM.mMinZ;
+                mMaxX = _SMM.mMaxX;
+                mMinX = _SMM.mMinX;
+                mMaxY = _SMM.mMaxY;
+                mMinY = _SMM.mMinY;
+                mMaxZ = _SMM.mMaxZ;
+                mMinZ = _SMM.mMinZ;
 
                 //End objects:
-                if (SMM.EndCapStart == null)
+                if (_SMM.EndCapStart == null)
                 {
                     EndCapStartString = "";
                 }
                 else
                 {
-                    EndCapStartString = SMM.EndCapStartString;
+                    EndCapStartString = _SMM.EndCapStartString;
                 }
-                if (SMM.EndCapEnd == null)
+                if (_SMM.EndCapEnd == null)
                 {
                     EndCapEndString = "";
                 }
                 else
                 {
-                    EndCapEndString = SMM.EndCapEndString;
+                    EndCapEndString = _SMM.EndCapEndString;
                 }
-                bEndCapCustomMatchStart = SMM.bEndCapCustomMatchStart;
-                EndCapCustomOffsetStart = SMM.EndCapCustomOffsetStart;
-                EndCapCustomOffsetEnd = SMM.EndCapCustomOffsetEnd;
-                EndCapCustomRotOffsetStart = SMM.EndCapCustomRotOffsetStart;
-                EndCapCustomRotOffsetEnd = SMM.EndCapCustomRotOffsetEnd;
-                bEndObjectsMatchGround = SMM.bEndObjectsMatchGround;
+                bEndCapCustomMatchStart = _SMM.bEndCapCustomMatchStart;
+                EndCapCustomOffsetStart = _SMM.EndCapCustomOffsetStart;
+                EndCapCustomOffsetEnd = _SMM.EndCapCustomOffsetEnd;
+                EndCapCustomRotOffsetStart = _SMM.EndCapCustomRotOffsetStart;
+                EndCapCustomRotOffsetEnd = _SMM.EndCapCustomRotOffsetEnd;
+                isEndObjectsMatchingGround = _SMM.bEndObjectsMatchGround;
                 //Endings down:
-                bStartDown = SMM.bStartDown;
-                bStartTypeDownOverride = SMM.bStartTypeDownOverride;
-                StartTypeDownOverride = SMM.StartTypeDownOverride;
-                bEndDown = SMM.bEndDown;
-                bEndTypeDownOverride = SMM.bEndTypeDownOverride;
-                EndTypeDownOverride = SMM.EndTypeDownOverride;
+                isStartDown = _SMM.isStartDown;
+                isStartTypeDownOverriden = _SMM.isStartTypeDownOverriden;
+                StartTypeDownOverride = _SMM.startTypeDownOverride;
+                isEndDown = _SMM.isEndDown;
+                isEndTypeDownOverriden = _SMM.isEndTypeDownOverriden;
+                EndTypeDownOverride = _SMM.endTypeDownOverride;
 
                 //Collision:
-                CollisionType = (int) SMM.CollisionType;
-                bCollisionConvex = SMM.bCollisionConvex;
-                bSimpleCollisionAutomatic = SMM.bSimpleCollisionAutomatic;
-                bCollisionTrigger = SMM.bCollisionTrigger;
+                CollisionType = (int) _SMM.CollisionType;
+                isCollisionConvex = _SMM.isCollisionConvex;
+                isSimpleCollisionAutomatic = _SMM.isSimpleCollisionAutomatic;
+                isCollisionTrigger = _SMM.isCollisionTrigger;
 
-                CollisionBoxBL = SMM.CollisionBoxBL;
-                CollisionBoxBR = SMM.CollisionBoxBR;
-                CollisionBoxTL = SMM.CollisionBoxTL;
-                CollisionBoxTR = SMM.CollisionBoxTR;
+                CollisionBoxBL = _SMM.CollisionBoxBL;
+                CollisionBoxBR = _SMM.CollisionBoxBR;
+                CollisionBoxTL = _SMM.CollisionBoxTL;
+                CollisionBoxTR = _SMM.CollisionBoxTR;
 
-                CollisionTriBL = SMM.CollisionTriBL;
-                CollisionTriBR = SMM.CollisionTriBR;
-                CollisionTriT = SMM.CollisionTriT;
+                CollisionTriBL = _SMM.CollisionTriBL;
+                CollisionTriBR = _SMM.CollisionTriBR;
+                CollisionTriT = _SMM.CollisionTriT;
 
-                tName = SMM.tName;
-                ThumbString = SMM.ThumbString;
-                Desc = SMM.Desc;
-                DisplayName = SMM.DisplayName;
+                objectName = _SMM.tName;
+                thumbString = _SMM.ThumbString;
+                desc = _SMM.Desc;
+                displayName = _SMM.DisplayName;
             }
 
-            public void LoadToSMM(SplinatedMeshMaker SMM)
+
+            public void LoadToSMM(SplinatedMeshMaker _SMM)
             {
 #if UNITY_EDITOR
-                SMM.CurrentSplinationString = CurrentSplinationString;
-                SMM.CurrentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString, typeof(GameObject));
+                _SMM.currentSplinationString = CurrentSplinationString;
+                _SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString, typeof(GameObject));
 
-                SMM.CurrentSplinationCap1String = CurrentSplinationCap1String;
+                _SMM.currentSplinationCap1String = CurrentSplinationCap1String;
                 if (CurrentSplinationCap1String != null && CurrentSplinationCap1String.Length > 1)
                 {
-                    SMM.CurrentSplinationCap1 = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String, typeof(GameObject));
+                    _SMM.currentSplinationCap1 = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String, typeof(GameObject));
                 }
 
-                SMM.CurrentSplinationCap2String = CurrentSplinationCap2String;
+                _SMM.currentSplinationCap2String = CurrentSplinationCap2String;
                 if (CurrentSplinationCap2String != null && CurrentSplinationCap2String.Length > 1)
                 {
-                    SMM.CurrentSplinationCap2 = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String, typeof(GameObject));
+                    _SMM.currentSplinationCap2 = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String, typeof(GameObject));
                 }
 
-                SMM.CapHeightOffset1 = CapHeightOffset1;
-                SMM.CapHeightOffset2 = CapHeightOffset2;
+                _SMM.capHeightOffset1 = CapHeightOffset1;
+                _SMM.capHeightOffset2 = CapHeightOffset2;
 
-                SMM.bMaterialOverride = bMaterialOverride;
-                SMM.SplinatedMaterial1String = SplinatedMaterial1String;
-                SMM.SplinatedMaterial2String = SplinatedMaterial2String;
+                _SMM.isMaterialOverriden = isMaterialOverriden;
+                _SMM.SplinatedMaterial1String = SplinatedMaterial1String;
+                _SMM.SplinatedMaterial2String = SplinatedMaterial2String;
 
-                if (bMaterialOverride)
+                if (isMaterialOverriden)
                 {
                     if (SplinatedMaterial1String != null && SplinatedMaterial1String.Length > 0)
                     {
-                        SMM.SplinatedMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial1String, typeof(Material));
+                        _SMM.SplinatedMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial1String, typeof(Material));
                     }
                     if (SplinatedMaterial2String != null && SplinatedMaterial2String.Length > 0)
                     {
-                        SMM.SplinatedMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial2String, typeof(Material));
+                        _SMM.SplinatedMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial2String, typeof(Material));
                     }
                 }
 
-                SMM.bIsGSD = bIsGSD;
-                SMM.bExactSplination = bExactSplination;
-                SMM.bMatchRoadDefinition = bMatchRoadDefinition;
-                SMM.bMatchRoadIncrements = bMatchRoadIncrements;
-                SMM.bTrimStart = bTrimStart;
-                SMM.bTrimEnd = bTrimEnd;
-                SMM.bMatchTerrain = bMatchTerrain;
-                SMM.MinMaxMod = MinMaxMod;
-                SMM.bIsBridge = bIsBridge;
-                SMM.VertexMatchingPrecision = VertexMatchingPrecision;
+                _SMM.isGSD = isGSD;
+                _SMM.isExactSplination = isExactSplination;
+                _SMM.isMatchingRoadDefinition = isMatchingRoadDefinition;
+                _SMM.isMatchingRoadIncrements = isMatchingRoadIncrements;
+                _SMM.isTrimStart = isTrimStart;
+                _SMM.isTrimEnd = isTrimEnd;
+                _SMM.isMatchingTerrain = isMatchingTerrain;
+                _SMM.minMaxMod = MinMaxMod;
+                _SMM.isBridge = isBridge;
+                _SMM.vertexMatchingPrecision = VertexMatchingPrecision;
 
-                SMM.bIsStretch = bIsStretch;
-                SMM.bStretchLocOffset = bStretchLocOffset;
-                SMM.bStretchSize = bStretchSize;
-                SMM.StretchBC_LocOffset = StretchBC_LocOffset;
-                SMM.StretchBC_Size = StretchBC_Size;
-                SMM.Stretch_UVThreshold = Stretch_UVThreshold;
-                SMM.bStraightLineMatchStartEnd = bStraightLineMatchStartEnd;
-                SMM.bBCFlipX = bBCFlipX;
-                SMM.bBCFlipZ = bBCFlipZ;
+                _SMM.isStretch = isStretched;
+                _SMM.isStretchLocOffset = isStretchedLocOffset;
+                _SMM.isStretchSize = isStretchedSize;
+                _SMM.StretchBC_LocOffset = StretchBC_LocOffset;
+                _SMM.StretchBC_Size = StretchBC_Size;
+                _SMM.stretchUVThreshold = Stretch_UVThreshold;
+                _SMM.isStraightLineMatchStartEnd = isStraightLineMatchingStartEnd;
+                _SMM.isBCFlipX = isBCFlippedX;
+                _SMM.isBCFlipZ = isBCFlippedZ;
 
                 //Horizontal offsets:
-                SMM.HorizontalSep = HorizontalSep;
-                SMM.HorizontalCurve = HorizontalCurve;
+                _SMM.HorizontalSep = HorizontalSep;
+                _SMM.HorizontalCurve = HorizontalCurve;
                 //Vertical offset:
-                SMM.VerticalRaise = VerticalRaise;
-                SMM.VerticalCurve = VerticalCurve;
+                _SMM.VerticalRaise = VerticalRaise;
+                _SMM.VerticalCurve = VerticalCurve;
                 //Vertical cutoff:
-                SMM.VerticalCutoff = VerticalCutoff;
-                SMM.bVerticalCutoff = bVerticalCutoff;
-                SMM.bVerticalCutoffDownwards = bVerticalCutoffDownwards;
-                SMM.bVerticalMeshCutoff_OppositeDir = bVerticalMeshCutoff_OppositeDir;
-                SMM.VerticalMeshCutoffOffset = VerticalMeshCutoffOffset;
-                SMM.bVerticalCutoff_MatchZero = bVerticalCutoff_MatchZero;
+                _SMM.VerticalCutoff = VerticalCutoff;
+                _SMM.isVerticalCutoff = isVerticalCutoff;
+                _SMM.isVerticalCutoffDownwards = isVerticalCutoffDownwards;
+                _SMM.isVerticalMeshCutoffOppositeDir = isVerticalMeshCutoffOppositeDir;
+                _SMM.VerticalMeshCutoffOffset = VerticalMeshCutoffOffset;
+                _SMM.isVerticalCutoffMatchingZero = isVerticalCutoffMatchingZero;
 
-                SMM.RoadRaise = RoadRaise;
-                SMM.CustomRotation = CustomRotation;
-                SMM.bFlipRotation = bFlipRotation;
-                SMM.bStatic = bStatic;
-                SMM.StartTime = StartTime;
-                SMM.EndTime = EndTime;
-                SMM.Axis = (AxisTypeEnum) Axis;
+                _SMM.RoadRaise = RoadRaise;
+                _SMM.CustomRotation = CustomRotation;
+                _SMM.isFlippingRotation = isFlippedRotation;
+                _SMM.isStatic = isStatic;
+                _SMM.StartTime = StartTime;
+                _SMM.EndTime = EndTime;
+                _SMM.Axis = (AxisTypeEnum) Axis;
 
-                SMM.RepeatUVType = (RepeatUVTypeEnum) RepeatUVType;
+                _SMM.RepeatUVType = (RepeatUVTypeEnum) RepeatUVType;
 
-                SMM.mMaxX = mMaxX;
-                SMM.mMinX = mMinX;
-                SMM.mMaxY = mMaxY;
-                SMM.mMinY = mMinY;
-                SMM.mMaxZ = mMaxZ;
-                SMM.mMinZ = mMinZ;
+                _SMM.mMaxX = mMaxX;
+                _SMM.mMinX = mMinX;
+                _SMM.mMaxY = mMaxY;
+                _SMM.mMinY = mMinY;
+                _SMM.mMaxZ = mMaxZ;
+                _SMM.mMinZ = mMinZ;
 
                 //Ending objects:
-                SMM.EndCapStartString = EndCapStartString;
-                SMM.EndCapEndString = EndCapEndString;
+                _SMM.EndCapStartString = EndCapStartString;
+                _SMM.EndCapEndString = EndCapEndString;
                 if (EndCapStartString != null && EndCapStartString.Length > 0)
                 {
-                    SMM.EndCapStart = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapStartString, typeof(GameObject));
+                    _SMM.EndCapStart = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapStartString, typeof(GameObject));
                 }
                 if (EndCapEndString != null && EndCapEndString.Length > 0)
                 {
-                    SMM.EndCapEnd = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
+                    _SMM.EndCapEnd = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
                 }
-                SMM.bEndCapCustomMatchStart = bEndCapCustomMatchStart;
-                SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
-                SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
-                SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
-                SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
-                SMM.bEndObjectsMatchGround = bEndObjectsMatchGround;
+                _SMM.bEndCapCustomMatchStart = bEndCapCustomMatchStart;
+                _SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
+                _SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
+                _SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
+                _SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
+                _SMM.bEndObjectsMatchGround = isEndObjectsMatchingGround;
 
                 //Endings down:
-                SMM.bStartDown = bStartDown;
-                SMM.bStartTypeDownOverride = bStartTypeDownOverride;
-                SMM.StartTypeDownOverride = StartTypeDownOverride;
-                SMM.bEndDown = bEndDown;
-                SMM.bEndTypeDownOverride = bEndTypeDownOverride;
-                SMM.EndTypeDownOverride = EndTypeDownOverride;
+                _SMM.isStartDown = isStartDown;
+                _SMM.isStartTypeDownOverriden = isStartTypeDownOverriden;
+                _SMM.startTypeDownOverride = StartTypeDownOverride;
+                _SMM.isEndDown = isEndDown;
+                _SMM.isEndTypeDownOverriden = isEndTypeDownOverriden;
+                _SMM.endTypeDownOverride = EndTypeDownOverride;
 
                 //Collision:
-                SMM.CollisionType = (CollisionTypeEnum) CollisionType;
-                SMM.bCollisionConvex = bCollisionConvex;
-                SMM.bSimpleCollisionAutomatic = bSimpleCollisionAutomatic;
-                SMM.bCollisionTrigger = bCollisionTrigger;
+                _SMM.CollisionType = (CollisionTypeEnum) CollisionType;
+                _SMM.isCollisionConvex = isCollisionConvex;
+                _SMM.isSimpleCollisionAutomatic = isSimpleCollisionAutomatic;
+                _SMM.isCollisionTrigger = isCollisionTrigger;
 
-                SMM.CollisionBoxBL = CollisionBoxBL;
-                SMM.CollisionBoxBR = CollisionBoxBR;
-                SMM.CollisionBoxTL = CollisionBoxTL;
-                SMM.CollisionBoxTR = CollisionBoxTR;
+                _SMM.CollisionBoxBL = CollisionBoxBL;
+                _SMM.CollisionBoxBR = CollisionBoxBR;
+                _SMM.CollisionBoxTL = CollisionBoxTL;
+                _SMM.CollisionBoxTR = CollisionBoxTR;
 
-                SMM.CollisionTriBL = CollisionTriBL;
-                SMM.CollisionTriBR = CollisionTriBR;
-                SMM.CollisionTriT = CollisionTriT;
+                _SMM.CollisionTriBL = CollisionTriBL;
+                _SMM.CollisionTriBR = CollisionTriBR;
+                _SMM.CollisionTriT = CollisionTriT;
 
-                SMM.tName = tName;
-                SMM.ThumbString = ThumbString;
-                SMM.Desc = Desc;
-                SMM.DisplayName = DisplayName;
+                _SMM.tName = objectName;
+                _SMM.ThumbString = thumbString;
+                _SMM.Desc = desc;
+                _SMM.DisplayName = displayName;
 #endif
             }
         }
@@ -869,30 +957,47 @@ namespace GSD.Roads.Splination
             public GameObject CurrentSplinationCap1 = null;
             public GameObject CurrentSplinationCap2 = null;
 
-            public bool bMaterialOverride = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
+            public bool isMaterialOverriden = false;
             public Material SplinatedMaterial1 = null;
             public Material SplinatedMaterial2 = null;
             public float CapHeightOffset1 = 0f;
             public float CapHeightOffset2 = 0f;
-            public bool bExactSplination = false;
-            public bool bMatchRoadDefinition = false;
-            public bool bMatchRoadIncrements = true;
-            public bool bTrimStart = false;
-            public bool bTrimEnd = false;
-            public bool bToggle = false;
-            public bool bMatchTerrain = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bExactSplination")]
+            public bool isExactSplination = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadDefinition")]
+            public bool isMatchingRoadDefinition = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadIncrements")]
+            public bool isMatchingRoadIncrements = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bTrimStart")]
+            public bool isTrimStart = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bTrimEnd")]
+            public bool isTrimEnd = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
+            public bool isToggled = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
+            public bool isMatchingTerrain = false;
             public float MinMaxMod = 0.002f;
             public float VertexMatchingPrecision = 0.005f;
 
-            public bool bIsStretch = false;
-            public bool bStretchLocOffset = false;
-            public bool bStretchSize = false;
-            public Vector3 StretchBC_LocOffset = default(Vector3);
-            public Vector3 StretchBC_Size = default(Vector3);
-            public float Stretch_UVThreshold = 0.05f;
-            public bool bStraightLineMatchStartEnd = false;
-            public bool bBCFlipX = false;
-            public bool bBCFlipZ = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsStretch")]
+            public bool isStretched = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStretchLocOffset")]
+            public bool isStretchedLocOffset = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
+            public bool isStretchedSize = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_LocOffset")]
+            public Vector3 stretchedBCLocOffset = default(Vector3);
+            [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_Size")]
+            public Vector3 stretchedBCSize = default(Vector3);
+            [UnityEngine.Serialization.FormerlySerializedAs("Stretch_UVThreshold")]
+            public float stretchedUVThreshold = 0.05f;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
+            public bool isStraightLineMatchingStartEnd = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
+            public bool isBCFlippedX = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
+            public bool isBCFlippedZ = false;
 
             //Horizontal offsets:
             public float HorizontalSep = 5f;
@@ -902,46 +1007,67 @@ namespace GSD.Roads.Splination
             public AnimationCurve VerticalCurve;
             //Vertical cutoff:
             public float VerticalCutoff = 0f;
-            public bool bVerticalCutoff = false;
-            public bool bVerticalCutoffDownwards = false;
-            public bool bVerticalMeshCutoff_OppositeDir = false;
             public float VerticalMeshCutoffOffset = 0.04f;
-            public bool bVerticalCutoff_MatchZero = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff")]
+            public bool isVerticalCutoff = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoffDownwards")]
+            public bool isVerticalCutoffDownwards = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalMeshCutoff_OppositeDir")]
+            public bool isVerticalMeshCutoffOppositeDir = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff_MatchZero")]
+            public bool isVerticalCutoffMatchingZero = false;
 
             public float RoadRaise = 0f;
             public Vector3 CustomRotation = default(Vector3);
-            public bool bFlipRotation = false;
-            public bool bStatic = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bFlipRotation")]
+            public bool isFlippedRotation = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
+            public bool isStatic = true;
             public float StartTime = 0f;
             public float EndTime = 1f;
             public AxisTypeEnum Axis = AxisTypeEnum.X;
-            public bool bIsBridge = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
+            public bool isBridge = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bNoCenterMode")]
+            public bool isNotCenterMode = true;
 
-            public RepeatUVTypeEnum RepeatUVType = RepeatUVTypeEnum.None;
-            public bool bNoCenterMode = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("RepeatUVType")]
+            public RepeatUVTypeEnum repeatUVType = RepeatUVTypeEnum.None;
 
             //End objects:
             public GameObject EndCapStart = null;
             public GameObject EndCapEnd = null;
-            public bool bEndCapCustomMatchStart = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndCapCustomMatchStart")]
+            public bool isEndCapCustomMatchingStart = true;
             public Vector3 EndCapCustomOffsetStart = default(Vector3);
             public Vector3 EndCapCustomOffsetEnd = default(Vector3);
             public Vector3 EndCapCustomRotOffsetStart = default(Vector3);
             public Vector3 EndCapCustomRotOffsetEnd = default(Vector3);
-            public bool bEndObjectsMatchGround = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndObjectsMatchGround")]
+            public bool isEndObjectsMatchingGround = false;
             //Endings down:
-            public bool bStartDown = false;
-            public bool bStartTypeDownOverride = false;
-            public float StartTypeDownOverride = 0f;
-            public bool bEndDown = false;
-            public bool bEndTypeDownOverride = false;
-            public float EndTypeDownOverride = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStartDown")]
+            public bool isStartDown = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStartTypeDownOverride")]
+            public bool isStartTypeDownOverriden = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndDown")]
+            public bool isEndDown = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndTypeDownOverride")]
+            public bool isEndTypeDownOverriden = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("StartTypeDownOverride")]
+            public float startTypeDownOverriden = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("EndTypeDownOverride")]
+            public float endTypeDownOverriden = 0f;
 
             //Collision:
-            public CollisionTypeEnum CollisionType = CollisionTypeEnum.SimpleMeshTriangle;
-            public bool bCollisionConvex = false;
-            public bool bSimpleCollisionAutomatic = true;
-            public bool bCollisionTrigger = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("CollisionType")]
+            public CollisionTypeEnum collisionType = CollisionTypeEnum.SimpleMeshTriangle;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCollisionConvex")]
+            public bool isCollisionConvex = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bSimpleCollisionAutomatic")]
+            public bool isSimpleCollisionAutomatic = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCollisionTrigger")]
+            public bool isCollisionTriggered = false;
 
             public Vector3 CollisionBoxBL = default(Vector3);
             public Vector3 CollisionBoxBR = default(Vector3);
@@ -952,499 +1078,504 @@ namespace GSD.Roads.Splination
             public Vector3 CollisionTriBR = default(Vector3);
             public Vector3 CollisionTriT = default(Vector3);
 
-            public string tName = "ExtrudedObject";
+            [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+            public string objectName = "ExtrudedObject";
 
-            public void Setup(SplinatedMeshMaker SMM)
+
+            public void Setup(SplinatedMeshMaker _SMM)
             {
-                CurrentSplination = SMM.CurrentSplination;
-                CurrentSplinationCap1 = SMM.CurrentSplinationCap1;
-                CurrentSplinationCap2 = SMM.CurrentSplinationCap2;
+                CurrentSplination = _SMM.currentSplination;
+                CurrentSplinationCap1 = _SMM.currentSplinationCap1;
+                CurrentSplinationCap2 = _SMM.currentSplinationCap2;
 
-                CapHeightOffset1 = SMM.CapHeightOffset1;
-                CapHeightOffset2 = SMM.CapHeightOffset2;
+                CapHeightOffset1 = _SMM.capHeightOffset1;
+                CapHeightOffset2 = _SMM.capHeightOffset2;
 
-                bMaterialOverride = SMM.bMaterialOverride;
-                SplinatedMaterial1 = SMM.SplinatedMaterial1;
-                SplinatedMaterial2 = SMM.SplinatedMaterial2;
-                bExactSplination = SMM.bExactSplination;
-                bMatchRoadDefinition = SMM.bMatchRoadDefinition;
-                bMatchRoadIncrements = SMM.bMatchRoadIncrements;
-                bTrimStart = SMM.bTrimStart;
-                bTrimEnd = SMM.bTrimEnd;
-                bMatchTerrain = SMM.bMatchTerrain;
-                MinMaxMod = SMM.MinMaxMod;
-                bIsBridge = SMM.bIsBridge;
-                VertexMatchingPrecision = SMM.VertexMatchingPrecision;
+                isMaterialOverriden = _SMM.isMaterialOverriden;
+                SplinatedMaterial1 = _SMM.SplinatedMaterial1;
+                SplinatedMaterial2 = _SMM.SplinatedMaterial2;
+                isExactSplination = _SMM.isExactSplination;
+                isMatchingRoadDefinition = _SMM.isMatchingRoadDefinition;
+                isMatchingRoadIncrements = _SMM.isMatchingRoadIncrements;
+                isTrimStart = _SMM.isTrimStart;
+                isTrimEnd = _SMM.isTrimEnd;
+                isMatchingTerrain = _SMM.isMatchingTerrain;
+                MinMaxMod = _SMM.minMaxMod;
+                isBridge = _SMM.isBridge;
+                VertexMatchingPrecision = _SMM.vertexMatchingPrecision;
 
-                bIsStretch = SMM.bIsStretch;
-                bStretchLocOffset = SMM.bStretchLocOffset;
-                bStretchSize = SMM.bStretchSize;
-                StretchBC_LocOffset = SMM.StretchBC_LocOffset;
-                StretchBC_Size = SMM.StretchBC_Size;
-                Stretch_UVThreshold = SMM.Stretch_UVThreshold;
-                bStraightLineMatchStartEnd = SMM.bStraightLineMatchStartEnd;
-                bBCFlipX = SMM.bBCFlipX;
-                bBCFlipZ = SMM.bBCFlipZ;
+                isStretched = _SMM.isStretch;
+                isStretchedLocOffset = _SMM.isStretchLocOffset;
+                isStretchedSize = _SMM.isStretchSize;
+                stretchedBCLocOffset = _SMM.StretchBC_LocOffset;
+                stretchedBCSize = _SMM.StretchBC_Size;
+                stretchedUVThreshold = _SMM.stretchUVThreshold;
+                isStraightLineMatchingStartEnd = _SMM.isStraightLineMatchStartEnd;
+                isBCFlippedX = _SMM.isBCFlipX;
+                isBCFlippedZ = _SMM.isBCFlipZ;
 
                 //Horizontal offsets:
-                HorizontalSep = SMM.HorizontalSep;
-                HorizontalCurve = SMM.HorizontalCurve;
+                HorizontalSep = _SMM.HorizontalSep;
+                HorizontalCurve = _SMM.HorizontalCurve;
                 //Vertical offset:
-                VerticalRaise = SMM.VerticalRaise;
-                VerticalCurve = SMM.VerticalCurve;
+                VerticalRaise = _SMM.VerticalRaise;
+                VerticalCurve = _SMM.VerticalCurve;
                 //Vertical cutoff
-                VerticalCutoff = SMM.VerticalCutoff;
-                bVerticalCutoff = SMM.bVerticalCutoff;
-                bVerticalCutoffDownwards = SMM.bVerticalCutoffDownwards;
-                bVerticalMeshCutoff_OppositeDir = SMM.bVerticalMeshCutoff_OppositeDir;
-                VerticalMeshCutoffOffset = SMM.VerticalMeshCutoffOffset;
-                bVerticalCutoff_MatchZero = SMM.bVerticalCutoff_MatchZero;
+                VerticalCutoff = _SMM.VerticalCutoff;
+                isVerticalCutoff = _SMM.isVerticalCutoff;
+                isVerticalCutoffDownwards = _SMM.isVerticalCutoffDownwards;
+                isVerticalMeshCutoffOppositeDir = _SMM.isVerticalMeshCutoffOppositeDir;
+                VerticalMeshCutoffOffset = _SMM.VerticalMeshCutoffOffset;
+                isVerticalCutoffMatchingZero = _SMM.isVerticalCutoffMatchingZero;
 
-                RoadRaise = SMM.RoadRaise;
-                CustomRotation = SMM.CustomRotation;
-                bFlipRotation = SMM.bFlipRotation;
-                bStatic = SMM.bStatic;
-                StartTime = SMM.StartTime;
-                EndTime = SMM.EndTime;
-                Axis = SMM.Axis;
+                RoadRaise = _SMM.RoadRaise;
+                CustomRotation = _SMM.CustomRotation;
+                isFlippedRotation = _SMM.isFlippingRotation;
+                isStatic = _SMM.isStatic;
+                StartTime = _SMM.StartTime;
+                EndTime = _SMM.EndTime;
+                Axis = _SMM.Axis;
 
-                RepeatUVType = SMM.RepeatUVType;
+                repeatUVType = _SMM.RepeatUVType;
 
                 //End objects:
-                EndCapStart = SMM.EndCapStart;
-                EndCapEnd = SMM.EndCapEnd;
+                EndCapStart = _SMM.EndCapStart;
+                EndCapEnd = _SMM.EndCapEnd;
 
-                bEndCapCustomMatchStart = SMM.bEndCapCustomMatchStart;
-                EndCapCustomOffsetStart = SMM.EndCapCustomOffsetStart;
-                EndCapCustomOffsetEnd = SMM.EndCapCustomOffsetEnd;
-                EndCapCustomRotOffsetStart = SMM.EndCapCustomRotOffsetStart;
-                EndCapCustomRotOffsetEnd = SMM.EndCapCustomRotOffsetEnd;
-                bEndObjectsMatchGround = SMM.bEndObjectsMatchGround;
+                isEndCapCustomMatchingStart = _SMM.bEndCapCustomMatchStart;
+                EndCapCustomOffsetStart = _SMM.EndCapCustomOffsetStart;
+                EndCapCustomOffsetEnd = _SMM.EndCapCustomOffsetEnd;
+                EndCapCustomRotOffsetStart = _SMM.EndCapCustomRotOffsetStart;
+                EndCapCustomRotOffsetEnd = _SMM.EndCapCustomRotOffsetEnd;
+                isEndObjectsMatchingGround = _SMM.bEndObjectsMatchGround;
                 //Endings down:
-                bStartDown = SMM.bStartDown;
-                bStartTypeDownOverride = SMM.bStartTypeDownOverride;
-                StartTypeDownOverride = SMM.StartTypeDownOverride;
-                bEndDown = SMM.bEndDown;
-                bEndTypeDownOverride = SMM.bEndTypeDownOverride;
-                EndTypeDownOverride = SMM.EndTypeDownOverride;
+                isStartDown = _SMM.isStartDown;
+                isStartTypeDownOverriden = _SMM.isStartTypeDownOverriden;
+                startTypeDownOverriden = _SMM.startTypeDownOverride;
+                isEndDown = _SMM.isEndDown;
+                isEndTypeDownOverriden = _SMM.isEndTypeDownOverriden;
+                endTypeDownOverriden = _SMM.endTypeDownOverride;
 
                 //Collision:
-                CollisionType = SMM.CollisionType;
-                bCollisionConvex = SMM.bCollisionConvex;
-                bSimpleCollisionAutomatic = SMM.bSimpleCollisionAutomatic;
-                bCollisionTrigger = SMM.bCollisionTrigger;
+                collisionType = _SMM.CollisionType;
+                isCollisionConvex = _SMM.isCollisionConvex;
+                isSimpleCollisionAutomatic = _SMM.isSimpleCollisionAutomatic;
+                isCollisionTriggered = _SMM.isCollisionTrigger;
 
-                CollisionBoxBL = SMM.CollisionBoxBL;
-                CollisionBoxBR = SMM.CollisionBoxBR;
-                CollisionBoxTL = SMM.CollisionBoxTL;
-                CollisionBoxTR = SMM.CollisionBoxTR;
+                CollisionBoxBL = _SMM.CollisionBoxBL;
+                CollisionBoxBR = _SMM.CollisionBoxBR;
+                CollisionBoxTL = _SMM.CollisionBoxTL;
+                CollisionBoxTR = _SMM.CollisionBoxTR;
 
-                CollisionTriBL = SMM.CollisionTriBL;
-                CollisionTriBR = SMM.CollisionTriBR;
-                CollisionTriT = SMM.CollisionTriT;
+                CollisionTriBL = _SMM.CollisionTriBL;
+                CollisionTriBR = _SMM.CollisionTriBR;
+                CollisionTriT = _SMM.CollisionTriT;
 
-                tName = SMM.tName;
+                objectName = _SMM.tName;
             }
 
 
-            public void LoadToSMM(SplinatedMeshMaker SMM)
+            public void LoadToSMM(SplinatedMeshMaker _SMM)
             {
 #if UNITY_EDITOR
-                SMM.CurrentSplination = CurrentSplination; // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString,typeof(GameObject));
-                SMM.CurrentSplinationCap1 = CurrentSplinationCap1;// (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String,typeof(GameObject));
-                SMM.CurrentSplinationCap2 = CurrentSplinationCap2;// (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String,typeof(GameObject));
+                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString,typeof(GameObject));
+                _SMM.currentSplination = CurrentSplination;
+                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String,typeof(GameObject));
+                _SMM.currentSplinationCap1 = CurrentSplinationCap1;
+                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String,typeof(GameObject));
+                _SMM.currentSplinationCap2 = CurrentSplinationCap2;
 
-                SMM.CapHeightOffset1 = CapHeightOffset1;
-                SMM.CapHeightOffset2 = CapHeightOffset2;
+                _SMM.capHeightOffset1 = CapHeightOffset1;
+                _SMM.capHeightOffset2 = CapHeightOffset2;
 
-                SMM.bMaterialOverride = bMaterialOverride;
+                _SMM.isMaterialOverriden = isMaterialOverriden;
 
-                SMM.SplinatedMaterial1 = SplinatedMaterial1;
-                SMM.SplinatedMaterial2 = SplinatedMaterial2;
+                _SMM.SplinatedMaterial1 = SplinatedMaterial1;
+                _SMM.SplinatedMaterial2 = SplinatedMaterial2;
 
-                SMM.bExactSplination = bExactSplination;
-                SMM.bMatchRoadDefinition = bMatchRoadDefinition;
-                SMM.bMatchRoadIncrements = bMatchRoadIncrements;
-                SMM.bTrimStart = bTrimStart;
-                SMM.bTrimEnd = bTrimEnd;
-                SMM.bMatchTerrain = bMatchTerrain;
-                SMM.MinMaxMod = MinMaxMod;
-                SMM.bIsBridge = bIsBridge;
-                SMM.VertexMatchingPrecision = VertexMatchingPrecision;
+                _SMM.isExactSplination = isExactSplination;
+                _SMM.isMatchingRoadDefinition = isMatchingRoadDefinition;
+                _SMM.isMatchingRoadIncrements = isMatchingRoadIncrements;
+                _SMM.isTrimStart = isTrimStart;
+                _SMM.isTrimEnd = isTrimEnd;
+                _SMM.isMatchingTerrain = isMatchingTerrain;
+                _SMM.minMaxMod = MinMaxMod;
+                _SMM.isBridge = isBridge;
+                _SMM.vertexMatchingPrecision = VertexMatchingPrecision;
 
-                SMM.bIsStretch = bIsStretch;
-                SMM.bStretchLocOffset = bStretchLocOffset;
-                SMM.bStretchSize = bStretchSize;
-                SMM.StretchBC_LocOffset = StretchBC_LocOffset;
-                SMM.StretchBC_Size = StretchBC_Size;
-                SMM.Stretch_UVThreshold = Stretch_UVThreshold;
-                SMM.bStraightLineMatchStartEnd = bStraightLineMatchStartEnd;
-                SMM.bBCFlipX = bBCFlipX;
-                SMM.bBCFlipZ = bBCFlipZ;
+                _SMM.isStretch = isStretched;
+                _SMM.isStretchLocOffset = isStretchedLocOffset;
+                _SMM.isStretchSize = isStretchedSize;
+                _SMM.StretchBC_LocOffset = stretchedBCLocOffset;
+                _SMM.StretchBC_Size = stretchedBCSize;
+                _SMM.stretchUVThreshold = stretchedUVThreshold;
+                _SMM.isStraightLineMatchStartEnd = isStraightLineMatchingStartEnd;
+                _SMM.isBCFlipX = isBCFlippedX;
+                _SMM.isBCFlipZ = isBCFlippedZ;
 
                 //Horizontal offsets:
-                SMM.HorizontalSep = HorizontalSep;
-                SMM.HorizontalCurve = HorizontalCurve;
+                _SMM.HorizontalSep = HorizontalSep;
+                _SMM.HorizontalCurve = HorizontalCurve;
                 //Vertical offset:
-                SMM.VerticalRaise = VerticalRaise;
-                SMM.VerticalCurve = VerticalCurve;
+                _SMM.VerticalRaise = VerticalRaise;
+                _SMM.VerticalCurve = VerticalCurve;
                 //Vertical cutoff:
-                SMM.VerticalCutoff = VerticalCutoff;
-                SMM.bVerticalCutoff = bVerticalCutoff;
-                SMM.bVerticalCutoffDownwards = bVerticalCutoffDownwards;
-                SMM.bVerticalMeshCutoff_OppositeDir = bVerticalMeshCutoff_OppositeDir;
-                SMM.VerticalMeshCutoffOffset = VerticalMeshCutoffOffset;
-                SMM.bVerticalCutoff_MatchZero = bVerticalCutoff_MatchZero;
+                _SMM.VerticalCutoff = VerticalCutoff;
+                _SMM.isVerticalCutoff = isVerticalCutoff;
+                _SMM.isVerticalCutoffDownwards = isVerticalCutoffDownwards;
+                _SMM.isVerticalMeshCutoffOppositeDir = isVerticalMeshCutoffOppositeDir;
+                _SMM.VerticalMeshCutoffOffset = VerticalMeshCutoffOffset;
+                _SMM.isVerticalCutoffMatchingZero = isVerticalCutoffMatchingZero;
 
-                SMM.RoadRaise = RoadRaise;
-                SMM.CustomRotation = CustomRotation;
-                SMM.bFlipRotation = bFlipRotation;
-                SMM.bStatic = bStatic;
-                SMM.StartTime = StartTime;
-                SMM.EndTime = EndTime;
-                SMM.Axis = Axis;
+                _SMM.RoadRaise = RoadRaise;
+                _SMM.CustomRotation = CustomRotation;
+                _SMM.isFlippingRotation = isFlippedRotation;
+                _SMM.isStatic = isStatic;
+                _SMM.StartTime = StartTime;
+                _SMM.EndTime = EndTime;
+                _SMM.Axis = Axis;
 
-                SMM.RepeatUVType = RepeatUVType;
+                _SMM.RepeatUVType = repeatUVType;
 
                 //Ending objects:
-                SMM.EndCapStart = EndCapStart;
-                SMM.EndCapEnd = EndCapEnd;
+                _SMM.EndCapStart = EndCapStart;
+                _SMM.EndCapEnd = EndCapEnd;
 
-                SMM.bEndCapCustomMatchStart = bEndCapCustomMatchStart;
-                SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
-                SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
-                SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
-                SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
-                SMM.bEndObjectsMatchGround = bEndObjectsMatchGround;
+                _SMM.bEndCapCustomMatchStart = isEndCapCustomMatchingStart;
+                _SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
+                _SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
+                _SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
+                _SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
+                _SMM.bEndObjectsMatchGround = isEndObjectsMatchingGround;
 
                 //Endings down:
-                SMM.bStartDown = bStartDown;
-                SMM.bStartTypeDownOverride = bStartTypeDownOverride;
-                SMM.StartTypeDownOverride = StartTypeDownOverride;
-                SMM.bEndDown = bEndDown;
-                SMM.bEndTypeDownOverride = bEndTypeDownOverride;
-                SMM.EndTypeDownOverride = EndTypeDownOverride;
+                _SMM.isStartDown = isStartDown;
+                _SMM.isStartTypeDownOverriden = isStartTypeDownOverriden;
+                _SMM.startTypeDownOverride = startTypeDownOverriden;
+                _SMM.isEndDown = isEndDown;
+                _SMM.isEndTypeDownOverriden = isEndTypeDownOverriden;
+                _SMM.endTypeDownOverride = endTypeDownOverriden;
 
                 //Collision:
-                SMM.CollisionType = CollisionType;
-                SMM.bCollisionConvex = bCollisionConvex;
-                SMM.bSimpleCollisionAutomatic = bSimpleCollisionAutomatic;
-                SMM.bCollisionTrigger = bCollisionTrigger;
+                _SMM.CollisionType = collisionType;
+                _SMM.isCollisionConvex = isCollisionConvex;
+                _SMM.isSimpleCollisionAutomatic = isSimpleCollisionAutomatic;
+                _SMM.isCollisionTrigger = isCollisionTriggered;
 
-                SMM.CollisionBoxBL = CollisionBoxBL;
-                SMM.CollisionBoxBR = CollisionBoxBR;
-                SMM.CollisionBoxTL = CollisionBoxTL;
-                SMM.CollisionBoxTR = CollisionBoxTR;
+                _SMM.CollisionBoxBL = CollisionBoxBL;
+                _SMM.CollisionBoxBR = CollisionBoxBR;
+                _SMM.CollisionBoxTL = CollisionBoxTL;
+                _SMM.CollisionBoxTR = CollisionBoxTR;
 
-                SMM.CollisionTriBL = CollisionTriBL;
-                SMM.CollisionTriBR = CollisionTriBR;
-                SMM.CollisionTriT = CollisionTriT;
+                _SMM.CollisionTriBL = CollisionTriBL;
+                _SMM.CollisionTriBR = CollisionTriBR;
+                _SMM.CollisionTriT = CollisionTriT;
 
-                SMM.tName = tName;
+                _SMM.tName = objectName;
 #endif
             }
 
 
-            public bool IsEqualToSMM(SplinatedMeshMaker SMM)
+            public bool IsEqualToSMM(SplinatedMeshMaker _SMM)
             {
-                if (SMM.CurrentSplination != CurrentSplination)
+                if (_SMM.currentSplination != CurrentSplination)
                 {
                     return false;
                 }
-                if (SMM.CurrentSplinationCap1 != CurrentSplinationCap1)
+                if (_SMM.currentSplinationCap1 != CurrentSplinationCap1)
                 {
                     return false;
                 }
-                if (SMM.CurrentSplinationCap2 != CurrentSplinationCap2)
-                {
-                    return false;
-                }
-
-                if (!GSDRootUtil.IsApproximately(SMM.CapHeightOffset1, CapHeightOffset1, 0.0001f))
-                {
-                    return false;
-                }
-                if (!GSDRootUtil.IsApproximately(SMM.CapHeightOffset2, CapHeightOffset2, 0.0001f))
+                if (_SMM.currentSplinationCap2 != CurrentSplinationCap2)
                 {
                     return false;
                 }
 
-                if (SMM.bMaterialOverride != bMaterialOverride)
+                if (!GSDRootUtil.IsApproximately(_SMM.capHeightOffset1, CapHeightOffset1, 0.0001f))
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_SMM.capHeightOffset2, CapHeightOffset2, 0.0001f))
                 {
                     return false;
                 }
 
-                if (SMM.SplinatedMaterial1 != SplinatedMaterial1)
-                {
-                    return false;
-                }
-                if (SMM.SplinatedMaterial2 != SplinatedMaterial2)
+                if (_SMM.isMaterialOverriden != isMaterialOverriden)
                 {
                     return false;
                 }
 
-                if (SMM.bExactSplination != bExactSplination)
+                if (_SMM.SplinatedMaterial1 != SplinatedMaterial1)
                 {
                     return false;
                 }
-                if (SMM.bMatchRoadDefinition != bMatchRoadDefinition)
-                {
-                    return false;
-                }
-                if (SMM.bMatchRoadIncrements != bMatchRoadIncrements)
-                {
-                    return false;
-                }
-                if (SMM.bTrimStart != bTrimStart)
-                {
-                    return false;
-                }
-                if (SMM.bTrimEnd != bTrimEnd)
-                {
-                    return false;
-                }
-                if (SMM.bMatchTerrain != bMatchTerrain)
-                {
-                    return false;
-                }
-                if (!GSDRootUtil.IsApproximately(SMM.MinMaxMod, MinMaxMod, 0.0001f))
-                {
-                    return false;
-                }
-                if (SMM.bIsBridge != bIsBridge)
-                {
-                    return false;
-                }
-                if (!GSDRootUtil.IsApproximately(SMM.VertexMatchingPrecision, VertexMatchingPrecision, 0.0001f))
+                if (_SMM.SplinatedMaterial2 != SplinatedMaterial2)
                 {
                     return false;
                 }
 
-                if (SMM.bIsStretch != bIsStretch)
+                if (_SMM.isExactSplination != isExactSplination)
                 {
                     return false;
                 }
-                if (SMM.bStretchLocOffset != bStretchLocOffset)
+                if (_SMM.isMatchingRoadDefinition != isMatchingRoadDefinition)
                 {
                     return false;
                 }
-                if (SMM.bStretchSize != bStretchSize)
+                if (_SMM.isMatchingRoadIncrements != isMatchingRoadIncrements)
                 {
                     return false;
                 }
-                if (SMM.StretchBC_LocOffset != StretchBC_LocOffset)
+                if (_SMM.isTrimStart != isTrimStart)
                 {
                     return false;
                 }
-                if (SMM.StretchBC_Size != StretchBC_Size)
+                if (_SMM.isTrimEnd != isTrimEnd)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(SMM.Stretch_UVThreshold, Stretch_UVThreshold, 0.0001f))
+                if (_SMM.isMatchingTerrain != isMatchingTerrain)
                 {
                     return false;
                 }
-                if (SMM.bStraightLineMatchStartEnd != bStraightLineMatchStartEnd)
+                if (!GSDRootUtil.IsApproximately(_SMM.minMaxMod, MinMaxMod, 0.0001f))
                 {
                     return false;
                 }
-                if (SMM.bBCFlipX != bBCFlipX)
+                if (_SMM.isBridge != isBridge)
                 {
                     return false;
                 }
-                if (SMM.bBCFlipZ != bBCFlipZ)
+                if (!GSDRootUtil.IsApproximately(_SMM.vertexMatchingPrecision, VertexMatchingPrecision, 0.0001f))
+                {
+                    return false;
+                }
+
+                if (_SMM.isStretch != isStretched)
+                {
+                    return false;
+                }
+                if (_SMM.isStretchLocOffset != isStretchedLocOffset)
+                {
+                    return false;
+                }
+                if (_SMM.isStretchSize != isStretchedSize)
+                {
+                    return false;
+                }
+                if (_SMM.StretchBC_LocOffset != stretchedBCLocOffset)
+                {
+                    return false;
+                }
+                if (_SMM.StretchBC_Size != stretchedBCSize)
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_SMM.stretchUVThreshold, stretchedUVThreshold, 0.0001f))
+                {
+                    return false;
+                }
+                if (_SMM.isStraightLineMatchStartEnd != isStraightLineMatchingStartEnd)
+                {
+                    return false;
+                }
+                if (_SMM.isBCFlipX != isBCFlippedX)
+                {
+                    return false;
+                }
+                if (_SMM.isBCFlipZ != isBCFlippedZ)
                 {
                     return false;
                 }
 
                 //Horizontal offsets:
-                if (!GSDRootUtil.IsApproximately(SMM.HorizontalSep, HorizontalSep, 0.0001f))
+                if (!GSDRootUtil.IsApproximately(_SMM.HorizontalSep, HorizontalSep, 0.0001f))
                 {
                     return false;
                 }
-                if (SMM.HorizontalCurve != HorizontalCurve)
+                if (_SMM.HorizontalCurve != HorizontalCurve)
                 {
                     return false;
                 }
                 //Vertical offset:
-                if (!GSDRootUtil.IsApproximately(SMM.VerticalRaise, VerticalRaise, 0.0001f))
+                if (!GSDRootUtil.IsApproximately(_SMM.VerticalRaise, VerticalRaise, 0.0001f))
                 {
                     return false;
                 }
-                if (SMM.VerticalCurve != VerticalCurve)
+                if (_SMM.VerticalCurve != VerticalCurve)
                 {
                     return false;
                 }
                 //Vertical cutoff:
-                if (!GSDRootUtil.IsApproximately(SMM.VerticalCutoff, VerticalCutoff, 0.0001f))
+                if (!GSDRootUtil.IsApproximately(_SMM.VerticalCutoff, VerticalCutoff, 0.0001f))
                 {
                     return false;
                 }
-                if (SMM.bVerticalCutoff != bVerticalCutoff)
+                if (_SMM.isVerticalCutoff != isVerticalCutoff)
                 {
                     return false;
                 }
-                if (SMM.bVerticalCutoffDownwards != bVerticalCutoffDownwards)
+                if (_SMM.isVerticalCutoffDownwards != isVerticalCutoffDownwards)
                 {
                     return false;
                 }
-                if (SMM.bVerticalMeshCutoff_OppositeDir != bVerticalMeshCutoff_OppositeDir)
+                if (_SMM.isVerticalMeshCutoffOppositeDir != isVerticalMeshCutoffOppositeDir)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(SMM.VerticalMeshCutoffOffset, VerticalMeshCutoffOffset, 0.0001f))
+                if (!GSDRootUtil.IsApproximately(_SMM.VerticalMeshCutoffOffset, VerticalMeshCutoffOffset, 0.0001f))
                 {
                     return false;
                 }
-                if (SMM.bVerticalCutoff_MatchZero != bVerticalCutoff_MatchZero)
-                {
-                    return false;
-                }
-
-                if (!GSDRootUtil.IsApproximately(SMM.RoadRaise, RoadRaise, 0.0001f))
-                {
-                    return false;
-                }
-                if (SMM.CustomRotation != CustomRotation)
-                {
-                    return false;
-                }
-                if (SMM.bFlipRotation != bFlipRotation)
-                {
-                    return false;
-                }
-                if (SMM.bStatic != bStatic)
-                {
-                    return false;
-                }
-                if (!GSDRootUtil.IsApproximately(SMM.StartTime, StartTime, 0.0001f))
-                {
-                    return false;
-                }
-                if (!GSDRootUtil.IsApproximately(SMM.EndTime, EndTime, 0.0001f))
-                {
-                    return false;
-                }
-                if (SMM.Axis != Axis)
+                if (_SMM.isVerticalCutoffMatchingZero != isVerticalCutoffMatchingZero)
                 {
                     return false;
                 }
 
-                if (SMM.RepeatUVType != RepeatUVType)
+                if (!GSDRootUtil.IsApproximately(_SMM.RoadRaise, RoadRaise, 0.0001f))
+                {
+                    return false;
+                }
+                if (_SMM.CustomRotation != CustomRotation)
+                {
+                    return false;
+                }
+                if (_SMM.isFlippingRotation != isFlippedRotation)
+                {
+                    return false;
+                }
+                if (_SMM.isStatic != isStatic)
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_SMM.StartTime, StartTime, 0.0001f))
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_SMM.EndTime, EndTime, 0.0001f))
+                {
+                    return false;
+                }
+                if (_SMM.Axis != Axis)
+                {
+                    return false;
+                }
+
+                if (_SMM.RepeatUVType != repeatUVType)
                 {
                     return false;
                 }
 
                 //Ending objects:
-                if (SMM.EndCapStart != EndCapStart)
+                if (_SMM.EndCapStart != EndCapStart)
                 {
                     return false;
                 }
-                if (SMM.EndCapEnd != EndCapEnd)
+                if (_SMM.EndCapEnd != EndCapEnd)
                 {
                     return false;
                 }
 
-                if (SMM.bEndCapCustomMatchStart != bEndCapCustomMatchStart)
+                if (_SMM.bEndCapCustomMatchStart != isEndCapCustomMatchingStart)
                 {
                     return false;
                 }
-                if (SMM.EndCapCustomOffsetStart != EndCapCustomOffsetStart)
+                if (_SMM.EndCapCustomOffsetStart != EndCapCustomOffsetStart)
                 {
                     return false;
                 }
-                if (SMM.EndCapCustomOffsetEnd != EndCapCustomOffsetEnd)
+                if (_SMM.EndCapCustomOffsetEnd != EndCapCustomOffsetEnd)
                 {
                     return false;
                 }
-                if (SMM.EndCapCustomRotOffsetStart != EndCapCustomRotOffsetStart)
+                if (_SMM.EndCapCustomRotOffsetStart != EndCapCustomRotOffsetStart)
                 {
                     return false;
                 }
-                if (SMM.EndCapCustomRotOffsetEnd != EndCapCustomRotOffsetEnd)
+                if (_SMM.EndCapCustomRotOffsetEnd != EndCapCustomRotOffsetEnd)
                 {
                     return false;
                 }
-                if (SMM.bEndObjectsMatchGround != bEndObjectsMatchGround)
+                if (_SMM.bEndObjectsMatchGround != isEndObjectsMatchingGround)
                 {
                     return false;
                 }
 
                 //Endings down:
-                if (SMM.bStartDown != bStartDown)
+                if (_SMM.isStartDown != isStartDown)
                 {
                     return false;
                 }
-                if (SMM.bStartTypeDownOverride != bStartTypeDownOverride)
+                if (_SMM.isStartTypeDownOverriden != isStartTypeDownOverriden)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(SMM.StartTypeDownOverride, StartTypeDownOverride, 0.0001f))
+                if (!GSDRootUtil.IsApproximately(_SMM.startTypeDownOverride, startTypeDownOverriden, 0.0001f))
                 {
                     return false;
                 }
-                if (SMM.bEndDown != bEndDown)
+                if (_SMM.isEndDown != isEndDown)
                 {
                     return false;
                 }
-                if (SMM.bEndTypeDownOverride != bEndTypeDownOverride)
+                if (_SMM.isEndTypeDownOverriden != isEndTypeDownOverriden)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(SMM.EndTypeDownOverride, EndTypeDownOverride, 0.0001f))
+                if (!GSDRootUtil.IsApproximately(_SMM.endTypeDownOverride, endTypeDownOverriden, 0.0001f))
                 {
                     return false;
                 }
 
                 //Collision:
-                if (SMM.CollisionType != CollisionType)
+                if (_SMM.CollisionType != collisionType)
                 {
                     return false;
                 }
-                if (SMM.bCollisionConvex != bCollisionConvex)
+                if (_SMM.isCollisionConvex != isCollisionConvex)
                 {
                     return false;
                 }
-                if (SMM.bSimpleCollisionAutomatic != bSimpleCollisionAutomatic)
+                if (_SMM.isSimpleCollisionAutomatic != isSimpleCollisionAutomatic)
                 {
                     return false;
                 }
-                if (SMM.bCollisionTrigger != bCollisionTrigger)
-                {
-                    return false;
-                }
-
-                if (SMM.CollisionBoxBL != CollisionBoxBL)
-                {
-                    return false;
-                }
-                if (SMM.CollisionBoxBR != CollisionBoxBR)
-                {
-                    return false;
-                }
-                if (SMM.CollisionBoxTL != CollisionBoxTL)
-                {
-                    return false;
-                }
-                if (SMM.CollisionBoxTR != CollisionBoxTR)
+                if (_SMM.isCollisionTrigger != isCollisionTriggered)
                 {
                     return false;
                 }
 
-                if (SMM.CollisionTriBL != CollisionTriBL)
+                if (_SMM.CollisionBoxBL != CollisionBoxBL)
                 {
                     return false;
                 }
-                if (SMM.CollisionTriBR != CollisionTriBR)
+                if (_SMM.CollisionBoxBR != CollisionBoxBR)
                 {
                     return false;
                 }
-                if (SMM.CollisionTriT != CollisionTriT)
+                if (_SMM.CollisionBoxTL != CollisionBoxTL)
+                {
+                    return false;
+                }
+                if (_SMM.CollisionBoxTR != CollisionBoxTR)
                 {
                     return false;
                 }
 
-                if (string.CompareOrdinal(SMM.tName, tName) != 0)
+                if (_SMM.CollisionTriBL != CollisionTriBL)
+                {
+                    return false;
+                }
+                if (_SMM.CollisionTriBR != CollisionTriBR)
+                {
+                    return false;
+                }
+                if (_SMM.CollisionTriT != CollisionTriT)
+                {
+                    return false;
+                }
+
+                if (string.CompareOrdinal(_SMM.tName, objectName) != 0)
                 {
                     return false;
                 }
@@ -1457,38 +1588,38 @@ namespace GSD.Roads.Splination
         #region "Static util"
         public void SetupUniqueIdentifier()
         {
-            if (UID == null || UID.Length < 4)
+            if (uID == null || uID.Length < 4)
             {
-                UID = System.Guid.NewGuid().ToString();
+                uID = System.Guid.NewGuid().ToString();
             }
         }
 
 
-        public static Vector3 GetVector3Average(Vector3[] tVects)
+        public static Vector3 GetVector3Average(Vector3[] _vectors)
         {
-            int tCount = tVects.Length;
+            int tCount = _vectors.Length;
             Vector3 mVect = default(Vector3);
             for (int index = 0; index < tCount; index++)
             {
-                mVect += tVects[index];
+                mVect += _vectors[index];
             }
             mVect /= tCount;
             return mVect;
         }
 
 
-        private static bool FloatsNear(float tNear, float tVal1, float tVal2)
+        private static bool FloatsNear(float _near, float _val1, float _val2)
         {
-            if (GSDRootUtil.IsApproximately(tVal1, tVal2, tNear))
+            if (GSDRootUtil.IsApproximately(_val1, _val2, _near))
             {
                 return true;
             }
 
-            if (tVal1 < (tVal2 + tNear) && tVal1 > (tVal2 - tNear))
+            if (_val1 < (_val2 + _near) && _val1 > (_val2 - _near))
             {
                 return true;
             }
-            if (tVal2 < (tVal1 + tNear) && tVal2 > (tVal1 - tNear))
+            if (_val2 < (_val1 + _near) && _val2 > (_val1 - _near))
             {
                 return true;
             }
@@ -1496,10 +1627,10 @@ namespace GSD.Roads.Splination
         }
 
 
-        private static int[] GetCollisionTris_Tri(int MeshCount, int cTriCount, int cCount)
+        private static int[] GetCollisionTrisTri(int _meshCount, int _cTriCount, int _cCount)
         {
             int tCounter = 0;
-            int[] tTris = new int[cTriCount * 3];
+            int[] tTris = new int[_cTriCount * 3];
 
             //Front side: **
             tTris[tCounter] = 0;
@@ -1509,7 +1640,7 @@ namespace GSD.Roads.Splination
             tTris[tCounter] = 1;
             tCounter += 1;
             int tMod = -1;
-            for (int index = 0; index < (MeshCount); index++)
+            for (int index = 0; index < (_meshCount); index++)
             {
                 tMod = (index * 3);
                 //Bottom side: ***
@@ -1553,21 +1684,21 @@ namespace GSD.Roads.Splination
                 tCounter += 1;
             }
             //Back side: **
-            tTris[tCounter] = cCount - 2;
+            tTris[tCounter] = _cCount - 2;
             tCounter += 1;
-            tTris[tCounter] = cCount - 1;
+            tTris[tCounter] = _cCount - 1;
             tCounter += 1;
-            tTris[tCounter] = cCount - 3;
+            tTris[tCounter] = _cCount - 3;
             tCounter += 1;
 
             return tTris;
         }
 
 
-        private static int[] GetCollisionTris_Box(int MeshCount, int cTriCount, int cCount)
+        private static int[] GetCollisionTrisBox(int _meshCount, int _cTriCount, int _cCount)
         {
             int tCounter = 0;
-            int[] tTris = new int[cTriCount * 3];
+            int[] tTris = new int[_cTriCount * 3];
 
             //Front side: ***
             tTris[tCounter] = 0;
@@ -1584,7 +1715,7 @@ namespace GSD.Roads.Splination
             tCounter += 1;
 
             int tMod = -1;
-            for (int index = 0; index < (MeshCount); index++)
+            for (int index = 0; index < (_meshCount); index++)
             {
                 tMod = (index * 4);
                 //Bottom side: ***
@@ -1642,35 +1773,35 @@ namespace GSD.Roads.Splination
             }
 
             //Back side: ***
-            tTris[tCounter] = cCount - 3;
+            tTris[tCounter] = _cCount - 3;
             tCounter += 1;
-            tTris[tCounter] = cCount - 1;
+            tTris[tCounter] = _cCount - 1;
             tCounter += 1;
-            tTris[tCounter] = cCount - 4;
+            tTris[tCounter] = _cCount - 4;
             tCounter += 1;
-            tTris[tCounter] = cCount - 1;
+            tTris[tCounter] = _cCount - 1;
             tCounter += 1;
-            tTris[tCounter] = cCount - 2;
+            tTris[tCounter] = _cCount - 2;
             tCounter += 1;
-            tTris[tCounter] = cCount - 4;
+            tTris[tCounter] = _cCount - 4;
             tCounter += 1;
 
             return tTris;
         }
 
 
-        private static bool IsApproxTwoThirds(ref Vector3 V1, Vector3 V2, float Precision = 0.005f)
+        private static bool IsApproxTwoThirds(ref Vector3 _v1, Vector3 _v2, float _precision = 0.005f)
         {
             int cCount = 0;
-            if (GSDRootUtil.IsApproximately(V1.x, V2.x, Precision))
+            if (GSDRootUtil.IsApproximately(_v1.x, _v2.x, _precision))
             {
                 cCount += 1;
             }
-            if (GSDRootUtil.IsApproximately(V1.y, V2.y, Precision))
+            if (GSDRootUtil.IsApproximately(_v1.y, _v2.y, _precision))
             {
                 cCount += 1;
             }
-            if (GSDRootUtil.IsApproximately(V1.z, V2.z, Precision))
+            if (GSDRootUtil.IsApproximately(_v1.z, _v2.z, _precision))
             {
                 cCount += 1;
             }
@@ -1686,24 +1817,24 @@ namespace GSD.Roads.Splination
         }
 
 
-        private static bool IsApproxWithNeg(ref Vector3 V1, ref Vector3 V2)
+        private static bool IsApproxWithNeg(ref Vector3 _v1, ref Vector3 _v2)
         {
             int cCount = 0;
             bool bXMatch = false;
             bool bYMatch = false;
             bool bZMatch = false;
 
-            if (GSDRootUtil.IsApproximately(V1.x, V2.x, 0.02f))
+            if (GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.02f))
             {
                 cCount += 1;
                 bXMatch = true;
             }
-            if (GSDRootUtil.IsApproximately(V1.y, V2.y, 0.02f))
+            if (GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.02f))
             {
                 cCount += 1;
                 bYMatch = true;
             }
-            if (GSDRootUtil.IsApproximately(V1.z, V2.z, 0.02f))
+            if (GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.02f))
             {
                 cCount += 1;
                 bZMatch = true;
@@ -1711,15 +1842,15 @@ namespace GSD.Roads.Splination
 
             if (cCount == 2)
             {
-                if (!bXMatch && GSDRootUtil.IsApproximately(V1.x, V2.x * -1f, 0.02f))
+                if (!bXMatch && GSDRootUtil.IsApproximately(_v1.x, _v2.x * -1f, 0.02f))
                 {
                     return true;
                 }
-                else if (!bYMatch && GSDRootUtil.IsApproximately(V1.y, V2.y * -1f, 0.02f))
+                else if (!bYMatch && GSDRootUtil.IsApproximately(_v1.y, _v2.y * -1f, 0.02f))
                 {
                     return true;
                 }
-                else if (!bZMatch && GSDRootUtil.IsApproximately(V1.z, V2.z * -1f, 0.02f))
+                else if (!bZMatch && GSDRootUtil.IsApproximately(_v1.z, _v2.z * -1f, 0.02f))
                 {
                     return true;
                 }
@@ -1735,17 +1866,17 @@ namespace GSD.Roads.Splination
         }
 
 
-        private static bool V3EqualToNone(Vector3 V1)
+        private static bool V3EqualToNone(Vector3 _v1)
         {
-            if (!GSDRootUtil.IsApproximately(V1.x, 0f, 0.0001f))
+            if (!GSDRootUtil.IsApproximately(_v1.x, 0f, 0.0001f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(V1.y, 0f, 0.0001f))
+            if (!GSDRootUtil.IsApproximately(_v1.y, 0f, 0.0001f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(V1.z, 0f, 0.0001f))
+            if (!GSDRootUtil.IsApproximately(_v1.z, 0f, 0.0001f))
             {
                 return false;
             }
@@ -1753,17 +1884,17 @@ namespace GSD.Roads.Splination
         }
 
 
-        private static bool V3EqualNormal(Vector3 V1, Vector3 V2)
+        private static bool V3EqualNormal(Vector3 _v1, Vector3 _v2)
         {
-            if (!GSDRootUtil.IsApproximately(V1.x, V2.x, 0.01f))
+            if (!GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.01f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(V1.y, V2.y, 0.01f))
+            if (!GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.01f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(V1.z, V2.z, 0.01f))
+            if (!GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.01f))
             {
                 return false;
             }
@@ -1771,23 +1902,23 @@ namespace GSD.Roads.Splination
         }
 
 
-        private static bool IsApproxExtruded(ref Vector3 V1, ref Vector3 V2, bool bIsZAxis)
+        private static bool IsApproxExtruded(ref Vector3 _v1, ref Vector3 _v2, bool _isZAxis)
         {
-            if (!GSDRootUtil.IsApproximately(V1.y, V2.y, 0.02f))
+            if (!GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.02f))
             {
                 return false;
             }
 
-            if (bIsZAxis)
+            if (_isZAxis)
             {
-                if (!GSDRootUtil.IsApproximately(V1.x, V2.x, 0.02f))
+                if (!GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.02f))
                 {
                     return false;
                 }
             }
             else
             {
-                if (!GSDRootUtil.IsApproximately(V1.z, V2.z, 0.02f))
+                if (!GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.02f))
                 {
                     return false;
                 }
@@ -1797,11 +1928,11 @@ namespace GSD.Roads.Splination
         }
 
 
-        private static float GetVHeightAtXY(ref Vector3 tVect1, ref Vector3 tVect2, ref Vector3 tVect3)
+        private static float GetVHeightAtXY(ref Vector3 _vect1, ref Vector3 _vect2, ref Vector3 _vect3)
         {
-            Vector2 tVect2D1 = new Vector2(tVect1.x, tVect1.z);
-            Vector2 tVect2D2 = new Vector2(tVect2.x, tVect2.z);
-            Vector2 tVect2D3 = new Vector2(tVect3.x, tVect3.z);
+            Vector2 tVect2D1 = new Vector2(_vect1.x, _vect1.z);
+            Vector2 tVect2D2 = new Vector2(_vect2.x, _vect2.z);
+            Vector2 tVect2D3 = new Vector2(_vect3.x, _vect3.z);
 
             float tDist1 = Vector2.Distance(tVect2D1, tVect2D3);
             float tDist2 = Vector2.Distance(tVect2D2, tVect2D3);
@@ -1809,20 +1940,20 @@ namespace GSD.Roads.Splination
 
             float CloseTo1 = (tDist1 / tDistSum);
 
-            Vector3 tVect = ((tVect2 - tVect1) * CloseTo1) + tVect1;
+            Vector3 tVect = ((_vect2 - _vect1) * CloseTo1) + _vect1;
 
             return tVect.y;
         }
         #endregion
 
 
-        public void Setup(bool bGetStrings = false, bool bCollect = true)
+        public void Setup(bool _isGettingStrings = false, bool _isCollecting = true)
         {
 #if UNITY_EDITOR
             GameObject[] tObj = new GameObject[5];
             try
             {
-                SplinateMesh_Do(bGetStrings, ref tObj, bCollect);
+                SplinateMeshDo(_isGettingStrings, ref tObj, _isCollecting);
             }
             catch (System.Exception exception)
             {
@@ -1842,10 +1973,10 @@ namespace GSD.Roads.Splination
         }
 
 
-        private void SplinateMesh_Do(bool bGetStrings, ref GameObject[] ErrortObj, bool bCollect)
+        private void SplinateMeshDo(bool _isGettingStrings, ref GameObject[] _errorObj, bool _isCollecting)
         {
 #if UNITY_EDITOR
-            bNeedsUpdate = false;
+            isRequiringUpdate = false;
             SetupUniqueIdentifier();
 
             //Buffers:
@@ -1860,18 +1991,18 @@ namespace GSD.Roads.Splination
             //			float tFloat3 = default(float);
             //			int tCount = -1;
 
-            StartTime = tSpline.GetClosestParam(StartPos);
-            EndTime = tSpline.GetClosestParam(EndPos);
+            StartTime = spline.GetClosestParam(StartPos);
+            EndTime = spline.GetClosestParam(EndPos);
 
             if (EndTime < StartTime)
             {
-                EndTime = tNode.NextTime;
-                EndPos = tSpline.GetSplineValue(EndTime, false);
+                EndTime = node.NextTime;
+                EndPos = spline.GetSplineValue(EndTime, false);
             }
             if (EndTime > 0.99995f)
             {
                 EndTime = 0.99995f;
-                EndPos = tSpline.GetSplineValue(EndTime, false);
+                EndPos = spline.GetSplineValue(EndTime, false);
             }
 
             Kill();
@@ -1894,16 +2025,16 @@ namespace GSD.Roads.Splination
             //			}
 
             //Setup strings:
-            if (bGetStrings)
+            if (_isGettingStrings)
             {
-                CurrentSplinationString = GSDRootUtil.GetPrefabString(CurrentSplination);
-                if (CurrentSplinationCap1 != null)
+                currentSplinationString = GSDRootUtil.GetPrefabString(currentSplination);
+                if (currentSplinationCap1 != null)
                 {
-                    CurrentSplinationCap1String = GSDRootUtil.GetPrefabString(CurrentSplinationCap1);
+                    currentSplinationCap1String = GSDRootUtil.GetPrefabString(currentSplinationCap1);
                 }
-                if (CurrentSplinationCap2 != null)
+                if (currentSplinationCap2 != null)
                 {
-                    CurrentSplinationCap2String = GSDRootUtil.GetPrefabString(CurrentSplinationCap2);
+                    currentSplinationCap2String = GSDRootUtil.GetPrefabString(currentSplinationCap2);
                 }
                 if (EndCapStart != null)
                 {
@@ -1923,52 +2054,52 @@ namespace GSD.Roads.Splination
                 }
             }
 
-            if (CurrentSplination == null)
+            if (currentSplination == null)
             {
                 return;
             }
-            GameObject tObj = (GameObject) GameObject.Instantiate(CurrentSplination);
-            ErrortObj[0] = tObj;
+            GameObject tObj = (GameObject) GameObject.Instantiate(currentSplination);
+            _errorObj[0] = tObj;
 
             GameObject EndCapStartObj = null;
             GameObject EndCapEndObj = null;
             if (EndCapStart != null)
             {
                 EndCapStartObj = (GameObject) GameObject.Instantiate(EndCapStart);
-                ErrortObj[1] = EndCapStartObj;
+                _errorObj[1] = EndCapStartObj;
             }
             if (EndCapEnd != null)
             {
                 EndCapEndObj = (GameObject) GameObject.Instantiate(EndCapEnd);
-                ErrortObj[2] = EndCapEndObj;
+                _errorObj[2] = EndCapEndObj;
             }
 
             GameObject Cap1 = null;
             GameObject Cap2 = null;
-            if (bFlipRotation)
+            if (isFlippingRotation)
             {
-                if (CurrentSplinationCap2 != null)
+                if (currentSplinationCap2 != null)
                 {
-                    Cap1 = (GameObject) GameObject.Instantiate(CurrentSplinationCap2);
-                    ErrortObj[3] = Cap1;
+                    Cap1 = (GameObject) GameObject.Instantiate(currentSplinationCap2);
+                    _errorObj[3] = Cap1;
                 }
-                if (CurrentSplinationCap1 != null)
+                if (currentSplinationCap1 != null)
                 {
-                    Cap2 = (GameObject) GameObject.Instantiate(CurrentSplinationCap1);
-                    ErrortObj[4] = Cap2;
+                    Cap2 = (GameObject) GameObject.Instantiate(currentSplinationCap1);
+                    _errorObj[4] = Cap2;
                 }
             }
             else
             {
-                if (CurrentSplinationCap1 != null)
+                if (currentSplinationCap1 != null)
                 {
-                    Cap1 = (GameObject) GameObject.Instantiate(CurrentSplinationCap1);
-                    ErrortObj[3] = Cap1;
+                    Cap1 = (GameObject) GameObject.Instantiate(currentSplinationCap1);
+                    _errorObj[3] = Cap1;
                 }
-                if (CurrentSplinationCap2 != null)
+                if (currentSplinationCap2 != null)
                 {
-                    Cap2 = (GameObject) GameObject.Instantiate(CurrentSplinationCap2);
-                    ErrortObj[4] = Cap2;
+                    Cap2 = (GameObject) GameObject.Instantiate(currentSplinationCap2);
+                    _errorObj[4] = Cap2;
                 }
             }
 
@@ -1992,7 +2123,7 @@ namespace GSD.Roads.Splination
             tMesh = MF.sharedMesh;
 
             //			Quaternion OrigRot = tObj.transform.rotation;
-            if (bFlipRotation)
+            if (isFlippingRotation)
             {
                 tVect1 = new Vector3(0f, 180f, 0f);
                 tObj.transform.Rotate(tVect1, Space.World);
@@ -2096,14 +2227,14 @@ namespace GSD.Roads.Splination
                 {
                     if (Axis == AxisTypeEnum.Z)
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts1[index].z, oMaxZ, MinMaxMod))
+                        if (GSDRootUtil.IsApproximately(CapOrigVerts1[index].z, oMaxZ, minMaxMod))
                         {
                             tCapMatchIndices1.Add(index);
                         }
                     }
                     else
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts1[index].x, oMaxX, MinMaxMod))
+                        if (GSDRootUtil.IsApproximately(CapOrigVerts1[index].x, oMaxX, minMaxMod))
                         {
                             tCapMatchIndices1.Add(index);
                         }
@@ -2143,14 +2274,14 @@ namespace GSD.Roads.Splination
                 {
                     if (Axis == AxisTypeEnum.Z)
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts2[index].z, oMinZ, MinMaxMod))
+                        if (GSDRootUtil.IsApproximately(CapOrigVerts2[index].z, oMinZ, minMaxMod))
                         {
                             tCapMatchIndices2.Add(index);
                         }
                     }
                     else
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts2[index].x, oMinX, MinMaxMod))
+                        if (GSDRootUtil.IsApproximately(CapOrigVerts2[index].x, oMinX, minMaxMod))
                         {
                             tCapMatchIndices2.Add(index);
                         }
@@ -2218,8 +2349,8 @@ namespace GSD.Roads.Splination
             }
             float mMaxDiff = mMax - mMin;
             float mMaxHeight = mMaxY - mMinY;
-            float mMaxThreshold = mMax - MinMaxMod;
-            float mMinThreshold = mMin + MinMaxMod;
+            float mMaxThreshold = mMax - minMaxMod;
+            float mMinThreshold = mMin + minMaxMod;
             List<int> MinVectorIndices = new List<int>();
             List<int> MaxVectorIndices = new List<int>();
             List<int> MiddleVectorIndicies = new List<int>();
@@ -2304,7 +2435,7 @@ namespace GSD.Roads.Splination
                                 {
                                     break;
                                 }
-                                if (IsApproxTwoThirds(ref tVect1, OrigVerts[tIntBuffer2], VertexMatchingPrecision))
+                                if (IsApproxTwoThirds(ref tVect1, OrigVerts[tIntBuffer2], vertexMatchingPrecision))
                                 {
                                     MatchingIndices.Add(tIntBuffer1, tIntBuffer2);
                                     AlreadyAddedList.Add(tIntBuffer2);
@@ -2326,7 +2457,7 @@ namespace GSD.Roads.Splination
                                 {
                                     break;
                                 }
-                                if (IsApproxTwoThirds(ref tVect1, OrigVerts[tIntBuffer2], VertexMatchingPrecision))
+                                if (IsApproxTwoThirds(ref tVect1, OrigVerts[tIntBuffer2], vertexMatchingPrecision))
                                 {
                                     MatchingIndices.Add(tIntBuffer1, tIntBuffer2);
                                     AlreadyAddedList.Add(tIntBuffer2);
@@ -2387,7 +2518,7 @@ namespace GSD.Roads.Splination
                     tVect1 = OrigVerts[KVP.Key];
                     for (int index = 0; index < CapOrigMVL1; index++)
                     {
-                        if (tCapMatchIndices1.Contains(index) && IsApproxTwoThirds(ref tVect1, CapOrigVerts1[index], VertexMatchingPrecision))
+                        if (tCapMatchIndices1.Contains(index) && IsApproxTwoThirds(ref tVect1, CapOrigVerts1[index], vertexMatchingPrecision))
                         {
                             tList.Add(index);
                             bDidAdd = true;
@@ -2423,7 +2554,7 @@ namespace GSD.Roads.Splination
                     tVect1 = OrigVerts[KVP.Key];
                     for (int index = 0; index < CapOrigMVL2; index++)
                     {
-                        if (tCapMatchIndices2.Contains(index) && IsApproxTwoThirds(ref tVect1, CapOrigVerts2[index], VertexMatchingPrecision))
+                        if (tCapMatchIndices2.Contains(index) && IsApproxTwoThirds(ref tVect1, CapOrigVerts2[index], vertexMatchingPrecision))
                         {
                             tList.Add(index);
                             bDidAdd = true;
@@ -2452,22 +2583,22 @@ namespace GSD.Roads.Splination
             }
 
             //Road definition matching:
-            if (bMatchRoadDefinition)
+            if (isMatchingRoadDefinition)
             {
-                float RoadDefStart = (tSpline.tRoad.roadDefinition / 2f) * -1;
-                float UVChange = tSpline.tRoad.roadDefinition / mMaxDiff;
+                float RoadDefStart = (spline.tRoad.roadDefinition / 2f) * -1;
+                float UVChange = spline.tRoad.roadDefinition / mMaxDiff;
                 foreach (KeyValuePair<int, int> KVP in MatchingIndices)
                 {
                     //Vertex change:
                     if (Axis == AxisTypeEnum.X)
                     {
                         OrigVerts[KVP.Value].x = RoadDefStart;
-                        OrigVerts[KVP.Key].x = (OrigVerts[KVP.Value].x + tSpline.tRoad.roadDefinition);
+                        OrigVerts[KVP.Key].x = (OrigVerts[KVP.Value].x + spline.tRoad.roadDefinition);
                     }
                     else if (Axis == AxisTypeEnum.Z)
                     {
                         OrigVerts[KVP.Value].z = RoadDefStart;
-                        OrigVerts[KVP.Key].z = (OrigVerts[KVP.Value].z + tSpline.tRoad.roadDefinition);
+                        OrigVerts[KVP.Key].z = (OrigVerts[KVP.Value].z + spline.tRoad.roadDefinition);
                     }
                     //UV Change:
                     if (RepeatUVType == RepeatUVTypeEnum.X)
@@ -2528,14 +2659,14 @@ namespace GSD.Roads.Splination
                 }
                 mMaxDiff = mMax - mMin;
                 mMaxHeight = mMaxY - mMinY;
-                mMaxThreshold = mMax - MinMaxMod;
-                mMinThreshold = mMin + MinMaxMod;
+                mMaxThreshold = mMax - minMaxMod;
+                mMinThreshold = mMin + minMaxMod;
             }
 
             //For vert reverse cut:
             int VertCutTriIndex1 = -1;
             int VertCutTriIndex2 = -1;
-            if (bVerticalMeshCutoff_OppositeDir)
+            if (isVerticalMeshCutoffOppositeDir)
             {
                 float[] tMatchingMaxY = new float[MatchingIndices.Count];
                 int tempcount141 = 0;
@@ -2559,7 +2690,7 @@ namespace GSD.Roads.Splination
 
 
             //Set auto simple collision points: 
-            if (bSimpleCollisionAutomatic)
+            if (isSimpleCollisionAutomatic)
             {
                 if (Axis == AxisTypeEnum.X)
                 {
@@ -2609,7 +2740,7 @@ namespace GSD.Roads.Splination
 
             while (cTime < EndTime && SpamGuardCounter < SpamGuard)
             {
-                tSpline.GetSplineValue_Both(cTime, out tVect1, out tDir);
+                spline.GetSplineValue_Both(cTime, out tVect1, out tDir);
                 fHeight = HorizontalCurve.Evaluate((cTime - StartTime) / pDiffTime);
                 CurrentH = fHeight * HorizontalSep;
 
@@ -2625,7 +2756,7 @@ namespace GSD.Roads.Splination
 
                 xVect = (tDir.normalized * mMaxDiff) + tVect1;
 
-                cTime = tSpline.GetClosestParam(xVect, false, false);
+                cTime = spline.GetClosestParam(xVect, false, false);
                 if (cTime > EndTime)
                 {
                     cTime = EndTime;
@@ -2633,11 +2764,11 @@ namespace GSD.Roads.Splination
                 tTimes.Add(cTime);
                 SpamGuardCounter += 1;
             }
-            if (bTrimStart)
+            if (isTrimStart)
             {
                 tTimes.RemoveAt(0);
             }
-            else if (bTrimEnd)
+            else if (isTrimEnd)
             {
                 tTimes.RemoveAt(tTimes.Count - 1);
             }
@@ -2654,8 +2785,8 @@ namespace GSD.Roads.Splination
             //			float cDiff = 0f;
 
             float jDistance = 0f;
-            float jStartDistance = tSpline.TranslateParamToDist(tStartTime);
-            float jEndDistance = tSpline.TranslateParamToDist(tEndTime);
+            float jStartDistance = spline.TranslateParamToDist(tStartTime);
+            float jEndDistance = spline.TranslateParamToDist(tEndTime);
             float jDistanceDiff = jEndDistance - jStartDistance;
             //			float jLastTime = 0f;
             float jCurrTime = 0f;
@@ -2676,7 +2807,7 @@ namespace GSD.Roads.Splination
                 }
                 else
                 {
-                    jDistance = tSpline.TranslateParamToDist(tTimes[i]);
+                    jDistance = spline.TranslateParamToDist(tTimes[i]);
                     jCurrTime = (jDistance - jStartDistance) / jDistanceDiff;
                     fHeight = VerticalCurve.Evaluate(jCurrTime);
                 }
@@ -2734,7 +2865,7 @@ namespace GSD.Roads.Splination
             for (int i = 0; i < vSeriesCount; i++)
             {
                 cTime = tTimes[i];
-                tSpline.GetSplineValue_Both(cTime, out tVect1, out tVect2);
+                spline.GetSplineValue_Both(cTime, out tVect1, out tVect2);
                 tOrigHeights.Add(tVect1.y);
 
                 //Horizontal offset:
@@ -2750,7 +2881,7 @@ namespace GSD.Roads.Splination
                     tVect1 = (tVect1 + new Vector3(CurrentH * tVect2.normalized.z, 0, CurrentH * -tVect2.normalized.x));
                 }
 
-                tIntStrength = tSpline.IntersectionStrength(ref tVect1, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref cTime, ref xNode);
+                tIntStrength = spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref cTime, ref xNode);
 
                 if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.0001f))
                 {
@@ -2762,7 +2893,7 @@ namespace GSD.Roads.Splination
                 }
 
                 //Terrain matching:
-                if (bMatchTerrain)
+                if (isMatchingTerrain)
                 {
                     //					temp2DVect = new Vector2(tVect1.x,tVect1.z);
                     //					for(int j=0;j<TerrainCount;j++){
@@ -2851,7 +2982,7 @@ namespace GSD.Roads.Splination
             //				tTriList = new List<GSD.Roads.GSDRoadUtil.Construction3DTri>();
             //			}
 
-            if (bIsStretch)
+            if (isStretch)
             {
                 DoStretch(ref OrigVerts, ref OrigUV, ref OrigTris, ref MaxVectorIndices, ref MinVectorIndices, mMaxDiff, out tVerts, out tUV, out tNormals, out tTris);
                 goto StretchSkip;
@@ -2865,7 +2996,7 @@ namespace GSD.Roads.Splination
                 vManuver = j * OrigMVL;
                 vManuver_Prev = (j - 1) * OrigMVL;
 
-                if (!bIsStretch)
+                if (!isStretch)
                 {
                     tVect1 = VectorSeries[j];
                     tVect2 = VectorSeries[j + 1];
@@ -2877,7 +3008,7 @@ namespace GSD.Roads.Splination
                 //				if(j==0){ tStartPos = tVect1; }
                 //				if(j==(MeshCount-1)){ tEndPos = tVect1; }
 
-                if (bExactSplination && MiddleCount < 2)
+                if (isExactSplination && MiddleCount < 2)
                 {
                     tDir = (tVect2 - tVect1).normalized;
                 }
@@ -2901,14 +3032,14 @@ namespace GSD.Roads.Splination
                     tUV[vManuver + index] = OrigUV[index];
 
                     //Vertical cutoff:
-                    if (bVerticalCutoff)
+                    if (isVerticalCutoff)
                     {
                         if (MiddleVectorIndicies.Contains(index))
                         {
                             tFloat5 = tVerts[vManuver + index].y;
-                            if (bVerticalCutoffDownwards)
+                            if (isVerticalCutoffDownwards)
                             {
-                                if (bVerticalCutoff_MatchZero)
+                                if (isVerticalCutoffMatchingZero)
                                 {
                                     if (tFloat5 < tOrigHeightBuffer_Orig)
                                     {
@@ -2929,7 +3060,7 @@ namespace GSD.Roads.Splination
                             }
                             else
                             {
-                                if (bVerticalCutoff_MatchZero)
+                                if (isVerticalCutoffMatchingZero)
                                 {
                                     if (tFloat5 > tOrigHeightBuffer_Orig)
                                     {
@@ -3090,9 +3221,9 @@ namespace GSD.Roads.Splination
                 }
 
                 //Vert cut reverse:
-                if (bVerticalCutoff)
+                if (isVerticalCutoff)
                 {
-                    if (bVerticalMeshCutoff_OppositeDir)
+                    if (isVerticalMeshCutoffOppositeDir)
                     {
                         VertCutBuffer1 = tVerts[vManuver + VertCutTriIndex1];
                         VertCutBuffer2 = tVerts[vManuver + VertCutTriIndex2];
@@ -3101,7 +3232,7 @@ namespace GSD.Roads.Splination
                         {
                             VertCutBuffer3 = tVerts[vManuver + MiddleVectorIndicies[index]];
 
-                            if (!bVerticalCutoffDownwards)
+                            if (!isVerticalCutoffDownwards)
                             {
                                 tBuffer = GetVHeightAtXY(ref VertCutBuffer1, ref VertCutBuffer2, ref VertCutBuffer3) + VerticalMeshCutoffOffset;
                                 if (VertCutBuffer3.y < tBuffer)
@@ -3123,12 +3254,12 @@ namespace GSD.Roads.Splination
 
 
                 //Ending push down:
-                if (bStartDown)
+                if (isStartDown)
                 {
                     tFloat1 = mMaxHeight * 1.05f;
-                    if (bStartTypeDownOverride)
+                    if (isStartTypeDownOverriden)
                     {
-                        tFloat1 = StartTypeDownOverride;
+                        tFloat1 = startTypeDownOverride;
                     }
                     if (j == 0)
                     {
@@ -3172,12 +3303,12 @@ namespace GSD.Roads.Splination
                     }
                 }
 
-                if (bEndDown)
+                if (isEndDown)
                 {
                     tFloat1 = mMaxHeight * 1.05f;
-                    if (bEndTypeDownOverride)
+                    if (isEndTypeDownOverriden)
                     {
-                        tFloat1 = EndTypeDownOverride;
+                        tFloat1 = endTypeDownOverride;
                     }
                     if (j == (MeshCount - 1))
                     {
@@ -3232,7 +3363,7 @@ namespace GSD.Roads.Splination
                             bVerts[g] = tVerts[vManuver + MinVectorIndices[g]];
                         }
                         Vector3 tVect5 = GetVector3Average(bVerts);
-                        Vector3 tVect6 = tSpline.GetSplineValue(tSpline.GetClosestParam(tVect5, false, false), false);
+                        Vector3 tVect6 = spline.GetSplineValue(spline.GetClosestParam(tVect5, false, false), false);
                         tVect5.y = tVect6.y;
                         EndCapStartObj.transform.position = tVect5;
                     }
@@ -3288,7 +3419,7 @@ namespace GSD.Roads.Splination
                             bVerts[g] = tVerts[vManuver + MaxVectorIndices[g]];
                         }
                         Vector3 tVect5 = GetVector3Average(bVerts);
-                        Vector3 tVect6 = tSpline.GetSplineValue(tSpline.GetClosestParam(tVect5, false, false), false);
+                        Vector3 tVect6 = spline.GetSplineValue(spline.GetClosestParam(tVect5, false, false), false);
                         if (!float.IsNaN(tVect6.y))
                         {
                             tVect5.y = tVect6.y;
@@ -3340,20 +3471,20 @@ namespace GSD.Roads.Splination
             }
 
             StretchSkip:
-            if (bIsStretch)
+            if (isStretch)
             {
                 vManuver = 0;
             }
 
             //End/Start for stretch:
-            if (bIsStretch)
+            if (isStretch)
             {
                 //Ending objects:
                 if (EndCapStartObj != null)
                 {
                     tVect1 = tVerts[MinVectorIndices[0]];
-                    tFloat1 = tSpline.GetClosestParam(tVect1);
-                    tVect2 = tSpline.GetSplineValue(tFloat1, false);
+                    tFloat1 = spline.GetClosestParam(tVect1);
+                    tVect2 = spline.GetSplineValue(tFloat1, false);
                     tVect1.y = tVect2.y;
 
                     EndCapStartObj.transform.position = tVect1;
@@ -3364,8 +3495,8 @@ namespace GSD.Roads.Splination
                 if (EndCapEndObj != null)
                 {
                     tVect1 = tVerts[MaxVectorIndices[0]];
-                    tFloat1 = tSpline.GetClosestParam(tVect1);
-                    tVect2 = tSpline.GetSplineValue(tFloat1, false);
+                    tFloat1 = spline.GetClosestParam(tVect1);
+                    tVect2 = spline.GetSplineValue(tFloat1, false);
                     tVect1.y = tVect2.y;
 
                     EndCapEndObj.transform.position = tVect1;
@@ -3375,15 +3506,15 @@ namespace GSD.Roads.Splination
                 }
             }
 
-            if (bSimpleCollisionOn && !bIsStretch)
+            if (bSimpleCollisionOn && !isStretch)
             {
                 if (CollisionType == CollisionTypeEnum.SimpleMeshTriangle)
                 {
-                    cTris = GetCollisionTris_Tri(MeshCount, cTriCount, cCount);
+                    cTris = GetCollisionTrisTri(MeshCount, cTriCount, cCount);
                 }
                 else if (CollisionType == CollisionTypeEnum.SimpleMeshTrapezoid)
                 {
-                    cTris = GetCollisionTris_Box(MeshCount, cTriCount, cCount);
+                    cTris = GetCollisionTrisBox(MeshCount, cTriCount, cCount);
                 }
             }
 
@@ -3414,7 +3545,7 @@ namespace GSD.Roads.Splination
                         cap1_hit[KVP.Value[index]] = true;
                         if (bcapstart)
                         {
-                            tHeight = tSpline.GetSplineValue(tSpline.GetClosestParam(cap1_verts[KVP.Value[index]]), false).y;
+                            tHeight = spline.GetSplineValue(spline.GetClosestParam(cap1_verts[KVP.Value[index]]), false).y;
                             bcapstart = false;
                         }
                     }
@@ -3426,10 +3557,10 @@ namespace GSD.Roads.Splination
                     if (!cap1_hit[index])
                     {
                         cap1_verts[index] -= tVect1;
-                        tParam = tSpline.GetClosestParam(cap1_verts[index]);
-                        tVect2 = tSpline.GetSplineValue(tParam, false);
+                        tParam = spline.GetClosestParam(cap1_verts[index]);
+                        tVect2 = spline.GetSplineValue(tParam, false);
                         cap1_verts[index].y -= (tHeight - tVect2.y);
-                        cap1_verts[index].y += CapHeightOffset1;
+                        cap1_verts[index].y += capHeightOffset1;
                     }
                 }
 
@@ -3489,7 +3620,7 @@ namespace GSD.Roads.Splination
 
                         if (bcapstart)
                         {
-                            tHeight = tSpline.GetSplineValue(tSpline.GetClosestParam(cap2_verts[KVP.Value[index]]), false).y;
+                            tHeight = spline.GetSplineValue(spline.GetClosestParam(cap2_verts[KVP.Value[index]]), false).y;
                             bcapstart = false;
                         }
                     }
@@ -3502,10 +3633,10 @@ namespace GSD.Roads.Splination
                     if (!cap2_hit[index])
                     {
                         cap2_verts[index] -= tVect1;
-                        tParam = tSpline.GetClosestParam(cap2_verts[index]);
-                        tVect2 = tSpline.GetSplineValue(tParam, false);
+                        tParam = spline.GetClosestParam(cap2_verts[index]);
+                        tVect2 = spline.GetSplineValue(tParam, false);
                         cap2_verts[index].y -= (tHeight - tVect2.y);
-                        cap2_verts[index].y += CapHeightOffset2;
+                        cap2_verts[index].y += capHeightOffset2;
                     }
                 }
 
@@ -3540,14 +3671,14 @@ namespace GSD.Roads.Splination
             int tVertCount = tVerts.Length;
             for (int index = 0; index < tVertCount; index++)
             {
-                tVerts[index] -= tNode.pos;
+                tVerts[index] -= node.pos;
             }
             if (cVerts != null)
             {
                 int cVertCount = cVerts.Length;
                 for (int index = 0; index < cVertCount; index++)
                 {
-                    cVerts[index] -= tNode.pos;
+                    cVerts[index] -= node.pos;
                 }
             }
 
@@ -3561,7 +3692,7 @@ namespace GSD.Roads.Splination
             tNormals = xMesh.normals;
             Vector3 tAvgNormal = default(Vector3);
             tIntBuffer1 = 0;
-            if (!bIsStretch)
+            if (!isStretch)
             {
                 for (int j = 1; j < MeshCount; j++)
                 {
@@ -3588,12 +3719,12 @@ namespace GSD.Roads.Splination
             }
 
             Output = new GameObject(tName);
-            Output.transform.position = tNode.pos;
+            Output.transform.position = node.pos;
 
             MF = Output.AddComponent<MeshFilter>();
             MF.sharedMesh = xMesh;
 
-            if (tNode.GSDSpline.tRoad.GSDRS.opt_bSaveMeshes)
+            if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
             {
                 SaveMesh(ref xMesh, false);
             }
@@ -3613,9 +3744,9 @@ namespace GSD.Roads.Splination
                 }
                 if (MC != null)
                 {
-                    MC.convex = bCollisionConvex;
-                    MC.isTrigger = bCollisionTrigger;
-                    if (tNode.GSDSpline.tRoad.GSDRS.opt_bSaveMeshes)
+                    MC.convex = isCollisionConvex;
+                    MC.isTrigger = isCollisionTrigger;
+                    if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
                         cMesh.tangents = GSDRootUtil.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
@@ -3636,9 +3767,9 @@ namespace GSD.Roads.Splination
                 }
                 if (MC != null)
                 {
-                    MC.convex = bCollisionConvex;
-                    MC.isTrigger = bCollisionTrigger;
-                    if (tNode.GSDSpline.tRoad.GSDRS.opt_bSaveMeshes)
+                    MC.convex = isCollisionConvex;
+                    MC.isTrigger = isCollisionTrigger;
+                    if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
                         cMesh.tangents = GSDRootUtil.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
@@ -3655,8 +3786,8 @@ namespace GSD.Roads.Splination
                 }
                 if (MC != null)
                 {
-                    MC.convex = bCollisionConvex;
-                    MC.isTrigger = bCollisionTrigger;
+                    MC.convex = isCollisionConvex;
+                    MC.isTrigger = isCollisionTrigger;
                 }
             }
             else if (CollisionType == CollisionTypeEnum.BoxCollision)
@@ -3664,8 +3795,8 @@ namespace GSD.Roads.Splination
                 //Primitive collider:
                 GameObject BC_Obj = new GameObject("Primitive");
                 BoxCollider BC = BC_Obj.AddComponent<BoxCollider>();
-                BC_Obj.transform.position = tNode.pos;
-                BC_Obj.transform.rotation = Quaternion.LookRotation(tNode.tangent);
+                BC_Obj.transform.position = node.pos;
+                BC_Obj.transform.rotation = Quaternion.LookRotation(node.tangent);
 
                 Vector3 BCCenter = default(Vector3);
                 //				if(bStraightLineMatchStartEnd){
@@ -3680,10 +3811,10 @@ namespace GSD.Roads.Splination
                 //					BCCenter.y -= (mMaxHeight*0.5f);
                 //				}else{
                 Vector3 POS = default(Vector3);
-                tSpline.GetSplineValue_Both(StartTime, out tVect1, out POS);
+                spline.GetSplineValue_Both(StartTime, out tVect1, out POS);
                 //Goes right if not neg:
                 tVect1 = (tVect1 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
-                tSpline.GetSplineValue_Both(EndTime, out tVect2, out POS);
+                spline.GetSplineValue_Both(EndTime, out tVect2, out POS);
                 tVect2 = (tVect2 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
                 tVect1.y += VerticalRaise;
                 tVect2.y += VerticalRaise;
@@ -3691,14 +3822,14 @@ namespace GSD.Roads.Splination
                 BCCenter.y += ((mMinY + mMaxY) * 0.5f);
                 //				}
 
-                BCCenter -= tNode.pos;
+                BCCenter -= node.pos;
                 BCCenter.z *= -1f;
 
-                if (bBCFlipX)
+                if (isBCFlipX)
                 {
                     BCCenter.z *= -1f;
                 }
-                if (bBCFlipZ)
+                if (isBCFlipZ)
                 {
                     BCCenter.x *= -1f;
                 }
@@ -3713,9 +3844,9 @@ namespace GSD.Roads.Splination
 
                 BC.center = BCCenter2;
 
-                tFloat1 = Vector3.Distance(tNode.pos, tNode.BridgeCounterpartNode.pos);
+                tFloat1 = Vector3.Distance(node.pos, node.BridgeCounterpartNode.pos);
 
-                if (bStretchSize)
+                if (isStretchSize)
                 {
                     BC.size = StretchBC_Size;
                 }
@@ -3737,7 +3868,7 @@ namespace GSD.Roads.Splination
 
             //Use prefab mats if no material override:
             MeshRenderer MR = Output.AddComponent<MeshRenderer>();
-            if (SplinatedMaterial1 == null && !bMaterialOverride)
+            if (SplinatedMaterial1 == null && !isMaterialOverriden)
             {
                 MeshRenderer PrefabMR = tObj.GetComponent<MeshRenderer>();
                 if (PrefabMR != null && PrefabMR.sharedMaterials != null)
@@ -3779,8 +3910,8 @@ namespace GSD.Roads.Splination
             mMaxZ = mMaxZ * 1.5f;
             mMinZ = mMinZ * 1.5f;
 
-            StartPos = tSpline.GetSplineValue(StartTime);
-            EndPos = tSpline.GetSplineValue(EndTime);
+            StartPos = spline.GetSplineValue(StartTime);
+            EndPos = spline.GetSplineValue(EndTime);
 
             //Destroy the instantiated prefab:
             if (tObj != null)
@@ -3800,7 +3931,7 @@ namespace GSD.Roads.Splination
 
             //Set the new object with the specified vertical raise:
             Output.transform.name = tName;
-            Output.transform.parent = MasterObjTrans;
+            Output.transform.parent = masterObjTrans;
             if (EndCapStartObj != null)
             {
                 EndCapStartObj.transform.parent = Output.transform;
@@ -3831,18 +3962,18 @@ namespace GSD.Roads.Splination
                 }
             }
 
-            if (bCollect)
+            if (_isCollecting)
             {
-                tNode.GSDSpline.tRoad.isTriggeringGC = true;
+                node.GSDSpline.tRoad.isTriggeringGC = true;
             }
 #endif
         }
 
 
-        private void SaveMesh(ref Mesh tMesh, bool bIsCollider)
+        private void SaveMesh(ref Mesh _mesh, bool _isCollider)
         {
 #if UNITY_EDITOR
-            if (!tNode.GSDSpline.tRoad.GSDRS.opt_bSaveMeshes)
+            if (!node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
             {
                 return;
             }
@@ -3851,9 +3982,9 @@ namespace GSD.Roads.Splination
             tSceneName = tSceneName.Replace("/", "");
             tSceneName = tSceneName.Replace(".", "");
             string tFolderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/Extrusions/";
-            string tRoadName = tNode.GSDSpline.tRoad.transform.name;
+            string tRoadName = node.GSDSpline.tRoad.transform.name;
             string FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + ".asset";
-            if (bIsCollider)
+            if (_isCollider)
             {
                 FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + "-collider.asset";
             }
@@ -3865,104 +3996,108 @@ namespace GSD.Roads.Splination
             }
 
 
-            UnityEditor.AssetDatabase.CreateAsset(tMesh, FinalName);
+            UnityEditor.AssetDatabase.CreateAsset(_mesh, FinalName);
             UnityEditor.AssetDatabase.SaveAssets();
 #endif
         }
 
 
-        private void DoStretch(ref Vector3[] OrigVerts, ref Vector2[] OrigUV, ref int[] OrigTris, ref List<int> MaxVectorIndices, ref List<int> MinVectorIndices, float mMaxDiff, out Vector3[] tVerts, out Vector2[] tUV, out Vector3[] tNormals, out int[] tTris)
+        private void DoStretch(ref Vector3[] _origVerts, ref Vector2[] _origUV, ref int[] _origTris, ref List<int> _maxVectorIndices, ref List<int> _minVectorIndices, float _maxDiff, out Vector3[] _verts, out Vector2[] _UV, out Vector3[] _normals, out int[] _tris)
         {
-            Vector3 tVect1 = tNode.pos;
+            Vector3 tVect1 = node.pos;
             Vector3 tVect2 = default(Vector3);
 
-            //			if(bStraightLineMatchStartEnd){
-            //				if(tNode.bIsBridge && tNode.bIsBridgeMatched && tNode.BridgeCounterpartNode != null){
-            //					tVect2 = tNode.BridgeCounterpartNode.pos;
-            //				}else if(tNode.idOnSpline < (tSpline.GetNodeCount()-1)){
-            //					tVect2 = tSpline.mNodes[tNode.idOnSpline+1].pos;	
-            //				}
-            //			}
+            //if(bStraightLineMatchStartEnd)
+            //{
+            //  if(tNode.bIsBridge && tNode.bIsBridgeMatched && tNode.BridgeCounterpartNode != null)
+            //  {
+            //      tVect2 = tNode.BridgeCounterpartNode.pos;
+            //  }
+            //  else if(tNode.idOnSpline < (tSpline.GetNodeCount()-1))
+            //  {
+            //	    tVect2 = tSpline.mNodes[tNode.idOnSpline+1].pos;	
+            //  }
+            //}
 
             Vector3 POS = default(Vector3);
-            Vector3 tDir = tNode.tangent;
+            Vector3 tDir = node.tangent;
 
-            //			if(!bStraightLineMatchStartEnd){
-            tSpline.GetSplineValue_Both(StartTime, out tVect1, out POS);
+            //if(!bStraightLineMatchStartEnd){
+            spline.GetSplineValue_Both(StartTime, out tVect1, out POS);
             //Goes right if not neg:
             tVect1 = (tVect1 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
 
-            tSpline.GetSplineValue_Both(EndTime, out tVect2, out POS);
+            spline.GetSplineValue_Both(EndTime, out tVect2, out POS);
             tVect2 = (tVect2 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
 
             tVect1.y += VerticalRaise;
             tVect2.y += VerticalRaise;
 
-            tDir = tSpline.GetSplineValue(StartTime, true);
+            tDir = spline.GetSplineValue(StartTime, true);
             //			}
 
             Matrix4x4 tMatrixStart = new Matrix4x4();
             Matrix4x4 tMatrixEnd = new Matrix4x4();
-            int OrigMVL = OrigVerts.Length;
+            int OrigMVL = _origVerts.Length;
 
-            tVerts = new Vector3[OrigMVL];
-            tUV = new Vector2[OrigMVL];
-            tNormals = new Vector3[OrigMVL];
-            tTris = new int[OrigTris.Length];
-            System.Array.Copy(OrigVerts, tVerts, OrigMVL);
-            System.Array.Copy(OrigTris, tTris, OrigTris.Length);
-            System.Array.Copy(OrigUV, tUV, OrigMVL);
+            _verts = new Vector3[OrigMVL];
+            _UV = new Vector2[OrigMVL];
+            _normals = new Vector3[OrigMVL];
+            _tris = new int[_origTris.Length];
+            System.Array.Copy(_origVerts, _verts, OrigMVL);
+            System.Array.Copy(_origTris, _tris, _origTris.Length);
+            System.Array.Copy(_origUV, _UV, OrigMVL);
 
             tMatrixStart.SetTRS(tVect1, Quaternion.LookRotation(tDir), new Vector3(1f, 1f, 1f));
             tMatrixEnd.SetTRS(tVect2, Quaternion.LookRotation(tDir), new Vector3(1f, 1f, 1f));
 
             //Rotate and set vertex positions:
             float NewDiff = Vector3.Distance(tVect1, tVect2);
-            float UVMod = NewDiff / mMaxDiff;
+            float UVMod = NewDiff / _maxDiff;
             Vector3 xVect = default(Vector3);
             for (int index = 0; index < OrigMVL; index++)
             {
-                xVect = OrigVerts[index];
-                if (MaxVectorIndices.Contains(index))
+                xVect = _origVerts[index];
+                if (_maxVectorIndices.Contains(index))
                 {
-                    tVerts[index] = tMatrixEnd.MultiplyPoint3x4(xVect);
+                    _verts[index] = tMatrixEnd.MultiplyPoint3x4(xVect);
                 }
                 else
                 {
-                    tVerts[index] = tMatrixStart.MultiplyPoint3x4(xVect);
+                    _verts[index] = tMatrixStart.MultiplyPoint3x4(xVect);
                 }
 
                 if (RepeatUVType == RepeatUVTypeEnum.X)
                 {
-                    if (OrigUV[index].x > Stretch_UVThreshold)
+                    if (_origUV[index].x > stretchUVThreshold)
                     {
-                        tUV[index].x = OrigUV[index].x * UVMod;
+                        _UV[index].x = _origUV[index].x * UVMod;
                     }
                 }
                 else
                 {
-                    if (OrigUV[index].y > Stretch_UVThreshold)
+                    if (_origUV[index].y > stretchUVThreshold)
                     {
-                        tUV[index].y = OrigUV[index].y * UVMod;
+                        _UV[index].y = _origUV[index].y * UVMod;
                     }
                 }
             }
         }
 
 
-        private Vector3 GetAverageNormalToGround(GameObject tObj)
+        private Vector3 GetAverageNormalToGround(GameObject _object)
         {
-            Ray tRay = default(Ray);
-            RaycastHit[] tRayHit = null;
-            float tHitY = 0f;
-            int tHitIndex = 0;
-            Vector3 tHitNormal = default(Vector3);
+            Ray ray = default(Ray);
+            RaycastHit[] rayHit = null;
+            float hitY = 0f;
+            int hitIndex = 0;
+            Vector3 hitNormal = default(Vector3);
 
-            Bounds tBounds = tObj.GetComponent<MeshFilter>().sharedMesh.bounds;
+            Bounds bounds = _object.GetComponent<MeshFilter>().sharedMesh.bounds;
 
             Vector3[] tVects = new Vector3[8];
-            tVects[0] = tBounds.min;
-            tVects[1] = tBounds.max;
+            tVects[0] = bounds.min;
+            tVects[1] = bounds.max;
             tVects[2] = new Vector3(tVects[0].x, tVects[0].y, tVects[1].z);
             tVects[3] = new Vector3(tVects[0].x, tVects[1].y, tVects[0].z);
             tVects[4] = new Vector3(tVects[1].x, tVects[0].y, tVects[0].z);
@@ -3974,40 +4109,40 @@ namespace GSD.Roads.Splination
 
             for (int index = 0; index < 8; index++)
             {
-                tRay = new Ray(tVects[index] + new Vector3(0f, 1f, 0f), Vector3.down);
-                tRayHit = Physics.RaycastAll(tRay);
-                tHitIndex = -1;
-                tHitY = -1f;
-                if (tRayHit.Length > 0)
+                ray = new Ray(tVects[index] + new Vector3(0f, 1f, 0f), Vector3.down);
+                rayHit = Physics.RaycastAll(ray);
+                hitIndex = -1;
+                hitY = -1f;
+                if (rayHit.Length > 0)
                 {
-                    for (int g = 0; g < tRayHit.Length; g++)
+                    for (int g = 0; g < rayHit.Length; g++)
                     {
                         if (g == 0)
                         {
-                            tHitY = tRayHit[g].point.y;
-                            tHitIndex = 0;
+                            hitY = rayHit[g].point.y;
+                            hitIndex = 0;
                         }
                         else
                         {
-                            if (tRayHit[g].point.y > tHitY)
+                            if (rayHit[g].point.y > hitY)
                             {
-                                tHitY = tRayHit[g].point.y;
-                                tHitIndex = g;
+                                hitY = rayHit[g].point.y;
+                                hitIndex = g;
                             }
                         }
                     }
-                    xVects.Add(tRayHit[tHitIndex].normal);
+                    xVects.Add(rayHit[hitIndex].normal);
                 }
             }
 
 
             for (int index = 0; index < xVects.Count; index++)
             {
-                tHitNormal += xVects[index];
+                hitNormal += xVects[index];
             }
-            tHitNormal /= xVects.Count;
+            hitNormal /= xVects.Count;
 
-            return tHitNormal;
+            return hitNormal;
         }
     }
 

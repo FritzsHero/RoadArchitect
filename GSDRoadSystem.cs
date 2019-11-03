@@ -5,57 +5,59 @@ using UnityEngine;
 
 public class GSDRoadSystem : MonoBehaviour
 {
-    public static string AssetBasePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "";
+    public static string assetBasePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "";
 #if UNITY_EDITOR
 
-    public bool opt_bMultithreading = true;
-    public bool opt_bSaveMeshes = false;
-    public bool opt_bAllowRoadUpdates = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_bMultithreading")]
+    public bool isMultithreaded = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_bSaveMeshes")]
+    public bool isSavingMeshes = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_bAllowRoadUpdates")]
+    public bool isAllowingRoadUpdates = true;
+
+    public Camera editorPlayCamera = null;
 
 
-    public GameObject AddRoad(bool bForceSelect = false)
+    public GameObject AddRoad(bool _isForceSelected = false)
     {
-        GSDRoad[] tObj = GetComponentsInChildren<GSDRoad>();
-        int NewRoadNumber = (tObj.Length + 1);
+        GSDRoad[] allRoadObj = GetComponentsInChildren<GSDRoad>();
+        int newRoadNumber = (allRoadObj.Length + 1);
 
         //Road:
-        GameObject tRoadObj = new GameObject("Road" + NewRoadNumber.ToString());
-        UnityEditor.Undo.RegisterCreatedObjectUndo(tRoadObj, "Created road");
-        tRoadObj.transform.parent = transform;
-        GSDRoad tRoad = tRoadObj.AddComponent<GSDRoad>();
+        GameObject roadObj = new GameObject("Road" + newRoadNumber.ToString());
+        UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Created road");
+        roadObj.transform.parent = transform;
+        GSDRoad road = roadObj.AddComponent<GSDRoad>();
 
         //Spline:
-        GameObject tSplineObj = new GameObject("Spline");
-        tSplineObj.transform.parent = tRoad.transform;
-        tRoad.spline = tSplineObj.AddComponent<GSDSplineC>();
-        tRoad.spline.mSplineRoot = tSplineObj;
-        tRoad.spline.tRoad = tRoad;
-        tRoad.GSDSplineObj = tSplineObj;
-        tRoad.GSDRS = this;
-        tRoad.SetupUniqueIdentifier();
+        GameObject splineObj = new GameObject("Spline");
+        splineObj.transform.parent = road.transform;
+        road.spline = splineObj.AddComponent<GSDSplineC>();
+        road.spline.mSplineRoot = splineObj;
+        road.spline.tRoad = road;
+        road.GSDSplineObj = splineObj;
+        road.GSDRS = this;
+        road.SetupUniqueIdentifier();
 
-        tRoad.ConstructRoad_ResetTerrainHistory();
+        road.ConstructRoad_ResetTerrainHistory();
 
-        if (bForceSelect)
+        if (_isForceSelected)
         {
-            UnityEditor.Selection.activeGameObject = tRoadObj;
+            UnityEditor.Selection.activeGameObject = roadObj;
         }
 
-        return tRoadObj;
+        return roadObj;
     }
-
-
-    public Camera EditorPlayCamera = null;
 
 
     public void EditorCameraSetSingle()
     {
-        if (EditorPlayCamera == null)
+        if (editorPlayCamera == null)
         {
-            Camera[] EditorCams = (Camera[]) GameObject.FindObjectsOfType(typeof(Camera));
-            if (EditorCams != null && EditorCams.Length == 1)
+            Camera[] editorCams = (Camera[]) GameObject.FindObjectsOfType(typeof(Camera));
+            if (editorCams != null && editorCams.Length == 1)
             {
-                EditorPlayCamera = EditorCams[0];
+                editorPlayCamera = editorCams[0];
             }
         }
     }
@@ -63,61 +65,58 @@ public class GSDRoadSystem : MonoBehaviour
 
     public void UpdateAllRoads()
     {
-        GSDRoad[] tRoadObjs = GetComponentsInChildren<GSDRoad>();
-        //		int i=0;
-
-        int RoadCount = tRoadObjs.Length;
-
-        GSDRoad tRoad = null;
-        GSDSplineC[] tPiggys = null;
-        if (RoadCount > 1)
+        GSDRoad[] allRoadObjs = GetComponentsInChildren<GSDRoad>();
+        int roadCount = allRoadObjs.Length;
+        GSDRoad road = null;
+        GSDSplineC[] piggys = null;
+        if (roadCount > 1)
         {
-            tPiggys = new GSDSplineC[RoadCount];
-            for (int h = 0; h < RoadCount; h++)
+            piggys = new GSDSplineC[roadCount];
+            for (int i = 0; i < roadCount; i++)
             {
-                tRoad = tRoadObjs[h];
-                tPiggys[h] = tRoad.spline;
+                road = allRoadObjs[i];
+                piggys[i] = road.spline;
             }
         }
 
-        tRoad = tRoadObjs[0];
-        if (tPiggys != null && tPiggys.Length > 0)
+        road = allRoadObjs[0];
+        if (piggys != null && piggys.Length > 0)
         {
-            tRoad.PiggyBacks = tPiggys;
+            road.PiggyBacks = piggys;
         }
-        tRoad.UpdateRoad();
+        road.UpdateRoad();
     }
 
 
     //Workaround for submission rules:
-    public void UpdateAllRoads_MultiThreadOptions()
+    public void UpdateAllRoadsMultiThreadedOption()
     {
-        GSDRoad[] tRoadObjs = (GSDRoad[]) GetComponentsInChildren<GSDRoad>();
-        int RoadCount = tRoadObjs.Length;
-        GSDRoad tRoad = null;
-        for (int h = 0; h < RoadCount; h++)
+        GSDRoad[] allRoadObjs = (GSDRoad[]) GetComponentsInChildren<GSDRoad>();
+        int roadCount = allRoadObjs.Length;
+        GSDRoad road = null;
+        for (int i = 0; i < roadCount; i++)
         {
-            tRoad = tRoadObjs[h];
-            if (tRoad != null)
+            road = allRoadObjs[i];
+            if (road != null)
             {
-                tRoad.isUsingMultithreading = opt_bMultithreading;
+                road.isUsingMultithreading = isMultithreaded;
             }
         }
     }
 
 
     //Workaround for submission rules:
-    public void UpdateAllRoads_SaveMeshesAsAssetsOptions()
+    public void UpdateAllRoadsSavingMeshesOption()
     {
-        GSDRoad[] tRoadObjs = (GSDRoad[]) GetComponentsInChildren<GSDRoad>();
-        int RoadCount = tRoadObjs.Length;
-        GSDRoad tRoad = null;
-        for (int h = 0; h < RoadCount; h++)
+        GSDRoad[] allRoadObjs = (GSDRoad[]) GetComponentsInChildren<GSDRoad>();
+        int roadsCount = allRoadObjs.Length;
+        GSDRoad road = null;
+        for (int i = 0; i < roadsCount; i++)
         {
-            tRoad = tRoadObjs[h];
-            if (tRoad != null)
+            road = allRoadObjs[i];
+            if (road != null)
             {
-                tRoad.isSavingMeshes = opt_bSaveMeshes;
+                road.isSavingMeshes = isSavingMeshes;
             }
         }
     }

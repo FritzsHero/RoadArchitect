@@ -10,39 +10,44 @@ public class GSDTerrain : MonoBehaviour
 #if UNITY_EDITOR
     [SerializeField]
     [HideInInspector]
-    private int mGSDID = -1;
+    [UnityEngine.Serialization.FormerlySerializedAs("mGSDID")]
+    private int uID = -1;
 
-    public int GSDID
-    {
-        get { return mGSDID; }
-        set
-        {
-            //Do nothing.
-        }
-    }
+    public int UID { get { return uID; } }
 
     [HideInInspector]
-    public Terrain tTerrain;
+    [UnityEngine.Serialization.FormerlySerializedAs("tTerrain")]
+    public Terrain terrain;
 
     //Splat map:
-    public int SplatResoWidth = 1024;
-    public int SplatResoHeight = 1024;
-    public Color SplatBackground = new Color(0f, 0f, 0f, 1f);
-    public Color SplatForeground = new Color(1f, 1f, 1f, 1f);
-    public float SplatWidth = 30f;
-    public bool SplatSkipBridges = false;
-    public bool SplatSkipTunnels = false;
-    public bool SplatSingleRoad = false;
-    public int SplatSingleChoiceIndex = 0;
-    public string RoadSingleChoiceUID = "";
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatResoWidth")]
+    public int splatResoWidth = 1024;
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatResoHeight")]
+    public int splatResoHeight = 1024;
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatBackground")]
+    public Color splatBackground = new Color(0f, 0f, 0f, 1f);
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatForeground")]
+    public Color splatForeground = new Color(1f, 1f, 1f, 1f);
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatWidth")]
+    public float splatWidth = 30f;
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatSkipBridges")]
+    public bool isSplatSkipBridges = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatSkipTunnels")]
+    public bool isSplatSkipTunnels = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatSingleRoad")]
+    public bool isSplatSingleRoad = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("SplatSingleChoiceIndex")]
+    public int splatSingleChoiceIndex = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("RoadSingleChoiceUID")]
+    public string roadSingleChoiceUID = "";
 
 
     private void OnEnable()
     {
         CheckID();
-        if (!tTerrain)
+        if (!terrain)
         {
-            tTerrain = transform.gameObject.GetComponent<Terrain>();
+            terrain = transform.gameObject.GetComponent<Terrain>();
         }
     }
 
@@ -51,13 +56,13 @@ public class GSDTerrain : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            if (mGSDID < 0)
+            if (uID < 0)
             {
-                mGSDID = GetNewID();
+                uID = GetNewID();
             }
-            if (!tTerrain)
+            if (!terrain)
             {
-                tTerrain = transform.gameObject.GetComponent<Terrain>();
+                terrain = transform.gameObject.GetComponent<Terrain>();
             }
         }
     }
@@ -65,34 +70,34 @@ public class GSDTerrain : MonoBehaviour
 
     private int GetNewID()
     {
-        Object[] tTerrainObjs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
-        List<int> AllIDS = new List<int>();
-        foreach (GSDTerrain TID in tTerrainObjs)
+        Object[] allTerrainObjs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
+        List<int> allIDS = new List<int>();
+        foreach (GSDTerrain Terrain in allTerrainObjs)
         {
-            if (TID.GSDID > 0)
+            if (Terrain.UID > 0)
             {
-                AllIDS.Add(TID.GSDID);
+                allIDS.Add(Terrain.UID);
             }
         }
 
-        bool bNotDone = true;
-        int SpamChecker = 0;
-        int SpamCheckerMax = AllIDS.Count + 64;
-        int tRand;
-        while (bNotDone)
+        bool isNotDone = true;
+        int spamChecker = 0;
+        int spamCheckerMax = allIDS.Count + 64;
+        int random;
+        while (isNotDone)
         {
-            if (SpamChecker > SpamCheckerMax)
+            if (spamChecker > spamCheckerMax)
             {
                 Debug.LogError("Failed to generate GSDTerrainID");
                 break;
             }
-            tRand = Random.Range(1, 2000000000);
-            if (!AllIDS.Contains(tRand))
+            random = Random.Range(1, 2000000000);
+            if (!allIDS.Contains(random))
             {
-                bNotDone = false;
-                return tRand;
+                isNotDone = false;
+                return random;
             }
-            SpamChecker += 1;
+            spamChecker += 1;
         }
 
         return -1;
@@ -105,9 +110,9 @@ public class GSDTerrain : MonoBehaviour
 #if UNITY_EDITOR
         this.enabled = true;
         CheckID();
-        if (!tTerrain)
+        if (!terrain)
         {
-            tTerrain = transform.gameObject.GetComponent<Terrain>();
+            terrain = transform.gameObject.GetComponent<Terrain>();
         }
 #else
 		this.enabled = false;

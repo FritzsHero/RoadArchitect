@@ -12,15 +12,11 @@ public class GSDRoadSystemEditor : Editor
     protected GSDRoadSystem GSDRS { get { return (GSDRoadSystem) target; } }
 
     //Serialized properties:
-    [UnityEngine.Serialization.FormerlySerializedAs("bTempMultithreading")]
     private SerializedProperty isTempMultithreading;
-    [UnityEngine.Serialization.FormerlySerializedAs("bTempSaveMeshAssets")]
     private SerializedProperty isTempSaveMeshAssets;
 
     //Editor only variables:
-    [UnityEngine.Serialization.FormerlySerializedAs("bUpdateGlobal_Multithread")]
     private bool isUpdateGlobalMultithread = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("bUpdateGlobal_SaveMesh")]
     private bool isUpdateGlobalSaveMesh = false;
 
     //	//Editor only camera variables:
@@ -47,8 +43,8 @@ public class GSDRoadSystemEditor : Editor
 
     private void OnEnable()
     {
-        isTempMultithreading = serializedObject.FindProperty("opt_bMultithreading");
-        isTempSaveMeshAssets = serializedObject.FindProperty("opt_bSaveMeshes");
+        isTempMultithreading = serializedObject.FindProperty("isMultithreaded");
+        isTempSaveMeshAssets = serializedObject.FindProperty("isSavingMeshes");
     }
 
 
@@ -76,19 +72,19 @@ public class GSDRoadSystemEditor : Editor
         }
 
         //Multi-threading input:
-        isTempMultithreading.boolValue = EditorGUILayout.Toggle("Multi-threading enabled", GSDRS.opt_bMultithreading);
-        if (isTempMultithreading.boolValue != GSDRS.opt_bMultithreading)
+        isTempMultithreading.boolValue = EditorGUILayout.Toggle("Multi-threading enabled", GSDRS.isMultithreaded);
+        if (isTempMultithreading.boolValue != GSDRS.isMultithreaded)
         {
             isUpdateGlobalMultithread = true;
         }
 
         //Save mesh assets input:
-        isTempSaveMeshAssets.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", GSDRS.opt_bSaveMeshes);
-        if (isTempSaveMeshAssets.boolValue != GSDRS.opt_bSaveMeshes)
+        isTempSaveMeshAssets.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", GSDRS.isSavingMeshes);
+        if (isTempSaveMeshAssets.boolValue != GSDRS.isSavingMeshes)
         {
             isUpdateGlobalSaveMesh = true;
         }
-        if (GSDRS.opt_bSaveMeshes || isTempSaveMeshAssets.boolValue)
+        if (GSDRS.isSavingMeshes || isTempSaveMeshAssets.boolValue)
         {
             GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", WarningLabelStyle);
         }
@@ -108,7 +104,7 @@ public class GSDRoadSystemEditor : Editor
             Application.OpenURL(GSD.Roads.GSDRoadUtilityEditor.GetRoadArchitectApplicationPath() + "/RoadArchitectManual.htm");
         }
 
-        if (GSDRS.EditorPlayCamera == null)
+        if (GSDRS.editorPlayCamera == null)
         {
             GSDRS.EditorCameraSetSingle();
         }
@@ -135,13 +131,13 @@ public class GSDRoadSystemEditor : Editor
             //Multithreading global change:
             if (isUpdateGlobalMultithread)
             {
-                GSDRS.UpdateAllRoads_MultiThreadOptions();
+                GSDRS.UpdateAllRoadsMultiThreadedOption();
             }
 
             //Save mesh assets global change:
             if (isUpdateGlobalSaveMesh)
             {
-                GSDRS.UpdateAllRoads_SaveMeshesAsAssetsOptions();
+                GSDRS.UpdateAllRoadsSavingMeshesOption();
             }
         }
     }

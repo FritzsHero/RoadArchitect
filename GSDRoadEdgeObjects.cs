@@ -12,171 +12,225 @@ namespace GSD.Roads.EdgeObjects
     [System.Serializable]
     public class EdgeObjectMaker
     {
-        public bool bNeedsUpdate = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bNeedsUpdate")]
+        public bool isRequiringUpdate = false;
         public string UID = "";
-        public GSDSplineN tNode = null;
-        public bool bIsGSD = false;
-        public GameObject EdgeObject = null;
-        public string EdgeObjectString = "";
-        public bool bMaterialOverride = false;
-        public Material EdgeMaterial1 = null;
-        public Material EdgeMaterial2 = null;
-        public string EdgeMaterial1String = null;
-        public string EdgeMaterial2String = null;
-        public bool bMatchTerrain = true;
-
+        [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
+        public GSDSplineN node = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
+        public bool isGSD = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObject")]
+        public GameObject edgeObject = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectString")]
+        public string edgeObjectString = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
+        public bool isMaterialOverriden = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1")]
+        public Material edgeMaterial1 = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2")]
+        public Material edgeMaterial2 = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1String")]
+        public string edgeMaterial1String = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2String")]
+        public string edgeMaterial2String = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
+        public bool isMatchingTerrain = true;
 
         //Temp editor buffers:
-        public bool bEdgeSignLabelInit = false;
-        public bool bEdgeSignLabel = false;
-        public string EdgeSignLabel = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("bEdgeSignLabelInit")]
+        public bool isEdgeSignLabelInit = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bEdgeSignLabel")]
+        public bool isEdgeSignLabel = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeSignLabel")]
+        public string edgeSignLabel = "";
 
-
-        public bool bCombineMesh = false;
-        public bool bCombineMeshCollider = false;
-        public GameObject MasterObj = null;
-        public List<Vector3> EdgeObjectLocations;
-        public List<Vector3> EdgeObjectRotations;
-        public List<GameObject> EdgeObjects;
-        public GSD.Roads.SignPlacementSubTypeEnum SubType = GSD.Roads.SignPlacementSubTypeEnum.Right;
-        public float MeterSep = 5f;
-        public bool bToggle = false;
-        public bool bIsBridge = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bCombineMesh")]
+        public bool isCombinedMesh = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bCombineMeshCollider")]
+        public bool isCombinedMeshCollider = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("MasterObj")]
+        public GameObject masterObject = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectLocations")]
+        public List<Vector3> edgeObjectLocations;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
+        public List<Vector3> edgeObjectRotations;
+        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjects")]
+        public List<GameObject> edgeObjects;
+        [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
+        public GSD.Roads.SignPlacementSubTypeEnum subType = GSD.Roads.SignPlacementSubTypeEnum.Right;
+        [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
+        public float meterSep = 5f;
+        [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
+        public bool isToggled = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
+        public bool isBridge = false;
 
 
         #region "Horizontal offsets"
-        public float HorizontalSep = 5f;
-        public AnimationCurve HorizontalCurve;
-        public float HorizCurve_tempchecker1 = 0f;
-        public float HorizCurve_tempchecker2 = 0f;
-        public float HorizCurve_tempchecker3 = 0f;
-        public float HorizCurve_tempchecker4 = 0f;
-        public float HorizCurve_tempchecker5 = 0f;
-        public float HorizCurve_tempchecker6 = 0f;
-        public float HorizCurve_tempchecker7 = 0f;
-        public float HorizCurve_tempchecker8 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
+        public float horizontalSep = 5f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
+        public AnimationCurve horizontalCurve;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker1")]
+        public float horizCurveTempChecker1 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker2")]
+        public float horizCurveTempChecker2 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker3")]
+        public float horizCurveTempChecker3 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker4")]
+        public float horizCurveTempChecker4 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker5")]
+        public float horizCurveTempChecker5 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker6")]
+        public float horizCurveTempChecker6 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker7")]
+        public float horizCurveTempChecker7 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker8")]
+        public float horizCurveTempChecker8 = 0f;
         #endregion
 
 
         #region "Vertical offsets"
-        public float VerticalRaise = 0f;
-        public AnimationCurve VerticalCurve;
-        public float VerticalCurve_tempchecker1 = 0f;
-        public float VerticalCurve_tempchecker2 = 0f;
-        public float VerticalCurve_tempchecker3 = 0f;
-        public float VerticalCurve_tempchecker4 = 0f;
-        public float VerticalCurve_tempchecker5 = 0f;
-        public float VerticalCurve_tempchecker6 = 0f;
-        public float VerticalCurve_tempchecker7 = 0f;
-        public float VerticalCurve_tempchecker8 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
+        public float verticalRaise = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
+        public AnimationCurve verticalCurve;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker1")]
+        public float verticalCurveTempChecker1 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker2")]
+        public float verticalCurveTempChecker2 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker3")]
+        public float verticalCurveTempChecker3 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker4")]
+        public float verticalCurveTempChecker4 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker5")]
+        public float verticalCurveTempChecker5 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker6")]
+        public float verticalCurveTempChecker6 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker7")]
+        public float verticalCurveTempChecker7 = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker8")]
+        public float verticalCurveTempChecker8 = 0f;
         #endregion
 
 
         // Custom Rotation
-        public Vector3 CustomRotation = default(Vector3);
-        public bool bOncomingRotation = true;
-
+        [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
+        public Vector3 customRotation = default(Vector3);
+        [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
+        public bool isOncomingRotation = true;
 
         // EdgeObject is static
-        public bool bStatic = true;
-
+        [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
+        public bool isStatic = true;
 
         // The CustomScale of the EdgeObject
-        public Vector3 CustomScale = new Vector3(1f, 1f, 1f);
-
+        [UnityEngine.Serialization.FormerlySerializedAs("CustomScale")]
+        public Vector3 customScale = new Vector3(1f, 1f, 1f);
 
         // Start and EndTime
-        public float StartTime = 0f;
-        public float EndTime = 1f;
+        [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
+        public float startTime = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("EndTime")]
+        public float endTime = 1f;
 
-
-        public float SingleOnlyBridgePercent = 0f;
-        public Vector3 StartPos = default(Vector3);
-        public Vector3 EndPos = default(Vector3);
-        public bool bSingle = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("SingleOnlyBridgePercent")]
+        public float singleOnlyBridgePercent = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("StartPos")]
+        public Vector3 startPos = default(Vector3);
+        [UnityEngine.Serialization.FormerlySerializedAs("EndPos")]
+        public Vector3 endPos = default(Vector3);
+        [UnityEngine.Serialization.FormerlySerializedAs("bSingle")]
+        public bool isSingle = false;
 
         // Should it be only on a single position
-        public float SinglePosition;
-
-        public bool bStartMatchRoadDefinition = false;
-        public float StartMatchRoadDef = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("SinglePosition")]
+        public float singlePosition;
+        [UnityEngine.Serialization.FormerlySerializedAs("bStartMatchRoadDefinition")]
+        public bool isStartMatchRoadDefinition = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("StartMatchRoadDef")]
+        public float startMatchRoadDef = 0f;
 
         // EdgeObjectName
-        public string tName = "EdgeObject";
-        public string ThumbString = "";
-        public string Desc = "";
-        public string DisplayName = "";
-
-        public EdgeObjectEditorMaker EM;
+        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+        public string objectName = "EdgeObject";
+        [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
+        public string thumbString = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
+        public string desc = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
+        public string displayName = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("EM")]
+        public EdgeObjectEditorMaker edgeMaker;
 
 
         public EdgeObjectMaker Copy()
         {
             EdgeObjectMaker EOM = new EdgeObjectMaker();
 
-            EOM.EdgeObjectString = EdgeObjectString;
+            EOM.edgeObjectString = edgeObjectString;
 #if UNITY_EDITOR
-            EOM.EdgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EdgeObjectString, typeof(GameObject));
+            EOM.edgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
 #endif
-            EOM.bIsGSD = bIsGSD;
+            EOM.isGSD = isGSD;
 
-            EOM.bCombineMesh = bCombineMesh;
-            EOM.bCombineMeshCollider = bCombineMeshCollider;
-            EOM.SubType = SubType;
-            EOM.MeterSep = MeterSep;
-            EOM.bToggle = bToggle;
-            EOM.bMatchTerrain = bMatchTerrain;
+            EOM.isCombinedMesh = isCombinedMesh;
+            EOM.isCombinedMeshCollider = isCombinedMeshCollider;
+            EOM.subType = subType;
+            EOM.meterSep = meterSep;
+            EOM.isToggled = isToggled;
+            EOM.isMatchingTerrain = isMatchingTerrain;
 
-            EOM.bMaterialOverride = bMaterialOverride;
-            EOM.EdgeMaterial1 = EdgeMaterial1;
-            EOM.EdgeMaterial2 = EdgeMaterial2;
+            EOM.isMaterialOverriden = isMaterialOverriden;
+            EOM.edgeMaterial1 = edgeMaterial1;
+            EOM.edgeMaterial2 = edgeMaterial2;
 
-            EOM.MasterObj = MasterObj;
-            EOM.EdgeObjectLocations = EdgeObjectLocations;
-            EOM.EdgeObjectRotations = EdgeObjectRotations;
-            EOM.tNode = tNode;
-            EOM.StartTime = StartTime;
-            EOM.EndTime = EndTime;
-            EOM.StartPos = StartPos;
-            EOM.EndPos = EndPos;
-            EOM.SingleOnlyBridgePercent = SingleOnlyBridgePercent;
-            EOM.bIsBridge = bIsBridge;
+            EOM.masterObject = masterObject;
+            EOM.edgeObjectLocations = edgeObjectLocations;
+            EOM.edgeObjectRotations = edgeObjectRotations;
+            EOM.node = node;
+            EOM.startTime = startTime;
+            EOM.endTime = endTime;
+            EOM.startPos = startPos;
+            EOM.endPos = endPos;
+            EOM.singleOnlyBridgePercent = singleOnlyBridgePercent;
+            EOM.isBridge = isBridge;
 
-            EOM.HorizontalSep = HorizontalSep;
-            EOM.HorizontalCurve = new AnimationCurve();
-            if (HorizontalCurve != null && HorizontalCurve.keys.Length > 0)
+            EOM.horizontalSep = horizontalSep;
+            EOM.horizontalCurve = new AnimationCurve();
+            if (horizontalCurve != null && horizontalCurve.keys.Length > 0)
             {
-                for (int i = 0; i < HorizontalCurve.keys.Length; i++)
+                for (int i = 0; i < horizontalCurve.keys.Length; i++)
                 {
-                    EOM.HorizontalCurve.AddKey(HorizontalCurve.keys[i]);
+                    EOM.horizontalCurve.AddKey(horizontalCurve.keys[i]);
                 }
             }
 
-            EOM.VerticalRaise = VerticalRaise;
-            EOM.VerticalCurve = new AnimationCurve();
-            if (VerticalCurve != null && VerticalCurve.keys.Length > 0)
+            EOM.verticalRaise = verticalRaise;
+            EOM.verticalCurve = new AnimationCurve();
+            if (verticalCurve != null && verticalCurve.keys.Length > 0)
             {
-                for (int index = 0; index < VerticalCurve.keys.Length; index++)
+                for (int index = 0; index < verticalCurve.keys.Length; index++)
                 {
-                    EOM.VerticalCurve.AddKey(VerticalCurve.keys[index]);
+                    EOM.verticalCurve.AddKey(verticalCurve.keys[index]);
                 }
             }
 
-            EOM.CustomRotation = CustomRotation;
-            EOM.bOncomingRotation = bOncomingRotation;
-            EOM.bStatic = bStatic;
-            EOM.bSingle = bSingle;
-            EOM.SinglePosition = SinglePosition;
+            EOM.customRotation = customRotation;
+            EOM.isOncomingRotation = isOncomingRotation;
+            EOM.isStatic = isStatic;
+            EOM.isSingle = isSingle;
+            EOM.singlePosition = singlePosition;
 
-            EOM.bStartMatchRoadDefinition = bStartMatchRoadDefinition;
-            EOM.StartMatchRoadDef = StartMatchRoadDef;
+            EOM.isStartMatchRoadDefinition = isStartMatchRoadDefinition;
+            EOM.startMatchRoadDef = startMatchRoadDef;
 
             EOM.SetupUniqueIdentifier();
 
-            EOM.tName = tName;
-            EOM.ThumbString = ThumbString;
-            EOM.Desc = Desc;
-            EOM.DisplayName = DisplayName;
+            EOM.objectName = objectName;
+            EOM.thumbString = thumbString;
+            EOM.desc = desc;
+            EOM.displayName = displayName;
 
             return EOM;
         }
@@ -184,9 +238,8 @@ namespace GSD.Roads.EdgeObjects
 
         public void UpdatePositions()
         {
-            StartPos = tNode.GSDSpline.GetSplineValue(StartTime);
-            EndPos = tNode.GSDSpline.GetSplineValue(EndTime);     // FH EXPERIMENTAL fix for NodeEdgeObjectPlacement?
-            // This does not affect the 1f = -0.0001f bug
+            startPos = node.GSDSpline.GetSplineValue(startTime);
+            endPos = node.GSDSpline.GetSplineValue(endTime);
         }
 
 
@@ -200,73 +253,73 @@ namespace GSD.Roads.EdgeObjects
         }
 
 
-        public void SaveToLibrary(string fName = "", bool bIsDefault = false)
+        public void SaveToLibrary(string _fileName = "", bool _isDefault = false)
         {
-            EdgeObjectLibraryMaker ELM = new EdgeObjectLibraryMaker();
-            ELM.Setup(this);
-            GSDRootUtil.Dir_GetLibrary_CheckSpecialDirs();
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            string tPath = xPath + "EOM" + tName + ".gsd";
-            if (fName.Length > 0)
+            EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
+            EOLM.Setup(this);
+            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            string xPath = GSDRootUtil.GetDirLibrary();
+            string tPath = xPath + "EOM" + objectName + ".gsd";
+            if (_fileName.Length > 0)
             {
-                if (bIsDefault)
+                if (_isDefault)
                 {
-                    tPath = xPath + "Q/EOM" + fName + ".gsd";
+                    tPath = xPath + "Q/EOM" + _fileName + ".gsd";
                 }
                 else
                 {
-                    tPath = xPath + "EOM" + fName + ".gsd";
+                    tPath = xPath + "EOM" + _fileName + ".gsd";
                 }
             }
-            GSDRootUtil.CreateXML<EdgeObjectLibraryMaker>(ref tPath, ELM);
+            GSDRootUtil.CreateXML<EdgeObjectLibraryMaker>(ref tPath, EOLM);
         }
 
 
-        public void LoadFromLibrary(string xName, bool bIsQuickAdd = false)
+        public void LoadFromLibrary(string _fileName, bool _isQuickAdd = false)
         {
-            GSDRootUtil.Dir_GetLibrary_CheckSpecialDirs();
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            string tPath = xPath + "EOM" + xName + ".gsd";
-            if (bIsQuickAdd)
+            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            string xPath = GSDRootUtil.GetDirLibrary();
+            string tPath = xPath + "EOM" + _fileName + ".gsd";
+            if (_isQuickAdd)
             {
-                tPath = xPath + "Q/EOM" + xName + ".gsd";
+                tPath = xPath + "Q/EOM" + _fileName + ".gsd";
             }
             EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadXML<EdgeObjectLibraryMaker>(ref tPath);
             ELM.LoadTo(this);
-            bNeedsUpdate = true;
+            isRequiringUpdate = true;
         }
 
 
-        public void LoadFromLibraryWizard(string xName)
+        public void LoadFromLibraryWizard(string _fileName)
         {
-            GSDRootUtil.Dir_GetLibrary_CheckSpecialDirs();
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            string tPath = xPath + "W/" + xName + ".gsd";
+            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            string xPath = GSDRootUtil.GetDirLibrary();
+            string tPath = xPath + "W/" + _fileName + ".gsd";
             EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadXML<EdgeObjectLibraryMaker>(ref tPath);
             ELM.LoadTo(this);
-            bNeedsUpdate = true;
+            isRequiringUpdate = true;
         }
 
 
         public string ConvertToString()
         {
-            EdgeObjectLibraryMaker ELM = new EdgeObjectLibraryMaker();
-            ELM.Setup(this);
-            return GSDRootUtil.GetString<EdgeObjectLibraryMaker>(ELM);
+            EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
+            EOLM.Setup(this);
+            return GSDRootUtil.GetString<EdgeObjectLibraryMaker>(EOLM);
         }
 
 
-        public void LoadFromLibraryBulk(ref EdgeObjectLibraryMaker ELM)
+        public void LoadFromLibraryBulk(ref EdgeObjectLibraryMaker _EOLM)
         {
-            ELM.LoadTo(this);
+            _EOLM.LoadTo(this);
         }
 
 
-        public static EdgeObjectLibraryMaker ELMFromData(string tData)
+        public static EdgeObjectLibraryMaker ELMFromData(string _data)
         {
             try
             {
-                EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadData<EdgeObjectLibraryMaker>(ref tData);
+                EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadData<EdgeObjectLibraryMaker>(ref _data);
                 return ELM;
             }
             catch
@@ -276,7 +329,7 @@ namespace GSD.Roads.EdgeObjects
         }
 
 
-        public static void GetLibraryFiles(out string[] tNames, out string[] tPaths, bool bIsDefault = false)
+        public static void GetLibraryFiles(out string[] _names, out string[] _paths, bool _isDefault = false)
         {
 #if UNITY_WEBPLAYER
 			tNames = null;
@@ -284,11 +337,11 @@ namespace GSD.Roads.EdgeObjects
 			return;
 #else
 
-            tNames = null;
-            tPaths = null;
+            _names = null;
+            _paths = null;
             DirectoryInfo info;
-            string xPath = GSDRootUtil.Dir_GetLibrary();
-            if (bIsDefault)
+            string xPath = GSDRootUtil.GetDirLibrary();
+            if (_isDefault)
             {
                 info = new DirectoryInfo(xPath + "Q/");
             }
@@ -297,63 +350,63 @@ namespace GSD.Roads.EdgeObjects
                 info = new DirectoryInfo(xPath);
             }
 
-            FileInfo[] fileInfo = info.GetFiles();
-            int tCount = 0;
+            FileInfo[] fileInfos = info.GetFiles();
+            int count = 0;
 
 
-            foreach (FileInfo tInfo in fileInfo)
+            foreach (FileInfo tInfo in fileInfos)
             {
                 if (tInfo.Name.Contains("EOM") && tInfo.Extension.ToLower().Contains("gsd"))
                 {
-                    tCount += 1;
+                    count += 1;
                 }
             }
 
-            tNames = new string[tCount];
-            tPaths = new string[tCount];
-            tCount = 0;
-            foreach (FileInfo tInfo in fileInfo)
+            _names = new string[count];
+            _paths = new string[count];
+            count = 0;
+            foreach (FileInfo fileInfo in fileInfos)
             {
-                if (tInfo.Name.Contains("EOM") && tInfo.Extension.ToLower().Contains("gsd"))
+                if (fileInfo.Name.Contains("EOM") && fileInfo.Extension.ToLower().Contains("gsd"))
                 {
-                    tNames[tCount] = tInfo.Name.Replace(".gsd", "").Replace("EOM", "");
-                    tPaths[tCount] = tInfo.FullName;
-                    tCount += 1;
+                    _names[count] = fileInfo.Name.Replace(".gsd", "").Replace("EOM", "");
+                    _paths[count] = fileInfo.FullName;
+                    count += 1;
                 }
             }
 #endif
         }
 
 
-        private void SaveMesh(Mesh tMesh, bool bIsCollider)
+        private void SaveMesh(Mesh _mesh, bool _isCollider)
         {
 #if UNITY_EDITOR
-            if (!tNode.GSDSpline.tRoad.GSDRS.opt_bSaveMeshes)
+            if (!node.GSDSpline.tRoad.GSDRS.isSavingMeshes)
             {
                 return;
             }
 
             //string tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string tSceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+            string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
 
 
-            tSceneName = tSceneName.Replace("/", "");
-            tSceneName = tSceneName.Replace(".", "");
-            string tFolderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
-            string tRoadName = tNode.GSDSpline.tRoad.transform.name;
-            string FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + ".asset";
-            if (bIsCollider)
+            sceneName = sceneName.Replace("/", "");
+            sceneName = sceneName.Replace(".", "");
+            string folderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
+            string roadName = node.GSDSpline.tRoad.transform.name;
+            string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
+            if (_isCollider)
             {
-                FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + "-collider.asset";
+                finalName = folderName + sceneName + "-" + roadName + "-" + objectName + "-collider.asset";
             }
 
-            string xPath = Application.dataPath.Replace("/Assets", "/" + tFolderName);
-            if (!System.IO.Directory.Exists(xPath))
+            string path = Application.dataPath.Replace("/Assets", "/" + folderName);
+            if (!System.IO.Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(xPath);
+                System.IO.Directory.CreateDirectory(path);
             }
 
-            UnityEditor.AssetDatabase.CreateAsset(tMesh, FinalName);
+            UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             UnityEditor.AssetDatabase.SaveAssets();
 #endif
         }
@@ -363,128 +416,160 @@ namespace GSD.Roads.EdgeObjects
         [System.Serializable]
         public class EdgeObjectLibraryMaker
         {
-            public string EdgeObjectString = "";
-            public bool bCombineMesh = false;
-            public bool bCombineMeshCollider = false;
-            public List<Vector3> EdgeObjectLocations;
-            public List<Vector3> EdgeObjectRotations;
-            public GSD.Roads.SignPlacementSubTypeEnum SubType = GSD.Roads.SignPlacementSubTypeEnum.Right;
-            public float MeterSep = 5f;
-            public bool bToggle = false;
-            public bool bIsBridge = false;
-            public bool bIsGSD = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectString")]
+            public string edgeObjectString = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("bCombineMesh")]
+            public bool isCombinedMesh = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCombineMeshCollider")]
+            public bool isCombinedMeshCollider = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectLocations")]
+            public List<Vector3> edgeObjectLocations;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
+            public List<Vector3> edgeObjectRotations;
+            [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
+            public GSD.Roads.SignPlacementSubTypeEnum subType = GSD.Roads.SignPlacementSubTypeEnum.Right;
+            [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
+            public float meterSep = 5f;
+            [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
+            public bool isToggled = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
+            public bool isBridge = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
+            public bool isGSD = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
+            public bool isOncomingRotation = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
+            public bool isStatic = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
+            public bool isMatchingTerrain = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bSingle")]
+            public bool isSingle = false;
 
-            public bool bMaterialOverride = false;
-            public string EdgeMaterial1String = "";
-            public string EdgeMaterial2String = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
+            public bool isMaterialOverriden = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1String")]
+            public string edgeMaterial1String = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2String")]
+            public string edgeMaterial2String = "";
 
             //Horizontal offsets:
-            public float HorizontalSep = 5f;
-            public AnimationCurve HorizontalCurve;
+            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
+            public float horizontalSep = 5f;
+            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
+            public AnimationCurve horizontalCurve;
             //Vertical offsets:
-            public float VerticalRaise = 0f;
-            public AnimationCurve VerticalCurve;
+            [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
+            public float verticalRaise = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
+            public AnimationCurve verticalCurve;
 
-            public Vector3 CustomRotation = default(Vector3);
-            public bool bOncomingRotation = true;
-            public bool bStatic = true;
-            public bool bMatchTerrain = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
+            public Vector3 customRotation = default(Vector3);
 
-            public float StartTime = 0f;
-            public float EndTime = 1f;
-            public float SingleOnlyBridgePercent = 0f;
-            public bool bSingle = false;
-            public float SinglePosition;
+            [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
+            public float startTime = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("EndTime")]
+            public float endTime = 1f;
+            [UnityEngine.Serialization.FormerlySerializedAs("SingleOnlyBridgePercent")]
+            public float singleOnlyBridgePercent = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("SinglePosition")]
+            public float singlePosition;
 
-            public bool bStartMatchRoadDefinition = false;
-            public float StartMatchRoadDef = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStartMatchRoadDefinition")]
+            public bool isStartMatchingRoadDefinition = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("StartMatchRoadDef")]
+            public float startMatchRoadDef = 0f;
 
-            public string tName = "EdgeObject";
-            public string ThumbString = "";
-            public string Desc = "";
-            public string DisplayName = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+            public string objectName = "EdgeObject";
+            [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
+            public string thumbString = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
+            public string desc = "";
+            [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
+            public string displayName = "";
 
 
-            public void Setup(EdgeObjectMaker EOM)
+            public void Setup(EdgeObjectMaker _EOM)
             {
-                EdgeObjectString = EOM.EdgeObjectString;
-                bCombineMesh = EOM.bCombineMesh;
-                bCombineMeshCollider = EOM.bCombineMeshCollider;
+                edgeObjectString = _EOM.edgeObjectString;
+                isCombinedMesh = _EOM.isCombinedMesh;
+                isCombinedMeshCollider = _EOM.isCombinedMeshCollider;
                 //GSD.Roads.SignPlacementSubTypeEnum SubType = EOM.SubType;
-                MeterSep = EOM.MeterSep;
-                bToggle = EOM.bToggle;
-                bIsGSD = EOM.bIsGSD;
+                meterSep = _EOM.meterSep;
+                isToggled = _EOM.isToggled;
+                isGSD = _EOM.isGSD;
 
-                bMaterialOverride = EOM.bMaterialOverride;
-                EdgeMaterial1String = EOM.EdgeMaterial1String;
-                EdgeMaterial2String = EOM.EdgeMaterial2String;
+                isMaterialOverriden = _EOM.isMaterialOverriden;
+                edgeMaterial1String = _EOM.edgeMaterial1String;
+                edgeMaterial2String = _EOM.edgeMaterial2String;
 
-                HorizontalSep = EOM.HorizontalSep;
-                HorizontalCurve = EOM.HorizontalCurve;
-                VerticalRaise = EOM.VerticalRaise;
-                VerticalCurve = EOM.VerticalCurve;
-                bMatchTerrain = EOM.bMatchTerrain;
+                horizontalSep = _EOM.horizontalSep;
+                horizontalCurve = _EOM.horizontalCurve;
+                verticalRaise = _EOM.verticalRaise;
+                verticalCurve = _EOM.verticalCurve;
+                isMatchingTerrain = _EOM.isMatchingTerrain;
 
-                CustomRotation = EOM.CustomRotation;
-                bOncomingRotation = EOM.bOncomingRotation;
-                bStatic = EOM.bStatic;
-                bSingle = EOM.bSingle;
-                SinglePosition = EOM.SinglePosition;
-                tName = EOM.tName;
-                SingleOnlyBridgePercent = EOM.SingleOnlyBridgePercent;
-                bStartMatchRoadDefinition = EOM.bStartMatchRoadDefinition;
-                StartMatchRoadDef = EOM.StartMatchRoadDef;
-                ThumbString = EOM.ThumbString;
-                Desc = EOM.Desc;
-                bIsBridge = EOM.bIsBridge;
-                DisplayName = EOM.DisplayName;
+                customRotation = _EOM.customRotation;
+                isOncomingRotation = _EOM.isOncomingRotation;
+                isStatic = _EOM.isStatic;
+                isSingle = _EOM.isSingle;
+                singlePosition = _EOM.singlePosition;
+                objectName = _EOM.objectName;
+                singleOnlyBridgePercent = _EOM.singleOnlyBridgePercent;
+                isStartMatchingRoadDefinition = _EOM.isStartMatchRoadDefinition;
+                startMatchRoadDef = _EOM.startMatchRoadDef;
+                thumbString = _EOM.thumbString;
+                desc = _EOM.desc;
+                isBridge = _EOM.isBridge;
+                displayName = _EOM.displayName;
             }
 
 
-            public void LoadTo(EdgeObjectMaker EOM)
+            public void LoadTo(EdgeObjectMaker _EOM)
             {
-                EOM.EdgeObjectString = EdgeObjectString;
+                _EOM.edgeObjectString = edgeObjectString;
 #if UNITY_EDITOR
-                EOM.EdgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EdgeObjectString, typeof(GameObject));
+                _EOM.edgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
 #endif
-                EOM.bMaterialOverride = bMaterialOverride;
+                _EOM.isMaterialOverriden = isMaterialOverriden;
 #if UNITY_EDITOR
-                if (EdgeMaterial1String.Length > 0)
+                if (edgeMaterial1String.Length > 0)
                 {
-                    EOM.EdgeMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(EdgeMaterial1String, typeof(Material));
+                    _EOM.edgeMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeMaterial1String, typeof(Material));
                 }
-                if (EdgeMaterial2String.Length > 0)
+                if (edgeMaterial2String.Length > 0)
                 {
-                    EOM.EdgeMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(EdgeMaterial2String, typeof(Material));
+                    _EOM.edgeMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeMaterial2String, typeof(Material));
                 }
 #endif
 
-                EOM.bCombineMesh = bCombineMesh;
-                EOM.bCombineMeshCollider = bCombineMeshCollider;
-                EOM.SubType = SubType;
-                EOM.MeterSep = MeterSep;
-                EOM.bToggle = bToggle;
-                EOM.bIsGSD = bIsGSD;
+                _EOM.isCombinedMesh = isCombinedMesh;
+                _EOM.isCombinedMeshCollider = isCombinedMeshCollider;
+                _EOM.subType = subType;
+                _EOM.meterSep = meterSep;
+                _EOM.isToggled = isToggled;
+                _EOM.isGSD = isGSD;
 
-                EOM.HorizontalSep = HorizontalSep;
-                EOM.HorizontalCurve = HorizontalCurve;
-                EOM.VerticalRaise = VerticalRaise;
-                EOM.VerticalCurve = VerticalCurve;
-                EOM.bMatchTerrain = bMatchTerrain;
+                _EOM.horizontalSep = horizontalSep;
+                _EOM.horizontalCurve = horizontalCurve;
+                _EOM.verticalRaise = verticalRaise;
+                _EOM.verticalCurve = verticalCurve;
+                _EOM.isMatchingTerrain = isMatchingTerrain;
 
-                EOM.CustomRotation = CustomRotation;
-                EOM.bOncomingRotation = bOncomingRotation;
-                EOM.bStatic = bStatic;
-                EOM.bSingle = bSingle;
-                EOM.SinglePosition = SinglePosition;
-                EOM.tName = tName;
-                EOM.SingleOnlyBridgePercent = SingleOnlyBridgePercent;
-                EOM.bStartMatchRoadDefinition = bStartMatchRoadDefinition;
-                EOM.StartMatchRoadDef = StartMatchRoadDef;
-                EOM.ThumbString = ThumbString;
-                EOM.Desc = Desc;
-                EOM.bIsBridge = bIsBridge;
-                EOM.DisplayName = DisplayName;
+                _EOM.customRotation = customRotation;
+                _EOM.isOncomingRotation = isOncomingRotation;
+                _EOM.isStatic = isStatic;
+                _EOM.isSingle = isSingle;
+                _EOM.singlePosition = singlePosition;
+                _EOM.objectName = objectName;
+                _EOM.singleOnlyBridgePercent = singleOnlyBridgePercent;
+                _EOM.isStartMatchRoadDefinition = isStartMatchingRoadDefinition;
+                _EOM.startMatchRoadDef = startMatchRoadDef;
+                _EOM.thumbString = thumbString;
+                _EOM.desc = desc;
+                _EOM.isBridge = isBridge;
+                _EOM.displayName = displayName;
             }
         }
         #endregion
@@ -494,255 +579,285 @@ namespace GSD.Roads.EdgeObjects
 
         public class EdgeObjectEditorMaker
         {
-            public GameObject EdgeObject = null;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObject")]
+            public GameObject edgeObject = null;
 
             // Should we combine the Mesh?
-            public bool bCombineMesh = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCombineMesh")]
+            public bool isCombinedMesh = false;
 
             // Should it also combine the Colliders
-            public bool bCombineMeshCollider = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bCombineMeshCollider")]
+            public bool isCombinedMeshCollider = false;
 
             // Seems to be a List with all Locations for the EdgeObjects
-            public List<Vector3> EdgeObjectLocations;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectLocations")]
+            public List<Vector3> edgeObjectLocations;
             // Seems to be a List with all Rotations for the EdgeObjects
-            public List<Vector3> EdgeObjectRotations;
-            public GSD.Roads.SignPlacementSubTypeEnum SubType = GSD.Roads.SignPlacementSubTypeEnum.Right;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
+            public List<Vector3> edgeObjectRotations;
+            [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
+            public GSD.Roads.SignPlacementSubTypeEnum subType = GSD.Roads.SignPlacementSubTypeEnum.Right;
 
             // Sounds like Speration
-            public float MeterSep = 5f;
+            [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
+            public float meterSep = 5f;
 
             // A Toggle for? for What?
-            public bool bToggle = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
+            public bool isToggled = false;
 
             // Is it Bridge? I think?
-            public bool bIsBridge = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
+            public bool isBridge = false;
 
             // ??
-            public bool bIsGSD = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
+            public bool isGSD = false;
 
             // Materials of EdgeObject
-            public bool bMaterialOverride = false;
-            public Material EdgeMaterial1;
-            public Material EdgeMaterial2;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
+            public bool isMaterialOverriden = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1")]
+            public Material edgeMaterial1;
+            [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2")]
+            public Material edgeMaterial2;
 
             //Horizontal offsets:
-            public float HorizontalSep = 5f;
-            public AnimationCurve HorizontalCurve;
+            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
+            public float horizontalSep = 5f;
+            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
+            public AnimationCurve horizontalCurve;
             //Vertical offsets:
-            public float VerticalRaise = 0f;
-            public AnimationCurve VerticalCurve;
+            [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
+            public float verticalRaise = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
+            public AnimationCurve verticalCurve;
 
-            public Vector3 CustomRotation = default(Vector3);
-            public bool bOncomingRotation = true;
-            public bool bStatic = true;
-            public bool bMatchTerrain = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
+            public bool isOncomingRotation = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
+            public bool isStatic = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
+            public bool isMatchingTerrain = true;
 
-            public Vector3 CustomScale = new Vector3(1f, 1f, 1f);
+            [UnityEngine.Serialization.FormerlySerializedAs("CustomScale")]
+            public Vector3 customScale = new Vector3(1f, 1f, 1f);
+            [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
+            public Vector3 customRotation = default(Vector3);
 
             // Start and EndTime
-            public float StartTime = 0f;
-            public float EndTime = 1f;
+            [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
+            public float startTime = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("EndTime")]
+            public float endTime = 1f;
 
-            public float SingleOnlyBridgePercent = 0f;
-            public bool bSingle = false;
-            public float SinglePosition;
-            public string tName;
+            [UnityEngine.Serialization.FormerlySerializedAs("SingleOnlyBridgePercent")]
+            public float singleOnlyBridgePercent = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("bSingle")]
+            public bool isSingle = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("SinglePosition")]
+            public float singlePosition;
+            [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+            public string objectName;
 
-            public bool bStartMatchRoadDefinition = false;
-            public float StartMatchRoadDef = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("bStartMatchRoadDefinition")]
+            public bool isStartMatchingRoadDefinition = false;
+            [UnityEngine.Serialization.FormerlySerializedAs("StartMatchRoadDef")]
+            public float startMatchRoadDef = 0f;
 
 
-            public void Setup(EdgeObjectMaker EOM)
+            public void Setup(EdgeObjectMaker _EOM)
             {
-                EdgeObject = EOM.EdgeObject;
-                bCombineMesh = EOM.bCombineMesh;
-                bCombineMeshCollider = EOM.bCombineMeshCollider;
-                MeterSep = EOM.MeterSep;
-                bToggle = EOM.bToggle;
+                edgeObject = _EOM.edgeObject;
+                isCombinedMesh = _EOM.isCombinedMesh;
+                isCombinedMeshCollider = _EOM.isCombinedMeshCollider;
+                meterSep = _EOM.meterSep;
+                isToggled = _EOM.isToggled;
 
-                bMaterialOverride = EOM.bMaterialOverride;
-                EdgeMaterial1 = EOM.EdgeMaterial1;
-                EdgeMaterial2 = EOM.EdgeMaterial2;
+                isMaterialOverriden = _EOM.isMaterialOverriden;
+                edgeMaterial1 = _EOM.edgeMaterial1;
+                edgeMaterial2 = _EOM.edgeMaterial2;
 
                 // Horizontal
-                HorizontalSep = EOM.HorizontalSep;
-                HorizontalCurve = EOM.HorizontalCurve;
+                horizontalSep = _EOM.horizontalSep;
+                horizontalCurve = _EOM.horizontalCurve;
 
                 // Vertical
-                VerticalRaise = EOM.VerticalRaise;
-                VerticalCurve = EOM.VerticalCurve;
+                verticalRaise = _EOM.verticalRaise;
+                verticalCurve = _EOM.verticalCurve;
 
-                bMatchTerrain = EOM.bMatchTerrain;
+                isMatchingTerrain = _EOM.isMatchingTerrain;
 
                 // Rotation
-                CustomRotation = EOM.CustomRotation;
-                bOncomingRotation = EOM.bOncomingRotation;
+                customRotation = _EOM.customRotation;
+                isOncomingRotation = _EOM.isOncomingRotation;
 
-                CustomScale = EOM.CustomScale;
-                bStatic = EOM.bStatic;
+                customScale = _EOM.customScale;
+                isStatic = _EOM.isStatic;
 
                 // Is it Single and if yes Position
-                bSingle = EOM.bSingle;
-                SinglePosition = EOM.SinglePosition;
+                isSingle = _EOM.isSingle;
+                singlePosition = _EOM.singlePosition;
 
                 // Name of EdgeObject??
-                tName = EOM.tName;
+                objectName = _EOM.objectName;
 
                 // Start and EndTime of EdgeObject
-                StartTime = EOM.StartTime;
-                EndTime = EOM.EndTime;
+                startTime = _EOM.startTime;
+                endTime = _EOM.endTime;
 
-                SingleOnlyBridgePercent = EOM.SingleOnlyBridgePercent;
-                bStartMatchRoadDefinition = EOM.bStartMatchRoadDefinition;
-                StartMatchRoadDef = EOM.StartMatchRoadDef;
+                singleOnlyBridgePercent = _EOM.singleOnlyBridgePercent;
+                isStartMatchingRoadDefinition = _EOM.isStartMatchRoadDefinition;
+                startMatchRoadDef = _EOM.startMatchRoadDef;
             }
 
 
-            public void LoadTo(EdgeObjectMaker EOM)
+            public void LoadTo(EdgeObjectMaker _EOM)
             {
-                EOM.EdgeObject = EdgeObject;
-                EOM.bMaterialOverride = bMaterialOverride;
-                EOM.EdgeMaterial1 = EdgeMaterial1;
-                EOM.EdgeMaterial2 = EdgeMaterial2;
+                _EOM.edgeObject = edgeObject;
+                _EOM.isMaterialOverriden = isMaterialOverriden;
+                _EOM.edgeMaterial1 = edgeMaterial1;
+                _EOM.edgeMaterial2 = edgeMaterial2;
 
-                EOM.bCombineMesh = bCombineMesh;
-                EOM.bCombineMeshCollider = bCombineMeshCollider;
-                EOM.SubType = SubType;
-                EOM.MeterSep = MeterSep;
-                EOM.bToggle = bToggle;
+                _EOM.isCombinedMesh = isCombinedMesh;
+                _EOM.isCombinedMeshCollider = isCombinedMeshCollider;
+                _EOM.subType = subType;
+                _EOM.meterSep = meterSep;
+                _EOM.isToggled = isToggled;
 
-                EOM.HorizontalSep = HorizontalSep;
-                EOM.HorizontalCurve = HorizontalCurve;
-                EOM.VerticalRaise = VerticalRaise;
-                EOM.VerticalCurve = VerticalCurve;
-                EOM.bMatchTerrain = bMatchTerrain;
+                _EOM.horizontalSep = horizontalSep;
+                _EOM.horizontalCurve = horizontalCurve;
+                _EOM.verticalRaise = verticalRaise;
+                _EOM.verticalCurve = verticalCurve;
+                _EOM.isMatchingTerrain = isMatchingTerrain;
 
-                EOM.CustomRotation = CustomRotation;
-                EOM.CustomScale = CustomScale;
-                EOM.bOncomingRotation = bOncomingRotation;
-                EOM.bStatic = bStatic;
-                EOM.bSingle = bSingle;
-
-
-                EOM.StartTime = StartTime;
-                EOM.EndTime = EndTime;
+                _EOM.customRotation = customRotation;
+                _EOM.customScale = customScale;
+                _EOM.isOncomingRotation = isOncomingRotation;
+                _EOM.isStatic = isStatic;
+                _EOM.isSingle = isSingle;
 
 
-                EOM.SinglePosition = SinglePosition;
+                _EOM.startTime = startTime;
+                _EOM.endTime = endTime;
 
 
-                EOM.tName = tName;
-                EOM.SingleOnlyBridgePercent = SingleOnlyBridgePercent;
-                EOM.bStartMatchRoadDefinition = bStartMatchRoadDefinition;
-                EOM.StartMatchRoadDef = StartMatchRoadDef;
+                _EOM.singlePosition = singlePosition;
+
+
+                _EOM.objectName = objectName;
+                _EOM.singleOnlyBridgePercent = singleOnlyBridgePercent;
+                _EOM.isStartMatchRoadDefinition = isStartMatchingRoadDefinition;
+                _EOM.startMatchRoadDef = startMatchRoadDef;
             }
 
 
-            public bool IsEqual(EdgeObjectMaker EOM)
+            public bool IsEqual(EdgeObjectMaker _EOM)
             {
-                if (EOM.EdgeObject != EdgeObject)
+                if (_EOM.edgeObject != edgeObject)
                 {
                     return false;
                 }
-                if (EOM.bMaterialOverride != bMaterialOverride)
+                if (_EOM.isMaterialOverriden != isMaterialOverriden)
                 {
                     return false;
                 }
-                if (EOM.EdgeMaterial1 != EdgeMaterial1)
+                if (_EOM.edgeMaterial1 != edgeMaterial1)
                 {
                     return false;
                 }
-                if (EOM.EdgeMaterial2 != EdgeMaterial2)
+                if (_EOM.edgeMaterial2 != edgeMaterial2)
                 {
                     return false;
                 }
 
-                if (EOM.bCombineMesh != bCombineMesh)
+                if (_EOM.isCombinedMesh != isCombinedMesh)
                 {
                     return false;
                 }
-                if (EOM.bCombineMeshCollider != bCombineMeshCollider)
+                if (_EOM.isCombinedMeshCollider != isCombinedMeshCollider)
                 {
                     return false;
                 }
-                if (EOM.SubType != SubType)
+                if (_EOM.subType != subType)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.MeterSep, MeterSep, 0.001f))
+                if (!GSDRootUtil.IsApproximately(_EOM.meterSep, meterSep, 0.001f))
                 {
                     return false;
                 }
                 //				if(EOM.bToggle != bToggle)
                 //              { return false; }
 
-                if (!GSDRootUtil.IsApproximately(EOM.HorizontalSep, HorizontalSep, 0.001f))
+                if (!GSDRootUtil.IsApproximately(_EOM.horizontalSep, horizontalSep, 0.001f))
                 {
                     return false;
                 }
-                if (EOM.HorizontalCurve != HorizontalCurve)
+                if (_EOM.horizontalCurve != horizontalCurve)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.VerticalRaise, VerticalRaise, 0.001f))
+                if (!GSDRootUtil.IsApproximately(_EOM.verticalRaise, verticalRaise, 0.001f))
                 {
                     return false;
                 }
-                if (EOM.VerticalCurve != VerticalCurve)
+                if (_EOM.verticalCurve != verticalCurve)
                 {
                     return false;
                 }
-                if (EOM.bMatchTerrain != bMatchTerrain)
-                {
-                    return false;
-                }
-
-                if (EOM.CustomRotation != CustomRotation)
-                {
-                    return false;
-                }
-                if (EOM.CustomScale != CustomScale)
-                {
-                    return false;
-                }
-                if (EOM.bOncomingRotation != bOncomingRotation)
-                {
-                    return false;
-                }
-                if (EOM.bStatic != bStatic)
-                {
-                    return false;
-                }
-                if (EOM.bSingle != bSingle)
+                if (_EOM.isMatchingTerrain != isMatchingTerrain)
                 {
                     return false;
                 }
 
-                if (!GSDRootUtil.IsApproximately(EOM.SinglePosition, SinglePosition, 0.001f))
+                if (_EOM.customRotation != customRotation)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.StartTime, StartTime, 0.001f))
+                if (_EOM.customScale != customScale)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.EndTime, EndTime, 0.001f))
+                if (_EOM.isOncomingRotation != isOncomingRotation)
                 {
                     return false;
                 }
-                if (EOM.tName != tName)
+                if (_EOM.isStatic != isStatic)
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.SingleOnlyBridgePercent, SingleOnlyBridgePercent, 0.001f))
+                if (_EOM.isSingle != isSingle)
                 {
                     return false;
                 }
-                if (EOM.bStartMatchRoadDefinition != bStartMatchRoadDefinition)
+
+                if (!GSDRootUtil.IsApproximately(_EOM.singlePosition, singlePosition, 0.001f))
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.StartMatchRoadDef, StartMatchRoadDef, 0.001f))
+                if (!GSDRootUtil.IsApproximately(_EOM.startTime, startTime, 0.001f))
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_EOM.endTime, endTime, 0.001f))
+                {
+                    return false;
+                }
+                if (_EOM.objectName != objectName)
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_EOM.singleOnlyBridgePercent, singleOnlyBridgePercent, 0.001f))
+                {
+                    return false;
+                }
+                if (_EOM.isStartMatchRoadDefinition != isStartMatchingRoadDefinition)
+                {
+                    return false;
+                }
+                if (!GSDRootUtil.IsApproximately(_EOM.startMatchRoadDef, startMatchRoadDef, 0.001f))
                 {
                     return false;
                 }
@@ -753,24 +868,24 @@ namespace GSD.Roads.EdgeObjects
 
 
         #region "Setup and processing"
-        public void Setup(bool bCollect = true)
+        public void Setup(bool _isCollecting = true)
         {
 #if UNITY_EDITOR
-            List<GameObject> tErrorObjs = new List<GameObject>();
+            List<GameObject> errorObjs = new List<GameObject>();
             try
             {
-                Setup_Do(bCollect, ref tErrorObjs);
+                Setup_Do(_isCollecting, ref errorObjs);
             }
             catch (System.Exception exception)
             {
-                if (tErrorObjs != null && tErrorObjs.Count > 0)
+                if (errorObjs != null && errorObjs.Count > 0)
                 {
-                    int tCount = tErrorObjs.Count;
-                    for (int index = 0; index < tCount; index++)
+                    int objCount = errorObjs.Count;
+                    for (int index = 0; index < objCount; index++)
                     {
-                        if (tErrorObjs[index] != null)
+                        if (errorObjs[index] != null)
                         {
-                            Object.DestroyImmediate(tErrorObjs[index]);
+                            Object.DestroyImmediate(errorObjs[index]);
                         }
                     }
                     throw exception;
@@ -780,93 +895,93 @@ namespace GSD.Roads.EdgeObjects
         }
 
 
-        private void Setup_Do(bool bCollect, ref List<GameObject> tErrorObjs)
+        private void Setup_Do(bool _isCollecting, ref List<GameObject> _errorObjs)
         {
 #if UNITY_EDITOR
-            if (EdgeObjects == null)
+            if (edgeObjects == null)
             {
-                EdgeObjects = new List<GameObject>();
+                edgeObjects = new List<GameObject>();
             }
-            if (HorizontalCurve == null)
+            if (horizontalCurve == null)
             {
-                HorizontalCurve = new AnimationCurve();
-                HorizontalCurve.AddKey(0f, 1f);
-                HorizontalCurve.AddKey(1f, 1f);
+                horizontalCurve = new AnimationCurve();
+                horizontalCurve.AddKey(0f, 1f);
+                horizontalCurve.AddKey(1f, 1f);
             }
-            if (VerticalCurve == null)
+            if (verticalCurve == null)
             {
-                VerticalCurve = new AnimationCurve();
-                VerticalCurve.AddKey(0f, 1f);
-                VerticalCurve.AddKey(1f, 1f);
+                verticalCurve = new AnimationCurve();
+                verticalCurve.AddKey(0f, 1f);
+                verticalCurve.AddKey(1f, 1f);
             }
 
             SetupUniqueIdentifier();
 
             SetupLocations();
 
-            EdgeObjectString = GSDRootUtil.GetPrefabString(EdgeObject);
-            if (EdgeMaterial1 != null)
+            edgeObjectString = GSDRootUtil.GetPrefabString(edgeObject);
+            if (edgeMaterial1 != null)
             {
-                EdgeMaterial1String = UnityEditor.AssetDatabase.GetAssetPath(EdgeMaterial1);
+                edgeMaterial1String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial1);
             }
-            if (EdgeMaterial2 != null)
+            if (edgeMaterial2 != null)
             {
-                EdgeMaterial2String = UnityEditor.AssetDatabase.GetAssetPath(EdgeMaterial2);
+                edgeMaterial2String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial2);
             }
-            EdgeObjects = new List<GameObject>();
+            edgeObjects = new List<GameObject>();
 
             Quaternion xRot = default(Quaternion);
             xRot = Quaternion.identity;
-            xRot.eulerAngles = CustomRotation;
-            int lCount = EdgeObjectLocations.Count;
-            //			Quaternion OrigRot = Quaternion.identity;
+            xRot.eulerAngles = customRotation;
+            int lCount = edgeObjectLocations.Count;
+            //Quaternion OrigRot = Quaternion.identity;
 
             Material[] tMats = null;
             GameObject tObj = null;
 
-            if (EdgeObject != null)
+            if (edgeObject != null)
             {
-                GameObject mObj = new GameObject(EdgeObject.name);
-                MasterObj = mObj;
-                tErrorObjs.Add(MasterObj);
-                mObj.transform.position = tNode.transform.position;
-                mObj.transform.parent = tNode.transform;
-                mObj.name = tName;
-                MeshRenderer OrigMR = EdgeObject.GetComponent<MeshRenderer>();
+                GameObject mObj = new GameObject(edgeObject.name);
+                masterObject = mObj;
+                _errorObjs.Add(masterObject);
+                mObj.transform.position = node.transform.position;
+                mObj.transform.parent = node.transform;
+                mObj.name = objectName;
+                MeshRenderer OrigMR = edgeObject.GetComponent<MeshRenderer>();
                 for (int j = 0; j < lCount; j++)
                 {
-                    if (EdgeObjectRotations[j] == default(Vector3))
+                    if (edgeObjectRotations[j] == default(Vector3))
                     {
                         // Line to instantiate the object instead of an prefab
                         //tObj = GameObject.Instantiate(EdgeObject);
                         // Instantiate prefab instead of object
-                        tObj = (GameObject) UnityEditor.PrefabUtility.InstantiatePrefab(EdgeObject);
-                        tErrorObjs.Add(tObj);
-                        tObj.transform.position = EdgeObjectLocations[j];
+                        tObj = (GameObject) UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
+                        _errorObjs.Add(tObj);
+                        tObj.transform.position = edgeObjectLocations[j];
                     }
                     else
                     {
                         // Line to instantiate the object instead of an prefab
                         //tObj = GameObject.Instantiate(EdgeObject, EdgeObjectLocations[j], Quaternion.LookRotation(EdgeObjectRotations[j]));
                         // Instantiate prefab instead of object
-                        tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(EdgeObject);
-                        tObj.transform.position = EdgeObjectLocations[j];
-                        tObj.transform.rotation = Quaternion.LookRotation(EdgeObjectRotations[j]);
-                        tErrorObjs.Add(tObj);
+                        tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
+                        tObj.transform.position = edgeObjectLocations[j];
+                        tObj.transform.rotation = Quaternion.LookRotation(edgeObjectRotations[j]);
+                        _errorObjs.Add(tObj);
                     }
                     //OrigRot = tObj.transform.rotation;
                     tObj.transform.rotation *= xRot;
-                    tObj.transform.localScale = CustomScale;
-                    if (bOncomingRotation && SubType == GSD.Roads.SignPlacementSubTypeEnum.Left)
+                    tObj.transform.localScale = customScale;
+                    if (isOncomingRotation && subType == GSD.Roads.SignPlacementSubTypeEnum.Left)
                     {
                         Quaternion tRot = new Quaternion(0f, 0f, 0f, 0f);
                         tRot = Quaternion.identity;
                         tRot.eulerAngles = new Vector3(0f, 180f, 0f);
                         tObj.transform.rotation *= tRot;
                     }
-                    tObj.isStatic = bStatic;
+                    tObj.isStatic = isStatic;
                     tObj.transform.parent = mObj.transform;
-                    EdgeObjects.Add(tObj);
+                    edgeObjects.Add(tObj);
 
                     MeshRenderer NewMR = tObj.GetComponent<MeshRenderer>();
                     if (NewMR == null)
@@ -874,24 +989,24 @@ namespace GSD.Roads.EdgeObjects
                         NewMR = tObj.AddComponent<MeshRenderer>();
                     }
 
-                    if (!bMaterialOverride && OrigMR != null && OrigMR.sharedMaterials.Length > 0 && NewMR != null)
+                    if (!isMaterialOverriden && OrigMR != null && OrigMR.sharedMaterials.Length > 0 && NewMR != null)
                     {
                         NewMR.sharedMaterials = OrigMR.sharedMaterials;
                     }
                     else
                     {
-                        if (EdgeMaterial1 != null)
+                        if (edgeMaterial1 != null)
                         {
-                            if (EdgeMaterial2 != null)
+                            if (edgeMaterial2 != null)
                             {
                                 tMats = new Material[2];
-                                tMats[0] = EdgeMaterial1;
-                                tMats[1] = EdgeMaterial2;
+                                tMats[0] = edgeMaterial1;
+                                tMats[1] = edgeMaterial2;
                             }
                             else
                             {
                                 tMats = new Material[1];
-                                tMats[0] = EdgeMaterial1;
+                                tMats[0] = edgeMaterial1;
                             }
                             NewMR.sharedMaterials = tMats;
                         }
@@ -899,32 +1014,32 @@ namespace GSD.Roads.EdgeObjects
                 }
             }
 
-            lCount = EdgeObjects.Count;
-            if (lCount > 1 && bCombineMesh)
+            lCount = edgeObjects.Count;
+            if (lCount > 1 && isCombinedMesh)
             {
                 Material[] tMat = null;
                 Mesh xMeshBuffer = null;
-                xMeshBuffer = EdgeObject.GetComponent<MeshFilter>().sharedMesh;
-                if (bMaterialOverride)
+                xMeshBuffer = edgeObject.GetComponent<MeshFilter>().sharedMesh;
+                if (isMaterialOverriden)
                 {
-                    if (EdgeMaterial1 != null)
+                    if (edgeMaterial1 != null)
                     {
-                        if (EdgeMaterial2 != null)
+                        if (edgeMaterial2 != null)
                         {
                             tMat = new Material[2];
-                            tMat[0] = EdgeMaterial1;
-                            tMat[1] = EdgeMaterial2;
+                            tMat[0] = edgeMaterial1;
+                            tMat[1] = edgeMaterial2;
                         }
                         else
                         {
                             tMat = new Material[1];
-                            tMat[0] = EdgeMaterial1;
+                            tMat[0] = edgeMaterial1;
                         }
                     }
                 }
                 else
                 {
-                    tMat = EdgeObject.GetComponent<MeshRenderer>().sharedMaterials;
+                    tMat = edgeObject.GetComponent<MeshRenderer>().sharedMaterials;
                 }
 
                 Vector3[] kVerts = xMeshBuffer.vertices;
@@ -941,7 +1056,7 @@ namespace GSD.Roads.EdgeObjects
                 Transform tTrans;
                 for (int j = 0; j < lCount; j++)
                 {
-                    tTrans = EdgeObjects[j].transform;
+                    tTrans = edgeObjects[j].transform;
                     hVerts.Add(new Vector3[OrigMVL]);
                     hTris.Add(new int[OrigTriCount]);
                     hUV.Add(new Vector2[OrigMVL]);
@@ -962,15 +1077,15 @@ namespace GSD.Roads.EdgeObjects
                     }
                 }
 
-                GameObject xObj = new GameObject(tName);
+                GameObject xObj = new GameObject(objectName);
                 MeshRenderer MR = xObj.GetComponent<MeshRenderer>();
                 if (MR == null)
                 {
                     MR = xObj.AddComponent<MeshRenderer>();
                 }
-                xObj.isStatic = bStatic;
-                xObj.transform.parent = MasterObj.transform;
-                tErrorObjs.Add(xObj);
+                xObj.isStatic = isStatic;
+                xObj.transform.parent = masterObject.transform;
+                _errorObjs.Add(xObj);
                 xObj.transform.name = xObj.transform.name + "Combined";
                 xObj.transform.name = xObj.transform.name.Replace("(Clone)", "");
                 MeshFilter MF = xObj.GetComponent<MeshFilter>();
@@ -978,25 +1093,25 @@ namespace GSD.Roads.EdgeObjects
                 {
                     MF = xObj.AddComponent<MeshFilter>();
                 }
-                MF.sharedMesh = GSDCombineMeshes(ref hVerts, ref hTris, ref hUV, OrigMVL, OrigTriCount);
+                MF.sharedMesh = CombineMeshes(ref hVerts, ref hTris, ref hUV, OrigMVL, OrigTriCount);
                 MeshCollider MC = xObj.GetComponent<MeshCollider>();
                 if (MC == null)
                 {
                     MC = xObj.AddComponent<MeshCollider>();
                 }
-                xObj.transform.position = tNode.transform.position;
+                xObj.transform.position = node.transform.position;
                 xObj.transform.rotation = Quaternion.identity;
 
                 for (int j = (lCount - 1); j >= 0; j--)
                 {
-                    Object.DestroyImmediate(EdgeObjects[j]);
+                    Object.DestroyImmediate(edgeObjects[j]);
                 }
-                for (int j = 0; j < EdgeObjects.Count; j++)
+                for (int j = 0; j < edgeObjects.Count; j++)
                 {
-                    EdgeObjects[j] = null;
+                    edgeObjects[j] = null;
                 }
-                EdgeObjects.RemoveRange(0, lCount);
-                EdgeObjects.Add(xObj);
+                edgeObjects.RemoveRange(0, lCount);
+                edgeObjects.Add(xObj);
 
                 if (tMat != null && MR != null)
                 {
@@ -1017,7 +1132,7 @@ namespace GSD.Roads.EdgeObjects
                     spamc += 1;
                 }
 
-                if (bCombineMeshCollider)
+                if (isCombinedMeshCollider)
                 {
                     if (MC == null)
                     {
@@ -1034,7 +1149,7 @@ namespace GSD.Roads.EdgeObjects
                     }
                 }
 
-                if (tNode.GSDSpline.tRoad.GSDRS.opt_bSaveMeshes && MF != null && bCombineMesh)
+                if (node.GSDSpline.tRoad.GSDRS.isSavingMeshes && MF != null && isCombinedMesh)
                 {
                     SaveMesh(MF.sharedMesh, false);
                     if (MC != null)
@@ -1050,107 +1165,109 @@ namespace GSD.Roads.EdgeObjects
             }
 
             //Zero these out, as they are not needed anymore:
-            if (EdgeObjectLocations != null)
+            if (edgeObjectLocations != null)
             {
-                EdgeObjectLocations.Clear();
-                EdgeObjectLocations = null;
+                edgeObjectLocations.Clear();
+                edgeObjectLocations = null;
             }
-            if (EdgeObjectRotations != null)
+            if (edgeObjectRotations != null)
             {
-                EdgeObjectRotations.Clear();
-                EdgeObjectRotations = null;
+                edgeObjectRotations.Clear();
+                edgeObjectRotations = null;
             }
 
-            if (bCollect)
+            if (_isCollecting)
             {
-                tNode.GSDSpline.tRoad.isTriggeringGC = true;
+                node.GSDSpline.tRoad.isTriggeringGC = true;
             }
 #endif
         }
 
 
-        // FH_Tag Optimizable
         private void SetupLocations()
         {
-            float OrigHeight = 0f;
-            StartTime = tNode.GSDSpline.GetClosestParam(StartPos);
-            EndTime = tNode.GSDSpline.GetClosestParam(EndPos);
+            float origHeight = 0f;
+            startTime = node.GSDSpline.GetClosestParam(startPos);
+            endTime = node.GSDSpline.GetClosestParam(endPos);
 
-            float FakeStartTime = StartTime;
-            if (bStartMatchRoadDefinition)
+            float fakeStartTime = startTime;
+            if (isStartMatchRoadDefinition)
             {
-                int tIndex = tNode.GSDSpline.GetClosestRoadDefIndex(StartTime, false, true);
-                float jTime1 = tNode.GSDSpline.TranslateInverseParamToFloat(tNode.GSDSpline.RoadDefKeysArray[tIndex]);
-                float jTime2 = jTime1;
-                if (tIndex + 1 < tNode.GSDSpline.RoadDefKeysArray.Length)
+                int index = node.GSDSpline.GetClosestRoadDefIndex(startTime, false, true);
+                float time1 = node.GSDSpline.TranslateInverseParamToFloat(node.GSDSpline.RoadDefKeysArray[index]);
+                float time2 = time1;
+                if (index + 1 < node.GSDSpline.RoadDefKeysArray.Length)
                 {
-                    jTime2 = tNode.GSDSpline.TranslateInverseParamToFloat(tNode.GSDSpline.RoadDefKeysArray[tIndex + 1]);
+                    time2 = node.GSDSpline.TranslateInverseParamToFloat(node.GSDSpline.RoadDefKeysArray[index + 1]);
                 }
-                FakeStartTime = jTime1 + ((jTime2 - jTime1) * StartMatchRoadDef);
+                fakeStartTime = time1 + ((time2 - time1) * startMatchRoadDef);
             }
 
 
-            //			int eCount = EdgeObjects.Count;
-            //			Vector3 rVect = default(Vector3);
-            //			Vector3 lVect = default(Vector3);
-            //			float fTimeMax = -1f;
-            int mCount = tNode.GSDSpline.GetNodeCount();
-            if (tNode.idOnSpline >= mCount - 1)
+            //int eCount = EdgeObjects.Count;
+            //Vector3 rVect = default(Vector3);
+            //Vector3 lVect = default(Vector3);
+            //float fTimeMax = -1f;
+            int mCount = node.GSDSpline.GetNodeCount();
+            if (node.idOnSpline >= mCount - 1)
             {
                 return;
             }
-            //			fTimeMax = tNode.GSDSpline.mNodes[tNode.idOnSpline+1].tTime;
-            //			float tStep = -1f;
+            //fTimeMax = tNode.GSDSpline.mNodes[tNode.idOnSpline+1].tTime;
+            //float tStep = -1f;
             Vector3 tVect = default(Vector3);
             Vector3 POS = default(Vector3);
 
 
-            //			tStep = MeterSep/tNode.GSDSpline.distance;
+            //tStep = MeterSep/tNode.GSDSpline.distance;
             //Destroy old objects:
             ClearEOM();
             //Make sure old locs and rots are fresh:
-            if (EdgeObjectLocations != null)
+            if (edgeObjectLocations != null)
             {
-                EdgeObjectLocations.Clear();
-                EdgeObjectLocations = null;
+                edgeObjectLocations.Clear();
+                edgeObjectLocations = null;
             }
-            EdgeObjectLocations = new List<Vector3>();
-            if (EdgeObjectRotations != null)
+            edgeObjectLocations = new List<Vector3>();
+            if (edgeObjectRotations != null)
             {
-                EdgeObjectRotations.Clear();
-                EdgeObjectRotations = null;
+                edgeObjectRotations.Clear();
+                edgeObjectRotations = null;
             }
-            EdgeObjectRotations = new List<Vector3>();
-            bool bIsCenter = GSDRootUtil.IsApproximately(HorizontalSep, 0f, 0.02f);
+            edgeObjectRotations = new List<Vector3>();
+            bool bIsCenter = GSDRootUtil.IsApproximately(horizontalSep, 0f, 0.02f);
 
 
             //Set rotation and locations:
-            //			Vector2 temp2DVect = default(Vector2);
+            //Vector2 temp2DVect = default(Vector2);
             Ray tRay = default(Ray);
             RaycastHit[] tRayHit = null;
             float[] tRayYs = null;
-            if (bSingle)    
+            if (isSingle)    
             {
-                // If the Object is a SingleObject  // FH 03.02.19
+                // If the Object is a SingleObject
 
 
-                tNode.GSDSpline.GetSplineValue_Both(SinglePosition, out tVect, out POS);
-                OrigHeight = tVect.y;
+                node.GSDSpline.GetSplineValue_Both(singlePosition, out tVect, out POS);
+                origHeight = tVect.y;
 
                 //Horizontal offset:
                 if (!bIsCenter)
                 {
-                    //					if(HorizontalSep > 0f){
-                    tVect = (tVect + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
-                    //					}else{
-                    //						tVect = (tVect + new Vector3(HorizontalSep*-POS.normalized.z,0,HorizontalSep*POS.normalized.x));
-                    //					}
+                    //if(HorizontalSep > 0f)
+                    //{
+                    tVect = (tVect + new Vector3(horizontalSep * POS.normalized.z, 0, horizontalSep * -POS.normalized.x));
+                    //}
+                    //else
+                    //{
+                    //  tVect = (tVect + new Vector3(HorizontalSep*-POS.normalized.z,0,HorizontalSep*POS.normalized.x));
+                    //}
                 }
 
 
 
                 //Vertical:
-                if (bMatchTerrain)
+                if (isMatchingTerrain)
                 {
                     tRay = new Ray(tVect + new Vector3(0f, 1f, 0f), Vector3.down);
                     tRayHit = Physics.RaycastAll(tRay);
@@ -1164,45 +1281,46 @@ namespace GSD.Roads.EdgeObjects
                         tVect.y = Mathf.Max(tRayYs);
                     }
                 }
-                tVect.y += VerticalRaise;
+                tVect.y += verticalRaise;
 
-                StartPos = tVect;
-                EndPos = tVect;
+                startPos = tVect;
+                endPos = tVect;
 
                 if (float.IsNaN(tVect.y))
                 {
-                    tVect.y = OrigHeight;
+                    tVect.y = origHeight;
                 }
 
-                EdgeObjectLocations.Add(tVect);
-                EdgeObjectRotations.Add(POS);
+                edgeObjectLocations.Add(tVect);
+                edgeObjectRotations.Add(POS);
             }
             else
             {
-                // If this Object is not marked as a single Object  // FH 03.02.19
+                // If this Object is not marked as a single Object
 
                 //Get the vector series that this mesh is interpolated on:
                 List<float> tTimes = new List<float>();
-                float cTime = FakeStartTime;
+                float cTime = fakeStartTime;
                 tTimes.Add(cTime);
                 int SpamGuard = 5000;
                 int SpamGuardCounter = 0;
-                float pDiffTime = EndTime - FakeStartTime;
+                float pDiffTime = endTime - fakeStartTime;
                 float CurrentH = 0f;
                 float fHeight = 0f;
                 Vector3 xVect = default(Vector3);
-                while (cTime < EndTime && SpamGuardCounter < SpamGuard)
+                while (cTime < endTime && SpamGuardCounter < SpamGuard)
                 {
-                    tNode.GSDSpline.GetSplineValue_Both(cTime, out tVect, out POS);
+                    node.GSDSpline.GetSplineValue_Both(cTime, out tVect, out POS);
 
-                    fHeight = HorizontalCurve.Evaluate((cTime - FakeStartTime) / pDiffTime);
-                    CurrentH = fHeight * HorizontalSep;
+                    fHeight = horizontalCurve.Evaluate((cTime - fakeStartTime) / pDiffTime);
+                    CurrentH = fHeight * horizontalSep;
 
                     // FH 06.02.19
                     // Hoirzontal1:
                     if (CurrentH < 0f)
                     {
-                        CurrentH *= -1f;    // So we get a positiv Number again
+                        // So we get a positiv Number again
+                        CurrentH *= -1f;
                         tVect = (tVect + new Vector3(CurrentH * (-POS.normalized.x + (POS.normalized.y / 2)), 0, CurrentH * (POS.normalized.z + +(POS.normalized.y / 2))));
                         // I implemented the POS.normalized.y value to make sure we get to a value of 1 overall to ensure 50m distance, is this mathematicly correct?? FH 10.02.19
                         // Original: tVect = (tVect + new Vector3(CurrentH * -POS.normalized.z, 0, CurrentH * POS.normalized.x));
@@ -1215,11 +1333,11 @@ namespace GSD.Roads.EdgeObjects
                     }
                     // FH 06.02.19
 
-                    xVect = (POS.normalized * MeterSep) + tVect;
+                    xVect = (POS.normalized * meterSep) + tVect;
 
-                    cTime = tNode.GSDSpline.GetClosestParam(xVect, false, false);
+                    cTime = node.GSDSpline.GetClosestParam(xVect, false, false);
 
-                    if (cTime > EndTime)
+                    if (cTime > endTime)
                     {
                         break;
                     }
@@ -1228,17 +1346,17 @@ namespace GSD.Roads.EdgeObjects
                 }
                 int vSeriesCount = tTimes.Count;
 
-                float mMin = FakeStartTime;
-                float mMax = EndTime;
-                float tPercent = 0;
+                float min = fakeStartTime;
+                float max = endTime;
+                float percent = 0;
                 for (int index = 0; index < vSeriesCount; index++)
                 {
-                    tNode.GSDSpline.GetSplineValue_Both(tTimes[index], out tVect, out POS);
+                    node.GSDSpline.GetSplineValue_Both(tTimes[index], out tVect, out POS);
 
-                    tPercent = ((tTimes[index] - mMin) / (mMax - mMin));
+                    percent = ((tTimes[index] - min) / (max - min));
 
                     //Horiz:
-                    CurrentH = (HorizontalCurve.Evaluate(tPercent) * HorizontalSep);
+                    CurrentH = (horizontalCurve.Evaluate(percent) * horizontalSep);
                     if (CurrentH < 0f)
                     {
                         CurrentH *= -1f;
@@ -1255,7 +1373,7 @@ namespace GSD.Roads.EdgeObjects
                     }
 
                     //Vertical:
-                    if (bMatchTerrain)
+                    if (isMatchingTerrain)
                     {
                         tRay = new Ray(tVect + new Vector3(0f, 1f, 0f), Vector3.down);
                         tRayHit = Physics.RaycastAll(tRay);
@@ -1271,26 +1389,25 @@ namespace GSD.Roads.EdgeObjects
                     }
 
                     // Adds the Height to the Node including the VerticalRaise
-                    tVect.y += (VerticalCurve.Evaluate(tPercent) * VerticalRaise);
+                    tVect.y += (verticalCurve.Evaluate(percent) * verticalRaise);
 
                     // Adds the Vector and the POS to the List of the EdgeObjects, so they can be created
-                    EdgeObjectLocations.Add(tVect);
-                    EdgeObjectRotations.Add(POS);
+                    edgeObjectLocations.Add(tVect);
+                    edgeObjectRotations.Add(POS);
                 }
-                StartPos = tNode.GSDSpline.GetSplineValue(StartTime);
-                EndPos = tNode.GSDSpline.GetSplineValue(EndTime);
+                startPos = node.GSDSpline.GetSplineValue(startTime);
+                endPos = node.GSDSpline.GetSplineValue(endTime);
             }
-            // FH_Tag Optimizable
         }
 
 
         //ref hVerts,ref hTris, ref hNormals, ref hUV, ref hTangents
-        private Mesh GSDCombineMeshes(ref List<Vector3[]> hVerts, ref List<int[]> hTris, ref List<Vector2[]> hUV, int OrigMVL, int OrigTriCount)
+        private Mesh CombineMeshes(ref List<Vector3[]> hVerts, ref List<int[]> hTris, ref List<Vector2[]> hUV, int _origMVL, int _origTriCount)
         {
             int mCount = hVerts.Count;
-            int NewMVL = OrigMVL * mCount;
+            int NewMVL = _origMVL * mCount;
             Vector3[] tVerts = new Vector3[NewMVL];
-            int[] tTris = new int[OrigTriCount * mCount];
+            int[] tTris = new int[_origTriCount * mCount];
             Vector3[] tNormals = new Vector3[NewMVL];
             Vector2[] tUV = new Vector2[NewMVL];
 
@@ -1298,78 +1415,76 @@ namespace GSD.Roads.EdgeObjects
             int CurrentTriIndex = 0;
             for (int j = 0; j < mCount; j++)
             {
-                CurrentMVLIndex = OrigMVL * j;
-                CurrentTriIndex = OrigTriCount * j;
+                CurrentMVLIndex = _origMVL * j;
+                CurrentTriIndex = _origTriCount * j;
 
                 if (j > 0)
                 {
-                    for (int index = 0; index < OrigTriCount; index++)
+                    for (int index = 0; index < _origTriCount; index++)
                     {
                         hTris[j][index] += CurrentMVLIndex;
                     }
                 }
 
-                System.Array.Copy(hVerts[j], 0, tVerts, CurrentMVLIndex, OrigMVL);
-                System.Array.Copy(hTris[j], 0, tTris, CurrentTriIndex, OrigTriCount);
-                System.Array.Copy(hUV[j], 0, tUV, CurrentMVLIndex, OrigMVL);
+                System.Array.Copy(hVerts[j], 0, tVerts, CurrentMVLIndex, _origMVL);
+                System.Array.Copy(hTris[j], 0, tTris, CurrentTriIndex, _origTriCount);
+                System.Array.Copy(hUV[j], 0, tUV, CurrentMVLIndex, _origMVL);
             }
 
-            Mesh tMesh = new Mesh();
-            tMesh.vertices = tVerts;
-            tMesh.triangles = tTris;
-            tMesh.uv = tUV;
-            tMesh.normals = tNormals;
-            tMesh.RecalculateBounds();
-            tMesh.RecalculateNormals();
-            tMesh.tangents = GSDRootUtil.ProcessTangents(tTris, tNormals, tUV, tVerts);
-            return tMesh;
+            Mesh mesh = new Mesh();
+            mesh.vertices = tVerts;
+            mesh.triangles = tTris;
+            mesh.uv = tUV;
+            mesh.normals = tNormals;
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+            mesh.tangents = GSDRootUtil.ProcessTangents(tTris, tNormals, tUV, tVerts);
+            return mesh;
         }
 
 
         public void ClearEOM()
         {
-            if (EdgeObjects != null)
+            if (edgeObjects != null)
             {
-                int hCount = EdgeObjects.Count;
+                int hCount = edgeObjects.Count;
                 for (int h = (hCount - 1); h >= 0; h--)
                 {
-                    if (EdgeObjects[h] != null)
+                    if (edgeObjects[h] != null)
                     {
-                        Object.DestroyImmediate(EdgeObjects[h].transform.gameObject);
+                        Object.DestroyImmediate(edgeObjects[h].transform.gameObject);
                     }
                 }
             }
-            if (MasterObj != null)
+            if (masterObject != null)
             {
-                Object.DestroyImmediate(MasterObj);
+                Object.DestroyImmediate(masterObject);
             }
         }
         #endregion
 
 
-
-        public void SetDefaultTimes(bool bIsEndPoint, float tTime, float tTimeNext, int idOnSpline, float tDist)
+        public void SetDefaultTimes(bool _isEndPoint, float _time, float _timeNext, int _idOnSpline, float _dist)
         {
-            if (!bIsEndPoint)
+            if (!_isEndPoint)
             {
-                StartTime = tTime;
-                EndTime = tTimeNext;
+                startTime = _time;
+                endTime = _timeNext;
             }
             else
             {
-                if (idOnSpline < 2)
+                if (_idOnSpline < 2)
                 {
-                    StartTime = tTime;
-                    EndTime = tTimeNext;
+                    startTime = _time;
+                    endTime = _timeNext;
                 }
                 else
                 {
-                    StartTime = tTime;
-                    EndTime = tTime - (125f / tDist);
+                    startTime = _time;
+                    endTime = _time - (125f / _dist);
                 }
             }
         }
-
     }
 #endif
 }

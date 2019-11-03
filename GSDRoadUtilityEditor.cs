@@ -74,38 +74,38 @@ namespace GSD.Roads
 
 
 #if UNITY_EDITOR
-        public static void SetRoadMaterial(string tPath, MeshRenderer MR, string tPath2 = "")
+        public static void SetRoadMaterial(string _assetPath, MeshRenderer _MR, string _assetPath2 = "")
         {
-            Material tMat2;
+            Material material2;
 
             Material[] tMats;
-            Material tMat = (Material) AssetDatabase.LoadAssetAtPath(tPath, typeof(Material));
-            if (tPath2.Length > 0)
+            Material material = (Material) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(Material));
+            if (_assetPath2.Length > 0)
             {
+                material2 = (Material) AssetDatabase.LoadAssetAtPath(_assetPath2, typeof(Material));
                 tMats = new Material[2];
-                tMats[0] = tMat;
-                tMat2 = (Material) AssetDatabase.LoadAssetAtPath(tPath2, typeof(Material));
-                tMats[1] = tMat2;
+                tMats[0] = material;
+                tMats[1] = material2;
             }
             else
             {
                 tMats = new Material[1];
-                tMats[0] = tMat;
+                tMats[0] = material;
             }
 
-            MR.sharedMaterials = tMats;
+            _MR.sharedMaterials = tMats;
         }
 
 
-        public static Material GiveMaterial(string tPath)
+        public static Material LoadMaterial(string _assetPath)
         {
-            return (Material) AssetDatabase.LoadAssetAtPath(tPath, typeof(Material));
+            return (Material) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(Material));
         }
 
 
-        public static PhysicMaterial GivePhysicsMaterial(string tPath)
+        public static PhysicMaterial LoadPhysicsMaterial(string _assetPath)
         {
-            return (PhysicMaterial) AssetDatabase.LoadAssetAtPath(tPath, typeof(PhysicMaterial));
+            return (PhysicMaterial) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(PhysicMaterial));
         }
 #endif
     }

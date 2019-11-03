@@ -9,45 +9,45 @@ using GSD;
 [CustomEditor(typeof(GSDRoadIntersection))]
 public class GSDRoadIntersectionEditor : Editor
 {
-    protected GSDRoadIntersection tInter { get { return (GSDRoadIntersection) target; } }
+    protected GSDRoadIntersection intersection { get { return (GSDRoadIntersection) target; } }
 
-    private SerializedProperty t_opt_AutoUpdateIntersections;
-    private SerializedProperty t_bDrawGizmo;
-    private SerializedProperty t_bLeftTurnYieldOnGreen;
-    private SerializedProperty t_opt_FixedTime_RegularLightLength;
-    private SerializedProperty t_opt_FixedTime_LeftTurnLightLength;
-    private SerializedProperty t_opt_FixedTime_AllRedLightLength;
-    private SerializedProperty t_opt_FixedTime_YellowLightLength;
-    private SerializedProperty t_bTrafficPoleStreetLight;
-    private SerializedProperty t_bTrafficLightGray;
-    private SerializedProperty t_bRegularPoleAlignment;
-    private SerializedProperty t_bLightsEnabled;
-    private SerializedProperty t_StreetLight_Range;
-    private SerializedProperty t_StreetLight_Intensity;
-    private SerializedProperty t_StreetLight_Color;
-    private SerializedProperty t_ScalingSense;
-    private SerializedProperty t_GradeMod;
-    private SerializedProperty t_bUseDefaultMaterials;
-    private SerializedProperty t_MarkerCenter1;
-    private SerializedProperty t_MarkerCenter2;
-    private SerializedProperty t_MarkerCenter3;
-    private SerializedProperty t_MarkerExt_Stretch1;
-    private SerializedProperty t_MarkerExt_Stretch2;
-    private SerializedProperty t_MarkerExt_Stretch3;
-    private SerializedProperty t_MarkerExt_Tiled1;
-    private SerializedProperty t_MarkerExt_Tiled2;
-    private SerializedProperty t_MarkerExt_Tiled3;
-    private SerializedProperty t_Lane0Mat1;
-    private SerializedProperty t_Lane0Mat2;
-    private SerializedProperty t_Lane1Mat1;
-    private SerializedProperty t_Lane1Mat2;
-    private SerializedProperty t_Lane2Mat1;
-    private SerializedProperty t_Lane2Mat2;
-    private SerializedProperty t_Lane3Mat1;
-    private SerializedProperty t_Lane3Mat2;
-    private SerializedProperty t_rType;
-    private SerializedProperty t_iStopType;
-    private SerializedProperty t_lType;
+    private SerializedProperty isAutoUpdatingIntersection;
+    private SerializedProperty isDrawingGizmo;
+    private SerializedProperty isLeftTurnYieldOnGreen;
+    private SerializedProperty fixedTimeRegularLightLength;
+    private SerializedProperty fixedTimeLeftTurnLightLength;
+    private SerializedProperty fixedTimeAllRedLightLength;
+    private SerializedProperty fixedTimeYellowLightLength;
+    private SerializedProperty isTrafficPoleStreetLight;
+    private SerializedProperty isTrafficLightGray;
+    private SerializedProperty isRegularPoleAlignment;
+    private SerializedProperty isLightsEnabled;
+    private SerializedProperty streetLightRange;
+    private SerializedProperty streetLightIntensity;
+    private SerializedProperty streetLightColor;
+    private SerializedProperty scalingSense;
+    private SerializedProperty gradeMod;
+    private SerializedProperty isUsingDefaultMaterials;
+    private SerializedProperty markerCenter1;
+    private SerializedProperty markerCenter2;
+    private SerializedProperty markerCenter3;
+    private SerializedProperty markerExtStretch1;
+    private SerializedProperty markerExtStretch2;
+    private SerializedProperty markerExtStretch3;
+    private SerializedProperty markerExtTiled1;
+    private SerializedProperty markerExtTiled2;
+    private SerializedProperty markerExtTiled3;
+    private SerializedProperty lane0Mat1;
+    private SerializedProperty lane0Mat2;
+    private SerializedProperty lane1Mat1;
+    private SerializedProperty lane1Mat2;
+    private SerializedProperty lane2Mat1;
+    private SerializedProperty lane2Mat2;
+    private SerializedProperty lane3Mat1;
+    private SerializedProperty lane3Mat2;
+    private SerializedProperty roadType;
+    private SerializedProperty intersectionStopType;
+    private SerializedProperty lightType;
 
 
     #region "Editor only variables"
@@ -110,43 +110,43 @@ public class GSDRoadIntersectionEditor : Editor
 
     private void OnEnable()
     {
-        t_opt_AutoUpdateIntersections = serializedObject.FindProperty("opt_AutoUpdateIntersections");
-        t_bDrawGizmo = serializedObject.FindProperty("bDrawGizmo");
-        t_bLeftTurnYieldOnGreen = serializedObject.FindProperty("bLeftTurnYieldOnGreen");
-        t_opt_FixedTime_RegularLightLength = serializedObject.FindProperty("opt_FixedTime_RegularLightLength");
-        t_opt_FixedTime_LeftTurnLightLength = serializedObject.FindProperty("opt_FixedTime_LeftTurnLightLength");
-        t_opt_FixedTime_AllRedLightLength = serializedObject.FindProperty("opt_FixedTime_AllRedLightLength");
-        t_opt_FixedTime_YellowLightLength = serializedObject.FindProperty("opt_FixedTime_YellowLightLength");
-        t_bTrafficPoleStreetLight = serializedObject.FindProperty("bTrafficPoleStreetLight");
-        t_bTrafficLightGray = serializedObject.FindProperty("bTrafficLightGray");
-        t_bRegularPoleAlignment = serializedObject.FindProperty("bRegularPoleAlignment");
-        t_bLightsEnabled = serializedObject.FindProperty("bLightsEnabled");
-        t_StreetLight_Range = serializedObject.FindProperty("StreetLight_Range");
-        t_StreetLight_Intensity = serializedObject.FindProperty("StreetLight_Intensity");
-        t_StreetLight_Color = serializedObject.FindProperty("StreetLight_Color");
-        t_ScalingSense = serializedObject.FindProperty("ScalingSense");
-        t_GradeMod = serializedObject.FindProperty("GradeMod");
-        t_bUseDefaultMaterials = serializedObject.FindProperty("bUseDefaultMaterials");
-        t_MarkerCenter1 = serializedObject.FindProperty("MarkerCenter1");
-        t_MarkerCenter2 = serializedObject.FindProperty("MarkerCenter2");
-        t_MarkerCenter3 = serializedObject.FindProperty("MarkerCenter3");
-        t_MarkerExt_Stretch1 = serializedObject.FindProperty("MarkerExt_Stretch1");
-        t_MarkerExt_Stretch2 = serializedObject.FindProperty("MarkerExt_Stretch2");
-        t_MarkerExt_Stretch3 = serializedObject.FindProperty("MarkerExt_Stretch3");
-        t_MarkerExt_Tiled1 = serializedObject.FindProperty("MarkerExt_Tiled1");
-        t_MarkerExt_Tiled2 = serializedObject.FindProperty("MarkerExt_Tiled2");
-        t_MarkerExt_Tiled3 = serializedObject.FindProperty("MarkerExt_Tiled3");
-        t_Lane0Mat1 = serializedObject.FindProperty("Lane0Mat1");
-        t_Lane0Mat2 = serializedObject.FindProperty("Lane0Mat2");
-        t_Lane1Mat1 = serializedObject.FindProperty("Lane1Mat1");
-        t_Lane1Mat2 = serializedObject.FindProperty("Lane1Mat2");
-        t_Lane2Mat1 = serializedObject.FindProperty("Lane2Mat1");
-        t_Lane2Mat2 = serializedObject.FindProperty("Lane2Mat2");
-        t_Lane3Mat1 = serializedObject.FindProperty("Lane3Mat1");
-        t_Lane3Mat2 = serializedObject.FindProperty("Lane3Mat2");
-        t_rType = serializedObject.FindProperty("rType");
-        t_iStopType = serializedObject.FindProperty("iStopType");
-        t_lType = serializedObject.FindProperty("lType");
+        isAutoUpdatingIntersection = serializedObject.FindProperty("isAutoUpdatingIntersection");
+        isDrawingGizmo = serializedObject.FindProperty("isDrawingGizmo");
+        isLeftTurnYieldOnGreen = serializedObject.FindProperty("isLeftTurnYieldOnGreen");
+        fixedTimeRegularLightLength = serializedObject.FindProperty("fixedTimeRegularLightLength");
+        fixedTimeLeftTurnLightLength = serializedObject.FindProperty("fixedTimeLeftTurnLightLength");
+        fixedTimeAllRedLightLength = serializedObject.FindProperty("fixedTimeAllRedLightLength");
+        fixedTimeYellowLightLength = serializedObject.FindProperty("fixedTimeYellowLightLength");
+        isTrafficPoleStreetLight = serializedObject.FindProperty("isTrafficPoleStreetLight");
+        isTrafficLightGray = serializedObject.FindProperty("isTrafficLightGray");
+        isRegularPoleAlignment = serializedObject.FindProperty("isRegularPoleAlignment");
+        isLightsEnabled = serializedObject.FindProperty("isLightsEnabled");
+        streetLightRange = serializedObject.FindProperty("streetLightRange");
+        streetLightIntensity = serializedObject.FindProperty("streetLightIntensity");
+        streetLightColor = serializedObject.FindProperty("streetLightColor");
+        scalingSense = serializedObject.FindProperty("scalingSense");
+        gradeMod = serializedObject.FindProperty("gradeMod");
+        isUsingDefaultMaterials = serializedObject.FindProperty("isUsingDefaultMaterials");
+        markerCenter1 = serializedObject.FindProperty("markerCenter1");
+        markerCenter2 = serializedObject.FindProperty("markerCenter2");
+        markerCenter3 = serializedObject.FindProperty("markerCenter3");
+        markerExtStretch1 = serializedObject.FindProperty("markerExtStretch1");
+        markerExtStretch2 = serializedObject.FindProperty("markerExtStretch2");
+        markerExtStretch3 = serializedObject.FindProperty("markerExtStretch3");
+        markerExtTiled1 = serializedObject.FindProperty("markerExtTiled1");
+        markerExtTiled2 = serializedObject.FindProperty("markerExtTiled2");
+        markerExtTiled3 = serializedObject.FindProperty("markerExtTiled3");
+        lane0Mat1 = serializedObject.FindProperty("lane0Mat1");
+        lane0Mat2 = serializedObject.FindProperty("lane0Mat2");
+        lane1Mat1 = serializedObject.FindProperty("lane1Mat1");
+        lane1Mat2 = serializedObject.FindProperty("lane1Mat2");
+        lane2Mat1 = serializedObject.FindProperty("lane2Mat1");
+        lane2Mat2 = serializedObject.FindProperty("lane2Mat2");
+        lane3Mat1 = serializedObject.FindProperty("lane3Mat1");
+        lane3Mat2 = serializedObject.FindProperty("lane3Mat2");
+        roadType = serializedObject.FindProperty("roadType");
+        intersectionStopType = serializedObject.FindProperty("intersectionStopType");
+        lightType = serializedObject.FindProperty("lightType");
     }
 
 
@@ -173,10 +173,10 @@ public class GSDRoadIntersectionEditor : Editor
         RAEditorUtilitys.Line();
         EditorGUILayout.BeginHorizontal();
         {
-            GSDRoad road1 = tInter.Node1.GSDSpline.transform.parent.GetComponent<GSDRoad>();
-            GSDRoad road2 = tInter.Node2.GSDSpline.transform.parent.GetComponent<GSDRoad>();
-            EditorGUILayout.LabelField("First road: " + road1.name + " node: " + tInter.Node1.name);
-            EditorGUILayout.LabelField("Second road: " + road2.name + " node: " + tInter.Node2.name);
+            GSDRoad road1 = intersection.node1.GSDSpline.transform.parent.GetComponent<GSDRoad>();
+            GSDRoad road2 = intersection.node2.GSDSpline.transform.parent.GetComponent<GSDRoad>();
+            EditorGUILayout.LabelField("First road: " + road1.name + " node: " + intersection.node1.name);
+            EditorGUILayout.LabelField("Second road: " + road2.name + " node: " + intersection.node2.name);
         }
         EditorGUILayout.EndHorizontal();
         RAEditorUtilitys.Line();
@@ -187,13 +187,13 @@ public class GSDRoadIntersectionEditor : Editor
         }
 
         //Option: Auto update:
-        t_opt_AutoUpdateIntersections.boolValue = EditorGUILayout.Toggle("Auto-update:", tInter.opt_AutoUpdateIntersections);
+        isAutoUpdatingIntersection.boolValue = EditorGUILayout.Toggle("Auto-update:", intersection.isAutoUpdatingIntersection);
 
         //Option: Gizmo:
-        t_bDrawGizmo.boolValue = EditorGUILayout.Toggle("Gizmo:", tInter.bDrawGizmo);
+        isDrawingGizmo.boolValue = EditorGUILayout.Toggle("Gizmo:", intersection.isDrawingGizmo);
 
         //UI:
-        if (tInter.iType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+        if (intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
         {
             EditorGUILayout.LabelField("Intersection type: 3 way");
         }
@@ -213,29 +213,29 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.BeginVertical();
         if (GUILayout.Button("Access objects on first road node"))
         {
-            Selection.objects = new Object[1] { tInter.Node1 };
+            Selection.objects = new Object[1] { intersection.node1 };
         }
         if (GUILayout.Button("Access objects on second road node"))
         {
-            Selection.objects = new Object[1] { tInter.Node2 };
+            Selection.objects = new Object[1] { intersection.node2 };
         }
         EditorGUILayout.EndVertical();
         //Option: Intersection turn lane options
         RAEditorUtilitys.Line();
         EditorGUILayout.LabelField("Intersection turn lane options:");
-        if (tInter.iType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+        if (intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
         {
-            t_rType.enumValueIndex = (int) EditorGUILayout.Popup((int) tInter.rType, rTypeDescriptions_3Way);
+            roadType.enumValueIndex = (int) EditorGUILayout.Popup((int) intersection.roadType, rTypeDescriptions_3Way);
         }
         else
         {
-            t_rType.enumValueIndex = (int) EditorGUILayout.Popup((int) tInter.rType, rTypeDescriptions);
+            roadType.enumValueIndex = (int) EditorGUILayout.Popup((int) intersection.roadType, rTypeDescriptions);
         }
 
         //Option: Left yield on green:
-        if (tInter.rType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+        if (intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
         {
-            t_bLeftTurnYieldOnGreen.boolValue = EditorGUILayout.Toggle("Left yield on green: ", tInter.bLeftTurnYieldOnGreen);
+            isLeftTurnYieldOnGreen.boolValue = EditorGUILayout.Toggle("Left yield on green: ", intersection.isLeftTurnYieldOnGreen);
 
             bShowHelpLeftTurnGreen = EditorGUILayout.Foldout(bShowHelpLeftTurnGreen, status);
             if (bShowHelpLeftTurnGreen)
@@ -249,68 +249,68 @@ public class GSDRoadIntersectionEditor : Editor
 
 
         //Option: Intersection stop type:
-        t_iStopType.enumValueIndex = (int) EditorGUILayout.Popup("Intersection stop type:", (int) tInter.iStopType, iStopTypeEnumDescriptions);
+        intersectionStopType.enumValueIndex = (int) EditorGUILayout.Popup("Intersection stop type:", (int) intersection.intersectionStopType, iStopTypeEnumDescriptions);
 
 
-        if (tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
+        if (intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
         {
             //Option: Traffic light timing type:
-            t_lType.enumValueIndex = (int) EditorGUILayout.Popup("Traffic light timing:", (int) tInter.lType, iTrafficLightSequenceTypeDesc);
+            lightType.enumValueIndex = (int) EditorGUILayout.Popup("Traffic light timing:", (int) intersection.lightType, iTrafficLightSequenceTypeDesc);
 
             //Options: Traffic fixed light timings:
-            if (tInter.lType == GSDRoadIntersection.LightTypeEnum.Timed)
+            if (intersection.lightType == GSDRoadIntersection.LightTypeEnum.Timed)
             {
                 EditorGUILayout.LabelField("Traffic light fixed time lengths (in seconds):");
                 EditorGUILayout.BeginHorizontal();
-                t_opt_FixedTime_RegularLightLength.floatValue = EditorGUILayout.Slider("Green length: ", tInter.opt_FixedTime_RegularLightLength, 0.1f, 180f);
+                fixedTimeRegularLightLength.floatValue = EditorGUILayout.Slider("Green length: ", intersection.fixedTimeRegularLightLength, 0.1f, 180f);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_opt_FixedTime_RegularLightLength.floatValue = 30f;
+                    fixedTimeRegularLightLength.floatValue = 30f;
                 }
                 EditorGUILayout.EndHorizontal();
 
-                if (tInter.rType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                if (intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                 {
                     EditorGUILayout.BeginHorizontal();
-                    t_opt_FixedTime_LeftTurnLightLength.floatValue = EditorGUILayout.Slider("Left turn only length: ", tInter.opt_FixedTime_LeftTurnLightLength, 0.1f, 180f);
+                    fixedTimeLeftTurnLightLength.floatValue = EditorGUILayout.Slider("Left turn only length: ", intersection.fixedTimeLeftTurnLightLength, 0.1f, 180f);
                     if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                     {
-                        t_opt_FixedTime_LeftTurnLightLength.floatValue = 10f;
+                        fixedTimeLeftTurnLightLength.floatValue = 10f;
                     }
                     EditorGUILayout.EndHorizontal();
                 }
 
                 EditorGUILayout.BeginHorizontal();
-                t_opt_FixedTime_AllRedLightLength.floatValue = EditorGUILayout.Slider("All red length: ", tInter.opt_FixedTime_AllRedLightLength, 0.1f, 180f);
+                fixedTimeAllRedLightLength.floatValue = EditorGUILayout.Slider("All red length: ", intersection.fixedTimeAllRedLightLength, 0.1f, 180f);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_opt_FixedTime_AllRedLightLength.floatValue = 1f;
+                    fixedTimeAllRedLightLength.floatValue = 1f;
                 }
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
-                t_opt_FixedTime_YellowLightLength.floatValue = EditorGUILayout.Slider("Yellow light length: ", tInter.opt_FixedTime_YellowLightLength, 0.1f, 180f);
+                fixedTimeYellowLightLength.floatValue = EditorGUILayout.Slider("Yellow light length: ", intersection.fixedTimeYellowLightLength, 0.1f, 180f);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_opt_FixedTime_YellowLightLength.floatValue = 3f;
+                    fixedTimeYellowLightLength.floatValue = 3f;
                 }
                 EditorGUILayout.EndHorizontal();
             }
         }
 
 
-        if (tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
+        if (intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
         {
             //Option: Traffic light poles:
             RAEditorUtilitys.Line();
             EditorGUILayout.LabelField("Traffic light poles:");
-            t_bTrafficPoleStreetLight.boolValue = EditorGUILayout.Toggle("Street lights: ", tInter.bTrafficPoleStreetLight);
+            isTrafficPoleStreetLight.boolValue = EditorGUILayout.Toggle("Street lights: ", intersection.isTrafficPoleStreetLight);
 
             //Option: Traffic light pole gray color:
-            t_bTrafficLightGray.boolValue = EditorGUILayout.Toggle("Gray color: ", tInter.bTrafficLightGray);
+            isTrafficLightGray.boolValue = EditorGUILayout.Toggle("Gray color: ", intersection.isTrafficLightGray);
 
             //Option: Normal pole alignment:
-            t_bRegularPoleAlignment.boolValue = EditorGUILayout.Toggle("Normal pole alignment: ", tInter.bRegularPoleAlignment);
+            isRegularPoleAlignment.boolValue = EditorGUILayout.Toggle("Normal pole alignment: ", intersection.isRegularPoleAlignment);
             bShowTLPole = EditorGUILayout.Foldout(bShowTLPole, status);
             if (bShowTLPole)
             {
@@ -328,35 +328,35 @@ public class GSDRoadIntersectionEditor : Editor
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Point lights:");
             EditorGUILayout.EndHorizontal();
-            t_bLightsEnabled.boolValue = EditorGUILayout.Toggle("  Point lights enabled: ", tInter.bLightsEnabled);
+            isLightsEnabled.boolValue = EditorGUILayout.Toggle("  Point lights enabled: ", intersection.isLightsEnabled);
 
             //Options: Street point light options:
-            if (tInter.bTrafficPoleStreetLight)
+            if (intersection.isTrafficPoleStreetLight)
             {
                 //Option: Street light range:
                 EditorGUILayout.BeginHorizontal();
-                t_StreetLight_Range.floatValue = EditorGUILayout.Slider("  Street light range: ", tInter.StreetLight_Range, 1f, 128f);
+                streetLightRange.floatValue = EditorGUILayout.Slider("  Street light range: ", intersection.streetLightRange, 1f, 128f);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_StreetLight_Range.floatValue = 30f;
+                    streetLightRange.floatValue = 30f;
                 }
                 EditorGUILayout.EndHorizontal();
 
                 //Option: Street light intensity:
                 EditorGUILayout.BeginHorizontal();
-                t_StreetLight_Intensity.floatValue = EditorGUILayout.Slider("  Street light intensity: ", tInter.StreetLight_Intensity, 0f, 8f);
+                streetLightIntensity.floatValue = EditorGUILayout.Slider("  Street light intensity: ", intersection.streetLightIntensity, 0f, 8f);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_StreetLight_Intensity.floatValue = 1f;
+                    streetLightIntensity.floatValue = 1f;
                 }
                 EditorGUILayout.EndHorizontal();
 
                 //Option: Street light color:
                 EditorGUILayout.BeginHorizontal();
-                t_StreetLight_Color.colorValue = EditorGUILayout.ColorField("  Street light color: ", tInter.StreetLight_Color);
+                streetLightColor.colorValue = EditorGUILayout.ColorField("  Street light color: ", intersection.streetLightColor);
                 if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    t_StreetLight_Color.colorValue = new Color(1f, 0.7451f, 0.27451f, 1f);
+                    streetLightColor.colorValue = new Color(1f, 0.7451f, 0.27451f, 1f);
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -384,10 +384,10 @@ public class GSDRoadIntersectionEditor : Editor
             //Option: Traffic light scaling sensitivity:
             EditorGUILayout.LabelField("Traffic light scaling sensitivity: *Does not auto-update");
             EditorGUILayout.BeginHorizontal();
-            t_ScalingSense.floatValue = EditorGUILayout.Slider(tInter.ScalingSense, 0f, 200f);
+            scalingSense.floatValue = EditorGUILayout.Slider(intersection.scalingSense, 0f, 200f);
             if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
             {
-                t_ScalingSense.floatValue = 170f;
+                scalingSense.floatValue = 170f;
             }
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(4f);
@@ -421,17 +421,17 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.LabelField("Grade correction factor: *Does not auto-update");
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
-        t_GradeMod.floatValue = EditorGUILayout.Slider(tInter.GradeMod, 0.01f, 2f);
+        gradeMod.floatValue = EditorGUILayout.Slider(intersection.gradeMod, 0.01f, 2f);
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
-            t_GradeMod.floatValue = 0.375f;
+            gradeMod.floatValue = 0.375f;
         }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
         bGradeCorrect = EditorGUILayout.Foldout(bGradeCorrect, status);
         if (GUILayout.Button("Manually update intersection", EditorStyles.miniButton, GUILayout.Width(170f)))
         {
-            tInter.UpdateRoads();
+            intersection.UpdateRoads();
         }
         EditorGUILayout.EndHorizontal();
         if (bGradeCorrect)
@@ -455,7 +455,7 @@ public class GSDRoadIntersectionEditor : Editor
 
         //Option: Use default materials:
         RAEditorUtilitys.Line();
-        t_bUseDefaultMaterials.boolValue = EditorGUILayout.Toggle("Use default materials:", tInter.bUseDefaultMaterials);
+        isUsingDefaultMaterials.boolValue = EditorGUILayout.Toggle("Use default materials:", intersection.isUsingDefaultMaterials);
         bShowDefaultMatHelp = EditorGUILayout.Foldout(bShowDefaultMatHelp, status);
         if (bShowDefaultMatHelp)
         {
@@ -470,7 +470,7 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.LabelField("Center marker material(s):");
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.ResetMaterials_Center();
+            intersection.ResetCenterMaterials();
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(4f);
@@ -493,30 +493,30 @@ public class GSDRoadIntersectionEditor : Editor
         //		}
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(t_MarkerCenter1, new GUIContent("  Mat #1: "));
-        if (tInter.MarkerCenter1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        EditorGUILayout.PropertyField(markerCenter1, new GUIContent("  Mat #1: "));
+        if (intersection.markerCenter1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.MarkerCenter1 = null;
+            intersection.markerCenter1 = null;
         }
         EditorGUILayout.EndHorizontal();
 
-        if (tInter.MarkerCenter1 != null)
+        if (intersection.markerCenter1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_MarkerCenter2, new GUIContent("  Mat #2: "));
-            if (tInter.MarkerCenter2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(markerCenter2, new GUIContent("  Mat #2: "));
+            if (intersection.markerCenter2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.MarkerCenter2 = null;
+                intersection.markerCenter2 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
-        if (tInter.MarkerCenter2 != null && tInter.MarkerCenter1 != null)
+        if (intersection.markerCenter2 != null && intersection.markerCenter1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_MarkerCenter3, new GUIContent("  Mat #3: "));
-            if (tInter.MarkerCenter3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(markerCenter3, new GUIContent("  Mat #3: "));
+            if (intersection.markerCenter3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.MarkerCenter3 = null;
+                intersection.markerCenter3 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -537,35 +537,35 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.LabelField("Exterior fitted marker material(s):");
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.ResetMaterials_Ext_Stretched();
+            intersection.ResetExtStrechtedMaterials();
         }
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(t_MarkerExt_Stretch1, new GUIContent("  Mat #1: "));
-        if (tInter.MarkerExt_Stretch1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        EditorGUILayout.PropertyField(markerExtStretch1, new GUIContent("  Mat #1: "));
+        if (intersection.markerExtStretch1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.MarkerExt_Stretch1 = null;
+            intersection.markerExtStretch1 = null;
         }
         EditorGUILayout.EndHorizontal();
 
-        if (tInter.MarkerExt_Stretch1 != null)
+        if (intersection.markerExtStretch1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_MarkerExt_Stretch2, new GUIContent("  Mat #2: "));
-            if (tInter.MarkerExt_Stretch2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(markerExtStretch2, new GUIContent("  Mat #2: "));
+            if (intersection.markerExtStretch2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.MarkerExt_Stretch2 = null;
+                intersection.markerExtStretch2 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
-        if (tInter.MarkerExt_Stretch2 != null && tInter.MarkerExt_Stretch1 != null)
+        if (intersection.markerExtStretch2 != null && intersection.markerExtStretch1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_MarkerExt_Stretch3, new GUIContent("  Mat #3: "));
-            if (tInter.MarkerExt_Stretch3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(markerExtStretch3, new GUIContent("  Mat #3: "));
+            if (intersection.markerExtStretch3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.MarkerExt_Stretch3 = null;
+                intersection.markerExtStretch3 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -586,36 +586,36 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.LabelField("Exterior tiled marker material(s):");
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.ResetMaterials_Ext_Tiled();
+            intersection.ResetExtTiledMaterials();
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(4f);
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(t_MarkerExt_Tiled1, new GUIContent("  Mat #1: "));
-        if (tInter.MarkerExt_Tiled1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        EditorGUILayout.PropertyField(markerExtTiled1, new GUIContent("  Mat #1: "));
+        if (intersection.markerExtTiled1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.MarkerExt_Tiled1 = null;
+            intersection.markerExtTiled1 = null;
         }
         EditorGUILayout.EndHorizontal();
 
-        if (tInter.MarkerExt_Tiled1 != null)
+        if (intersection.markerExtTiled1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_MarkerExt_Tiled2, new GUIContent("  Mat #2: "));
-            if (tInter.MarkerExt_Tiled2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(markerExtTiled2, new GUIContent("  Mat #2: "));
+            if (intersection.markerExtTiled2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.MarkerExt_Tiled2 = null;
+                intersection.markerExtTiled2 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
-        if (tInter.MarkerExt_Tiled2 != null && tInter.MarkerExt_Tiled1 != null)
+        if (intersection.markerExtTiled2 != null && intersection.markerExtTiled1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_MarkerExt_Tiled3, new GUIContent("  Mat #3: "));
-            if (tInter.MarkerExt_Tiled3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(markerExtTiled3, new GUIContent("  Mat #3: "));
+            if (intersection.markerExtTiled3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.MarkerExt_Tiled3 = null;
+                intersection.markerExtTiled3 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -636,25 +636,25 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.LabelField("Lanes marker materials:");
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.ResetMaterials_Lanes();
+            intersection.ResetLanesMaterials();
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(4f);
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(t_Lane0Mat1, new GUIContent("Lane section 0 mat #1:"));
-        if (tInter.Lane0Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        EditorGUILayout.PropertyField(lane0Mat1, new GUIContent("Lane section 0 mat #1:"));
+        if (intersection.lane0Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.Lane0Mat1 = null;
+            intersection.lane0Mat1 = null;
         }
         EditorGUILayout.EndHorizontal();
-        if (tInter.Lane0Mat1 != null)
+        if (intersection.lane0Mat1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_Lane0Mat2, new GUIContent("Lane section 0 mat #2:"));
-            if (tInter.Lane0Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(lane0Mat2, new GUIContent("Lane section 0 mat #2:"));
+            if (intersection.lane0Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.Lane0Mat2 = null;
+                intersection.lane0Mat2 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -662,40 +662,40 @@ public class GSDRoadIntersectionEditor : Editor
 
         //Option: Lane section 1:
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(t_Lane1Mat1, new GUIContent("Lane section 1 mat #1:"));
-        if (tInter.Lane1Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        EditorGUILayout.PropertyField(lane1Mat1, new GUIContent("Lane section 1 mat #1:"));
+        if (intersection.lane1Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
         {
-            tInter.Lane1Mat1 = null;
+            intersection.lane1Mat1 = null;
         }
         EditorGUILayout.EndHorizontal();
-        if (tInter.Lane1Mat1 != null)
+        if (intersection.lane1Mat1 != null)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_Lane1Mat2, new GUIContent("Lane section 1 mat #2:"));
-            if (tInter.Lane1Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(lane1Mat2, new GUIContent("Lane section 1 mat #2:"));
+            if (intersection.lane1Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.Lane1Mat2 = null;
+                intersection.lane1Mat2 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
 
         //Option: Lane section 2:
-        if (tInter.rType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes || tInter.rType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes || intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_Lane2Mat1, new GUIContent("Lane section 2 mat #1:"));
-            if (tInter.Lane2Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(lane2Mat1, new GUIContent("Lane section 2 mat #1:"));
+            if (intersection.lane2Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.Lane2Mat1 = null;
+                intersection.lane2Mat1 = null;
             }
             EditorGUILayout.EndHorizontal();
-            if (tInter.Lane2Mat1 != null)
+            if (intersection.lane2Mat1 != null)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(t_Lane2Mat2, new GUIContent("Lane section 2 mat #2:"));
-                if (tInter.Lane2Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                EditorGUILayout.PropertyField(lane2Mat2, new GUIContent("Lane section 2 mat #2:"));
+                if (intersection.lane2Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    tInter.Lane2Mat2 = null;
+                    intersection.lane2Mat2 = null;
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -703,22 +703,22 @@ public class GSDRoadIntersectionEditor : Editor
         GUILayout.Space(4f);
 
         //Option: Lane section 3:
-        if (tInter.rType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(t_Lane3Mat1, new GUIContent("Lane section 3 mat #1:"));
-            if (tInter.Lane3Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            EditorGUILayout.PropertyField(lane3Mat1, new GUIContent("Lane section 3 mat #1:"));
+            if (intersection.lane3Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
             {
-                tInter.Lane3Mat1 = null;
+                intersection.lane3Mat1 = null;
             }
             EditorGUILayout.EndHorizontal();
-            if (tInter.Lane3Mat1 != null)
+            if (intersection.lane3Mat1 != null)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(t_Lane3Mat2, new GUIContent("Lane section 3 mat #2:"));
-                if (tInter.Lane3Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                EditorGUILayout.PropertyField(lane3Mat2, new GUIContent("Lane section 3 mat #2:"));
+                if (intersection.lane3Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
                 {
-                    tInter.Lane3Mat2 = null;
+                    intersection.lane3Mat2 = null;
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -730,18 +730,18 @@ public class GSDRoadIntersectionEditor : Editor
             EditorGUILayout.LabelField("Covers individual lane sections in the intersection. Used for high-definition line marking.");
             EditorGUILayout.LabelField("Lane section 0 = Left side of the intersection where oncoming traffic travels. Use lane texture which matches the number of lanes used on the road system, with a white left line and a yellow right line.");
 
-            if (tInter.rType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
                 EditorGUILayout.LabelField("Lane section 1 = Left turn lane. Use a single lane texture with a yellow left line and a white right line.");
                 EditorGUILayout.LabelField("Lane section 2 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
                 EditorGUILayout.LabelField("Lane section 3 = Right turn lane. Use a single lane texture with a white right line.");
             }
-            else if (tInter.rType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
             {
                 EditorGUILayout.LabelField("Lane section 1 = Left turn lane. Use a single lane texture with a yellow left line and a white right line.");
                 EditorGUILayout.LabelField("Lane section 2 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
             }
-            else if (tInter.rType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
             {
                 EditorGUILayout.LabelField("Lane section 1 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
             }
@@ -788,212 +788,212 @@ public class GSDRoadIntersectionEditor : Editor
         if (GUI.changed)
         {
             //Option: Gizmo:
-            if (t_bDrawGizmo.boolValue != tInter.bDrawGizmo)
+            if (isDrawingGizmo.boolValue != intersection.isDrawingGizmo)
             {
                 bGizmoChange = true;
             }
 
             //Option: Intersection turn lane options
-            if ((int) tInter.rType != t_rType.enumValueIndex)
+            if ((int) intersection.roadType != roadType.enumValueIndex)
             {
                 bMatChange = true;
                 bRoadUpdate = true;
             }
 
             //Option: Left yield on green:
-            if (t_bLeftTurnYieldOnGreen.boolValue != tInter.bLeftTurnYieldOnGreen)
+            if (isLeftTurnYieldOnGreen.boolValue != intersection.isLeftTurnYieldOnGreen)
             {
                 bRoadUpdate = true;
             }
 
             //Option: Intersection stop type:
-            if (t_iStopType.enumValueIndex != (int) tInter.iStopType)
+            if (intersectionStopType.enumValueIndex != (int) intersection.intersectionStopType)
             {
                 bRoadUpdate = true;
             }
 
             //Option: Traffic light poles:
-            if (t_bTrafficPoleStreetLight.boolValue != tInter.bTrafficPoleStreetLight)
+            if (isTrafficPoleStreetLight.boolValue != intersection.isTrafficPoleStreetLight)
             {
                 bRoadUpdate = true;
             }
 
             //Option: Traffic light pole gray color:
-            if (t_bTrafficLightGray.boolValue != tInter.bTrafficLightGray)
+            if (isTrafficLightGray.boolValue != intersection.isTrafficLightGray)
             {
                 bToggleTrafficLightPoleColor = true;
             }
 
             //Option: Normal pole alignment:
-            if (t_bRegularPoleAlignment.boolValue != tInter.bRegularPoleAlignment)
+            if (isRegularPoleAlignment.boolValue != intersection.isRegularPoleAlignment)
             {
                 bRoadUpdate = true;
             }
 
             //Option: Point lights enabled:
-            if (t_bLightsEnabled.boolValue != tInter.bLightsEnabled)
+            if (isLightsEnabled.boolValue != intersection.isLightsEnabled)
             {
                 bTogglePointLights = true;
             }
 
             //Option: Street light range:
-            if (!GSDRootUtil.IsApproximately(t_StreetLight_Range.floatValue, tInter.StreetLight_Range, 0.01f))
+            if (!GSDRootUtil.IsApproximately(streetLightRange.floatValue, intersection.streetLightRange, 0.01f))
             {
                 bTogglePointLights = true;
             }
 
             //Option: Street light intensity:
-            if (!GSDRootUtil.IsApproximately(t_StreetLight_Intensity.floatValue, tInter.StreetLight_Intensity, 0.01f))
+            if (!GSDRootUtil.IsApproximately(streetLightIntensity.floatValue, intersection.streetLightIntensity, 0.01f))
             {
                 bTogglePointLights = true;
             }
 
             //Option: Street light color:
-            if (t_StreetLight_Color.colorValue != tInter.StreetLight_Color)
+            if (streetLightColor.colorValue != intersection.streetLightColor)
             {
                 bTogglePointLights = true;
             }
 
             //Option: Use default materials:
-            if (t_bUseDefaultMaterials.boolValue != tInter.bUseDefaultMaterials)
+            if (isUsingDefaultMaterials.boolValue != intersection.isUsingDefaultMaterials)
             {
                 bMatChange = true;
             }
 
-            if (t_MarkerCenter1 == null || t_MarkerCenter1.objectReferenceValue == null)
+            if (markerCenter1 == null || markerCenter1.objectReferenceValue == null)
             {
-                tInter.MarkerCenter1 = null;
+                intersection.markerCenter1 = null;
             }
-            if (t_MarkerCenter2 == null || t_MarkerCenter2.objectReferenceValue == null)
+            if (markerCenter2 == null || markerCenter2.objectReferenceValue == null)
             {
-                tInter.MarkerCenter2 = null;
+                intersection.markerCenter2 = null;
             }
-            if (t_MarkerCenter3 == null || t_MarkerCenter3.objectReferenceValue == null)
+            if (markerCenter3 == null || markerCenter3.objectReferenceValue == null)
             {
-                tInter.MarkerCenter3 = null;
+                intersection.markerCenter3 = null;
             }
-            if (t_MarkerExt_Stretch1 == null || t_MarkerExt_Stretch1.objectReferenceValue == null)
+            if (markerExtStretch1 == null || markerExtStretch1.objectReferenceValue == null)
             {
-                tInter.MarkerExt_Stretch1 = null;
+                intersection.markerExtStretch1 = null;
             }
-            if (t_MarkerExt_Stretch2 == null || t_MarkerExt_Stretch2.objectReferenceValue == null)
+            if (markerExtStretch2 == null || markerExtStretch2.objectReferenceValue == null)
             {
-                tInter.MarkerExt_Stretch2 = null;
+                intersection.markerExtStretch2 = null;
             }
-            if (t_MarkerExt_Stretch3 == null || t_MarkerExt_Stretch3.objectReferenceValue == null)
+            if (markerExtStretch3 == null || markerExtStretch3.objectReferenceValue == null)
             {
-                tInter.MarkerExt_Stretch3 = null;
+                intersection.markerExtStretch3 = null;
             }
-            if (t_MarkerExt_Tiled1 == null || t_MarkerExt_Tiled1.objectReferenceValue == null)
+            if (markerExtTiled1 == null || markerExtTiled1.objectReferenceValue == null)
             {
-                tInter.MarkerExt_Tiled1 = null;
+                intersection.markerExtTiled1 = null;
             }
-            if (t_MarkerExt_Tiled2 == null || t_MarkerExt_Tiled2.objectReferenceValue == null)
+            if (markerExtTiled2 == null || markerExtTiled2.objectReferenceValue == null)
             {
-                tInter.MarkerExt_Tiled2 = null;
+                intersection.markerExtTiled2 = null;
             }
-            if (t_MarkerExt_Tiled3 == null || t_MarkerExt_Tiled3.objectReferenceValue == null)
+            if (markerExtTiled3 == null || markerExtTiled3.objectReferenceValue == null)
             {
-                tInter.MarkerExt_Tiled3 = null;
+                intersection.markerExtTiled3 = null;
             }
-            if (t_Lane0Mat1 == null || t_Lane0Mat1.objectReferenceValue == null)
+            if (lane0Mat1 == null || lane0Mat1.objectReferenceValue == null)
             {
-                tInter.Lane0Mat1 = null;
+                intersection.lane0Mat1 = null;
             }
-            if (t_Lane0Mat2 == null || t_Lane0Mat2.objectReferenceValue == null)
+            if (lane0Mat2 == null || lane0Mat2.objectReferenceValue == null)
             {
-                tInter.Lane0Mat2 = null;
+                intersection.lane0Mat2 = null;
             }
-            if (t_Lane1Mat1 == null || t_Lane1Mat1.objectReferenceValue == null)
+            if (lane1Mat1 == null || lane1Mat1.objectReferenceValue == null)
             {
-                tInter.Lane1Mat1 = null;
+                intersection.lane1Mat1 = null;
             }
-            if (t_Lane1Mat2 == null || t_Lane1Mat2.objectReferenceValue == null)
+            if (lane1Mat2 == null || lane1Mat2.objectReferenceValue == null)
             {
-                tInter.Lane1Mat2 = null;
+                intersection.lane1Mat2 = null;
             }
-            if (t_Lane2Mat1 == null || t_Lane2Mat1.objectReferenceValue == null)
+            if (lane2Mat1 == null || lane2Mat1.objectReferenceValue == null)
             {
-                tInter.Lane2Mat1 = null;
+                intersection.lane2Mat1 = null;
             }
-            if (t_Lane2Mat2 == null || t_Lane2Mat2.objectReferenceValue == null)
+            if (lane2Mat2 == null || lane2Mat2.objectReferenceValue == null)
             {
-                tInter.Lane2Mat2 = null;
+                intersection.lane2Mat2 = null;
             }
-            if (t_Lane3Mat1 == null || t_Lane3Mat1.objectReferenceValue == null)
+            if (lane3Mat1 == null || lane3Mat1.objectReferenceValue == null)
             {
-                tInter.Lane3Mat1 = null;
+                intersection.lane3Mat1 = null;
             }
-            if (t_Lane3Mat2 == null || t_Lane3Mat2.objectReferenceValue == null)
+            if (lane3Mat2 == null || lane3Mat2.objectReferenceValue == null)
             {
-                tInter.Lane3Mat2 = null;
+                intersection.lane3Mat2 = null;
             }
 
-            if (tInter.MarkerCenter1 != null && t_MarkerCenter1.objectReferenceValue != tInter.MarkerCenter1)
+            if (intersection.markerCenter1 != null && markerCenter1.objectReferenceValue != intersection.markerCenter1)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerCenter2 != null && t_MarkerCenter2.objectReferenceValue != tInter.MarkerCenter2)
+            if (intersection.markerCenter2 != null && markerCenter2.objectReferenceValue != intersection.markerCenter2)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerCenter3 != null && t_MarkerCenter3.objectReferenceValue != tInter.MarkerCenter3)
+            if (intersection.markerCenter3 != null && markerCenter3.objectReferenceValue != intersection.markerCenter3)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerExt_Stretch1 != null && t_MarkerExt_Stretch1.objectReferenceValue != tInter.MarkerExt_Stretch1)
+            if (intersection.markerExtStretch1 != null && markerExtStretch1.objectReferenceValue != intersection.markerExtStretch1)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerExt_Stretch2 != null && t_MarkerExt_Stretch2.objectReferenceValue != tInter.MarkerExt_Stretch2)
+            if (intersection.markerExtStretch2 != null && markerExtStretch2.objectReferenceValue != intersection.markerExtStretch2)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerExt_Stretch3 != null && t_MarkerExt_Stretch3.objectReferenceValue != tInter.MarkerExt_Stretch3)
+            if (intersection.markerExtStretch3 != null && markerExtStretch3.objectReferenceValue != intersection.markerExtStretch3)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerExt_Tiled1 != null && t_MarkerExt_Tiled1.objectReferenceValue != tInter.MarkerExt_Tiled1)
+            if (intersection.markerExtTiled1 != null && markerExtTiled1.objectReferenceValue != intersection.markerExtTiled1)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerExt_Tiled2 != null && t_MarkerExt_Tiled2.objectReferenceValue != tInter.MarkerExt_Tiled2)
+            if (intersection.markerExtTiled2 != null && markerExtTiled2.objectReferenceValue != intersection.markerExtTiled2)
             {
                 bMatChange = true;
             }
-            if (tInter.MarkerExt_Tiled3 != null && t_MarkerExt_Tiled3.objectReferenceValue != tInter.MarkerExt_Tiled3)
+            if (intersection.markerExtTiled3 != null && markerExtTiled3.objectReferenceValue != intersection.markerExtTiled3)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane0Mat1 != null && t_Lane0Mat1.objectReferenceValue != tInter.Lane0Mat1)
+            if (intersection.lane0Mat1 != null && lane0Mat1.objectReferenceValue != intersection.lane0Mat1)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane0Mat2 != null && t_Lane0Mat2.objectReferenceValue != tInter.Lane0Mat2)
+            if (intersection.lane0Mat2 != null && lane0Mat2.objectReferenceValue != intersection.lane0Mat2)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane1Mat1 != null && t_Lane1Mat1.objectReferenceValue != tInter.Lane1Mat1)
+            if (intersection.lane1Mat1 != null && lane1Mat1.objectReferenceValue != intersection.lane1Mat1)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane1Mat2 != null && t_Lane1Mat2.objectReferenceValue != tInter.Lane1Mat2)
+            if (intersection.lane1Mat2 != null && lane1Mat2.objectReferenceValue != intersection.lane1Mat2)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane2Mat1 != null && t_Lane2Mat1.objectReferenceValue != tInter.Lane2Mat1)
+            if (intersection.lane2Mat1 != null && lane2Mat1.objectReferenceValue != intersection.lane2Mat1)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane2Mat2 != null && t_Lane2Mat2.objectReferenceValue != tInter.Lane2Mat2)
+            if (intersection.lane2Mat2 != null && lane2Mat2.objectReferenceValue != intersection.lane2Mat2)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane3Mat1 != null && t_Lane3Mat1.objectReferenceValue != tInter.Lane3Mat1)
+            if (intersection.lane3Mat1 != null && lane3Mat1.objectReferenceValue != intersection.lane3Mat1)
             {
                 bMatChange = true;
             }
-            if (tInter.Lane3Mat2 != null && t_Lane3Mat2.objectReferenceValue != tInter.Lane3Mat2)
+            if (intersection.lane3Mat2 != null && lane3Mat2.objectReferenceValue != intersection.lane3Mat2)
             {
                 bMatChange = true;
             }
@@ -1006,12 +1006,12 @@ public class GSDRoadIntersectionEditor : Editor
             //Apply secondary effects:
             if (bGizmoChange)
             {
-                MeshRenderer[] tMRs = tInter.transform.GetComponentsInChildren<MeshRenderer>();
+                MeshRenderer[] tMRs = intersection.transform.GetComponentsInChildren<MeshRenderer>();
                 int tCount = tMRs.Length;
                 for (int i = 0; i < tCount; i++)
                 {
                     //EditorUtility.SetSelectedWireframeHidden(tMRs[i], !tInter.bDrawGizmo);
-                    EditorUtility.SetSelectedRenderState(tMRs[i], tInter.bDrawGizmo ? EditorSelectedRenderState.Wireframe : EditorSelectedRenderState.Hidden);
+                    EditorUtility.SetSelectedRenderState(tMRs[i], intersection.isDrawingGizmo ? EditorSelectedRenderState.Wireframe : EditorSelectedRenderState.Hidden);
 
                 }
                 SceneView.RepaintAll();
@@ -1019,20 +1019,20 @@ public class GSDRoadIntersectionEditor : Editor
 
             if (bTogglePointLights)
             {
-                tInter.TogglePointLights(tInter.bLightsEnabled);
+                intersection.TogglePointLights(intersection.isLightsEnabled);
             }
 
             if (bToggleTrafficLightPoleColor)
             {
-                tInter.ToggleTrafficLightPoleColor();
+                intersection.ToggleTrafficLightPoleColor();
             }
 
             if (bMatChange)
             {
-                tInter.UpdateMaterials();
-                if (tInter.bUseDefaultMaterials)
+                intersection.UpdateMaterials();
+                if (intersection.isUsingDefaultMaterials)
                 {
-                    tInter.ResetMaterials_All();
+                    intersection.ResetMaterialsAll();
                 }
             }
 
@@ -1041,7 +1041,7 @@ public class GSDRoadIntersectionEditor : Editor
                 TriggerRoadUpdate();
             }
 
-            EditorUtility.SetDirty(tInter);
+            EditorUtility.SetDirty(intersection);
         }
     }
 
@@ -1071,11 +1071,11 @@ public class GSDRoadIntersectionEditor : Editor
 
         if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
         {
-            if (tInter.transform.position != tInter.Node1.transform.position)
+            if (intersection.transform.position != intersection.node1.transform.position)
             {
-                tInter.Node1.transform.position = tInter.transform.position;
-                tInter.Node2.transform.position = tInter.transform.position;
-                tInter.Height = tInter.transform.position.y;
+                intersection.node1.transform.position = intersection.transform.position;
+                intersection.node2.transform.position = intersection.transform.position;
+                intersection.height = intersection.transform.position.y;
                 TriggerRoadUpdate();
             }
         }
@@ -1097,11 +1097,11 @@ public class GSDRoadIntersectionEditor : Editor
             return;
         }
 
-        if (Selection.activeGameObject == tInter.transform.gameObject)
+        if (Selection.activeGameObject == intersection.transform.gameObject)
         {
             if (current.keyCode == KeyCode.F5)
             {
-                if (tInter != null && tInter.Node1 != null && tInter.Node2 != null)
+                if (intersection != null && intersection.node1 != null && intersection.node2 != null)
                 {
                     TriggerRoadUpdate();
                 }
@@ -1123,28 +1123,28 @@ public class GSDRoadIntersectionEditor : Editor
         }
         if (GUI.changed)
         {
-            EditorUtility.SetDirty(tInter);
+            EditorUtility.SetDirty(intersection);
         }
     }
 
 
     private void TriggerRoadUpdate(bool bForce = false)
     {
-        if (!bForce && !tInter.opt_AutoUpdateIntersections)
+        if (!bForce && !intersection.isAutoUpdatingIntersection)
         {
             return;
         }
 
-        if (tInter != null && tInter.Node1 != null && tInter.Node2 != null)
+        if (intersection != null && intersection.node1 != null && intersection.node2 != null)
         {
-            if (!tInter.Node1.GSDSpline.tRoad.isEditorConstructing && !tInter.Node2.GSDSpline.tRoad.isEditorConstructing)
+            if (!intersection.node1.GSDSpline.tRoad.isEditorConstructing && !intersection.node2.GSDSpline.tRoad.isEditorConstructing)
             {
-                if (!tInter.bSameSpline)
+                if (!intersection.isSameSpline)
                 {
-                    tInter.Node1.GSDSpline.tRoad.PiggyBacks = new GSDSplineC[1];
-                    tInter.Node1.GSDSpline.tRoad.PiggyBacks[0] = tInter.Node2.GSDSpline;
+                    intersection.node1.GSDSpline.tRoad.PiggyBacks = new GSDSplineC[1];
+                    intersection.node1.GSDSpline.tRoad.PiggyBacks[0] = intersection.node2.GSDSpline;
                 }
-                tInter.Node1.GSDSpline.tRoad.isUpdateRequired = true;
+                intersection.node1.GSDSpline.tRoad.isUpdateRequired = true;
             }
         }
     }

@@ -9,9 +9,9 @@ namespace GSD.Roads
 #if UNITY_EDITOR
     /* Proper automation flow:
      * 1. Make sure opt_bAllowRoadUpdates in the scene's GSDRoadSystem is set to FALSE.
-     * 2. Create your roads programmatically via CreateRoad_Programmatically (pass it the road, and then the points in a list)
-     *      a. Optionally you can do it via CreateNode_Programmatically and InsertNode_Programmatically
-     * 3. Call CreateIntersections_ProgrammaticallyForRoad for each road to create intersections automatically at intersection points.
+     * 2. Create your roads programmatically via CreateRoadProgrammatically (pass it the road, and then the points in a list)
+     *      a. Optionally you can do it via CreateNodeProgrammatically and InsertNodeProgrammatically
+     * 3. Call CreateIntersectionsProgrammaticallyForRoad for each road to create intersections automatically at intersection points.
      * 4. Set opt_bAllowRoadUpdates in the scene's GSDRoadSystem is set to TRUE.
      * 5. Call GSDRoadSystem.UpdateAllRoads();
      * 6. Call GSDRoadSystem.UpdateAllRoads(); after step #5 completes.
@@ -241,8 +241,8 @@ namespace GSD.Roads
                 //Now create the fucking intersection:
                 GameObject tInter = GSD.Roads.GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
                 GSDRoadIntersection GSDRI_JustCreated = tInter.GetComponent<GSDRoadIntersection>();
-                GSDRI_JustCreated.iStopType = _iStopType;
-                GSDRI_JustCreated.rType = _roadType;
+                GSDRI_JustCreated.intersectionStopType = _iStopType;
+                GSDRI_JustCreated.roadType = _roadType;
             }
 
             //Main algorithm: 2m increments to find actual intersection point:
@@ -354,8 +354,8 @@ namespace GSD.Roads
                                 //Now create the fucking intersection:
                                 GameObject intersection = GSD.Roads.GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
                                 GSDRoadIntersection newRoadIntersection = intersection.GetComponent<GSDRoadIntersection>();
-                                newRoadIntersection.iStopType = _iStopType;
-                                newRoadIntersection.rType = _roadType;
+                                newRoadIntersection.intersectionStopType = _iStopType;
+                                newRoadIntersection.roadType = _roadType;
                             }
 
                             NoIntersectionCreation:

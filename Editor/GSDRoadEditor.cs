@@ -398,14 +398,14 @@ public class GSDRoadEditor : Editor
         }
 
         //Option: Multi-threading option: workaround for UAS submission rules:
-        if (road.GSDRS.opt_bMultithreading != road.isUsingMultithreading)
+        if (road.GSDRS.isMultithreaded != road.isUsingMultithreading)
         {
-            road.GSDRS.opt_bMultithreading = road.isUsingMultithreading;
-            road.GSDRS.UpdateAllRoads_MultiThreadOptions();
+            road.GSDRS.isMultithreaded = road.isUsingMultithreading;
+            road.GSDRS.UpdateAllRoadsMultiThreadedOption();
         }
         if (road.GSDRS != null)
         {
-            isUsingMultithreading.boolValue = EditorGUILayout.Toggle("Multithreading: ", road.GSDRS.opt_bMultithreading);
+            isUsingMultithreading.boolValue = EditorGUILayout.Toggle("Multithreading: ", road.GSDRS.isMultithreaded);
             //Static:
             isStatic.boolValue = EditorGUILayout.Toggle("Static: ", road.isStatic);
             //Used for lightmapping:
@@ -414,16 +414,16 @@ public class GSDRoadEditor : Editor
         }
 
         //Option: Save meshes as unity assets options:
-        if (road.GSDRS.opt_bSaveMeshes != road.isSavingMeshes)
+        if (road.GSDRS.isSavingMeshes != road.isSavingMeshes)
         {
-            road.GSDRS.opt_bSaveMeshes = road.isSavingMeshes;
-            road.GSDRS.UpdateAllRoads_SaveMeshesAsAssetsOptions();
+            road.GSDRS.isSavingMeshes = road.isSavingMeshes;
+            road.GSDRS.UpdateAllRoadsSavingMeshesOption();
         }
         if (road.GSDRS != null)
         {
-            isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.GSDRS.opt_bSaveMeshes);
+            isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.GSDRS.isSavingMeshes);
         }
-        if (road.GSDRS.opt_bSaveMeshes)
+        if (road.GSDRS.isSavingMeshes)
         {
             GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", WarningLabelStyle);
         }
@@ -1186,14 +1186,14 @@ public class GSDRoadEditor : Editor
             //Option pre-handle for multithread and save mesh:
             if (road.GSDRS != null)
             {
-                if (isUsingMultithreading.boolValue != road.GSDRS.opt_bMultithreading)
+                if (isUsingMultithreading.boolValue != road.GSDRS.isMultithreaded)
                 {
-                    road.GSDRS.opt_bMultithreading = isUsingMultithreading.boolValue;
+                    road.GSDRS.isMultithreaded = isUsingMultithreading.boolValue;
                     bMultithreadChange = true;
                 }
-                if (isSavingMeshes.boolValue != road.GSDRS.opt_bSaveMeshes)
+                if (isSavingMeshes.boolValue != road.GSDRS.isSavingMeshes)
                 {
-                    road.GSDRS.opt_bSaveMeshes = isSavingMeshes.boolValue;
+                    road.GSDRS.isSavingMeshes = isSavingMeshes.boolValue;
                     bSaveMeshChange = true;
                 }
             }
@@ -1236,13 +1236,13 @@ public class GSDRoadEditor : Editor
             //Option: Multithreading
             if (bMultithreadChange)
             {
-                road.GSDRS.UpdateAllRoads_MultiThreadOptions();
+                road.GSDRS.UpdateAllRoadsMultiThreadedOption();
             }
 
             //Option: Save meshes as unity assets options:
             if (bSaveMeshChange)
             {
-                road.GSDRS.UpdateAllRoads_SaveMeshesAsAssetsOptions();
+                road.GSDRS.UpdateAllRoadsSavingMeshesOption();
             }
 
             //Option: terrain history save type:

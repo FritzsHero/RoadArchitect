@@ -202,25 +202,25 @@ public class GSDWizard : EditorWindow
                 {
                     GSD.Roads.Splination.SplinatedMeshMaker SMM = thisNode.AddSplinatedObject();
                     SMM.SetDefaultTimes(thisNode.bIsEndPoint, thisNode.tTime, thisNode.NextTime, thisNode.idOnSpline, thisNode.GSDSpline.distance);
-                    SMM.LoadFromLibrary(oList[i].FileName, oList[i].bIsDefault);
-                    SMM.bIsGSD = oList[i].bIsDefault;
+                    SMM.LoadFromLibrary(oList[i].fileName, oList[i].isDefault);
+                    SMM.isGSD = oList[i].isDefault;
                     SMM.Setup(true);
                 }
                 else if (tWindowType == WindowTypeEnum.Edge)
                 {
                     GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = thisNode.AddEdgeObject();
                     EOM.SetDefaultTimes(thisNode.bIsEndPoint, thisNode.tTime, thisNode.NextTime, thisNode.idOnSpline, thisNode.GSDSpline.distance);
-                    EOM.LoadFromLibrary(oList[i].FileName, oList[i].bIsDefault);
-                    EOM.bIsGSD = oList[i].bIsDefault;
+                    EOM.LoadFromLibrary(oList[i].fileName, oList[i].isDefault);
+                    EOM.isGSD = oList[i].isDefault;
                     EOM.Setup();
                 }
                 else if (tWindowType == WindowTypeEnum.Groups)
                 {
-                    thisNode.LoadWizardObjectsFromLibrary(oList[i].FileName, oList[i].bIsDefault, oList[i].bIsBridge);
+                    thisNode.LoadWizardObjectsFromLibrary(oList[i].fileName, oList[i].isDefault, oList[i].isBridge);
                 }
                 else if (tWindowType == WindowTypeEnum.BridgeComplete)
                 {
-                    thisNode.LoadWizardObjectsFromLibrary(oList[i].FileName, oList[i].bIsDefault, oList[i].bIsBridge);
+                    thisNode.LoadWizardObjectsFromLibrary(oList[i].fileName, oList[i].isDefault, oList[i].isBridge);
                 }
                 thisNode.bQuitGUI = true;
                 oList.Clear();
@@ -248,9 +248,9 @@ public class GSDWizard : EditorWindow
 
     private bool DoItem(int x1, int y1, int i)
     {
-        if (oList[i].Thumb != null)
+        if (oList[i].thumb != null)
         {
-            if (GUI.Button(new Rect(x1, y1, 132f, 132f), oList[i].Thumb))
+            if (GUI.Button(new Rect(x1, y1, 132f, 132f), oList[i].thumb))
             {
                 return true;
             }
@@ -263,8 +263,8 @@ public class GSDWizard : EditorWindow
             }
         }
 
-        GUI.Label(new Rect(x1, y1 + 132f, 148f, 20f), oList[i].DisplayName, EditorStyles.boldLabel);
-        GUI.Label(new Rect(x1, y1 + 148f, 148f, 52f), oList[i].Desc, EditorStyles.miniLabel);
+        GUI.Label(new Rect(x1, y1 + 132f, 148f, 20f), oList[i].displayName, EditorStyles.boldLabel);
+        GUI.Label(new Rect(x1, y1 + 148f, 148f, 52f), oList[i].desc, EditorStyles.miniLabel);
 
         return false;
     }
@@ -366,135 +366,135 @@ public class GSDWizard : EditorWindow
             {
                 continue;
             }
-            if (tO.bIsBridge != bIsBridge)
+            if (tO.isBridge != bIsBridge)
             {
                 continue;
             }
             try
             {
-                tO.Thumb = (Texture2D) AssetDatabase.LoadAssetAtPath(tO.ThumbString, typeof(Texture2D)) as Texture2D;
+                tO.thumb = (Texture2D) AssetDatabase.LoadAssetAtPath(tO.thumbString, typeof(Texture2D)) as Texture2D;
             }
             catch
             {
-                tO.Thumb = null;
+                tO.thumb = null;
             }
-            tO.FileName = tNames[index];
+            tO.fileName = tNames[index];
             tO.FullPath = tPath;
 
-            if (tO.bIsDefault && bIsBridge)
+            if (tO.isDefault && bIsBridge)
             {
-                if (tO.DisplayName.Contains("SuspL") || tO.DisplayName.Contains("Large Suspension"))
+                if (tO.displayName.Contains("SuspL") || tO.displayName.Contains("Large Suspension"))
                 {
-                    tO.DisplayName = "Large Suspension";
-                    tO.Desc = "Designed after the Golden Gate bridge. For lengths over 850m. Best results over 1300m.";
+                    tO.displayName = "Large Suspension";
+                    tO.desc = "Designed after the Golden Gate bridge. For lengths over 850m. Best results over 1300m.";
                     tO.sortID = 11;
                 }
-                else if (tO.DisplayName.Contains("SuspS") || tO.DisplayName.Contains("Small Suspension"))
+                else if (tO.displayName.Contains("SuspS") || tO.displayName.Contains("Small Suspension"))
                 {
-                    tO.DisplayName = "Small Suspension";
-                    tO.Desc = "Similar style as the large with smaller pillars. For lengths under 725m.";
+                    tO.displayName = "Small Suspension";
+                    tO.desc = "Similar style as the large with smaller pillars. For lengths under 725m.";
                     tO.sortID = 10;
                 }
-                else if (tO.DisplayName.Contains("SemiArch1"))
+                else if (tO.displayName.Contains("SemiArch1"))
                 {
-                    tO.DisplayName = "SemiArch 80 Degree";
-                    tO.Desc = "80 Degree arch. For lengths under 300m and small heights.";
+                    tO.displayName = "SemiArch 80 Degree";
+                    tO.desc = "80 Degree arch. For lengths under 300m and small heights.";
                     tO.sortID = 40;
                 }
-                else if (tO.DisplayName.Contains("SemiArch2"))
+                else if (tO.displayName.Contains("SemiArch2"))
                 {
-                    tO.DisplayName = "SemiArch 80 Girder";
-                    tO.Desc = "80 Degree arch with girder style. For lengths under 300m and small heights.";
+                    tO.displayName = "SemiArch 80 Girder";
+                    tO.desc = "80 Degree arch with girder style. For lengths under 300m and small heights.";
                     tO.sortID = 41;
                 }
-                else if (tO.DisplayName.Contains("SemiArch3"))
+                else if (tO.displayName.Contains("SemiArch3"))
                 {
-                    tO.DisplayName = "SemiArch 180 Degree";
-                    tO.Desc = "180 Degree arch. For lengths under 300m and small heights.";
+                    tO.displayName = "SemiArch 180 Degree";
+                    tO.desc = "180 Degree arch. For lengths under 300m and small heights.";
                     tO.sortID = 42;
                 }
-                else if (tO.DisplayName.Contains("Arch12m"))
+                else if (tO.displayName.Contains("Arch12m"))
                 {
-                    tO.DisplayName = "Arch 12m Beams";
-                    tO.Desc = "Full deck arch bridge with 12m beams. Good for any length.";
+                    tO.displayName = "Arch 12m Beams";
+                    tO.desc = "Full deck arch bridge with 12m beams. Good for any length.";
                     tO.sortID = 0;
                 }
-                else if (tO.DisplayName.Contains("Arch24m"))
+                else if (tO.displayName.Contains("Arch24m"))
                 {
-                    tO.DisplayName = "Arch 24m Beams";
-                    tO.Desc = "Full deck arch bridge with 24m beams. Good for any length and non-small width roads.";
+                    tO.displayName = "Arch 24m Beams";
+                    tO.desc = "Full deck arch bridge with 24m beams. Good for any length and non-small width roads.";
                     tO.sortID = 1;
                 }
-                else if (tO.DisplayName.Contains("Arch48m"))
+                else if (tO.displayName.Contains("Arch48m"))
                 {
-                    tO.DisplayName = "Arch 48m Beams";
-                    tO.Desc = "Full deck arch bridge with 48m beams. Good for any length and large width roads.";
+                    tO.displayName = "Arch 48m Beams";
+                    tO.desc = "Full deck arch bridge with 48m beams. Good for any length and large width roads.";
                     tO.sortID = 3;
                 }
-                else if (tO.DisplayName.Contains("Grid"))
+                else if (tO.displayName.Contains("Grid"))
                 {
-                    tO.DisplayName = "Grid Steel";
-                    tO.Desc = "Grid based steel bridge. Good for any length depending on triangle counts.";
+                    tO.displayName = "Grid Steel";
+                    tO.desc = "Grid based steel bridge. Good for any length depending on triangle counts.";
                     tO.sortID = 30;
                 }
-                else if (tO.DisplayName.Contains("Steel"))
+                else if (tO.displayName.Contains("Steel"))
                 {
-                    tO.DisplayName = "Steel Beam";
-                    tO.Desc = "Standard steel beam bridge. Good for any length depending on triangle counts.";
+                    tO.displayName = "Steel Beam";
+                    tO.desc = "Standard steel beam bridge. Good for any length depending on triangle counts.";
                     tO.sortID = 4;
                 }
-                else if (tO.DisplayName.Contains("Causeway1"))
+                else if (tO.displayName.Contains("Causeway1"))
                 {
-                    tO.DisplayName = "Causeway Federal";
-                    tO.Desc = "Standard federal highway bridge style. Good for any length depending on triangle counts.";
+                    tO.displayName = "Causeway Federal";
+                    tO.desc = "Standard federal highway bridge style. Good for any length depending on triangle counts.";
                     tO.sortID = 5;
                 }
-                else if (tO.DisplayName.Contains("Causeway2"))
+                else if (tO.displayName.Contains("Causeway2"))
                 {
-                    tO.DisplayName = "Causeway Overpass";
-                    tO.Desc = "Overpass style. Good for any length depending on triangle counts.";
+                    tO.displayName = "Causeway Overpass";
+                    tO.desc = "Overpass style. Good for any length depending on triangle counts.";
                     tO.sortID = 8;
                 }
-                else if (tO.DisplayName.Contains("Causeway3"))
+                else if (tO.displayName.Contains("Causeway3"))
                 {
-                    tO.DisplayName = "Causeway Classic";
-                    tO.Desc = "Classic causeway style. Good for any length depending on triangle counts.";
+                    tO.displayName = "Causeway Classic";
+                    tO.desc = "Classic causeway style. Good for any length depending on triangle counts.";
                     tO.sortID = 7;
                 }
-                else if (tO.DisplayName.Contains("Causeway4"))
+                else if (tO.displayName.Contains("Causeway4"))
                 {
-                    tO.DisplayName = "Causeway Highway";
-                    tO.Desc = "State highway style. Good for any length depending on triangle counts.";
+                    tO.displayName = "Causeway Highway";
+                    tO.desc = "State highway style. Good for any length depending on triangle counts.";
                     tO.sortID = 6;
                 }
             }
 
-            if (tO.bIsDefault && !bIsBridge)
+            if (tO.isDefault && !bIsBridge)
             {
-                if (tO.DisplayName.Contains("GSDTunnel"))
+                if (tO.displayName.Contains("GSDTunnel"))
                 {
-                    tO.DisplayName = "Tunnel";
-                    tO.Desc = "Designed after the Eisenhower tunnel.";
+                    tO.displayName = "Tunnel";
+                    tO.desc = "Designed after the Eisenhower tunnel.";
                 }
-                else if (tO.DisplayName.Contains("GSDGroup-WBeamLeftTurn"))
+                else if (tO.displayName.Contains("GSDGroup-WBeamLeftTurn"))
                 {
-                    tO.DisplayName = "Left turn wbeams";
-                    tO.Desc = "Contains wbeam and signs on right side of road for left turn.";
+                    tO.displayName = "Left turn wbeams";
+                    tO.desc = "Contains wbeam and signs on right side of road for left turn.";
                 }
-                else if (tO.DisplayName.Contains("GSDGroup-KRailLights"))
+                else if (tO.displayName.Contains("GSDGroup-KRailLights"))
                 {
-                    tO.DisplayName = "K-rail with lights";
-                    tO.Desc = "Center divider k-rail with double sided lights. Best used on mostly straight highway type roads.";
+                    tO.displayName = "K-rail with lights";
+                    tO.desc = "Center divider k-rail with double sided lights. Best used on mostly straight highway type roads.";
                 }
-                else if (tO.DisplayName.Contains("GSDGroup-Rumblestrips"))
+                else if (tO.displayName.Contains("GSDGroup-Rumblestrips"))
                 {
-                    tO.DisplayName = "Rumblestrips x2";
-                    tO.Desc = "Rumble strips on both sides of the road.";
+                    tO.displayName = "Rumblestrips x2";
+                    tO.desc = "Rumble strips on both sides of the road.";
                 }
-                else if (tO.DisplayName.Contains("GSDGroup-Fancy1"))
+                else if (tO.displayName.Contains("GSDGroup-Fancy1"))
                 {
-                    tO.DisplayName = "Fancy railing x2";
-                    tO.Desc = "Luxurious railing with lighting on both sides of the road.";
+                    tO.displayName = "Fancy railing x2";
+                    tO.desc = "Luxurious railing with lighting on both sides of the road.";
                 }
             }
 
@@ -507,7 +507,7 @@ public class GSDWizard : EditorWindow
     public static void GetGroupListing(out string[] tNames, out string[] tPaths, int Lanes, bool bIsDefault = false)
     {
 
-        xPath = GSDRootUtil.Dir_GetLibrary();
+        xPath = GSDRootUtil.GetDirLibrary();
         Debug.Log(xPath);
 
         string LaneText = "-2L";
@@ -630,10 +630,10 @@ public class GSDWizard : EditorWindow
                     continue;
                 }
                 tStringPath = SLM.CurrentSplinationString;
-                tDesc = SLM.Desc;
-                tDisplayName = SLM.DisplayName;
-                ThumbString = SLM.ThumbString;
-                bIsBridge = SLM.bIsBridge;
+                tDesc = SLM.desc;
+                tDisplayName = SLM.displayName;
+                ThumbString = SLM.thumbString;
+                bIsBridge = SLM.isBridge;
             }
             else if (tWindowType == WindowTypeEnum.Edge)
             {
@@ -642,11 +642,11 @@ public class GSDWizard : EditorWindow
                 {
                     continue;
                 }
-                tStringPath = ELM.EdgeObjectString;
-                tDesc = ELM.Desc;
-                tDisplayName = ELM.DisplayName;
-                ThumbString = ELM.ThumbString;
-                bIsBridge = ELM.bIsBridge;
+                tStringPath = ELM.edgeObjectString;
+                tDesc = ELM.desc;
+                tDisplayName = ELM.displayName;
+                ThumbString = ELM.thumbString;
+                bIsBridge = ELM.isBridge;
             }
 
             //Don't continue if bridge pieces and this is not a bridge piece:
@@ -658,330 +658,330 @@ public class GSDWizard : EditorWindow
             GSDRoadUtil.WizardObject tO = new GSDRoadUtil.WizardObject();
             try
             {
-                tO.Thumb = (Texture2D) AssetDatabase.LoadAssetAtPath(ThumbString, typeof(Texture2D)) as Texture2D;
+                tO.thumb = (Texture2D) AssetDatabase.LoadAssetAtPath(ThumbString, typeof(Texture2D)) as Texture2D;
             }
             catch
             {
-                tO.Thumb = null;
+                tO.thumb = null;
             }
-            if (tO.Thumb == null)
+            if (tO.thumb == null)
             {
                 try
                 {
                     GameObject xObj = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tStringPath, typeof(GameObject)) as GameObject;
-                    tO.Thumb = AssetPreview.GetAssetPreview(xObj);
+                    tO.thumb = AssetPreview.GetAssetPreview(xObj);
                 }
                 catch
                 {
-                    tO.Thumb = null;
+                    tO.thumb = null;
                 }
             }
-            tO.DisplayName = tDisplayName;
-            tO.FileName = tNames[i];
+            tO.displayName = tDisplayName;
+            tO.fileName = tNames[i];
             tO.FullPath = tPath;
-            tO.Desc = tDesc;
-            tO.bIsDefault = bIsDefault;
+            tO.desc = tDesc;
+            tO.isDefault = bIsDefault;
 
             if (bIsDefault && tWindowType == WindowTypeEnum.Edge)
             {
-                if (tO.DisplayName.Contains("GSDAtten"))
+                if (tO.displayName.Contains("GSDAtten"))
                 {
-                    tO.DisplayName = "Attenuator";
-                    tO.Desc = "Standard double WBeam with impact absorption.";
+                    tO.displayName = "Attenuator";
+                    tO.desc = "Standard double WBeam with impact absorption.";
                 }
-                else if (tO.DisplayName.Contains("GSDGreenBlinder"))
+                else if (tO.displayName.Contains("GSDGreenBlinder"))
                 {
-                    tO.DisplayName = "KRail Blinder";
-                    tO.Desc = "Best results when placed on KRail for KRail blinders.";
+                    tO.displayName = "KRail Blinder";
+                    tO.desc = "Best results when placed on KRail for KRail blinders.";
                     tO.sortID = 5;
                 }
-                else if (tO.DisplayName.Contains("GSDRoadBarrelStatic"))
+                else if (tO.displayName.Contains("GSDRoadBarrelStatic"))
                 {
-                    tO.DisplayName = "Sand Barrel Static";
-                    tO.Desc = "One static sand barrel. Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Sand Barrel Static";
+                    tO.desc = "One static sand barrel. Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDRoadBarrelRigid"))
+                else if (tO.displayName.Contains("GSDRoadBarrelRigid"))
                 {
-                    tO.DisplayName = "Sand Barrel Rigid";
-                    tO.Desc = "One rigid sand barrel. Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Sand Barrel Rigid";
+                    tO.desc = "One rigid sand barrel. Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDRoadBarrel3Static"))
+                else if (tO.displayName.Contains("GSDRoadBarrel3Static"))
                 {
-                    tO.DisplayName = "Sand Barrels Static 3";
-                    tO.Desc = "Three static sand barrels in a line. Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Sand Barrels Static 3";
+                    tO.desc = "Three static sand barrels in a line. Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDRoadBarrel3Rigid"))
+                else if (tO.displayName.Contains("GSDRoadBarrel3Rigid"))
                 {
-                    tO.DisplayName = "Sand Barrels Rigid 3";
-                    tO.Desc = "Three rigid sand barrels in a line. Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Sand Barrels Rigid 3";
+                    tO.desc = "Three rigid sand barrels in a line. Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDRoadBarrel7Static"))
+                else if (tO.displayName.Contains("GSDRoadBarrel7Static"))
                 {
-                    tO.DisplayName = "Sand Barrels Static 7";
-                    tO.Desc = "Seven static sand barrels in standard formation. Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Sand Barrels Static 7";
+                    tO.desc = "Seven static sand barrels in standard formation. Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDRoadBarrel7Rigid"))
+                else if (tO.displayName.Contains("GSDRoadBarrel7Rigid"))
                 {
-                    tO.DisplayName = "Sand Barrel Rigid 7";
-                    tO.Desc = "Seven rigid sand barrels in standard formation. Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Sand Barrel Rigid 7";
+                    tO.desc = "Seven rigid sand barrels in standard formation. Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDRoadConBarrelStatic"))
+                else if (tO.displayName.Contains("GSDRoadConBarrelStatic"))
                 {
-                    tO.DisplayName = "Con Barrels Static";
-                    tO.Desc = "Static road construction barrels.";
+                    tO.displayName = "Con Barrels Static";
+                    tO.desc = "Static road construction barrels.";
                     tO.sortID = 3;
                 }
-                else if (tO.DisplayName.Contains("GSDRoadConBarrelRigid"))
+                else if (tO.displayName.Contains("GSDRoadConBarrelRigid"))
                 {
-                    tO.DisplayName = "Con Barrels Rigid";
-                    tO.Desc = "Rigid road construction barrels.";
+                    tO.displayName = "Con Barrels Rigid";
+                    tO.desc = "Rigid road construction barrels.";
                     tO.sortID = 3;
                 }
-                else if (tO.DisplayName.Contains("GSDTrafficConeStatic"))
+                else if (tO.displayName.Contains("GSDTrafficConeStatic"))
                 {
-                    tO.DisplayName = "Traffic cones Static";
-                    tO.Desc = "Static traffic cones.";
+                    tO.displayName = "Traffic cones Static";
+                    tO.desc = "Static traffic cones.";
                     tO.sortID = 4;
                 }
-                else if (tO.DisplayName.Contains("GSDTrafficConeRigid"))
+                else if (tO.displayName.Contains("GSDTrafficConeRigid"))
                 {
-                    tO.DisplayName = "Traffic cones Rigid";
-                    tO.Desc = "Rigid traffic cones.";
+                    tO.displayName = "Traffic cones Rigid";
+                    tO.desc = "Rigid traffic cones.";
                     tO.sortID = 4;
                 }
-                else if (tO.DisplayName.Contains("GSDRoadReflector"))
+                else if (tO.displayName.Contains("GSDRoadReflector"))
                 {
-                    tO.DisplayName = "Road reflectors";
-                    tO.Desc = "Placed one center line of road for center line reflection.";
+                    tO.displayName = "Road reflectors";
+                    tO.desc = "Placed one center line of road for center line reflection.";
                     tO.sortID = 4;
                 }
-                else if (tO.DisplayName.Contains("GSDStopSign"))
+                else if (tO.displayName.Contains("GSDStopSign"))
                 {
-                    tO.DisplayName = "Stop sign";
-                    tO.Desc = "Standard specification non-interstate stop sign.";
+                    tO.displayName = "Stop sign";
+                    tO.desc = "Standard specification non-interstate stop sign.";
                 }
-                else if (tO.DisplayName.Contains("GSDStreetLightSingle"))
+                else if (tO.displayName.Contains("GSDStreetLightSingle"))
                 {
-                    tO.DisplayName = "Streetlight Singlesided";
-                    tO.Desc = "Best used on side of roads.";
+                    tO.displayName = "Streetlight Singlesided";
+                    tO.desc = "Best used on side of roads.";
                 }
-                else if (tO.DisplayName.Contains("GSDStreetLightDouble"))
+                else if (tO.displayName.Contains("GSDStreetLightDouble"))
                 {
-                    tO.DisplayName = "Streetlight Doublesided";
-                    tO.Desc = "Best results when embedded in KRail in centerline of road.";
+                    tO.displayName = "Streetlight Doublesided";
+                    tO.desc = "Best results when embedded in KRail in centerline of road.";
                 }
-                else if (tO.DisplayName.Contains("GSDWarningSign1"))
+                else if (tO.displayName.Contains("GSDWarningSign1"))
                 {
-                    tO.DisplayName = "Warning Sign #1";
-                    tO.Desc = "Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Warning Sign #1";
+                    tO.desc = "Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDWarningSign2"))
+                else if (tO.displayName.Contains("GSDWarningSign2"))
                 {
-                    tO.DisplayName = "Warning Sign #2";
-                    tO.Desc = "Best results when placed in front of railings or bridges.";
+                    tO.displayName = "Warning Sign #2";
+                    tO.desc = "Best results when placed in front of railings or bridges.";
                 }
-                else if (tO.DisplayName.Contains("GSDSignRightTurnOnly"))
+                else if (tO.displayName.Contains("GSDSignRightTurnOnly"))
                 {
-                    tO.DisplayName = "Right turn only";
-                    tO.Desc = "Best results when placed near intersection right turn lane.";
+                    tO.displayName = "Right turn only";
+                    tO.desc = "Best results when placed near intersection right turn lane.";
                     tO.sortID = 4;
                 }
 
-                else if (tO.DisplayName.Contains("GSDSign330"))
+                else if (tO.displayName.Contains("GSDSign330"))
                 {
-                    tO.DisplayName = "Signs 330";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-330\" as the search term.";
+                    tO.displayName = "Signs 330";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-330\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign396"))
+                else if (tO.displayName.Contains("GSDSign396"))
                 {
-                    tO.DisplayName = "Signs 396";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-396\" as the search term.";
+                    tO.displayName = "Signs 396";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-396\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign617-Small"))
+                else if (tO.displayName.Contains("GSDSign617-Small"))
                 {
-                    tO.DisplayName = "Signs 617 small";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-617\" as the search term.";
+                    tO.displayName = "Signs 617 small";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-617\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign617"))
+                else if (tO.displayName.Contains("GSDSign617"))
                 {
-                    tO.DisplayName = "Signs 617";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-617\" as the search term.";
+                    tO.displayName = "Signs 617";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-617\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign861-Small"))
+                else if (tO.displayName.Contains("GSDSign861-Small"))
                 {
-                    tO.DisplayName = "Signs 861 small";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-861\" as the search term.";
+                    tO.displayName = "Signs 861 small";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-861\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign861"))
+                else if (tO.displayName.Contains("GSDSign861"))
                 {
-                    tO.DisplayName = "Sign type 861";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-861\" as the search term.";
+                    tO.displayName = "Sign type 861";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-861\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign988-Small"))
+                else if (tO.displayName.Contains("GSDSign988-Small"))
                 {
-                    tO.DisplayName = "Signs 988 small";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-988\" as the search term.";
+                    tO.displayName = "Signs 988 small";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-988\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSign988"))
+                else if (tO.displayName.Contains("GSDSign988"))
                 {
-                    tO.DisplayName = "Signs 988";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-988\" as the search term.";
+                    tO.displayName = "Signs 988";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-988\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSignDiamond"))
+                else if (tO.displayName.Contains("GSDSignDiamond"))
                 {
-                    tO.DisplayName = "Signs diamond";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-diamond\" as the search term.";
+                    tO.displayName = "Signs diamond";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-diamond\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSignSquare-Small"))
+                else if (tO.displayName.Contains("GSDSignSquare-Small"))
                 {
-                    tO.DisplayName = "Signs square small";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-Square\" as the search term.";
+                    tO.displayName = "Signs square small";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-Square\" as the search term.";
                     tO.sortID = 21;
                 }
-                else if (tO.DisplayName.Contains("GSDSignSquare"))
+                else if (tO.displayName.Contains("GSDSignSquare"))
                 {
-                    tO.DisplayName = "Signs square";
-                    tO.Desc = "Interchangeable materials, use \"GSDFedSign-Square\" as the search term.";
+                    tO.displayName = "Signs square";
+                    tO.desc = "Interchangeable materials, use \"GSDFedSign-Square\" as the search term.";
                     tO.sortID = 21;
                 }
             }
 
             if (bIsDefault && tWindowType == WindowTypeEnum.Extrusion)
             {
-                if (tO.DisplayName.Contains("GSDKRail"))
+                if (tO.displayName.Contains("GSDKRail"))
                 {
-                    tO.DisplayName = "KRail";
-                    tO.Desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with down ends.";
+                    tO.displayName = "KRail";
+                    tO.desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with down ends.";
                 }
-                else if (tO.DisplayName.Contains("GSDKRailCurvedR"))
+                else if (tO.displayName.Contains("GSDKRailCurvedR"))
                 {
-                    tO.DisplayName = "KRail Curved Right";
-                    tO.Desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with curved ends for right shoulder.";
+                    tO.displayName = "KRail Curved Right";
+                    tO.desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with curved ends for right shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDKRailCurvedL"))
+                else if (tO.displayName.Contains("GSDKRailCurvedL"))
                 {
-                    tO.DisplayName = "KRail Curved Left";
-                    tO.Desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with curved ends for left shoulder.";
+                    tO.displayName = "KRail Curved Left";
+                    tO.desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with curved ends for left shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDWBeam1R"))
+                else if (tO.displayName.Contains("GSDWBeam1R"))
                 {
-                    tO.DisplayName = "WBeam Wood Right";
-                    tO.Desc = "Federal spec wooden pole WBeam railing. Best used as outer shoulder railing. Right shoulder.";
+                    tO.displayName = "WBeam Wood Right";
+                    tO.desc = "Federal spec wooden pole WBeam railing. Best used as outer shoulder railing. Right shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDWBeam1L"))
+                else if (tO.displayName.Contains("GSDWBeam1L"))
                 {
-                    tO.DisplayName = "WBeam Wood Left";
-                    tO.Desc = "Federal spec wooden pole WBeam railing. Best used as outer shoulder railing. Left shoulder.";
+                    tO.displayName = "WBeam Wood Left";
+                    tO.desc = "Federal spec wooden pole WBeam railing. Best used as outer shoulder railing. Left shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDWBeam2R"))
+                else if (tO.displayName.Contains("GSDWBeam2R"))
                 {
-                    tO.DisplayName = "WBeam Metal Right";
-                    tO.Desc = "Federal spec metal pole WBeam railing. Best used as outer shoulder railing. Right shoulder.";
+                    tO.displayName = "WBeam Metal Right";
+                    tO.desc = "Federal spec metal pole WBeam railing. Best used as outer shoulder railing. Right shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDWBeam2L"))
+                else if (tO.displayName.Contains("GSDWBeam2L"))
                 {
-                    tO.DisplayName = "WBeam Metal Left";
-                    tO.Desc = "Federal spec metal pole WBeam railing. Best used as outer shoulder railing. Left shoulder.";
+                    tO.displayName = "WBeam Metal Left";
+                    tO.desc = "Federal spec metal pole WBeam railing. Best used as outer shoulder railing. Left shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing1"))
+                else if (tO.displayName.Contains("GSDRailing1"))
                 {
-                    tO.DisplayName = "Railing #1";
-                    tO.Desc = "Standard double square pole railing.";
+                    tO.displayName = "Railing #1";
+                    tO.desc = "Standard double square pole railing.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing2"))
+                else if (tO.displayName.Contains("GSDRailing2"))
                 {
-                    tO.DisplayName = "Railing #2";
-                    tO.Desc = "Standard concrete big block railing.";
+                    tO.displayName = "Railing #2";
+                    tO.desc = "Standard concrete big block railing.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing3"))
+                else if (tO.displayName.Contains("GSDRailing3"))
                 {
-                    tO.DisplayName = "Railing #3";
-                    tO.Desc = "Standard four-strand metal railing.";
+                    tO.displayName = "Railing #3";
+                    tO.desc = "Standard four-strand metal railing.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing5"))
+                else if (tO.displayName.Contains("GSDRailing5"))
                 {
-                    tO.DisplayName = "Railing #5";
-                    tO.Desc = "Basic concrete railing with pylons.";
+                    tO.displayName = "Railing #5";
+                    tO.desc = "Basic concrete railing with pylons.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing6"))
+                else if (tO.displayName.Contains("GSDRailing6"))
                 {
-                    tO.DisplayName = "Railing #6";
-                    tO.Desc = "Standard two-strand metal pole railing.";
+                    tO.displayName = "Railing #6";
+                    tO.desc = "Standard two-strand metal pole railing.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing7"))
+                else if (tO.displayName.Contains("GSDRailing7"))
                 {
-                    tO.DisplayName = "Railing #7";
-                    tO.Desc = "Rock-decorated concrete railing with pylons and double strand rusted look metal railing.";
+                    tO.displayName = "Railing #7";
+                    tO.desc = "Rock-decorated concrete railing with pylons and double strand rusted look metal railing.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing8"))
+                else if (tO.displayName.Contains("GSDRailing8"))
                 {
-                    tO.DisplayName = "Railing #8";
-                    tO.Desc = "Rock-decorated concrete railing with standard single pole metal railing.";
+                    tO.displayName = "Railing #8";
+                    tO.desc = "Rock-decorated concrete railing with standard single pole metal railing.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing9"))
+                else if (tO.displayName.Contains("GSDRailing9"))
                 {
-                    tO.DisplayName = "Railing #9";
-                    tO.Desc = "Very low poly railing used for mobile.";
+                    tO.displayName = "Railing #9";
+                    tO.desc = "Very low poly railing used for mobile.";
                 }
-                else if (tO.DisplayName.Contains("GSDSidewalk"))
+                else if (tO.displayName.Contains("GSDSidewalk"))
                 {
-                    tO.DisplayName = "Sidewalk";
-                    tO.Desc = "Sidewalk.";
+                    tO.displayName = "Sidewalk";
+                    tO.desc = "Sidewalk.";
                 }
-                else if (tO.DisplayName.Contains("GSDRumbleStrip"))
+                else if (tO.displayName.Contains("GSDRumbleStrip"))
                 {
-                    tO.DisplayName = "Rumblestrip";
-                    tO.Desc = "State spec rumblestrip. For best results place several cm from road edge into shoulder.";
+                    tO.displayName = "Rumblestrip";
+                    tO.desc = "State spec rumblestrip. For best results place several cm from road edge into shoulder.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing4R"))
+                else if (tO.displayName.Contains("GSDRailing4R"))
                 {
-                    tO.DisplayName = "Railing #4 Right";
-                    tO.Desc = "Three bar angled pole railing. Right side of road.";
+                    tO.displayName = "Railing #4 Right";
+                    tO.desc = "Three bar angled pole railing. Right side of road.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing4L"))
+                else if (tO.displayName.Contains("GSDRailing4L"))
                 {
-                    tO.DisplayName = "Railing #4 Left";
-                    tO.Desc = "Three bar angled pole railing. Left side of road.";
+                    tO.displayName = "Railing #4 Left";
+                    tO.desc = "Three bar angled pole railing. Left side of road.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing4-LightR"))
+                else if (tO.displayName.Contains("GSDRailing4-LightR"))
                 {
-                    tO.DisplayName = "Railing #4 Light Right";
-                    tO.Desc = "Three bar angled pole railing. Right side of road. Light version with fewer triangle count.";
+                    tO.displayName = "Railing #4 Light Right";
+                    tO.desc = "Three bar angled pole railing. Right side of road. Light version with fewer triangle count.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailing4-LightL"))
+                else if (tO.displayName.Contains("GSDRailing4-LightL"))
                 {
-                    tO.DisplayName = "Railing #4 Light Left";
-                    tO.Desc = "Three bar angled pole railing. Left side of road. Light version with fewer triangle count.";
+                    tO.displayName = "Railing #4 Light Left";
+                    tO.desc = "Three bar angled pole railing. Left side of road. Light version with fewer triangle count.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailingBase1"))
+                else if (tO.displayName.Contains("GSDRailingBase1"))
                 {
-                    tO.DisplayName = "Railing base #1";
-                    tO.Desc = "Use as a base on other railings to create more detail.";
+                    tO.displayName = "Railing base #1";
+                    tO.desc = "Use as a base on other railings to create more detail.";
                 }
-                else if (tO.DisplayName.Contains("GSDRailingBase2"))
+                else if (tO.displayName.Contains("GSDRailingBase2"))
                 {
-                    tO.DisplayName = "Railing base #2";
-                    tO.Desc = "Use as a base on other railings to create more detail.";
+                    tO.displayName = "Railing base #2";
+                    tO.desc = "Use as a base on other railings to create more detail.";
                 }
-                else if (tO.DisplayName.Contains("GSDCableBarrier-Light"))
+                else if (tO.displayName.Contains("GSDCableBarrier-Light"))
                 {
-                    tO.DisplayName = "Cable barrier 10m";
-                    tO.Desc = "Cable barrier 10m light triangle version. Best used as center divider or as railing barriers.";
+                    tO.displayName = "Cable barrier 10m";
+                    tO.desc = "Cable barrier 10m light triangle version. Best used as center divider or as railing barriers.";
                     tO.sortID = 20;
                 }
-                else if (tO.DisplayName.Contains("GSDCableBarrier"))
+                else if (tO.displayName.Contains("GSDCableBarrier"))
                 {
-                    tO.DisplayName = "Cable barrier 5m";
-                    tO.Desc = "Cable barrier 5m. Best used as center divider or as railing barriers.";
+                    tO.displayName = "Cable barrier 5m";
+                    tO.desc = "Cable barrier 5m. Best used as center divider or as railing barriers.";
                     tO.sortID = 20;
                 }
             }
@@ -996,9 +996,9 @@ public class GSDWizard : EditorWindow
     {
         oList.Sort((GSDRoadUtil.WizardObject t1, GSDRoadUtil.WizardObject t2) =>
         {
-            if (t1.bIsDefault != t2.bIsDefault)
+            if (t1.isDefault != t2.isDefault)
             {
-                return t1.bIsDefault.CompareTo(t2.bIsDefault);
+                return t1.isDefault.CompareTo(t2.isDefault);
             }
             else if (t1.sortID != t2.sortID)
             {
@@ -1006,7 +1006,7 @@ public class GSDWizard : EditorWindow
             }
             else
             {
-                return t1.DisplayName.CompareTo(t2.DisplayName);
+                return t1.displayName.CompareTo(t2.displayName);
             }
         });
     }

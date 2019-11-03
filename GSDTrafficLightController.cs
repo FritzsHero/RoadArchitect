@@ -6,116 +6,142 @@ using UnityEngine;
 [System.Serializable]
 public class GSDTrafficLightController
 {
-    public GameObject LightLeftObj;
-    public GameObject LightRightObj;
-    public GameObject[] LightsObj;
-
-    public MeshRenderer MR_Left;
-    public MeshRenderer MR_Right;
-    public MeshRenderer[] MR_MainsStorage;
-    public MeshRenderer MR_Main;
-
-    public Light LightLeft_R;
-    public Light LightLeft_Y;
-    public Light LightLeft_G;
-
-    public Light LightRight_R;
-    public Light LightRight_Y;
-    public Light LightRight_G;
-
-    public Light[] Lights_R;
-    public Light[] Lights_Y;
-    public Light[] Lights_G;
-
     //Enums for controller:
     public enum iLightControllerEnum { Regular, LeftTurn, MasterLeft1, MasterLeft2, Red }
     //Enums for actual lights:
     public enum iLightStatusEnum { Regular, LeftTurn, MasterLeft, Red, RightTurn }
     public enum iLightSubStatusEnum { Green, Yellow, Red }
     public enum iLightYieldSubStatusEnum { Green, Yellow, Red, YellowTurn, GreenTurn }
-    public iLightStatusEnum iLightStatus = iLightStatusEnum.Red;
-    public iLightSubStatusEnum iLightSubStatus = iLightSubStatusEnum.Green;
 
-    private bool bLeft = false;
-    private bool bRight = false;
-    private bool bMain = false;
-    private bool bUseSharedMaterial = false;
-    private bool bLeftTurnYieldOnGreen = true;
-    private bool bLightsEnabled = true;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("LightLeftObj")]
+    public GameObject lightLeftObject;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightRightObj")]
+    public GameObject lightRightObject;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightsObj")]
+    public GameObject[] lightsObjects;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("MR_Left")]
+    public MeshRenderer leftMR;
+    [UnityEngine.Serialization.FormerlySerializedAs("MR_Right")]
+    public MeshRenderer rightMR;
+    [UnityEngine.Serialization.FormerlySerializedAs("MR_MainsStorage")]
+    public MeshRenderer[] mainMRStorage;
+    [UnityEngine.Serialization.FormerlySerializedAs("MR_Main")]
+    public MeshRenderer mainMR;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("LightLeft_R")]
+    public Light lightLeftR;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightLeft_Y")]
+    public Light lightLeftY;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightLeft_G")]
+    public Light lightLeftG;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("LightRight_R")]
+    public Light lightRightR;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightRight_Y")]
+    public Light lightRightY;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightRight_G")]
+    public Light lightRightG;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("Lights_R")]
+    public Light[] lightsR;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lights_Y")]
+    public Light[] lightsY;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lights_G")]
+    public Light[] lightsG;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("iLightStatus")]
+    public iLightStatusEnum lightStatus = iLightStatusEnum.Red;
+    [UnityEngine.Serialization.FormerlySerializedAs("iLightSubStatus")]
+    public iLightSubStatusEnum lightSubStatus = iLightSubStatusEnum.Green;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("bLeft")]
+    private bool isLeft = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bRight")]
+    private bool isRight = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bMain")]
+    private bool isMain = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bUseSharedMaterial")]
+    private bool isUsingSharedMaterial = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bLeftTurnYieldOnGreen")]
+    private bool isLeftTurnYieldOnGreen = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bLightsEnabled")]
+    private bool isLightsEnabled = true;
 
 
     #region "Constructor"
     public GSDTrafficLightController(ref GameObject _LightLeft, ref GameObject _LightRight, ref GameObject[] _Lights, ref MeshRenderer _MR_Left, ref MeshRenderer _MR_Right, ref MeshRenderer[] MR_Mains)
     {
-        LightLeftObj = _LightLeft;
-        LightRightObj = _LightRight;
-        LightsObj = _Lights;
+        lightLeftObject = _LightLeft;
+        lightRightObject = _LightRight;
+        lightsObjects = _Lights;
 
-        MR_Left = _MR_Left;
-        MR_Right = _MR_Right;
-        MR_MainsStorage = MR_Mains;
-        MR_Main = MR_Mains[0];
+        leftMR = _MR_Left;
+        rightMR = _MR_Right;
+        mainMRStorage = MR_Mains;
+        mainMR = MR_Mains[0];
 
         Light[] tLights;
-        if (LightLeftObj != null)
+        if (lightLeftObject != null)
         {
-            tLights = LightLeftObj.transform.GetComponentsInChildren<Light>();
+            tLights = lightLeftObject.transform.GetComponentsInChildren<Light>();
             foreach (Light tLight in tLights)
             {
                 if (tLight.transform.name.ToLower().Contains("redlight"))
                 {
-                    LightLeft_R = tLight;
+                    lightLeftR = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("yellowlight"))
                 {
-                    LightLeft_Y = tLight;
+                    lightLeftY = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("greenl"))
                 {
-                    LightLeft_G = tLight;
+                    lightLeftG = tLight;
                 }
             }
         }
-        if (LightRightObj != null)
+        if (lightRightObject != null)
         {
-            tLights = LightRightObj.transform.GetComponentsInChildren<Light>();
+            tLights = lightRightObject.transform.GetComponentsInChildren<Light>();
             foreach (Light tLight in tLights)
             {
                 if (tLight.transform.name.ToLower().Contains("redlight"))
                 {
-                    LightRight_R = tLight;
+                    lightRightR = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("yellowlight"))
                 {
-                    LightRight_Y = tLight;
+                    lightRightY = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("greenl"))
                 {
-                    LightRight_G = tLight;
+                    lightRightG = tLight;
                 }
             }
         }
 
-        int mCount = LightsObj.Length;
-        Lights_R = new Light[mCount];
-        Lights_Y = new Light[mCount];
-        Lights_G = new Light[mCount];
+        int mCount = lightsObjects.Length;
+        lightsR = new Light[mCount];
+        lightsY = new Light[mCount];
+        lightsG = new Light[mCount];
         for (int index = 0; index < mCount; index++)
         {
-            tLights = LightsObj[index].transform.GetComponentsInChildren<Light>();
+            tLights = lightsObjects[index].transform.GetComponentsInChildren<Light>();
             foreach (Light tLight in tLights)
             {
                 if (tLight.transform.name.ToLower().Contains("redlight"))
                 {
-                    Lights_R[index] = tLight;
+                    lightsR[index] = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("yellowlight"))
                 {
-                    Lights_Y[index] = tLight;
+                    lightsY[index] = tLight;
                 }
                 if (tLight.transform.name.ToLower().Contains("greenl"))
                 {
-                    Lights_G[index] = tLight;
+                    lightsG[index] = tLight;
                 }
             }
         }
@@ -124,13 +150,13 @@ public class GSDTrafficLightController
 
 
     #region "Update"
-    public void UpdateLights(iLightStatusEnum tLightStatus, iLightSubStatusEnum tLightSubStatus, bool _bLightsEnabled)
+    public void UpdateLights(iLightStatusEnum _lightStatus, iLightSubStatusEnum _lightSubStatus, bool _isLightsEnabled)
     {
-        bLightsEnabled = _bLightsEnabled;
-        iLightStatus = tLightStatus;
-        iLightSubStatus = tLightSubStatus;
-        bUseSharedMaterial = false;
-        switch (iLightStatus)
+        isLightsEnabled = _isLightsEnabled;
+        lightStatus = _lightStatus;
+        lightSubStatus = _lightSubStatus;
+        isUsingSharedMaterial = false;
+        switch (lightStatus)
         {
             case iLightStatusEnum.Regular:
                 TriggerRegular();
@@ -155,37 +181,37 @@ public class GSDTrafficLightController
     #region "Triggers"
     private void TriggerRegular()
     {
-        if (bMain)
+        if (isMain)
         {
-            MRChange(ref MR_Main, iLightSubStatus);
-            for (int index = 1; index < MR_MainsStorage.Length; index++)
+            MRChange(ref mainMR, lightSubStatus);
+            for (int index = 1; index < mainMRStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[index], iLightSubStatus);
+                MRChange(ref mainMRStorage[index], lightSubStatus);
             }
-            LightChange(0, iLightSubStatus);
+            LightChange(0, lightSubStatus);
         }
-        if (bLeft)
+        if (isLeft)
         {
-            if (bLeftTurnYieldOnGreen)
+            if (isLeftTurnYieldOnGreen)
             {
-                if (iLightSubStatus == iLightSubStatusEnum.Green)
+                if (lightSubStatus == iLightSubStatusEnum.Green)
                 {
-                    MRChangeLeftYield(ref MR_Left, iLightYieldSubStatusEnum.Green);
+                    MRChangeLeftYield(ref leftMR, iLightYieldSubStatusEnum.Green);
                 }
-                else if (iLightSubStatus == iLightSubStatusEnum.Yellow)
+                else if (lightSubStatus == iLightSubStatusEnum.Yellow)
                 {
-                    MRChangeLeftYield(ref MR_Left, iLightYieldSubStatusEnum.Yellow);
+                    MRChangeLeftYield(ref leftMR, iLightYieldSubStatusEnum.Yellow);
                 }
             }
             else
             {
-                MRChange(ref MR_Left, iLightSubStatusEnum.Red);
+                MRChange(ref leftMR, iLightSubStatusEnum.Red);
                 LightChange(1, iLightSubStatusEnum.Red);
             }
         }
-        if (bRight)
+        if (isRight)
         {
-            MRChange(ref MR_Right, iLightSubStatusEnum.Red);
+            MRChange(ref rightMR, iLightSubStatusEnum.Red);
             LightChange(2, iLightSubStatusEnum.Red);
         }
     }
@@ -193,38 +219,38 @@ public class GSDTrafficLightController
 
     private void TriggerLeftTurn()
     {
-        if (bMain)
+        if (isMain)
         {
-            MRChange(ref MR_Main, iLightSubStatusEnum.Red);
-            for (int i = 1; i < MR_MainsStorage.Length; i++)
+            MRChange(ref mainMR, iLightSubStatusEnum.Red);
+            for (int i = 1; i < mainMRStorage.Length; i++)
             {
-                MRChange(ref MR_MainsStorage[i], iLightSubStatusEnum.Red);
+                MRChange(ref mainMRStorage[i], iLightSubStatusEnum.Red);
             }
             LightChange(0, iLightSubStatusEnum.Red);
         }
-        if (bLeft)
+        if (isLeft)
         {
-            if (bLeftTurnYieldOnGreen)
+            if (isLeftTurnYieldOnGreen)
             {
-                if (iLightSubStatus == iLightSubStatusEnum.Green)
+                if (lightSubStatus == iLightSubStatusEnum.Green)
                 {
-                    MRChangeLeftYield(ref MR_Left, iLightYieldSubStatusEnum.GreenTurn);
+                    MRChangeLeftYield(ref leftMR, iLightYieldSubStatusEnum.GreenTurn);
                 }
-                else if (iLightSubStatus == iLightSubStatusEnum.Yellow)
+                else if (lightSubStatus == iLightSubStatusEnum.Yellow)
                 {
-                    MRChangeLeftYield(ref MR_Left, iLightYieldSubStatusEnum.YellowTurn);
+                    MRChangeLeftYield(ref leftMR, iLightYieldSubStatusEnum.YellowTurn);
                 }
-                LightChange(1, iLightSubStatus);
+                LightChange(1, lightSubStatus);
             }
             else
             {
-                MRChange(ref MR_Left, iLightSubStatus);
-                LightChange(1, iLightSubStatus);
+                MRChange(ref leftMR, lightSubStatus);
+                LightChange(1, lightSubStatus);
             }
         }
-        if (bRight)
+        if (isRight)
         {
-            MRChange(ref MR_Right, iLightSubStatusEnum.Red);
+            MRChange(ref rightMR, iLightSubStatusEnum.Red);
             LightChange(2, iLightSubStatusEnum.Red);
         }
     }
@@ -232,291 +258,291 @@ public class GSDTrafficLightController
 
     private void TriggerMasterLeft()
     {
-        if (bMain)
+        if (isMain)
         {
-            MRChange(ref MR_Main, iLightSubStatus);
-            for (int index = 1; index < MR_MainsStorage.Length; index++)
+            MRChange(ref mainMR, lightSubStatus);
+            for (int index = 1; index < mainMRStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[index], iLightSubStatus);
+                MRChange(ref mainMRStorage[index], lightSubStatus);
             }
-            LightChange(0, iLightSubStatus);
+            LightChange(0, lightSubStatus);
         }
-        if (bLeft)
+        if (isLeft)
         {
-            if (iLightSubStatus == iLightSubStatusEnum.Green)
+            if (lightSubStatus == iLightSubStatusEnum.Green)
             {
-                MRChangeLeftYield(ref MR_Left, iLightYieldSubStatusEnum.GreenTurn);
+                MRChangeLeftYield(ref leftMR, iLightYieldSubStatusEnum.GreenTurn);
             }
-            else if (iLightSubStatus == iLightSubStatusEnum.Yellow)
+            else if (lightSubStatus == iLightSubStatusEnum.Yellow)
             {
-                MRChangeLeftYield(ref MR_Left, iLightYieldSubStatusEnum.YellowTurn);
+                MRChangeLeftYield(ref leftMR, iLightYieldSubStatusEnum.YellowTurn);
             }
-            LightChange(1, iLightSubStatus);
+            LightChange(1, lightSubStatus);
         }
-        if (bRight)
+        if (isRight)
         {
-            MRChange(ref MR_Right, iLightSubStatus);
-            LightChange(2, iLightSubStatus);
+            MRChange(ref rightMR, lightSubStatus);
+            LightChange(2, lightSubStatus);
         }
     }
 
 
     private void TriggerRightTurn()
     {
-        if (bMain)
+        if (isMain)
         {
-            MRChange(ref MR_Main, iLightSubStatusEnum.Red);
-            for (int index = 1; index < MR_MainsStorage.Length; index++)
+            MRChange(ref mainMR, iLightSubStatusEnum.Red);
+            for (int index = 1; index < mainMRStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[index], iLightSubStatusEnum.Red);
+                MRChange(ref mainMRStorage[index], iLightSubStatusEnum.Red);
             }
             LightChange(0, iLightSubStatusEnum.Red);
         }
-        if (bLeft)
+        if (isLeft)
         {
-            MRChange(ref MR_Left, iLightSubStatusEnum.Red);
+            MRChange(ref leftMR, iLightSubStatusEnum.Red);
             LightChange(1, iLightSubStatusEnum.Red);
         }
-        if (bRight)
+        if (isRight)
         {
-            MRChange(ref MR_Right, iLightSubStatus);
-            LightChange(2, iLightSubStatus);
+            MRChange(ref rightMR, lightSubStatus);
+            LightChange(2, lightSubStatus);
         }
     }
 
 
     private void TriggerRed()
     {
-        if (bMain)
+        if (isMain)
         {
-            MRChange(ref MR_Main, iLightSubStatusEnum.Red);
-            for (int index = 1; index < MR_MainsStorage.Length; index++)
+            MRChange(ref mainMR, iLightSubStatusEnum.Red);
+            for (int index = 1; index < mainMRStorage.Length; index++)
             {
-                MRChange(ref MR_MainsStorage[index], iLightSubStatusEnum.Red);
+                MRChange(ref mainMRStorage[index], iLightSubStatusEnum.Red);
             }
             LightChange(0, iLightSubStatusEnum.Red);
         }
-        if (bLeft)
+        if (isLeft)
         {
-            MRChange(ref MR_Left, iLightSubStatusEnum.Red);
+            MRChange(ref leftMR, iLightSubStatusEnum.Red);
             LightChange(1, iLightSubStatusEnum.Red);
         }
-        if (bRight)
+        if (isRight)
         {
-            MRChange(ref MR_Right, iLightSubStatusEnum.Red);
+            MRChange(ref rightMR, iLightSubStatusEnum.Red);
             LightChange(2, iLightSubStatusEnum.Red);
         }
     }
     #endregion
 
 
-    private void MRChange(ref MeshRenderer MR, iLightSubStatusEnum iLSSE)
+    private void MRChange(ref MeshRenderer _MR, iLightSubStatusEnum _lightSub)
     {
-        if (bUseSharedMaterial)
+        if (isUsingSharedMaterial)
         {
-            if (iLSSE == iLightSubStatusEnum.Green)
+            if (_lightSub == iLightSubStatusEnum.Green)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
             }
-            else if (iLSSE == iLightSubStatusEnum.Yellow)
+            else if (_lightSub == iLightSubStatusEnum.Yellow)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
             }
-            else if (iLSSE == iLightSubStatusEnum.Red)
+            else if (_lightSub == iLightSubStatusEnum.Red)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0f, 0f);
             }
         }
         else
         {
-            if (iLSSE == iLightSubStatusEnum.Green)
+            if (_lightSub == iLightSubStatusEnum.Green)
             {
-                MR.material.mainTextureOffset = new Vector2(0.667f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0.667f, 0f);
             }
-            else if (iLSSE == iLightSubStatusEnum.Yellow)
+            else if (_lightSub == iLightSubStatusEnum.Yellow)
             {
-                MR.material.mainTextureOffset = new Vector2(0.334f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0.334f, 0f);
             }
-            else if (iLSSE == iLightSubStatusEnum.Red)
+            else if (_lightSub == iLightSubStatusEnum.Red)
             {
-                MR.material.mainTextureOffset = new Vector2(0f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0f, 0f);
             }
         }
     }
 
 
-    private void MRChangeLeftYield(ref MeshRenderer MR, iLightYieldSubStatusEnum iLYSSE)
+    private void MRChangeLeftYield(ref MeshRenderer _MR, iLightYieldSubStatusEnum _lightYieldSub)
     {
-        if (bUseSharedMaterial)
+        if (isUsingSharedMaterial)
         {
-            if (iLYSSE == iLightYieldSubStatusEnum.Green)
+            if (_lightYieldSub == iLightYieldSubStatusEnum.Green)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.Yellow)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.Yellow)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.Red)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.Red)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.YellowTurn)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.YellowTurn)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0.6f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0.6f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.GreenTurn)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.GreenTurn)
             {
-                MR.sharedMaterial.mainTextureOffset = new Vector2(0.8f, 0f);
+                _MR.sharedMaterial.mainTextureOffset = new Vector2(0.8f, 0f);
             }
         }
         else
         {
-            if (iLYSSE == iLightYieldSubStatusEnum.Green)
+            if (_lightYieldSub == iLightYieldSubStatusEnum.Green)
             {
-                MR.material.mainTextureOffset = new Vector2(0.4f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0.4f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.Yellow)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.Yellow)
             {
-                MR.material.mainTextureOffset = new Vector2(0.2f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0.2f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.Red)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.Red)
             {
-                MR.material.mainTextureOffset = new Vector2(0f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.YellowTurn)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.YellowTurn)
             {
-                MR.material.mainTextureOffset = new Vector2(0.6f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0.6f, 0f);
             }
-            else if (iLYSSE == iLightYieldSubStatusEnum.GreenTurn)
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.GreenTurn)
             {
-                MR.material.mainTextureOffset = new Vector2(0.8f, 0f);
+                _MR.material.mainTextureOffset = new Vector2(0.8f, 0f);
             }
         }
     }
 
 
-    private void LightChange(int tIndex, iLightSubStatusEnum iLSSE)
+    private void LightChange(int _index, iLightSubStatusEnum _lightSub)
     {
-        if (!bLightsEnabled)
+        if (!isLightsEnabled)
         {
-            int mCount = MR_MainsStorage.Length;
-            for (int index = 0; index < mCount; index++)
+            int meshCount = mainMRStorage.Length;
+            for (int index = 0; index < meshCount; index++)
             {
-                Lights_R[index].enabled = false;
-                Lights_Y[index].enabled = false;
-                Lights_G[index].enabled = false;
+                lightsR[index].enabled = false;
+                lightsY[index].enabled = false;
+                lightsG[index].enabled = false;
             }
-            if (LightLeft_R != null)
+            if (lightLeftR != null)
             {
-                LightLeft_R.enabled = false;
+                lightLeftR.enabled = false;
             }
-            if (LightLeft_Y != null)
+            if (lightLeftY != null)
             {
-                LightLeft_Y.enabled = false;
+                lightLeftY.enabled = false;
             }
-            if (LightLeft_G != null)
+            if (lightLeftG != null)
             {
-                LightLeft_G.enabled = false;
+                lightLeftG.enabled = false;
             }
-            if (LightRight_R != null)
+            if (lightRightR != null)
             {
-                LightRight_R.enabled = false;
+                lightRightR.enabled = false;
             }
-            if (LightRight_Y != null)
+            if (lightRightY != null)
             {
-                LightRight_Y.enabled = false;
+                lightRightY.enabled = false;
             }
-            if (LightRight_G != null)
+            if (lightRightG != null)
             {
-                LightRight_G.enabled = false;
+                lightRightG.enabled = false;
             }
             return;
         }
 
-        if (tIndex == 0)
+        if (_index == 0)
         {
             //Main:
-            int mCount = MR_MainsStorage.Length;
+            int mCount = mainMRStorage.Length;
             for (int index = 0; index < mCount; index++)
             {
-                LightChangeHelper(ref Lights_R[index], ref Lights_Y[index], ref Lights_G[index], iLSSE);
+                LightChangeHelper(ref lightsR[index], ref lightsY[index], ref lightsG[index], _lightSub);
             }
         }
-        else if (tIndex == 1)
+        else if (_index == 1)
         {
             //Left:
-            LightChangeHelper(ref LightLeft_R, ref LightLeft_Y, ref LightLeft_G, iLSSE);
+            LightChangeHelper(ref lightLeftR, ref lightLeftY, ref lightLeftG, _lightSub);
         }
-        else if (tIndex == 2)
+        else if (_index == 2)
         {
             //Right:
-            LightChangeHelper(ref LightRight_R, ref LightRight_Y, ref LightRight_G, iLSSE);
+            LightChangeHelper(ref lightRightR, ref lightRightY, ref lightRightG, _lightSub);
         }
     }
 
 
-    private void LightChangeHelper(ref Light tRed, ref Light tYellow, ref Light tGreen, iLightSubStatusEnum iLSSE)
+    private void LightChangeHelper(ref Light _red, ref Light _yellow, ref Light _green, iLightSubStatusEnum _lightSub)
     {
-        if (iLSSE == iLightSubStatusEnum.Green)
+        if (_lightSub == iLightSubStatusEnum.Green)
         {
-            tRed.enabled = false;
-            tYellow.enabled = false;
-            tGreen.enabled = true;
+            _red.enabled = false;
+            _yellow.enabled = false;
+            _green.enabled = true;
         }
-        else if (iLSSE == iLightSubStatusEnum.Yellow)
+        else if (_lightSub == iLightSubStatusEnum.Yellow)
         {
-            tRed.enabled = false;
-            tYellow.enabled = true;
-            tGreen.enabled = false;
+            _red.enabled = false;
+            _yellow.enabled = true;
+            _green.enabled = false;
         }
-        else if (iLSSE == iLightSubStatusEnum.Red)
+        else if (_lightSub == iLightSubStatusEnum.Red)
         {
-            tRed.enabled = true;
-            tYellow.enabled = false;
-            tGreen.enabled = false;
+            _red.enabled = true;
+            _yellow.enabled = false;
+            _green.enabled = false;
         }
     }
 
 
     #region "Setup"
-    public void Setup(bool bLeftYield)
+    public void Setup(bool _isLeftYield)
     {
-        SetupObject(MR_Left);
-        SetupObject(MR_Right);
+        SetupObject(leftMR);
+        SetupObject(rightMR);
         SetupMainObjects();
-        bLeft = (MR_Left != null);
-        bRight = (MR_Right != null);
-        bMain = (MR_Main != null);
-        bLeftTurnYieldOnGreen = bLeftYield;
+        isLeft = (leftMR != null);
+        isRight = (rightMR != null);
+        isMain = (mainMR != null);
+        isLeftTurnYieldOnGreen = _isLeftYield;
     }
 
 
     private void SetupMainObjects()
     {
-        if (MR_Main == null)
+        if (mainMR == null)
         {
             return;
         }
-        int mCount = MR_MainsStorage.Length;
-        if (mCount == 0)
+        int meshCount = mainMRStorage.Length;
+        if (meshCount == 0)
         {
             return;
         }
-        SetupObject(MR_Main);
-        if (mCount > 1)
+        SetupObject(mainMR);
+        if (meshCount > 1)
         {
-            for (int index = 1; index < mCount; index++)
+            for (int index = 1; index < meshCount; index++)
             {
-                if (bUseSharedMaterial)
+                if (isUsingSharedMaterial)
                 {
-                    MR_MainsStorage[index].sharedMaterial = MR_Main.sharedMaterial;
+                    mainMRStorage[index].sharedMaterial = mainMR.sharedMaterial;
                 }
                 else
                 {
                     Material[] materials = new Material[1];
-                    materials[0] = MR_Main.materials[0];
-                    MR_MainsStorage[index].materials = materials;
+                    materials[0] = mainMR.materials[0];
+                    mainMRStorage[index].materials = materials;
 
                 }
 
@@ -525,35 +551,40 @@ public class GSDTrafficLightController
     }
 
 
-    private void SetupObject(MeshRenderer MR)
+    private void SetupObject(MeshRenderer _MR)
     {
-        if (MR != null)
+        if (_MR != null)
         {
-            MR.material = MR.material;
+            _MR.material = _MR.material;
         }
     }
     #endregion
 }
 
+
 public class GSDTrafficLightSequence
 {
-    public bool bLightMasterPath1 = true;
-    public GSDTrafficLightController.iLightControllerEnum iLightController = GSDTrafficLightController.iLightControllerEnum.Regular;
-    public GSDTrafficLightController.iLightSubStatusEnum iLightSubcontroller = GSDTrafficLightController.iLightSubStatusEnum.Green;
-    public float tTime = 10f;
+    [UnityEngine.Serialization.FormerlySerializedAs("bLightMasterPath1")]
+    public bool isLightMasterPath1 = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("iLightController")]
+    public GSDTrafficLightController.iLightControllerEnum lightController = GSDTrafficLightController.iLightControllerEnum.Regular;
+    [UnityEngine.Serialization.FormerlySerializedAs("iLightSubcontroller")]
+    public GSDTrafficLightController.iLightSubStatusEnum lightSubcontroller = GSDTrafficLightController.iLightSubStatusEnum.Green;
+    [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
+    public float time = 10f;
 
 
-    public GSDTrafficLightSequence(bool bPath1, GSDTrafficLightController.iLightControllerEnum tLightController, GSDTrafficLightController.iLightSubStatusEnum tLightSubcontroller, float xTime)
+    public GSDTrafficLightSequence(bool _isPath1, GSDTrafficLightController.iLightControllerEnum _lightController, GSDTrafficLightController.iLightSubStatusEnum _lightSubcontroller, float _time)
     {
-        bLightMasterPath1 = bPath1;
-        iLightController = tLightController;
-        iLightSubcontroller = tLightSubcontroller;
-        tTime = xTime;
+        isLightMasterPath1 = _isPath1;
+        lightController = _lightController;
+        lightSubcontroller = _lightSubcontroller;
+        time = _time;
     }
 
 
-    public string ToStringGSD()
+    public string ToStringRA()
     {
-        return "Path1: " + bLightMasterPath1 + " iLightController: " + iLightController.ToString() + " iLightSubcontroller: " + iLightSubcontroller.ToString() + " tTime: " + tTime.ToString("0F");
+        return "Path1: " + isLightMasterPath1 + " iLightController: " + lightController.ToString() + " iLightSubcontroller: " + lightSubcontroller.ToString() + " tTime: " + time.ToString("0F");
     }
 }

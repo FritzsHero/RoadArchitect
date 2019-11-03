@@ -89,8 +89,8 @@ public class GSDTerrainEditor : Editor
         GUILayout.Space(6f);
 
         //Splat Resolution input:
-        tSplatImageWidth.intValue = GSDT.SplatResoWidth;
-        tSplatImageHeight.intValue = GSDT.SplatResoHeight;
+        tSplatImageWidth.intValue = GSDT.splatResoWidth;
+        tSplatImageHeight.intValue = GSDT.splatResoHeight;
         EditorGUILayout.BeginHorizontal();
         tSplatReso = (SplatImageResoMatchingEnum) EditorGUILayout.Popup("Match resolutions:", (int) tSplatReso, TheSplatResoOptions);
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
@@ -104,18 +104,18 @@ public class GSDTerrainEditor : Editor
         {
             if (tSplatReso == SplatImageResoMatchingEnum.MatchHeightmapResolution)
             {
-                tSplatImageWidth.intValue = GSDT.tTerrain.terrainData.heightmapResolution;
-                tSplatImageHeight.intValue = GSDT.tTerrain.terrainData.heightmapResolution;
+                tSplatImageWidth.intValue = GSDT.terrain.terrainData.heightmapResolution;
+                tSplatImageHeight.intValue = GSDT.terrain.terrainData.heightmapResolution;
             }
             else if (tSplatReso == SplatImageResoMatchingEnum.MatchDetailResolution)
             {
-                tSplatImageWidth.intValue = GSDT.tTerrain.terrainData.detailResolution;
-                tSplatImageHeight.intValue = GSDT.tTerrain.terrainData.detailResolution;
+                tSplatImageWidth.intValue = GSDT.terrain.terrainData.detailResolution;
+                tSplatImageHeight.intValue = GSDT.terrain.terrainData.detailResolution;
             }
             else if (tSplatReso == SplatImageResoMatchingEnum.MatchTerrainSize)
             {
-                tSplatImageWidth.intValue = (int) GSDT.tTerrain.terrainData.size.x;
-                tSplatImageHeight.intValue = (int) GSDT.tTerrain.terrainData.size.z;
+                tSplatImageWidth.intValue = (int) GSDT.terrain.terrainData.size.x;
+                tSplatImageHeight.intValue = (int) GSDT.terrain.terrainData.size.z;
             }
             else if (tSplatReso == SplatImageResoMatchingEnum.Match512x512)
             {
@@ -148,7 +148,7 @@ public class GSDTerrainEditor : Editor
 
         //Splat background color input:
         EditorGUILayout.BeginHorizontal();
-        tSplatBackgroundColor.colorValue = EditorGUILayout.ColorField("Splat background:", GSDT.SplatBackground);
+        tSplatBackgroundColor.colorValue = EditorGUILayout.ColorField("Splat background:", GSDT.splatBackground);
         //Default button:
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
@@ -158,7 +158,7 @@ public class GSDTerrainEditor : Editor
 
         //Splat foreground color input:
         EditorGUILayout.BeginHorizontal();
-        tSplatForegroundColor.colorValue = EditorGUILayout.ColorField("Splat foreground:", GSDT.SplatForeground);
+        tSplatForegroundColor.colorValue = EditorGUILayout.ColorField("Splat foreground:", GSDT.splatForeground);
         //Default button:
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
@@ -168,7 +168,7 @@ public class GSDTerrainEditor : Editor
 
         //Splat width (meters) input:
         EditorGUILayout.BeginHorizontal();
-        tSplatWidth.floatValue = EditorGUILayout.Slider("Splat width (meters):", GSDT.SplatWidth, 0.02f, 256f);
+        tSplatWidth.floatValue = EditorGUILayout.Slider("Splat width (meters):", GSDT.splatWidth, 0.02f, 256f);
         //Default button:
         if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
         {
@@ -177,20 +177,20 @@ public class GSDTerrainEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         //Skip bridges:
-        tSkipBridges.boolValue = EditorGUILayout.Toggle("Skip bridges: ", GSDT.SplatSkipBridges);
+        tSkipBridges.boolValue = EditorGUILayout.Toggle("Skip bridges: ", GSDT.isSplatSkipBridges);
 
         //Skip tunnels:
-        tSkipTunnels.boolValue = EditorGUILayout.Toggle("Skip tunnels: ", GSDT.SplatSkipTunnels);
+        tSkipTunnels.boolValue = EditorGUILayout.Toggle("Skip tunnels: ", GSDT.isSplatSkipTunnels);
 
         //Splat single road bool input:
         EditorGUILayout.BeginHorizontal();
-        tSplatSingleRoad.boolValue = EditorGUILayout.Toggle("Splat a single road: ", GSDT.SplatSingleRoad);
+        tSplatSingleRoad.boolValue = EditorGUILayout.Toggle("Splat a single road: ", GSDT.isSplatSingleRoad);
 
         //Splat single road , road input:
-        if (GSDT.SplatSingleRoad)
+        if (GSDT.isSplatSingleRoad)
         {
             LoadSplatSingleChoice();
-            tSplatSingleChoiceIndex.intValue = EditorGUILayout.Popup(GSDT.SplatSingleChoiceIndex, tRoadsString, GUILayout.Width(150f));
+            tSplatSingleChoiceIndex.intValue = EditorGUILayout.Popup(GSDT.splatSingleChoiceIndex, tRoadsString, GUILayout.Width(150f));
             tRoadSingleChoiceUID.stringValue = tRoads[tSplatSingleChoiceIndex.intValue];
         }
 
@@ -271,13 +271,13 @@ public class GSDTerrainEditor : Editor
     private void GenerateSplatMap()
     {
         byte[] tBytes = null;
-        if (GSDT.SplatSingleRoad && GSDT.RoadSingleChoiceUID != "")
+        if (GSDT.isSplatSingleRoad && GSDT.roadSingleChoiceUID != "")
         {
-            tBytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(GSDT.tTerrain, GSDT.SplatBackground, GSDT.SplatForeground, GSDT.SplatResoWidth, GSDT.SplatResoHeight, GSDT.SplatWidth, GSDT.SplatSkipBridges, GSDT.SplatSkipTunnels, GSDT.RoadSingleChoiceUID);
+            tBytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(GSDT.terrain, GSDT.splatBackground, GSDT.splatForeground, GSDT.splatResoWidth, GSDT.splatResoHeight, GSDT.splatWidth, GSDT.isSplatSkipBridges, GSDT.isSplatSkipTunnels, GSDT.roadSingleChoiceUID);
         }
         else
         {
-            tBytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(GSDT.tTerrain, GSDT.SplatBackground, GSDT.SplatForeground, GSDT.SplatResoWidth, GSDT.SplatResoHeight, GSDT.SplatWidth, GSDT.SplatSkipBridges, GSDT.SplatSkipTunnels);
+            tBytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(GSDT.terrain, GSDT.splatBackground, GSDT.splatForeground, GSDT.splatResoWidth, GSDT.splatResoHeight, GSDT.splatWidth, GSDT.isSplatSkipBridges, GSDT.isSplatSkipTunnels);
         }
 
         if (tBytes != null && tBytes.Length > 3)

@@ -7,211 +7,334 @@ using System.Collections.Generic;
 
 public class GSDRoadIntersection : MonoBehaviour
 {
+    #region "Vars"
+    [UnityEngine.Serialization.FormerlySerializedAs("Node1")]
+    public GSDSplineN node1;
+    [UnityEngine.Serialization.FormerlySerializedAs("Node2")]
+    public GSDSplineN node2;
 
-    public GSDSplineN Node1;
-    public GSDSplineN Node2;
+    [UnityEngine.Serialization.FormerlySerializedAs("Node1UID")]
+    public string node1uID;
+    [UnityEngine.Serialization.FormerlySerializedAs("Node2UID")]
+    public string node2uID;
 
-    public string Node1UID;
-    public string Node2UID;
+    //Unique ID
+    [UnityEngine.Serialization.FormerlySerializedAs("UID")]
+    protected string uID;
+    [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+    public string intersectionName = "";
 
-    public bool bSameSpline = false;
-    public bool bDrawGizmo = true;
-    public bool bSelected = false;
-    public string tName = "";
+    [UnityEngine.Serialization.FormerlySerializedAs("bSameSpline")]
+    public bool isSameSpline = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bDrawGizmo")]
+    public bool isDrawingGizmo = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bSelected")]
+    public bool isSelected = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bFlipped")]
+    public bool isFlipped = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bUseDefaultMaterials")]
+    public bool isUsingDefaultMaterials = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_AutoUpdateIntersections")]
+    public bool isAutoUpdatingIntersection = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bNode2B_LeftTurnLane")]
+    public bool isNode2BLeftTurnLane = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bNode2B_RightTurnLane")]
+    public bool isNode2BRightTurnLane = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bNode2F_LeftTurnLane")]
+    public bool isNode2FLeftTurnLane = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bNode2F_RightTurnLane")]
+    public bool isNode2FRightTurnLane = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bFirstSpecial_First")]
+    public bool isFirstSpecialFirst = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bFirstSpecial_Last")]
+    public bool isFirstSpecialLast = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bSecondSpecial_First")]
+    public bool isSecondSpecialFirst = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bSecondSpecial_Last")]
+    public bool isSecondSpecialLast = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRR1")]
+    public bool isCornerRR1Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRR2")]
+    public bool isCornerRR2Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRL1")]
+    public bool isCornerRL1Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRL2")]
+    public bool isCornerRL2Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLR1")]
+    public bool isCornerLR1Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLR2")]
+    public bool isCornerLR2Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLL1")]
+    public bool isCornerLL1Enabled = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLL2")]
+    public bool isCornerLL2Enabled = false;
 
     //Markers:
-    public bool bUseDefaultMaterials = true;
-    public Material MarkerCenter1 = null;
-    public Material MarkerCenter2 = null;
-    public Material MarkerCenter3 = null;
-    public Material MarkerExt_Stretch1 = null;
-    public Material MarkerExt_Stretch2 = null;
-    public Material MarkerExt_Stretch3 = null;
-    public Material MarkerExt_Tiled1 = null;
-    public Material MarkerExt_Tiled2 = null;
-    public Material MarkerExt_Tiled3 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter1")]
+    public Material markerCenter1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter2")]
+    public Material markerCenter2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter3")]
+    public Material markerCenter3 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Stretch1")]
+    public Material markerExtStretch1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Stretch2")]
+    public Material markerExtStretch2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Stretch3")]
+    public Material markerExtStretch3 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled1")]
+    public Material markerExtTiled1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled2")]
+    public Material markerExtTiled2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled3")]
+    public Material markerExtTiled3 = null;
 
-    public Material Lane0Mat1 = null;
-    public Material Lane0Mat2 = null;
-    public Material Lane1Mat1 = null;
-    public Material Lane1Mat2 = null;
-    public Material Lane2Mat1 = null;
-    public Material Lane2Mat2 = null;
-    public Material Lane3Mat1 = null;
-    public Material Lane3Mat2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane0Mat1")]
+    public Material lane0Mat1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane0Mat2")]
+    public Material lane0Mat2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat1")]
+    public Material lane1Mat1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat2")]
+    public Material lane1Mat2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1")]
+    public Material lane2Mat1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2")]
+    public Material lane2Mat2 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat1")]
+    public Material lane3Mat1 = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat2")]
+    public Material lane3Mat2 = null;
 
-    public Material Lane1Mat1_Disabled = null;
-    public Material Lane1Mat2_Disabled = null;
-    public Material Lane1Mat1_DisabledActive = null;
-    public Material Lane1Mat2_DisabledActive = null;
-    public Material Lane2Mat1_Disabled = null;
-    public Material Lane2Mat2_Disabled = null;
-    public Material Lane2Mat1_DisabledActive = null;
-    public Material Lane2Mat2_DisabledActive = null;
-    public Material Lane2Mat1_DisabledActiveR = null;
-    public Material Lane2Mat2_DisabledActiveR = null;
-    public Material Lane3Mat1_Disabled = null;
-    public Material Lane3Mat2_Disabled = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat1_Disabled")]
+    public Material lane1Mat1Disabled = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat2_Disabled")]
+    public Material lane1Mat2Disabled = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat1_DisabledActive")]
+    public Material lane1Mat1DisabledActive = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat2_DisabledActive")]
+    public Material lane1Mat2DisabledActive = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1_Disabled")]
+    public Material lane2Mat1Disabled = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2_Disabled")]
+    public Material lane2Mat2Disabled = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1_DisabledActive")]
+    public Material lane2Mat1DisabledActive = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2_DisabledActive")]
+    public Material lane2Mat2DisabledActive = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1_DisabledActiveR")]
+    public Material lane2Mat1DisabledActiveR = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2_DisabledActiveR")]
+    public Material lane2Mat2DisabledActiveR = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat1_Disabled")]
+    public Material lane3Mat1Disabled = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat2_Disabled")]
+    public Material lane3Mat2Disabled = null;
 
-    public int IntersectionWidth = 10;  //Width of the largest of road connected
-    public int Lanes;
+    //Width of the largest of road connected
+    [UnityEngine.Serialization.FormerlySerializedAs("IntersectionWidth")]
+    public int intersectionWidth = 10;
+    [UnityEngine.Serialization.FormerlySerializedAs("Lanes")]
+    public int lanesAmount;
+    [UnityEngine.Serialization.FormerlySerializedAs("IgnoreSide")]
+    public int ignoreSide = -1;
+    [UnityEngine.Serialization.FormerlySerializedAs("IgnoreCorner")]
+    public int ignoreCorner = -1;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("iType")]
+    public IntersectionTypeEnum intersectionType = IntersectionTypeEnum.FourWay;
+    [UnityEngine.Serialization.FormerlySerializedAs("iStopType")]
+    public iStopTypeEnum intersectionStopType = iStopTypeEnum.StopSign_AllWay;
+    [UnityEngine.Serialization.FormerlySerializedAs("rType")]
+    public RoadTypeEnum roadType = RoadTypeEnum.NoTurnLane;
+    [UnityEngine.Serialization.FormerlySerializedAs("lType")]
+    public LightTypeEnum lightType = LightTypeEnum.Timed;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerPoints")]
+    public CornerPositionMaker[] cornerPoints;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRR")]
+    public Vector3 cornerRR;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRR_Outer")]
+    public Vector3 cornerRROuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRR_RampOuter")]
+    public Vector3 cornerRRRampOuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRL")]
+    public Vector3 cornerRL;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRL_Outer")]
+    public Vector3 cornerRLOuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRL_RampOuter")]
+    public Vector3 cornerRLRampOuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLR")]
+    public Vector3 cornerLR;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLR_Outer")]
+    public Vector3 cornerLROuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLR_RampOuter")]
+    public Vector3 cornerLRRampOuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLL")]
+    public Vector3 cornerLL;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLL_Outer")]
+    public Vector3 cornerLLOuter;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLL_RampOuter")]
+    public Vector3 cornerLLRampOuter;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRR_2D")]
+    public Vector2 cornerRR2D;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerRL_2D")]
+    public Vector2 cornerRL2D;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLR_2D")]
+    public Vector2 cornerLR2D;
+    [UnityEngine.Serialization.FormerlySerializedAs("CornerLL_2D")]
+    public Vector2 cornerLL2D;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("fCornerLR_CornerRR")]
+    public Vector3[] cornerLRCornerRR;
+    [UnityEngine.Serialization.FormerlySerializedAs("fCornerLL_CornerRL")]
+    public Vector3[] cornerLLCornerRL;
+    [UnityEngine.Serialization.FormerlySerializedAs("fCornerLL_CornerLR")]
+    public Vector3[] cornerLLCornerLR;
+    [UnityEngine.Serialization.FormerlySerializedAs("fCornerRL_CornerRR")]
+    public Vector3[] cornerRLCornerRR;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("GradeMod")]
+    public float gradeMod = 0.375f;
+    [UnityEngine.Serialization.FormerlySerializedAs("GradeModNegative")]
+    public float gradeModNegative = 0.75f;
+    [UnityEngine.Serialization.FormerlySerializedAs("ScalingSense")]
+    public float scalingSense = 3f;
+    [UnityEngine.Serialization.FormerlySerializedAs("OddAngle")]
+    public float oddAngle;
+    [UnityEngine.Serialization.FormerlySerializedAs("EvenAngle")]
+    public float evenAngle;
+    [UnityEngine.Serialization.FormerlySerializedAs("MaxInterDistance")]
+    public float maxInterDistance = 0f;
+    [UnityEngine.Serialization.FormerlySerializedAs("MaxInterDistanceSQ")]
+    public float maxInterDistanceSQ = 0f;
+    [UnityEngine.Serialization.FormerlySerializedAs("Height")]
+    public float height = 50000f;
+    [UnityEngine.Serialization.FormerlySerializedAs("SignHeight")]
+    public float signHeight = -2000f;
+    [UnityEngine.Serialization.FormerlySerializedAs("BoundsRect")]
+    private GSD.Roads.GSDRoadUtil.Construction2DRect boundsRect;
+
+    #region "Traffic Light Vars"
+    [UnityEngine.Serialization.FormerlySerializedAs("bLightsEnabled")]
+    public bool isLightsEnabled = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bRegularPoleAlignment")]
+    public bool isRegularPoleAlignment = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bTrafficPoleStreetLight")]
+    public bool isTrafficPoleStreetLight = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("bTrafficLightGray")]
+    public bool isTrafficLightGray = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bLeftTurnYieldOnGreen")]
+    public bool isLeftTurnYieldOnGreen = true;
+    [UnityEngine.Serialization.FormerlySerializedAs("StreetLight_Range")]
+    public float streetLightRange = 30f;
+    [UnityEngine.Serialization.FormerlySerializedAs("StreetLight_Intensity")]
+    public float streetLightIntensity = 1f;
+    [UnityEngine.Serialization.FormerlySerializedAs("StreetLight_Color")]
+    public Color streetLightColor = new Color(1f, 0.7451f, 0.27451f, 1f);
+    [UnityEngine.Serialization.FormerlySerializedAs("FixedTimeIndex")]
+    private int fixedTimeIndex = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightsRR")]
+    public GSDTrafficLightController lightsRR;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightsRL")]
+    public GSDTrafficLightController lightsRL;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightsLL")]
+    public GSDTrafficLightController lightsLL;
+    [UnityEngine.Serialization.FormerlySerializedAs("LightsLR")]
+    public GSDTrafficLightController lightsLR;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_RegularLightLength")]
+    public float fixedTimeRegularLightLength = 10f;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_LeftTurnLightLength")]
+    public float fixedTimeLeftTurnLightLength = 5f;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_AllRedLightLength")]
+    public float fixedTimeAllRedLightLength = 1f;
+    [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_YellowLightLength")]
+    public float fixedTimeYellowLightLength = 2f;
+    [UnityEngine.Serialization.FormerlySerializedAs("FixedTimeSequenceList")]
+    public List<GSDTrafficLightSequence> fixedTimeSequenceList;
+    #endregion
+    #endregion
+
+
     public enum IntersectionTypeEnum { ThreeWay, FourWay };
-    public IntersectionTypeEnum iType = IntersectionTypeEnum.FourWay;
-    public bool bNode2B_LeftTurnLane = true;
-    public bool bNode2B_RightTurnLane = true;
-    public bool bNode2F_LeftTurnLane = true;
-    public bool bNode2F_RightTurnLane = true;
-
     public enum iStopTypeEnum { StopSign_AllWay, TrafficLight1, None, TrafficLight2 };
-    public iStopTypeEnum iStopType = iStopTypeEnum.StopSign_AllWay;
-    public bool bLightsEnabled = true;
-    public bool bFlipped = false;
-    public bool bLeftTurnYieldOnGreen = true;
-    public RoadTypeEnum rType = RoadTypeEnum.NoTurnLane;
     public enum RoadTypeEnum { NoTurnLane, TurnLane, BothTurnLanes };
     public enum LightTypeEnum { Timed, Sensors };
-    public LightTypeEnum lType = LightTypeEnum.Timed;
 
-    public bool bRegularPoleAlignment = true;
-    public bool bTrafficPoleStreetLight = true;
-    public bool bTrafficLightGray = false;
-    public float StreetLight_Range = 30f;
-    public float StreetLight_Intensity = 1f;
-    public Color StreetLight_Color = new Color(1f, 0.7451f, 0.27451f, 1f);
-
-    public float GradeMod = 0.375f;
-    public float GradeModNegative = 0.75f;
-
-    public int IgnoreSide = -1;
-    public int IgnoreCorner = -1;
-    public bool bFirstSpecial_First = false;
-    public bool bFirstSpecial_Last = false;
-    public bool bSecondSpecial_First = false;
-    public bool bSecondSpecial_Last = false;
-
-    public float ScalingSense = 3f;
+    public void SetupUniqueIdentifier()
+    {
+        if (uID == null || uID.Length < 4)
+        {
+            uID = System.Guid.NewGuid().ToString();
+        }
+    }
 
 
-    // A struct may be better and faster // FH 29.01.19
+    // A struct may be better and faster
     public class CornerPositionMaker
     {
         public Vector3 position;
         public Quaternion rotation;
-        public Vector3 DirectionFromCenter;
+        [UnityEngine.Serialization.FormerlySerializedAs("DirectionFromCenter")]
+        public Vector3 directionFromCenter;
     }
-
-    public CornerPositionMaker[] CornerPoints;
-
-    protected string UID; //Unique ID
-
-
-    public void SetupUniqueIdentifier()
-    {
-        if (UID == null || UID.Length < 4)
-        {
-            UID = System.Guid.NewGuid().ToString();
-        }
-    }
-
-
-    public Vector3 CornerRR, CornerRR_Outer, CornerRR_RampOuter;
-    public Vector3 CornerRL, CornerRL_Outer, CornerRL_RampOuter;
-    public Vector3 CornerLR, CornerLR_Outer, CornerLR_RampOuter;
-    public Vector3 CornerLL, CornerLL_Outer, CornerLL_RampOuter;
-
-    public Vector2 CornerRR_2D;
-    public Vector2 CornerRL_2D;
-    public Vector2 CornerLR_2D;
-    public Vector2 CornerLL_2D;
-
-    public Vector3[] fCornerLR_CornerRR;
-    public Vector3[] fCornerLL_CornerRL;
-    public Vector3[] fCornerLL_CornerLR;
-    public Vector3[] fCornerRL_CornerRR;
-
-    public float OddAngle, EvenAngle;
-
-
-    public bool CornerRR1 = false;
-    public bool CornerRR2 = false;
-    public bool CornerRL1 = false;
-    public bool CornerRL2 = false;
-    public bool CornerLR1 = false;
-    public bool CornerLR2 = false;
-    public bool CornerLL1 = false;
-    public bool CornerLL2 = false;
-
-    public float MaxInterDistance = 0f;
-    public float MaxInterDistanceSQ = 0f;
-    public float Height = 50000f;
-    public float SignHeight = -2000f;
-
-    //Traffic lights:
-    public GSDTrafficLightController LightsRR;
-    public GSDTrafficLightController LightsRL;
-    public GSDTrafficLightController LightsLL;
-    public GSDTrafficLightController LightsLR;
-    public float opt_FixedTime_RegularLightLength = 10f;
-    public float opt_FixedTime_LeftTurnLightLength = 5f;
-    public float opt_FixedTime_AllRedLightLength = 1f;
-    public float opt_FixedTime_YellowLightLength = 2f;
-    public bool opt_AutoUpdateIntersections = true;
-    public List<GSDTrafficLightSequence> FixedTimeSequenceList;
 
 
 #if UNITY_EDITOR
     #region "Setup"
-    public void Setup(GSDSplineN tNode, GSDSplineN xNode)
+    public void Setup(GSDSplineN _node1, GSDSplineN _node2)
     {
-        if (tNode.GSDSpline == xNode.GSDSpline)
+        if (_node1.GSDSpline == _node2.GSDSpline)
         {
-            bSameSpline = true;
+            isSameSpline = true;
         }
 
-        if (bSameSpline)
+        if (isSameSpline)
         {
-            if (tNode.idOnSpline < xNode.idOnSpline)
+            if (_node1.idOnSpline < _node2.idOnSpline)
             {
-                Node1 = tNode;
-                Node2 = xNode;
+                node1 = _node1;
+                node2 = _node2;
             }
             else
             {
-                Node1 = xNode;
-                Node2 = tNode;
+                node1 = _node2;
+                node2 = _node1;
             }
         }
         else
         {
-            Node1 = tNode;
-            Node2 = xNode;
+            node1 = _node1;
+            node2 = _node2;
         }
 
-        Node1.Intersection_OtherNode = Node2;
-        Node2.Intersection_OtherNode = Node1;
+        node1.Intersection_OtherNode = node2;
+        node2.Intersection_OtherNode = node1;
 
-        Node1.ToggleHideFlags(true);
-        Node2.ToggleHideFlags(true);
+        node1.ToggleHideFlags(true);
+        node2.ToggleHideFlags(true);
 
-        Node1UID = Node1.UID;
-        Node2UID = Node2.UID;
-        Node1.bIsIntersection = true;
-        Node2.bIsIntersection = true;
-        Node1.GSDRI = this;
-        Node2.GSDRI = this;
+        node1uID = node1.UID;
+        node2uID = node2.UID;
+        node1.bIsIntersection = true;
+        node2.bIsIntersection = true;
+        node1.GSDRI = this;
+        node2.GSDRI = this;
     }
 
 
-    public void DeleteRelevantChildren(GSDSplineN tNode, string tString)
+    public void DeleteRelevantChildren(GSDSplineN _node, string _string)
     {
-        int cCount = transform.childCount;
-        for (int index = cCount - 1; index >= 0; index--)
+        int childCount = transform.childCount;
+        for (int index = childCount - 1; index >= 0; index--)
         {
-            if (transform.GetChild(index).name.ToLower().Contains(tString.ToLower()))
+            if (transform.GetChild(index).name.ToLower().Contains(_string.ToLower()))
             {
                 Object.DestroyImmediate(transform.GetChild(index).gameObject);
             }
-            else if (tNode == Node1)
+            else if (_node == node1)
             {
                 if (transform.GetChild(index).name.ToLower().Contains("centermarkers"))
                 {
@@ -227,65 +350,62 @@ public class GSDRoadIntersection : MonoBehaviour
     public void UpdateRoads()
     {
 #if UNITY_EDITOR
-        if (!bSameSpline)
+        if (!isSameSpline)
         {
-            GSDSplineC[] tPiggys = new GSDSplineC[1];
-            tPiggys[0] = Node2.GSDSpline;
-            Node1.GSDSpline.tRoad.PiggyBacks = tPiggys;
-            Node1.GSDSpline.Setup_Trigger();
+            GSDSplineC[] piggys = new GSDSplineC[1];
+            piggys[0] = node2.GSDSpline;
+            node1.GSDSpline.tRoad.PiggyBacks = piggys;
+            node1.GSDSpline.Setup_Trigger();
         }
         else
         {
-            Node1.GSDSpline.Setup_Trigger();
+            node1.GSDSpline.Setup_Trigger();
         }
 #endif
     }
 
 
-    GSD.Roads.GSDRoadUtil.Construction2DRect BoundsRect;
-
-
     public void ConstructBoundsRect()
     {
-        BoundsRect = null;
-        BoundsRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(new Vector2(CornerRR.x, CornerRR.z), new Vector2(CornerRL.x, CornerRL.z), new Vector2(CornerLR.x, CornerLR.z), new Vector2(CornerLL.x, CornerLL.z));
+        boundsRect = null;
+        boundsRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(new Vector2(cornerRR.x, cornerRR.z), new Vector2(cornerRL.x, cornerRL.z), new Vector2(cornerLR.x, cornerLR.z), new Vector2(cornerLL.x, cornerLL.z));
     }
 
 
-    public bool Contains(ref Vector3 tVect)
+    public bool Contains(ref Vector3 _vector)
     {
-        Vector2 vVect = new Vector2(tVect.x, tVect.z);
-        if (BoundsRect == null)
+        Vector2 vector2D = new Vector2(_vector.x, _vector.z);
+        if (boundsRect == null)
         {
             ConstructBoundsRect();
         }
-        return BoundsRect.Contains(ref vVect);
+        return boundsRect.Contains(ref vector2D);
     }
 
 
-    private bool ContainsLineOld(Vector3 tVect1, Vector3 tVect2, int LineDef = 30)
+    private bool ContainsLineOld(Vector3 _vector1, Vector3 _vector2, int _lineDef = 30)
     {
-        int MaxDef = LineDef;
+        int MaxDef = _lineDef;
         float MaxDefF = (float)MaxDef;
 
         Vector3[] tVects = new Vector3[MaxDef];
 
-        tVects[0] = tVect1;
+        tVects[0] = _vector1;
         float mMod = 0f;
         float fcounter = 1f;
         for (int index = 1; index < (MaxDef - 1); index++)
         {
             mMod = fcounter / MaxDefF;
-            tVects[index] = ((tVect2 - tVect1) * mMod) + tVect1;
+            tVects[index] = ((_vector2 - _vector1) * mMod) + _vector1;
             fcounter += 1f;
         }
-        tVects[MaxDef - 1] = tVect2;
+        tVects[MaxDef - 1] = _vector2;
 
         Vector2 xVect = default(Vector2);
         for (int index = 0; index < MaxDef; index++)
         {
             xVect = new Vector2(tVects[index].x, tVects[index].z);
-            if (BoundsRect.Contains(ref xVect))
+            if (boundsRect.Contains(ref xVect))
             {
                 return true;
             }
@@ -294,45 +414,45 @@ public class GSDRoadIntersection : MonoBehaviour
     }
 
 
-    public bool ContainsLine(Vector3 tVect1, Vector3 tVect2)
+    public bool ContainsLine(Vector3 _vector1, Vector3 _vector2)
     {
-        Vector2 tVectStart = new Vector2(tVect1.x, tVect1.z);
-        Vector2 tVectEnd = new Vector2(tVect2.x, tVect2.z);
-        bool bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref CornerRR_2D, ref CornerRL_2D);
+        Vector2 tVectStart = new Vector2(_vector1.x, _vector1.z);
+        Vector2 tVectEnd = new Vector2(_vector2.x, _vector2.z);
+        bool bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref cornerRR2D, ref cornerRL2D);
         if (bIntersects)
         {
             return true;
         }
-        bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref CornerRL_2D, ref CornerLL_2D);
+        bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref cornerRL2D, ref cornerLL2D);
         if (bIntersects)
         {
             return true;
         }
-        bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref CornerLL_2D, ref CornerLR_2D);
+        bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref cornerLL2D, ref cornerLR2D);
         if (bIntersects)
         {
             return true;
         }
-        bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref CornerLR_2D, ref CornerRR_2D);
+        bIntersects = Intersects2D(ref tVectStart, ref tVectEnd, ref cornerLR2D, ref cornerRR2D);
         return bIntersects;
     }
 
 
     // Returns true if the lines intersect, otherwise false. If the lines
     // intersect, intersectionPoint holds the intersection point.
-    private static bool Intersects2D(ref Vector2 Line1S, ref Vector2 Line1E, ref Vector2 Line2S, ref Vector2 Line2E)
+    private static bool Intersects2D(ref Vector2 _line1S, ref Vector2 _line1E, ref Vector2 _line2S, ref Vector2 _line2E)
     {
         float firstLineSlopeX, firstLineSlopeY, secondLineSlopeX, secondLineSlopeY;
 
-        firstLineSlopeX = Line1E.x - Line1S.x;
-        firstLineSlopeY = Line1E.y - Line1S.y;
+        firstLineSlopeX = _line1E.x - _line1S.x;
+        firstLineSlopeY = _line1E.y - _line1S.y;
 
-        secondLineSlopeX = Line2E.x - Line2S.x;
-        secondLineSlopeY = Line2E.y - Line2S.y;
+        secondLineSlopeX = _line2E.x - _line2S.x;
+        secondLineSlopeY = _line2E.y - _line2S.y;
 
         float s, t;
-        s = (-firstLineSlopeY * (Line1S.x - Line2S.x) + firstLineSlopeX * (Line1S.y - Line2S.y)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
-        t = (secondLineSlopeX * (Line1S.y - Line2S.y) - secondLineSlopeY * (Line1S.x - Line2S.x)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
+        s = (-firstLineSlopeY * (_line1S.x - _line2S.x) + firstLineSlopeX * (_line1S.y - _line2S.y)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
+        t = (secondLineSlopeX * (_line1S.y - _line2S.y) - secondLineSlopeY * (_line1S.x - _line2S.x)) / (-secondLineSlopeX * firstLineSlopeY + firstLineSlopeX * secondLineSlopeY);
 
         if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
         {
@@ -346,7 +466,7 @@ public class GSDRoadIntersection : MonoBehaviour
     #region "Gizmos"
     private void OnDrawGizmos()
     {
-        if (!bDrawGizmo)
+        if (!isDrawingGizmo)
         {
             return;
         }
@@ -360,14 +480,14 @@ public class GSDRoadIntersection : MonoBehaviour
     #region "Traffic light controlling"
     private void Start()
     {
-        LightsRR.Setup(bLeftTurnYieldOnGreen);
-        LightsRL.Setup(bLeftTurnYieldOnGreen);
-        LightsLL.Setup(bLeftTurnYieldOnGreen);
-        LightsLR.Setup(bLeftTurnYieldOnGreen);
-        if (lType == LightTypeEnum.Timed)
+        lightsRR.Setup(isLeftTurnYieldOnGreen);
+        lightsRL.Setup(isLeftTurnYieldOnGreen);
+        lightsLL.Setup(isLeftTurnYieldOnGreen);
+        lightsLR.Setup(isLeftTurnYieldOnGreen);
+        if (lightType == LightTypeEnum.Timed)
         {
             CreateFixedSequence();
-            FixedTime_Increment();
+            FixedTimeIncrement();
         }
         else
         {
@@ -379,359 +499,358 @@ public class GSDRoadIntersection : MonoBehaviour
 
     private void CreateFixedSequence()
     {
-        GSDTrafficLightSequence SMaker = null;
-        FixedTimeSequenceList = new List<GSDTrafficLightSequence>();
-        if (rType != RoadTypeEnum.NoTurnLane)
+        GSDTrafficLightSequence SequenceMaker = null;
+        fixedTimeSequenceList = new List<GSDTrafficLightSequence>();
+        if (roadType != RoadTypeEnum.NoTurnLane)
         {
-            SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_LeftTurnLightLength);
-            FixedTimeSequenceList.Add(SMaker);
+            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeLeftTurnLightLength);
+            fixedTimeSequenceList.Add(SequenceMaker);
         }
-        if (rType != RoadTypeEnum.NoTurnLane)
+        if (roadType != RoadTypeEnum.NoTurnLane)
         {
-            SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Yellow, opt_FixedTime_YellowLightLength);
-            FixedTimeSequenceList.Add(SMaker);
+            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+            fixedTimeSequenceList.Add(SequenceMaker);
         }
-        SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_AllRedLightLength);
-        FixedTimeSequenceList.Add(SMaker);
-        SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_RegularLightLength);
-        FixedTimeSequenceList.Add(SMaker);
-        SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Yellow, opt_FixedTime_YellowLightLength);
-        FixedTimeSequenceList.Add(SMaker);
-        SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_AllRedLightLength);
-        FixedTimeSequenceList.Add(SMaker);
+        SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
+        SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeRegularLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
+        SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
+        SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
 
-        if (rType != RoadTypeEnum.NoTurnLane)
+        if (roadType != RoadTypeEnum.NoTurnLane)
         {
-            SMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_LeftTurnLightLength);
-            FixedTimeSequenceList.Add(SMaker);
+            SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeLeftTurnLightLength);
+            fixedTimeSequenceList.Add(SequenceMaker);
         }
-        if (rType != RoadTypeEnum.NoTurnLane)
+        if (roadType != RoadTypeEnum.NoTurnLane)
         {
-            SMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Yellow, opt_FixedTime_YellowLightLength);
-            FixedTimeSequenceList.Add(SMaker);
+            SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+            fixedTimeSequenceList.Add(SequenceMaker);
         }
-        SMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_AllRedLightLength);
-        FixedTimeSequenceList.Add(SMaker);
-        SMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_RegularLightLength);
-        FixedTimeSequenceList.Add(SMaker);
-        SMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Yellow, opt_FixedTime_YellowLightLength);
-        FixedTimeSequenceList.Add(SMaker);
-        SMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, opt_FixedTime_AllRedLightLength);
-        FixedTimeSequenceList.Add(SMaker);
+        SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
+        SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeRegularLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
+        SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
+        SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+        fixedTimeSequenceList.Add(SequenceMaker);
     }
 
 
-    private IEnumerator TrafficLightFixedUpdate(float tTime)
+    private IEnumerator TrafficLightFixedUpdate(float _time)
     {
-        yield return new WaitForSeconds(tTime);
-        FixedTime_Increment();
+        yield return new WaitForSeconds(_time);
+        FixedTimeIncrement();
     }
 
 
-    private int FixedTimeIndex = 0;
-
-
-    private void FixedTime_Increment()
+    private void FixedTimeIncrement()
     {
-        GSDTrafficLightSequence SMaker = FixedTimeSequenceList[FixedTimeIndex];
-        FixedTimeIndex += 1;
-        if (FixedTimeIndex > (FixedTimeSequenceList.Count - 1))
+        GSDTrafficLightSequence SequenceMaker = fixedTimeSequenceList[fixedTimeIndex];
+        fixedTimeIndex += 1;
+        if (fixedTimeIndex > (fixedTimeSequenceList.Count - 1))
         {
-            FixedTimeIndex = 0;
+            fixedTimeIndex = 0;
         }
 
-        GSDTrafficLightController Lights1 = null;
-        GSDTrafficLightController Lights2 = null;
+        GSDTrafficLightController lights1 = null;
+        GSDTrafficLightController lights2 = null;
 
-        GSDTrafficLightController Lights_outer1 = null;
-        GSDTrafficLightController Lights_outer2 = null;
+        GSDTrafficLightController lightsOuter1 = null;
+        GSDTrafficLightController lightsOuter2 = null;
 
-        if (SMaker.bLightMasterPath1)
+        if (SequenceMaker.isLightMasterPath1)
         {
-            Lights1 = LightsRL;
-            Lights2 = LightsLR;
+            lights1 = lightsRL;
+            lights2 = lightsLR;
 
-            if (bFlipped)
+            if (isFlipped)
             {
-                Lights_outer1 = LightsRR;
-                Lights_outer2 = LightsLL;
+                lightsOuter1 = lightsRR;
+                lightsOuter2 = lightsLL;
             }
             else
             {
-                Lights_outer1 = LightsRR;
-                Lights_outer2 = LightsLL;
+                lightsOuter1 = lightsRR;
+                lightsOuter2 = lightsLL;
             }
         }
         else
         {
-            if (bFlipped)
+            if (isFlipped)
             {
-                Lights1 = LightsRR;
-                Lights2 = LightsLL;
+                lights1 = lightsRR;
+                lights2 = lightsLL;
             }
             else
             {
-                Lights1 = LightsRR;
-                Lights2 = LightsLL;
+                lights1 = lightsRR;
+                lights2 = lightsLL;
             }
 
-            Lights_outer1 = LightsRL;
-            Lights_outer2 = LightsLR;
+            lightsOuter1 = lightsRL;
+            lightsOuter2 = lightsLR;
         }
 
-        GSDTrafficLightController.iLightControllerEnum LCE = SMaker.iLightController;
-        GSDTrafficLightController.iLightSubStatusEnum LCESub = SMaker.iLightSubcontroller;
+        GSDTrafficLightController.iLightControllerEnum LCE = SequenceMaker.lightController;
+        GSDTrafficLightController.iLightSubStatusEnum LCESub = SequenceMaker.lightSubcontroller;
 
         if (LCE == GSDTrafficLightController.iLightControllerEnum.Regular)
         {
-            Lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Regular, LCESub, bLightsEnabled);
-            Lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Regular, LCESub, bLightsEnabled);
-            Lights_outer1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, bLightsEnabled);
-            Lights_outer2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, bLightsEnabled);
+            lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Regular, LCESub, isLightsEnabled);
+            lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Regular, LCESub, isLightsEnabled);
+            lightsOuter1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+            lightsOuter2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
         }
         else if (LCE == GSDTrafficLightController.iLightControllerEnum.LeftTurn)
         {
-            Lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.LeftTurn, LCESub, bLightsEnabled);
-            Lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.LeftTurn, LCESub, bLightsEnabled);
-            Lights_outer1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.RightTurn, LCESub, bLightsEnabled);
-            Lights_outer2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.RightTurn, LCESub, bLightsEnabled);
+            lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.LeftTurn, LCESub, isLightsEnabled);
+            lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.LeftTurn, LCESub, isLightsEnabled);
+            lightsOuter1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.RightTurn, LCESub, isLightsEnabled);
+            lightsOuter2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.RightTurn, LCESub, isLightsEnabled);
         }
         else if (LCE == GSDTrafficLightController.iLightControllerEnum.Red)
         {
-            Lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, bLightsEnabled);
-            Lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, bLightsEnabled);
-            Lights_outer1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, bLightsEnabled);
-            Lights_outer2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, bLightsEnabled);
+            lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+            lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+            lightsOuter1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+            lightsOuter2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
         }
 
-        //		Debug.Log ("Starting: " + SMaker.ToString());
-        StartCoroutine(TrafficLightFixedUpdate(SMaker.tTime));
+        //Debug.Log ("Starting: " + SMaker.ToString());
+        StartCoroutine(TrafficLightFixedUpdate(SequenceMaker.time));
     }
     #endregion
 
 
 #if UNITY_EDITOR
     #region "Materials"
-    public void ResetMaterials_All()
+    public void ResetMaterialsAll()
     {
-        ResetMaterials_Center(false);
-        ResetMaterials_Ext_Stretched(false);
-        ResetMaterials_Ext_Tiled(false);
-        ResetMaterials_Lanes(false);
+        ResetCenterMaterials(false);
+        ResetExtStrechtedMaterials(false);
+        ResetExtTiledMaterials(false);
+        ResetLanesMaterials(false);
         UpdateMaterials();
     }
 
 
-    public void ResetMaterials_Center(bool bUpdate = true)
+    public void ResetCenterMaterials(bool _isUpdate = true)
     {
-        string tLanes = "-2L";
-        Lanes = Node1.GSDSpline.tRoad.laneAmount;
-        if (Lanes == 4)
+        string lanesNumber = "-2L";
+        lanesAmount = node1.GSDSpline.tRoad.laneAmount;
+        if (lanesAmount == 4)
         {
-            tLanes = "-4L";
+            lanesNumber = "-4L";
         }
-        else if (Lanes == 6)
+        else if (lanesAmount == 6)
         {
-            tLanes = "-6L";
+            lanesNumber = "-6L";
         }
-        if (iType == IntersectionTypeEnum.ThreeWay)
+        if (intersectionType == IntersectionTypeEnum.ThreeWay)
         {
-            tLanes += "-3";
-            if (Node1.idOnSpline < 2 || Node2.idOnSpline < 2)
+            lanesNumber += "-3";
+            if (node1.idOnSpline < 2 || node2.idOnSpline < 2)
             {
-                //			if(bFirstSpecial_First || bFirstSpecial_Last){	//Reverse if from node 0
-                tLanes += "-crev";  //stands for "Center Reversed"	
-                                    //			}
+                //if(bFirstSpecial_First || bFirstSpecial_Last)
+                //{
+                //Reverse if from node 0
+                lanesNumber += "-crev";  //stands for "Center Reversed"	
+                //}
             }
         }
 
-        if (rType == RoadTypeEnum.BothTurnLanes)
+        if (roadType == RoadTypeEnum.BothTurnLanes)
         {
-            MarkerCenter1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterCenter-Both" + tLanes + ".mat");
-            MarkerCenter2 = null;
-            MarkerCenter3 = null;
+            markerCenter1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterCenter-Both" + lanesNumber + ".mat");
+            markerCenter2 = null;
+            markerCenter3 = null;
         }
-        else if (rType == RoadTypeEnum.TurnLane)
+        else if (roadType == RoadTypeEnum.TurnLane)
         {
-            MarkerCenter1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterCenter-Left" + tLanes + ".mat");
-            MarkerCenter2 = null;
-            MarkerCenter3 = null;
+            markerCenter1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterCenter-Left" + lanesNumber + ".mat");
+            markerCenter2 = null;
+            markerCenter3 = null;
         }
-        else if (rType == RoadTypeEnum.NoTurnLane)
+        else if (roadType == RoadTypeEnum.NoTurnLane)
         {
-            MarkerCenter1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterCenter-None" + tLanes + ".mat");
-            MarkerCenter2 = null;
-            MarkerCenter3 = null;
+            markerCenter1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterCenter-None" + lanesNumber + ".mat");
+            markerCenter2 = null;
+            markerCenter3 = null;
         }
-        if (bUpdate)
+        if (_isUpdate)
         {
             UpdateMaterials();
         }
     }
 
 
-    public void ResetMaterials_Ext_Stretched(bool bUpdate = true)
+    public void ResetExtStrechtedMaterials(bool _isUpdate = true)
     {
-        string tLanes = "-2L";
-        Lanes = Node1.GSDSpline.tRoad.laneAmount;
-        if (Lanes == 4)
+        string lanesNumber = "-2L";
+        lanesAmount = node1.GSDSpline.tRoad.laneAmount;
+        if (lanesAmount == 4)
         {
-            tLanes = "-4L";
+            lanesNumber = "-4L";
         }
-        else if (Lanes == 6)
+        else if (lanesAmount == 6)
         {
-            tLanes = "-6L";
+            lanesNumber = "-6L";
         }
 
-        if (rType == RoadTypeEnum.BothTurnLanes)
+        if (roadType == RoadTypeEnum.BothTurnLanes)
         {
-            MarkerExt_Stretch1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterStretch-Both" + tLanes + ".mat");
-            MarkerExt_Stretch2 = null;
-            MarkerExt_Stretch3 = null;
+            markerExtStretch1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterStretch-Both" + lanesNumber + ".mat");
+            markerExtStretch2 = null;
+            markerExtStretch3 = null;
         }
-        else if (rType == RoadTypeEnum.TurnLane)
+        else if (roadType == RoadTypeEnum.TurnLane)
         {
-            MarkerExt_Stretch1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterStretch-Left" + tLanes + ".mat");
-            MarkerExt_Stretch2 = null;
-            MarkerExt_Stretch3 = null;
+            markerExtStretch1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterStretch-Left" + lanesNumber + ".mat");
+            markerExtStretch2 = null;
+            markerExtStretch3 = null;
         }
-        else if (rType == RoadTypeEnum.NoTurnLane)
+        else if (roadType == RoadTypeEnum.NoTurnLane)
         {
-            MarkerExt_Stretch1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterStretch-None" + tLanes + ".mat");
-            MarkerExt_Stretch2 = null;
-            MarkerExt_Stretch3 = null;
+            markerExtStretch1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterStretch-None" + lanesNumber + ".mat");
+            markerExtStretch2 = null;
+            markerExtStretch3 = null;
         }
-        if (bUpdate)
+        if (_isUpdate)
         {
             UpdateMaterials();
         }
     }
 
 
-    public void ResetMaterials_Ext_Tiled(bool bUpdate = true)
+    public void ResetExtTiledMaterials(bool _isUpdate = true)
     {
-        if (rType == RoadTypeEnum.BothTurnLanes)
+        if (roadType == RoadTypeEnum.BothTurnLanes)
         {
-            MarkerExt_Tiled1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoad1.mat");
-            MarkerExt_Tiled2 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
-            MarkerExt_Tiled3 = null;
+            markerExtTiled1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoad1.mat");
+            markerExtTiled2 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+            markerExtTiled3 = null;
         }
-        else if (rType == RoadTypeEnum.TurnLane)
+        else if (roadType == RoadTypeEnum.TurnLane)
         {
-            MarkerExt_Tiled1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoad1.mat");
-            MarkerExt_Tiled2 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
-            MarkerExt_Tiled3 = null;
+            markerExtTiled1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoad1.mat");
+            markerExtTiled2 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+            markerExtTiled3 = null;
         }
-        else if (rType == RoadTypeEnum.NoTurnLane)
+        else if (roadType == RoadTypeEnum.NoTurnLane)
         {
-            MarkerExt_Tiled1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoad1.mat");
-            MarkerExt_Tiled2 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
-            MarkerExt_Tiled3 = null;
+            markerExtTiled1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoad1.mat");
+            markerExtTiled2 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+            markerExtTiled3 = null;
         }
-        if (bUpdate)
+        if (_isUpdate)
         {
             UpdateMaterials();
         }
     }
 
 
-    public void ResetMaterials_Lanes(bool bUpdate = true)
+    public void ResetLanesMaterials(bool _isUpdate = true)
     {
-        string tLanes = "";
-        Lanes = Node1.GSDSpline.tRoad.laneAmount;
-        if (Lanes == 4)
+        string lanesNumber = "";
+        lanesAmount = node1.GSDSpline.tRoad.laneAmount;
+        if (lanesAmount == 4)
         {
-            tLanes = "-4L";
+            lanesNumber = "-4L";
         }
-        else if (Lanes == 6)
+        else if (lanesAmount == 6)
         {
-            tLanes = "-6L";
+            lanesNumber = "-6L";
         }
 
-        if (iType == IntersectionTypeEnum.ThreeWay)
+        if (intersectionType == IntersectionTypeEnum.ThreeWay)
         {
-            Lane1Mat1_Disabled = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabled.mat");
-            Lane1Mat2_Disabled = null;
-            if (rType == RoadTypeEnum.BothTurnLanes)
+            lane1Mat1Disabled = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabled.mat");
+            lane1Mat2Disabled = null;
+            if (roadType == RoadTypeEnum.BothTurnLanes)
             {
-                Lane1Mat1_DisabledActive = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledOuterRR.mat");
-                Lane1Mat2_DisabledActive = null;
-                Lane2Mat1_Disabled = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledR.mat");
-                Lane2Mat2_Disabled = null;
+                lane1Mat1DisabledActive = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledOuterRR.mat");
+                lane1Mat2DisabledActive = null;
+                lane2Mat1Disabled = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledR.mat");
+                lane2Mat2Disabled = null;
             }
             else
             {
-                Lane2Mat1_Disabled = null;
-                Lane2Mat2_Disabled = null;
-                Lane2Mat1_DisabledActive = null;
-                Lane2Mat2_DisabledActive = null;
+                lane2Mat1Disabled = null;
+                lane2Mat2Disabled = null;
+                lane2Mat1DisabledActive = null;
+                lane2Mat2DisabledActive = null;
             }
-            Lane2Mat1_DisabledActive = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledOuter" + tLanes + ".mat");
-            Lane2Mat2_DisabledActive = null;
-            if (rType == RoadTypeEnum.BothTurnLanes)
+            lane2Mat1DisabledActive = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledOuter" + lanesNumber + ".mat");
+            lane2Mat2DisabledActive = null;
+            if (roadType == RoadTypeEnum.BothTurnLanes)
             {
-                Lane2Mat1_DisabledActiveR = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledOuterR.mat");
-                Lane2Mat2_DisabledActiveR = null;
-                Lane3Mat1_Disabled = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledR.mat");
-                Lane3Mat2_Disabled = null;
+                lane2Mat1DisabledActiveR = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledOuterR.mat");
+                lane2Mat2DisabledActiveR = null;
+                lane3Mat1Disabled = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterLaneDisabledR.mat");
+                lane3Mat2Disabled = null;
             }
             else
             {
-                Lane2Mat1_DisabledActiveR = null;
-                Lane2Mat2_DisabledActiveR = null;
-                Lane3Mat1_Disabled = null;
-                Lane3Mat2_Disabled = null;
+                lane2Mat1DisabledActiveR = null;
+                lane2Mat2DisabledActiveR = null;
+                lane3Mat1Disabled = null;
+                lane3Mat2Disabled = null;
             }
         }
         else
         {
-            Lane1Mat1_Disabled = null;
-            Lane1Mat2_Disabled = null;
-            Lane2Mat1_Disabled = null;
-            Lane2Mat2_Disabled = null;
-            Lane2Mat1_DisabledActive = null;
-            Lane2Mat2_DisabledActive = null;
-            Lane2Mat1_DisabledActiveR = null;
-            Lane2Mat2_DisabledActiveR = null;
-            Lane3Mat1_Disabled = null;
-            Lane3Mat2_Disabled = null;
+            lane1Mat1Disabled = null;
+            lane1Mat2Disabled = null;
+            lane2Mat1Disabled = null;
+            lane2Mat2Disabled = null;
+            lane2Mat1DisabledActive = null;
+            lane2Mat2DisabledActive = null;
+            lane2Mat1DisabledActiveR = null;
+            lane2Mat2DisabledActiveR = null;
+            lane3Mat1Disabled = null;
+            lane3Mat2Disabled = null;
         }
 
-        if (rType == RoadTypeEnum.BothTurnLanes)
+        if (roadType == RoadTypeEnum.BothTurnLanes)
         {
-            Lane0Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteLYellowR" + tLanes + ".mat");
-            Lane0Mat2 = null;
-            Lane1Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
-            Lane1Mat2 = null;
-            Lane2Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteR" + tLanes + ".mat");
-            Lane2Mat2 = null;
-            Lane3Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteR.mat");
-            Lane3Mat2 = null;
+            lane0Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteLYellowR" + lanesNumber + ".mat");
+            lane0Mat2 = null;
+            lane1Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
+            lane1Mat2 = null;
+            lane2Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteR" + lanesNumber + ".mat");
+            lane2Mat2 = null;
+            lane3Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteR.mat");
+            lane3Mat2 = null;
         }
-        else if (rType == RoadTypeEnum.TurnLane)
+        else if (roadType == RoadTypeEnum.TurnLane)
         {
-            Lane0Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteLYellowR" + tLanes + ".mat");
-            Lane0Mat2 = null;
-            Lane1Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
-            Lane1Mat2 = null;
-            Lane2Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteR" + tLanes + ".mat");
-            Lane2Mat2 = null;
-            Lane3Mat1 = null;
-            Lane3Mat2 = null;
+            lane0Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteLYellowR" + lanesNumber + ".mat");
+            lane0Mat2 = null;
+            lane1Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
+            lane1Mat2 = null;
+            lane2Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteR" + lanesNumber + ".mat");
+            lane2Mat2 = null;
+            lane3Mat1 = null;
+            lane3Mat2 = null;
         }
-        else if (rType == RoadTypeEnum.NoTurnLane)
+        else if (roadType == RoadTypeEnum.NoTurnLane)
         {
-            Lane0Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteLYellowR" + tLanes + ".mat");
-            Lane0Mat2 = null;
-            Lane1Mat1 = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterYellowLWhiteR" + tLanes + ".mat");
-            Lane1Mat2 = null;
-            Lane2Mat1 = null;
-            Lane2Mat2 = null;
-            Lane3Mat1 = null;
-            Lane3Mat2 = null;
+            lane0Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterWhiteLYellowR" + lanesNumber + ".mat");
+            lane0Mat2 = null;
+            lane1Mat1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Markers/GSDInterYellowLWhiteR" + lanesNumber + ".mat");
+            lane1Mat2 = null;
+            lane2Mat1 = null;
+            lane2Mat2 = null;
+            lane3Mat1 = null;
+            lane3Mat2 = null;
         }
 
-        if (bUpdate)
+        if (_isUpdate)
         {
             UpdateMaterials();
         }
@@ -746,105 +865,105 @@ public class GSDRoadIntersection : MonoBehaviour
 
     private void UpdateMaterials_Do()
     {
-        int cCount = transform.childCount;
-        List<MeshRenderer> MR_Ext_Stretch = new List<MeshRenderer>();
-        List<MeshRenderer> MR_Ext_Tiled = new List<MeshRenderer>();
-        MeshRenderer MR_Center = null;
-        List<MeshRenderer> MR_Lane0 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_Lane1 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_Lane2 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_Lane3 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_LaneD1 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_LaneD3 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_LaneDA2 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_LaneDAR2 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_LaneD2 = new List<MeshRenderer>();
-        List<MeshRenderer> MR_LaneDA1 = new List<MeshRenderer>();
+        int childCount = transform.childCount;
+        List<MeshRenderer> extStretchMR = new List<MeshRenderer>();
+        List<MeshRenderer> extTiledMR = new List<MeshRenderer>();
+        MeshRenderer centerMR = null;
+        List<MeshRenderer> lane0MR = new List<MeshRenderer>();
+        List<MeshRenderer> lane1MR = new List<MeshRenderer>();
+        List<MeshRenderer> lane2MR = new List<MeshRenderer>();
+        List<MeshRenderer> lane3MR = new List<MeshRenderer>();
+        List<MeshRenderer> laneD1MR = new List<MeshRenderer>();
+        List<MeshRenderer> laneD3MR = new List<MeshRenderer>();
+        List<MeshRenderer> laneDA2MR = new List<MeshRenderer>();
+        List<MeshRenderer> laneDAR2MR = new List<MeshRenderer>();
+        List<MeshRenderer> laneD2MR = new List<MeshRenderer>();
+        List<MeshRenderer> laneDA1MR = new List<MeshRenderer>();
 
-        string tTransName = "";
-        for (int i = 0; i < cCount; i++)
+        string transformName = "";
+        for (int i = 0; i < childCount; i++)
         {
-            tTransName = transform.GetChild(i).name.ToLower();
-            if (tTransName.Contains("-stretchext"))
+            transformName = transform.GetChild(i).name.ToLower();
+            if (transformName.Contains("-stretchext"))
             {
-                MR_Ext_Stretch.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                extStretchMR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                 continue;
             }
-            if (tTransName.Contains("-tiledext"))
+            if (transformName.Contains("-tiledext"))
             {
-                MR_Ext_Tiled.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                extTiledMR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                 continue;
             }
-            if (tTransName.Contains("centermarkers"))
+            if (transformName.Contains("centermarkers"))
             {
-                MR_Center = transform.GetChild(i).GetComponent<MeshRenderer>();
+                centerMR = transform.GetChild(i).GetComponent<MeshRenderer>();
                 continue;
             }
-            if (tTransName.Contains("lane0"))
+            if (transformName.Contains("lane0"))
             {
-                MR_Lane0.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                lane0MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                 continue;
             }
-            if (tTransName.Contains("lane1"))
+            if (transformName.Contains("lane1"))
             {
-                MR_Lane1.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                lane1MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                 continue;
             }
-            if (tTransName.Contains("lane2"))
+            if (transformName.Contains("lane2"))
             {
-                MR_Lane2.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                lane2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                 continue;
             }
-            if (tTransName.Contains("lane3"))
+            if (transformName.Contains("lane3"))
             {
-                MR_Lane3.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                lane3MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                 continue;
             }
-            if (iType == IntersectionTypeEnum.ThreeWay)
+            if (intersectionType == IntersectionTypeEnum.ThreeWay)
             {
-                if (tTransName.Contains("laned1"))
+                if (transformName.Contains("laned1"))
                 {
-                    MR_LaneD1.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    laneD1MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                     continue;
                 }
-                if (tTransName.Contains("laned3"))
+                if (transformName.Contains("laned3"))
                 {
-                    MR_LaneD3.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    laneD3MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                     continue;
                 }
-                if (tTransName.Contains("laneda2"))
+                if (transformName.Contains("laneda2"))
                 {
-                    MR_LaneDA2.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    laneDA2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                     continue;
                 }
-                if (tTransName.Contains("lanedar2"))
+                if (transformName.Contains("lanedar2"))
                 {
-                    MR_LaneDAR2.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    laneDAR2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                     continue;
                 }
-                if (tTransName.Contains("laned2"))
+                if (transformName.Contains("laned2"))
                 {
-                    MR_LaneD2.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    laneD2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                     continue;
                 }
-                if (tTransName.Contains("laneda1"))
+                if (transformName.Contains("laneda1"))
                 {
-                    MR_LaneDA1.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    laneDA1MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
                     continue;
                 }
             }
         }
 
-        if (MR_Ext_Stretch != null && MR_Ext_Stretch.Count > 0)
+        if (extStretchMR != null && extStretchMR.Count > 0)
         {
             int MarkerExtStretchCounter = 0;
-            if (MarkerExt_Stretch1 != null)
+            if (markerExtStretch1 != null)
             {
                 MarkerExtStretchCounter += 1;
-                if (MarkerExt_Stretch2 != null)
+                if (markerExtStretch2 != null)
                 {
                     MarkerExtStretchCounter += 1;
-                    if (MarkerExt_Stretch3 != null)
+                    if (markerExtStretch3 != null)
                     {
                         MarkerExtStretchCounter += 1;
                     }
@@ -855,383 +974,383 @@ public class GSDRoadIntersection : MonoBehaviour
             {
                 if (i == 0)
                 {
-                    MarkerExtStretchMats[i] = MarkerExt_Stretch1;
+                    MarkerExtStretchMats[i] = markerExtStretch1;
                 }
                 else if (i == 1)
                 {
-                    MarkerExtStretchMats[i] = MarkerExt_Stretch2;
+                    MarkerExtStretchMats[i] = markerExtStretch2;
                 }
                 else if (i == 2)
                 {
-                    MarkerExtStretchMats[i] = MarkerExt_Stretch3;
+                    MarkerExtStretchMats[i] = markerExtStretch3;
                 }
             }
-            for (int i = 0; i < MR_Ext_Stretch.Count; i++)
+            for (int i = 0; i < extStretchMR.Count; i++)
             {
-                MR_Ext_Stretch[i].materials = MarkerExtStretchMats;
+                extStretchMR[i].materials = MarkerExtStretchMats;
             }
         }
 
-        if (MR_Ext_Tiled != null && MR_Ext_Tiled.Count > 0)
+        if (extTiledMR != null && extTiledMR.Count > 0)
         {
-            int MarkerExtTiledCounter = 0;
-            if (MarkerExt_Tiled1 != null)
+            int extTiledMarkerCounter = 0;
+            if (markerExtTiled1 != null)
             {
-                MarkerExtTiledCounter += 1;
-                if (MarkerExt_Tiled2 != null)
+                extTiledMarkerCounter += 1;
+                if (markerExtTiled2 != null)
                 {
-                    MarkerExtTiledCounter += 1;
-                    if (MarkerExt_Tiled3 != null)
+                    extTiledMarkerCounter += 1;
+                    if (markerExtTiled3 != null)
                     {
-                        MarkerExtTiledCounter += 1;
+                        extTiledMarkerCounter += 1;
                     }
                 }
             }
-            Material[] MarkerExtTiledMats = new Material[MarkerExtTiledCounter];
-            for (int i = 0; i < MarkerExtTiledCounter; i++)
+            Material[] extTiledMarkerMats = new Material[extTiledMarkerCounter];
+            for (int i = 0; i < extTiledMarkerCounter; i++)
             {
                 if (i == 0)
                 {
-                    MarkerExtTiledMats[i] = MarkerExt_Tiled1;
+                    extTiledMarkerMats[i] = markerExtTiled1;
                 }
                 else if (i == 1)
                 {
-                    MarkerExtTiledMats[i] = MarkerExt_Tiled2;
+                    extTiledMarkerMats[i] = markerExtTiled2;
                 }
                 else if (i == 2)
                 {
-                    MarkerExtTiledMats[i] = MarkerExt_Tiled3;
+                    extTiledMarkerMats[i] = markerExtTiled3;
                 }
             }
-            for (int i = 0; i < MR_Ext_Tiled.Count; i++)
+            for (int i = 0; i < extTiledMR.Count; i++)
             {
-                MR_Ext_Tiled[i].materials = MarkerExtTiledMats;
+                extTiledMR[i].materials = extTiledMarkerMats;
             }
         }
 
-        if (MR_Center != null)
+        if (centerMR != null)
         {
             int CenterCounter = 0;
-            if (MarkerCenter1 != null)
+            if (markerCenter1 != null)
             {
                 CenterCounter += 1;
-                if (MarkerCenter2 != null)
+                if (markerCenter2 != null)
                 {
                     CenterCounter += 1;
-                    if (MarkerCenter3 != null)
+                    if (markerCenter3 != null)
                     {
                         CenterCounter += 1;
                     }
                 }
             }
-            Material[] CenterMats = new Material[CenterCounter];
+            Material[] centerMats = new Material[CenterCounter];
             for (int i = 0; i < CenterCounter; i++)
             {
                 if (i == 0)
                 {
-                    CenterMats[i] = MarkerCenter1;
+                    centerMats[i] = markerCenter1;
                 }
                 else if (i == 1)
                 {
-                    CenterMats[i] = MarkerCenter2;
+                    centerMats[i] = markerCenter2;
                 }
                 else if (i == 2)
                 {
-                    CenterMats[i] = MarkerCenter3;
+                    centerMats[i] = markerCenter3;
                 }
             }
-            MR_Center.materials = CenterMats;
+            centerMR.materials = centerMats;
         }
 
-        int LaneCounter = 0;
-        if (MR_Lane0 != null && MR_Lane0.Count > 0)
+        int laneCounter = 0;
+        if (lane0MR != null && lane0MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane0Mat1 != null)
+            laneCounter = 0;
+            if (lane0Mat1 != null)
             {
-                LaneCounter += 1;
-                if (Lane0Mat2 != null)
+                laneCounter += 1;
+                if (lane0Mat2 != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane0Mats = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane0Mats = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane0Mats[i] = Lane0Mat1;
+                    lane0Mats[i] = lane0Mat1;
                 }
                 else if (i == 1)
                 {
-                    Lane0Mats[i] = Lane0Mat2;
+                    lane0Mats[i] = lane0Mat2;
                 }
             }
-            for (int i = 0; i < MR_Lane0.Count; i++)
+            for (int i = 0; i < lane0MR.Count; i++)
             {
-                MR_Lane0[i].materials = Lane0Mats;
+                lane0MR[i].materials = lane0Mats;
             }
         }
 
-        if (MR_Lane1 != null && MR_Lane1.Count > 0)
+        if (lane1MR != null && lane1MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane1Mat1 != null)
+            laneCounter = 0;
+            if (lane1Mat1 != null)
             {
-                LaneCounter += 1;
-                if (Lane1Mat2 != null)
+                laneCounter += 1;
+                if (lane1Mat2 != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane1Mats = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane1Mats = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane1Mats[i] = Lane1Mat1;
+                    lane1Mats[i] = lane1Mat1;
                 }
                 else if (i == 1)
                 {
-                    Lane1Mats[i] = Lane1Mat2;
+                    lane1Mats[i] = lane1Mat2;
                 }
             }
-            for (int i = 0; i < MR_Lane1.Count; i++)
+            for (int i = 0; i < lane1MR.Count; i++)
             {
-                MR_Lane1[i].materials = Lane1Mats;
+                lane1MR[i].materials = lane1Mats;
             }
         }
 
-        if (MR_Lane2 != null && MR_Lane2.Count > 0)
+        if (lane2MR != null && lane2MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane2Mat1 != null)
+            laneCounter = 0;
+            if (lane2Mat1 != null)
             {
-                LaneCounter += 1;
-                if (Lane2Mat2 != null)
+                laneCounter += 1;
+                if (lane2Mat2 != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane2Mats = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane2Mats = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane2Mats[i] = Lane2Mat1;
+                    lane2Mats[i] = lane2Mat1;
                 }
                 else if (i == 1)
                 {
-                    Lane2Mats[i] = Lane2Mat2;
+                    lane2Mats[i] = lane2Mat2;
                 }
             }
-            for (int i = 0; i < MR_Lane2.Count; i++)
+            for (int i = 0; i < lane2MR.Count; i++)
             {
-                MR_Lane2[i].materials = Lane2Mats;
+                lane2MR[i].materials = lane2Mats;
             }
         }
 
-        if (MR_Lane3 != null && MR_Lane3.Count > 0)
+        if (lane3MR != null && lane3MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane3Mat1 != null)
+            laneCounter = 0;
+            if (lane3Mat1 != null)
             {
-                LaneCounter += 1;
-                if (Lane3Mat2 != null)
+                laneCounter += 1;
+                if (lane3Mat2 != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane3Mats = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane3Mats = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane3Mats[i] = Lane3Mat1;
+                    lane3Mats[i] = lane3Mat1;
                 }
                 else if (i == 1)
                 {
-                    Lane3Mats[i] = Lane3Mat2;
+                    lane3Mats[i] = lane3Mat2;
                 }
             }
-            for (int i = 0; i < MR_Lane3.Count; i++)
+            for (int i = 0; i < lane3MR.Count; i++)
             {
-                MR_Lane3[i].materials = Lane3Mats;
+                lane3MR[i].materials = lane3Mats;
             }
         }
 
-        if (MR_LaneD1 != null && MR_LaneD1.Count > 0)
+        if (laneD1MR != null && laneD1MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane1Mat1_Disabled != null)
+            laneCounter = 0;
+            if (lane1Mat1Disabled != null)
             {
-                LaneCounter += 1;
-                if (Lane1Mat2_Disabled != null)
+                laneCounter += 1;
+                if (lane1Mat2Disabled != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane1Mats_Disabled = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane1MatsDisabled = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane1Mats_Disabled[i] = Lane1Mat1_Disabled;
+                    lane1MatsDisabled[i] = lane1Mat1Disabled;
                 }
                 else if (i == 1)
                 {
-                    Lane1Mats_Disabled[i] = Lane1Mat2_Disabled;
+                    lane1MatsDisabled[i] = lane1Mat2Disabled;
                 }
             }
-            for (int i = 0; i < MR_LaneD1.Count; i++)
+            for (int i = 0; i < laneD1MR.Count; i++)
             {
-                MR_LaneD1[i].materials = Lane1Mats_Disabled;
+                laneD1MR[i].materials = lane1MatsDisabled;
             }
         }
 
-        if (MR_LaneD3 != null && MR_LaneD3.Count > 0)
+        if (laneD3MR != null && laneD3MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane3Mat1_Disabled != null)
+            laneCounter = 0;
+            if (lane3Mat1Disabled != null)
             {
-                LaneCounter += 1;
-                if (Lane3Mat2_Disabled != null)
+                laneCounter += 1;
+                if (lane3Mat2Disabled != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane3Mats_Disabled = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane3MatsDisabled = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane3Mats_Disabled[i] = Lane3Mat1_Disabled;
+                    lane3MatsDisabled[i] = lane3Mat1Disabled;
                 }
                 else if (i == 1)
                 {
-                    Lane3Mats_Disabled[i] = Lane3Mat2_Disabled;
+                    lane3MatsDisabled[i] = lane3Mat2Disabled;
                 }
             }
-            for (int i = 0; i < MR_LaneD3.Count; i++)
+            for (int i = 0; i < laneD3MR.Count; i++)
             {
-                MR_LaneD3[i].materials = Lane3Mats_Disabled;
+                laneD3MR[i].materials = lane3MatsDisabled;
             }
         }
 
-        if (MR_LaneDA2 != null && MR_LaneDA2.Count > 0)
+        if (laneDA2MR != null && laneDA2MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane2Mat1_DisabledActive != null)
+            laneCounter = 0;
+            if (lane2Mat1DisabledActive != null)
             {
-                LaneCounter += 1;
-                if (Lane2Mat2_DisabledActive != null)
+                laneCounter += 1;
+                if (lane2Mat2DisabledActive != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane2Mats_DisabledActive = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane2MatsDisabledActive = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane2Mats_DisabledActive[i] = Lane2Mat1_DisabledActive;
+                    lane2MatsDisabledActive[i] = lane2Mat1DisabledActive;
                 }
                 else if (i == 1)
                 {
-                    Lane2Mats_DisabledActive[i] = Lane2Mat2_DisabledActive;
+                    lane2MatsDisabledActive[i] = lane2Mat2DisabledActive;
                 }
             }
-            for (int i = 0; i < MR_LaneDA2.Count; i++)
+            for (int i = 0; i < laneDA2MR.Count; i++)
             {
-                MR_LaneDA2[i].materials = Lane2Mats_DisabledActive;
+                laneDA2MR[i].materials = lane2MatsDisabledActive;
             }
         }
 
-        if (MR_LaneDAR2 != null && MR_LaneDAR2.Count > 0)
+        if (laneDAR2MR != null && laneDAR2MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane2Mat1_DisabledActiveR != null)
+            laneCounter = 0;
+            if (lane2Mat1DisabledActiveR != null)
             {
-                LaneCounter += 1;
-                if (Lane2Mat2_DisabledActiveR != null)
+                laneCounter += 1;
+                if (lane2Mat2DisabledActiveR != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane2Mats_DisabledActiveR = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane2MatsDisabledActiveR = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane2Mats_DisabledActiveR[i] = Lane2Mat1_DisabledActiveR;
+                    lane2MatsDisabledActiveR[i] = lane2Mat1DisabledActiveR;
                 }
                 else if (i == 1)
                 {
-                    Lane2Mats_DisabledActiveR[i] = Lane2Mat2_DisabledActiveR;
+                    lane2MatsDisabledActiveR[i] = lane2Mat2DisabledActiveR;
                 }
             }
-            for (int i = 0; i < MR_LaneDAR2.Count; i++)
+            for (int i = 0; i < laneDAR2MR.Count; i++)
             {
-                MR_LaneDAR2[i].materials = Lane2Mats_DisabledActiveR;
+                laneDAR2MR[i].materials = lane2MatsDisabledActiveR;
             }
         }
 
-        if (MR_LaneD2 != null && MR_LaneD2.Count > 0)
+        if (laneD2MR != null && laneD2MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane2Mat1_Disabled != null)
+            laneCounter = 0;
+            if (lane2Mat1Disabled != null)
             {
-                LaneCounter += 1;
-                if (Lane2Mat2_Disabled != null)
+                laneCounter += 1;
+                if (lane2Mat2Disabled != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane2Mats_Disabled = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane2MatsDisabled = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane2Mats_Disabled[i] = Lane2Mat1_Disabled;
+                    lane2MatsDisabled[i] = lane2Mat1Disabled;
                 }
                 else if (i == 1)
                 {
-                    Lane2Mats_Disabled[i] = Lane2Mat2_Disabled;
+                    lane2MatsDisabled[i] = lane2Mat2Disabled;
                 }
             }
-            for (int i = 0; i < MR_LaneD2.Count; i++)
+            for (int i = 0; i < laneD2MR.Count; i++)
             {
-                MR_LaneD2[i].materials = Lane2Mats_Disabled;
+                laneD2MR[i].materials = lane2MatsDisabled;
             }
         }
 
 
-        if (MR_LaneDA1 != null && MR_LaneDA1.Count > 0)
+        if (laneDA1MR != null && laneDA1MR.Count > 0)
         {
-            LaneCounter = 0;
-            if (Lane1Mat1_DisabledActive != null)
+            laneCounter = 0;
+            if (lane1Mat1DisabledActive != null)
             {
-                LaneCounter += 1;
-                if (Lane1Mat2_DisabledActive != null)
+                laneCounter += 1;
+                if (lane1Mat2DisabledActive != null)
                 {
-                    LaneCounter += 1;
+                    laneCounter += 1;
                 }
             }
-            Material[] Lane1Mats_DisabledActive = new Material[LaneCounter];
-            for (int i = 0; i < LaneCounter; i++)
+            Material[] lane1MatsDisabledActive = new Material[laneCounter];
+            for (int i = 0; i < laneCounter; i++)
             {
                 if (i == 0)
                 {
-                    Lane1Mats_DisabledActive[i] = Lane1Mat1_DisabledActive;
+                    lane1MatsDisabledActive[i] = lane1Mat1DisabledActive;
                 }
                 else if (i == 1)
                 {
-                    Lane1Mats_DisabledActive[i] = Lane1Mat2_DisabledActive;
+                    lane1MatsDisabledActive[i] = lane1Mat2DisabledActive;
                 }
             }
-            for (int i = 0; i < MR_LaneDA1.Count; i++)
+            for (int i = 0; i < laneDA1MR.Count; i++)
             {
-                MR_LaneDA1[i].materials = Lane1Mats_DisabledActive;
+                laneDA1MR[i].materials = lane1MatsDisabledActive;
             }
         }
     }
@@ -1241,35 +1360,35 @@ public class GSDRoadIntersection : MonoBehaviour
     #region "TrafficLights"
     public void ToggleTrafficLightPoleColor()
     {
-        Material TrafficLightMaterial = null;
-        if (bTrafficLightGray)
+        Material trafficLightMaterial = null;
+        if (isTrafficLightGray)
         {
-            TrafficLightMaterial = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Signs/GSDInterTLB2.mat");
+            trafficLightMaterial = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Signs/GSDInterTLB2.mat");
         }
         else
         {
-            TrafficLightMaterial = GSD.Roads.GSDRoadUtilityEditor.GiveMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Signs/GSDInterTLB1.mat");
+            trafficLightMaterial = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/Signs/GSDInterTLB1.mat");
         }
-        int cCount = transform.childCount;
-        string tName = "";
+        int childCount = transform.childCount;
+        string transformName = "";
         MeshRenderer MR = null;
-        Material[] tMats = new Material[1];
-        tMats[0] = TrafficLightMaterial;
-        for (int index = 0; index < cCount; index++)
+        Material[] materials = new Material[1];
+        materials[0] = trafficLightMaterial;
+        for (int index = 0; index < childCount; index++)
         {
-            tName = transform.GetChild(index).name.ToLower();
-            if (tName.Contains("trafficlight"))
+            transformName = transform.GetChild(index).name.ToLower();
+            if (transformName.Contains("trafficlight"))
             {
                 MR = transform.GetChild(index).GetComponent<MeshRenderer>();
-                MR.materials = tMats;
+                MR.materials = materials;
             }
         }
     }
 
 
-    public void TogglePointLights(bool _bLightsEnabled)
+    public void TogglePointLights(bool _isLightsEnabled)
     {
-        bLightsEnabled = _bLightsEnabled;
+        isLightsEnabled = _isLightsEnabled;
         int cCount = transform.childCount;
         Light[] fLights = null;
         Transform tTrans = null;
@@ -1278,8 +1397,8 @@ public class GSDRoadIntersection : MonoBehaviour
             if (transform.GetChild(index).name.ToLower().Contains("trafficlight"))
             {
                 tTrans = transform.GetChild(index);
-                int kCount = tTrans.childCount;
-                for (int k = 0; k < kCount; k++)
+                int childCount = tTrans.childCount;
+                for (int k = 0; k < childCount; k++)
                 {
                     if (tTrans.GetChild(k).name.ToLower().Contains("streetlight"))
                     {
@@ -1288,10 +1407,10 @@ public class GSDRoadIntersection : MonoBehaviour
                         {
                             for (int j = 0; j < fLights.Length; j++)
                             {
-                                fLights[j].enabled = bLightsEnabled;
-                                fLights[j].range = StreetLight_Range;
-                                fLights[j].intensity = StreetLight_Intensity;
-                                fLights[j].color = StreetLight_Color;
+                                fLights[j].enabled = isLightsEnabled;
+                                fLights[j].range = streetLightRange;
+                                fLights[j].intensity = streetLightIntensity;
+                                fLights[j].color = streetLightColor;
                             }
                         }
                         fLights = null;
@@ -1305,10 +1424,10 @@ public class GSDRoadIntersection : MonoBehaviour
 
     public void ResetStreetLightSettings()
     {
-        StreetLight_Range = 30f;
-        StreetLight_Intensity = 1f;
-        StreetLight_Color = new Color(1f, 0.7451f, 0.27451f, 1f);
-        TogglePointLights(bLightsEnabled);
+        streetLightRange = 30f;
+        streetLightIntensity = 1f;
+        streetLightColor = new Color(1f, 0.7451f, 0.27451f, 1f);
+        TogglePointLights(isLightsEnabled);
     }
     #endregion
 #endif
