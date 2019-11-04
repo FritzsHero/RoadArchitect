@@ -52,22 +52,22 @@ public class GSDRoadIntersectionEditor : Editor
 
     #region "Editor only variables"
     //Editor only variables
-    private const bool bDebug = false;
-    private bool bShowMarkerStretch = false;
-    private bool bShowMarkerTiled = false;
-    private bool bShowMarkerCenter = false;
-    private bool bShowTLSense = false;
-    private bool bShowTLPole = false;
-    private bool bShowLightHelp = false;
-    private bool bShowLanes = false;
-    private bool bGradeCorrect = false;
-    private bool bShowDefaultMatHelp = false;
-    private bool bShowHelpLeftTurnGreen = false;
+    private const bool isDebug = false;
+    private bool isShowingMarkerStretch = false;
+    private bool isShowingMarkerTiled = false;
+    private bool isShowingMarkerCenter = false;
+    private bool isShowingTLSense = false;
+    private bool isShowingTLPole = false;
+    private bool isShowingLightHelp = false;
+    private bool isShowingLanes = false;
+    private bool isGradeCorrect = false;
+    private bool isShowingDefaultMatHelp = false;
+    private bool isShowingHelpLeftTurnGreen = false;
     private string status = "Show help";
 
-    private GUIStyle GSDImageButton = null;
-    private Texture btnRefreshText = null;
-    private Texture btnDeleteText = null;
+    private GUIStyle imageButton = null;
+    private Texture refreshButtonTexture = null;
+    private Texture deleteButtonTexture = null;
 
 
     private static string[] rTypeDescriptions = new string[]{
@@ -97,14 +97,14 @@ public class GSDRoadIntersectionEditor : Editor
     };
 
 
-    private const string HelpText1 = "Each material added is rendered on top of the previous. Combine with transparent shaders which accept shadows to allow for easy marking.";
+    private const string helpText1 = "Each material added is rendered on top of the previous. Combine with transparent shaders which accept shadows to allow for easy marking.";
 
     //Checkers:
-    private Texture2D LoadBtnBG = null;
-    private Texture2D LoadBtnBGGlow = null;
+    private Texture2D loadButtonBG = null;
+    private Texture2D loadButtonBGGlow = null;
 
-    private GUIStyle GSDLoadButton = null;
-    private bool bHasInit = false;
+    private GUIStyle loadButton = null;
+    private bool isInitialized = false;
     #endregion
 
 
@@ -165,7 +165,7 @@ public class GSDRoadIntersectionEditor : Editor
         serializedObject.Update();
 
         //Graphic null checks:
-        if (!bHasInit)
+        if (!isInitialized)
         {
             Init();
         }
@@ -181,7 +181,7 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.EndHorizontal();
         RAEditorUtilitys.Line();
         EditorGUILayout.LabelField("Intersection options", EditorStyles.boldLabel);
-        if (GUILayout.Button("Update intersection", GSDLoadButton))
+        if (GUILayout.Button("Update intersection", loadButton))
         {
             TriggerRoadUpdate(true);
         }
@@ -237,8 +237,8 @@ public class GSDRoadIntersectionEditor : Editor
         {
             isLeftTurnYieldOnGreen.boolValue = EditorGUILayout.Toggle("Left yield on green: ", intersection.isLeftTurnYieldOnGreen);
 
-            bShowHelpLeftTurnGreen = EditorGUILayout.Foldout(bShowHelpLeftTurnGreen, status);
-            if (bShowHelpLeftTurnGreen)
+            isShowingHelpLeftTurnGreen = EditorGUILayout.Foldout(isShowingHelpLeftTurnGreen, status);
+            if (isShowingHelpLeftTurnGreen)
             {
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField("Left yield on green: If checked, replaces the standard 3-light left turn light with a five-light yield on green left turn signal structure and sign.");
@@ -263,7 +263,7 @@ public class GSDRoadIntersectionEditor : Editor
                 EditorGUILayout.LabelField("Traffic light fixed time lengths (in seconds):");
                 EditorGUILayout.BeginHorizontal();
                 fixedTimeRegularLightLength.floatValue = EditorGUILayout.Slider("Green length: ", intersection.fixedTimeRegularLightLength, 0.1f, 180f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     fixedTimeRegularLightLength.floatValue = 30f;
                 }
@@ -273,7 +273,7 @@ public class GSDRoadIntersectionEditor : Editor
                 {
                     EditorGUILayout.BeginHorizontal();
                     fixedTimeLeftTurnLightLength.floatValue = EditorGUILayout.Slider("Left turn only length: ", intersection.fixedTimeLeftTurnLightLength, 0.1f, 180f);
-                    if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                    if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                     {
                         fixedTimeLeftTurnLightLength.floatValue = 10f;
                     }
@@ -282,7 +282,7 @@ public class GSDRoadIntersectionEditor : Editor
 
                 EditorGUILayout.BeginHorizontal();
                 fixedTimeAllRedLightLength.floatValue = EditorGUILayout.Slider("All red length: ", intersection.fixedTimeAllRedLightLength, 0.1f, 180f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     fixedTimeAllRedLightLength.floatValue = 1f;
                 }
@@ -290,7 +290,7 @@ public class GSDRoadIntersectionEditor : Editor
 
                 EditorGUILayout.BeginHorizontal();
                 fixedTimeYellowLightLength.floatValue = EditorGUILayout.Slider("Yellow light length: ", intersection.fixedTimeYellowLightLength, 0.1f, 180f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     fixedTimeYellowLightLength.floatValue = 3f;
                 }
@@ -311,8 +311,8 @@ public class GSDRoadIntersectionEditor : Editor
 
             //Option: Normal pole alignment:
             isRegularPoleAlignment.boolValue = EditorGUILayout.Toggle("Normal pole alignment: ", intersection.isRegularPoleAlignment);
-            bShowTLPole = EditorGUILayout.Foldout(bShowTLPole, status);
-            if (bShowTLPole)
+            isShowingTLPole = EditorGUILayout.Foldout(isShowingTLPole, status);
+            if (isShowingTLPole)
             {
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField("Street lights: If checked, attaches street lights to each intersection pole. Point lights optional and can be manipulated in the next option segment.");
@@ -336,7 +336,7 @@ public class GSDRoadIntersectionEditor : Editor
                 //Option: Street light range:
                 EditorGUILayout.BeginHorizontal();
                 streetLightRange.floatValue = EditorGUILayout.Slider("  Street light range: ", intersection.streetLightRange, 1f, 128f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     streetLightRange.floatValue = 30f;
                 }
@@ -345,7 +345,7 @@ public class GSDRoadIntersectionEditor : Editor
                 //Option: Street light intensity:
                 EditorGUILayout.BeginHorizontal();
                 streetLightIntensity.floatValue = EditorGUILayout.Slider("  Street light intensity: ", intersection.streetLightIntensity, 0f, 8f);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     streetLightIntensity.floatValue = 1f;
                 }
@@ -354,14 +354,14 @@ public class GSDRoadIntersectionEditor : Editor
                 //Option: Street light color:
                 EditorGUILayout.BeginHorizontal();
                 streetLightColor.colorValue = EditorGUILayout.ColorField("  Street light color: ", intersection.streetLightColor);
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     streetLightColor.colorValue = new Color(1f, 0.7451f, 0.27451f, 1f);
                 }
                 EditorGUILayout.EndHorizontal();
             }
-            bShowLightHelp = EditorGUILayout.Foldout(bShowLightHelp, status);
-            if (bShowLightHelp)
+            isShowingLightHelp = EditorGUILayout.Foldout(isShowingLightHelp, status);
+            if (isShowingLightHelp)
             {
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField("Point lights: Enabled means that point lights for the traffic lights (and street lights, if enabled) will be turned on. This is accessible via script \"bLightsEnabled\"");
@@ -371,7 +371,7 @@ public class GSDRoadIntersectionEditor : Editor
 
                 GUILayout.Space(4f);
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
 
                 }
@@ -385,26 +385,26 @@ public class GSDRoadIntersectionEditor : Editor
             EditorGUILayout.LabelField("Traffic light scaling sensitivity: *Does not auto-update");
             EditorGUILayout.BeginHorizontal();
             scalingSense.floatValue = EditorGUILayout.Slider(intersection.scalingSense, 0f, 200f);
-            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 scalingSense.floatValue = 170f;
             }
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(4f);
             EditorGUILayout.BeginHorizontal();
-            bShowTLSense = EditorGUILayout.Foldout(bShowTLSense, status);
+            isShowingTLSense = EditorGUILayout.Foldout(isShowingTLSense, status);
             if (GUILayout.Button("Manually update intersection", EditorStyles.miniButton, GUILayout.Width(170f)))
             {
                 TriggerRoadUpdate(true);
             }
             EditorGUILayout.EndHorizontal();
-            if (bShowTLSense)
+            if (isShowingTLSense)
             {
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.LabelField("Increasing this value will increase the scaling sensitivity relative to the size of the intersection. Higher scaling value = bigger traffic lights at further distances. Default value is 170.");
                 GUILayout.Space(4f);
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
 
                 }
@@ -422,19 +422,19 @@ public class GSDRoadIntersectionEditor : Editor
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
         gradeMod.floatValue = EditorGUILayout.Slider(intersection.gradeMod, 0.01f, 2f);
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             gradeMod.floatValue = 0.375f;
         }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
-        bGradeCorrect = EditorGUILayout.Foldout(bGradeCorrect, status);
+        isGradeCorrect = EditorGUILayout.Foldout(isGradeCorrect, status);
         if (GUILayout.Button("Manually update intersection", EditorStyles.miniButton, GUILayout.Width(170f)))
         {
             intersection.UpdateRoads();
         }
         EditorGUILayout.EndHorizontal();
-        if (bGradeCorrect)
+        if (isGradeCorrect)
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("If using extreme road grades immediately surrounding the intersection, terrain height matching errors may occur at the point of road expansion leading to the intersection.");
@@ -444,7 +444,7 @@ public class GSDRoadIntersectionEditor : Editor
             EditorGUILayout.LabelField("Recommended to keep grades and angles small leading up to intersections.");
             GUILayout.Space(4f);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
             {
 
             }
@@ -456,8 +456,8 @@ public class GSDRoadIntersectionEditor : Editor
         //Option: Use default materials:
         RAEditorUtilitys.Line();
         isUsingDefaultMaterials.boolValue = EditorGUILayout.Toggle("Use default materials:", intersection.isUsingDefaultMaterials);
-        bShowDefaultMatHelp = EditorGUILayout.Foldout(bShowDefaultMatHelp, status);
-        if (bShowDefaultMatHelp)
+        isShowingDefaultMatHelp = EditorGUILayout.Foldout(isShowingDefaultMatHelp, status);
+        if (isShowingDefaultMatHelp)
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("Checking this option will reset all materials for this intersection and use the default intersection materials that come with this addon.");
@@ -468,7 +468,7 @@ public class GSDRoadIntersectionEditor : Editor
         RAEditorUtilitys.Line();
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Center marker material(s):");
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.ResetCenterMaterials();
         }
@@ -494,7 +494,7 @@ public class GSDRoadIntersectionEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(markerCenter1, new GUIContent("  Mat #1: "));
-        if (intersection.markerCenter1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        if (intersection.markerCenter1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.markerCenter1 = null;
         }
@@ -504,7 +504,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(markerCenter2, new GUIContent("  Mat #2: "));
-            if (intersection.markerCenter2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.markerCenter2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.markerCenter2 = null;
             }
@@ -514,15 +514,15 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(markerCenter3, new GUIContent("  Mat #3: "));
-            if (intersection.markerCenter3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.markerCenter3 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.markerCenter3 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        bShowMarkerCenter = EditorGUILayout.Foldout(bShowMarkerCenter, status);
-        if (bShowMarkerCenter)
+        isShowingMarkerCenter = EditorGUILayout.Foldout(isShowingMarkerCenter, status);
+        if (isShowingMarkerCenter)
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("Center marker materials require transparent shaders. Covers the center area of the intersection. Displayed in order #1 on bottom to #4 on top. Combine with transparent shaders which accept shadows to allow for easy marking.");
@@ -535,7 +535,7 @@ public class GSDRoadIntersectionEditor : Editor
         //Options: Marker ext stretched materials:
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Exterior fitted marker material(s):");
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.ResetExtStrechtedMaterials();
         }
@@ -543,7 +543,7 @@ public class GSDRoadIntersectionEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(markerExtStretch1, new GUIContent("  Mat #1: "));
-        if (intersection.markerExtStretch1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        if (intersection.markerExtStretch1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.markerExtStretch1 = null;
         }
@@ -553,7 +553,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(markerExtStretch2, new GUIContent("  Mat #2: "));
-            if (intersection.markerExtStretch2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.markerExtStretch2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.markerExtStretch2 = null;
             }
@@ -563,18 +563,18 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(markerExtStretch3, new GUIContent("  Mat #3: "));
-            if (intersection.markerExtStretch3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.markerExtStretch3 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.markerExtStretch3 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        bShowMarkerStretch = EditorGUILayout.Foldout(bShowMarkerStretch, status);
-        if (bShowMarkerStretch)
+        isShowingMarkerStretch = EditorGUILayout.Foldout(isShowingMarkerStretch, status);
+        if (isShowingMarkerStretch)
         {
             EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.LabelField("Fitted marker materials require transparent shaders. Covers the exterior area of the intersection with the UV's stretched to match at a 1:1 ratio. Should be use for intersection markings and any visual effects like dirt." + HelpText1);
+            EditorGUILayout.LabelField("Fitted marker materials require transparent shaders. Covers the exterior area of the intersection with the UV's stretched to match at a 1:1 ratio. Should be use for intersection markings and any visual effects like dirt." + helpText1);
             DoDefaultHelpMat();
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
@@ -584,7 +584,7 @@ public class GSDRoadIntersectionEditor : Editor
         //Options: Marker ext tiled materials:
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Exterior tiled marker material(s):");
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.ResetExtTiledMaterials();
         }
@@ -593,7 +593,7 @@ public class GSDRoadIntersectionEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(markerExtTiled1, new GUIContent("  Mat #1: "));
-        if (intersection.markerExtTiled1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        if (intersection.markerExtTiled1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.markerExtTiled1 = null;
         }
@@ -603,7 +603,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(markerExtTiled2, new GUIContent("  Mat #2: "));
-            if (intersection.markerExtTiled2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.markerExtTiled2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.markerExtTiled2 = null;
             }
@@ -613,18 +613,18 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(markerExtTiled3, new GUIContent("  Mat #3: "));
-            if (intersection.markerExtTiled3 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.markerExtTiled3 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.markerExtTiled3 = null;
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        bShowMarkerTiled = EditorGUILayout.Foldout(bShowMarkerTiled, status);
-        if (bShowMarkerTiled)
+        isShowingMarkerTiled = EditorGUILayout.Foldout(isShowingMarkerTiled, status);
+        if (isShowingMarkerTiled)
         {
             EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.LabelField("Covers the exterior area of the intersection with the UV's tiled matching world coordinates. Tiled and used for road pavement textures. UV coordinates will match up seamlessly with road pavement." + HelpText1);
+            EditorGUILayout.LabelField("Covers the exterior area of the intersection with the UV's tiled matching world coordinates. Tiled and used for road pavement textures. UV coordinates will match up seamlessly with road pavement." + helpText1);
             DoDefaultHelpMat();
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
@@ -634,7 +634,7 @@ public class GSDRoadIntersectionEditor : Editor
         //Option: Lane section 0:
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Lanes marker materials:");
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.ResetLanesMaterials();
         }
@@ -643,7 +643,7 @@ public class GSDRoadIntersectionEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(lane0Mat1, new GUIContent("Lane section 0 mat #1:"));
-        if (intersection.lane0Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        if (intersection.lane0Mat1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.lane0Mat1 = null;
         }
@@ -652,7 +652,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(lane0Mat2, new GUIContent("Lane section 0 mat #2:"));
-            if (intersection.lane0Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.lane0Mat2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.lane0Mat2 = null;
             }
@@ -663,7 +663,7 @@ public class GSDRoadIntersectionEditor : Editor
         //Option: Lane section 1:
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(lane1Mat1, new GUIContent("Lane section 1 mat #1:"));
-        if (intersection.lane1Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        if (intersection.lane1Mat1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             intersection.lane1Mat1 = null;
         }
@@ -672,7 +672,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(lane1Mat2, new GUIContent("Lane section 1 mat #2:"));
-            if (intersection.lane1Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.lane1Mat2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.lane1Mat2 = null;
             }
@@ -684,7 +684,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(lane2Mat1, new GUIContent("Lane section 2 mat #1:"));
-            if (intersection.lane2Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.lane2Mat1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.lane2Mat1 = null;
             }
@@ -693,7 +693,7 @@ public class GSDRoadIntersectionEditor : Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(lane2Mat2, new GUIContent("Lane section 2 mat #2:"));
-                if (intersection.lane2Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                if (intersection.lane2Mat2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     intersection.lane2Mat2 = null;
                 }
@@ -707,7 +707,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(lane3Mat1, new GUIContent("Lane section 3 mat #1:"));
-            if (intersection.lane3Mat1 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (intersection.lane3Mat1 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 intersection.lane3Mat1 = null;
             }
@@ -716,15 +716,15 @@ public class GSDRoadIntersectionEditor : Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(lane3Mat2, new GUIContent("Lane section 3 mat #2:"));
-                if (intersection.lane3Mat2 != null && GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+                if (intersection.lane3Mat2 != null && GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     intersection.lane3Mat2 = null;
                 }
                 EditorGUILayout.EndHorizontal();
             }
         }
-        bShowLanes = EditorGUILayout.Foldout(bShowLanes, status);
-        if (bShowLanes)
+        isShowingLanes = EditorGUILayout.Foldout(isShowingLanes, status);
+        if (isShowingLanes)
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.LabelField("Covers individual lane sections in the intersection. Used for high-definition line marking.");
@@ -746,7 +746,7 @@ public class GSDRoadIntersectionEditor : Editor
                 EditorGUILayout.LabelField("Lane section 1 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
             }
 
-            EditorGUILayout.LabelField(HelpText1);
+            EditorGUILayout.LabelField(helpText1);
             DoDefaultHelpMat();
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
@@ -779,85 +779,85 @@ public class GSDRoadIntersectionEditor : Editor
 
 
         //Set change bools:
-        bool bToggleTrafficLightPoleColor = false;
-        bool bTogglePointLights = false;
-        bool bGizmoChange = false;
-        bool bMatChange = false;
-        bool bRoadUpdate = false;
+        bool isTrafficLightPoleColorToggled = false;
+        bool isPointLightsToggled = false;
+        bool isGizmoChanged = false;
+        bool isMaterialChanged = false;
+        bool isRoadUpdate = false;
 
         if (GUI.changed)
         {
             //Option: Gizmo:
             if (isDrawingGizmo.boolValue != intersection.isDrawingGizmo)
             {
-                bGizmoChange = true;
+                isGizmoChanged = true;
             }
 
             //Option: Intersection turn lane options
             if ((int) intersection.roadType != roadType.enumValueIndex)
             {
-                bMatChange = true;
-                bRoadUpdate = true;
+                isMaterialChanged = true;
+                isRoadUpdate = true;
             }
 
             //Option: Left yield on green:
             if (isLeftTurnYieldOnGreen.boolValue != intersection.isLeftTurnYieldOnGreen)
             {
-                bRoadUpdate = true;
+                isRoadUpdate = true;
             }
 
             //Option: Intersection stop type:
             if (intersectionStopType.enumValueIndex != (int) intersection.intersectionStopType)
             {
-                bRoadUpdate = true;
+                isRoadUpdate = true;
             }
 
             //Option: Traffic light poles:
             if (isTrafficPoleStreetLight.boolValue != intersection.isTrafficPoleStreetLight)
             {
-                bRoadUpdate = true;
+                isRoadUpdate = true;
             }
 
             //Option: Traffic light pole gray color:
             if (isTrafficLightGray.boolValue != intersection.isTrafficLightGray)
             {
-                bToggleTrafficLightPoleColor = true;
+                isTrafficLightPoleColorToggled = true;
             }
 
             //Option: Normal pole alignment:
             if (isRegularPoleAlignment.boolValue != intersection.isRegularPoleAlignment)
             {
-                bRoadUpdate = true;
+                isRoadUpdate = true;
             }
 
             //Option: Point lights enabled:
             if (isLightsEnabled.boolValue != intersection.isLightsEnabled)
             {
-                bTogglePointLights = true;
+                isPointLightsToggled = true;
             }
 
             //Option: Street light range:
             if (!GSDRootUtil.IsApproximately(streetLightRange.floatValue, intersection.streetLightRange, 0.01f))
             {
-                bTogglePointLights = true;
+                isPointLightsToggled = true;
             }
 
             //Option: Street light intensity:
             if (!GSDRootUtil.IsApproximately(streetLightIntensity.floatValue, intersection.streetLightIntensity, 0.01f))
             {
-                bTogglePointLights = true;
+                isPointLightsToggled = true;
             }
 
             //Option: Street light color:
             if (streetLightColor.colorValue != intersection.streetLightColor)
             {
-                bTogglePointLights = true;
+                isPointLightsToggled = true;
             }
 
             //Option: Use default materials:
             if (isUsingDefaultMaterials.boolValue != intersection.isUsingDefaultMaterials)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
 
             if (markerCenter1 == null || markerCenter1.objectReferenceValue == null)
@@ -931,71 +931,71 @@ public class GSDRoadIntersectionEditor : Editor
 
             if (intersection.markerCenter1 != null && markerCenter1.objectReferenceValue != intersection.markerCenter1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerCenter2 != null && markerCenter2.objectReferenceValue != intersection.markerCenter2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerCenter3 != null && markerCenter3.objectReferenceValue != intersection.markerCenter3)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerExtStretch1 != null && markerExtStretch1.objectReferenceValue != intersection.markerExtStretch1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerExtStretch2 != null && markerExtStretch2.objectReferenceValue != intersection.markerExtStretch2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerExtStretch3 != null && markerExtStretch3.objectReferenceValue != intersection.markerExtStretch3)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerExtTiled1 != null && markerExtTiled1.objectReferenceValue != intersection.markerExtTiled1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerExtTiled2 != null && markerExtTiled2.objectReferenceValue != intersection.markerExtTiled2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.markerExtTiled3 != null && markerExtTiled3.objectReferenceValue != intersection.markerExtTiled3)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane0Mat1 != null && lane0Mat1.objectReferenceValue != intersection.lane0Mat1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane0Mat2 != null && lane0Mat2.objectReferenceValue != intersection.lane0Mat2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane1Mat1 != null && lane1Mat1.objectReferenceValue != intersection.lane1Mat1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane1Mat2 != null && lane1Mat2.objectReferenceValue != intersection.lane1Mat2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane2Mat1 != null && lane2Mat1.objectReferenceValue != intersection.lane2Mat1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane2Mat2 != null && lane2Mat2.objectReferenceValue != intersection.lane2Mat2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane3Mat1 != null && lane3Mat1.objectReferenceValue != intersection.lane3Mat1)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
             if (intersection.lane3Mat2 != null && lane3Mat2.objectReferenceValue != intersection.lane3Mat2)
             {
-                bMatChange = true;
+                isMaterialChanged = true;
             }
 
 
@@ -1004,30 +1004,30 @@ public class GSDRoadIntersectionEditor : Editor
 
 
             //Apply secondary effects:
-            if (bGizmoChange)
+            if (isGizmoChanged)
             {
-                MeshRenderer[] tMRs = intersection.transform.GetComponentsInChildren<MeshRenderer>();
-                int tCount = tMRs.Length;
-                for (int i = 0; i < tCount; i++)
+                MeshRenderer[] meshRenderers = intersection.transform.GetComponentsInChildren<MeshRenderer>();
+                int count = meshRenderers.Length;
+                for (int i = 0; i < count; i++)
                 {
                     //EditorUtility.SetSelectedWireframeHidden(tMRs[i], !tInter.bDrawGizmo);
-                    EditorUtility.SetSelectedRenderState(tMRs[i], intersection.isDrawingGizmo ? EditorSelectedRenderState.Wireframe : EditorSelectedRenderState.Hidden);
+                    EditorUtility.SetSelectedRenderState(meshRenderers[i], intersection.isDrawingGizmo ? EditorSelectedRenderState.Wireframe : EditorSelectedRenderState.Hidden);
 
                 }
                 SceneView.RepaintAll();
             }
 
-            if (bTogglePointLights)
+            if (isPointLightsToggled)
             {
                 intersection.TogglePointLights(intersection.isLightsEnabled);
             }
 
-            if (bToggleTrafficLightPoleColor)
+            if (isTrafficLightPoleColorToggled)
             {
                 intersection.ToggleTrafficLightPoleColor();
             }
 
-            if (bMatChange)
+            if (isMaterialChanged)
             {
                 intersection.UpdateMaterials();
                 if (intersection.isUsingDefaultMaterials)
@@ -1036,7 +1036,7 @@ public class GSDRoadIntersectionEditor : Editor
                 }
             }
 
-            if (bRoadUpdate)
+            if (isRoadUpdate)
             {
                 TriggerRoadUpdate();
             }
@@ -1128,9 +1128,9 @@ public class GSDRoadIntersectionEditor : Editor
     }
 
 
-    private void TriggerRoadUpdate(bool bForce = false)
+    private void TriggerRoadUpdate(bool _isForced = false)
     {
-        if (!bForce && !intersection.isAutoUpdatingIntersection)
+        if (!_isForced && !intersection.isAutoUpdatingIntersection)
         {
             return;
         }
@@ -1153,44 +1153,44 @@ public class GSDRoadIntersectionEditor : Editor
     private void Init()
     {
         EditorStyles.label.wordWrap = true;
-        bHasInit = true;
-        if (btnRefreshText == null)
+        isInitialized = true;
+        if (refreshButtonTexture == null)
         {
-            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            refreshButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
-        if (btnDeleteText == null)
+        if (deleteButtonTexture == null)
         {
-            btnDeleteText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            deleteButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
-        if (LoadBtnBG == null)
+        if (loadButtonBG == null)
         {
-            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
         }
-        if (LoadBtnBGGlow == null)
+        if (loadButtonBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
         }
 
-        if (GSDImageButton == null)
+        if (imageButton == null)
         {
-            GSDImageButton = new GUIStyle(GUI.skin.button);
-            GSDImageButton.contentOffset = new Vector2(0f, 0f);
-            GSDImageButton.border = new RectOffset(0, 0, 0, 0);
-            GSDImageButton.fixedHeight = 16f;
-            GSDImageButton.padding = new RectOffset(0, 0, 0, 0);
-            GSDImageButton.normal.background = null;
+            imageButton = new GUIStyle(GUI.skin.button);
+            imageButton.contentOffset = new Vector2(0f, 0f);
+            imageButton.border = new RectOffset(0, 0, 0, 0);
+            imageButton.fixedHeight = 16f;
+            imageButton.padding = new RectOffset(0, 0, 0, 0);
+            imageButton.normal.background = null;
         }
-        if (GSDLoadButton == null)
+        if (loadButton == null)
         {
-            GSDLoadButton = new GUIStyle(GUI.skin.button);
-            GSDLoadButton.contentOffset = new Vector2(0f, 1f);
-            GSDLoadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
-            GSDLoadButton.normal.background = LoadBtnBG;
-            GSDLoadButton.active.background = LoadBtnBGGlow;
-            GSDLoadButton.focused.background = LoadBtnBGGlow;
-            GSDLoadButton.hover.background = LoadBtnBGGlow;
-            GSDLoadButton.fixedHeight = 16f;
-            GSDLoadButton.fixedWidth = 128f;
+            loadButton = new GUIStyle(GUI.skin.button);
+            loadButton.contentOffset = new Vector2(0f, 1f);
+            loadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            loadButton.normal.background = loadButtonBG;
+            loadButton.active.background = loadButtonBGGlow;
+            loadButton.focused.background = loadButtonBGGlow;
+            loadButton.hover.background = loadButtonBGGlow;
+            loadButton.fixedHeight = 16f;
+            loadButton.fixedWidth = 128f;
         }
     }
 
@@ -1199,7 +1199,7 @@ public class GSDRoadIntersectionEditor : Editor
     {
         GUILayout.Space(4f);
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
         {
 
         }
@@ -1212,7 +1212,7 @@ public class GSDRoadIntersectionEditor : Editor
     {
         GUILayout.Space(4f);
         EditorGUILayout.BeginHorizontal();
-        if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
         {
 
         }

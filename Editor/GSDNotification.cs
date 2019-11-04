@@ -5,9 +5,7 @@ using UnityEditor;
 #endregion
 
 
-/// <summary>
-/// Used for notifications in other areas of RA.
-/// </summary>
+/// <summary> Used for notifications in other areas of RA. </summary>
 public class GSDNotification : EditorWindow
 {
     private string notification = "This is a Notification";

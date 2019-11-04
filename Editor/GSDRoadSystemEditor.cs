@@ -9,7 +9,7 @@ using UnityEditor;
 public class GSDRoadSystemEditor : Editor
 {
     //Main target for this editor file:
-    protected GSDRoadSystem GSDRS { get { return (GSDRoadSystem) target; } }
+    protected GSDRoadSystem roadSystem { get { return (GSDRoadSystem) target; } }
 
     //Serialized properties:
     private SerializedProperty isTempMultithreading;
@@ -34,11 +34,11 @@ public class GSDRoadSystemEditor : Editor
     //	private Vector3 CameraCustomRot = new Vector3(0.5f,0f,-0.5f);
 
     //Editor only graphic variables:
-    private Texture2D LoadBtnBG = null;
-    private Texture2D LoadBtnBGGlow = null;
-    private Texture2D WarningLabelBG;
-    private GUIStyle WarningLabelStyle;
-    private GUIStyle GSDLoadButton = null;
+    private Texture2D loadButtonBG = null;
+    private Texture2D loadButtonBGGlow = null;
+    private Texture2D warningLabelBG;
+    private GUIStyle warningLabelStyle;
+    private GUIStyle loadButton = null;
 
 
     private void OnEnable()
@@ -59,34 +59,35 @@ public class GSDRoadSystemEditor : Editor
 
         //Add road button:
         RAEditorUtilitys.Line();
-        if (GUILayout.Button("Add road", GSDLoadButton, GUILayout.Width(128f)))
-        {// || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
-            Selection.activeObject = GSDRS.AddRoad();
+        if (GUILayout.Button("Add road", loadButton, GUILayout.Width(128f)))
+        {
+            // || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
+            Selection.activeObject = roadSystem.AddRoad();
         }
         RAEditorUtilitys.Line();
 
         //Update all roads button:
         if (GUILayout.Button("Update all roads", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            GSDRS.UpdateAllRoads();
+            roadSystem.UpdateAllRoads();
         }
 
         //Multi-threading input:
-        isTempMultithreading.boolValue = EditorGUILayout.Toggle("Multi-threading enabled", GSDRS.isMultithreaded);
-        if (isTempMultithreading.boolValue != GSDRS.isMultithreaded)
+        isTempMultithreading.boolValue = EditorGUILayout.Toggle("Multi-threading enabled", roadSystem.isMultithreaded);
+        if (isTempMultithreading.boolValue != roadSystem.isMultithreaded)
         {
             isUpdateGlobalMultithread = true;
         }
 
         //Save mesh assets input:
-        isTempSaveMeshAssets.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", GSDRS.isSavingMeshes);
-        if (isTempSaveMeshAssets.boolValue != GSDRS.isSavingMeshes)
+        isTempSaveMeshAssets.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", roadSystem.isSavingMeshes);
+        if (isTempSaveMeshAssets.boolValue != roadSystem.isSavingMeshes)
         {
             isUpdateGlobalSaveMesh = true;
         }
-        if (GSDRS.isSavingMeshes || isTempSaveMeshAssets.boolValue)
+        if (roadSystem.isSavingMeshes || isTempSaveMeshAssets.boolValue)
         {
-            GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", WarningLabelStyle);
+            GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", warningLabelStyle);
         }
 
         //Online manual button:
@@ -104,9 +105,9 @@ public class GSDRoadSystemEditor : Editor
             Application.OpenURL(GSD.Roads.GSDRoadUtilityEditor.GetRoadArchitectApplicationPath() + "/RoadArchitectManual.htm");
         }
 
-        if (GSDRS.editorPlayCamera == null)
+        if (roadSystem.editorPlayCamera == null)
         {
-            GSDRS.EditorCameraSetSingle();
+            roadSystem.EditorCameraSetSingle();
         }
         RAEditorUtilitys.Line();
 
@@ -131,13 +132,13 @@ public class GSDRoadSystemEditor : Editor
             //Multithreading global change:
             if (isUpdateGlobalMultithread)
             {
-                GSDRS.UpdateAllRoadsMultiThreadedOption();
+                roadSystem.UpdateAllRoadsMultiThreadedOption();
             }
 
             //Save mesh assets global change:
             if (isUpdateGlobalSaveMesh)
             {
-                GSDRS.UpdateAllRoadsSavingMeshesOption();
+                roadSystem.UpdateAllRoadsSavingMeshesOption();
             }
         }
     }
@@ -145,43 +146,43 @@ public class GSDRoadSystemEditor : Editor
 
     private void InitChecks()
     {
-        if (WarningLabelBG == null)
+        if (warningLabelBG == null)
         {
-            WarningLabelBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
+            warningLabelBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
         }
-        if (LoadBtnBG == null)
+        if (loadButtonBG == null)
         {
-            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
         }
-        if (LoadBtnBGGlow == null)
+        if (loadButtonBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
-        }
-
-        if (GSDLoadButton == null)
-        {
-            GSDLoadButton = new GUIStyle(GUI.skin.button);
-            GSDLoadButton.contentOffset = new Vector2(0f, 1f);
-            GSDLoadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
-            GSDLoadButton.normal.background = LoadBtnBG;
-            GSDLoadButton.active.background = LoadBtnBGGlow;
-            GSDLoadButton.focused.background = LoadBtnBGGlow;
-            GSDLoadButton.hover.background = LoadBtnBGGlow;
-            GSDLoadButton.fixedHeight = 16f;
-            GSDLoadButton.fixedWidth = 128f;
-            GSDLoadButton.padding = new RectOffset(0, 0, 0, 0);
+            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
         }
 
-        if (WarningLabelStyle == null)
+        if (loadButton == null)
         {
-            WarningLabelStyle = new GUIStyle(GUI.skin.textArea);
-            WarningLabelStyle.normal.textColor = Color.red;
-            WarningLabelStyle.active.textColor = Color.red;
-            WarningLabelStyle.hover.textColor = Color.red;
-            WarningLabelStyle.normal.background = WarningLabelBG;
-            WarningLabelStyle.active.background = WarningLabelBG;
-            WarningLabelStyle.hover.background = WarningLabelBG;
-            WarningLabelStyle.padding = new RectOffset(8, 8, 8, 8);
+            loadButton = new GUIStyle(GUI.skin.button);
+            loadButton.contentOffset = new Vector2(0f, 1f);
+            loadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            loadButton.normal.background = loadButtonBG;
+            loadButton.active.background = loadButtonBGGlow;
+            loadButton.focused.background = loadButtonBGGlow;
+            loadButton.hover.background = loadButtonBGGlow;
+            loadButton.fixedHeight = 16f;
+            loadButton.fixedWidth = 128f;
+            loadButton.padding = new RectOffset(0, 0, 0, 0);
+        }
+
+        if (warningLabelStyle == null)
+        {
+            warningLabelStyle = new GUIStyle(GUI.skin.textArea);
+            warningLabelStyle.normal.textColor = Color.red;
+            warningLabelStyle.active.textColor = Color.red;
+            warningLabelStyle.hover.textColor = Color.red;
+            warningLabelStyle.normal.background = warningLabelBG;
+            warningLabelStyle.active.background = warningLabelBG;
+            warningLabelStyle.hover.background = warningLabelBG;
+            warningLabelStyle.padding = new RectOffset(8, 8, 8, 8);
         }
     }
 
@@ -368,7 +369,7 @@ public class GSDRoadSystemEditor : Editor
 
         if (GUI.changed)
         {
-            EditorUtility.SetDirty(GSDRS);
+            EditorUtility.SetDirty(roadSystem);
         }
     }
 }

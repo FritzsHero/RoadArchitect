@@ -15,12 +15,12 @@ public class GSDSaveWindow : EditorWindow
         Edge,
         BridgeWizard
     };
-    private WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
+    private WindowTypeEnum windowType = WindowTypeEnum.Extrusion;
 
     private Texture2D temp2D = null;
-    private Texture2D temp2D_2 = null;
-    private string ThumbString = "";
-    private string Desc = "";
+    private Texture2D temp2D2 = null;
+    private string thumbString = "";
+    private string desc = "";
     [UnityEngine.Serialization.FormerlySerializedAs("tFilename")]
     private string fileName = "DefaultName";
     [UnityEngine.Serialization.FormerlySerializedAs("tDisplayName")]
@@ -31,16 +31,14 @@ public class GSDSaveWindow : EditorWindow
     private string titleText = "";
     //	private string tPath = "";
     [UnityEngine.Serialization.FormerlySerializedAs("bFileExists")]
-    private bool fileExists = false;
+    private bool isFileExisting = false;
     [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
     private bool isBridge = false;
-    //	private bool bIsDefault = false;
 
     private GSD.Roads.Splination.SplinatedMeshMaker[] tSMMs = null;
     private GSD.Roads.EdgeObjects.EdgeObjectMaker[] tEOMs = null;
+    private string path = "";
     private const int titleLabelHeight = 20;
-
-    private string xPath = "";
 
 
     private void OnGUI()
@@ -48,116 +46,114 @@ public class GSDSaveWindow : EditorWindow
         GUILayout.Space(4f);
         EditorGUILayout.LabelField(titleText, EditorStyles.boldLabel);
 
-        temp2D_2 = (Texture2D) EditorGUILayout.ObjectField("Square thumb (optional):", temp2D, typeof(Texture2D), false);
-        if (temp2D_2 != temp2D)
+        temp2D2 = (Texture2D) EditorGUILayout.ObjectField("Square thumb (optional):", temp2D, typeof(Texture2D), false);
+        if (temp2D2 != temp2D)
         {
-            temp2D = temp2D_2;
-            ThumbString = AssetDatabase.GetAssetPath(temp2D);
+            temp2D = temp2D2;
+            thumbString = AssetDatabase.GetAssetPath(temp2D);
         }
 
-        if (xPath.Length < 5)
+        if (path.Length < 5)
         {
-            xPath = GSDRootUtil.GetDirLibrary();
+            path = GSDRootUtil.GetDirLibrary();
         }
 
         EditorGUILayout.LabelField("Short description (optional):");
-        Desc = EditorGUILayout.TextArea(Desc, GUILayout.Height(40f));
+        desc = EditorGUILayout.TextArea(desc, GUILayout.Height(40f));
         displayName2 = EditorGUILayout.TextField("Display name:", displayName);
         if (string.Compare(displayName2, displayName) != 0)
         {
             displayName = displayName2;
             SanitizeFilename();
 
-            if (tWindowType == WindowTypeEnum.Edge)
+            if (windowType == WindowTypeEnum.Edge)
             {
 
 
-                if (System.IO.File.Exists(xPath + "EOM" + fileName + ".gsd"))
+                if (System.IO.File.Exists(path + "EOM" + fileName + ".gsd"))
                 {
-                    fileExists = true;
+                    isFileExisting = true;
                 }
                 else
                 {
-                    fileExists = false;
+                    isFileExisting = false;
                 }
             }
-            else if (tWindowType == WindowTypeEnum.Extrusion)
+            else if (windowType == WindowTypeEnum.Extrusion)
             {
-                if (System.IO.File.Exists(xPath + "ESO" + fileName + ".gsd"))
+                if (System.IO.File.Exists(path + "ESO" + fileName + ".gsd"))
                 {
-                    fileExists = true;
+                    isFileExisting = true;
                 }
                 else
                 {
-                    fileExists = false;
+                    isFileExisting = false;
                 }
             }
             else
             {
-                if (System.IO.File.Exists(xPath + "B/" + fileName + ".gsd"))
+                if (System.IO.File.Exists(path + "B/" + fileName + ".gsd"))
                 {
-                    fileExists = true;
+                    isFileExisting = true;
                 }
                 else
                 {
-                    fileExists = false;
+                    isFileExisting = false;
                 }
             }
         }
 
 
-        if (fileExists)
+        if (isFileExisting)
         {
             EditorGUILayout.LabelField("File exists already!", EditorStyles.miniLabel);
-            if (tWindowType == WindowTypeEnum.Edge)
+            if (windowType == WindowTypeEnum.Edge)
             {
-                EditorGUILayout.LabelField(xPath + "EOM" + fileName + ".gsd", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(path + "EOM" + fileName + ".gsd", EditorStyles.miniLabel);
             }
-            else if (tWindowType == WindowTypeEnum.Extrusion)
+            else if (windowType == WindowTypeEnum.Extrusion)
             {
-                EditorGUILayout.LabelField(xPath + "ESO" + fileName + ".gsd", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(path + "ESO" + fileName + ".gsd", EditorStyles.miniLabel);
             }
             else
             {
-                EditorGUILayout.LabelField(xPath + "B/" + fileName + ".gsd", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(path + "B/" + fileName + ".gsd", EditorStyles.miniLabel);
             }
         }
         else
         {
-            if (tWindowType == WindowTypeEnum.Edge)
+            if (windowType == WindowTypeEnum.Edge)
             {
-                EditorGUILayout.LabelField(xPath + "EOM" + fileName + ".gsd", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(path + "EOM" + fileName + ".gsd", EditorStyles.miniLabel);
             }
-            else if (tWindowType == WindowTypeEnum.Extrusion)
+            else if (windowType == WindowTypeEnum.Extrusion)
             {
-                EditorGUILayout.LabelField(xPath + "ESO" + fileName + ".gsd", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(path + "ESO" + fileName + ".gsd", EditorStyles.miniLabel);
             }
             else
             {
-                EditorGUILayout.LabelField(xPath + "B/" + fileName + ".gsd", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(path + "B/" + fileName + ".gsd", EditorStyles.miniLabel);
             }
         }
 
         GUILayout.Space(4f);
 
         isBridge = EditorGUILayout.Toggle("Is bridge related:", isBridge);
-        //		GUILayout.Space(4f);
-        //		bIsDefault = EditorGUILayout.Toggle("Is GSD:",bIsDefault);
         GUILayout.Space(8f);
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Cancel"))
         {
             Close();
         }
-        if (tWindowType == WindowTypeEnum.Extrusion)
+        if (windowType == WindowTypeEnum.Extrusion)
         {
             DoExtrusion();
         }
-        else if (tWindowType == WindowTypeEnum.Edge)
+        else if (windowType == WindowTypeEnum.Edge)
         {
             DoEdgeObject();
         }
-        else if (tWindowType == WindowTypeEnum.BridgeWizard)
+        else if (windowType == WindowTypeEnum.BridgeWizard)
         {
             DoBridge();
         }
@@ -172,8 +168,8 @@ public class GSDSaveWindow : EditorWindow
         {
             SanitizeFilename();
             tSMMs[0].isBridge = isBridge;
-            tSMMs[0].ThumbString = ThumbString;
-            tSMMs[0].Desc = Desc;
+            tSMMs[0].ThumbString = thumbString;
+            tSMMs[0].Desc = desc;
             tSMMs[0].DisplayName = displayName;
             tSMMs[0].SaveToLibrary(fileName, false);
             Close();
@@ -187,8 +183,8 @@ public class GSDSaveWindow : EditorWindow
         {
             SanitizeFilename();
             tEOMs[0].isBridge = isBridge;
-            tEOMs[0].thumbString = ThumbString;
-            tEOMs[0].desc = Desc;
+            tEOMs[0].thumbString = thumbString;
+            tEOMs[0].desc = desc;
             tEOMs[0].displayName = displayName;
             tEOMs[0].SaveToLibrary(fileName, false);
             Close();
@@ -202,8 +198,8 @@ public class GSDSaveWindow : EditorWindow
         {
             SanitizeFilename();
             GSD.Roads.GSDRoadUtil.WizardObject WO = new GSD.Roads.GSDRoadUtil.WizardObject();
-            WO.thumbString = ThumbString;
-            WO.desc = Desc;
+            WO.thumbString = thumbString;
+            WO.desc = desc;
             WO.displayName = displayName;
             WO.fileName = fileName;
             WO.isBridge = isBridge;
@@ -217,8 +213,8 @@ public class GSDSaveWindow : EditorWindow
 
     private void SanitizeFilename()
     {
-        Regex rgx = new Regex("[^a-zA-Z0-9 -]");
-        fileName = rgx.Replace(displayName, "");
+        Regex regex = new Regex("[^a-zA-Z0-9 -]");
+        fileName = regex.Replace(displayName, "");
         fileName = fileName.Replace(" ", "-");
         fileName = fileName.Replace("_", "-");
     }
@@ -227,10 +223,10 @@ public class GSDSaveWindow : EditorWindow
     #region "Init"
     public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, GSDSplineN _node, GSD.Roads.Splination.SplinatedMeshMaker _SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker _EOM = null)
     {
-        int Rheight = 300;
-        int Rwidth = 360;
-        float Rx = ((float) _rect.width / 2f) - ((float) Rwidth / 2f) + _rect.x;
-        float Ry = ((float) _rect.height / 2f) - ((float) Rheight / 2f) + _rect.y;
+        int rectHeight = 300;
+        int rectWidth = 360;
+        float Rx = ((float) _rect.width / 2f) - ((float) rectWidth / 2f) + _rect.x;
+        float Ry = ((float) _rect.height / 2f) - ((float) rectHeight / 2f) + _rect.y;
 
         if (Rx < 0)
         {
@@ -249,24 +245,24 @@ public class GSDSaveWindow : EditorWindow
             Ry = _rect.y;
         }
 
-        Rect fRect = new Rect(Rx, Ry, Rwidth, Rheight);
+        Rect rect = new Rect(Rx, Ry, rectWidth, rectHeight);
 
-        if (fRect.width < 300)
+        if (rect.width < 300)
         {
-            fRect.width = 300;
-            fRect.x = _rect.x;
+            rect.width = 300;
+            rect.x = _rect.x;
         }
-        if (fRect.height < 300)
+        if (rect.height < 300)
         {
-            fRect.height = 300;
-            fRect.y = _rect.y;
+            rect.height = 300;
+            rect.y = _rect.y;
         }
 
-        position = fRect;
-        tWindowType = _windowType;
+        position = rect;
+        windowType = _windowType;
         Show();
         titleContent.text = "Save";
-        if (tWindowType == WindowTypeEnum.Extrusion)
+        if (windowType == WindowTypeEnum.Extrusion)
         {
             titleText = "Save extrusion";
             tSMMs = new GSD.Roads.Splination.SplinatedMeshMaker[1];
@@ -277,7 +273,7 @@ public class GSDSaveWindow : EditorWindow
                 displayName = fileName;
             }
         }
-        else if (tWindowType == WindowTypeEnum.Edge)
+        else if (windowType == WindowTypeEnum.Edge)
         {
             titleText = "Save edge object";
             tEOMs = new GSD.Roads.EdgeObjects.EdgeObjectMaker[1];
@@ -288,7 +284,7 @@ public class GSDSaveWindow : EditorWindow
                 displayName = fileName;
             }
         }
-        else if (tWindowType == WindowTypeEnum.BridgeWizard)
+        else if (windowType == WindowTypeEnum.BridgeWizard)
         {
             isBridge = true;
             tSMMs = _node.SplinatedObjects.ToArray();
@@ -298,42 +294,42 @@ public class GSDSaveWindow : EditorWindow
             displayName = fileName;
         }
 
-        if (xPath.Length < 5)
+        if (path.Length < 5)
         {
-            xPath = GSDRootUtil.GetDirLibrary();
+            path = GSDRootUtil.GetDirLibrary();
         }
 
-        if (tWindowType == WindowTypeEnum.Edge)
+        if (windowType == WindowTypeEnum.Edge)
         {
-            if (System.IO.File.Exists(xPath + "EOM" + fileName + ".gsd"))
+            if (System.IO.File.Exists(path + "EOM" + fileName + ".gsd"))
             {
-                fileExists = true;
+                isFileExisting = true;
             }
             else
             {
-                fileExists = false;
+                isFileExisting = false;
             }
         }
-        else if (tWindowType == WindowTypeEnum.Extrusion)
+        else if (windowType == WindowTypeEnum.Extrusion)
         {
-            if (System.IO.File.Exists(xPath + "ESO" + fileName + ".gsd"))
+            if (System.IO.File.Exists(path + "ESO" + fileName + ".gsd"))
             {
-                fileExists = true;
+                isFileExisting = true;
             }
             else
             {
-                fileExists = false;
+                isFileExisting = false;
             }
         }
         else
         {
-            if (System.IO.File.Exists(xPath + "B/" + fileName + ".gsd"))
+            if (System.IO.File.Exists(path + "B/" + fileName + ".gsd"))
             {
-                fileExists = true;
+                isFileExisting = true;
             }
             else
             {
-                fileExists = false;
+                isFileExisting = false;
             }
         }
     }

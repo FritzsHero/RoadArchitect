@@ -26,7 +26,7 @@ public class GSDHelpWindow : EditorWindow
         EditorGUILayout.LabelField("Please visit the online manual for help.");
         GUILayout.Space(12f);
         EditorGUILayout.LabelField("Please visit our unity forum thread or reach out to us on Github (links below) with any questions or comments.");     
-        // or contact support@microgsd.com // Since I do not know if this Email even exists anymore, I'll removed it // FH 20.02.19
+        // or contact support@microgsd.com // Since I do not know if this Email even exists anymore, I'll removed it // FH
 
         EditorGUILayout.LabelField("You can also check out the following Sites, for an Beta of RoadArchitect:");
         GUILayout.Space(4f);
@@ -34,11 +34,11 @@ public class GSDHelpWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.BeginVertical();
 
-        if (GUILayout.Button("embeddedt's RoadArchitect Repository", EditorStyles.toolbarButton, GUILayout.Width(310f)))
+        if (GUILayout.Button("MicroGSD's RoadArchitect Repository", EditorStyles.toolbarButton, GUILayout.Width(310f)))
         {
-            Application.OpenURL("https://github.com/embeddedt/RoadArchitect/tree/master");
+            Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/tree/master");
         }
-        EditorGUILayout.LabelField("https://github.com/embeddedt/RoadArchitect/tree/master");
+        EditorGUILayout.LabelField("https://github.com/MicroGSD/RoadArchitect/tree/master");
 
         EditorGUILayout.EndVertical();
 
@@ -75,11 +75,11 @@ public class GSDHelpWindow : EditorWindow
 
         EditorGUILayout.BeginVertical();
 
-        if (GUILayout.Button("embeddedt's RoadArchitect Issues", EditorStyles.toolbarButton, GUILayout.Width(310f)))
+        if (GUILayout.Button("FritzsHero's RoadArchitect Issues", EditorStyles.toolbarButton, GUILayout.Width(310f)))
         {
-            Application.OpenURL("https://github.com/embeddedt/RoadArchitect/issues");
+            Application.OpenURL("https://github.com/FritzsHero/RoadArchitect/issues");
         }
-        EditorGUILayout.LabelField("https://github.com/embeddedt/RoadArchitect/issues");
+        EditorGUILayout.LabelField("https://github.com/FritzsHero/RoadArchitect/issues");
 
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
@@ -90,8 +90,8 @@ public class GSDHelpWindow : EditorWindow
     #region "Init"
     public void Initialize()
     {
-        Rect fRect = new Rect(340, 170, 650, 350);
-        position = fRect;
+        Rect rect = new Rect(340, 170, 650, 350);
+        position = rect;
         Show();
         titleContent.text = "Help Info";
     }

@@ -7,9 +7,7 @@ using UnityEditor;
 
 public class GSDRoadSystemEditorMenu : ScriptableObject
 {
-    /// <summary>
-    /// Creates the road system.
-    /// </summary>
+    /// <summary> Creates the road system. </summary>
     [MenuItem("Window/Road Architect/Create road system")]
     public static void CreateRoadSystem()
     {
@@ -26,9 +24,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     }
 
 
-    /// <summary>
-    /// Add road to gameobject. Not sure if this is necessary.
-    /// </summary>
+    /// <summary> Add road to gameobject. Not sure if this is necessary. </summary>
 	[MenuItem("Window/Road Architect/Add road")]
     public static void AddRoad()
     {
@@ -46,9 +42,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     }
 
 
-    /// <summary>
-    /// Updates all roads. Used when things get out of sync.
-    /// </summary>
+    /// <summary> Updates all roads. Used when things get out of sync. </summary>
     [MenuItem("Window/Road Architect/Update All Roads")]
     public static void UpdateAllRoads()
     {
@@ -81,9 +75,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     }
 
 
-    /// <summary>
-    /// Show the help screen.
-    /// </summary>
+    /// <summary> Show the help screen. </summary>
     [MenuItem("Window/Road Architect/Help")]
     public static void GSDRoadsHelp()
     {
@@ -112,10 +104,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     }
 
 
-
-    /// <summary>
-    /// Get code line count for RA project.
-    /// </summary>
+    /// <summary> Get code line count for RA project. </summary>
     [MenuItem("Window/Road Architect/Testing/Get line count of RA")]
     public static void testCodeCount()
     {

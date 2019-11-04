@@ -16,43 +16,43 @@ using GSD;
 public class GSDSplineNEditor : Editor
 {
     #region "Vars"
-    protected GSDSplineN tNode { get { return (GSDSplineN) target; } }
-    private const string tOnlineHelpDesc = "Visit the online manual for the most effective help.";
-    private bool bMouseDragHasProcessed = true;
-    private int eCount = -1;
+    protected GSDSplineN node { get { return (GSDSplineN) target; } }
+    private const string onlineHelpDesc = "Visit the online manual for the most effective help.";
+    private int count = -1;
     private int currentCount = 0;
-    public bool bSplinatedObjectHelp = false;
-    public bool bEdgeObjectHelp = false;
-    private bool bRemoveAll = false;
-    private float HorizRoadMax = 0;
+    public bool isSplinatedObjectHelp = false;
+    public bool isEdgeObjectHelp = false;
+    private bool isMouseDragProcessed = true;
+    private bool isRemovingAll = false;
+    private float horizRoadMax = 0;
 
 
     #region "Button icons"
-    private Texture btnDeleteText = null;
-    private Texture btnCopyText = null;
-    private Texture btnSaveText = null;
-    private Texture btnLoadText = null;
-    private Texture btnExtrudeText = null;
-    private Texture btnEdgeText = null;
-    private Texture btnHelpText = null;
-    private Texture btnRefreshText = null;
-    private Texture btnDefaultText = null;
-    private Texture2D LoadBtnBG = null;
-    private Texture2D GSDTextAreaBG = null;
-    private Texture2D LoadBtnBGGlow = null;
-    private Texture2D ManualBG = null;
+    private Texture deleteButtonTexture = null;
+    private Texture copyButtonTexture = null;
+    private Texture saveButtonTexture = null;
+    private Texture loadButtonTexture = null;
+    private Texture extrudeButtonTexture = null;
+    private Texture edgeButtonTexture = null;
+    private Texture helpButtonTexture = null;
+    private Texture refreshButtonTexture = null;
+    private Texture defaultbuttonTexture = null;
+    private Texture2D loadButtonBG = null;
+    private Texture2D textAreaBG = null;
+    private Texture2D loadButtonBGGlow = null;
+    private Texture2D manualBG = null;
     #endregion
 
 
-    public bool bLoadingEOS = false;
-    public int LoadingEOSIndex = 0;
-    public List<string> LoadingEOSNames = null;
-    public List<string> LoadingEOSPaths = null;
+    public bool isLoadingEOS = false;
+    public int loadingEOSIndex = 0;
+    public List<string> loadingEOSNames = null;
+    public List<string> loadingEOSPaths = null;
 
-    public bool bLoadingEOM = false;
-    public int LoadingEOMIndex = 0;
-    public List<string> LoadingEOMNames = null;
-    public List<string> LoadingEOMPaths = null;
+    public bool isLoadingEOM = false;
+    public int loadingEOMIndex = 0;
+    public List<string> loadingEOMNames = null;
+    public List<string> loadingEOMPaths = null;
 
     //Checkers:
     //	private float ChangeChecker = -1f;
@@ -79,7 +79,7 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private EndObjectsDefaultsEnum tEndObjectAdd = EndObjectsDefaultsEnum.None;
+    private EndObjectsDefaultsEnum endObjectAdd = EndObjectsDefaultsEnum.None;
 
 
     private static string[] EndObjectsDefaultsEnumDesc = new string[]{
@@ -111,7 +111,7 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private SMMDefaultsEnum tSMMQuickAdd = SMMDefaultsEnum.None;
+    private SMMDefaultsEnum SMMQuickAdd = SMMDefaultsEnum.None;
 
 
     public enum BridgeTopBaseDefaultsEnum
@@ -124,7 +124,7 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private BridgeTopBaseDefaultsEnum tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
+    private BridgeTopBaseDefaultsEnum BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
 
 
     public enum BridgeBottomBaseDefaultsEnum
@@ -142,7 +142,7 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private BridgeBottomBaseDefaultsEnum tBridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
+    private BridgeBottomBaseDefaultsEnum BridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
 
 
     public enum BridgeWizardDefaultsEnum
@@ -177,7 +177,7 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private HorizMatchingDefaultsEnum tHorizMatching = HorizMatchingDefaultsEnum.None;
+    private HorizMatchingDefaultsEnum horizMatching = HorizMatchingDefaultsEnum.None;
 
 
     public enum EOMDefaultsEnum { None, Custom, StreetLightSingle, StreetLightDouble };
@@ -214,137 +214,135 @@ public class GSDSplineNEditor : Editor
     private string[] HorizMatchSubTypeDescriptions;
     #endregion
 
-    private GUIStyle GSDImageButton = null;
-    private GUIStyle GSDLoadButton = null;
-    private GUIStyle GSDManualButton = null;
-    private GUIStyle GSDUrl = null;
+    private GUIStyle imageButton = null;
+    private GUIStyle loadButton = null;
+    private GUIStyle manualButton = null;
+    private GUIStyle guiButton = null;
 
-    private bool bSceneRectSet = false;
-    private Rect tSceneRect = default(Rect);
+    private bool isSceneRectSet = false;
+    private Rect sceneRect = default(Rect);
 
-    private bool bHasInit = false;
+    private bool isInitialized = false;
 
     //Buffers:
-    //	private bool t_opt_GizmosEnabled = false;
-    private bool t_opt_GizmosEnabled = false;
+    private bool isGizmosEnabled = false;
 
     // Bridge
-    private bool t_bIsBridgeStart = false;
-    private bool t_bIsBridgeEnd = false;
-
-    private bool t_bRoadCut = false;
+    private bool isBridgeStart = false;
+    private bool isBridgeEnd = false;
+    private bool isRoadCut = false;
 
 
     private void Init()
     {
-        bHasInit = true;
+        isInitialized = true;
         EditorStyles.label.wordWrap = true;
         EditorStyles.miniLabel.wordWrap = true;
 
-        if (btnDeleteText == null)
+        if (deleteButtonTexture == null)
         {
-            btnDeleteText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            deleteButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
-        if (btnCopyText == null)
+        if (copyButtonTexture == null)
         {
-            btnCopyText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
+            copyButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
         }
-        if (btnLoadText == null)
+        if (loadButtonTexture == null)
         {
-            btnLoadText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
+            loadButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
         }
-        if (btnSaveText == null)
+        if (saveButtonTexture == null)
         {
-            btnSaveText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
+            saveButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
         }
-        if (btnExtrudeText == null)
+        if (extrudeButtonTexture == null)
         {
-            btnExtrudeText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
+            extrudeButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
         }
-        if (btnEdgeText == null)
+        if (edgeButtonTexture == null)
         {
-            btnEdgeText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
+            edgeButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
         }
-        if (btnHelpText == null)
+        if (helpButtonTexture == null)
         {
-            btnHelpText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
+            helpButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
         }
-        if (GSDTextAreaBG == null)
+        if (textAreaBG == null)
         {
-            GSDTextAreaBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
+            textAreaBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
         }
-        if (LoadBtnBG == null)
+        if (loadButtonBG == null)
         {
-            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
         }
-        if (LoadBtnBGGlow == null)
+        if (loadButtonBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
         }
-        if (ManualBG == null)
+        if (manualBG == null)
         {
-            ManualBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
+            manualBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
         }
-        if (btnRefreshText == null)
+        if (refreshButtonTexture == null)
         {
-            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
+            refreshButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
         }
-        if (btnDefaultText == null)
+        if (defaultbuttonTexture == null)
         {
-            btnDefaultText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
-        }
-
-        if (GSDImageButton == null)
-        {
-            GSDImageButton = new GUIStyle(GUI.skin.button);
-            GSDImageButton.contentOffset = new Vector2(0f, -2f);
-            GSDImageButton.border = new RectOffset(0, 0, 0, 0);
-            GSDImageButton.fixedHeight = 16f;
-            GSDImageButton.padding = new RectOffset(0, 0, 0, 0);
-            GSDImageButton.normal.background = null;
+            defaultbuttonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
 
-        if (GSDLoadButton == null)
+        if (imageButton == null)
         {
-            GSDLoadButton = new GUIStyle(GUI.skin.button);
-            GSDLoadButton.contentOffset = new Vector2(0f, 1f);
-            GSDLoadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
-            GSDLoadButton.normal.background = LoadBtnBG;
-            GSDLoadButton.active.background = LoadBtnBGGlow;
-            GSDLoadButton.focused.background = LoadBtnBGGlow;
-            GSDLoadButton.hover.background = LoadBtnBGGlow;
-            GSDLoadButton.fixedHeight = 16f;
-            GSDLoadButton.fixedWidth = 128f;
-            GSDLoadButton.padding = new RectOffset(0, 35, 0, 0);
+            imageButton = new GUIStyle(GUI.skin.button);
+            imageButton.contentOffset = new Vector2(0f, -2f);
+            imageButton.border = new RectOffset(0, 0, 0, 0);
+            imageButton.fixedHeight = 16f;
+            imageButton.padding = new RectOffset(0, 0, 0, 0);
+            imageButton.normal.background = null;
         }
 
-        if (GSDManualButton == null)
+        if (loadButton == null)
         {
-            GSDManualButton = new GUIStyle(GUI.skin.button);
-            GSDManualButton.contentOffset = new Vector2(0f, 1f);
-            GSDManualButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
-            GSDManualButton.normal.background = ManualBG;
-            GSDManualButton.fixedHeight = 16f;
-            GSDManualButton.fixedWidth = 128f;
+            loadButton = new GUIStyle(GUI.skin.button);
+            loadButton.contentOffset = new Vector2(0f, 1f);
+            loadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            loadButton.normal.background = loadButtonBG;
+            loadButton.active.background = loadButtonBGGlow;
+            loadButton.focused.background = loadButtonBGGlow;
+            loadButton.hover.background = loadButtonBGGlow;
+            loadButton.fixedHeight = 16f;
+            loadButton.fixedWidth = 128f;
+            loadButton.padding = new RectOffset(0, 35, 0, 0);
         }
 
-        if (GSDUrl == null)
+        if (manualButton == null)
         {
-            GSDUrl = new GUIStyle(GUI.skin.button);
-            GSDUrl.normal.textColor = new Color(0.5f, 1f, 0.5f, 1f);
+            manualButton = new GUIStyle(GUI.skin.button);
+            manualButton.contentOffset = new Vector2(0f, 1f);
+            manualButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            manualButton.normal.background = manualBG;
+            manualButton.fixedHeight = 16f;
+            manualButton.fixedWidth = 128f;
         }
 
-        float tRoadWidthHalf = tNode.spline.road.RoadWidth() * 0.5f;
+        if (guiButton == null)
+        {
+            guiButton = new GUIStyle(GUI.skin.button);
+            guiButton.normal.textColor = new Color(0.5f, 1f, 0.5f, 1f);
+        }
+
+        float tRoadWidthHalf = node.spline.road.RoadWidth() * 0.5f;
         HorizMatchSubTypeDescriptions = new string[6];
         HorizMatchSubTypeDescriptions[0] = "Select preset";
         HorizMatchSubTypeDescriptions[1] = "Match center: 0 meters";
         HorizMatchSubTypeDescriptions[2] = "Match road left edge: -" + tRoadWidthHalf.ToString("F1") + " meters";
         HorizMatchSubTypeDescriptions[4] = "Match road right edge: " + tRoadWidthHalf.ToString("F1") + " meters";
 
-        if (tNode.spline.road.isShouldersEnabled)
+        if (node.spline.road.isShouldersEnabled)
         {
-            HorizMatchSubTypeDescriptions[3] = "Match shoulder left edge: -" + (tRoadWidthHalf + tNode.spline.road.shoulderWidth).ToString("F1") + " meters";
-            HorizMatchSubTypeDescriptions[5] = "Match shoulder right edge: " + (tRoadWidthHalf + tNode.spline.road.shoulderWidth).ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[3] = "Match shoulder left edge: -" + (tRoadWidthHalf + node.spline.road.shoulderWidth).ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[5] = "Match shoulder right edge: " + (tRoadWidthHalf + node.spline.road.shoulderWidth).ToString("F1") + " meters";
         }
         else
         {
@@ -352,13 +350,13 @@ public class GSDSplineNEditor : Editor
             HorizMatchSubTypeDescriptions[4] = "Match shoulder right edge: " + tRoadWidthHalf.ToString("F1") + " meters";
         }
 
-        HorizRoadMax = tNode.spline.road.RoadWidth() * 20;
+        horizRoadMax = node.spline.road.RoadWidth() * 20;
     }
 
 
-    private GSDSplineN iNode1 = null;
-    private GSDSplineN iNode2 = null;
-    private bool bCreateIntersection = false;
+    private GSDSplineN node1 = null;
+    private GSDSplineN node2 = null;
+    private bool isCreatingIntersection = false;
 
 
     public override void OnInspectorGUI()
@@ -368,27 +366,27 @@ public class GSDSplineNEditor : Editor
             switch (Event.current.commandName)
             {
                 case "UndoRedoPerformed":
-                    UpdateSplineObjects_OnUndo();
+                    UpdateSplineObjectsOnUndo();
                     break;
             }
         }
 
-        if (Event.current.type != EventType.Layout && bCreateIntersection)
+        if (Event.current.type != EventType.Layout && isCreatingIntersection)
         {
-            bCreateIntersection = false;
-            Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(iNode1, iNode2);
+            isCreatingIntersection = false;
+            Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(node1, node2);
             return;
         }
 
 
-        if (Event.current.type != EventType.Layout && tNode.isQuitGUI)
+        if (Event.current.type != EventType.Layout && node.isQuitGUI)
         {
-            tNode.isQuitGUI = false;
+            node.isQuitGUI = false;
             return;
         }
 
         //Graphic null checks:
-        if (!bHasInit)
+        if (!isInitialized)
         {
             Init();
         }
@@ -396,7 +394,7 @@ public class GSDSplineNEditor : Editor
         RAEditorUtilitys.Line();
 
         #region "Online Manual on Top of SplineN Scripts"
-        EditorGUILayout.LabelField(tNode.editorDisplayString, EditorStyles.boldLabel);
+        EditorGUILayout.LabelField(node.editorDisplayString, EditorStyles.boldLabel);
 
         if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(128f)))
         {
@@ -412,23 +410,23 @@ public class GSDSplineNEditor : Editor
 
 
         #region Option: Gizmo options, Convoluted due to submission compliance for undo rules:
-        if (tNode.spline.road.isGizmosEnabled != tNode.isGizmosEnabled)
+        if (node.spline.road.isGizmosEnabled != node.isGizmosEnabled)
         {
-            tNode.spline.road.isGizmosEnabled = tNode.isGizmosEnabled;
-            tNode.spline.road.UpdateGizmoOptions();
-            tNode.spline.road.Wireframes_Toggle();
+            node.spline.road.isGizmosEnabled = node.isGizmosEnabled;
+            node.spline.road.UpdateGizmoOptions();
+            node.spline.road.Wireframes_Toggle();
         }
-        t_opt_GizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", tNode.spline.road.isGizmosEnabled);
+        isGizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", node.spline.road.isGizmosEnabled);
         #endregion
 
 
         #region "Option: Manual road cut"
-        if (tNode.idOnSpline > 0 && tNode.idOnSpline < (tNode.spline.GetNodeCount() - 1) && !tNode.isIntersection && !tNode.isSpecialEndNode)
+        if (node.idOnSpline > 0 && node.idOnSpline < (node.spline.GetNodeCount() - 1) && !node.isIntersection && !node.isSpecialEndNode)
         { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
-            if (tNode.spline.road.isDynamicCutsEnabled)
+            if (node.spline.road.isDynamicCutsEnabled)
             {
                 RAEditorUtilitys.Line();
-                t_bRoadCut = EditorGUILayout.Toggle("Cut road at this node: ", tNode.isRoadCut);
+                isRoadCut = EditorGUILayout.Toggle("Cut road at this node: ", node.isRoadCut);
             }
             RAEditorUtilitys.Line();
         }
@@ -437,18 +435,18 @@ public class GSDSplineNEditor : Editor
 
         //Option: Bridge options
         bool bDidBridge = false;
-        if (!tNode.isEndPoint)
+        if (!node.isEndPoint)
         {
             //Bridge start:
-            if (!tNode.isBridgeEnd && tNode.CanBridgeStart())
+            if (!node.isBridgeEnd && node.CanBridgeStart())
             {
-                t_bIsBridgeStart = EditorGUILayout.Toggle(" Bridge start", tNode.isBridgeStart);
+                isBridgeStart = EditorGUILayout.Toggle(" Bridge start", node.isBridgeStart);
                 bDidBridge = true;
             }
             //Bridge end:
-            if (!tNode.isBridgeStart && tNode.CanBridgeEnd())
+            if (!node.isBridgeStart && node.CanBridgeEnd())
             {
-                t_bIsBridgeEnd = EditorGUILayout.Toggle(" Bridge end", tNode.isBridgeEnd);
+                isBridgeEnd = EditorGUILayout.Toggle(" Bridge end", node.isBridgeEnd);
                 bDidBridge = true;
             }
 
@@ -460,7 +458,7 @@ public class GSDSplineNEditor : Editor
 
 
 
-        if ((Selection.objects.Length == 1 && Selection.objects[0] is GSDSplineN) || (tNode.specialNodeCounterpart == null && !tNode.isSpecialRoadConnPrimary))
+        if ((Selection.objects.Length == 1 && Selection.objects[0] is GSDSplineN) || (node.specialNodeCounterpart == null && !node.isSpecialRoadConnPrimary))
         {
             //Do extrusion and edge objects overview:
             DoExtAndEdgeOverview();
@@ -470,12 +468,12 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Road objects"))
             {
-                Selection.objects = new Object[1] { tNode.specialNodeCounterpart };
+                Selection.objects = new Object[1] { node.specialNodeCounterpart };
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        if (tNode.isSpecialRoadConnPrimary)
+        if (node.isSpecialRoadConnPrimary)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Road connection:", EditorStyles.boldLabel);
@@ -483,24 +481,24 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical();
             if (GUILayout.Button("Update road connection"))
             {
-                GSDSplineN tNode1 = tNode.originalConnectionNodes[0];
-                GSDSplineN tNode2 = tNode.originalConnectionNodes[1];
-                tNode.specialNodeCounterpart.BreakConnection();
-                tNode.spline.road.UpdateRoad();
+                GSDSplineN tNode1 = node.originalConnectionNodes[0];
+                GSDSplineN tNode2 = node.originalConnectionNodes[1];
+                node.specialNodeCounterpart.BreakConnection();
+                node.spline.road.UpdateRoad();
                 tNode1.spline.ActivateEndNodeConnection(tNode1, tNode2);
             }
             if (GUILayout.Button("Break road connection"))
             {
-                tNode.specialNodeCounterpart.BreakConnection();
+                node.specialNodeCounterpart.BreakConnection();
             }
             if (GUILayout.Button("Access objects on other node"))
             {
-                Selection.objects = new Object[] { tNode.specialNodeCounterpart };
+                Selection.objects = new Object[] { node.specialNodeCounterpart };
             }
             EditorGUILayout.EndVertical();
-            if (tNode.specialNodeCounterpart != null)
+            if (node.specialNodeCounterpart != null)
             {
-                EditorGUILayout.LabelField(tNode.specialNodeCounterpart.spline.road.transform.name + " to " + tNode.specialNodeCounterpart.specialNodeCounterpart.spline.road.transform.name);
+                EditorGUILayout.LabelField(node.specialNodeCounterpart.spline.road.transform.name + " to " + node.specialNodeCounterpart.specialNodeCounterpart.spline.road.transform.name);
             }
             EditorGUILayout.LabelField("To break this road connection, click the \"Break road connection\" button.");
             RAEditorUtilitys.Line();
@@ -514,51 +512,51 @@ public class GSDSplineNEditor : Editor
         {
             //Set snapshot for undo:
 
-            Undo.RecordObject(tNode, "Modify node");
+            Undo.RecordObject(node, "Modify node");
 
             //Option: Gizmo options, Convoluted due to submission compliance for undo rules:
-            if (t_opt_GizmosEnabled != tNode.spline.road.isGizmosEnabled)
+            if (isGizmosEnabled != node.spline.road.isGizmosEnabled)
             {
-                tNode.spline.road.isGizmosEnabled = t_opt_GizmosEnabled;
-                tNode.spline.road.UpdateGizmoOptions();
-                tNode.spline.road.Wireframes_Toggle();
+                node.spline.road.isGizmosEnabled = isGizmosEnabled;
+                node.spline.road.UpdateGizmoOptions();
+                node.spline.road.Wireframes_Toggle();
                 SceneView.RepaintAll();
             }
 
             //Option: Manual cut:
-            if (tNode.idOnSpline > 0 && tNode.idOnSpline < (tNode.spline.GetNodeCount() - 1) && !tNode.isIntersection && !tNode.isSpecialEndNode)
+            if (node.idOnSpline > 0 && node.idOnSpline < (node.spline.GetNodeCount() - 1) && !node.isIntersection && !node.isSpecialEndNode)
             { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
-                if (tNode.spline.road.isDynamicCutsEnabled)
+                if (node.spline.road.isDynamicCutsEnabled)
                 {
-                    if (t_bRoadCut != tNode.isRoadCut)
+                    if (isRoadCut != node.isRoadCut)
                     {
-                        tNode.isRoadCut = t_bRoadCut;
+                        node.isRoadCut = isRoadCut;
                     }
                 }
             }
 
             //Option: Bridge options
             //Bridge start:
-            if (!tNode.isEndPoint)
+            if (!node.isEndPoint)
             {
-                if (!tNode.isBridgeEnd && tNode.CanBridgeStart())
+                if (!node.isBridgeEnd && node.CanBridgeStart())
                 {
-                    if (t_bIsBridgeStart != tNode.isBridgeStart)
+                    if (isBridgeStart != node.isBridgeStart)
                     {
-                        tNode.isBridgeStart = t_bIsBridgeStart;
-                        tNode.BridgeToggleStart();
+                        node.isBridgeStart = isBridgeStart;
+                        node.BridgeToggleStart();
                     }
                 }
             }
             //Bridge end:
-            if (!tNode.isEndPoint)
+            if (!node.isEndPoint)
             {
-                if (!tNode.isBridgeStart && tNode.CanBridgeEnd())
+                if (!node.isBridgeStart && node.CanBridgeEnd())
                 {
-                    if (t_bIsBridgeEnd != tNode.isBridgeEnd)
+                    if (isBridgeEnd != node.isBridgeEnd)
                     {
-                        tNode.isBridgeEnd = t_bIsBridgeEnd;
-                        tNode.BridgeToggleEnd();
+                        node.isBridgeEnd = isBridgeEnd;
+                        node.BridgeToggleEnd();
                     }
                 }
             }
@@ -588,26 +586,26 @@ public class GSDSplineNEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        if (bEdgeObjectHelp)
+        if (isEdgeObjectHelp)
         {
-            bEdgeObjectHelp = EditorGUILayout.Foldout(bEdgeObjectHelp, "Hide quick help");
+            isEdgeObjectHelp = EditorGUILayout.Foldout(isEdgeObjectHelp, "Hide quick help");
         }
         else
         {
-            bEdgeObjectHelp = EditorGUILayout.Foldout(bEdgeObjectHelp, "Show quick help");
+            isEdgeObjectHelp = EditorGUILayout.Foldout(isEdgeObjectHelp, "Show quick help");
         }
         EditorGUILayout.LabelField("");
 
-        if (GUILayout.Button("Save group", EditorStyles.miniButton, GUILayout.Width(108f)) || GUILayout.Button(btnSaveText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button("Save group", EditorStyles.miniButton, GUILayout.Width(108f)) || GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
         {
             GSDSaveWindow tSave = EditorWindow.GetWindow<GSDSaveWindow>();
-            if (tNode.isBridge)
+            if (node.isBridge)
             {
-                tSave.Initialize(ref tSceneRect, GSDSaveWindow.WindowTypeEnum.BridgeWizard, tNode);
+                tSave.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.BridgeWizard, node);
             }
             else
             {
-                tSave.Initialize(ref tSceneRect, GSDSaveWindow.WindowTypeEnum.BridgeWizard, tNode);
+                tSave.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.BridgeWizard, node);
             }
         }
         EditorGUILayout.EndHorizontal();
@@ -615,35 +613,35 @@ public class GSDSplineNEditor : Editor
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("");
-        if (GUILayout.Button("Open Wizard", GSDLoadButton, GUILayout.Width(128f)))
+        if (GUILayout.Button("Open Wizard", loadButton, GUILayout.Width(128f)))
         {// || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
-            GSDWizard tWiz = EditorWindow.GetWindow<GSDWizard>();
-            if (tSceneRect.x < 0)
+            GSDWizard wizard = EditorWindow.GetWindow<GSDWizard>();
+            if (sceneRect.x < 0)
             {
-                tSceneRect.x = 0f;
+                sceneRect.x = 0f;
             }
-            if (tSceneRect.y < 0)
+            if (sceneRect.y < 0)
             {
-                tSceneRect.y = 0f;
+                sceneRect.y = 0f;
             }
-            tWiz.xRect = tSceneRect;
-            if (tNode.isBridgeStart)
+            wizard.rect = sceneRect;
+            if (node.isBridgeStart)
             {
-                tWiz.Initialize(GSDWizard.WindowTypeEnum.BridgeComplete, tNode);
+                wizard.Initialize(GSDWizard.WindowTypeEnum.BridgeComplete, node);
             }
             else
             {
-                tWiz.Initialize(GSDWizard.WindowTypeEnum.Extrusion, tNode);
+                wizard.Initialize(GSDWizard.WindowTypeEnum.Extrusion, node);
             }
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(4f);
 
-        if (bEdgeObjectHelp)
+        if (isEdgeObjectHelp)
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnExtrudeText, GSDImageButton, GUILayout.Width(32f)))
+            if (GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f)))
             { }
             EditorGUILayout.LabelField("= Extrusion objects", EditorStyles.miniLabel);
             EditorGUILayout.LabelField("");
@@ -653,7 +651,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnEdgeText, GSDImageButton, GUILayout.Width(32f)))
+            if (GUILayout.Button(edgeButtonTexture, imageButton, GUILayout.Width(32f)))
             { }
             EditorGUILayout.LabelField("= Edge objects", EditorStyles.miniLabel);
             EditorGUILayout.LabelField("");
@@ -663,7 +661,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnSaveText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
             { }
             EditorGUILayout.LabelField("= Saves object config to library for use on other nodes.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
@@ -671,7 +669,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnCopyText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))
             { }
             EditorGUILayout.LabelField("= Duplicates object onto current node.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
@@ -679,7 +677,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             { }
             EditorGUILayout.LabelField("= Deletes object.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
@@ -687,7 +685,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
             { }
             EditorGUILayout.LabelField("= Refreshes object.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
@@ -695,7 +693,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             { }
             EditorGUILayout.LabelField("= Resets setting(s) to default.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
@@ -719,7 +717,7 @@ public class GSDSplineNEditor : Editor
         EditorGUILayout.LabelField("");
         if (GUILayout.Button("Add custom extrusion object", EditorStyles.miniButton))
         {
-            tNode.AddSplinatedObject();
+            node.AddSplinatedObject();
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(4f);
@@ -727,22 +725,22 @@ public class GSDSplineNEditor : Editor
         EditorGUILayout.LabelField("");
         if (GUILayout.Button("Add custom edge object", EditorStyles.miniButton))
         {
-            tNode.AddEdgeObject();
+            node.AddEdgeObject();
         }
         EditorGUILayout.EndHorizontal();
 
-        if (tNode.SplinatedObjects.Count > 20 || tNode.EdgeObjects.Count > 20)
+        if (node.SplinatedObjects.Count > 20 || node.EdgeObjects.Count > 20)
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("");
-            bRemoveAll = EditorGUILayout.Toggle(bRemoveAll, GUILayout.Width(20f));
+            isRemovingAll = EditorGUILayout.Toggle(isRemovingAll, GUILayout.Width(20f));
             if (GUILayout.Button("Remove all", EditorStyles.miniButton, GUILayout.Width(100f)))
             {
-                if (bRemoveAll)
+                if (isRemovingAll)
                 {
-                    tNode.RemoveAllSplinatedObjects();
-                    tNode.RemoveAllEdgeObjects();
-                    bRemoveAll = false;
+                    node.RemoveAllSplinatedObjects();
+                    node.RemoveAllEdgeObjects();
+                    isRemovingAll = false;
                 }
             }
 
@@ -756,47 +754,47 @@ public class GSDSplineNEditor : Editor
     {
         EditorGUILayout.LabelField("Statistics:");
         EditorGUILayout.BeginVertical("box");
-        EditorGUILayout.LabelField("Grade to next node: " + tNode.gradeToNext);
-        EditorGUILayout.LabelField("Grade to prev node: " + tNode.gradeToPrev);
-        EditorGUILayout.LabelField("Distance from start: " + tNode.dist.ToString("F3") + " meters");
-        EditorGUILayout.LabelField("% of spline: " + ((tNode.dist / tNode.spline.distance) * 100f).ToString("F2") + "%");
-        EditorGUILayout.LabelField("Parameter: " + tNode.time);
-        EditorGUILayout.LabelField("Tangent: " + tNode.tangent);
-        EditorGUILayout.LabelField("POS: " + tNode.pos);
-        EditorGUILayout.LabelField("ID on spline: " + tNode.idOnSpline);
-        EditorGUILayout.LabelField("Is intersection node: " + tNode.isIntersection);
-        EditorGUILayout.LabelField("Is end node: " + tNode.isEndPoint);
-        EditorGUILayout.LabelField("Is bridge start: " + tNode.isBridgeStart);
-        EditorGUILayout.LabelField("Is bridge end: " + tNode.isBridgeEnd);
-        EditorGUILayout.LabelField("Road: " + tNode.spline.road.transform.name);
-        EditorGUILayout.LabelField("System: " + tNode.spline.road.GSDRS.transform.name);
-        EditorGUILayout.SelectableLabel("UID: " + tNode.uID);
+        EditorGUILayout.LabelField("Grade to next node: " + node.gradeToNext);
+        EditorGUILayout.LabelField("Grade to prev node: " + node.gradeToPrev);
+        EditorGUILayout.LabelField("Distance from start: " + node.dist.ToString("F3") + " meters");
+        EditorGUILayout.LabelField("% of spline: " + ((node.dist / node.spline.distance) * 100f).ToString("F2") + "%");
+        EditorGUILayout.LabelField("Parameter: " + node.time);
+        EditorGUILayout.LabelField("Tangent: " + node.tangent);
+        EditorGUILayout.LabelField("POS: " + node.pos);
+        EditorGUILayout.LabelField("ID on spline: " + node.idOnSpline);
+        EditorGUILayout.LabelField("Is intersection node: " + node.isIntersection);
+        EditorGUILayout.LabelField("Is end node: " + node.isEndPoint);
+        EditorGUILayout.LabelField("Is bridge start: " + node.isBridgeStart);
+        EditorGUILayout.LabelField("Is bridge end: " + node.isBridgeEnd);
+        EditorGUILayout.LabelField("Road: " + node.spline.road.transform.name);
+        EditorGUILayout.LabelField("System: " + node.spline.road.GSDRS.transform.name);
+        EditorGUILayout.SelectableLabel("UID: " + node.uID);
     }
 
 
     public void DoSplineObjects()
     {
-        if (!tNode.CanSplinate())
+        if (!node.CanSplinate())
         {
             return;
         }
-        if (tNode.SplinatedObjects == null)
+        if (node.SplinatedObjects == null)
         {
-            tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+            node.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
         }
-        eCount = tNode.SplinatedObjects.Count;
+        count = node.SplinatedObjects.Count;
 
         SMM = null;
-        eCount = tNode.SplinatedObjects.Count;
-        if (eCount == 0)
+        count = node.SplinatedObjects.Count;
+        if (count == 0)
         {
 
         }
 
-        for (int index = 0; index < tNode.SplinatedObjects.Count; index++)
+        for (int index = 0; index < node.SplinatedObjects.Count; index++)
         {
             currentCount += 1;
-            SMM = tNode.SplinatedObjects[index];
+            SMM = node.SplinatedObjects[index];
             if (SMM.EM == null)
             {
                 SMM.EM = new GSD.Roads.Splination.SplinatedMeshMaker.SplinatedMeshEditorMaker();
@@ -817,31 +815,31 @@ public class GSDSplineNEditor : Editor
 
             SMM.isToggled = EditorGUILayout.Foldout(SMM.isToggled, "#" + currentCount.ToString() + ": " + SMM.tName);
 
-            if (GUILayout.Button(btnExtrudeText, GSDImageButton, GUILayout.Width(32f)))
+            if (GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f)))
             {
 
             }
 
-            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.Setup();
             }
-            if (GUILayout.Button(btnSaveText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 GSDSaveWindow tSave = EditorWindow.GetWindow<GSDSaveWindow>();
-                tSave.Initialize(ref tSceneRect, GSDSaveWindow.WindowTypeEnum.Extrusion, tNode, SMM);
+                tSave.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.Extrusion, node, SMM);
             }
-            if (GUILayout.Button(btnCopyText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                Undo.RecordObject(tNode, "Copy");
-                tNode.CopySplinatedObject(ref SMM);
-                EditorUtility.SetDirty(tNode);
+                Undo.RecordObject(node, "Copy");
+                node.CopySplinatedObject(ref SMM);
+                EditorUtility.SetDirty(node);
             }
-            if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                Undo.RecordObject(tNode, "Delete");
-                tNode.RemoveSplinatedObject(index);
-                EditorUtility.SetDirty(tNode);
+                Undo.RecordObject(node, "Delete");
+                node.RemoveSplinatedObject(index);
+                EditorUtility.SetDirty(node);
             }
             EditorGUILayout.EndHorizontal();
             if (!SMM.isToggled)
@@ -888,20 +886,20 @@ public class GSDSplineNEditor : Editor
             SMM.EM.Axis = (GSD.Roads.Splination.AxisTypeEnum) EditorGUILayout.Popup("Extrusion axis: ", (int) SMM.Axis, TheAxisDescriptions_Spline, GUILayout.Width(250f));
 
             //Start time:
-            if (SMM.StartTime < tNode.minSplination)
+            if (SMM.StartTime < node.minSplination)
             {
-                SMM.StartTime = tNode.minSplination;
+                SMM.StartTime = node.minSplination;
             }
-            if (SMM.EndTime > tNode.maxSplination)
+            if (SMM.EndTime > node.maxSplination)
             {
-                SMM.EndTime = tNode.maxSplination;
+                SMM.EndTime = node.maxSplination;
             }
             EditorGUILayout.BeginHorizontal();
 
-            SMM.EM.StartTime = EditorGUILayout.Slider("Start param: ", SMM.StartTime, tNode.minSplination, tNode.maxSplination - 0.01f);
+            SMM.EM.StartTime = EditorGUILayout.Slider("Start param: ", SMM.StartTime, node.minSplination, node.maxSplination - 0.01f);
             if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
             {
-                SMM.EM.StartTime = tNode.time;
+                SMM.EM.StartTime = node.time;
             }
             if (SMM.EM.StartTime >= SMM.EM.EndTime)
             {
@@ -912,10 +910,10 @@ public class GSDSplineNEditor : Editor
 
             //End time:
             EditorGUILayout.BeginHorizontal();
-            SMM.EM.EndTime = EditorGUILayout.Slider("End param: ", SMM.EndTime, SMM.StartTime, tNode.maxSplination);
+            SMM.EM.EndTime = EditorGUILayout.Slider("End param: ", SMM.EndTime, SMM.StartTime, node.maxSplination);
             if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
             {
-                SMM.EM.EndTime = tNode.nextTime;
+                SMM.EM.EndTime = node.nextTime;
             }
             if (SMM.EM.StartTime >= SMM.EM.EndTime)
             {
@@ -925,7 +923,7 @@ public class GSDSplineNEditor : Editor
 
 
             //Straight line options:
-            if (tNode.IsStraight())
+            if (node.IsStraight())
             {
                 if (!SMM.isStretch)
                 {
@@ -967,7 +965,7 @@ public class GSDSplineNEditor : Editor
             //Vector min/max threshold: 
             EditorGUILayout.BeginHorizontal();
             SMM.EM.MinMaxMod = EditorGUILayout.Slider("Vertex min/max threshold: ", SMM.minMaxMod, 0.01f, 0.2f);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.MinMaxMod = 0.05f;
             }
@@ -976,7 +974,7 @@ public class GSDSplineNEditor : Editor
             //Vertex matching precision:
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VertexMatchingPrecision = EditorGUILayout.Slider("Vertex matching precision: ", SMM.vertexMatchingPrecision, 0f, 0.01f);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.VertexMatchingPrecision = 0.005f;
             }
@@ -993,7 +991,7 @@ public class GSDSplineNEditor : Editor
                 EditorGUILayout.BeginVertical("TextArea");
                 EditorGUILayout.BeginHorizontal();
                 SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
-                if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     SMM.EM.isMatchingRoadDefinition = false;
                 }
@@ -1012,7 +1010,7 @@ public class GSDSplineNEditor : Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
-                if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     SMM.EM.isMatchingRoadDefinition = false;
                 }
@@ -1026,7 +1024,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VerticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", SMM.VerticalRaise, -512f, 512f);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.VerticalRaise = 0f;
             }
@@ -1041,7 +1039,7 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VerticalCurve = EditorGUILayout.CurveField("Curve: ", SMM.VerticalCurve);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref SMM.EM.VerticalCurve);
             }
@@ -1054,35 +1052,35 @@ public class GSDSplineNEditor : Editor
             SMM.EM.HorizontalSep = SMM.HorizontalSep;
             EditorGUILayout.LabelField("Horizontal offset options:");
             EditorGUILayout.BeginVertical("box");
-            tHorizMatching = HorizMatchingDefaultsEnum.None;
-            tHorizMatching = (HorizMatchingDefaultsEnum) EditorGUILayout.Popup((int) tHorizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
-            if (tHorizMatching != HorizMatchingDefaultsEnum.None)
+            horizMatching = HorizMatchingDefaultsEnum.None;
+            horizMatching = (HorizMatchingDefaultsEnum) EditorGUILayout.Popup((int) horizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
+            if (horizMatching != HorizMatchingDefaultsEnum.None)
             {
-                if (tHorizMatching == HorizMatchingDefaultsEnum.MatchCenter)
+                if (horizMatching == HorizMatchingDefaultsEnum.MatchCenter)
                 {
                     SMM.EM.HorizontalSep = 0f;
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
                 {
-                    SMM.EM.HorizontalSep = (tNode.spline.road.RoadWidth() / 2) * -1;
+                    SMM.EM.HorizontalSep = (node.spline.road.RoadWidth() / 2) * -1;
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                 {
-                    SMM.EM.HorizontalSep = ((tNode.spline.road.RoadWidth() / 2) + tNode.spline.road.shoulderWidth) * -1;
+                    SMM.EM.HorizontalSep = ((node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth) * -1;
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
                 {
-                    SMM.EM.HorizontalSep = (tNode.spline.road.RoadWidth() / 2);
+                    SMM.EM.HorizontalSep = (node.spline.road.RoadWidth() / 2);
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                 {
-                    SMM.EM.HorizontalSep = (tNode.spline.road.RoadWidth() / 2) + tNode.spline.road.shoulderWidth;
+                    SMM.EM.HorizontalSep = (node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth;
                 }
-                tHorizMatching = HorizMatchingDefaultsEnum.None;
+                horizMatching = HorizMatchingDefaultsEnum.None;
             }
             EditorGUILayout.BeginHorizontal();
-            SMM.EM.HorizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", SMM.EM.HorizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            SMM.EM.HorizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", SMM.EM.HorizontalSep, (-1f * horizRoadMax), horizRoadMax);
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.HorizontalSep = 0f;
             }
@@ -1098,7 +1096,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             SMM.EM.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", SMM.HorizontalCurve);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref SMM.EM.HorizontalCurve);
             }
@@ -1155,11 +1153,11 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Start object:");
-            tEndObjectAdd = (EndObjectsDefaultsEnum) EditorGUILayout.Popup((int) tEndObjectAdd, EndObjectsDefaultsEnumDesc);
-            if (tEndObjectAdd != EndObjectsDefaultsEnum.None)
+            endObjectAdd = (EndObjectsDefaultsEnum) EditorGUILayout.Popup((int) endObjectAdd, EndObjectsDefaultsEnumDesc);
+            if (endObjectAdd != EndObjectsDefaultsEnum.None)
             {
                 SMM.EM.EndCapStart = GetEndObjectQuickAdd();
-                tEndObjectAdd = EndObjectsDefaultsEnum.None;
+                endObjectAdd = EndObjectsDefaultsEnum.None;
             }
             EditorGUILayout.EndHorizontal();
 
@@ -1176,12 +1174,12 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("End object:");
-            tEndObjectAdd = (EndObjectsDefaultsEnum) EditorGUILayout.Popup((int) tEndObjectAdd, EndObjectsDefaultsEnumDesc);
-            if (tEndObjectAdd != EndObjectsDefaultsEnum.None)
+            endObjectAdd = (EndObjectsDefaultsEnum) EditorGUILayout.Popup((int) endObjectAdd, EndObjectsDefaultsEnumDesc);
+            if (endObjectAdd != EndObjectsDefaultsEnum.None)
             {
                 SMM.EM.EndCapEnd = GetEndObjectQuickAdd();
                 SMM.EM.EndCapCustomRotOffsetEnd = new Vector3(0f, 180f, 0f);
-                tEndObjectAdd = EndObjectsDefaultsEnum.None;
+                endObjectAdd = EndObjectsDefaultsEnum.None;
             }
             EditorGUILayout.EndHorizontal();
 
@@ -1286,7 +1284,7 @@ public class GSDSplineNEditor : Editor
             //			if(GUILayout.Button("Reset custom rotation",EditorStyles.miniButton,GUILayout.Width(160f))){
             //				SMM.CustomRotation = new Vector3(0f,0f,0f);
             //			}
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.CustomRotation = new Vector3(0f, 0f, 0f);
             }
@@ -1312,18 +1310,18 @@ public class GSDSplineNEditor : Editor
 
     public void UpdateSplineObjects()
     {
-        if (!tNode.CanSplinate())
+        if (!node.CanSplinate())
         {
             return;
         }
-        if (tNode.SplinatedObjects == null)
+        if (node.SplinatedObjects == null)
         {
-            tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+            node.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
         }
-        eCount = tNode.SplinatedObjects.Count;
-        for (int index = 0; index < eCount; index++)
+        count = node.SplinatedObjects.Count;
+        for (int index = 0; index < count; index++)
         {
-            SMM = tNode.SplinatedObjects[index];
+            SMM = node.SplinatedObjects[index];
             if (SMM.EM != null)
             {
                 if (!SMM.EM.IsEqualToSMM(SMM))
@@ -1348,35 +1346,35 @@ public class GSDSplineNEditor : Editor
                     }
 
                     SMM.Setup(true);
-                    //					Debug.Log ("Setup SMM");
+                    //Debug.Log ("Setup SMM");
                 }
             }
         }
     }
 
 
-    public void UpdateSplineObjects_OnUndo()
+    public void UpdateSplineObjectsOnUndo()
     {
-        if (!tNode.CanSplinate())
+        if (!node.CanSplinate())
         {
             return;
         }
-        if (tNode.SplinatedObjects == null)
+        if (node.SplinatedObjects == null)
         {
-            tNode.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+            node.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
         }
 
         //Destroy all children:
-        for (int index = tNode.transform.childCount - 1; index >= 0; index--)
+        for (int index = node.transform.childCount - 1; index >= 0; index--)
         {
-            Object.DestroyImmediate(tNode.transform.GetChild(index).gameObject);
+            Object.DestroyImmediate(node.transform.GetChild(index).gameObject);
         }
 
         //Re-setup the SMM:
-        eCount = tNode.SplinatedObjects.Count;
-        for (int index = 0; index < eCount; index++)
+        count = node.SplinatedObjects.Count;
+        for (int index = 0; index < count; index++)
         {
-            SMM = tNode.SplinatedObjects[index];
+            SMM = node.SplinatedObjects[index];
             SMM.UpdatePositions();
             //if(SMM.bIsStretch != SMM.bIsStretch){ 
             if (SMM.isStretch)
@@ -1395,28 +1393,28 @@ public class GSDSplineNEditor : Editor
             SMM.Setup(true);
         }
 
-        UpdateEdgeObjects_OnUndo();
+        UpdateEdgeObjectsOnUndo();
     }
 
 
     public void DoEdgeObjects()
     {
-        if (!tNode.CanSplinate())
+        if (!node.CanSplinate())
         {
             return;
         }
 
-        if (tNode.EdgeObjects == null)
+        if (node.EdgeObjects == null)
         {
-            tNode.EdgeObjects = new List<GSD.Roads.EdgeObjects.EdgeObjectMaker>();
+            node.EdgeObjects = new List<GSD.Roads.EdgeObjects.EdgeObjectMaker>();
         }
-        eCount = tNode.EdgeObjects.Count;
+        count = node.EdgeObjects.Count;
 
         EOM = null;
 
-        for (int index = 0; index < tNode.EdgeObjects.Count; index++)
+        for (int index = 0; index < node.EdgeObjects.Count; index++)
         {
-            EOM = tNode.EdgeObjects[index];
+            EOM = node.EdgeObjects[index];
             if (EOM.edgeMaker == null)
             {
                 EOM.edgeMaker = new GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
@@ -1437,31 +1435,31 @@ public class GSDSplineNEditor : Editor
 
             EOM.isToggled = EditorGUILayout.Foldout(EOM.isToggled, "#" + currentCount.ToString() + ": " + EOM.objectName);
 
-            if (GUILayout.Button(btnEdgeText, GSDImageButton, GUILayout.Width(32f)))
+            if (GUILayout.Button(edgeButtonTexture, imageButton, GUILayout.Width(32f)))
             {
 
             }
-            if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.Setup();
             }
-            if (GUILayout.Button(btnSaveText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                GSDSaveWindow tSave = EditorWindow.GetWindow<GSDSaveWindow>();
-                tSave.Initialize(ref tSceneRect, GSDSaveWindow.WindowTypeEnum.Edge, tNode, null, EOM);
+                GSDSaveWindow saveWindow = EditorWindow.GetWindow<GSDSaveWindow>();
+                saveWindow.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.Edge, node, null, EOM);
             }
 
-            if (GUILayout.Button(btnCopyText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                Undo.RecordObject(tNode, "Copy");
-                tNode.CopyEdgeObject(index);
-                EditorUtility.SetDirty(tNode);
+                Undo.RecordObject(node, "Copy");
+                node.CopyEdgeObject(index);
+                EditorUtility.SetDirty(node);
             }
-            if (GUILayout.Button(btnDeleteText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                Undo.RecordObject(tNode, "Delete");
-                tNode.RemoveEdgeObject(index);
-                EditorUtility.SetDirty(tNode);
+                Undo.RecordObject(node, "Delete");
+                node.RemoveEdgeObject(index);
+                EditorUtility.SetDirty(node);
             }
             EditorGUILayout.EndHorizontal();
 
@@ -1595,9 +1593,9 @@ public class GSDSplineNEditor : Editor
             EOM.edgeMaker.isSingle = EditorGUILayout.Toggle("Single object only: ", EOM.isSingle);
             if (EOM.edgeMaker.isSingle != EOM.isSingle)
             {
-                EOM.edgeMaker.endTime = tNode.nextTime;
+                EOM.edgeMaker.endTime = node.nextTime;
                 //				EOM.EM.EndPos = tNode.GSDSpline.GetSplineValue(EOM.EM.EndTime,false);
-                EOM.edgeMaker.singlePosition = tNode.time + 0.025f;
+                EOM.edgeMaker.singlePosition = node.time + 0.025f;
                 if (EOM.edgeMaker.isSingle)
                 {
                     EOM.edgeMaker.isCombinedMesh = false;
@@ -1606,16 +1604,16 @@ public class GSDSplineNEditor : Editor
 
             if (EOM.isSingle)
             {
-                EOM.edgeMaker.singlePosition = EditorGUILayout.Slider("Single location: ", EOM.singlePosition, tNode.time, 1f);
+                EOM.edgeMaker.singlePosition = EditorGUILayout.Slider("Single location: ", EOM.singlePosition, node.time, 1f);
 
-                if (tNode.isBridgeStart && tNode.isBridgeMatched)
+                if (node.isBridgeStart && node.isBridgeMatched)
                 {
                     EOM.edgeMaker.singleOnlyBridgePercent = EditorGUILayout.Slider("Bridge %: ", EOM.singleOnlyBridgePercent, 0f, 1f);
                     if (!GSDRootUtil.IsApproximately(EOM.singleOnlyBridgePercent, EOM.edgeMaker.singleOnlyBridgePercent, 0.001f))
                     {
                         EOM.edgeMaker.singleOnlyBridgePercent = Mathf.Clamp(EOM.edgeMaker.singleOnlyBridgePercent, 0f, 1f);
-                        float tDist = (EOM.edgeMaker.singleOnlyBridgePercent * (tNode.bridgeCounterpartNode.dist - tNode.dist) + tNode.dist);
-                        EOM.edgeMaker.singlePosition = tNode.spline.TranslateDistBasedToParam(tDist);
+                        float dist = (EOM.edgeMaker.singleOnlyBridgePercent * (node.bridgeCounterpartNode.dist - node.dist) + node.dist);
+                        EOM.edgeMaker.singlePosition = node.spline.TranslateDistBasedToParam(dist);
                     }
                 }
             }
@@ -1648,19 +1646,19 @@ public class GSDSplineNEditor : Editor
 
             if (!EOM.isSingle)
             {
-                if (EOM.edgeMaker.startTime < tNode.minSplination)
+                if (EOM.edgeMaker.startTime < node.minSplination)
                 {
-                    EOM.edgeMaker.startTime = tNode.minSplination;
+                    EOM.edgeMaker.startTime = node.minSplination;
                 }
-                if (EOM.edgeMaker.endTime > tNode.maxSplination)
+                if (EOM.edgeMaker.endTime > node.maxSplination)
                 {
-                    EOM.edgeMaker.endTime = tNode.maxSplination;
+                    EOM.edgeMaker.endTime = node.maxSplination;
                 }
 
 
                 #region "Start param"
                 EditorGUILayout.BeginHorizontal();
-                EOM.edgeMaker.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, tNode.minSplination, EOM.endTime);  // EndTime = 1f??
+                EOM.edgeMaker.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, node.minSplination, EOM.endTime);  // EndTime = 1f??
 
                 if (EOM.edgeMaker.endTime < EOM.edgeMaker.startTime)
                 {
@@ -1670,7 +1668,7 @@ public class GSDSplineNEditor : Editor
 
                 if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
-                    EOM.edgeMaker.startTime = tNode.time;
+                    EOM.edgeMaker.startTime = node.time;
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
@@ -1678,7 +1676,7 @@ public class GSDSplineNEditor : Editor
 
                 #region "End param"
                 EditorGUILayout.BeginHorizontal();
-                EOM.edgeMaker.endTime = EditorGUILayout.Slider("End param: ", EOM.endTime, EOM.startTime, tNode.maxSplination);
+                EOM.edgeMaker.endTime = EditorGUILayout.Slider("End param: ", EOM.endTime, EOM.startTime, node.maxSplination);
                 //Mathf.Clamp(EditorGUILayout.Slider( "End param: ", EOM.EndTime, 0f/*EOM.StartTime*/, 1f/*tNode.MaxSplination*/ ), 0f, 1f);
                 // FH EXPERIMENTAL fix for EdgeObjects???
 
@@ -1699,7 +1697,7 @@ public class GSDSplineNEditor : Editor
 
                 if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
-                    EOM.edgeMaker.endTime = tNode.nextTime;
+                    EOM.edgeMaker.endTime = node.nextTime;
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
@@ -1715,7 +1713,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.verticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", EOM.verticalRaise, -512f, 512f);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.verticalRaise = 0f;
             }
@@ -1727,7 +1725,7 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.verticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.verticalCurve);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref EOM.edgeMaker.verticalCurve);
             }
@@ -1739,68 +1737,68 @@ public class GSDSplineNEditor : Editor
             #region "Horizontal offsets"
             EditorGUILayout.LabelField("Horizontal offset options:");
             EditorGUILayout.BeginVertical("box");
-            tHorizMatching = HorizMatchingDefaultsEnum.None;
-            tHorizMatching = (HorizMatchingDefaultsEnum) EditorGUILayout.Popup((int) tHorizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
-            if (tHorizMatching != HorizMatchingDefaultsEnum.None)
+            horizMatching = HorizMatchingDefaultsEnum.None;
+            horizMatching = (HorizMatchingDefaultsEnum) EditorGUILayout.Popup((int) horizMatching, HorizMatchSubTypeDescriptions, GUILayout.Width(100f));
+            if (horizMatching != HorizMatchingDefaultsEnum.None)
             {
-                if (tHorizMatching == HorizMatchingDefaultsEnum.MatchCenter)
+                if (horizMatching == HorizMatchingDefaultsEnum.MatchCenter)
                 {
                     EOM.edgeMaker.horizontalSep = 0f;
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
                 {
-                    EOM.edgeMaker.horizontalSep = (tNode.spline.road.RoadWidth() * 0.5f) * -1;
+                    EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f) * -1;
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                 {
-                    if (tNode.spline.road.isShouldersEnabled)
+                    if (node.spline.road.isShouldersEnabled)
                     {
-                        EOM.edgeMaker.horizontalSep = ((tNode.spline.road.RoadWidth() * 0.5f) + tNode.spline.road.shoulderWidth) * -1;
+                        EOM.edgeMaker.horizontalSep = ((node.spline.road.RoadWidth() * 0.5f) + node.spline.road.shoulderWidth) * -1;
                     }
                     else
                     {
-                        EOM.edgeMaker.horizontalSep = ((tNode.spline.road.RoadWidth() * 0.5f)) * -1;
+                        EOM.edgeMaker.horizontalSep = ((node.spline.road.RoadWidth() * 0.5f)) * -1;
                     }
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
                 {
-                    EOM.edgeMaker.horizontalSep = (tNode.spline.road.RoadWidth() * 0.5f);
+                    EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f);
                 }
-                else if (tHorizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
+                else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                 {
-                    if (tNode.spline.road.isShouldersEnabled)
+                    if (node.spline.road.isShouldersEnabled)
                     {
-                        EOM.edgeMaker.horizontalSep = (tNode.spline.road.RoadWidth() * 0.5f) + tNode.spline.road.shoulderWidth;
+                        EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f) + node.spline.road.shoulderWidth;
                     }
                     else
                     {
-                        EOM.edgeMaker.horizontalSep = (tNode.spline.road.RoadWidth() * 0.5f);
+                        EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f);
                     }
                 }
-                tHorizMatching = HorizMatchingDefaultsEnum.None;
+                horizMatching = HorizMatchingDefaultsEnum.None;
             }
             if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
             {
-                EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
+                EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
             }
 
 
             EditorGUILayout.BeginHorizontal();
-            EOM.edgeMaker.horizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.edgeMaker.horizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            EOM.edgeMaker.horizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.horizontalSep = 0f;
             }
             if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
             {
-                EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * HorizRoadMax), HorizRoadMax);
+                EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
             }
             EditorGUILayout.EndHorizontal();
             if (EOM.horizontalCurve == null || EOM.horizontalCurve.keys.Length < 2)
             { EnforceCurve(ref EOM.horizontalCurve); }
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.horizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.horizontalCurve);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref EOM.edgeMaker.horizontalCurve);
             }
@@ -1819,7 +1817,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Custom rotation: ");
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.customRotation = new Vector3(0f, 0f, 0f);
             }
@@ -1833,7 +1831,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginHorizontal();
             float scale = EditorGUILayout.Slider("Custom scale: ", EOM.customScale.x, 1f, 10f);
             EOM.edgeMaker.customScale = new Vector3(scale, scale, scale);
-            if (GUILayout.Button(btnDefaultText, GSDImageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.customScale = new Vector3(1f, 1f, 1f);
             }
@@ -1847,14 +1845,14 @@ public class GSDSplineNEditor : Editor
 
     public void UpdateEdgeObjects()
     {
-        if (!tNode.CanSplinate())
+        if (!node.CanSplinate())
         {
             return;
         }
-        eCount = tNode.EdgeObjects.Count;
-        for (int index = 0; index < tNode.EdgeObjects.Count; index++)
+        count = node.EdgeObjects.Count;
+        for (int index = 0; index < node.EdgeObjects.Count; index++)
         {
-            EOM = tNode.EdgeObjects[index];
+            EOM = node.EdgeObjects[index];
             if (EOM.edgeMaker != null)
             {
                 if (!EOM.edgeMaker.IsEqual(EOM))
@@ -1869,44 +1867,44 @@ public class GSDSplineNEditor : Editor
     }
 
 
-    public void UpdateEdgeObjects_OnUndo()
+    public void UpdateEdgeObjectsOnUndo()
     {
-        if (!tNode.CanSplinate())
+        if (!node.CanSplinate())
         {
             return;
         }
-        eCount = tNode.EdgeObjects.Count;
-        for (int index = 0; index < tNode.EdgeObjects.Count; index++)
+        count = node.EdgeObjects.Count;
+        for (int index = 0; index < node.EdgeObjects.Count; index++)
         {
-            EOM = tNode.EdgeObjects[index];
+            EOM = node.EdgeObjects[index];
             EOM.Setup();
         }
     }
 
 
     #region "Quick adds"
-    private void BridgeAdd_TopBase(float tHorizSep = 0f, float tVertRaise = -0.01f, string tMat = "", bool bOverridePrefab = false, string OverridePrefab = "")
+    private void BridgeAddTopBase(float _horizSep = 0f, float _vertRaise = -0.01f, string _mat = "", bool _isOverridenPrefab = false, string _overridePrefab = "")
     {
-        if (tMat == "")
+        if (_mat == "")
         {
-            tMat = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDConcrete2.mat";
+            _mat = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDConcrete2.mat";
         }
-        SMM = tNode.AddSplinatedObject();
+        SMM = node.AddSplinatedObject();
         string tBridgeTopBaseToAdd = "";
         string tName = "";
-        if (tNode.spline.road.laneAmount == 2)
+        if (node.spline.road.laneAmount == 2)
         {
-            if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
+            if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-19w-5l-1d.fbx";
                 tName = "BridgeTop1M-1M";
             }
-            else if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
+            else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-20w-5l-1d.fbx";
                 tName = "BridgeTop2M-1M";
             }
-            else if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
+            else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-18w-5l-3d.fbx";
                 tName = "BridgeTop0M-3M";
@@ -1917,19 +1915,19 @@ public class GSDSplineNEditor : Editor
                 tName = "BridgeTop0M-1M";
             }
         }
-        else if (tNode.spline.road.laneAmount == 4)
+        else if (node.spline.road.laneAmount == 4)
         {
-            if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
+            if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-29w-5l-1d.fbx";
                 tName = "BridgeTop1M-1M";
             }
-            else if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
+            else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-30w-5l-1d.fbx";
                 tName = "BridgeTop2M-1M";
             }
-            else if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
+            else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-28w-5l-3d.fbx";
                 tName = "BridgeTop0M-3M";
@@ -1942,17 +1940,17 @@ public class GSDSplineNEditor : Editor
         }
         else
         {
-            if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
+            if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-39w-5l-1d.fbx";
                 tName = "BridgeTop1M-1M";
             }
-            else if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
+            else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-40w-5l-1d.fbx";
                 tName = "BridgeTop2M-1M";
             }
-            else if (tBridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
+            else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
             {
                 tBridgeTopBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase-38w-5l-3d.fbx";
                 tName = "BridgeTop0M-3M";
@@ -1964,131 +1962,131 @@ public class GSDSplineNEditor : Editor
             }
         }
 
-        if (bOverridePrefab)
+        if (_isOverridenPrefab)
         {
-            tBridgeTopBaseToAdd = OverridePrefab;
+            tBridgeTopBaseToAdd = _overridePrefab;
         }
 
         SMM.tName = tName;
         SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
-        SMM.HorizontalSep = tHorizSep;
-        SMM.VerticalRaise = tVertRaise;
+        SMM.HorizontalSep = _horizSep;
+        SMM.VerticalRaise = _vertRaise;
         SMM.isMaterialOverriden = true;
-        SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+        SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
 
-        tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
-        if (SMM.StartTime < tNode.minSplination)
+        BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
+        if (SMM.StartTime < node.minSplination)
         {
-            SMM.StartTime = tNode.minSplination;
+            SMM.StartTime = node.minSplination;
         }
-        if (SMM.EndTime > tNode.maxSplination)
+        if (SMM.EndTime > node.maxSplination)
         {
-            SMM.EndTime = tNode.maxSplination;
+            SMM.EndTime = node.maxSplination;
         }
     }
 
 
-    private void BridgeAdd_BottomBase(float tHorizSep = 0f, float tVertRaise = -1.01f, string tMat = "", bool bOverridePrefab = false, string OverridePrefab = "")
+    private void BridgeAddBottomBase(float _horizSep = 0f, float _vertRaise = -1.01f, string _mat = "", bool _isOverridenPrefab = false, string _overridePrefab = "")
     {
-        if (tMat == "")
+        if (_mat == "")
         {
-            tMat = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDConcrete2.mat";
+            _mat = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDConcrete2.mat";
         }
-        SMM = tNode.AddSplinatedObject();
+        SMM = node.AddSplinatedObject();
         string tBridgeBottomBaseToAdd = "";
         string tName = "";
-        if (tNode.spline.road.laneAmount == 2)
+        if (node.spline.road.laneAmount == 2)
         {
-            if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
+            if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase2-18w-5l-3d.fbx";
                 tName = "BridgeBase2";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase3-18w-5l-5d.fbx";
                 tName = "BridgeBase3";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase4-18w-5l-5d.fbx";
                 tName = "BridgeBase4";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase5-18w-5l-5d.fbx";
                 tName = "BridgeBase5";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase6-2L.fbx";
                 tName = "BridgeArchBeam80";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase7-2L.fbx";
                 tName = "BridgeArchSolid80";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase8-2L.fbx";
                 tName = "BridgeArchSolid180";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBaseGrid-18w-5l-5d.fbx";
                 tName = "BridgeGrid";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBaseSteelBeam-18w-20l-3d.fbx";
                 tName = "BridgeSteelBeams";
             }
         }
-        else if (tNode.spline.road.laneAmount == 4)
+        else if (node.spline.road.laneAmount == 4)
         {
-            if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
+            if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase2-28w-5l-3d.fbx";
                 tName = "BridgeBase2";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase3-28w-5l-5d.fbx";
                 tName = "BridgeBase3";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase4-28w-5l-5d.fbx";
                 tName = "BridgeBase4";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase5-28w-5l-5d.fbx";
                 tName = "BridgeBase5";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase6-4L.fbx";
                 tName = "BridgeArchBeam80";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase7-4L.fbx";
                 tName = "BridgeArchSolid80";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase8-4L.fbx";
                 tName = "BridgeArchSolid180";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBaseGrid-28w-5l-5d.fbx";
                 tName = "BridgeGrid";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBaseSteelBeam-28w-20l-3d.fbx";
                 tName = "BridgeSteelBeams";
@@ -2096,175 +2094,175 @@ public class GSDSplineNEditor : Editor
         }
         else
         {
-            if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
+            if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase2-38w-5l-3d.fbx";
                 tName = "BridgeBase2";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase3-38w-5l-5d.fbx";
                 tName = "BridgeBase3";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase4-38w-5l-5d.fbx";
                 tName = "BridgeBase4";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase5-38w-5l-5d.fbx";
                 tName = "BridgeBase5";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase6-6L.fbx";
                 tName = "BridgeArchBeam80";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase7-6L.fbx";
                 tName = "BridgeArchSolid80";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBase8-6L.fbx";
                 tName = "BridgeArchSolid180";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBaseGrid-38w-5l-5d.fbx";
                 tName = "BridgeGrid";
             }
-            else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
+            else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
             {
                 tBridgeBottomBaseToAdd = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Bridges/BridgeBaseSteelBeam-38w-20l-3d.fbx";
                 tName = "BridgeBeams";
             }
         }
 
-        if (bOverridePrefab)
+        if (_isOverridenPrefab)
         {
-            tBridgeBottomBaseToAdd = OverridePrefab;
+            tBridgeBottomBaseToAdd = _overridePrefab;
         }
 
         SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
-        SMM.HorizontalSep = tHorizSep;
-        SMM.VerticalRaise = tVertRaise;
+        SMM.HorizontalSep = _horizSep;
+        SMM.VerticalRaise = _vertRaise;
         SMM.isMaterialOverriden = true;
         SMM.tName = tName;
 
-        if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
+        if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
         {
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(tMat);
+            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
         {
             SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDSteel7.mat");
         }
-        else if (tBridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
+        else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
         {
             SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDSteel7.mat");
         }
 
         SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
 
-        tBridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
-        if (SMM.StartTime < tNode.minSplination)
+        BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
+        if (SMM.StartTime < node.minSplination)
         {
-            SMM.StartTime = tNode.minSplination;
+            SMM.StartTime = node.minSplination;
         }
-        if (SMM.EndTime > tNode.maxSplination)
+        if (SMM.EndTime > node.maxSplination)
         {
-            SMM.EndTime = tNode.maxSplination;
+            SMM.EndTime = node.maxSplination;
         }
     }
 
 
-    private void ExtrusionQuickAdd(bool bHorizOverride = false, float tHorizSep = 0f, bool bVertOverride = false, float tVertRaise = 0f)
+    private void ExtrusionQuickAdd(bool _isHorizOverriden = false, float _horizSep = 0f, bool _isVertOverriden = false, float _vertRaise = 0f)
     {
         try
         {
-            ExtrusionQuickAdd_Do();
+            ExtrusionQuickAddDo();
         }
         catch (System.Exception exception)
         {
-            tSMMQuickAdd = SMMDefaultsEnum.None;
+            SMMQuickAdd = SMMDefaultsEnum.None;
             throw exception;
         }
     }
 
 
-    private void ExtrusionQuickAdd_Do()
+    private void ExtrusionQuickAddDo()
     {
-        if (tSMMQuickAdd == SMMDefaultsEnum.KRail)
+        if (SMMQuickAdd == SMMDefaultsEnum.KRail)
         {
-            tNode.SplinatedObjectQuickAdd("KRail");
+            node.SplinatedObjectQuickAdd("KRail");
         }
     }
 
 
-    private void ExtrudeHelper(string tPath, string tName, float DefaultHoriz, GSD.Roads.Splination.AxisTypeEnum tAxis = GSD.Roads.Splination.AxisTypeEnum.Z, bool bHorizOverride = false, float tHorizSep = 0f, bool bVertOverride = false, float tVertRaise = 0f, bool bFlipRot = false)
+    private void ExtrudeHelper(string _path, string _name, float DefaultHoriz, GSD.Roads.Splination.AxisTypeEnum _axisType = GSD.Roads.Splination.AxisTypeEnum.Z, bool _isHorizOverriden = false, float _horizSep = 0f, bool _isVertOverriden = false, float _vertRaise = 0f, bool _isFlippingRot = false)
     {
-        SMM = tNode.AddSplinatedObject();
-        SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject));
+        SMM = node.AddSplinatedObject();
+        SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(_path, typeof(GameObject));
 
-        if (bHorizOverride)
+        if (_isHorizOverriden)
         {
-            SMM.HorizontalSep = tHorizSep;
+            SMM.HorizontalSep = _horizSep;
         }
         else
         {
-            SMM.HorizontalSep = ((tNode.spline.road.RoadWidth() / 2) + tNode.spline.road.shoulderWidth) * -1f;
+            SMM.HorizontalSep = ((node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth) * -1f;
         }
 
-        if (bVertOverride)
+        if (_isVertOverriden)
         {
-            SMM.VerticalRaise = tVertRaise;
+            SMM.VerticalRaise = _vertRaise;
         }
         else
         {
-            if (tNode.isBridgeStart)
+            if (node.isBridgeStart)
             {
                 SMM.VerticalRaise = -0.01f;
             }
         }
 
-        SMM.isFlippingRotation = bFlipRot;
-        SMM.Axis = tAxis;
-        if (SMM.StartTime < tNode.minSplination)
+        SMM.isFlippingRotation = _isFlippingRot;
+        SMM.Axis = _axisType;
+        if (SMM.StartTime < node.minSplination)
         {
-            SMM.StartTime = tNode.minSplination;
+            SMM.StartTime = node.minSplination;
         }
-        if (SMM.EndTime > tNode.maxSplination)
+        if (SMM.EndTime > node.maxSplination)
         {
-            SMM.EndTime = tNode.maxSplination;
+            SMM.EndTime = node.maxSplination;
         }
-        SMM.tName = tName;
+        SMM.tName = _name;
     }
     #endregion
 
@@ -2275,22 +2273,22 @@ public class GSDSplineNEditor : Editor
         int controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
         bool bUsed = false;
 
-        if (!bSceneRectSet)
+        if (!isSceneRectSet)
         {
             try
             {
-                tSceneRect = EditorWindow.GetWindow<SceneView>().position;
+                sceneRect = EditorWindow.GetWindow<SceneView>().position;
             }
             catch
             {
-                tSceneRect = EditorWindow.GetWindow<EditorWindow>().position;
+                sceneRect = EditorWindow.GetWindow<EditorWindow>().position;
             }
-            bSceneRectSet = true;
+            isSceneRectSet = true;
         }
 
-        if (!tNode.isEditorSelected)
+        if (!node.isEditorSelected)
         {
-            tNode.isEditorSelected = true;
+            node.isEditorSelected = true;
         }
 
         if (current.type == EventType.ValidateCommand)
@@ -2298,21 +2296,21 @@ public class GSDSplineNEditor : Editor
             switch (current.commandName)
             {
                 case "UndoRedoPerformed":
-                    UpdateSplineObjects_OnUndo();
+                    UpdateSplineObjectsOnUndo();
                     break;
             }
         }
 
-        if (controlID != tNode.GetHashCode())
+        if (controlID != node.GetHashCode())
         {
-            tNode.isEditorSelected = false;
+            node.isEditorSelected = false;
         }
 
         //Drag with left click:
         if (Event.current.type == EventType.MouseDrag && Event.current.button == 0)
         {
-            bMouseDragHasProcessed = false;
-            tNode.isDrawingIntersectionHighlightGizmos = true;
+            isMouseDragProcessed = false;
+            node.isDrawingIntersectionHighlightGizmos = true;
         }
         //Drag with left click release:
         if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
@@ -2321,22 +2319,22 @@ public class GSDSplineNEditor : Editor
             Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(GSDRoadConnector));
             foreach (GSDSplineN xNode in xNodeObjects)
             {
-                if (Vector3.Distance(xNode.transform.position, tNode.transform.position) < 2f)
+                if (Vector3.Distance(xNode.transform.position, node.transform.position) < 2f)
                 {
-                    if (xNode == tNode)
+                    if (xNode == node)
                     {
                         continue;
                     }
-                    if (tNode.isSpecialEndNode || xNode.isSpecialEndNode)
+                    if (node.isSpecialEndNode || xNode.isSpecialEndNode)
                     {
                         continue;
                     }
-                    if (xNode.isEndPoint && tNode.isEndPoint)
+                    if (xNode.isEndPoint && node.isEndPoint)
                     {
                         //End point connection.
-                        tNode.transform.position = xNode.transform.position;
+                        node.transform.position = xNode.transform.position;
                         //Activate special end node for tnode
-                        TriggerRoadConnection(tNode, xNode);
+                        TriggerRoadConnection(node, xNode);
                         bUsed = true;
                         break;
                     }
@@ -2348,19 +2346,19 @@ public class GSDSplineNEditor : Editor
                     {
                         continue;
                     }
-                    if (tNode.isEndPoint && xNode.isEndPoint)
+                    if (node.isEndPoint && xNode.isEndPoint)
                     {
                         continue;
                     }
-                    if (xNode.spline == tNode.spline)
+                    if (xNode.spline == node.spline)
                     { //Don't let intersection be created on consecutive nodes:
-                        if ((tNode.idOnSpline + 1) == xNode.idOnSpline || (tNode.idOnSpline - 1) == xNode.idOnSpline)
+                        if ((node.idOnSpline + 1) == xNode.idOnSpline || (node.idOnSpline - 1) == xNode.idOnSpline)
                         {
                             continue;
                         }
                     }
-                    tNode.transform.position = xNode.transform.position;
-                    TriggerIntersection(tNode, xNode);
+                    node.transform.position = xNode.transform.position;
+                    TriggerIntersection(node, xNode);
                     bUsed = true;
                     break;
                 }
@@ -2371,50 +2369,50 @@ public class GSDSplineNEditor : Editor
             }
             foreach (GSDRoadConnector connector in connectorObjects)
             {
-                if (Vector3.Distance(connector.transform.position, tNode.transform.position) < 2f)
+                if (Vector3.Distance(connector.transform.position, node.transform.position) < 2f)
                 {
                     if (connector.connectedNode != null)
                     {
                         continue;
                     }
-                    connector.ConnectToNode(tNode);
+                    connector.ConnectToNode(node);
                     break;
                 }
             }
 
-            if (!bMouseDragHasProcessed)
+            if (!isMouseDragProcessed)
             {
                 //Enforce maximum road grade:
-                if (tNode.IsLegitimate() && tNode.spline.road.isMaxGradeEnabled)
+                if (node.IsLegitimate() && node.spline.road.isMaxGradeEnabled)
                 {
-                    tNode.EnsureGradeValidity();
+                    node.EnsureGradeValidity();
                 }
                 TriggerRoadUpdate();
                 bUsed = true;
             }
-            bMouseDragHasProcessed = true;
-            tNode.isDrawingIntersectionHighlightGizmos = false;
+            isMouseDragProcessed = true;
+            node.isDrawingIntersectionHighlightGizmos = false;
             bUsed = true;
         }
 
         //Enforce maximum road grade:
-        if (bMouseDragHasProcessed)
+        if (isMouseDragProcessed)
         {
 
-            Vector3 vChangeChecker = tNode.transform.position;
-            if (VectorDiff(vChangeChecker, tNode.pos))
+            Vector3 vChangeChecker = node.transform.position;
+            if (VectorDiff(vChangeChecker, node.pos))
             {
-                tNode.pos = vChangeChecker;
-                if (tNode.IsLegitimate() && tNode.spline.road.isMaxGradeEnabled)
+                node.pos = vChangeChecker;
+                if (node.IsLegitimate() && node.spline.road.isMaxGradeEnabled)
                 {
-                    tNode.EnsureGradeValidity();
+                    node.EnsureGradeValidity();
                 }
                 TriggerRoadUpdate();
             }
             bUsed = true;
         }
 
-        if (Selection.activeGameObject == tNode.transform.gameObject)
+        if (Selection.activeGameObject == node.transform.gameObject)
         {
             if (current.keyCode == KeyCode.F5)
             {
@@ -2433,22 +2431,22 @@ public class GSDSplineNEditor : Editor
 
         if (GUI.changed)
         {
-            EditorUtility.SetDirty(tNode);
+            EditorUtility.SetDirty(node);
         }
     }
 
 
-    private bool VectorDiff(Vector3 tVect1, Vector3 tVect2)
+    private bool VectorDiff(Vector3 _vect1, Vector3 _vect2)
     {
-        if (!GSDRootUtil.IsApproximately(tVect1.x, tVect2.x, 0.0001f))
+        if (!GSDRootUtil.IsApproximately(_vect1.x, _vect2.x, 0.0001f))
         {
             return true;
         }
-        if (!GSDRootUtil.IsApproximately(tVect1.y, tVect2.y, 0.0001f))
+        if (!GSDRootUtil.IsApproximately(_vect1.y, _vect2.y, 0.0001f))
         {
             return true;
         }
-        if (!GSDRootUtil.IsApproximately(tVect1.z, tVect2.z, 0.0001f))
+        if (!GSDRootUtil.IsApproximately(_vect1.z, _vect2.z, 0.0001f))
         {
             return true;
         }
@@ -2457,50 +2455,50 @@ public class GSDSplineNEditor : Editor
 
 
     #region "Triggers Interesctions; Connections; Update"
-    private void TriggerRoadConnection(GSDSplineN tNode1, GSDSplineN tNode2)
+    private void TriggerRoadConnection(GSDSplineN _node1, GSDSplineN _node2)
     {
-        tNode.spline.ActivateEndNodeConnection(tNode1, tNode2);
+        node.spline.ActivateEndNodeConnection(_node1, _node2);
     }
 
 
-    private void TriggerIntersection(GSDSplineN tNode1, GSDSplineN tNode2)
+    private void TriggerIntersection(GSDSplineN _node1, GSDSplineN _node2)
     {
-        bCreateIntersection = true;
-        iNode1 = tNode1;
-        iNode2 = tNode2;
-        Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(tNode1, tNode2);
+        isCreatingIntersection = true;
+        node1 = _node1;
+        node2 = _node2;
+        Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(_node1, _node2);
     }
 
 
     private void TriggerRoadUpdate()
     {
-        if (tNode != null)
+        if (node != null)
         {
-            tNode.spline.road.isUpdateRequired = true;
+            node.spline.road.isUpdateRequired = true;
         }
     }
     #endregion
 
 
-    private void ResetCurve(ref AnimationCurve tCurve)
+    private void ResetCurve(ref AnimationCurve _curve)
     {
-        tCurve = null;
-        tCurve = new AnimationCurve();
-        EnforceCurve(ref tCurve);
+        _curve = null;
+        _curve = new AnimationCurve();
+        EnforceCurve(ref _curve);
     }
 
 
-    private bool V3Equal(ref Vector3 V1, ref Vector3 V2)
+    private bool V3Equal(ref Vector3 _v1, ref Vector3 _v2)
     {
-        if (!GSDRootUtil.IsApproximately(V1.x, V2.x, 0.001f))
+        if (!GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.001f))
         {
             return false;
         }
-        if (!GSDRootUtil.IsApproximately(V1.y, V2.y, 0.001f))
+        if (!GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.001f))
         {
             return false;
         }
-        if (!GSDRootUtil.IsApproximately(V1.z, V2.z, 0.001f))
+        if (!GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.001f))
         {
             return false;
         }
@@ -2508,21 +2506,21 @@ public class GSDSplineNEditor : Editor
     }
 
 
-    private void EnforceCurve(ref AnimationCurve tCurve)
+    private void EnforceCurve(ref AnimationCurve _curve)
     {
-        if (tCurve == null)
+        if (_curve == null)
         {
             return;
         }
-        if (tCurve.keys.Length == 0)
+        if (_curve.keys.Length == 0)
         {
-            tCurve.AddKey(0f, 1f);
-            tCurve.AddKey(1f, 1f);
+            _curve.AddKey(0f, 1f);
+            _curve.AddKey(1f, 1f);
         }
-        else if (tCurve.keys.Length == 1)
+        else if (_curve.keys.Length == 1)
         {
-            tCurve.keys[0].time = 0f;
-            tCurve.AddKey(1f, 1f);
+            _curve.keys[0].time = 0f;
+            _curve.AddKey(1f, 1f);
         }
     }
 
@@ -2530,39 +2528,39 @@ public class GSDSplineNEditor : Editor
     private GameObject GetEndObjectQuickAdd()
     {
         string tPath = "";
-        if (tEndObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)
+        if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDWarningSign_Static.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.WarningSign2_Static)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign2_Static)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDWarningSign2_Static.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Atten_Static)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Atten_Static)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDAtten_Static.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Barrel1_Static)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Static)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Static.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Barrel1_Rigid)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Rigid)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Rigid.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Barrel3_Static)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Static)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Static.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Barrel3_Rigid)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Rigid)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Barrel7_Static)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Static)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Static.prefab";
         }
-        else if (tEndObjectAdd == EndObjectsDefaultsEnum.Barrel7_Rigid)
+        else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Rigid)
         {
             tPath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab";
         }

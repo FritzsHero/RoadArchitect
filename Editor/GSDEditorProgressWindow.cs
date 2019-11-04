@@ -5,9 +5,7 @@ using UnityEngine;
 #endregion
 
 
-/// <summary>
-/// Used for progress information for other areas of RA.
-/// </summary>
+/// <summary> Used for progress information for other areas of RA. </summary>
 public class GSDEditorProgressWindow : EditorWindow
 {
     private float secs = 10.0f;

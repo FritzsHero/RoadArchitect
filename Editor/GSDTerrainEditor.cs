@@ -8,19 +8,19 @@ using UnityEditor;
 [CustomEditor(typeof(GSDTerrain))]
 public class GSDTerrainEditor : Editor
 {
-    protected GSDTerrain GSDT { get { return (GSDTerrain) target; } }
+    protected GSDTerrain terrain { get { return (GSDTerrain) target; } }
 
     //Serialized properties:
-    SerializedProperty tSplatImageWidth;
-    SerializedProperty tSplatImageHeight;
-    SerializedProperty tSplatBackgroundColor;
-    SerializedProperty tSplatForegroundColor;
-    SerializedProperty tSplatWidth;
-    SerializedProperty tSkipBridges;
-    SerializedProperty tSkipTunnels;
-    SerializedProperty tSplatSingleRoad;
-    SerializedProperty tSplatSingleChoiceIndex;
-    SerializedProperty tRoadSingleChoiceUID;
+    SerializedProperty splatImageWidth;
+    SerializedProperty splatImageHeight;
+    SerializedProperty splatBackgroundColor;
+    SerializedProperty splatForegroundColor;
+    SerializedProperty splatWidth;
+    SerializedProperty isSkippingBridges;
+    SerializedProperty isSkippingTunnels;
+    SerializedProperty isSplatSingleRoad;
+    SerializedProperty splatSingleChoiceIndex;
+    SerializedProperty roadSingleChoiceUID;
 
     public enum SplatImageResoMatchingEnum
     {
@@ -33,7 +33,7 @@ public class GSDTerrainEditor : Editor
         MatchDetailResolution,
         MatchTerrainSize
     };
-    SplatImageResoMatchingEnum tSplatReso = SplatImageResoMatchingEnum.None;
+    SplatImageResoMatchingEnum splatReso = SplatImageResoMatchingEnum.None;
 
     private static string[] TheSplatResoOptions = new string[]{
         "Select option to match resolution",
@@ -47,27 +47,27 @@ public class GSDTerrainEditor : Editor
     };
 
     //Editor only variables:
-    private string[] tRoads = null;
-    private string[] tRoadsString = null;
-    private Texture btnRefreshText = null;
-    private GUIStyle GSDImageButton = null;
-    private Texture2D LoadBtnBG = null;
-    private Texture2D LoadBtnBGGlow = null;
-    private GUIStyle GSDLoadButton = null;
+    private string[] roads = null;
+    private string[] roadsString = null;
+    private Texture refreshButtonText = null;
+    private GUIStyle imageButton = null;
+    private Texture2D loadButtonBG = null;
+    private Texture2D loadButtonBGGlow = null;
+    private GUIStyle loadButton = null;
 
 
     private void OnEnable()
     {
-        tSplatImageWidth = serializedObject.FindProperty("SplatResoWidth");
-        tSplatImageHeight = serializedObject.FindProperty("SplatResoHeight");
-        tSplatBackgroundColor = serializedObject.FindProperty("SplatBackground");
-        tSplatForegroundColor = serializedObject.FindProperty("SplatForeground");
-        tSplatWidth = serializedObject.FindProperty("SplatWidth");
-        tSkipBridges = serializedObject.FindProperty("SplatSkipBridges");
-        tSkipTunnels = serializedObject.FindProperty("SplatSkipTunnels");
-        tSplatSingleRoad = serializedObject.FindProperty("SplatSingleRoad");
-        tSplatSingleChoiceIndex = serializedObject.FindProperty("SplatSingleChoiceIndex");
-        tRoadSingleChoiceUID = serializedObject.FindProperty("RoadSingleChoiceUID");
+        splatImageWidth = serializedObject.FindProperty("splatResoWidth");
+        splatImageHeight = serializedObject.FindProperty("splatResoHeight");
+        splatBackgroundColor = serializedObject.FindProperty("splatBackground");
+        splatForegroundColor = serializedObject.FindProperty("splatForeground");
+        splatWidth = serializedObject.FindProperty("splatWidth");
+        isSkippingBridges = serializedObject.FindProperty("isSplatSkipBridges");
+        isSkippingTunnels = serializedObject.FindProperty("isSplatSkipTunnels");
+        isSplatSingleRoad = serializedObject.FindProperty("isSplatSingleRoad");
+        splatSingleChoiceIndex = serializedObject.FindProperty("splatSingleChoiceIndex");
+        roadSingleChoiceUID = serializedObject.FindProperty("roadSingleChoiceUID");
     }
 
 
@@ -89,109 +89,109 @@ public class GSDTerrainEditor : Editor
         GUILayout.Space(6f);
 
         //Splat Resolution input:
-        tSplatImageWidth.intValue = GSDT.splatResoWidth;
-        tSplatImageHeight.intValue = GSDT.splatResoHeight;
+        splatImageWidth.intValue = terrain.splatResoWidth;
+        splatImageHeight.intValue = terrain.splatResoHeight;
         EditorGUILayout.BeginHorizontal();
-        tSplatReso = (SplatImageResoMatchingEnum) EditorGUILayout.Popup("Match resolutions:", (int) tSplatReso, TheSplatResoOptions);
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        splatReso = (SplatImageResoMatchingEnum) EditorGUILayout.Popup("Match resolutions:", (int) splatReso, TheSplatResoOptions);
+        if (GUILayout.Button(refreshButtonText, imageButton, GUILayout.Width(16f)))
         {
-            tSplatImageWidth.intValue = 1024;
-            tSplatImageHeight.intValue = 1024;
+            splatImageWidth.intValue = 1024;
+            splatImageHeight.intValue = 1024;
         }
         EditorGUILayout.EndHorizontal();
 
-        if (tSplatReso != SplatImageResoMatchingEnum.None)
+        if (splatReso != SplatImageResoMatchingEnum.None)
         {
-            if (tSplatReso == SplatImageResoMatchingEnum.MatchHeightmapResolution)
+            if (splatReso == SplatImageResoMatchingEnum.MatchHeightmapResolution)
             {
-                tSplatImageWidth.intValue = GSDT.terrain.terrainData.heightmapResolution;
-                tSplatImageHeight.intValue = GSDT.terrain.terrainData.heightmapResolution;
+                splatImageWidth.intValue = terrain.terrain.terrainData.heightmapResolution;
+                splatImageHeight.intValue = terrain.terrain.terrainData.heightmapResolution;
             }
-            else if (tSplatReso == SplatImageResoMatchingEnum.MatchDetailResolution)
+            else if (splatReso == SplatImageResoMatchingEnum.MatchDetailResolution)
             {
-                tSplatImageWidth.intValue = GSDT.terrain.terrainData.detailResolution;
-                tSplatImageHeight.intValue = GSDT.terrain.terrainData.detailResolution;
+                splatImageWidth.intValue = terrain.terrain.terrainData.detailResolution;
+                splatImageHeight.intValue = terrain.terrain.terrainData.detailResolution;
             }
-            else if (tSplatReso == SplatImageResoMatchingEnum.MatchTerrainSize)
+            else if (splatReso == SplatImageResoMatchingEnum.MatchTerrainSize)
             {
-                tSplatImageWidth.intValue = (int) GSDT.terrain.terrainData.size.x;
-                tSplatImageHeight.intValue = (int) GSDT.terrain.terrainData.size.z;
+                splatImageWidth.intValue = (int) terrain.terrain.terrainData.size.x;
+                splatImageHeight.intValue = (int) terrain.terrain.terrainData.size.z;
             }
-            else if (tSplatReso == SplatImageResoMatchingEnum.Match512x512)
+            else if (splatReso == SplatImageResoMatchingEnum.Match512x512)
             {
-                tSplatImageWidth.intValue = 512;
-                tSplatImageHeight.intValue = 512;
+                splatImageWidth.intValue = 512;
+                splatImageHeight.intValue = 512;
             }
-            else if (tSplatReso == SplatImageResoMatchingEnum.Match1024x1024)
+            else if (splatReso == SplatImageResoMatchingEnum.Match1024x1024)
             {
-                tSplatImageWidth.intValue = 1024;
-                tSplatImageHeight.intValue = 1024;
+                splatImageWidth.intValue = 1024;
+                splatImageHeight.intValue = 1024;
             }
-            else if (tSplatReso == SplatImageResoMatchingEnum.Match2048x2048)
+            else if (splatReso == SplatImageResoMatchingEnum.Match2048x2048)
             {
-                tSplatImageWidth.intValue = 2048;
-                tSplatImageHeight.intValue = 2048;
+                splatImageWidth.intValue = 2048;
+                splatImageHeight.intValue = 2048;
             }
-            else if (tSplatReso == SplatImageResoMatchingEnum.Match4096x4096)
+            else if (splatReso == SplatImageResoMatchingEnum.Match4096x4096)
             {
-                tSplatImageWidth.intValue = 4096;
-                tSplatImageHeight.intValue = 4096;
+                splatImageWidth.intValue = 4096;
+                splatImageHeight.intValue = 4096;
             }
-            tSplatReso = SplatImageResoMatchingEnum.None;
+            splatReso = SplatImageResoMatchingEnum.None;
         }
 
         //Splat image width input:
-        tSplatImageWidth.intValue = EditorGUILayout.IntField("Splat image width:", tSplatImageWidth.intValue);
+        splatImageWidth.intValue = EditorGUILayout.IntField("Splat image width:", splatImageWidth.intValue);
         //Splat image height input:
-        tSplatImageHeight.intValue = EditorGUILayout.IntField("Splat image height:", tSplatImageHeight.intValue);
+        splatImageHeight.intValue = EditorGUILayout.IntField("Splat image height:", splatImageHeight.intValue);
 
 
         //Splat background color input:
         EditorGUILayout.BeginHorizontal();
-        tSplatBackgroundColor.colorValue = EditorGUILayout.ColorField("Splat background:", GSDT.splatBackground);
+        splatBackgroundColor.colorValue = EditorGUILayout.ColorField("Splat background:", terrain.splatBackground);
         //Default button:
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonText, imageButton, GUILayout.Width(16f)))
         {
-            tSplatBackgroundColor.colorValue = new Color(0f, 0f, 0f, 1f);
+            splatBackgroundColor.colorValue = new Color(0f, 0f, 0f, 1f);
         }
         EditorGUILayout.EndHorizontal();
 
         //Splat foreground color input:
         EditorGUILayout.BeginHorizontal();
-        tSplatForegroundColor.colorValue = EditorGUILayout.ColorField("Splat foreground:", GSDT.splatForeground);
+        splatForegroundColor.colorValue = EditorGUILayout.ColorField("Splat foreground:", terrain.splatForeground);
         //Default button:
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonText, imageButton, GUILayout.Width(16f)))
         {
-            tSplatForegroundColor.colorValue = new Color(1f, 1f, 1f, 1f);
+            splatForegroundColor.colorValue = new Color(1f, 1f, 1f, 1f);
         }
         EditorGUILayout.EndHorizontal();
 
         //Splat width (meters) input:
         EditorGUILayout.BeginHorizontal();
-        tSplatWidth.floatValue = EditorGUILayout.Slider("Splat width (meters):", GSDT.splatWidth, 0.02f, 256f);
+        splatWidth.floatValue = EditorGUILayout.Slider("Splat width (meters):", terrain.splatWidth, 0.02f, 256f);
         //Default button:
-        if (GUILayout.Button(btnRefreshText, GSDImageButton, GUILayout.Width(16f)))
+        if (GUILayout.Button(refreshButtonText, imageButton, GUILayout.Width(16f)))
         {
-            tSplatWidth.floatValue = 30f;
+            splatWidth.floatValue = 30f;
         }
         EditorGUILayout.EndHorizontal();
 
         //Skip bridges:
-        tSkipBridges.boolValue = EditorGUILayout.Toggle("Skip bridges: ", GSDT.isSplatSkipBridges);
+        isSkippingBridges.boolValue = EditorGUILayout.Toggle("Skip bridges: ", terrain.isSplatSkipBridges);
 
         //Skip tunnels:
-        tSkipTunnels.boolValue = EditorGUILayout.Toggle("Skip tunnels: ", GSDT.isSplatSkipTunnels);
+        isSkippingTunnels.boolValue = EditorGUILayout.Toggle("Skip tunnels: ", terrain.isSplatSkipTunnels);
 
         //Splat single road bool input:
         EditorGUILayout.BeginHorizontal();
-        tSplatSingleRoad.boolValue = EditorGUILayout.Toggle("Splat a single road: ", GSDT.isSplatSingleRoad);
+        isSplatSingleRoad.boolValue = EditorGUILayout.Toggle("Splat a single road: ", terrain.isSplatSingleRoad);
 
         //Splat single road , road input:
-        if (GSDT.isSplatSingleRoad)
+        if (terrain.isSplatSingleRoad)
         {
             LoadSplatSingleChoice();
-            tSplatSingleChoiceIndex.intValue = EditorGUILayout.Popup(GSDT.splatSingleChoiceIndex, tRoadsString, GUILayout.Width(150f));
-            tRoadSingleChoiceUID.stringValue = tRoads[tSplatSingleChoiceIndex.intValue];
+            splatSingleChoiceIndex.intValue = EditorGUILayout.Popup(terrain.splatSingleChoiceIndex, roadsString, GUILayout.Width(150f));
+            roadSingleChoiceUID.stringValue = roads[splatSingleChoiceIndex.intValue];
         }
 
         EditorGUILayout.EndHorizontal();
@@ -207,87 +207,88 @@ public class GSDTerrainEditor : Editor
         if (GUI.changed)
         {
             serializedObject.ApplyModifiedProperties();
-            //			EditorUtility.SetDirty(target); //Necessary?
+            //Necessary?
+            //EditorUtility.SetDirty(target);
         }
     }
 
 
     private void InitNullChecks()
     {
-        if (btnRefreshText == null)
+        if (refreshButtonText == null)
         {
-            btnRefreshText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            refreshButtonText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
-        if (GSDImageButton == null)
+        if (imageButton == null)
         {
-            GSDImageButton = new GUIStyle(GUI.skin.button);
-            GSDImageButton.contentOffset = new Vector2(0f, 0f);
-            GSDImageButton.border = new RectOffset(0, 0, 0, 0);
-            GSDImageButton.fixedHeight = 16f;
-            GSDImageButton.padding = new RectOffset(0, 0, 0, 0);
-            GSDImageButton.normal.background = null;
+            imageButton = new GUIStyle(GUI.skin.button);
+            imageButton.contentOffset = new Vector2(0f, 0f);
+            imageButton.border = new RectOffset(0, 0, 0, 0);
+            imageButton.fixedHeight = 16f;
+            imageButton.padding = new RectOffset(0, 0, 0, 0);
+            imageButton.normal.background = null;
         }
-        if (LoadBtnBG == null)
+        if (loadButtonBG == null)
         {
-            LoadBtnBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
         }
-        if (LoadBtnBGGlow == null)
+        if (loadButtonBGGlow == null)
         {
-            LoadBtnBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
         }
-        if (GSDLoadButton == null)
+        if (loadButton == null)
         {
-            GSDLoadButton = new GUIStyle(GUI.skin.button);
-            GSDLoadButton.contentOffset = new Vector2(0f, 1f);
-            GSDLoadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
-            GSDLoadButton.normal.background = LoadBtnBG;
-            GSDLoadButton.active.background = LoadBtnBGGlow;
-            GSDLoadButton.focused.background = LoadBtnBGGlow;
-            GSDLoadButton.hover.background = LoadBtnBGGlow;
-            GSDLoadButton.fixedHeight = 16f;
-            GSDLoadButton.padding = new RectOffset(0, 0, 0, 0);
+            loadButton = new GUIStyle(GUI.skin.button);
+            loadButton.contentOffset = new Vector2(0f, 1f);
+            loadButton.normal.textColor = new Color(1f, 1f, 1f, 1f);
+            loadButton.normal.background = loadButtonBG;
+            loadButton.active.background = loadButtonBGGlow;
+            loadButton.focused.background = loadButtonBGGlow;
+            loadButton.hover.background = loadButtonBGGlow;
+            loadButton.fixedHeight = 16f;
+            loadButton.padding = new RectOffset(0, 0, 0, 0);
         }
     }
 
 
     private void LoadSplatSingleChoice()
     {
-        tRoads = null;
-        tRoadsString = null;
-        Object[] xRoads = GameObject.FindObjectsOfType(typeof(GSDRoad));
-        int xRoadsCount = xRoads.Length;
-        tRoads = new string[xRoadsCount];
-        tRoadsString = new string[xRoadsCount];
-        int xCounter = 0;
-        foreach (GSDRoad tRoad in xRoads)
+        roads = null;
+        roadsString = null;
+        Object[] allRoads = GameObject.FindObjectsOfType(typeof(GSDRoad));
+        int roadsCount = allRoads.Length;
+        roads = new string[roadsCount];
+        roadsString = new string[roadsCount];
+        int counter = 0;
+        foreach (GSDRoad road in allRoads)
         {
-            tRoads[xCounter] = tRoad.UID;
-            tRoadsString[xCounter] = tRoad.transform.name;
-            xCounter += 1;
+            roads[counter] = road.UID;
+            roadsString[counter] = road.transform.name;
+            counter += 1;
         }
     }
 
 
     private void GenerateSplatMap()
     {
-        byte[] tBytes = null;
-        if (GSDT.isSplatSingleRoad && GSDT.roadSingleChoiceUID != "")
+        byte[] bytes = null;
+        if (terrain.isSplatSingleRoad && terrain.roadSingleChoiceUID != "")
         {
-            tBytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(GSDT.terrain, GSDT.splatBackground, GSDT.splatForeground, GSDT.splatResoWidth, GSDT.splatResoHeight, GSDT.splatWidth, GSDT.isSplatSkipBridges, GSDT.isSplatSkipTunnels, GSDT.roadSingleChoiceUID);
+            bytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels, terrain.roadSingleChoiceUID);
         }
         else
         {
-            tBytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(GSDT.terrain, GSDT.splatBackground, GSDT.splatForeground, GSDT.splatResoWidth, GSDT.splatResoHeight, GSDT.splatWidth, GSDT.isSplatSkipBridges, GSDT.isSplatSkipTunnels);
+            bytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels);
         }
 
-        if (tBytes != null && tBytes.Length > 3)
+        if (bytes != null && bytes.Length > 3)
         {
-            string tPath = UnityEditor.EditorUtility.SaveFilePanel("Save splat map", Application.dataPath, "Splat", "png");
-            if (tPath != null && tPath.Length > 3)
+            string path = UnityEditor.EditorUtility.SaveFilePanel("Save splat map", Application.dataPath, "Splat", "png");
+            if (path != null && path.Length > 3)
             {
-                System.IO.File.WriteAllBytes(tPath, tBytes);
+                System.IO.File.WriteAllBytes(path, bytes);
             }
-            tBytes = null;
+            bytes = null;
         }
     }
 }
