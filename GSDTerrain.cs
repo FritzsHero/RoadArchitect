@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class GSDTerrain : MonoBehaviour
 {
 #if UNITY_EDITOR
+    #region "Vars"
     [SerializeField]
     [HideInInspector]
     [UnityEngine.Serialization.FormerlySerializedAs("mGSDID")]
@@ -40,6 +41,7 @@ public class GSDTerrain : MonoBehaviour
     public int splatSingleChoiceIndex = 0;
     [UnityEngine.Serialization.FormerlySerializedAs("RoadSingleChoiceUID")]
     public string roadSingleChoiceUID = "";
+    #endregion
 
 
     private void OnEnable()

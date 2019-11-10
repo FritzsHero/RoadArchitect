@@ -24,9 +24,10 @@ public class GSDRoadEditor : Editor
     };
 
 
+    #region "Vars"
     protected GSDRoad road { get { return (GSDRoad)target; } }
 
-    //Serialized properties:
+    #region "Serialized properties:"
     private SerializedProperty isGizmosEnabled;
     private SerializedProperty lanesAmount;
     private SerializedProperty laneWidth;
@@ -78,6 +79,7 @@ public class GSDRoadEditor : Editor
     private SerializedProperty shoulderMaterialMarker4;
     private SerializedProperty roadPhysicMaterial;
     private SerializedProperty shoulderPhysicMaterial;
+    #endregion
 
     //Editor only variables:
     private string status = "Show help";
@@ -109,6 +111,7 @@ public class GSDRoadEditor : Editor
     private bool isUsingDefaultMats = false;
     private bool isApplyingMaterialsCheck = false;
     private bool isApplyingMatsCheck = false;
+    #endregion
 
 
     private void OnEnable()
@@ -1171,7 +1174,7 @@ public class GSDRoadEditor : Editor
             if (isGizmosEnabled.boolValue != road.isGizmosEnabled)
             {
                 isGizmoChanged = true;
-                road.Wireframes_Toggle();
+                road.WireframesToggle();
                 SceneView.RepaintAll();
             }
             //Option pre-handle: Lane count:
@@ -1215,7 +1218,7 @@ public class GSDRoadEditor : Editor
             //Handle after effects:
             if (isGizmoChanged)
             {
-                road.Wireframes_Toggle();
+                road.WireframesToggle();
                 SceneView.RepaintAll();
             }
 
@@ -1502,7 +1505,7 @@ public class GSDRoadEditor : Editor
     /// <summary> Creates progress bar. </summary>
     /// <param name='_value'> Value of the progress bar. </param>
     /// <param name='_text'> Label of the progress bar. </param>
-    private void GSDProgressBar(float _value, string _text)
+    private void ProgressBar(float _value, string _text)
     {
         // Get a rect for the progress bar using the same margins as a textfield:
         Rect rect = GUILayoutUtility.GetRect(18, 18, "TextField");

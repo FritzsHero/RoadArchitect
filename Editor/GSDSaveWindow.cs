@@ -15,6 +15,9 @@ public class GSDSaveWindow : EditorWindow
         Edge,
         BridgeWizard
     };
+
+
+    #region "Vars"
     private WindowTypeEnum windowType = WindowTypeEnum.Extrusion;
 
     private Texture2D temp2D = null;
@@ -39,6 +42,7 @@ public class GSDSaveWindow : EditorWindow
     private GSD.Roads.EdgeObjects.EdgeObjectMaker[] tEOMs = null;
     private string path = "";
     private const int titleLabelHeight = 20;
+    #endregion
 
 
     private void OnGUI()

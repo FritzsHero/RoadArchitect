@@ -9,7 +9,7 @@ namespace GSD.Roads
 #if UNITY_EDITOR
     public static class GSDUnitTests
     {
-        private static GSDRoadSystem RoadSystem;
+        private static GSDRoadSystem roadSystem;
 
 
         /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. MicroGSD LLC is not responsbile for data loss if this function is called by user. </summary>
@@ -19,8 +19,9 @@ namespace GSD.Roads
 
             //Create new road system and turn off updates:
             GameObject tRoadSystemObj = new GameObject("RoadArchitectSystem1");
-            RoadSystem = tRoadSystemObj.AddComponent<GSDRoadSystem>(); 	//Add road system component.
-            RoadSystem.isAllowingRoadUpdates = false;
+            //Add road system component.
+            roadSystem = tRoadSystemObj.AddComponent<GSDRoadSystem>();
+            roadSystem.isAllowingRoadUpdates = false;
 
             int numTests = 5;
             double totalTestTime = 0f;
@@ -34,8 +35,8 @@ namespace GSD.Roads
             UnityEngine.Debug.Log("All tests completed.  Total test time: " + totalTestTime + "ms");
 
             //Turn updates back on and update road:
-            RoadSystem.isAllowingRoadUpdates = true;
-            RoadSystem.UpdateAllRoads();
+            roadSystem.isAllowingRoadUpdates = true;
+            roadSystem.UpdateAllRoads();
         }
 
 
@@ -121,7 +122,7 @@ namespace GSD.Roads
             }
 
             //Get road system create road:
-            GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Bridge0: (Arch)
             tRoad.spline.nodes[4].isBridgeStart = true;
@@ -167,10 +168,6 @@ namespace GSD.Roads
             float tHeight = 20f;
             GSDRoad road1 = null;
             GSDRoad road2 = null;
-            //if (bRoad == null)
-            //{ } //Buffer
-            //if (tRoad == null)
-            //{ } //Buffer
 
             //Create base road:
             List<Vector3> nodeLocations = new List<Vector3>();
@@ -178,7 +175,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (index * 200f), tHeight, 600f));
             }
-            road1 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road1 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Get road system, create road #1:
             nodeLocations.Clear();
@@ -186,7 +183,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX, tHeight, StartLocY + (index * StartLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #2:
@@ -195,7 +192,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 2f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
             //Get road system, create road #3:
@@ -204,7 +201,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 4f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.BothTurnLanes);
 
             //Get road system, create road #4:
@@ -213,7 +210,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 6f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
             //Get road system, create road #4:
@@ -222,7 +219,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 8f), tHeight, StartLocY + (index * StartLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
             GSDRoadAutomation.CreateIntersectionsProgrammaticallyForRoad(road1, GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
@@ -244,7 +241,7 @@ namespace GSD.Roads
 
 
         /// <summary> This will create an intersection if two nodes overlap on the road. Only good if the roads only overlap once. </summary>
-        private static void UnitTest_IntersectionHelper(GSDRoad _road1, GSDRoad _road2, GSDRoadIntersection.iStopTypeEnum _iStopType, GSDRoadIntersection.RoadTypeEnum _roadType)
+        private static void UnitTestIntersectionHelper(GSDRoad _road1, GSDRoad _road2, GSDRoadIntersection.iStopTypeEnum _iStopType, GSDRoadIntersection.RoadTypeEnum _roadType)
         {
             GSDSplineN nodeInter1 = null;
             GSDSplineN nodeInter2 = null;
@@ -288,7 +285,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(startLocX + (index * startLocYSep), height, startLocY + (startLocYSep * 2f)));
             }
-            road1 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road1 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road1.laneAmount = 4;
 
 
@@ -298,9 +295,9 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(startLocX, height, startLocY + (index * startLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTest_IntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #2:
             nodeLocations.Clear();
@@ -308,9 +305,9 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 2f), height, startLocY + (index * startLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTest_IntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #3:
             nodeLocations.Clear();
@@ -318,9 +315,9 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 4f), height, startLocY + (index * startLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTest_IntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #4:
             nodeLocations.Clear();
@@ -328,9 +325,9 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 6f), height, startLocY + (index * startLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTest_IntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #5:
             nodeLocations.Clear();
@@ -338,9 +335,9 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 8f), height, startLocY + (index * startLocYSep)));
             }
-            road2 = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            road2 = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTest_IntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
@@ -367,7 +364,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(3500f, 90f, 200f + (800f * index)));
             }
-            GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            GSDRoad tRoad = GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Suspension bridge:
             tRoad.spline.nodes[1].isBridgeStart = true;
@@ -396,7 +393,7 @@ namespace GSD.Roads
             {
                 nodeLocations.Add(new Vector3(30, 30f, 3960f - (79f * index)));
             }
-            GSDRoadAutomation.CreateRoadProgrammatically(RoadSystem, ref nodeLocations);
+            GSDRoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
         }
     }
 #endif

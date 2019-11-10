@@ -26,6 +26,10 @@ public class GSDSplineNEditor : Editor
     private bool isRemovingAll = false;
     private float horizRoadMax = 0;
 
+    private GSDSplineN node1 = null;
+    private GSDSplineN node2 = null;
+    private bool isCreatingIntersection = false;
+
 
     #region "Button icons"
     private Texture deleteButtonTexture = null;
@@ -61,6 +65,35 @@ public class GSDSplineNEditor : Editor
     //	private GameObject tObj = null;
     //	private Material tMat = null;
     private GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
+    private EndObjectsDefaultsEnum endObjectAdd = EndObjectsDefaultsEnum.None;
+    private SMMDefaultsEnum SMMQuickAdd = SMMDefaultsEnum.None;
+    private BridgeTopBaseDefaultsEnum BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
+    private BridgeBottomBaseDefaultsEnum BridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
+    //	BridgeWizardDefaultsEnum tBridgeWizardQuickAdd = BridgeWizardDefaultsEnum.None;
+    private HorizMatchingDefaultsEnum horizMatching = HorizMatchingDefaultsEnum.None;
+
+
+    //GSD.Roads.Splination.CollisionTypeEnum tCollisionTypeSpline = GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle;
+    //GSD.Roads.Splination.RepeatUVTypeEnum tRepeatUVType = GSD.Roads.Splination.RepeatUVTypeEnum.None;
+    private GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
+    private GUIStyle imageButton = null;
+    private GUIStyle loadButton = null;
+    private GUIStyle manualButton = null;
+    private GUIStyle guiButton = null;
+
+    private bool isSceneRectSet = false;
+    private Rect sceneRect = default(Rect);
+
+    private bool isInitialized = false;
+    private bool isGizmosEnabled = false;
+
+    // Bridge
+    private bool isBridgeStart = false;
+    private bool isBridgeEnd = false;
+    private bool isRoadCut = false;
+
+    private string[] HorizMatchSubTypeDescriptions;
+    #endregion
 
 
     #region "Enums"
@@ -77,9 +110,6 @@ public class GSDSplineNEditor : Editor
         Barrel7_Static,
         Barrel7_Rigid
     };
-
-
-    private EndObjectsDefaultsEnum endObjectAdd = EndObjectsDefaultsEnum.None;
 
 
     private static string[] EndObjectsDefaultsEnumDesc = new string[]{
@@ -111,9 +141,6 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private SMMDefaultsEnum SMMQuickAdd = SMMDefaultsEnum.None;
-
-
     public enum BridgeTopBaseDefaultsEnum
     {
         None,
@@ -122,9 +149,6 @@ public class GSDSplineNEditor : Editor
         Base2MOver,
         Base3MDeep,
     };
-
-
-    private BridgeTopBaseDefaultsEnum BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
 
 
     public enum BridgeBottomBaseDefaultsEnum
@@ -140,9 +164,6 @@ public class GSDSplineNEditor : Editor
         BridgeBase4,
         BridgeBase5,
     };
-
-
-    private BridgeBottomBaseDefaultsEnum BridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
 
 
     public enum BridgeWizardDefaultsEnum
@@ -163,7 +184,6 @@ public class GSDSplineNEditor : Editor
         GridBridge,
         SteelBeamBridge
     };
-    //	BridgeWizardDefaultsEnum tBridgeWizardQuickAdd = BridgeWizardDefaultsEnum.None;
 
 
     public enum HorizMatchingDefaultsEnum
@@ -177,25 +197,16 @@ public class GSDSplineNEditor : Editor
     };
 
 
-    private HorizMatchingDefaultsEnum horizMatching = HorizMatchingDefaultsEnum.None;
-
-
     public enum EOMDefaultsEnum { None, Custom, StreetLightSingle, StreetLightDouble };
-    #endregion
 
 
-    //GSD.Roads.Splination.CollisionTypeEnum tCollisionTypeSpline = GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle;
-    //GSD.Roads.Splination.RepeatUVTypeEnum tRepeatUVType = GSD.Roads.Splination.RepeatUVTypeEnum.None;
-    private GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
-
-
-    private static string[] TheAxisDescriptions_Spline = new string[]{
+    private static string[] TheAxisDescriptionsSpline = new string[]{
         "X axis",
         "Z axis"
     };
 
 
-    private static string[] RepeatUVTypeDescriptions_Spline = new string[]{
+    private static string[] RepeatUVTypeDescriptionsSpline = new string[]{
         "None",
         "X axis",
         "Y axis"
@@ -209,28 +220,7 @@ public class GSDSplineNEditor : Editor
         "Meshfilter collision mesh",
         "Straight line box collider"
     };
-
-
-    private string[] HorizMatchSubTypeDescriptions;
     #endregion
-
-    private GUIStyle imageButton = null;
-    private GUIStyle loadButton = null;
-    private GUIStyle manualButton = null;
-    private GUIStyle guiButton = null;
-
-    private bool isSceneRectSet = false;
-    private Rect sceneRect = default(Rect);
-
-    private bool isInitialized = false;
-
-    //Buffers:
-    private bool isGizmosEnabled = false;
-
-    // Bridge
-    private bool isBridgeStart = false;
-    private bool isBridgeEnd = false;
-    private bool isRoadCut = false;
 
 
     private void Init()
@@ -354,11 +344,6 @@ public class GSDSplineNEditor : Editor
     }
 
 
-    private GSDSplineN node1 = null;
-    private GSDSplineN node2 = null;
-    private bool isCreatingIntersection = false;
-
-
     public override void OnInspectorGUI()
     {
         if (Event.current.type == EventType.ValidateCommand)
@@ -414,7 +399,7 @@ public class GSDSplineNEditor : Editor
         {
             node.spline.road.isGizmosEnabled = node.isGizmosEnabled;
             node.spline.road.UpdateGizmoOptions();
-            node.spline.road.Wireframes_Toggle();
+            node.spline.road.WireframesToggle();
         }
         isGizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", node.spline.road.isGizmosEnabled);
         #endregion
@@ -519,7 +504,7 @@ public class GSDSplineNEditor : Editor
             {
                 node.spline.road.isGizmosEnabled = isGizmosEnabled;
                 node.spline.road.UpdateGizmoOptions();
-                node.spline.road.Wireframes_Toggle();
+                node.spline.road.WireframesToggle();
                 SceneView.RepaintAll();
             }
 
@@ -883,7 +868,7 @@ public class GSDSplineNEditor : Editor
             }
 
             //Axis:
-            SMM.EM.Axis = (GSD.Roads.Splination.AxisTypeEnum) EditorGUILayout.Popup("Extrusion axis: ", (int) SMM.Axis, TheAxisDescriptions_Spline, GUILayout.Width(250f));
+            SMM.EM.Axis = (GSD.Roads.Splination.AxisTypeEnum) EditorGUILayout.Popup("Extrusion axis: ", (int) SMM.Axis, TheAxisDescriptionsSpline, GUILayout.Width(250f));
 
             //Start time:
             if (SMM.StartTime < node.minSplination)
@@ -938,7 +923,7 @@ public class GSDSplineNEditor : Editor
                     SMM.EM.stretchedUVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.stretchUVThreshold, 0.01f, 0.5f);
 
                     //UV repeats:
-                    SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV stretch axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
+                    SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV stretch axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
                     EditorGUILayout.EndVertical();
                 }
             }
@@ -983,7 +968,7 @@ public class GSDSplineNEditor : Editor
             //UV repeats:
             if (!SMM.isStretch)
             {
-                SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV repeat axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptions_Spline, GUILayout.Width(250f));
+                SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum) EditorGUILayout.Popup("UV repeat axis: ", (int) SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
             }
 
             if (SMM.isMatchingRoadDefinition)

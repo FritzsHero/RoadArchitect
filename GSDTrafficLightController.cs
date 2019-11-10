@@ -14,6 +14,7 @@ public class GSDTrafficLightController
     public enum iLightYieldSubStatusEnum { Green, Yellow, Red, YellowTurn, GreenTurn }
 
 
+    #region "Vars"
     [UnityEngine.Serialization.FormerlySerializedAs("LightLeftObj")]
     public GameObject lightLeftObject;
     [UnityEngine.Serialization.FormerlySerializedAs("LightRightObj")]
@@ -68,6 +69,7 @@ public class GSDTrafficLightController
     private bool isLeftTurnYieldOnGreen = true;
     [UnityEngine.Serialization.FormerlySerializedAs("bLightsEnabled")]
     private bool isLightsEnabled = true;
+    #endregion
 
 
     #region "Constructor"

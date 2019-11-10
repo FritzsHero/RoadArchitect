@@ -45,6 +45,7 @@ public class GSDWizard : EditorWindow
     };
 
 
+    #region "Vars"
     private WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
     private WindowTypeEnum xWindowType = WindowTypeEnum.Extrusion;
     private WindowTypeEnumShort StWindowType = WindowTypeEnumShort.Extrusion;
@@ -57,6 +58,7 @@ public class GSDWizard : EditorWindow
     private List<GSDRoadUtil.WizardObject> objectList = null;
     private bool isUsingNoGUI = false;
     public Rect rect;
+    #endregion
 
 
     private void OnGUI()

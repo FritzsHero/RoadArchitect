@@ -11,7 +11,7 @@ public class GSDRoadConnector : MonoBehaviour
 {
     public GSDSplineN connectedNode;
     [HideInInspector]
-    public GSDOffRoadObject obj { get { return transform.parent.GetComponent<GSDOffRoadObject>(); } }
+    public GSDOffRoadObject offRoadObject { get { return transform.parent.GetComponent<GSDOffRoadObject>(); } }
 
 
 #if UNITY_EDITOR
@@ -45,9 +45,9 @@ public class GSDRoadConnector : MonoBehaviour
     {
         if (connectedNode != null)
         {
-            if (obj == null)
+            if (offRoadObject == null)
             {
-                Debug.LogError("Parent should have GSDOffRoadObject component attached");
+                Debug.LogError("Parent should have OffRoadObject component attached");
             }
             if (connectedNode.transform.position != transform.position)
             {
@@ -73,7 +73,7 @@ public class GSDRoadConnectorEditor : Editor
         {
             EditorGUILayout.BeginVertical();
             EditorGUILayout.LabelField("Off-road connection:", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField(connector.connectedNode.spline.road.name + " to " + connector.obj.name);
+            EditorGUILayout.LabelField(connector.connectedNode.spline.road.name + " to " + connector.offRoadObject.name);
             if (GUILayout.Button("Break connection"))
             {
                 connector.connectedNode = null;

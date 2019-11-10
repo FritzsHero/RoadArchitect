@@ -171,26 +171,34 @@ namespace GSD.Threaded
             float FinalMax = 1f;
             float StartMin = 0f;
             if (_spline.isSpecialEndControlNode)
-            {   //If control node, start after the control node:
+            {
+                //If control node, start after the control node:
                 FinalMax = _spline.nodes[_spline.GetNodeCount() - 2].time;
             }
             if (_spline.isSpecialStartControlNode)
-            {   //If ends in control node, end construction before the control node:
+            {
+                //If ends in control node, end construction before the control node:
                 StartMin = _spline.nodes[1].time;
             }
-            //			bool bFinalEnd = false;
-            //			float RoadConnection_StartMin1 = StartMin;	//Storage of incremental start values for the road connection mesh construction at the end of this function.
-            //			float RoadConnection_FinalMax1 = FinalMax; 	//Storage of incremental end values for the road connection mesh construction at the end of this function.
+            //bool bFinalEnd = false;
+            //Storage of incremental start values for the road connection mesh construction at the end of this function.
+            //float RoadConnection_StartMin1 = StartMin;
+            //Storage of incremental end values for the road connection mesh construction at the end of this function.
+            //float RoadConnection_FinalMax1 = FinalMax;
             if (_spline.isSpecialEndNodeIsStartDelay)
             {
-                StartMin += (_spline.specialEndNodeDelayStart / _spline.distance); //If there's a start delay (in meters), delay the start of road construction: Due to special control nodes for road connections or 3 way intersections.
+                //If there's a start delay (in meters), delay the start of road construction: Due to special control nodes for road connections or 3 way intersections.
+                StartMin += (_spline.specialEndNodeDelayStart / _spline.distance);
             }
             else if (_spline.isSpecialEndNodeIsEndDelay)
             {
-                FinalMax -= (_spline.specialEndNodeDelayEnd / _spline.distance);   //If there's a end delay (in meters), cut early the end of road construction: Due to special control nodes for road connections or 3 way intersections.
+                //If there's a end delay (in meters), cut early the end of road construction: Due to special control nodes for road connections or 3 way intersections.
+                FinalMax -= (_spline.specialEndNodeDelayEnd / _spline.distance);
             }
-            //			float RoadConnection_StartMin2 = StartMin;	//Storage of incremental start values for the road connection mesh construction at the end of this function.
-            //			float RoadConnection_FinalMax2 = FinalMax; 	//Storage of incremental end values for the road connection mesh construction at the end of this function.
+            //Storage of incremental start values for the road connection mesh construction at the end of this function.
+            //float RoadConnection_StartMin2 = StartMin;
+            //Storage of incremental end values for the road connection mesh construction at the end of this function.
+            //float RoadConnection_FinalMax2 = FinalMax;
 
             FinalMax = FinalMax + tStep;
 
@@ -209,8 +217,8 @@ namespace GSD.Threaded
             bool bIsPastInter = false;
             float tIntStrength = 0f;
             float tIntStrength2 = 0f;
-            //			bool bMaxIntersection = false;
-            //			bool bFirstInterNode = false;
+            //bool bMaxIntersection = false;
+            //bool bFirstInterNode = false;
             GSDSplineN xNode = null;
             float tIntHeight = 0f;
             float tIntHeight2 = 0f;
@@ -224,8 +232,8 @@ namespace GSD.Threaded
             bool bIntStr2_FullPrev = false;
             bool bIntStr2_FullNext = false;
             Vector3 tVect3 = default(Vector3);
-            //			bool bStarted = false;
-            //			bool T3Added = false;
+            //bool bStarted = false;
+            //bool T3Added = false;
             List<int[]> tXYs = new List<int[]>();
             float TreeClearDist = _spline.road.clearTreesDistance;
             if (TreeClearDist < _spline.road.RoadWidth())
@@ -260,14 +268,18 @@ namespace GSD.Threaded
                     }
 
                     //Determine if intersection:
-                    bIsPastInter = false;   //If past intersection
+                    bIsPastInter = false;
+                    //If past intersection
                     tIntStrength = _spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref index, ref xNode);
-                    //					if(IsApproximately(tIntStrength,1f,0.001f) || tIntStrength > 1f){
-                    //						bMaxIntersection = true;
-                    //					}else{
-                    //						bMaxIntersection = false;	
-                    //					}	
-                    //					bFirstInterNode = false;	
+                    //if(IsApproximately(tIntStrength,1f,0.001f) || tIntStrength > 1f)
+                    //{
+                    //	bMaxIntersection = true;
+                    //}
+                    //else
+                    //{
+                    //	bMaxIntersection = false;	
+                    //}	
+                    //bFirstInterNode = false;	
 
                     tIntStrength2 = _spline.IntersectionStrength(ref tVect2, ref tIntHeight2, ref GSDRI, ref bIsPastInter, ref index, ref xNode);
                     if (tIntStrength2 > 1f)
@@ -522,8 +534,8 @@ namespace GSD.Threaded
             int k = 0;
             int[] tXY = null;
             int tXYsCount = tXYs.Count;
-            bool bIsBridge = false;
-            bool bIsTunnel = false;
+            bool isBridge = false;
+            bool isTunnel = false;
             for (float index = StartMin; index < FinalMax; index += tStep)
             {
                 if (TBMList.Count > 0)
@@ -541,26 +553,26 @@ namespace GSD.Threaded
                 //If in bridg mode:
                 if (_spline.IsInBridgeTerrain(index))
                 {
-                    bIsBridge = true;
+                    isBridge = true;
                 }
                 else
                 {
-                    bIsBridge = false;
+                    isBridge = false;
                 }
                 //If in tunnel mode:
                 if (_spline.IsInTunnelTerrain(index))
                 {
-                    bIsTunnel = true;
+                    isTunnel = true;
                 }
                 else
                 {
-                    bIsTunnel = false;
+                    isTunnel = false;
                 }
 
                 if (k < tXYsCount)
                 {
                     tXY = tXYs[k];
-                    tFloat = ProcessCoordinateGrabber(ref index, ref _spline, ref _TTD, ref TBMList, ref tXY, bIsBridge, bIsTunnel);
+                    tFloat = ProcessCoordinateGrabber(ref index, ref _spline, ref _TTD, ref TBMList, ref tXY, isBridge, isTunnel);
                     if (!GSDRootUtil.IsApproximately(tFloat, 0f, 0.0001f))
                     {
                         _spline.HeightHistory.Add(new KeyValuePair<float, float>(index, tFloat));
@@ -1019,7 +1031,7 @@ namespace GSD.Threaded
             }
 
             Vector3 xVect = default(Vector3);
-            bool bAdjusted = false;
+            bool isAdjusted = false;
             float tHeight = -1f;
             float tReturnFloat = 0f;
             //			int dX = 0;
@@ -1040,9 +1052,9 @@ namespace GSD.Threaded
                         }
 
                         xVect = ConvertTerrainCoordToWorldVect(index, k, _TTD.heights[index, k], ref _TTD);
-                        AdjustedTerrainVectTri(ref _param, out bAdjusted, out tHeight, ref xVect, ref _terrainList, _isBridge, _isTunnel);
+                        AdjustedTerrainVectTri(ref _param, out isAdjusted, out tHeight, ref xVect, ref _terrainList, _isBridge, _isTunnel);
 
-                        if (bAdjusted)
+                        if (isAdjusted)
                         {
                             tHeight -= _spline.road.matchTerrainSubtraction;
                             if (tHeight < 0f)
@@ -1067,9 +1079,9 @@ namespace GSD.Threaded
                     else
                     {
                         xVect = ConvertTerrainCoordToWorldVect(index, k, _TTD.heights[index, k], ref _TTD);
-                        AdjustedTerrainVectTri(ref _param, out bAdjusted, out tHeight, ref xVect, ref _terrainList, _isBridge, _isTunnel);
+                        AdjustedTerrainVectTri(ref _param, out isAdjusted, out tHeight, ref xVect, ref _terrainList, _isBridge, _isTunnel);
 
-                        if (bAdjusted)
+                        if (isAdjusted)
                         {
                             tHeight -= _spline.road.matchTerrainSubtraction;
                             if (tHeight < 0f)
@@ -1183,22 +1195,23 @@ namespace GSD.Threaded
 
         private static void RoadJobPrelimDo(ref GSDRoad _road)
         {
-            GSDSplineC tSpline = _road.spline;
+            #region "Vars"
+            GSDSplineC spline = _road.spline;
             //Road,shoulder,ramp and lane widths:
-            float RoadWidth = _road.RoadWidth();
-            float ShoulderWidth = _road.shoulderWidth;
-            float RoadSeperation = RoadWidth / 2f;
-            float RoadSeperation_NoTurn = RoadWidth / 2f;
-            float ShoulderSeperation = RoadSeperation + ShoulderWidth;
-            float LaneWidth = _road.laneWidth;
-            float RoadSep1Lane = (RoadSeperation + (LaneWidth * 0.5f));
-            float RoadSep2Lane = (RoadSeperation + (LaneWidth * 1.5f));
-            float ShoulderSep1Lane = (ShoulderSeperation + (LaneWidth * 0.5f));
-            float ShoulderSep2Lane = (ShoulderSeperation + (LaneWidth * 1.5f));
+            float roadWidth = _road.RoadWidth();
+            float shoulderWidth = _road.shoulderWidth;
+            float roadSeperation = roadWidth / 2f;
+            float roadSeperationNoTurn = roadWidth / 2f;
+            float shoulderSeperation = roadSeperation + shoulderWidth;
+            float laneWidth = _road.laneWidth;
+            float roadSep1Lane = (roadSeperation + (laneWidth * 0.5f));
+            float roadSep2Lane = (roadSeperation + (laneWidth * 1.5f));
+            float shoulderSep1Lane = (shoulderSeperation + (laneWidth * 0.5f));
+            float shoulderSep2Lane = (shoulderSeperation + (laneWidth * 1.5f));
 
             //Vector3 buffers used in construction:
-            Vector3 rVect = default(Vector3);
-            Vector3 lVect = default(Vector3);
+            Vector3 rightVector = default(Vector3);
+            Vector3 leftVector = default(Vector3);
             Vector3 ShoulderR_rVect = default(Vector3);
             Vector3 ShoulderR_lVect = default(Vector3);
             Vector3 ShoulderL_rVect = default(Vector3);
@@ -1211,9 +1224,6 @@ namespace GSD.Threaded
             float ShoulderR_OuterAngle = 0f;
             float ShoulderL_OuterAngle = 0f;
 
-            //			Vector3 ShoulderR_OuterDirection = default(Vector3);
-            //			Vector3 ShoulderL_OuterDirection = default(Vector3);
-
             //Previous temp storage values:
             Vector3 tVect_Prev = default(Vector3);
             Vector3 rVect_Prev = default(Vector3);
@@ -1222,25 +1232,14 @@ namespace GSD.Threaded
             Vector3 ShoulderL_PrevRVect = default(Vector3);
             Vector3 ShoulderR_PrevRVect = default(Vector3);
             Vector3 ShoulderL_PrevLVect = default(Vector3);
-            //			Vector3 ShoulderR_PrevRVect2 = default(Vector3);	//Prev storage of shoulder variable (2 step history).
-            //			Vector3 ShoulderL_PrevLVect2 = default(Vector3);	//Prev storage of shoulder variable (2 step history).
-            //			Vector3 ShoulderR_PrevRVect3 = default(Vector3);	//Prev storage of shoulder variable (3 step history).
-            //			Vector3 ShoulderL_PrevLVect3 = default(Vector3);	//Prev storage of shoulder variable (3 step history).
             Vector3 RampR_PrevR = default(Vector3);
             Vector3 RampR_PrevL = default(Vector3);
             Vector3 RampL_PrevR = default(Vector3);
             Vector3 RampL_PrevL = default(Vector3);
-            //			Vector3 ShoulderR_OuterDirectionPrev = default(Vector3);	//Prev storage of outer shoulder direction (euler).
-            //			Vector3 ShoulderL_OuterDirectionPrev = default(Vector3);	//Prev storage of outer shoulder direction (euler).
 
             //Height and angle variables, used to change certain parameters of road depending on past & future angle and height changes.
-            //			float tAngle = 0f;
-            //			float OrigStep = 0.06f;
-            float Step = _road.roadDefinition / tSpline.distance;
-            //			float AngleStep = 5f;
+            float Step = _road.roadDefinition / spline.distance;
             Vector3 tHeight0 = new Vector3(0f, 0.1f, 0f);
-            //			Vector3 tHeight2 = new Vector3(0f,0.15f,0f);
-            //			Vector3 tHeight1 = new Vector3(0f,0.2f,0f);
             float OuterShoulderWidthR = 0f;
             float OuterShoulderWidthL = 0f;
             float RampOuterWidthR = (OuterShoulderWidthR / 6f) + OuterShoulderWidthR;
@@ -1248,59 +1247,51 @@ namespace GSD.Threaded
             Vector3 tVect = default(Vector3);
             Vector3 POS = default(Vector3);
             float TempY = 0f;
-            //			bool bTempYWasNegative = false;
-            //			Vector3 tY = new Vector3(0f,0f,0f);
-            float tHeightAdded = 0f;
-            //			float[] HeightChecks = new float[5];
+            float heightAdded = 0f;
             Vector3 gHeight = default(Vector3);
 
 #pragma warning disable CS0219
 
             //Bridge variables:
-            bool bIsBridge = false;
-            bool bTempbridge = false;
-            bool bBridgeInitial = false;
-            bool bBridgeLast = false;
+            bool isBridge = false;
+            bool isTempbridge = false;
+            bool isBridgeInitial = false;
+            bool isBridgeLast = false;
             float BridgeUpComing;
-            //			int BridgeLIndex;
-            //			int BridgeRIndex;
 
             //Tunnel variables:	
-            bool bIsTunnel = false;
-            bool bTempTunnel = false;
-            bool bTunnelInitial = false;
-            bool bTunnelLast = false;
+            bool isTunnel = false;
+            bool isTempTunnel = false;
+            bool isTunnelInitial = false;
+            bool isTunnelLast = false;
             float TunnelUpComing = 0f;
-            //			int TunnelLIndex;
-            //			int TunnelRIndex;
 
             //Intersection variables:
             float tIntHeight = 0f;
             float tIntStrength = 0f;
             float tIntStrength_temp = 0f;
-            //			float tIntDistCheck = 75f;
-            GSDRoadIntersection GSDRI = null;
-            bool bIsPastInter = false;
-            bool bMaxIntersection = false;
-            bool bWasPrevMaxInter = false;
+            GSDRoadIntersection intersection = null;
+            bool isPastInter = false;
+            bool isMaxIntersection = false;
+            bool isWasPrevMaxInter = false;
             GSDSplineN xNode = null;
             float tInterSubtract = 4f;
             float tLastInterHeight = -4f;
-            bool bOverrideRampR = false;
-            bool bOverrideRampL = false;
+            bool isOverridenRampR = false;
+            bool isOverridenRampL = false;
             Vector3 RampR_Override = default(Vector3);
             Vector3 RampL_Override = default(Vector3);
-            bool bFirstInterNode = false;
-            bool bInter_PrevWasCorner = false;
-            bool bInter_CurreIsCorner = false;
-            bool bInter_CurreIsCornerRR = false;
-            bool bInter_CurreIsCornerRL = false;
-            bool bInter_CurreIsCornerLL = false;
-            bool bInter_CurreIsCornerLR = false;
-            bool bInter_PrevWasCornerRR = false;
-            bool bInter_PrevWasCornerRL = false;
-            bool bInter_PrevWasCornerLL = false;
-            bool bInter_PrevWasCornerLR = false;
+            bool isFirstInterNode = false;
+            bool isInterPrevWasCorner = false;
+            bool isInterCurrentIsCorner = false;
+            bool isInterCurrentIsCornerRR = false;
+            bool isInterCurreIsCornerRL = false;
+            bool isInterCurreIsCornerLL = false;
+            bool isInterCurreIsCornerLR = false;
+            bool isInterPrevWasCornerRR = false;
+            bool isInterPrevWasCornerRL = false;
+            bool isInterPrevWasCornerLL = false;
+            bool isInterPrevWasCornerLR = false;
             Vector3 iTemp_HeightVect = default(Vector3);
             Vector3 rVect_iTemp = default(Vector3);
             Vector3 lVect_iTemp = default(Vector3);
@@ -1312,40 +1303,36 @@ namespace GSD.Threaded
             Vector3 RampL_L_iTemp = default(Vector3);
             Vector3 tempIVect_Prev = default(Vector3);
             Vector3 tempIVect = tVect;
-            bool b0LAdded = false;
-            bool b1LAdded = false;
-            bool b2LAdded = false;
-            bool b3LAdded = false;
-            bool f0LAdded = false;
-            bool f1LAdded = false;
-            bool f2LAdded = false;
-            bool f3LAdded = false;
-            bool b0RAdded = false;
-            bool b1RAdded = false;
-            bool b2RAdded = false;
-            bool b3RAdded = false;
+            bool is0LAdded = false;
+            bool is1LAdded = false;
+            bool is2LAdded = false;
+            bool is3LAdded = false;
+            bool isf0LAdded = false;
+            bool isf1LAdded = false;
+            bool isf2LAdded = false;
+            bool isf3LAdded = false;
+            bool is0RAdded = false;
+            bool is1RAdded = false;
+            bool is2RAdded = false;
+            bool is3RAdded = false;
             bool f0RAdded = false;
             bool f1RAdded = false;
             bool f2RAdded = false;
             bool f3RAdded = false;
-            bool bInterTestAddAfterR = false;
-            bool bInterTestAddAfterL = false;
-            //			Vector3 InterTestVect1 = default(Vector3);
-            //			Vector3 InterTestVect2 = default(Vector3);
-            //			Vector3 InterTestVect3 = default(Vector3);
-            //			Vector3 InterTestVect4 = default(Vector3);
-            bool bShoulderSkipR = false;
-            bool bShoulderSkipL = false;
-            bool bShrinkRoadB = false;
-            bool bShrinkRoadFNext = false;
-            bool bShrinkRoadF = false;
-            bool bIsNextInter = false;
-            GSDSplineN cNode = null;
-            int NodeID = -1;
-            int NodeIDPrev = -1;
-            int NodeCount = tSpline.GetNodeCount();
-            bool bDynamicCut = false;
-            float CullDistanceSQ = (3f * RoadWidth) * (3f * RoadWidth);
+            bool isInterTestAddAfterR = false;
+            bool isInterTestAddAfterL = false;
+            bool isShoulderSkipR = false;
+            bool isShoulderSkipL = false;
+            bool isShrinkRoadB = false;
+            bool isShrinkRoadFNext = false;
+            bool isShrinkRoadF = false;
+            bool isNextInter = false;
+            GSDSplineN currentNode = null;
+            int currentNodeID = -1;
+            int previousNodeID = -1;
+            int NodeCount = spline.GetNodeCount();
+            bool isDynamicCut = false;
+            float CullDistanceSQ = (3f * roadWidth) * (3f * roadWidth);
             float mCornerDist = 0f;
             Vector2 CornerRR = default(Vector2);
             Vector2 CornerRL = default(Vector2);
@@ -1359,42 +1346,74 @@ namespace GSD.Threaded
             Vector3 rVect_Next = default(Vector3);
             Vector3 lVect_Next = default(Vector3);
             Vector3 xHeight = default(Vector3);
-            bool bLRtoRR = false;
-            bool bLLtoLR = false;
-            bool bLine = false;
-            bool bImmuneR = false;
-            bool bImmuneL = false;
-            bool bSpecAddedL = false;
-            bool bSpecAddedR = false;
-            bool bTriggerInterAddition = false;
-            bool bSpecialThreeWayIgnoreR = false;
-            bool bSpecialThreeWayIgnoreL = false;
-            //			int eCount = -1;
-            //			int eIndex = -1;
-            //			int uCount = -1;
-            //			int uIndex = -1;
+            bool isLRtoRR = false;
+            bool isLLtoLR = false;
+            bool isLine = false;
+            bool isImmuneR = false;
+            bool isImmuneL = false;
+            bool isSpecAddedL = false;
+            bool isSpecAddedR = false;
+            bool isTriggerInterAddition = false;
+            bool isSpecialThreeWayIgnoreR = false;
+            bool isSpecialThreeWayIgnoreL = false;
             float bMod1 = 1.75f;
             float bMod2 = 1.25f;
             float t2DDist = -1f;
             List<Vector3> vList = null;
             List<int> eList = null;
-            float tParam2 = 0f;
-            float tParam1 = 0f;
-            bool bRecordShoulderForNormals = false;
-            bool bRecordShoulderLForNormals = false;
+            float param2 = 0f;
+            float param1 = 0f;
+            bool isRecordShoulderForNormals = false;
+            bool isRecordShoulderLForNormals = false;
+            //Prev storage of shoulder variable (2 step history).
+            //Vector3 ShoulderR_PrevRVect2 = default(Vector3);
+            //Prev storage of shoulder variable (2 step history).
+            //Vector3 ShoulderL_PrevLVect2 = default(Vector3);
+            //Prev storage of shoulder variable (3 step history).
+            //Vector3 ShoulderR_PrevRVect3 = default(Vector3);
+            //Prev storage of shoulder variable (3 step history).
+            //Vector3 ShoulderL_PrevLVect3 = default(Vector3);
+            //Prev storage of outer shoulder direction (euler).
+            //Vector3 ShoulderR_OuterDirectionPrev = default(Vector3);
+            //Prev storage of outer shoulder direction (euler).
+            //Vector3 ShoulderL_OuterDirectionPrev = default(Vector3);
+            //Vector3 ShoulderR_OuterDirection = default(Vector3);
+            //Vector3 ShoulderL_OuterDirection = default(Vector3);
+            //float tAngle = 0f;
+            //float OrigStep = 0.06f;
+            //float AngleStep = 5f;
+            //Vector3 tHeight2 = new Vector3(0f,0.15f,0f);
+            //Vector3 tHeight1 = new Vector3(0f,0.2f,0f);
+            //bool bTempYWasNegative = false;
+            //Vector3 tY = new Vector3(0f,0f,0f);
+            //float[] HeightChecks = new float[5];
+            //int BridgeLIndex;
+            //int BridgeRIndex;
+            //int TunnelLIndex;
+            //int TunnelRIndex;
+            //float tIntDistCheck = 75f;
+            //Vector3 InterTestVect1 = default(Vector3);
+            //Vector3 InterTestVect2 = default(Vector3);
+            //Vector3 InterTestVect3 = default(Vector3);
+            //Vector3 InterTestVect4 = default(Vector3);
+            //int eCount = -1;
+            //int eIndex = -1;
+            //int uCount = -1;
+            //int uIndex = -1;
 
             //Unused for now, for later partial construction methods:
-            bool bInterseOn = _road.RCS.isInterseOn;
+            bool isInterseOn = _road.RCS.isInterseOn;
             //			bool bBridgesOn = tRoad.RCS.bBridgesOn;
             //			if(tRoad.RCS.bRoadOn){
-            bInterseOn = true;
+            isInterseOn = true;
             //			}
 #pragma warning restore CS0219
+            #endregion
 
 
             //Prelim intersection construction and profiling:
             GSDRootUtil.StartProfiling(_road, "RoadJob_Prelim_Inter");
-            if (bInterseOn)
+            if (isInterseOn)
             {
                 RoadJobPrelimInter(ref _road);
             }
@@ -1403,48 +1422,54 @@ namespace GSD.Threaded
             //Road/shoulder cuts: Init necessary since a road cut is added for the last segment after this function:
             if (_road.isRoadCutsEnabled || _road.isDynamicCutsEnabled)
             {
-                _road.RCS.RoadCutNodes.Add(tSpline.nodes[0]);
+                _road.RCS.RoadCutNodes.Add(spline.nodes[0]);
             }
             if (_road.isShoulderCutsEnabled || _road.isDynamicCutsEnabled)
             {
-                _road.RCS.ShoulderCutsLNodes.Add(tSpline.nodes[0]);
-                _road.RCS.ShoulderCutsRNodes.Add(tSpline.nodes[0]);
+                _road.RCS.ShoulderCutsLNodes.Add(spline.nodes[0]);
+                _road.RCS.ShoulderCutsRNodes.Add(spline.nodes[0]);
             }
 
             //Start initializing the loop. Convuluted to handle special control nodes, so roads don't get rendered where they aren't supposed to, while still preserving the proper curvature.
             float FinalMax = 1f;
             float StartMin = 0f;
-            if (tSpline.isSpecialEndControlNode)
+            if (spline.isSpecialEndControlNode)
             {   //If control node, start after the control node:
-                FinalMax = tSpline.nodes[tSpline.GetNodeCount() - 2].time;
+                FinalMax = spline.nodes[spline.GetNodeCount() - 2].time;
             }
-            if (tSpline.isSpecialStartControlNode)
+            if (spline.isSpecialStartControlNode)
             {   //If ends in control node, end construction before the control node:
-                StartMin = tSpline.nodes[1].time;
+                StartMin = spline.nodes[1].time;
             }
-            bool bFinalEnd = false;
-            float RoadConnection_StartMin1 = StartMin;  //Storage of incremental start values for the road connection mesh construction at the end of this function.
-            float RoadConnection_FinalMax1 = FinalMax;  //Storage of incremental end values for the road connection mesh construction at the end of this function.
-            if (tSpline.isSpecialEndNodeIsStartDelay)
+            bool isFinalEnd = false;
+            //Storage of incremental start values for the road connection mesh construction at the end of this function.
+            float RoadConnection_StartMin1 = StartMin;
+            //Storage of incremental end values for the road connection mesh construction at the end of this function.
+            float RoadConnection_FinalMax1 = FinalMax;
+            if (spline.isSpecialEndNodeIsStartDelay)
             {
-                StartMin += (tSpline.specialEndNodeDelayStart / tSpline.distance); //If there's a start delay (in meters), delay the start of road construction: Due to special control nodes for road connections or 3 way intersections.
+                //If there's a start delay (in meters), delay the start of road construction: Due to special control nodes for road connections or 3 way intersections.
+                StartMin += (spline.specialEndNodeDelayStart / spline.distance);
             }
-            else if (tSpline.isSpecialEndNodeIsEndDelay)
+            else if (spline.isSpecialEndNodeIsEndDelay)
             {
-                FinalMax -= (tSpline.specialEndNodeDelayEnd / tSpline.distance);   //If there's a end delay (in meters), cut early the end of road construction: Due to special control nodes for road connections or 3 way intersections.
+                //If there's a end delay (in meters), cut early the end of road construction: Due to special control nodes for road connections or 3 way intersections.
+                FinalMax -= (spline.specialEndNodeDelayEnd / spline.distance);
             }
-            //			float RoadConnection_StartMin2 = StartMin;	//Storage of incremental start values for the road connection mesh construction at the end of this function.
-            //			float RoadConnection_FinalMax2 = FinalMax; 	//Storage of incremental end values for the road connection mesh construction at the end of this function.
+            //Storage of incremental start values for the road connection mesh construction at the end of this function.
+            //float RoadConnection_StartMin2 = StartMin;
+            //Storage of incremental end values for the road connection mesh construction at the end of this function.
+            //float RoadConnection_FinalMax2 = FinalMax;
             float i = StartMin;
 
-            //			int StartIndex = tSpline.GetClosestRoadDefIndex(StartMin,true,false);
-            //			int EndIndex = tSpline.GetClosestRoadDefIndex(FinalMax,false,true);
-            //			float cDist = 0f;
+            //int StartIndex = tSpline.GetClosestRoadDefIndex(StartMin,true,false);
+            //int EndIndex = tSpline.GetClosestRoadDefIndex(FinalMax,false,true);
+            //float cDist = 0f;
             bool kSkip = true;
             bool kSkipFinal = false;
             int kCount = 0;
             int vCount = kCount;
-            int kFinalCount = tSpline.RoadDefKeysArray.Length;
+            int kFinalCount = spline.RoadDefKeysArray.Length;
             int spamcheckmax1 = 18000;
             int spamcheck1 = 0;
 
@@ -1458,17 +1483,17 @@ namespace GSD.Threaded
             }
 
             //If startmin > 0 then kcount needs to start at proper road def
-            //			bool bStartMinEnabled = false;
+            //bool bStartMinEnabled = false;
             int StartMinIndex1 = 0;
 
             if (StartMin > 0f)
             {
-                kCount = tSpline.GetClosestRoadDefIndex(StartMin, true, false);
-                //				bStartMinEnabled = true;
+                kCount = spline.GetClosestRoadDefIndex(StartMin, true, false);
+                //bStartMinEnabled = true;
                 StartMinIndex1 = 1;
             }
 
-            while (!bFinalEnd && spamcheck1 < spamcheckmax1)
+            while (!isFinalEnd && spamcheck1 < spamcheckmax1)
             {
                 spamcheck1++;
 
@@ -1487,7 +1512,7 @@ namespace GSD.Threaded
                     }
                     else
                     {
-                        i = tSpline.TranslateInverseParamToFloat(tSpline.RoadDefKeysArray[kCount]);
+                        i = spline.TranslateInverseParamToFloat(spline.RoadDefKeysArray[kCount]);
                         kCount += 1;
                     }
                 }
@@ -1503,156 +1528,189 @@ namespace GSD.Threaded
 
                 if (GSDRootUtil.IsApproximately(i, FinalMax, 0.00001f))
                 {
-                    bFinalEnd = true;
+                    isFinalEnd = true;
                 }
                 else if (i > FinalMax)
                 {
-                    if (tSpline.isSpecialEndControlNode)
+                    if (spline.isSpecialEndControlNode)
                     {
                         i = FinalMax;
-                        bFinalEnd = true;
+                        isFinalEnd = true;
                     }
                     else
                     {
-                        bFinalEnd = true;
+                        isFinalEnd = true;
                         break;
                     }
                 }
-                cNode = tSpline.GetCurrentNode(i);  //Set the current node.
-                NodeID = cNode.idOnSpline;          //Set the current node ID.
-                if (NodeID != NodeIDPrev && (_road.isRoadCutsEnabled || _road.isDynamicCutsEnabled))
-                {   //If different than the previous node id, time to make a cut, if necessary:
+
+
+                //Set the current node.
+                currentNode = spline.GetCurrentNode(i);
+                //Set the current node ID.
+                currentNodeID = currentNode.idOnSpline;
+
+
+                //If different than the previous node id, time to make a cut, if necessary:
+                if (currentNodeID != previousNodeID && (_road.isRoadCutsEnabled || _road.isDynamicCutsEnabled))
+                {
                     //Don't ever cut the first node, last node, intersection node, special control nodes, bridge nodes or bridge control nodes:
-                    if (NodeID > StartMinIndex1 && NodeID < (NodeCount - 1) && !cNode.isIntersection && !cNode.isSpecialEndNode)
-                    { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
+                    if (currentNodeID > StartMinIndex1 && currentNodeID < (NodeCount - 1) && !currentNode.isIntersection && !currentNode.isSpecialEndNode)
+                    {
+                        // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
                         if (_road.isDynamicCutsEnabled)
                         {
-                            bDynamicCut = cNode.isRoadCut;
+                            isDynamicCut = currentNode.isRoadCut;
                         }
                         else
                         {
-                            bDynamicCut = true;
+                            isDynamicCut = true;
                         }
 
-                        if (bDynamicCut)
+                        if (isDynamicCut)
                         {
-                            _road.RCS.RoadCuts.Add(_road.RCS.RoadVectors.Count);            //Add the vector index to cut later.
-                            _road.RCS.RoadCutNodes.Add(cNode);                              //Store the node which was at the beginning of this cut.	
+                            //Add the vector index to cut later.
+                            _road.RCS.RoadCuts.Add(_road.RCS.RoadVectors.Count);
+                            //Store the node which was at the beginning of this cut.	
+                            _road.RCS.RoadCutNodes.Add(currentNode);
                         }
-                        if (_road.isShoulderCutsEnabled && bDynamicCut)
-                        {   //If option shoulder cuts is on.
-                            _road.RCS.ShoulderCutsL.Add(_road.RCS.ShoulderL_Vectors.Count); //Add the vector index to cut later.
-                            _road.RCS.ShoulderCutsLNodes.Add(cNode);                        //Store the node which was at the beginning of this cut.
-                            _road.RCS.ShoulderCutsR.Add(_road.RCS.ShoulderR_Vectors.Count); //Add the vector index to cut later.
-                            _road.RCS.ShoulderCutsRNodes.Add(cNode);                        //Store the node which was at the beginning of this cut.
+
+
+                        if (_road.isShoulderCutsEnabled && isDynamicCut)
+                        {
+                            //If option shoulder cuts is on.
+                            //Add the vector index to cut later.
+                            _road.RCS.ShoulderCutsL.Add(_road.RCS.ShoulderL_Vectors.Count);
+                            //Store the node which was at the beginning of this cut.
+                            _road.RCS.ShoulderCutsLNodes.Add(currentNode);
+                            //Add the vector index to cut later.
+                            _road.RCS.ShoulderCutsR.Add(_road.RCS.ShoulderR_Vectors.Count);
+                            //Store the node which was at the beginning of this cut.
+                            _road.RCS.ShoulderCutsRNodes.Add(currentNode);
                         }
                     }
                 }
-                if (NodeID != NodeIDPrev)
+
+
+                //If different than the previous node id, we store the RoadVectorsHeights in initialRoadHeight
+                if (currentNodeID != previousNodeID)
                 {
                     if (_road.RCS.RoadVectors.Count > 0)
                     {
-                        cNode.initialRoadHeight = _road.RCS.RoadVectors[_road.RCS.RoadVectors.Count - 1].y;
+                        currentNode.initialRoadHeight = _road.RCS.RoadVectors[_road.RCS.RoadVectors.Count - 1].y;
                     }
                 }
-                 //Store the previous node ID for the next round. Done now with road cuts as far as this function is concerned.
-                NodeIDPrev = NodeID;
+
+
+                //Store the current node ID as previous for the next round.
+                //Done now with road cuts as far as this function is concerned.
+                previousNodeID = currentNodeID;
 
                 //Set all necessary intersection triggers to false:
-                bInter_CurreIsCorner = false;
-                bInter_CurreIsCornerRR = false;
-                bInter_CurreIsCornerRL = false;
-                bInter_CurreIsCornerLL = false;
-                bInter_CurreIsCornerLR = false;
-                b0LAdded = false;
-                b1LAdded = false;
-                b2LAdded = false;
-                b3LAdded = false;
-                f0LAdded = false;
-                f1LAdded = false;
-                f2LAdded = false;
-                f3LAdded = false;
-                b0RAdded = false;
-                b1RAdded = false;
-                b2RAdded = false;
-                b3RAdded = false;
+                isInterCurrentIsCorner = false;
+                isInterCurrentIsCornerRR = false;
+                isInterCurreIsCornerRL = false;
+                isInterCurreIsCornerLL = false;
+                isInterCurreIsCornerLR = false;
+                is0LAdded = false;
+                is1LAdded = false;
+                is2LAdded = false;
+                is3LAdded = false;
+                isf0LAdded = false;
+                isf1LAdded = false;
+                isf2LAdded = false;
+                isf3LAdded = false;
+                is0RAdded = false;
+                is1RAdded = false;
+                is2RAdded = false;
+                is3RAdded = false;
                 f0RAdded = false;
                 f1RAdded = false;
                 f2RAdded = false;
                 f3RAdded = false;
-                bInterTestAddAfterR = false;
-                bInterTestAddAfterL = false;
-                bShoulderSkipR = false;
-                bShoulderSkipL = false;
-                bShrinkRoadB = false;
-                bShrinkRoadF = false;
-                bIsNextInter = false;
-                if (bShrinkRoadFNext)
+                isInterTestAddAfterR = false;
+                isInterTestAddAfterL = false;
+                isShoulderSkipR = false;
+                isShoulderSkipL = false;
+                isShrinkRoadB = false;
+                isShrinkRoadF = false;
+                isNextInter = false;
+                if (isShrinkRoadFNext)
                 {
-                    bShrinkRoadFNext = false;
-                    bShrinkRoadF = true;
+                    isShrinkRoadFNext = false;
+                    isShrinkRoadF = true;
                 }
-                bRecordShoulderForNormals = false;
-                bRecordShoulderLForNormals = false;
+                isRecordShoulderForNormals = false;
+                isRecordShoulderLForNormals = false;
 
                 //Bridges: Note: This is convoluted due to need for triggers:
-                bBridgeInitial = false;
-                bBridgeLast = false;
-                bTempbridge = tSpline.IsInBridge(i);
-                if (!bIsBridge && bTempbridge)
+                isBridgeInitial = false;
+                isBridgeLast = false;
+                isTempbridge = spline.IsInBridge(i);
+
+
+                if (!isBridge && isTempbridge)
                 {
-                    bIsBridge = true;
-                    bBridgeInitial = true;
+                    isBridge = true;
+                    isBridgeInitial = true;
                 }
-                else if (bIsBridge && !bTempbridge)
+                else if (isBridge && !isTempbridge)
                 {
-                    bIsBridge = false;
+                    isBridge = false;
                 }
+
+
                 //Check if this is the last bridge run for this bridge:
-                if (bIsBridge)
+                if (isBridge)
                 {
-                    bTempbridge = tSpline.IsInBridge(i + Step);
-                    if (!bTempbridge)
+                    isTempbridge = spline.IsInBridge(i + Step);
+                    if (!isTempbridge)
                     {
-                        bBridgeLast = true;
+                        isBridgeLast = true;
                     }
                 }
+
 
                 //Tunnels: Note: This is convoluted due to need for triggers:
-                bTunnelInitial = false;
-                bTunnelLast = false;
-                bTempTunnel = tSpline.IsInTunnel(i);
-                if (!bIsTunnel && bTempTunnel)
+                isTunnelInitial = false;
+                isTunnelLast = false;
+                isTempTunnel = spline.IsInTunnel(i);
+
+
+                if (!isTunnel && isTempTunnel)
                 {
-                    bIsTunnel = true;
-                    bTunnelInitial = true;
+                    isTunnel = true;
+                    isTunnelInitial = true;
                 }
-                else if (bIsTunnel && !bTempTunnel)
+                else if (isTunnel && !isTempTunnel)
                 {
-                    bIsTunnel = false;
+                    isTunnel = false;
                 }
+
+
                 //Check if this is the last Tunnel run for this Tunnel:
-                if (bIsTunnel)
+                if (isTunnel)
                 {
-                    bTempTunnel = tSpline.IsInTunnel(i + Step);
-                    if (!bTempTunnel)
+                    isTempTunnel = spline.IsInTunnel(i + Step);
+                    if (!isTempTunnel)
                     {
-                        bTunnelLast = true;
+                        isTunnelLast = true;
                     }
                 }
 
-                //Master Vector3 for the current road construction location:
-                tSpline.GetSplineValueBoth(i, out tVect, out POS);
 
-                //				Profiler.EndSample();
-                //				Profiler.BeginSample("Test2");
+                //Master Vector3 for the current road construction location:
+                spline.GetSplineValueBoth(i, out tVect, out POS);
+
+                //Profiler.EndSample();
+                //Profiler.BeginSample("Test2");
 
                 //Detect downward or upward slope:
                 TempY = POS.y;
-                //				bTempYWasNegative = false;
+                //bTempYWasNegative = false;
                 if (TempY < 0f)
                 {
-                    //					bTempYWasNegative = true;
+                    //bTempYWasNegative = true;
                     TempY *= -1f;
                 }
                 if (tVect.y < 0f)
@@ -1661,18 +1719,20 @@ namespace GSD.Threaded
                 }
 
                 //Determine if intersection:
-                if (bInterseOn)
+                if (isInterseOn)
                 {
-                    bIsPastInter = false;   //If past intersection
-                    tIntStrength = _road.spline.IntersectionStrength(ref tVect, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref i, ref xNode);
-                    bMaxIntersection = (tIntStrength >= 1f);    //1f strength = max intersection
-                    bFirstInterNode = false;
+                    //If past intersection
+                    isPastInter = false;
+                    tIntStrength = _road.spline.IntersectionStrength(ref tVect, ref tIntHeight, ref intersection, ref isPastInter, ref i, ref xNode);
+                    //1f strength = max intersection
+                    isMaxIntersection = (tIntStrength >= 1f);
+                    isFirstInterNode = false;
                 }
 
                 //Outer widths:
-                if (bMaxIntersection && bInterseOn)
+                if (isMaxIntersection && isInterseOn)
                 {
-                    GSDRI.signHeight = tIntHeight;
+                    intersection.signHeight = tIntHeight;
                     xNode.intersectionConstruction.isBLane0DoneFinalThisRound = false;
                     xNode.intersectionConstruction.isBLane1DoneFinalThisRound = false;
                     xNode.intersectionConstruction.isBLane2DoneFinalThisRound = false;
@@ -1683,46 +1743,48 @@ namespace GSD.Threaded
                     xNode.intersectionConstruction.isFLane3DoneFinalThisRound = false;
                     xNode.intersectionConstruction.isFrontFirstRound = false;
 
-                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                    // Intersections type
+                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
-                        OuterShoulderWidthR = ShoulderSeperation;
-                        OuterShoulderWidthL = ShoulderSeperation;
+                        OuterShoulderWidthR = shoulderSeperation;
+                        OuterShoulderWidthL = shoulderSeperation;
                     }
-                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                     {
-                        OuterShoulderWidthR = ShoulderSep1Lane;
-                        OuterShoulderWidthL = ShoulderSep1Lane;
+                        OuterShoulderWidthR = shoulderSep1Lane;
+                        OuterShoulderWidthL = shoulderSep1Lane;
                     }
-                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
-                        if (bIsPastInter)
+                        if (isPastInter)
                         {
-                            OuterShoulderWidthR = ShoulderSep1Lane;
-                            OuterShoulderWidthL = ShoulderSep2Lane;
+                            OuterShoulderWidthR = shoulderSep1Lane;
+                            OuterShoulderWidthL = shoulderSep2Lane;
                         }
                         else
                         {
-                            OuterShoulderWidthR = ShoulderSep2Lane;
-                            OuterShoulderWidthL = ShoulderSep1Lane;
+                            OuterShoulderWidthR = shoulderSep2Lane;
+                            OuterShoulderWidthL = shoulderSep1Lane;
                         }
                     }
                 }
                 else
                 {
-                    if (TempY < 0.5f || bIsBridge || bIsTunnel)
+                    if (TempY < 0.5f || isBridge || isTunnel)
                     {
-                        OuterShoulderWidthR = ShoulderSeperation;
-                        OuterShoulderWidthL = ShoulderSeperation;
+                        OuterShoulderWidthR = shoulderSeperation;
+                        OuterShoulderWidthL = shoulderSeperation;
                     }
                     else
                     {
-                        OuterShoulderWidthR = ShoulderSeperation + (TempY * 0.05f);
-                        OuterShoulderWidthL = ShoulderSeperation + (TempY * 0.05f);
+                        OuterShoulderWidthR = shoulderSeperation + (TempY * 0.05f);
+                        OuterShoulderWidthL = shoulderSeperation + (TempY * 0.05f);
                     }
                 }
 
-                if (bIsBridge)
-                { //No ramps for bridges:
+                if (isBridge)
+                {
+                    //No ramps for bridges:
                     RampOuterWidthR = OuterShoulderWidthR;
                     RampOuterWidthL = OuterShoulderWidthL;
                 }
@@ -1733,90 +1795,95 @@ namespace GSD.Threaded
                 }
 
                 //The master outer road edges vector locations:
-                if (bMaxIntersection && bInterseOn)
-                {   //If in maximum intersection, adjust road edge (also the shoulder inner edges):
-                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                if (isMaxIntersection && isInterseOn)
+                {   
+                    //If in maximum intersection, adjust road edge (also the shoulder inner edges):
+                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
-                        rVect = (tVect + new Vector3(RoadSeperation_NoTurn * POS.normalized.z, 0, RoadSeperation_NoTurn * -POS.normalized.x));
-                        lVect = (tVect + new Vector3(RoadSeperation_NoTurn * -POS.normalized.z, 0, RoadSeperation_NoTurn * POS.normalized.x));
+                        rightVector = (tVect + new Vector3(roadSeperationNoTurn * POS.normalized.z, 0, roadSeperationNoTurn * -POS.normalized.x));
+                        leftVector = (tVect + new Vector3(roadSeperationNoTurn * -POS.normalized.z, 0, roadSeperationNoTurn * POS.normalized.x));
                     }
-                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                     {
-                        rVect = (tVect + new Vector3(RoadSep1Lane * POS.normalized.z, 0, RoadSep1Lane * -POS.normalized.x));
-                        lVect = (tVect + new Vector3(RoadSep1Lane * -POS.normalized.z, 0, RoadSep1Lane * POS.normalized.x));
+                        rightVector = (tVect + new Vector3(roadSep1Lane * POS.normalized.z, 0, roadSep1Lane * -POS.normalized.x));
+                        leftVector = (tVect + new Vector3(roadSep1Lane * -POS.normalized.z, 0, roadSep1Lane * POS.normalized.x));
                     }
-                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
-                        if (bIsPastInter)
+                        if (isPastInter)
                         {
-                            rVect = (tVect + new Vector3(RoadSep1Lane * POS.normalized.z, 0, RoadSep1Lane * -POS.normalized.x));
-                            lVect = (tVect + new Vector3(RoadSep2Lane * -POS.normalized.z, 0, RoadSep2Lane * POS.normalized.x));
-                            ;
+                            rightVector = (tVect + new Vector3(roadSep1Lane * POS.normalized.z, 0, roadSep1Lane * -POS.normalized.x));
+                            leftVector = (tVect + new Vector3(roadSep2Lane * -POS.normalized.z, 0, roadSep2Lane * POS.normalized.x));
                         }
                         else
                         {
-                            rVect = (tVect + new Vector3(RoadSep2Lane * POS.normalized.z, 0, RoadSep2Lane * -POS.normalized.x));
-                            lVect = (tVect + new Vector3(RoadSep1Lane * -POS.normalized.z, 0, RoadSep1Lane * POS.normalized.x));
+                            rightVector = (tVect + new Vector3(roadSep2Lane * POS.normalized.z, 0, roadSep2Lane * -POS.normalized.x));
+                            leftVector = (tVect + new Vector3(roadSep1Lane * -POS.normalized.z, 0, roadSep1Lane * POS.normalized.x));
                         }
                     }
                     else
                     {
-                        rVect = (tVect + new Vector3(RoadSeperation * POS.normalized.z, 0, RoadSeperation * -POS.normalized.x));
-                        lVect = (tVect + new Vector3(RoadSeperation * -POS.normalized.z, 0, RoadSeperation * POS.normalized.x));
+                        rightVector = (tVect + new Vector3(roadSeperation * POS.normalized.z, 0, roadSeperation * -POS.normalized.x));
+                        leftVector = (tVect + new Vector3(roadSeperation * -POS.normalized.z, 0, roadSeperation * POS.normalized.x));
                     }
                 }
                 else
                 {
                     //Typical road/shoulder inner edge location:
-                    rVect = (tVect + new Vector3(RoadSeperation * POS.normalized.z, 0, RoadSeperation * -POS.normalized.x));
-                    lVect = (tVect + new Vector3(RoadSeperation * -POS.normalized.z, 0, RoadSeperation * POS.normalized.x));
+                    rightVector = (tVect + new Vector3(roadSeperation * POS.normalized.z, 0, roadSeperation * -POS.normalized.x));
+                    leftVector = (tVect + new Vector3(roadSeperation * -POS.normalized.z, 0, roadSeperation * POS.normalized.x));
                 }
 
                 //Shoulder right vectors:
                 ShoulderR_rVect = (tVect + new Vector3(OuterShoulderWidthR * POS.normalized.z, 0, OuterShoulderWidthR * -POS.normalized.x));
-                ShoulderR_lVect = rVect;    //Note that the shoulder inner edge is the same as the road edge vector.
-                                            //Shoulder left vectors:
-                ShoulderL_rVect = lVect;    //Note that the shoulder inner edge is the same as the road edge vector.
+                //Note that the shoulder inner edge is the same as the road edge vector.
+                ShoulderR_lVect = rightVector;
+                //Shoulder left vectors:
+                //Note that the shoulder inner edge is the same as the road edge vector.
+                ShoulderL_rVect = leftVector;
                 ShoulderL_lVect = (tVect + new Vector3(OuterShoulderWidthL * -POS.normalized.z, 0, OuterShoulderWidthL * POS.normalized.x));
 
-                //				Profiler.EndSample();
-                //				Profiler.BeginSample("Test3");
+                //Profiler.EndSample();
+                //Profiler.BeginSample("Test3");
 
                 //Now to start the main lane construction for the intersection:
-                if (bMaxIntersection && bInterseOn)
+                if (isMaxIntersection && isInterseOn)
                 {
-                    //					if(kCount >= tSpline.RoadDefKeysArray.Length){
-                    //						vCount = tSpline.RoadDefKeysArray.Length-1;
-                    //					}else{
-                    //						vCount = kCount-1;	
-                    //					}
+                    //if(kCount >= tSpline.RoadDefKeysArray.Length)
+                    //{
+                    //	vCount = tSpline.RoadDefKeysArray.Length-1;
+                    //}
+                    //else
+                    //{
+                    //	vCount = kCount-1;	
+                    //}
                     vCount = kCount;
 
-                    tParam2 = tSpline.TranslateInverseParamToFloat(tSpline.RoadDefKeysArray[vCount]);
-                    float tInterStrNext = _road.spline.IntersectionStrengthNext(tSpline.GetSplineValue(tParam2, false));
+                    param2 = spline.TranslateInverseParamToFloat(spline.RoadDefKeysArray[vCount]);
+                    float tInterStrNext = _road.spline.IntersectionStrengthNext(spline.GetSplineValue(param2, false));
                     if (GSDRootUtil.IsApproximately(tInterStrNext, 1f, 0.001f) || tInterStrNext > 1f)
                     {
-                        bIsNextInter = true;
+                        isNextInter = true;
                     }
                     else
                     {
-                        bIsNextInter = false;
+                        isNextInter = false;
                     }
 
-                    if (string.Compare(xNode.uID, GSDRI.node1.uID) == 0)
+                    if (string.Compare(xNode.uID, intersection.node1.uID) == 0)
                     {
-                        bFirstInterNode = true;
+                        isFirstInterNode = true;
                     }
                     else
                     {
-                        bFirstInterNode = false;
+                        isFirstInterNode = false;
                     }
 
                     tempIVect = tVect;
-                    if (bIsPastInter)
+                    if (isPastInter)
                     {
-                        bool bLLtoRL = bFirstInterNode;
-                        bool bRLtoRR = !bFirstInterNode;
+                        bool isLLtoRL = isFirstInterNode;
+                        bool isRLtoRR = !isFirstInterNode;
                         if (xNode.intersectionConstruction.iFLane0L.Count == 0)
                         {
                             xNode.intersectionConstruction.isFrontFirstRound = true;
@@ -1826,106 +1893,106 @@ namespace GSD.Threaded
                             xNode.intersectionConstruction.isFLane2DoneFinalThisRound = true;
                             xNode.intersectionConstruction.isFLane3DoneFinalThisRound = true;
 
-                            if (GSDRI.isFlipped && !bFirstInterNode)
+                            if (intersection.isFlipped && !isFirstInterNode)
                             {
-                                if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                 {
-                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[0], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[3], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[3], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[4], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerLLCornerLR[4], tIntHeight));
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                 {
-                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[0], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[3], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], tIntHeight));
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                 {
-                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[0], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerLLCornerLR[2], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
                                 }
                             }
                             else
                             {
-                                if (bLLtoRL)
+                                if (isLLtoRL)
                                 {
-                                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[4], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[4], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], tIntHeight));
                                     }
-                                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], tIntHeight));
                                     }
-                                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerLLCornerRL[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], tIntHeight));
                                     }
                                 }
-                                else if (bRLtoRR)
+                                else if (isRLtoRR)
                                 {
-                                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[4], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[4], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], tIntHeight));
                                     }
-                                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], tIntHeight));
                                     }
-                                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(GSDRI.cornerRLCornerRR[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], tIntHeight));
                                     }
                                 }
                             }
 
                             xNode.intersectionConstruction.shoulderEndFR = xNode.intersectionConstruction.iFLane0L[0];
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 xNode.intersectionConstruction.shoulderEndFL = xNode.intersectionConstruction.iFLane3R[0];
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 xNode.intersectionConstruction.shoulderEndFL = xNode.intersectionConstruction.iFLane2R[0];
                             }
@@ -1938,56 +2005,56 @@ namespace GSD.Threaded
                         }
 
                         //Line 0:
-                        xNode.intersectionConstruction.f0LAttempt = rVect;
-                        if (!xNode.intersectionConstruction.isFLane0Done && !GSDRI.Contains(ref rVect))
+                        xNode.intersectionConstruction.f0LAttempt = rightVector;
+                        if (!xNode.intersectionConstruction.isFLane0Done && !intersection.Contains(ref rightVector))
                         {
-                            xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rVect, tIntHeight));
-                            f0LAdded = true;
+                            xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rightVector, tIntHeight));
+                            isf0LAdded = true;
                         }
 
                         //Line 1:
                         //	if(f0LAdded){
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
                             tempIVect = tVect;
-                            if (!xNode.intersectionConstruction.isFLane1Done && !GSDRI.Contains(ref tempIVect) && !GSDRI.ContainsLine(tempIVect, rVect))
+                            if (!xNode.intersectionConstruction.isFLane1Done && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(tempIVect, rightVector))
                             {
-                                if (f0LAdded)
+                                if (isf0LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
                                     f0RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                f1LAdded = true;
+                                isf1LAdded = true;
                             }
                             else
                             {
-                                if (f0LAdded)
+                                if (isf0LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane0L.RemoveAt(xNode.intersectionConstruction.iFLane0L.Count - 1);
-                                    f0LAdded = false;
+                                    isf0LAdded = false;
                                 }
                             }
                         }
                         else
                         {
-                            tempIVect = (tVect + new Vector3((LaneWidth * 0.5f) * POS.normalized.z, 0f, (LaneWidth * 0.5f) * -POS.normalized.x));
-                            if (!xNode.intersectionConstruction.isFLane1Done && !GSDRI.Contains(ref tempIVect) && !GSDRI.ContainsLine(tempIVect, rVect))
+                            tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * POS.normalized.z, 0f, (laneWidth * 0.5f) * -POS.normalized.x));
+                            if (!xNode.intersectionConstruction.isFLane1Done && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(tempIVect, rightVector))
                             {
-                                if (f0LAdded)
+                                if (isf0LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
                                     f0RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                f1LAdded = true;
+                                isf1LAdded = true;
                             }
                             else
                             {
-                                if (f0LAdded)
+                                if (isf0LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane0L.RemoveAt(xNode.intersectionConstruction.iFLane0L.Count - 1);
-                                    f0LAdded = false;
+                                    isf0LAdded = false;
                                 }
                             }
                         }
@@ -1997,12 +2064,12 @@ namespace GSD.Threaded
 
                         //Line 2:
                         //if(f1LAdded){
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
-                            tempIVect = lVect;
-                            if (!xNode.intersectionConstruction.isFLane2Done && !GSDRI.Contains(ref tempIVect) && !GSDRI.ContainsLine(tempIVect, rVect))
+                            tempIVect = leftVector;
+                            if (!xNode.intersectionConstruction.isFLane2Done && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(tempIVect, rightVector))
                             {
-                                if (f1LAdded)
+                                if (isf1LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
                                     f1RAdded = true;
@@ -2010,33 +2077,33 @@ namespace GSD.Threaded
                             }
                             else
                             {
-                                if (f1LAdded && xNode.intersectionConstruction.iFLane1L.Count > 1)
+                                if (isf1LAdded && xNode.intersectionConstruction.iFLane1L.Count > 1)
                                 {
                                     xNode.intersectionConstruction.iFLane1L.RemoveAt(xNode.intersectionConstruction.iFLane1L.Count - 1);
-                                    f1LAdded = false;
+                                    isf1LAdded = false;
                                 }
                             }
                         }
                         else
                         {
-                            tempIVect = (tVect + new Vector3((LaneWidth * 0.5f) * -POS.normalized.z, 0f, (LaneWidth * 0.5f) * POS.normalized.x));
+                            tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0f, (laneWidth * 0.5f) * POS.normalized.x));
                             tempIVect_prev = tempIVect;
-                            if (!xNode.intersectionConstruction.isFLane2Done && !GSDRI.Contains(ref tempIVect) && !GSDRI.ContainsLine(tempIVect, rVect))
+                            if (!xNode.intersectionConstruction.isFLane2Done && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(tempIVect, rightVector))
                             {
-                                if (f1LAdded)
+                                if (isf1LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
                                     f1RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                f2LAdded = true;
+                                isf2LAdded = true;
                             }
                             else
                             {
-                                if (f1LAdded)
+                                if (isf1LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane1L.RemoveAt(xNode.intersectionConstruction.iFLane1L.Count - 1);
-                                    f1LAdded = false;
+                                    isf1LAdded = false;
                                     f1RAdded = false;
                                 }
                             }
@@ -2048,18 +2115,18 @@ namespace GSD.Threaded
                         //Line 3 / 4:
                         //if(f2LAdded){
 
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                         {
-                            tempIVect = (tVect + new Vector3(((LaneWidth * 0.5f) + RoadSeperation) * -POS.normalized.z, 0, ((LaneWidth * 0.5f) + RoadSeperation) * POS.normalized.x));
-                            if (!xNode.intersectionConstruction.isFLane3Done && !GSDRI.Contains(ref tempIVect) && !GSDRI.ContainsLine(lVect, tempIVect))
+                            tempIVect = (tVect + new Vector3(((laneWidth * 0.5f) + roadSeperation) * -POS.normalized.z, 0, ((laneWidth * 0.5f) + roadSeperation) * POS.normalized.x));
+                            if (!xNode.intersectionConstruction.isFLane3Done && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(leftVector, tempIVect))
                             {
 
                                 xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                f3LAdded = true;
-                                xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(lVect, tIntHeight));
+                                isf3LAdded = true;
+                                xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(leftVector, tIntHeight));
                                 f3RAdded = true;
                                 //								if(bIsNextInter && GSDRI.iType == GSDRoadIntersection.IntersectionTypeEnum.FourWay){
-                                if (f2LAdded)
+                                if (isf2LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
                                     f2RAdded = true;
@@ -2068,35 +2135,35 @@ namespace GSD.Threaded
                             }
                             else
                             {
-                                if (f2LAdded)
+                                if (isf2LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane2L.RemoveAt(xNode.intersectionConstruction.iFLane2L.Count - 1);
-                                    f2LAdded = false;
+                                    isf2LAdded = false;
                                 }
                             }
 
                         }
-                        else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                        else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                         {
-                            tempIVect = (tVect + new Vector3(((LaneWidth * 0.5f) + RoadSeperation) * -POS.normalized.z, 0, ((LaneWidth * 0.5f) + RoadSeperation) * POS.normalized.x));
-                            if (f2LAdded && !GSDRI.Contains(ref tempIVect) && !GSDRI.ContainsLine(rVect, tempIVect))
+                            tempIVect = (tVect + new Vector3(((laneWidth * 0.5f) + roadSeperation) * -POS.normalized.z, 0, ((laneWidth * 0.5f) + roadSeperation) * POS.normalized.x));
+                            if (isf2LAdded && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(rightVector, tempIVect))
                             {
                                 xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
                                 f2RAdded = true;
                             }
-                            else if (f2LAdded)
+                            else if (isf2LAdded)
                             {
                                 xNode.intersectionConstruction.iFLane2L.RemoveAt(xNode.intersectionConstruction.iFLane2L.Count - 1);
-                                f2LAdded = false;
+                                isf2LAdded = false;
                             }
                         }
 
                         //	}
                         xNode.intersectionConstruction.f2RAttempt = tempIVect;
                         xNode.intersectionConstruction.f3LAttempt = tempIVect;
-                        xNode.intersectionConstruction.f3RAttempt = lVect;
+                        xNode.intersectionConstruction.f3RAttempt = leftVector;
 
-                        if (!bIsNextInter && !xNode.intersectionConstruction.isFDone)
+                        if (!isNextInter && !xNode.intersectionConstruction.isFDone)
                         {
                             //							xNode.iConstruction.bFDone = true;
                             xNode.intersectionConstruction.isFLane0Done = true;
@@ -2107,14 +2174,14 @@ namespace GSD.Threaded
                             POS_Next = default(Vector3);
                             tVect_Next = default(Vector3);
 
-                            tParam1 = tSpline.TranslateInverseParamToFloat(tSpline.RoadDefKeysArray[kCount]);
-                            tSpline.GetSplineValueBoth(tParam1, out tVect_Next, out POS_Next);
-                            rVect_Next = (tVect_Next + new Vector3(RoadSeperation * POS_Next.normalized.z, 0, RoadSeperation * -POS_Next.normalized.x));
-                            lVect_Next = (tVect_Next + new Vector3(RoadSeperation * -POS_Next.normalized.z, 0, RoadSeperation * POS_Next.normalized.x));
+                            param1 = spline.TranslateInverseParamToFloat(spline.RoadDefKeysArray[kCount]);
+                            spline.GetSplineValueBoth(param1, out tVect_Next, out POS_Next);
+                            rVect_Next = (tVect_Next + new Vector3(roadSeperation * POS_Next.normalized.z, 0, roadSeperation * -POS_Next.normalized.x));
+                            lVect_Next = (tVect_Next + new Vector3(roadSeperation * -POS_Next.normalized.z, 0, roadSeperation * POS_Next.normalized.x));
 
                             xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rVect_Next, tIntHeight));
                             xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tVect_Next, tIntHeight));
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, tIntHeight));
                                 if (_road.laneAmount == 2)
@@ -2144,11 +2211,11 @@ namespace GSD.Threaded
                                 }
 
                                 xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(lVect_Next, tIntHeight));
-                                //								xNode.iConstruction.iFLane2L.Add(GVC(tVect_Next,tIntHeight));	
-                                //								xNode.iConstruction.iFLane2R.Add(GVC(lVect_Next,tIntHeight));
+                                //xNode.iConstruction.iFLane2L.Add(GVC(tVect_Next,tIntHeight));	
+                                //xNode.iConstruction.iFLane2R.Add(GVC(lVect_Next,tIntHeight));
 
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, tIntHeight));
                                 if (_road.laneAmount == 2)
@@ -2167,58 +2234,58 @@ namespace GSD.Threaded
                                 xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(lVect_Next, tIntHeight));
 
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, tIntHeight));
                                 xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(lVect_Next, tIntHeight));
                             }
-                            bShrinkRoadFNext = true;
-                            //							bShrinkRoadF = true;
+                            isShrinkRoadFNext = true;
+                            //bShrinkRoadF = true;
                         }
 
                     }
                     else
                     {
-                        bLRtoRR = bFirstInterNode;
-                        bLLtoLR = !bFirstInterNode;
+                        isLRtoRR = isFirstInterNode;
+                        isLLtoLR = !isFirstInterNode;
                         //B:
                         //Line 0:
-                        tempIVect = lVect;
-                        bool bFirst123 = false;
+                        tempIVect = leftVector;
+                        bool isFirst123 = false;
                         if (xNode.intersectionConstruction.iBLane0R.Count == 0)
                         {
                             xNode.intersectionConstruction.iBLane0L.Add(lVect_Prev);
                             xNode.intersectionConstruction.iBLane0R.Add(tVect_Prev);
-                            bShrinkRoadB = true;
+                            isShrinkRoadB = true;
 
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 xNode.intersectionConstruction.iBLane1L.Add(tVect_Prev);
-                                xNode.intersectionConstruction.iBLane1R.Add((tVect_Prev + new Vector3((LaneWidth * 0.05f) * POS.normalized.z, 0, (LaneWidth * 0.05f) * -POS.normalized.x)));
+                                xNode.intersectionConstruction.iBLane1R.Add((tVect_Prev + new Vector3((laneWidth * 0.05f) * POS.normalized.z, 0, (laneWidth * 0.05f) * -POS.normalized.x)));
                                 xNode.intersectionConstruction.iBLane3L.Add(((lVect_Prev - rVect_Prev) * 0.03f) + rVect_Prev);
                                 xNode.intersectionConstruction.iBLane3R.Add(rVect_Prev);
 
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 xNode.intersectionConstruction.iBLane1L.Add(tVect_Prev);
-                                xNode.intersectionConstruction.iBLane1R.Add((tVect_Prev + new Vector3((LaneWidth * 0.05f) * POS.normalized.z, 0, (LaneWidth * 0.05f) * -POS.normalized.x)));
+                                xNode.intersectionConstruction.iBLane1R.Add((tVect_Prev + new Vector3((laneWidth * 0.05f) * POS.normalized.z, 0, (laneWidth * 0.05f) * -POS.normalized.x)));
                                 xNode.intersectionConstruction.iBLane2L.Add(xNode.intersectionConstruction.iBLane1R[0]);
                                 xNode.intersectionConstruction.iBLane2R.Add(rVect_Prev);
 
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
                                 xNode.intersectionConstruction.iBLane1L.Add(tVect_Prev);
                                 xNode.intersectionConstruction.iBLane1R.Add(rVect_Prev);
                             }
 
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 xNode.intersectionConstruction.shoulderStartBL = xNode.intersectionConstruction.iBLane0L[0];
                                 xNode.intersectionConstruction.shoulderStartBR = xNode.intersectionConstruction.iBLane3R[0];
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 xNode.intersectionConstruction.shoulderStartBL = xNode.intersectionConstruction.iBLane0L[0];
                                 xNode.intersectionConstruction.shoulderStartBR = xNode.intersectionConstruction.iBLane2R[0];
@@ -2231,32 +2298,31 @@ namespace GSD.Threaded
 
                             xNode.intersectionConstruction.shoulderBLStartIndex = _road.RCS.ShoulderL_Vectors.Count - 2;
                             xNode.intersectionConstruction.shoulderBRStartIndex = _road.RCS.ShoulderR_Vectors.Count - 2;
-                            //							bFirst123 = true;
-                            //							goto InterSkip;
+                            //goto InterSkip;
                         }
 
-                        bLine = false;
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                        isLine = false;
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                         {
-                            bLine = !GSDRI.ContainsLine(tempIVect, (tVect + new Vector3((LaneWidth * 0.5f) * -POS.normalized.z, 0, (LaneWidth * 0.5f) * POS.normalized.x)));
+                            isLine = !intersection.ContainsLine(tempIVect, (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0, (laneWidth * 0.5f) * POS.normalized.x)));
                         }
-                        else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                        else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                         {
-                            bLine = !GSDRI.ContainsLine(tempIVect, (tVect + new Vector3((LaneWidth * 0.5f) * -POS.normalized.z, 0, (LaneWidth * 0.5f) * POS.normalized.x)));
+                            isLine = !intersection.ContainsLine(tempIVect, (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0, (laneWidth * 0.5f) * POS.normalized.x)));
                         }
-                        else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                        else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
-                            bLine = !GSDRI.ContainsLine(lVect, tVect);
+                            isLine = !intersection.ContainsLine(leftVector, tVect);
                         }
-                        if (!xNode.intersectionConstruction.isBLane0Done && !GSDRI.Contains(ref tempIVect) && bLine)
+                        if (!xNode.intersectionConstruction.isBLane0Done && !intersection.Contains(ref tempIVect) && isLine)
                         {
                             xNode.intersectionConstruction.iBLane0L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                            b0LAdded = true;
+                            is0LAdded = true;
                         }
                         else if (!xNode.intersectionConstruction.isBLane0DoneFinal)
                         {
                             //Finalize lane 0:
-                            InterFinalizeiBLane0(ref xNode, ref GSDRI, ref tIntHeight, bLRtoRR, bLLtoLR, bFirstInterNode);
+                            InterFinalizeiBLane0(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode);
                         }
 
                         //Line 1:
@@ -2264,119 +2330,119 @@ namespace GSD.Threaded
                         {
                             if (xNode.intersectionConstruction.iBLane0L.Count == 2)
                             {
-                                tempIVect = (tVect + new Vector3((LaneWidth * 0.5f) * -POS.normalized.z, 0, (LaneWidth * 0.5f) * POS.normalized.x));
+                                tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0, (laneWidth * 0.5f) * POS.normalized.x));
                                 xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                b0RAdded = true;
+                                is0RAdded = true;
                             }
                         }
                         tempIVect_Prev = tempIVect;
-                        tempIVect = (tVect + new Vector3((LaneWidth * 0.5f) * -POS.normalized.z, 0, (LaneWidth * 0.5f) * POS.normalized.x));
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                        tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0, (laneWidth * 0.5f) * POS.normalized.x));
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
                             tempIVect = tVect;
                         }
-                        bLine = false;
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                        isLine = false;
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                         {
-                            bLine = !GSDRI.ContainsLine(tempIVect, (tVect + new Vector3((LaneWidth * 0.5f) * POS.normalized.z, 0, (LaneWidth * 0.5f) * -POS.normalized.x)));
+                            isLine = !intersection.ContainsLine(tempIVect, (tVect + new Vector3((laneWidth * 0.5f) * POS.normalized.z, 0, (laneWidth * 0.5f) * -POS.normalized.x)));
                         }
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                         {
-                            bLine = !GSDRI.ContainsLine(tempIVect, rVect);
+                            isLine = !intersection.ContainsLine(tempIVect, rightVector);
                         }
                         else
                         {
-                            bLine = !GSDRI.ContainsLine(tempIVect, rVect);
+                            isLine = !intersection.ContainsLine(tempIVect, rightVector);
                         }
                         tempIVect_Prev = tempIVect;
-                        if (b0LAdded && !xNode.intersectionConstruction.isBLane1Done && !GSDRI.Contains(ref tempIVect) && bLine)
+                        if (is0LAdded && !xNode.intersectionConstruction.isBLane1Done && !intersection.Contains(ref tempIVect) && isLine)
                         {
-                            if (b0LAdded && (xNode.intersectionConstruction.iBLane0L.Count != 2 || GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane))
+                            if (is0LAdded && (xNode.intersectionConstruction.iBLane0L.Count != 2 || intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane))
                             {
                                 xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                b0RAdded = true;
+                                is0RAdded = true;
                             }
                             xNode.intersectionConstruction.iBLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                            b1LAdded = true;
+                            is1LAdded = true;
                         }
                         else if (!xNode.intersectionConstruction.isBLane1DoneFinal)
                         {
                             //Finalize lane 1:
-                            InterFinalizeiBLane1(ref xNode, ref GSDRI, ref tIntHeight, bLRtoRR, bLLtoLR, bFirstInterNode, ref b0LAdded, ref b1RAdded);
+                            InterFinalizeiBLane1(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is0LAdded, ref is1RAdded);
                         }
 
                         //Line 2:
                         if (xNode.intersectionConstruction.iBLane1R.Count == 0 && xNode.intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
                             xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tVect, tIntHeight));
-                            b1RAdded = true;
+                            is1RAdded = true;
                             xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tVect, tIntHeight));
-                            b2LAdded = true;
-                            b2LAdded = true;
+                            is2LAdded = true;
+                            is2LAdded = true;
                         }
                         else
                         {
-                            tempIVect = (tVect + new Vector3((LaneWidth * 0.5f) * POS.normalized.z, 0, (LaneWidth * 0.5f) * -POS.normalized.x));
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                            tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * POS.normalized.z, 0, (laneWidth * 0.5f) * -POS.normalized.x));
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
-                                tempIVect = rVect;
+                                tempIVect = rightVector;
                             }
-                            if (b1LAdded)
+                            if (is1LAdded)
                             {
-                                bLine = !GSDRI.ContainsLine(tempIVect, tempIVect_Prev);
+                                isLine = !intersection.ContainsLine(tempIVect, tempIVect_Prev);
                             }
                             else
                             {
-                                bLine = !GSDRI.ContainsLine(tempIVect, rVect);
+                                isLine = !intersection.ContainsLine(tempIVect, rightVector);
                             }
-                            if (!xNode.intersectionConstruction.isBLane2Done && !GSDRI.Contains(ref tempIVect) && bLine)
+                            if (!xNode.intersectionConstruction.isBLane2Done && !intersection.Contains(ref tempIVect) && isLine)
                             {
-                                if (b1LAdded)
+                                if (is1LAdded)
                                 {
                                     xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    b1RAdded = true;
+                                    is1RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                b2LAdded = true;
+                                is2LAdded = true;
                             }
                             else if (!xNode.intersectionConstruction.isBLane2DoneFinal)
                             {
-                                InterFinalizeiBLane2(ref xNode, ref GSDRI, ref tIntHeight, bLRtoRR, bLLtoLR, bFirstInterNode, ref b2LAdded, ref b1LAdded, ref b0LAdded, ref b1RAdded);
+                                InterFinalizeiBLane2(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
                             }
                         }
 
                         //Line 3 / 4:
-                        tempIVect = (tVect + new Vector3(((LaneWidth * 0.5f) + RoadSeperation) * POS.normalized.z, 0, ((LaneWidth * 0.5f) + RoadSeperation) * -POS.normalized.x));
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                        tempIVect = (tVect + new Vector3(((laneWidth * 0.5f) + roadSeperation) * POS.normalized.z, 0, ((laneWidth * 0.5f) + roadSeperation) * -POS.normalized.x));
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
-                            tempIVect = rVect;
+                            tempIVect = rightVector;
                         }
-                        if (!xNode.intersectionConstruction.isBLane3Done && !GSDRI.ContainsLine(rVect, tempIVect) && !GSDRI.ContainsLine(rVect, lVect))
+                        if (!xNode.intersectionConstruction.isBLane3Done && !intersection.ContainsLine(rightVector, tempIVect) && !intersection.ContainsLine(rightVector, leftVector))
                         {
                             xNode.intersectionConstruction.iBLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                            b3LAdded = true;
-                            xNode.intersectionConstruction.iBLane3R.Add(ReplaceHeight(rVect, tIntHeight));
-                            b3RAdded = true;
-                            if (!bFirst123 && GSDRI.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.FourWay)
+                            is3LAdded = true;
+                            xNode.intersectionConstruction.iBLane3R.Add(ReplaceHeight(rightVector, tIntHeight));
+                            is3RAdded = true;
+                            if (!isFirst123 && intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.FourWay)
                             {
-                                if (b2LAdded)
+                                if (is2LAdded)
                                 {
                                     xNode.intersectionConstruction.iBLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    b2RAdded = true;
+                                    is2RAdded = true;
                                 }
                             }
                         }
                         else if (!xNode.intersectionConstruction.isBLane3DoneFinal)
                         {
-                            InterFinalizeiBLane3(ref xNode, ref GSDRI, ref tIntHeight, bLRtoRR, bLLtoLR, bFirstInterNode, ref b2LAdded, ref b1LAdded, ref b0LAdded, ref b1RAdded);
+                            InterFinalizeiBLane3(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
                         }
 
                     }
                 }
 
-                //			InterSkip:
+                //InterSkip:
 
-                if (!bIsBridge)
+                if (!isBridge)
                 {
                     BridgeUpComing = _road.spline.BridgeUpComing(i);
                     //					if(TempY < 0.5f){
@@ -2402,13 +2468,13 @@ namespace GSD.Threaded
                     gHeight.y = 0f;
                     //					}
 
-                    lVect += gHeight;
-                    rVect += gHeight;
+                    leftVector += gHeight;
+                    rightVector += gHeight;
                     ShoulderR_lVect += gHeight;
                     ShoulderL_rVect += gHeight;
                     ShoulderL_lVect += gHeight;
                     ShoulderR_rVect += gHeight;
-                    tHeightAdded = gHeight.y;
+                    heightAdded = gHeight.y;
                 }
 
 
@@ -2416,8 +2482,8 @@ namespace GSD.Threaded
                 {
                     tVect.y -= tInterSubtract;
                     tLastInterHeight = tVect.y;
-                    rVect.y -= tInterSubtract;
-                    lVect.y -= tInterSubtract;
+                    rightVector.y -= tInterSubtract;
+                    leftVector.y -= tInterSubtract;
 
                     ShoulderL_rVect.y = tIntHeight;
                     ShoulderR_lVect.y = tIntHeight;
@@ -2439,10 +2505,10 @@ namespace GSD.Threaded
                 else if (tIntStrength > 0f)
                 {
 
-                    rVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * rVect.y);
-                    ShoulderR_lVect = rVect;
-                    lVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * lVect.y);
-                    ShoulderL_rVect = lVect;
+                    rightVector.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * rightVector.y);
+                    ShoulderR_lVect = rightVector;
+                    leftVector.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * leftVector.y);
+                    ShoulderL_rVect = leftVector;
                     ShoulderR_rVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * ShoulderR_rVect.y);
                     ShoulderL_lVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * ShoulderL_lVect.y);
 
@@ -2460,10 +2526,10 @@ namespace GSD.Threaded
                     //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y); }
                 }
 
-                //Ramp:
+                #region "Ramp:"
                 RampR_L = ShoulderR_rVect;
                 RampL_R = ShoulderL_lVect;
-                if (bIsBridge)
+                if (isBridge)
                 {
                     RampR_R = RampR_L;
                     RampL_L = RampL_R;
@@ -2471,30 +2537,31 @@ namespace GSD.Threaded
                 else
                 {
                     RampR_R = (tVect + new Vector3(RampOuterWidthR * POS.normalized.z, 0, RampOuterWidthR * -POS.normalized.x)) + gHeight;
-                    SetVectorHeight2(ref RampR_R, ref i, ref tSpline.HeightHistory, ref tSpline);
+                    SetVectorHeight2(ref RampR_R, ref i, ref spline.HeightHistory, ref spline);
                     RampR_R.y -= _road.desiredRampHeight;
 
                     RampL_L = (tVect + new Vector3(RampOuterWidthL * -POS.normalized.z, 0, RampOuterWidthL * POS.normalized.x)) + gHeight;
-                    SetVectorHeight2(ref RampL_L, ref i, ref tSpline.HeightHistory, ref tSpline);
+                    SetVectorHeight2(ref RampL_L, ref i, ref spline.HeightHistory, ref spline);
                     RampL_L.y -= _road.desiredRampHeight;
                 }
+                #endregion
 
                 //Merge points to intersection corners if necessary:
-                if (bMaxIntersection && !bIsBridge && !bIsTunnel && bInterseOn)
+                if (isMaxIntersection && !isBridge && !isTunnel && isInterseOn)
                 {
                     mCornerDist = _road.roadDefinition * 1.35f;
                     mCornerDist *= mCornerDist;
 
-                    CornerRR = new Vector2(GSDRI.cornerRR.x, GSDRI.cornerRR.z);
-                    CornerRL = new Vector2(GSDRI.cornerRL.x, GSDRI.cornerRL.z);
-                    CornerLR = new Vector2(GSDRI.cornerLR.x, GSDRI.cornerLR.z);
-                    CornerLL = new Vector2(GSDRI.cornerLL.x, GSDRI.cornerLL.z);
-                    rVect2D = new Vector2(rVect.x, rVect.z);
-                    lVect2D = new Vector2(lVect.x, lVect.z);
-                    bOverrideRampR = false;
-                    bOverrideRampL = false;
-                    bImmuneR = false;
-                    bImmuneL = false;
+                    CornerRR = new Vector2(intersection.cornerRR.x, intersection.cornerRR.z);
+                    CornerRL = new Vector2(intersection.cornerRL.x, intersection.cornerRL.z);
+                    CornerLR = new Vector2(intersection.cornerLR.x, intersection.cornerLR.z);
+                    CornerLL = new Vector2(intersection.cornerLL.x, intersection.cornerLL.z);
+                    rVect2D = new Vector2(rightVector.x, rightVector.z);
+                    lVect2D = new Vector2(leftVector.x, leftVector.z);
+                    isOverridenRampR = false;
+                    isOverridenRampL = false;
+                    isImmuneR = false;
+                    isImmuneL = false;
                     bMod1 = 1.75f;
                     bMod2 = 1.25f;
                     t2DDist = -1f;
@@ -2506,43 +2573,43 @@ namespace GSD.Threaded
                     //					uIndex = -1;
 
                     xHeight = new Vector3(0f, -0.1f, 0f);
-                    bSpecAddedL = false;
-                    bSpecAddedR = false;
+                    isSpecAddedL = false;
+                    isSpecAddedR = false;
 
-                    if (bFirstInterNode)
+                    if (isFirstInterNode)
                     {
-                        bSpecAddedL = (b0LAdded || f0LAdded);
-                        if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                        isSpecAddedL = (is0LAdded || isf0LAdded);
+                        if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
-                            bSpecAddedR = (b1RAdded || f1LAdded);
+                            isSpecAddedR = (is1RAdded || isf1LAdded);
                         }
-                        else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                        else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                         {
-                            bSpecAddedR = (b2RAdded || f2LAdded);
+                            isSpecAddedR = (is2RAdded || isf2LAdded);
                         }
-                        else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                        else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                         {
-                            bSpecAddedR = (b3RAdded || f3LAdded);
+                            isSpecAddedR = (is3RAdded || isf3LAdded);
                         }
                     }
 
                     float tempRoadDef = Mathf.Clamp(_road.laneWidth, 3f, 5f);
 
-                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
 
                     }
-                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                     {
 
                     }
-                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
 
                     }
 
                     //RR:
-                    if (GSDRI.evenAngle > 90f)
+                    if (intersection.evenAngle > 90f)
                     {
                         mCornerDist = tempRoadDef * bMod1;
                     }
@@ -2554,14 +2621,14 @@ namespace GSD.Threaded
                     t2DDist = Vector2.SqrMagnitude(CornerRR - rVect2D);
                     if (t2DDist < mCornerDist)
                     {
-                        bImmuneR = true;
-                        bInter_CurreIsCorner = true;
-                        bInter_CurreIsCornerRR = true;
+                        isImmuneR = true;
+                        isInterCurrentIsCorner = true;
+                        isInterCurrentIsCornerRR = true;
 
-                        if (bFirstInterNode)
+                        if (isFirstInterNode)
                         {
                             vList = null;
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
                                 vList = xNode.intersectionConstruction.iBLane1R;
                                 if (xNode.intersectionConstruction.isBLane1DoneFinalThisRound)
@@ -2569,7 +2636,7 @@ namespace GSD.Threaded
                                     vList = null;
                                 }
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 vList = xNode.intersectionConstruction.iBLane2R;
                                 if (xNode.intersectionConstruction.isBLane2DoneFinalThisRound)
@@ -2577,7 +2644,7 @@ namespace GSD.Threaded
                                     vList = null;
                                 }
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 vList = xNode.intersectionConstruction.iBLane3R;
                                 if (xNode.intersectionConstruction.isBLane3DoneFinalThisRound)
@@ -2593,7 +2660,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerRR.x, 0.01f) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerRR.z, 0.01f)))
+                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRR.x, 0.01f) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRR.z, 0.01f)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2618,7 +2685,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerRR.x, 0.01f) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerRR.z, 0.01f)))
+                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRR.x, 0.01f) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRR.z, 0.01f)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2633,21 +2700,21 @@ namespace GSD.Threaded
                         }
 
                         ShoulderR_lVect = new Vector3(CornerRR.x, tIntHeight, CornerRR.y);
-                        ShoulderR_rVect = new Vector3(GSDRI.cornerRROuter.x, tIntHeight, GSDRI.cornerRROuter.z);
-                        RampR_Override = new Vector3(GSDRI.cornerRRRampOuter.x, tIntHeight, GSDRI.cornerRRRampOuter.z);
-                        bRecordShoulderForNormals = true;
+                        ShoulderR_rVect = new Vector3(intersection.cornerRROuter.x, tIntHeight, intersection.cornerRROuter.z);
+                        RampR_Override = new Vector3(intersection.cornerRRRampOuter.x, tIntHeight, intersection.cornerRRRampOuter.z);
+                        isRecordShoulderForNormals = true;
                     }
                     else
                     {
                         t2DDist = Vector2.SqrMagnitude(CornerRR - lVect2D);
                         if (t2DDist < mCornerDist)
                         {
-                            bImmuneL = true;
-                            bInter_CurreIsCorner = true;
-                            bInter_CurreIsCornerRR = true;
+                            isImmuneL = true;
+                            isInterCurrentIsCorner = true;
+                            isInterCurrentIsCornerRR = true;
 
                             //2nd node can come in via left
-                            if (!bFirstInterNode)
+                            if (!isFirstInterNode)
                             {
                                 vList = null;
                                 vList = xNode.intersectionConstruction.iBLane0L;
@@ -2662,7 +2729,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerRR.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerRR.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRR.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2677,13 +2744,13 @@ namespace GSD.Threaded
                             }
 
                             ShoulderL_rVect = new Vector3(CornerRR.x, tIntHeight, CornerRR.y);
-                            ShoulderL_lVect = new Vector3(GSDRI.cornerRROuter.x, tIntHeight, GSDRI.cornerRROuter.z);
-                            RampL_Override = new Vector3(GSDRI.cornerRRRampOuter.x, tIntHeight, GSDRI.cornerRRRampOuter.z);
-                            bRecordShoulderLForNormals = true;
+                            ShoulderL_lVect = new Vector3(intersection.cornerRROuter.x, tIntHeight, intersection.cornerRROuter.z);
+                            RampL_Override = new Vector3(intersection.cornerRRRampOuter.x, tIntHeight, intersection.cornerRRRampOuter.z);
+                            isRecordShoulderLForNormals = true;
                         }
                     }
                     //RL:
-                    if (GSDRI.oddAngle > 90f)
+                    if (intersection.oddAngle > 90f)
                     {
                         mCornerDist = tempRoadDef * bMod1;
                     }
@@ -2695,11 +2762,11 @@ namespace GSD.Threaded
                     t2DDist = Vector2.SqrMagnitude(CornerRL - rVect2D);
                     if (t2DDist < mCornerDist)
                     {
-                        bImmuneR = true;
-                        bInter_CurreIsCorner = true;
-                        bInter_CurreIsCornerRL = true;
+                        isImmuneR = true;
+                        isInterCurrentIsCorner = true;
+                        isInterCurreIsCornerRL = true;
 
-                        if (bFirstInterNode)
+                        if (isFirstInterNode)
                         {
                             vList = null;
                             vList = xNode.intersectionConstruction.iFLane0L;
@@ -2710,7 +2777,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerRL.z)))
+                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2726,21 +2793,21 @@ namespace GSD.Threaded
                         else
                         {
                             vList = null;
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
                                 vList = xNode.intersectionConstruction.iBLane1R;
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 vList = xNode.intersectionConstruction.iBLane2R;
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 vList = xNode.intersectionConstruction.iBLane3R;
                             }
 
                             //Hitting RL from backside with second node:
-                            if (!bFirstInterNode)
+                            if (!isFirstInterNode)
                             {
                                 eList = new List<int>();
                                 if (vList != null)
@@ -2749,22 +2816,22 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerRL.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                             {
                                                 eList.Add(m);
                                                 if (m == vList.Count - 1)
                                                 {
-                                                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                                     {
-                                                        b1RAdded = false;
+                                                        is1RAdded = false;
                                                     }
-                                                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                                     {
-                                                        b2RAdded = false;
+                                                        is2RAdded = false;
                                                     }
-                                                    else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                                    else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                                     {
-                                                        b3RAdded = false;
+                                                        is3RAdded = false;
                                                     }
                                                 }
                                             }
@@ -2780,23 +2847,23 @@ namespace GSD.Threaded
                         }
 
                         ShoulderR_lVect = new Vector3(CornerRL.x, tIntHeight, CornerRL.y);
-                        ShoulderR_rVect = new Vector3(GSDRI.cornerRLOuter.x, tIntHeight, GSDRI.cornerRLOuter.z);
-                        RampR_Override = new Vector3(GSDRI.cornerRLRampOuter.x, tIntHeight, GSDRI.cornerRLRampOuter.z);
-                        bRecordShoulderForNormals = true;
+                        ShoulderR_rVect = new Vector3(intersection.cornerRLOuter.x, tIntHeight, intersection.cornerRLOuter.z);
+                        RampR_Override = new Vector3(intersection.cornerRLRampOuter.x, tIntHeight, intersection.cornerRLRampOuter.z);
+                        isRecordShoulderForNormals = true;
                     }
                     else
                     {
                         t2DDist = Vector2.SqrMagnitude(CornerRL - lVect2D);
                         if (t2DDist < mCornerDist)
                         {
-                            bImmuneL = true;
-                            bInter_CurreIsCorner = true;
-                            bInter_CurreIsCornerRL = true;
+                            isImmuneL = true;
+                            isInterCurrentIsCorner = true;
+                            isInterCurreIsCornerRL = true;
 
-                            if (!bFirstInterNode)
+                            if (!isFirstInterNode)
                             {
                                 vList = null;
-                                if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane1R;
                                     if (xNode.intersectionConstruction.isFLane1DoneFinalThisRound)
@@ -2804,7 +2871,7 @@ namespace GSD.Threaded
                                         vList = null;
                                     }
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane2R;
                                     if (xNode.intersectionConstruction.isFLane2DoneFinalThisRound)
@@ -2812,7 +2879,7 @@ namespace GSD.Threaded
                                         vList = null;
                                     }
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane3R;
                                     if (xNode.intersectionConstruction.isFLane3DoneFinalThisRound)
@@ -2827,7 +2894,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerRL.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2842,13 +2909,13 @@ namespace GSD.Threaded
                             }
 
                             ShoulderL_rVect = new Vector3(CornerRL.x, tIntHeight, CornerRL.y);
-                            ShoulderL_lVect = new Vector3(GSDRI.cornerRLOuter.x, tIntHeight, GSDRI.cornerRLOuter.z);
-                            RampL_Override = new Vector3(GSDRI.cornerRLRampOuter.x, tIntHeight, GSDRI.cornerRLRampOuter.z);
-                            bRecordShoulderLForNormals = true;
+                            ShoulderL_lVect = new Vector3(intersection.cornerRLOuter.x, tIntHeight, intersection.cornerRLOuter.z);
+                            RampL_Override = new Vector3(intersection.cornerRLRampOuter.x, tIntHeight, intersection.cornerRLRampOuter.z);
+                            isRecordShoulderLForNormals = true;
                         }
                     }
                     //LR:
-                    if (GSDRI.oddAngle > 90f)
+                    if (intersection.oddAngle > 90f)
                     {
                         mCornerDist = tempRoadDef * bMod1;
                     }
@@ -2860,14 +2927,14 @@ namespace GSD.Threaded
                     t2DDist = Vector2.SqrMagnitude(CornerLR - rVect2D);
                     if (t2DDist < mCornerDist)
                     {
-                        bImmuneR = true;
-                        bInter_CurreIsCorner = true;
-                        bInter_CurreIsCornerLR = true;
+                        isImmuneR = true;
+                        isInterCurrentIsCorner = true;
+                        isInterCurreIsCornerLR = true;
 
-                        if (!bFirstInterNode)
+                        if (!isFirstInterNode)
                         {
                             vList = null;
-                            if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
                                 vList = xNode.intersectionConstruction.iBLane1R;
                                 if (xNode.intersectionConstruction.isBLane1DoneFinalThisRound)
@@ -2875,7 +2942,7 @@ namespace GSD.Threaded
                                     vList = null;
                                 }
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                             {
                                 vList = xNode.intersectionConstruction.iBLane2R;
                                 if (xNode.intersectionConstruction.isBLane2DoneFinalThisRound)
@@ -2883,7 +2950,7 @@ namespace GSD.Threaded
                                     vList = null;
                                 }
                             }
-                            else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
                                 vList = xNode.intersectionConstruction.iBLane3R;
                                 if (xNode.intersectionConstruction.isBLane3DoneFinalThisRound)
@@ -2899,7 +2966,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerLR.z)))
+                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLR.z)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2914,20 +2981,20 @@ namespace GSD.Threaded
                         }
 
                         ShoulderR_lVect = new Vector3(CornerLR.x, tIntHeight, CornerLR.y);
-                        ShoulderR_rVect = new Vector3(GSDRI.cornerLROuter.x, tIntHeight, GSDRI.cornerLROuter.z);
-                        RampR_Override = new Vector3(GSDRI.cornerLRRampOuter.x, tIntHeight, GSDRI.cornerLRRampOuter.z);
-                        bRecordShoulderForNormals = true;
+                        ShoulderR_rVect = new Vector3(intersection.cornerLROuter.x, tIntHeight, intersection.cornerLROuter.z);
+                        RampR_Override = new Vector3(intersection.cornerLRRampOuter.x, tIntHeight, intersection.cornerLRRampOuter.z);
+                        isRecordShoulderForNormals = true;
                     }
                     else
                     {
                         t2DDist = Vector2.SqrMagnitude(CornerLR - lVect2D);
                         if (t2DDist < mCornerDist)
                         {
-                            bImmuneL = true;
-                            bInter_CurreIsCorner = true;
-                            bInter_CurreIsCornerLR = true;
+                            isImmuneL = true;
+                            isInterCurrentIsCorner = true;
+                            isInterCurreIsCornerLR = true;
 
-                            if (bFirstInterNode)
+                            if (isFirstInterNode)
                             {
                                 vList = null;
                                 vList = xNode.intersectionConstruction.iBLane0L;
@@ -2942,7 +3009,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerLR.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLR.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2959,15 +3026,15 @@ namespace GSD.Threaded
                             {
                                 //2nd node can only come through LR as front with L
                                 vList = null;
-                                if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane1R;
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane2R;
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane3R;
                                 }
@@ -2978,7 +3045,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerLR.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLR.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2993,13 +3060,13 @@ namespace GSD.Threaded
                             }
 
                             ShoulderL_rVect = new Vector3(CornerLR.x, tIntHeight, CornerLR.y);
-                            ShoulderL_lVect = new Vector3(GSDRI.cornerLROuter.x, tIntHeight, GSDRI.cornerLROuter.z);
-                            RampL_Override = new Vector3(GSDRI.cornerLRRampOuter.x, tIntHeight, GSDRI.cornerLRRampOuter.z);
-                            bRecordShoulderLForNormals = true;
+                            ShoulderL_lVect = new Vector3(intersection.cornerLROuter.x, tIntHeight, intersection.cornerLROuter.z);
+                            RampL_Override = new Vector3(intersection.cornerLRRampOuter.x, tIntHeight, intersection.cornerLRRampOuter.z);
+                            isRecordShoulderLForNormals = true;
                         }
                     }
                     //LL:
-                    if (GSDRI.evenAngle > 90f)
+                    if (intersection.evenAngle > 90f)
                     {
                         mCornerDist = tempRoadDef * bMod1;
                     }
@@ -3011,12 +3078,12 @@ namespace GSD.Threaded
                     t2DDist = Vector2.SqrMagnitude(CornerLL - rVect2D);
                     if (t2DDist < mCornerDist)
                     {
-                        bImmuneR = true;
-                        bInter_CurreIsCorner = true;
-                        bInter_CurreIsCornerLL = true;
+                        isImmuneR = true;
+                        isInterCurrentIsCorner = true;
+                        isInterCurreIsCornerLL = true;
 
 
-                        if (!bFirstInterNode)
+                        if (!isFirstInterNode)
                         {
                             vList = null;
                             vList = xNode.intersectionConstruction.iFLane0L;
@@ -3027,7 +3094,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerLL.z)))
+                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLL.z)))
                                         {
                                             eList.Add(m);
                                         }
@@ -3042,31 +3109,31 @@ namespace GSD.Threaded
                         }
 
                         ShoulderR_lVect = new Vector3(CornerLL.x, tIntHeight, CornerLL.y);
-                        ShoulderR_rVect = new Vector3(GSDRI.cornerLLOuter.x, tIntHeight, GSDRI.cornerLLOuter.z);
-                        RampR_Override = new Vector3(GSDRI.cornerLLRampOuter.x, tIntHeight, GSDRI.cornerLLRampOuter.z);
-                        bRecordShoulderForNormals = true;
+                        ShoulderR_rVect = new Vector3(intersection.cornerLLOuter.x, tIntHeight, intersection.cornerLLOuter.z);
+                        RampR_Override = new Vector3(intersection.cornerLLRampOuter.x, tIntHeight, intersection.cornerLLRampOuter.z);
+                        isRecordShoulderForNormals = true;
                     }
                     else
                     {
                         t2DDist = Vector2.SqrMagnitude(CornerLL - lVect2D);
                         if (t2DDist < mCornerDist)
                         {
-                            bImmuneL = true;
-                            bInter_CurreIsCorner = true;
-                            bInter_CurreIsCornerLL = true;
+                            isImmuneL = true;
+                            isInterCurrentIsCorner = true;
+                            isInterCurreIsCornerLL = true;
 
-                            if (bFirstInterNode)
+                            if (isFirstInterNode)
                             {
                                 vList = null;
-                                if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                                if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane1R;
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane2R;
                                 }
-                                else if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                                 {
                                     vList = xNode.intersectionConstruction.iFLane3R;
                                 }
@@ -3077,7 +3144,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerLL.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLL.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -3105,7 +3172,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, GSDRI.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, GSDRI.cornerLL.z)))
+                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLL.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -3120,15 +3187,15 @@ namespace GSD.Threaded
                             }
 
                             ShoulderL_rVect = new Vector3(CornerLL.x, tIntHeight, CornerLL.y);
-                            ShoulderL_lVect = new Vector3(GSDRI.cornerLLOuter.x, tIntHeight, GSDRI.cornerLLOuter.z);
-                            RampL_Override = new Vector3(GSDRI.cornerLLRampOuter.x, tIntHeight, GSDRI.cornerLLRampOuter.z);
-                            bRecordShoulderLForNormals = true;
+                            ShoulderL_lVect = new Vector3(intersection.cornerLLOuter.x, tIntHeight, intersection.cornerLLOuter.z);
+                            RampL_Override = new Vector3(intersection.cornerLLRampOuter.x, tIntHeight, intersection.cornerLLRampOuter.z);
+                            isRecordShoulderLForNormals = true;
                         }
                     }
 
-                    if (bImmuneR)
+                    if (isImmuneR)
                     {
-                        bOverrideRampR = true;
+                        isOverridenRampR = true;
                         if (!_road.RCS.ImmuneVects.Contains(ShoulderR_lVect))
                         {
                             _road.RCS.ImmuneVects.Add(ShoulderR_lVect);
@@ -3138,9 +3205,9 @@ namespace GSD.Threaded
                             _road.RCS.ImmuneVects.Add(ShoulderR_rVect);
                         }
                     }
-                    if (bImmuneL)
+                    if (isImmuneL)
                     {
-                        bOverrideRampL = true;
+                        isOverridenRampL = true;
                         if (!_road.RCS.ImmuneVects.Contains(ShoulderL_rVect))
                         {
                             _road.RCS.ImmuneVects.Add(ShoulderL_rVect);
@@ -3152,7 +3219,7 @@ namespace GSD.Threaded
                     }
                 }
 
-                if (bShrinkRoadB)
+                if (isShrinkRoadB)
                 {
 
                     if (lVect_Prev != new Vector3(0f, 0f, 0f))
@@ -3163,52 +3230,52 @@ namespace GSD.Threaded
                         _road.RCS.RoadVectors.Add(lVect_Prev);
                     }
                 }
-                if (bShrinkRoadF)
+                if (isShrinkRoadF)
                 {
-                    if (lVect != new Vector3(0f, 0f, 0f))
+                    if (leftVector != new Vector3(0f, 0f, 0f))
                     {
-                        _road.RCS.RoadVectors.Add(lVect);
-                        _road.RCS.RoadVectors.Add(lVect);
-                        _road.RCS.RoadVectors.Add(lVect);
-                        _road.RCS.RoadVectors.Add(lVect);
+                        _road.RCS.RoadVectors.Add(leftVector);
+                        _road.RCS.RoadVectors.Add(leftVector);
+                        _road.RCS.RoadVectors.Add(leftVector);
+                        _road.RCS.RoadVectors.Add(leftVector);
                     }
                 }
 
-                _road.RCS.RoadVectors.Add(lVect);
-                _road.RCS.RoadVectors.Add(lVect);
-                _road.RCS.RoadVectors.Add(rVect);
-                _road.RCS.RoadVectors.Add(rVect);
+                _road.RCS.RoadVectors.Add(leftVector);
+                _road.RCS.RoadVectors.Add(leftVector);
+                _road.RCS.RoadVectors.Add(rightVector);
+                _road.RCS.RoadVectors.Add(rightVector);
 
 
 
                 //Add bounds for later removal:
-                if (!bIsBridge && !bIsTunnel && bMaxIntersection && bWasPrevMaxInter && bInterseOn)
+                if (!isBridge && !isTunnel && isMaxIntersection && isWasPrevMaxInter && isInterseOn)
                 {
-                    bool bGoAhead = true;
+                    bool isGoAhead = true;
                     if (xNode.isEndPoint)
                     {
                         if (xNode.idOnSpline == 1)
                         {
                             if (i < xNode.time)
                             {
-                                bGoAhead = false;
+                                isGoAhead = false;
                             }
                         }
                         else
                         {
                             if (i > xNode.time)
                             {
-                                bGoAhead = false;
+                                isGoAhead = false;
                             }
                         }
                     }
 
-                    //Get this and prev lvect rvect rects:
-                    if ((Vector3.SqrMagnitude(xNode.pos - tVect) < CullDistanceSQ) && bGoAhead)
+                    //Get this and prev leftVect rightVect rects:
+                    if ((Vector3.SqrMagnitude(xNode.pos - tVect) < CullDistanceSQ) && isGoAhead)
                     {
                         GSD.Roads.GSDRoadUtil.Construction2DRect vRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(
-                            new Vector2(lVect.x, lVect.z),
-                            new Vector2(rVect.x, rVect.z),
+                            new Vector2(leftVector.x, leftVector.z),
+                            new Vector2(rightVector.x, rightVector.z),
                             new Vector2(lVect_Prev.x, lVect_Prev.z),
                             new Vector2(rVect_Prev.x, rVect_Prev.z),
                             tLastInterHeight
@@ -3230,7 +3297,7 @@ namespace GSD.Threaded
                 //Ramp construction:
                 RampR_L = ShoulderR_rVect;
                 RampL_R = ShoulderL_lVect;
-                if (bIsBridge)
+                if (isBridge)
                 {
                     RampR_R = RampR_L;
                     RampL_L = RampL_R;
@@ -3238,119 +3305,119 @@ namespace GSD.Threaded
                 else
                 {
                     RampR_R = (tVect + new Vector3(RampOuterWidthR * POS.normalized.z, 0, RampOuterWidthR * -POS.normalized.x)) + gHeight;
-                    if (bOverrideRampR)
+                    if (isOverridenRampR)
                     {
                         RampR_R = RampR_Override;
                     }   //Overrides will come from intersection.
-                    SetVectorHeight2(ref RampR_R, ref i, ref tSpline.HeightHistory, ref tSpline);
+                    SetVectorHeight2(ref RampR_R, ref i, ref spline.HeightHistory, ref spline);
                     RampR_R.y -= _road.desiredRampHeight;
 
                     RampL_L = (tVect + new Vector3(RampOuterWidthL * -POS.normalized.z, 0, RampOuterWidthL * POS.normalized.x)) + gHeight;
-                    if (bOverrideRampL)
+                    if (isOverridenRampL)
                     {
                         RampL_L = RampL_Override;
                     }   //Overrides will come from intersection.
-                    SetVectorHeight2(ref RampL_L, ref i, ref tSpline.HeightHistory, ref tSpline);
+                    SetVectorHeight2(ref RampL_L, ref i, ref spline.HeightHistory, ref spline);
                     RampL_L.y -= _road.desiredRampHeight;
-                    bOverrideRampR = false;
-                    bOverrideRampL = false;
+                    isOverridenRampR = false;
+                    isOverridenRampL = false;
                 }
 
                 //If necessary during intersection construction, sometimes an addition will be created inbetween intersection corner points.
                 //This addition will create a dip between corner points to 100% ensure there is no shoulder visible on the roads between corner points.
-                bTriggerInterAddition = false;
-                if (bMaxIntersection && bInterseOn)
+                isTriggerInterAddition = false;
+                if (isMaxIntersection && isInterseOn)
                 {
-                    if (bFirstInterNode)
+                    if (isFirstInterNode)
                     {
-                        if ((bInter_PrevWasCornerLR && bInter_CurreIsCornerLL) || (bInter_PrevWasCornerRR && bInter_CurreIsCornerRL))
+                        if ((isInterPrevWasCornerLR && isInterCurreIsCornerLL) || (isInterPrevWasCornerRR && isInterCurreIsCornerRL))
                         {
-                            bTriggerInterAddition = true;
+                            isTriggerInterAddition = true;
                         }
                     }
                     else
                     {
-                        if (!GSDRI.isFlipped)
+                        if (!intersection.isFlipped)
                         {
-                            if ((bInter_PrevWasCornerLL && bInter_CurreIsCornerRL) || (bInter_PrevWasCornerLR && bInter_CurreIsCornerRR) || (bInter_PrevWasCornerRR && bInter_CurreIsCornerLR))
+                            if ((isInterPrevWasCornerLL && isInterCurreIsCornerRL) || (isInterPrevWasCornerLR && isInterCurrentIsCornerRR) || (isInterPrevWasCornerRR && isInterCurreIsCornerLR))
                             {
-                                bTriggerInterAddition = true;
+                                isTriggerInterAddition = true;
                             }
                         }
                         else
                         {
-                            if ((bInter_PrevWasCornerRR && bInter_CurreIsCornerLR) || (bInter_PrevWasCornerLR && bInter_CurreIsCornerRR) || (bInter_PrevWasCornerRL && bInter_CurreIsCornerLL))
+                            if ((isInterPrevWasCornerRR && isInterCurreIsCornerLR) || (isInterPrevWasCornerLR && isInterCurrentIsCornerRR) || (isInterPrevWasCornerRL && isInterCurreIsCornerLL))
                             {
-                                bTriggerInterAddition = true;
+                                isTriggerInterAddition = true;
                             }
                         }
                     }
 
-                    if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
-                        bTriggerInterAddition = false;
+                        isTriggerInterAddition = false;
                     }
 
                     //For 3-way intersections:
-                    bSpecialThreeWayIgnoreR = false;
-                    bSpecialThreeWayIgnoreL = false;
-                    if (GSDRI.ignoreSide > -1)
+                    isSpecialThreeWayIgnoreR = false;
+                    isSpecialThreeWayIgnoreL = false;
+                    if (intersection.ignoreSide > -1)
                     {
-                        if (GSDRI.ignoreSide == 0)
+                        if (intersection.ignoreSide == 0)
                         {
                             //RR to RL:
-                            if (bFirstInterNode && (bInter_PrevWasCornerRR && bInter_CurreIsCornerRL))
+                            if (isFirstInterNode && (isInterPrevWasCornerRR && isInterCurreIsCornerRL))
                             {
-                                bTriggerInterAddition = false;
+                                isTriggerInterAddition = false;
                             }
                         }
-                        else if (GSDRI.ignoreSide == 1)
+                        else if (intersection.ignoreSide == 1)
                         {
                             //RL to LL:
-                            if (!bFirstInterNode && ((bInter_PrevWasCornerRL && bInter_CurreIsCornerLL) || (bInter_PrevWasCornerLL && bInter_CurreIsCornerRL)))
+                            if (!isFirstInterNode && ((isInterPrevWasCornerRL && isInterCurreIsCornerLL) || (isInterPrevWasCornerLL && isInterCurreIsCornerRL)))
                             {
                                 //bTriggerInterAddition = false;	
-                                if (GSDRI.isFlipped)
+                                if (intersection.isFlipped)
                                 {
-                                    bSpecialThreeWayIgnoreR = true;
+                                    isSpecialThreeWayIgnoreR = true;
                                 }
                                 else
                                 {
-                                    bSpecialThreeWayIgnoreL = true;
+                                    isSpecialThreeWayIgnoreL = true;
                                 }
                             }
                         }
-                        else if (GSDRI.ignoreSide == 2)
+                        else if (intersection.ignoreSide == 2)
                         {
                             //LL to LR:
-                            if (bFirstInterNode && (bInter_PrevWasCornerLR && bInter_CurreIsCornerLL))
+                            if (isFirstInterNode && (isInterPrevWasCornerLR && isInterCurreIsCornerLL))
                             {
-                                bTriggerInterAddition = false;
+                                isTriggerInterAddition = false;
                             }
                         }
-                        else if (GSDRI.ignoreSide == 3)
+                        else if (intersection.ignoreSide == 3)
                         {
                             //LR to RR:
-                            if (!bFirstInterNode && ((bInter_PrevWasCornerRR && bInter_CurreIsCornerLR) || (bInter_PrevWasCornerLR && bInter_CurreIsCornerRR)))
+                            if (!isFirstInterNode && ((isInterPrevWasCornerRR && isInterCurreIsCornerLR) || (isInterPrevWasCornerLR && isInterCurrentIsCornerRR)))
                             {
                                 //bTriggerInterAddition = false;	
-                                if (GSDRI.isFlipped)
+                                if (intersection.isFlipped)
                                 {
-                                    bSpecialThreeWayIgnoreL = true;
+                                    isSpecialThreeWayIgnoreL = true;
                                 }
                                 else
                                 {
-                                    bSpecialThreeWayIgnoreR = true;
+                                    isSpecialThreeWayIgnoreR = true;
                                 }
                             }
                         }
                     }
 
-                    if (bTriggerInterAddition)
+                    if (isTriggerInterAddition)
                     {
                         iTemp_HeightVect = new Vector3(0f, 0f, 0f);
-                        rVect_iTemp = (((rVect_Prev - rVect) * 0.5f) + rVect) + iTemp_HeightVect;
-                        lVect_iTemp = (((lVect_Prev - lVect) * 0.5f) + lVect) + iTemp_HeightVect;
+                        rVect_iTemp = (((rVect_Prev - rightVector) * 0.5f) + rightVector) + iTemp_HeightVect;
+                        lVect_iTemp = (((lVect_Prev - leftVector) * 0.5f) + leftVector) + iTemp_HeightVect;
                         ShoulderR_R_iTemp = (((ShoulderR_PrevRVect - ShoulderR_rVect) * 0.5f) + ShoulderR_rVect) + iTemp_HeightVect;
                         ShoulderL_L_iTemp = (((ShoulderL_PrevLVect - ShoulderL_lVect) * 0.5f) + ShoulderL_lVect) + iTemp_HeightVect;
                         RampR_R_iTemp = (((RampR_PrevR - RampR_R) * 0.5f) + RampR_R) + iTemp_HeightVect;
@@ -3367,11 +3434,11 @@ namespace GSD.Threaded
                         //						RampR_L_iTemp = rVect_iTemp;
                     }
 
-                    if (bTriggerInterAddition && !(GSDRI.isFlipped && !bFirstInterNode))
+                    if (isTriggerInterAddition && !(intersection.isFlipped && !isFirstInterNode))
                     {
-                        if (bFirstInterNode)
+                        if (isFirstInterNode)
                         {
-                            if ((bInter_PrevWasCornerRR && bInter_CurreIsCornerRL && !bSpecialThreeWayIgnoreR))
+                            if ((isInterPrevWasCornerRR && isInterCurreIsCornerRL && !isSpecialThreeWayIgnoreR))
                             {
                                 //Right shoulder:
                                 _road.RCS.ShoulderR_Vectors.Add(rVect_iTemp);
@@ -3384,7 +3451,7 @@ namespace GSD.Threaded
                                 _road.RCS.ShoulderR_Vectors.Add(RampR_R_iTemp);
                                 _road.RCS.ShoulderR_Vectors.Add(RampR_R_iTemp);
                             }
-                            if ((bInter_PrevWasCornerLR && bInter_CurreIsCornerLL && !bSpecialThreeWayIgnoreL))
+                            if ((isInterPrevWasCornerLR && isInterCurreIsCornerLL && !isSpecialThreeWayIgnoreL))
                             {
                                 //Left shoulder:
                                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_L_iTemp);
@@ -3400,7 +3467,7 @@ namespace GSD.Threaded
                         }
                         else
                         {
-                            if ((bInter_PrevWasCornerLR && bInter_CurreIsCornerRR && !bSpecialThreeWayIgnoreR))
+                            if ((isInterPrevWasCornerLR && isInterCurrentIsCornerRR && !isSpecialThreeWayIgnoreR))
                             {
                                 //Right shoulder:
                                 _road.RCS.ShoulderR_Vectors.Add(rVect_iTemp);
@@ -3413,7 +3480,7 @@ namespace GSD.Threaded
                                 _road.RCS.ShoulderR_Vectors.Add(RampR_R_iTemp);
                                 _road.RCS.ShoulderR_Vectors.Add(RampR_R_iTemp);
                             }
-                            if ((bInter_PrevWasCornerLL && bInter_CurreIsCornerRL && !bSpecialThreeWayIgnoreL))
+                            if ((isInterPrevWasCornerLL && isInterCurreIsCornerRL && !isSpecialThreeWayIgnoreL))
                             {
                                 //Left shoulder:
                                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_L_iTemp);
@@ -3428,9 +3495,9 @@ namespace GSD.Threaded
                             }
                         }
                     }
-                    else if (bTriggerInterAddition && (GSDRI.isFlipped && !bFirstInterNode))
+                    else if (isTriggerInterAddition && (intersection.isFlipped && !isFirstInterNode))
                     {
-                        if ((bInter_PrevWasCornerRR && bInter_CurreIsCornerLR && !bSpecialThreeWayIgnoreL))
+                        if ((isInterPrevWasCornerRR && isInterCurreIsCornerLR && !isSpecialThreeWayIgnoreL))
                         {
                             //Left shoulder:
                             _road.RCS.ShoulderL_Vectors.Add(ShoulderL_L_iTemp);
@@ -3443,7 +3510,7 @@ namespace GSD.Threaded
                             _road.RCS.ShoulderL_Vectors.Add(RampL_R_iTemp);
                             _road.RCS.ShoulderL_Vectors.Add(RampL_R_iTemp);
                         }
-                        if ((bInter_PrevWasCornerRL && bInter_CurreIsCornerLL && !bSpecialThreeWayIgnoreR))
+                        if ((isInterPrevWasCornerRL && isInterCurreIsCornerLL && !isSpecialThreeWayIgnoreR))
                         {
                             //Right shoulder:
                             _road.RCS.ShoulderR_Vectors.Add(rVect_iTemp);
@@ -3463,9 +3530,9 @@ namespace GSD.Threaded
 
 
                 //Right shoulder:
-                if (!bShoulderSkipR)
+                if (!isShoulderSkipR)
                 {
-                    if (bRecordShoulderForNormals)
+                    if (isRecordShoulderForNormals)
                     {
                         _road.RCS.normals_ShoulderR_averageStartIndexes.Add(_road.RCS.ShoulderR_Vectors.Count);
                     }
@@ -3480,7 +3547,7 @@ namespace GSD.Threaded
                     _road.RCS.ShoulderR_Vectors.Add(RampR_R);
 
                     //Double up to prevent normal errors from intersection subtraction:
-                    if (bImmuneR && bRecordShoulderForNormals)
+                    if (isImmuneR && isRecordShoulderForNormals)
                     {
                         _road.RCS.ShoulderR_Vectors.Add(ShoulderR_lVect);
                         _road.RCS.ShoulderR_Vectors.Add(ShoulderR_lVect);
@@ -3494,9 +3561,9 @@ namespace GSD.Threaded
                 }
 
                 //Left shoulder:
-                if (!bShoulderSkipL)
+                if (!isShoulderSkipL)
                 {
-                    if (bRecordShoulderLForNormals)
+                    if (isRecordShoulderLForNormals)
                     {
                         _road.RCS.normals_ShoulderL_averageStartIndexes.Add(_road.RCS.ShoulderL_Vectors.Count);
                     }
@@ -3510,7 +3577,7 @@ namespace GSD.Threaded
                     _road.RCS.ShoulderL_Vectors.Add(RampL_R);
 
                     //Double up to prevent normal errors from intersection subtraction:
-                    if (bImmuneL && bRecordShoulderForNormals)
+                    if (isImmuneL && isRecordShoulderForNormals)
                     {
                         _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
                         _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
@@ -3525,8 +3592,8 @@ namespace GSD.Threaded
 
                 //Previous storage:
                 tVect_Prev = tVect;
-                rVect_Prev = rVect;
-                lVect_Prev = lVect;
+                rVect_Prev = rightVector;
+                lVect_Prev = leftVector;
                 ShoulderR_PrevLVect = ShoulderR_lVect;
                 ShoulderL_PrevRVect = ShoulderL_rVect;
                 //				ShoulderR_PrevRVect3 = ShoulderR_PrevRVect2;
@@ -3541,34 +3608,36 @@ namespace GSD.Threaded
                 RampL_PrevL = RampL_L;
 
                 //Store more prev variables:
-                bWasPrevMaxInter = bMaxIntersection;
-                bInter_PrevWasCorner = bInter_CurreIsCorner;
-                bInter_PrevWasCornerRR = bInter_CurreIsCornerRR;
-                bInter_PrevWasCornerRL = bInter_CurreIsCornerRL;
-                bInter_PrevWasCornerLL = bInter_CurreIsCornerLL;
-                bInter_PrevWasCornerLR = bInter_CurreIsCornerLR;
+                isWasPrevMaxInter = isMaxIntersection;
+                isInterPrevWasCorner = isInterCurrentIsCorner;
+                isInterPrevWasCornerRR = isInterCurrentIsCornerRR;
+                isInterPrevWasCornerRL = isInterCurreIsCornerRL;
+                isInterPrevWasCornerLL = isInterCurreIsCornerLL;
+                isInterPrevWasCornerLR = isInterCurreIsCornerLR;
 
                 //				i+=Step;//Master step incrementer.
             }
+
             GSDRootUtil.EndStartProfiling(_road, "RoadJob_Prelim_FinalizeInter");
 
             //Finalize intersection vectors:
-            if (bInterseOn)
+            if (isInterseOn)
             {
                 RoadJobPrelimFinalizeInter(ref _road);
             }
+
             GSDRootUtil.EndStartProfiling(_road, "RoadJob_Prelim_RoadConnections");
 
             //Creates road connections if necessary:
             //			float ExtraHeight = 0f;
             //			float RampPercent = 0.2f;
-            if (tSpline.isSpecialEndNodeIsStartDelay)
+            if (spline.isSpecialEndNodeIsStartDelay)
             {
                 Vector3[] RoadConn_verts = new Vector3[4];
 
                 RampR_R = _road.RCS.ShoulderR_Vectors[7];
                 ShoulderR_rVect = _road.RCS.ShoulderR_Vectors[3];
-                rVect = _road.RCS.ShoulderR_Vectors[0];
+                rightVector = _road.RCS.ShoulderR_Vectors[0];
 
                 _road.RCS.ShoulderR_Vectors.Insert(0, RampR_R);
                 _road.RCS.ShoulderR_Vectors.Insert(0, RampR_R);
@@ -3576,40 +3645,40 @@ namespace GSD.Threaded
                 _road.RCS.ShoulderR_Vectors.Insert(0, ShoulderR_rVect);
                 _road.RCS.ShoulderR_Vectors.Insert(0, ShoulderR_rVect);
                 _road.RCS.ShoulderR_Vectors.Insert(0, ShoulderR_rVect);
-                _road.RCS.ShoulderR_Vectors.Insert(0, rVect);
-                _road.RCS.ShoulderR_Vectors.Insert(0, rVect);
+                _road.RCS.ShoulderR_Vectors.Insert(0, rightVector);
+                _road.RCS.ShoulderR_Vectors.Insert(0, rightVector);
 
                 RampL_L = _road.RCS.ShoulderL_Vectors[4];
                 ShoulderL_lVect = _road.RCS.ShoulderL_Vectors[0];
-                lVect = _road.RCS.ShoulderL_Vectors[3];
+                leftVector = _road.RCS.ShoulderL_Vectors[3];
 
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Insert(0, RampL_L);
                 _road.RCS.ShoulderL_Vectors.Insert(0, RampL_L);
-                _road.RCS.ShoulderL_Vectors.Insert(0, lVect);
-                _road.RCS.ShoulderL_Vectors.Insert(0, lVect);
+                _road.RCS.ShoulderL_Vectors.Insert(0, leftVector);
+                _road.RCS.ShoulderL_Vectors.Insert(0, leftVector);
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect);
 
-                RoadConn_verts[0] = lVect;
-                RoadConn_verts[1] = rVect;
-                tSpline.GetSplineValueBoth(RoadConnection_StartMin1, out tVect, out POS);
-                RoadSeperation = tSpline.specialEndNodeDelayStartResult / 2f;
-                rVect = (tVect + new Vector3(RoadSeperation * POS.normalized.z, 0, RoadSeperation * -POS.normalized.x));
-                lVect = (tVect + new Vector3(RoadSeperation * -POS.normalized.z, 0, RoadSeperation * POS.normalized.x));
-                ShoulderSeperation = RoadSeperation + ShoulderWidth;
-                OuterShoulderWidthR = ShoulderSeperation;
-                OuterShoulderWidthL = ShoulderSeperation;
+                RoadConn_verts[0] = leftVector;
+                RoadConn_verts[1] = rightVector;
+                spline.GetSplineValueBoth(RoadConnection_StartMin1, out tVect, out POS);
+                roadSeperation = spline.specialEndNodeDelayStartResult / 2f;
+                rightVector = (tVect + new Vector3(roadSeperation * POS.normalized.z, 0, roadSeperation * -POS.normalized.x));
+                leftVector = (tVect + new Vector3(roadSeperation * -POS.normalized.z, 0, roadSeperation * POS.normalized.x));
+                shoulderSeperation = roadSeperation + shoulderWidth;
+                OuterShoulderWidthR = shoulderSeperation;
+                OuterShoulderWidthL = shoulderSeperation;
                 RampOuterWidthR = (OuterShoulderWidthR / 4f) + OuterShoulderWidthR;
                 RampOuterWidthL = (OuterShoulderWidthL / 4f) + OuterShoulderWidthL;
-                ShoulderR_rVect = (tVect + new Vector3(ShoulderSeperation * POS.normalized.z, 0, ShoulderSeperation * -POS.normalized.x));
-                ShoulderL_lVect = (tVect + new Vector3(ShoulderSeperation * -POS.normalized.z, 0, ShoulderSeperation * POS.normalized.x));
+                ShoulderR_rVect = (tVect + new Vector3(shoulderSeperation * POS.normalized.z, 0, shoulderSeperation * -POS.normalized.x));
+                ShoulderL_lVect = (tVect + new Vector3(shoulderSeperation * -POS.normalized.z, 0, shoulderSeperation * POS.normalized.x));
                 RampR_R = (tVect + new Vector3(RampOuterWidthR * POS.normalized.z, 0, RampOuterWidthR * -POS.normalized.x));
-                SetVectorHeight2(ref RampR_R, ref i, ref tSpline.HeightHistory, ref tSpline);
+                SetVectorHeight2(ref RampR_R, ref i, ref spline.HeightHistory, ref spline);
                 RampR_R.y -= (_road.desiredRampHeight + 0.10f);          // normal was 0.35f; Here was 0.45f
                 RampL_L = (tVect + new Vector3(RampOuterWidthL * -POS.normalized.z, 0, RampOuterWidthL * POS.normalized.x));
-                SetVectorHeight2(ref RampL_L, ref i, ref tSpline.HeightHistory, ref tSpline);
+                SetVectorHeight2(ref RampL_L, ref i, ref spline.HeightHistory, ref spline);
                 RampL_L.y -= (_road.desiredRampHeight + 0.10f);
 
 
@@ -3620,20 +3689,20 @@ namespace GSD.Threaded
                 _road.RCS.ShoulderR_Vectors.Insert(0, ShoulderR_rVect + tHeight0);
                 _road.RCS.ShoulderR_Vectors.Insert(0, ShoulderR_rVect + tHeight0);
                 _road.RCS.ShoulderR_Vectors.Insert(0, ShoulderR_rVect + tHeight0);
-                _road.RCS.ShoulderR_Vectors.Insert(0, rVect + tHeight0);
-                _road.RCS.ShoulderR_Vectors.Insert(0, rVect + tHeight0);
+                _road.RCS.ShoulderR_Vectors.Insert(0, rightVector + tHeight0);
+                _road.RCS.ShoulderR_Vectors.Insert(0, rightVector + tHeight0);
 
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect + tHeight0);
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect + tHeight0);
                 _road.RCS.ShoulderL_Vectors.Insert(0, RampL_L + tHeight0);
                 _road.RCS.ShoulderL_Vectors.Insert(0, RampL_L + tHeight0);
-                _road.RCS.ShoulderL_Vectors.Insert(0, lVect + tHeight0);
-                _road.RCS.ShoulderL_Vectors.Insert(0, lVect + tHeight0);
+                _road.RCS.ShoulderL_Vectors.Insert(0, leftVector + tHeight0);
+                _road.RCS.ShoulderL_Vectors.Insert(0, leftVector + tHeight0);
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect + tHeight0);
                 _road.RCS.ShoulderL_Vectors.Insert(0, ShoulderL_lVect + tHeight0);
 
-                RoadConn_verts[2] = lVect + tHeight0;
-                RoadConn_verts[3] = rVect + tHeight0;
+                RoadConn_verts[2] = leftVector + tHeight0;
+                RoadConn_verts[3] = rightVector + tHeight0;
                 //Tris:
                 int[] RoadConn_tris = new int[6];
                 RoadConn_tris[0] = 2;
@@ -3654,13 +3723,13 @@ namespace GSD.Threaded
 
                 if (_road.laneAmount == 2)
                 {
-                    tMod1 = 0.5f - (LaneWidth / tSpline.specialEndNodeDelayStartResult);
-                    tMod2 = 0.5f + (LaneWidth / tSpline.specialEndNodeDelayStartResult);
+                    tMod1 = 0.5f - (laneWidth / spline.specialEndNodeDelayStartResult);
+                    tMod2 = 0.5f + (laneWidth / spline.specialEndNodeDelayStartResult);
                 }
                 else if (_road.laneAmount == 4)
                 {
-                    tMod1 = 0.5f - ((LaneWidth * 2f) / tSpline.specialEndNodeDelayStartResult);
-                    tMod2 = 0.5f + ((LaneWidth * 2f) / tSpline.specialEndNodeDelayStartResult);
+                    tMod1 = 0.5f - ((laneWidth * 2f) / spline.specialEndNodeDelayStartResult);
+                    tMod2 = 0.5f + ((laneWidth * 2f) / spline.specialEndNodeDelayStartResult);
                 }
                 RoadConn_uv[0] = new Vector2(tMod1, 0f);
                 RoadConn_uv[1] = new Vector2(tMod2, 0f);
@@ -3673,17 +3742,17 @@ namespace GSD.Threaded
                 _road.RCS.RoadConnections_normals.Add(RoadConn_normals);
                 _road.RCS.RoadConnections_uv.Add(RoadConn_uv);
             }
-            else if (tSpline.isSpecialEndNodeIsEndDelay)
+            else if (spline.isSpecialEndNodeIsEndDelay)
             {
                 Vector3[] RoadConn_verts = new Vector3[4];
                 int rrCount = _road.RCS.ShoulderR_Vectors.Count;
                 RampR_R = _road.RCS.ShoulderR_Vectors[rrCount - 1];
                 ShoulderR_rVect = _road.RCS.ShoulderR_Vectors[rrCount - 3];
-                rVect = _road.RCS.ShoulderR_Vectors[rrCount - 7];
+                rightVector = _road.RCS.ShoulderR_Vectors[rrCount - 7];
 
                 //Right shoulder:
-                _road.RCS.ShoulderR_Vectors.Add(rVect);
-                _road.RCS.ShoulderR_Vectors.Add(rVect);
+                _road.RCS.ShoulderR_Vectors.Add(rightVector);
+                _road.RCS.ShoulderR_Vectors.Add(rightVector);
                 _road.RCS.ShoulderR_Vectors.Add(ShoulderR_rVect);
                 _road.RCS.ShoulderR_Vectors.Add(ShoulderR_rVect);
                 _road.RCS.ShoulderR_Vectors.Add(ShoulderR_rVect);
@@ -3694,41 +3763,41 @@ namespace GSD.Threaded
                 rrCount = _road.RCS.ShoulderL_Vectors.Count;
                 RampL_L = _road.RCS.ShoulderL_Vectors[rrCount - 3];
                 ShoulderL_lVect = _road.RCS.ShoulderL_Vectors[rrCount - 1];
-                lVect = _road.RCS.ShoulderL_Vectors[rrCount - 5];
+                leftVector = _road.RCS.ShoulderL_Vectors[rrCount - 5];
 
                 //Left shoulder:
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
-                _road.RCS.ShoulderL_Vectors.Add(lVect);
-                _road.RCS.ShoulderL_Vectors.Add(lVect);
+                _road.RCS.ShoulderL_Vectors.Add(leftVector);
+                _road.RCS.ShoulderL_Vectors.Add(leftVector);
                 _road.RCS.ShoulderL_Vectors.Add(RampL_L);
                 _road.RCS.ShoulderL_Vectors.Add(RampL_L);
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
 
-                RoadConn_verts[0] = lVect;
-                RoadConn_verts[1] = rVect;
-                tSpline.GetSplineValueBoth(RoadConnection_FinalMax1, out tVect, out POS);
-                RoadSeperation = tSpline.specialEndNodeDelayEndResult / 2f;
-                rVect = (tVect + new Vector3(RoadSeperation * POS.normalized.z, 0, RoadSeperation * -POS.normalized.x));
-                lVect = (tVect + new Vector3(RoadSeperation * -POS.normalized.z, 0, RoadSeperation * POS.normalized.x));
-                ShoulderSeperation = RoadSeperation + ShoulderWidth;
-                OuterShoulderWidthR = ShoulderSeperation;
-                OuterShoulderWidthL = ShoulderSeperation;
+                RoadConn_verts[0] = leftVector;
+                RoadConn_verts[1] = rightVector;
+                spline.GetSplineValueBoth(RoadConnection_FinalMax1, out tVect, out POS);
+                roadSeperation = spline.specialEndNodeDelayEndResult / 2f;
+                rightVector = (tVect + new Vector3(roadSeperation * POS.normalized.z, 0, roadSeperation * -POS.normalized.x));
+                leftVector = (tVect + new Vector3(roadSeperation * -POS.normalized.z, 0, roadSeperation * POS.normalized.x));
+                shoulderSeperation = roadSeperation + shoulderWidth;
+                OuterShoulderWidthR = shoulderSeperation;
+                OuterShoulderWidthL = shoulderSeperation;
                 RampOuterWidthR = (OuterShoulderWidthR / 4f) + OuterShoulderWidthR;
                 RampOuterWidthL = (OuterShoulderWidthL / 4f) + OuterShoulderWidthL;
-                ShoulderR_rVect = (tVect + new Vector3(ShoulderSeperation * POS.normalized.z, 0, ShoulderSeperation * -POS.normalized.x));
-                ShoulderL_lVect = (tVect + new Vector3(ShoulderSeperation * -POS.normalized.z, 0, ShoulderSeperation * POS.normalized.x));
+                ShoulderR_rVect = (tVect + new Vector3(shoulderSeperation * POS.normalized.z, 0, shoulderSeperation * -POS.normalized.x));
+                ShoulderL_lVect = (tVect + new Vector3(shoulderSeperation * -POS.normalized.z, 0, shoulderSeperation * POS.normalized.x));
                 RampR_R = (tVect + new Vector3(RampOuterWidthR * POS.normalized.z, 0, RampOuterWidthR * -POS.normalized.x));
-                SetVectorHeight2(ref RampR_R, ref i, ref tSpline.HeightHistory, ref tSpline);
+                SetVectorHeight2(ref RampR_R, ref i, ref spline.HeightHistory, ref spline);
                 RampR_R.y -= _road.desiredRampHeight;
                 RampL_L = (tVect + new Vector3(RampOuterWidthL * -POS.normalized.z, 0, RampOuterWidthL * POS.normalized.x));
-                SetVectorHeight2(ref RampL_L, ref i, ref tSpline.HeightHistory, ref tSpline);
+                SetVectorHeight2(ref RampL_L, ref i, ref spline.HeightHistory, ref spline);
                 RampL_L.y -= _road.desiredRampHeight;
 
                 //Right shoulder:
-                _road.RCS.ShoulderR_Vectors.Add(rVect);
-                _road.RCS.ShoulderR_Vectors.Add(rVect);
+                _road.RCS.ShoulderR_Vectors.Add(rightVector);
+                _road.RCS.ShoulderR_Vectors.Add(rightVector);
                 _road.RCS.ShoulderR_Vectors.Add(ShoulderR_rVect);
                 _road.RCS.ShoulderR_Vectors.Add(ShoulderR_rVect);
                 _road.RCS.ShoulderR_Vectors.Add(ShoulderR_rVect);
@@ -3739,15 +3808,15 @@ namespace GSD.Threaded
                 //Left shoulder:
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
-                _road.RCS.ShoulderL_Vectors.Add(lVect);
-                _road.RCS.ShoulderL_Vectors.Add(lVect);
+                _road.RCS.ShoulderL_Vectors.Add(leftVector);
+                _road.RCS.ShoulderL_Vectors.Add(leftVector);
                 _road.RCS.ShoulderL_Vectors.Add(RampL_L);
                 _road.RCS.ShoulderL_Vectors.Add(RampL_L);
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
                 _road.RCS.ShoulderL_Vectors.Add(ShoulderL_lVect);
 
-                RoadConn_verts[2] = lVect;
-                RoadConn_verts[3] = rVect;
+                RoadConn_verts[2] = leftVector;
+                RoadConn_verts[3] = rightVector;
                 //Tris:
                 int[] RoadConn_tris = new int[6];
                 RoadConn_tris[0] = 0;
@@ -3763,7 +3832,7 @@ namespace GSD.Threaded
                 RoadConn_normals[2] = -Vector3.forward;
                 RoadConn_normals[3] = -Vector3.forward;
                 Vector2[] RoadConn_uv = new Vector2[4];
-                float tMod = (RoadWidth / tSpline.specialEndNodeDelayEndResult) / 2f;
+                float tMod = (roadWidth / spline.specialEndNodeDelayEndResult) / 2f;
                 RoadConn_uv[0] = new Vector2(tMod, 0f);
                 RoadConn_uv[1] = new Vector2(tMod * 3f, 0f);
                 RoadConn_uv[2] = new Vector2(0f, 1f);
@@ -6320,9 +6389,7 @@ namespace GSD.Threaded
         #endregion
 
 
-        /// <summary>
-        /// Handles most triangles and normals construction. In certain scenarios for efficiency reasons UV might also be processed.
-        /// </summary>
+        /// <summary> Handles most triangles and normals construction. In certain scenarios for efficiency reasons UV might also be processed. </summary>
         /// <param name='_RCS'> The road construction buffer, by reference. </param>/
         public static void RoadJob1(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
         {
@@ -6661,7 +6728,7 @@ namespace GSD.Threaded
             int TriCount = 0;
             int x1, x2, x3;
             int xCount = (int) (_MVL * 0.25f * 6) - 6;
-            //			if(xCount < 0){ xCount = 0; }
+            //if(xCount < 0){ xCount = 0; }
             int[] tri = new int[xCount];
             for (int i = 0; i < _MVL; i += 4)
             {
@@ -6747,13 +6814,13 @@ namespace GSD.Threaded
 
         private static void ProcessRoadTrisShoulderCutsR(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
         {
-            int cCount = _RCS.ShoulderCutsR.Count;
+            int cutsCount = _RCS.ShoulderCutsR.Count;
             int PrevRoadCutIndex = 0;
             int CurrentRoadCutIndex = 0;
             List<List<Vector3>> tVects = new List<List<Vector3>>();
             List<Vector3> tVectListSingle = null;
             Vector3 xVect = default(Vector3);
-            for (int j = 0; j < cCount; j++)
+            for (int j = 0; j < cutsCount; j++)
             {
                 CurrentRoadCutIndex = _RCS.ShoulderCutsR[j];
                 tVectListSingle = new List<Vector3>();
@@ -7079,27 +7146,27 @@ namespace GSD.Threaded
             int MVL = _verts.Length;
             Vector2[] uv = new Vector2[MVL];
             int i = 0;
-            bool bOddToggle = true;
-            float tDistance = 0f;
-            float tDistanceLeft = 0f;
-            float tDistanceRight = 0f;
-            float tDistanceLeftSum = 0f;
-            float tDistanceRightSum = 0f;
-            float tDistanceSum = 0f;
+            bool isOddToggle = true;
+            float distance = 0f;
+            float distanceLeft = 0f;
+            float distanceRight = 0f;
+            float distanceLeftSum = 0f;
+            float distanceRightSum = 0f;
+            float distanceSum = 0f;
 
             while (i + 6 < MVL)
             {
-                tDistance = Vector3.Distance(_verts[i], _verts[i + 4]);
-                tDistance = tDistance / 5f;
-                uv[i] = new Vector2(0f, tDistanceSum);
-                uv[i + 2] = new Vector2(1f, tDistanceSum);
-                uv[i + 4] = new Vector2(0f, tDistance + tDistanceSum);
-                uv[i + 6] = new Vector2(1f, tDistance + tDistanceSum);
+                distance = Vector3.Distance(_verts[i], _verts[i + 4]);
+                distance = distance / 5f;
+                uv[i] = new Vector2(0f, distanceSum);
+                uv[i + 2] = new Vector2(1f, distanceSum);
+                uv[i + 4] = new Vector2(0f, distance + distanceSum);
+                uv[i + 6] = new Vector2(1f, distance + distanceSum);
 
                 //Last segment needs adjusted due to double vertices:
                 if ((i + 7) == MVL)
                 {
-                    if (bOddToggle)
+                    if (isOddToggle)
                     {
                         //First set: Debug.Log ("+5:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));		
                         uv[MVL - 3] = uv[i + 4];
@@ -7113,7 +7180,7 @@ namespace GSD.Threaded
                     }
                 }
 
-                if (bOddToggle)
+                if (isOddToggle)
                 {
                     i += 5;
                 }
@@ -7122,10 +7189,10 @@ namespace GSD.Threaded
                     i += 3;
                 }
 
-                tDistanceLeftSum += tDistanceLeft;
-                tDistanceRightSum += tDistanceRight;
-                tDistanceSum += tDistance;
-                bOddToggle = !bOddToggle;
+                distanceLeftSum += distanceLeft;
+                distanceRightSum += distanceRight;
+                distanceSum += distance;
+                isOddToggle = !isOddToggle;
             }
             return uv;
         }
@@ -7138,12 +7205,12 @@ namespace GSD.Threaded
             //int MVL = tMesh.vertices.Length;
 
             int cCount = _RCS.cut_RoadVectors.Count;
-            float tDistance = 0f;
-            float tDistanceLeft = 0f;
-            float tDistanceRight = 0f;
-            float tDistanceLeftSum = 0f;
-            float tDistanceRightSum = 0f;
-            float tDistanceSum = 0f;
+            float distance = 0f;
+            float distanceLeft = 0f;
+            float distanceRight = 0f;
+            float distanceLeftSum = 0f;
+            float distanceRightSum = 0f;
+            float distanceSum = 0f;
             for (int j = 0; j < cCount; j++)
             {
                 Vector3[] tVerts = _RCS.cut_RoadVectors[j].ToArray();
@@ -7151,20 +7218,20 @@ namespace GSD.Threaded
                 Vector2[] uv = new Vector2[MVL];
                 Vector2[] uv_world = new Vector2[MVL];
                 int i = 0;
-                bool bOddToggle = true;
+                bool isOddToggle = true;
                 while (i + 6 < MVL)
                 {
-                    tDistance = Vector3.Distance(tVerts[i], tVerts[i + 4]);
-                    tDistance = tDistance / 5f;
-                    uv[i] = new Vector2(0f, tDistanceSum);
-                    uv[i + 2] = new Vector2(1f, tDistanceSum);
-                    uv[i + 4] = new Vector2(0f, tDistance + tDistanceSum);
-                    uv[i + 6] = new Vector2(1f, tDistance + tDistanceSum);
+                    distance = Vector3.Distance(tVerts[i], tVerts[i + 4]);
+                    distance = distance / 5f;
+                    uv[i] = new Vector2(0f, distanceSum);
+                    uv[i + 2] = new Vector2(1f, distanceSum);
+                    uv[i + 4] = new Vector2(0f, distance + distanceSum);
+                    uv[i + 6] = new Vector2(1f, distance + distanceSum);
 
                     //Last segment needs adjusted due to double vertices:
                     if ((i + 7) == MVL)
                     {
-                        if (bOddToggle)
+                        if (isOddToggle)
                         {
                             //First set: Debug.Log ("+5:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));		
                             uv[MVL - 3] = uv[i + 4];
@@ -7178,7 +7245,7 @@ namespace GSD.Threaded
                         }
                     }
 
-                    if (bOddToggle)
+                    if (isOddToggle)
                     {
                         i += 5;
                     }
@@ -7187,10 +7254,10 @@ namespace GSD.Threaded
                         i += 3;
                     }
 
-                    tDistanceLeftSum += tDistanceLeft;
-                    tDistanceRightSum += tDistanceRight;
-                    tDistanceSum += tDistance;
-                    bOddToggle = !bOddToggle;
+                    distanceLeftSum += distanceLeft;
+                    distanceRightSum += distanceRight;
+                    distanceSum += distance;
+                    isOddToggle = !isOddToggle;
                 }
                 for (i = 0; i < MVL; i++)
                 {
@@ -7351,24 +7418,24 @@ namespace GSD.Threaded
             }
 
             //Marks:
-            float tDistance = 0f;
-            float tDistanceSum = 0f;
+            float distance = 0f;
+            float distanceSum = 0f;
             Vector2[] uv = new Vector2[MVL];
             float rDistance1 = 0f;
             float rDistance2 = 0f;
-            bool bOddToggle = true;
+            bool isOddToggle = true;
             float fDistance = Vector3.Distance(tVerts[0], tVerts[2]);
             float xDistance = 0f;
             i = 0;
             float TheOne = _RCS.road.shoulderWidth / _RCS.road.roadDefinition;
             while (i + 8 < MVL)
             {
-                tDistance = Vector3.Distance(tVerts[i], tVerts[i + 8]) * 0.2f;
+                distance = Vector3.Distance(tVerts[i], tVerts[i + 8]) * 0.2f;
 
-                uv[i] = new Vector2(0f, tDistanceSum);
-                uv[i + 2] = new Vector2(TheOne, tDistanceSum);
-                uv[i + 8] = new Vector2(0f, tDistance + tDistanceSum);
-                uv[i + 10] = new Vector2(TheOne, tDistance + tDistanceSum);
+                uv[i] = new Vector2(0f, distanceSum);
+                uv[i + 2] = new Vector2(TheOne, distanceSum);
+                uv[i + 8] = new Vector2(0f, distance + distanceSum);
+                uv[i + 10] = new Vector2(TheOne, distance + distanceSum);
 
                 rDistance1 = (Vector3.Distance(tVerts[i + 4], tVerts[i + 6]));
                 rDistance2 = (Vector3.Distance(tVerts[i + 12], tVerts[i + 14]));
@@ -7382,11 +7449,11 @@ namespace GSD.Threaded
 
                     xDistance = TheOne + (rDistance1 / fDistance);
                     uv[i + 4] = uv[i + 2];
-                    uv[i + 6] = new Vector2(xDistance, tDistanceSum);
+                    uv[i + 6] = new Vector2(xDistance, distanceSum);
 
                     xDistance = TheOne + (rDistance2 / fDistance);
                     uv[i + 12] = uv[i + 10];
-                    uv[i + 14] = new Vector2(xDistance, tDistance + tDistanceSum);
+                    uv[i + 14] = new Vector2(xDistance, distance + distanceSum);
                 }
                 else
                 {
@@ -7396,17 +7463,17 @@ namespace GSD.Threaded
                     //0f-X	     0f	 	 0f		1f
 
                     xDistance = 0f - (rDistance1 / fDistance);
-                    uv[i + 4] = new Vector2(xDistance, tDistanceSum);
+                    uv[i + 4] = new Vector2(xDistance, distanceSum);
                     uv[i + 6] = uv[i];
                     xDistance = 0f - (rDistance2 / fDistance);
-                    uv[i + 12] = new Vector2(xDistance, tDistance + tDistanceSum);
+                    uv[i + 12] = new Vector2(xDistance, distance + distanceSum);
                     uv[i + 14] = uv[i + 8];
                 }
 
                 //Last segment needs adjusted due to double vertices:
                 if ((i + 11) == MVL)
                 {
-                    if (bOddToggle)
+                    if (isOddToggle)
                     {
                         //First set: Debug.Log ("+5:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));		
                         uv[MVL - 3] = uv[i + 4];
@@ -7420,7 +7487,7 @@ namespace GSD.Threaded
                     }
                 }
 
-                if (bOddToggle)
+                if (isOddToggle)
                 {
                     i += 9;
                 }
@@ -7429,8 +7496,8 @@ namespace GSD.Threaded
                     i += 7;
                 }
 
-                tDistanceSum += tDistance;
-                bOddToggle = !bOddToggle;
+                distanceSum += distance;
+                isOddToggle = !isOddToggle;
             }
 
             if (_isLeft)
@@ -7899,17 +7966,17 @@ namespace GSD.Threaded
             int MVL = _verts.Length;
             Vector2[] uv = new Vector2[MVL];
             int i = 0;
-            //			bool bOddToggle = true;
-            //			float tDistance= 0f;
-            //			float tDistanceLeft = 0f;
-            //			float tDistanceRight = 0f;
-            //			float tDistanceLeftSum = 0f;
-            //			float tDistanceRightSum = 0f;
-            //			float tDistanceSum = 0f;
-            //			float DistRepresent = 5f;
+            //bool bOddToggle = true;
+            //float tDistance= 0f;
+            //float tDistanceLeft = 0f;
+            //float tDistanceRight = 0f;
+            //float tDistanceLeftSum = 0f;
+            //float tDistanceRightSum = 0f;
+            //float tDistanceSum = 0f;
+            //float DistRepresent = 5f;
 
-            //			float mDistanceL = Vector3.Distance(_verts[i],_verts[_verts.Length-3]);
-            //			float mDistanceR = Vector3.Distance(_verts[i+2],_verts[_verts.Length-1]);
+            //float mDistanceL = Vector3.Distance(_verts[i],_verts[_verts.Length-3]);
+            //float mDistanceR = Vector3.Distance(_verts[i+2],_verts[_verts.Length-1]);
 
             for (i = 0; i < MVL; i++)
             {

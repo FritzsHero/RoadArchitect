@@ -9,6 +9,7 @@ using GSD;
 [CustomEditor(typeof(GSDRoadIntersection))]
 public class GSDRoadIntersectionEditor : Editor
 {
+    #region "Vars"
     protected GSDRoadIntersection intersection { get { return (GSDRoadIntersection) target; } }
 
     private SerializedProperty isAutoUpdatingIntersection;
@@ -69,6 +70,17 @@ public class GSDRoadIntersectionEditor : Editor
     private Texture refreshButtonTexture = null;
     private Texture deleteButtonTexture = null;
 
+    private const string helpText1 = "Each material added is rendered on top of the previous. Combine with transparent shaders which accept shadows to allow for easy marking.";
+
+    //Checkers:
+    private Texture2D loadButtonBG = null;
+    private Texture2D loadButtonBGGlow = null;
+
+    private GUIStyle loadButton = null;
+    private bool isInitialized = false;
+    #endregion
+    #endregion
+
 
     private static string[] rTypeDescriptions = new string[]{
         "No turn lanes",
@@ -95,17 +107,6 @@ public class GSDRoadIntersectionEditor : Editor
         "Fixed time",
         "Other"
     };
-
-
-    private const string helpText1 = "Each material added is rendered on top of the previous. Combine with transparent shaders which accept shadows to allow for easy marking.";
-
-    //Checkers:
-    private Texture2D loadButtonBG = null;
-    private Texture2D loadButtonBGGlow = null;
-
-    private GUIStyle loadButton = null;
-    private bool isInitialized = false;
-    #endregion
 
 
     private void OnEnable()

@@ -7,7 +7,7 @@ using GSD;
 
 public class GSDSplineC : MonoBehaviour
 {
-    //#if  UNITY_EDITOR
+    #region "Vars"
     [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
     public List<GSDSplineN> nodes = new List<GSDSplineN>();
     [UnityEngine.Serialization.FormerlySerializedAs("mSplineRoot")]
@@ -92,6 +92,7 @@ public class GSDSplineC : MonoBehaviour
     public Vector2 RoadV1 = default(Vector2);
     public Vector2 RoadV2 = default(Vector2);
     public Vector2 RoadV3 = default(Vector2);
+    #endregion
 
 
 #if UNITY_EDITOR
@@ -118,7 +119,7 @@ public class GSDSplineC : MonoBehaviour
     {
 #if UNITY_EDITOR
         //Don't setup if playing:
-        //		if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
+        //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
 
         //Setup unique ID:
         SetupUniqueIdentifier();
@@ -151,9 +152,9 @@ public class GSDSplineC : MonoBehaviour
         //Setup spline length, if more than 1 node:
         if (GetNodeCount() > 1)
         {
-            //			GSDRootUtil.StartProfiling(tRoad, "SplineSetupLength");
+            //GSDRootUtil.StartProfiling(tRoad, "SplineSetupLength");
             SetupSplineLength();
-            //			GSDRootUtil.EndProfiling(tRoad);
+            //GSDRootUtil.EndProfiling(tRoad);
         }
         else if (GetNodeCount() == 1)
         {
@@ -458,7 +459,6 @@ public class GSDSplineC : MonoBehaviour
         float tDistance = 0f;
         Vector3 prevPos = nodes[0].pos;
         Vector3 cPos = new Vector3(0f, 0f, 0f);
-        //		float hDistance = 0f;
         GSDSplineN tNode;
 
         prevPos = GetSplineValue(0f);
@@ -476,7 +476,6 @@ public class GSDSplineC : MonoBehaviour
 
         //Now get fine distance between nodes:
 
-        //		float tNanCheck = 0f;
         float newTotalDistance = 0f;
         step = 0.5f / distance;
         GSDSplineN PrevNode = null;
@@ -571,7 +570,6 @@ public class GSDSplineC : MonoBehaviour
     #region "Road definition cache and translation"
     private void RoadDefCalcs()
     {
-        //float tNanCheck = 0f;
         float tMod = Mathf.Lerp(0.05f, 0.2f, distance / 9000f);
         float step = tMod / distance;
         Vector3 cPos = GetSplineValue(0f);

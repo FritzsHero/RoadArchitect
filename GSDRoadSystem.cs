@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class GSDRoadSystem : MonoBehaviour
 {
-    public static string assetBasePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "";
 #if UNITY_EDITOR
+    #region "Vars"
+    public static string assetBasePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "";
 
     [UnityEngine.Serialization.FormerlySerializedAs("opt_bMultithreading")]
     public bool isMultithreaded = true;
@@ -16,6 +17,7 @@ public class GSDRoadSystem : MonoBehaviour
     public bool isAllowingRoadUpdates = true;
 
     public Camera editorPlayCamera = null;
+    #endregion
 
 
     public GameObject AddRoad(bool _isForceSelected = false)

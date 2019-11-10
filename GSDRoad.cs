@@ -12,6 +12,16 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class GSDRoad : MonoBehaviour
 {
+    public enum RoadMaterialDropdownEnum
+    {
+        Asphalt,
+        Dirt,
+        Brick,
+        Cobblestone
+    };
+
+
+    #region "Vars"
     public GameObject MainMeshes;
     public GameObject MeshRoad;
     public GameObject MeshShoR;
@@ -118,14 +128,6 @@ public class GSDRoad : MonoBehaviour
     public float desiredRampHeight = 0.35f;
 
 
-    public enum RoadMaterialDropdownEnum
-    {
-        Asphalt,
-        Dirt,
-        Brick,
-        Cobblestone
-    };
-
     [UnityEngine.Serialization.FormerlySerializedAs("opt_tRoadMaterialDropdown")]
     public RoadMaterialDropdownEnum roadMaterialDropdown = RoadMaterialDropdownEnum.Asphalt;
     public RoadMaterialDropdownEnum tRoadMaterialDropdownOLD = RoadMaterialDropdownEnum.Asphalt;
@@ -150,8 +152,11 @@ public class GSDRoad : MonoBehaviour
 
     public PhysicMaterial RoadPhysicMaterial;
     public PhysicMaterial ShoulderPhysicMaterial;
+    #endregion
+
 #if UNITY_EDITOR
     #region "Road Construction"
+    #region "Vars"
     [System.NonSerialized]
     public GSD.Threaded.TerrainCalcs TerrainCalcsJob;
     [System.NonSerialized]
@@ -169,6 +174,78 @@ public class GSDRoad : MonoBehaviour
     public bool isSkippingStore = true;
     [System.NonSerialized]
     public float EditorConstructionStartTime = 0f;
+    [UnityEngine.Serialization.FormerlySerializedAs("bEditorError")]
+    public bool isEditorError = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("tError")]
+    public System.Exception exceptionError = null;
+
+
+    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimer")]
+    private int editorTimer = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerMax")]
+    private int editorTimerMax = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerSpline")]
+    private int editorTimerSpline = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerSplineMax")]
+    private const int editorTimerSplineMax = 2;
+    [System.NonSerialized]
+    public int editorProgress = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("GizmoNodeTimerMax")]
+    private const int gizmoNodeTimerMax = 2;
+    [UnityEngine.Serialization.FormerlySerializedAs("EditorUpdateMe")]
+    public bool isUpdateRequired = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC")]
+    public bool isTriggeringGC = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC_Happening")]
+    private bool isTriggeredGCExecuting;
+    [UnityEngine.Serialization.FormerlySerializedAs("TriggerGC_End")]
+    private float triggerGCEnd = 0f;
+
+    [System.NonSerialized]
+    [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraMoving")]
+    public bool isEditorCameraMoving = false;
+    [System.NonSerialized]
+    public float EditorCameraPos = 0f;
+    //float EditorCameraPos_Full = 0f;
+    private const float EditorCameraTimeUpdateInterval = 0.015f;
+    private float EditorCameraNextMove = 0f;
+    [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraSetup")]
+    private bool isEditorCameraSetup = false;
+    private float EditorCameraStartPos = 0f;
+    private float EditorCameraEndPos = 1f;
+    private float EditorCameraIncrementDistance = 0f;
+    private float EditorCameraIncrementDistance_Full = 0f;
+    public float EditorCameraMetersPerSecond = 60f;
+    [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraRotate")]
+    public bool isEditorCameraRotated = false;
+    private Vector3 EditorCameraV1 = default(Vector3);
+    private Vector3 EditorCameraV2 = default(Vector3);
+    [System.NonSerialized]
+    public Vector3 editorCameraOffset = new Vector3(0f, 5f, 0f);
+    [System.NonSerialized]
+    public Camera editorPlayCamera = null;
+    [UnityEngine.Serialization.FormerlySerializedAs("EditorCameraBadVec")]
+    private Vector3 editorCameraBadVec = default(Vector3);
+
+    public List<GSDTerraforming.TempTerrainData> EditorTTDList;
+
+    [UnityEngine.Serialization.FormerlySerializedAs("Editor_bIsConstructing")]
+    public bool isEditorConstructing = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("Editor_bConstructionID")]
+    public int editorConstructionID = 0;
+    [UnityEngine.Serialization.FormerlySerializedAs("Editor_bSelected")]
+    public bool isEditorSelected = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("Editor_MouseTerrainHit")]
+    public bool isEditorMouseHittingTerrain = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("Editor_MousePos")]
+    public Vector3 editorMousePos = new Vector3(0f, 0f, 0f);
+    [UnityEngine.Serialization.FormerlySerializedAs("Color_NodeDefaultColor")]
+    public Color defaultNodeColor = new Color(0f, 1f, 1f, 0.75f);
+    public readonly Color Color_NodeConnColor = new Color(0f, 1f, 0f, 0.75f);
+    public readonly Color Color_NodeInter = new Color(0f, 1f, 0f, 0.75f);
+    public Color selectedColor = Color.yellow;
+    public Color newNodePreviewColor = Color.red;
+    #endregion
 
 
     private void CleanRunTime()
@@ -177,12 +254,6 @@ public class GSDRoad : MonoBehaviour
         TerrainHistory = null;
         RCS = null;
     }
-
-
-    [UnityEngine.Serialization.FormerlySerializedAs("bEditorError")]
-    public bool isEditorError = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("tError")]
-    public System.Exception exceptionError = null;
 
 
     private void OnEnable()
@@ -232,28 +303,6 @@ public class GSDRoad : MonoBehaviour
     }
 
 
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimer")]
-    private int editorTimer = 0;
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerMax")]
-    private int editorTimerMax = 0;
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerSpline")]
-    private int editorTimerSpline = 0;
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerSplineMax")]
-    private const int editorTimerSplineMax = 2;
-    [System.NonSerialized]
-    public int editorProgress = 0;
-    [UnityEngine.Serialization.FormerlySerializedAs("GizmoNodeTimerMax")]
-    private const int gizmoNodeTimerMax = 2;
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorUpdateMe")]
-    public bool isUpdateRequired = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC")]
-    public bool isTriggeringGC = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC_Happening")]
-    private bool isTriggeredGCExecuting;
-    [UnityEngine.Serialization.FormerlySerializedAs("TriggerGC_End")]
-    private float triggerGCEnd = 0f;
-
-
     private void EditorUpdate()
     {
         if (!Application.isEditor)
@@ -293,7 +342,8 @@ public class GSDRoad : MonoBehaviour
         }
 
         if (isEditorConstructing)
-        { // && !Application.isPlaying && !UnityEditor.EditorApplication.isPlaying){
+        {
+            // && !Application.isPlaying && !UnityEditor.EditorApplication.isPlaying){
             if (GSDRS != null)
             {
                 if (GSDRS.isMultithreaded)
@@ -373,33 +423,6 @@ public class GSDRoad : MonoBehaviour
             DoEditorCameraLoop();
         }
     }
-
-
-    [System.NonSerialized]
-    [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraMoving")]
-    public bool isEditorCameraMoving = false;
-    [System.NonSerialized]
-    public float EditorCameraPos = 0f;
-    //float EditorCameraPos_Full = 0f;
-    private const float EditorCameraTimeUpdateInterval = 0.015f;
-    private float EditorCameraNextMove = 0f;
-    [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraSetup")]
-    private bool isEditorCameraSetup = false;
-    private float EditorCameraStartPos = 0f;
-    private float EditorCameraEndPos = 1f;
-    private float EditorCameraIncrementDistance = 0f;
-    private float EditorCameraIncrementDistance_Full = 0f;
-    public float EditorCameraMetersPerSecond = 60f;
-    [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraRotate")]
-    public bool isEditorCameraRotated = false;
-    private Vector3 EditorCameraV1 = default(Vector3);
-    private Vector3 EditorCameraV2 = default(Vector3);
-    [System.NonSerialized]
-    public Vector3 editorCameraOffset = new Vector3(0f, 5f, 0f);
-    [System.NonSerialized]
-    public Camera editorPlayCamera = null;
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorCameraBadVec")]
-    private Vector3 editorCameraBadVec = default(Vector3);
 
 
     public void DoEditorCameraLoop()
@@ -618,9 +641,9 @@ public class GSDRoad : MonoBehaviour
             isEditorConstructing = false;
         }
 
-        //		if(Application.isPlaying || !Application.isEditor){ return; }
-        //		if(Application.isEditor && UnityEditor.EditorApplication.isPlaying){ return; }
-        //		if(Application.isEditor && UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode){ return; }
+        //if(Application.isPlaying || !Application.isEditor){ return; }
+        //if(Application.isEditor && UnityEditor.EditorApplication.isPlaying){ return; }
+        //if(Application.isEditor && UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode){ return; }
 
         //In here for intersection patching purposes:
         int nodeCount = spline.GetNodeCount();
@@ -794,8 +817,8 @@ public class GSDRoad : MonoBehaviour
         if (GSDRS == null)
         {
             GSDRS = transform.parent.GetComponent<GSDRoadSystem>();
-        } //Compatibility update.
-
+        }
+        //Compatibility update.
         if (GSDRS.isMultithreaded)
         {
             isEditorConstructing = true;
@@ -845,7 +868,7 @@ public class GSDRoad : MonoBehaviour
         }
         else
         {
-            UpdateRoad_NoMultiThreading();
+            UpdateRoadNoMultiThreading();
         }
     }
 
@@ -921,7 +944,7 @@ public class GSDRoad : MonoBehaviour
 
     #region "Construction process"
     #region "No multithread"
-    private void UpdateRoad_NoMultiThreading()
+    private void UpdateRoadNoMultiThreading()
     {
         if (isHeightModificationEnabled || isDetailModificationEnabled || isTreeModificationEnabled)
         {
@@ -961,7 +984,7 @@ public class GSDRoad : MonoBehaviour
         editorProgress = 96;
         RCS.MeshSetup2();
         GSDRootUtil.EndProfiling(this);
-        Construction_Cleanup();
+        ConstructionCleanup();
     }
     #endregion
 
@@ -1017,12 +1040,12 @@ public class GSDRoad : MonoBehaviour
     private void ConstructRoad4()
     {
         RCS.MeshSetup2();
-        Construction_Cleanup();
+        ConstructionCleanup();
     }
     #endregion
 
 
-    private void Construction_Cleanup()
+    private void ConstructionCleanup()
     {
         FixZ();
 
@@ -1129,9 +1152,6 @@ public class GSDRoad : MonoBehaviour
     }
 
 
-    public List<GSDTerraforming.TempTerrainData> EditorTTDList;
-
-
     public void EditorTerrainCalcs(ref List<GSDTerraforming.TempTerrainData> _tddList)
     {
         EditorTTDList = _tddList;
@@ -1140,24 +1160,6 @@ public class GSDRoad : MonoBehaviour
 
 
     #region "Gizmos"
-    [UnityEngine.Serialization.FormerlySerializedAs("Editor_bIsConstructing")]
-    public bool isEditorConstructing = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("Editor_bConstructionID")]
-    public int editorConstructionID = 0;
-    [UnityEngine.Serialization.FormerlySerializedAs("Editor_bSelected")]
-    public bool isEditorSelected = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("Editor_MouseTerrainHit")]
-    public bool isEditorMouseHittingTerrain = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("Editor_MousePos")]
-    public Vector3 editorMousePos = new Vector3(0f, 0f, 0f);
-    [UnityEngine.Serialization.FormerlySerializedAs("Color_NodeDefaultColor")]
-    public Color defaultNodeColor = new Color(0f, 1f, 1f, 0.75f);
-    public readonly Color Color_NodeConnColor = new Color(0f, 1f, 0f, 0.75f);
-    public readonly Color Color_NodeInter = new Color(0f, 1f, 0f, 0.75f);
-    public Color selectedColor = Color.yellow;
-    public Color newNodePreviewColor = Color.red;
-
-
     private void OnDrawGizmosSelected()
     {
         if (isEditorMouseHittingTerrain)
@@ -1724,20 +1726,20 @@ public class GSDRoad : MonoBehaviour
     #endregion
 
 
-    public void Wireframes_Toggle()
+    public void WireframesToggle()
     {
         MeshRenderer[] MRs = transform.GetComponentsInChildren<MeshRenderer>();
-        Wireframes_Toggle_Help(ref MRs);
+        WireframesToggleHelp(ref MRs);
 
         if (spline != null)
         {
             MRs = spline.transform.GetComponentsInChildren<MeshRenderer>();
-            Wireframes_Toggle_Help(ref MRs);
+            WireframesToggleHelp(ref MRs);
         }
     }
 
 
-    private void Wireframes_Toggle_Help(ref MeshRenderer[] _MRs)
+    private void WireframesToggleHelp(ref MeshRenderer[] _MRs)
     {
         int meshRenderersCount = _MRs.Length;
         for (int i = 0; i < meshRenderersCount; i++)
@@ -1785,6 +1787,7 @@ public class GSDRoad : MonoBehaviour
     }
 
 
+    /// <summary> Setup a unique ID </summary>
     public void SetupUniqueIdentifier()
     {
         if (UID == null || UID.Length < 4)

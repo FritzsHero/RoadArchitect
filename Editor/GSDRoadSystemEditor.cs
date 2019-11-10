@@ -8,6 +8,7 @@ using UnityEditor;
 [CustomEditor(typeof(GSDRoadSystem))]
 public class GSDRoadSystemEditor : Editor
 {
+    #region "Vars"
     //Main target for this editor file:
     protected GSDRoadSystem roadSystem { get { return (GSDRoadSystem) target; } }
 
@@ -39,6 +40,7 @@ public class GSDRoadSystemEditor : Editor
     private Texture2D warningLabelBG;
     private GUIStyle warningLabelStyle;
     private GUIStyle loadButton = null;
+    #endregion
 
 
     private void OnEnable()

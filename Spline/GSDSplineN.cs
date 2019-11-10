@@ -9,6 +9,7 @@ using GSD;
 
 public class GSDSplineN : MonoBehaviour
 {
+    #region "Vars"
     public Vector3 pos;
     public Quaternion rot;
     public Vector3 tangent;
@@ -150,6 +151,7 @@ public class GSDSplineN : MonoBehaviour
 
     [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
     public GSDRoadIntersection intersection = null;
+    #endregion
 #if UNITY_EDITOR
     [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
     public GSD.Roads.GSDIntersections.iConstructionMaker intersectionConstruction;

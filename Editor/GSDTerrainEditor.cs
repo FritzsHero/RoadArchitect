@@ -8,6 +8,7 @@ using UnityEditor;
 [CustomEditor(typeof(GSDTerrain))]
 public class GSDTerrainEditor : Editor
 {
+    #region "Vars"
     protected GSDTerrain terrain { get { return (GSDTerrain) target; } }
 
     //Serialized properties:
@@ -22,6 +23,18 @@ public class GSDTerrainEditor : Editor
     SerializedProperty splatSingleChoiceIndex;
     SerializedProperty roadSingleChoiceUID;
 
+    //Editor only variables:
+    private string[] roads = null;
+    private string[] roadsString = null;
+    private Texture refreshButtonText = null;
+    private GUIStyle imageButton = null;
+    private Texture2D loadButtonBG = null;
+    private Texture2D loadButtonBGGlow = null;
+    private GUIStyle loadButton = null;
+    SplatImageResoMatchingEnum splatReso = SplatImageResoMatchingEnum.None;
+    #endregion
+
+
     public enum SplatImageResoMatchingEnum
     {
         None,
@@ -33,7 +46,7 @@ public class GSDTerrainEditor : Editor
         MatchDetailResolution,
         MatchTerrainSize
     };
-    SplatImageResoMatchingEnum splatReso = SplatImageResoMatchingEnum.None;
+
 
     private static string[] TheSplatResoOptions = new string[]{
         "Select option to match resolution",
@@ -45,15 +58,6 @@ public class GSDTerrainEditor : Editor
         "Match detail resolution",
         "Match terrain size"
     };
-
-    //Editor only variables:
-    private string[] roads = null;
-    private string[] roadsString = null;
-    private Texture refreshButtonText = null;
-    private GUIStyle imageButton = null;
-    private Texture2D loadButtonBG = null;
-    private Texture2D loadButtonBGGlow = null;
-    private GUIStyle loadButton = null;
 
 
     private void OnEnable()

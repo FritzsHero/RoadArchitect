@@ -9,6 +9,7 @@ public class GSDSplineI : MonoBehaviour
 #if UNITY_EDITOR
     public class GSDSplineIN
     {
+        #region "Vars"
         public Vector3 pos;
         public Quaternion rot;
         public Vector3 tangent;
@@ -35,6 +36,7 @@ public class GSDSplineI : MonoBehaviour
         public bool isDestroyed = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bPreviewNode")]
         public bool isPreviewNode = false;
+        #endregion
 
 
         public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _time, string _name)
@@ -48,6 +50,7 @@ public class GSDSplineI : MonoBehaviour
     }
 
 
+    #region "Vars"
     [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
     public int count = 0;
     [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
@@ -61,6 +64,12 @@ public class GSDSplineI : MonoBehaviour
     public GSDSplineC spline;
     [UnityEngine.Serialization.FormerlySerializedAs("ActionNode")]
     public GSDSplineIN actionNode;
+    // Gizmos
+    [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDraw")]
+    public bool isDrawingGizmos = false;
+    [UnityEngine.Serialization.FormerlySerializedAs("GizmoDrawMeters")]
+    private float gizmoDrawMeters = 1f;
+    #endregion
 
 
     public void DetermineInsertNodes()
@@ -152,12 +161,6 @@ public class GSDSplineI : MonoBehaviour
 
 
     #region "Gizmos"
-    [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDraw")]
-    public bool isDrawingGizmos = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("GizmoDrawMeters")]
-    private float gizmoDrawMeters = 1f;
-
-
     private void OnDrawGizmos()
     {
         if (!isDrawingGizmos)
@@ -266,7 +269,7 @@ public class GSDSplineI : MonoBehaviour
         }
         mDistance_NoMod = mDistance;
         mDistance = mDistance * 1.05f;
-        //		float step = 0.1f / mDistance;
+        //float step = 0.1f / mDistance;
 
         //Get a slightly more accurate portrayal of the time:
         float tTime = 0f;
@@ -430,7 +433,8 @@ public class GSDSplineI : MonoBehaviour
             t2 = _t * _t;
             _t = _t * 2.0;
             t2 = t2 * 3.0;
-            t3 = 0; //Necessary for compiler error.
+            //Necessary for compiler error.
+            t3 = 0;
         }
 
         //Vectors:
@@ -440,7 +444,8 @@ public class GSDSplineI : MonoBehaviour
         Vector3 P3 = nodes[NGI(_i, NI[3])].pos;
 
         //Tension:
-        tension = 0.5f; // 0.5 equivale a catmull-rom
+        // 0.5 equivale a catmull-rom
+        tension = 0.5f;
 
         //Tangents:
         P2 = (P1 - P2) * tension;

@@ -8,8 +8,8 @@ using UnityEngine;
 /// <summary> Used for progress information for other areas of RA. </summary>
 public class GSDEditorProgressWindow : EditorWindow
 {
-    private float secs = 10.0f;
-    private float startVal = 0f;
+    private float seconds = 10.0f;
+    private float startValue = 0f;
     private float progress = 0f;
 
 
@@ -22,30 +22,30 @@ public class GSDEditorProgressWindow : EditorWindow
 
     private void OnGUI()
     {
-        secs = EditorGUILayout.FloatField("Time to wait:", secs);
+        seconds = EditorGUILayout.FloatField("Time to wait:", seconds);
         if (GUILayout.Button("Display bar"))
         {
-            if (secs < 1)
+            if (seconds < 1)
             {
                 Debug.LogError("Seconds should be bigger than 1");
                 return;
             }
-            startVal = (float) EditorApplication.timeSinceStartup;
+            startValue = (float) EditorApplication.timeSinceStartup;
         }
 
-        if (progress < secs)
+        if (progress < seconds)
         {
             EditorUtility.DisplayProgressBar(
             "Simple Progress Bar",
             "Shows a progress bar for the given seconds",
-            progress / secs);
+            progress / seconds);
         }
         else
         {
             EditorUtility.ClearProgressBar();
         }
 
-        progress = (float) (EditorApplication.timeSinceStartup - startVal);
+        progress = (float) (EditorApplication.timeSinceStartup - startValue);
     }
 
 

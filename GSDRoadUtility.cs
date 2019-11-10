@@ -304,14 +304,15 @@ namespace GSD.Roads
         }
 
 
+        /// <summary> Checks all terrains and adds GSDTerrain if necessary </summary>
         private static void CheckAllTerrains()
         {
             Object[] allTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
             GSDTerrain TID;
             GameObject terrainObj;
-            foreach (Terrain tTerrain in allTerrains)
+            foreach (Terrain terrain in allTerrains)
             {
-                terrainObj = tTerrain.transform.gameObject;
+                terrainObj = terrain.transform.gameObject;
                 TID = terrainObj.GetComponent<GSDTerrain>();
                 if (TID == null)
                 {
@@ -347,7 +348,7 @@ namespace GSD.Roads
         private static void ProcessRoadTerrainHook1Do(ref GSDSplineC _spline, ref GSDRoad _road, bool _isMultithreaded)
         {
             GSDRootUtil.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
-            //First lets make sure all terrains have GSD shit on them:
+            //First lets make sure all terrains have GSDTerrain shit on them:
             CheckAllTerrains();
 
             //Reset the terrain:
@@ -5732,7 +5733,7 @@ namespace GSD.Roads
             tObjRL.transform.name = "TrafficLightRL";
             //LR:
             tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-            //			xDir = (GSDRI.CornerLR - GSDRI.transform.position).normalized;
+            //xDir = (GSDRI.CornerLR - GSDRI.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
             {

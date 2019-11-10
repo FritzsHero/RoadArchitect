@@ -10,6 +10,7 @@ public class GSDSplineF : MonoBehaviour
 
     public class GSDSplineFN
     {
+        #region "Vars"
         public Vector3 pos;
         public Quaternion rot;
         public Vector3 tangent;
@@ -36,6 +37,7 @@ public class GSDSplineF : MonoBehaviour
         public bool isDestroyed = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bPreviewNode")]
         public bool isPreviewNode = false;
+        #endregion
 
 
         public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _tTime, string _name)
@@ -49,6 +51,7 @@ public class GSDSplineF : MonoBehaviour
     }
 
 
+    #region "Vars"
     [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
     public int count = 0;
     [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
@@ -60,15 +63,15 @@ public class GSDSplineF : MonoBehaviour
     public Vector3 mousePos = new Vector3(0f, 0f, 0f);
     [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
     public GSDSplineC spline;
-
-
-    #region "Gizmos"
+    // Gizmos
     [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDraw")]
     public bool isDrawingGizmos = false;
     [UnityEngine.Serialization.FormerlySerializedAs("GizmoDrawMeters")]
     private float gizmoDrawMeters = 1f;
+    #endregion
 
 
+    #region "Gizmos"
     private void OnDrawGizmos()
     {
         if (!isDrawingGizmos)
