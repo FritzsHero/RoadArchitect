@@ -405,7 +405,7 @@ namespace GSD.Roads.Splination
         {
             SplinatedMeshLibraryMaker SLM = new SplinatedMeshLibraryMaker();
             SLM.Setup(this);
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string basePath = GSDRootUtil.GetDirLibrary();
             string filePath = basePath + "ESO" + tName + ".gsd";
             if (_name.Length > 0)
@@ -429,7 +429,7 @@ namespace GSD.Roads.Splination
             string filePath = basePath + "ESO" + _name + ".gsd";
             if (_isQuickAdd)
             {
-                GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+                GSDRootUtil.CheckCreateSpecialLibraryDirs();
                 filePath = basePath + "Q/ESO" + _name + ".gsd";
             }
             SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
@@ -440,7 +440,7 @@ namespace GSD.Roads.Splination
 
         public void LoadFromLibraryWizard(string _name)
         {
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string basePath = GSDRootUtil.GetDirLibrary();
             string filePath = basePath + "W/" + _name + ".gsd";
             SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);

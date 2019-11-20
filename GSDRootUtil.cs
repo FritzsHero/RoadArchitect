@@ -350,27 +350,29 @@ namespace GSD
         }
 
 
-        public static void GetDirLibraryCheckSpecialDirs()
+        /// <summary> Checks for the existing Library folders or creates them if not present </summary>
+        public static void CheckCreateSpecialLibraryDirs()
         {
-            string xPath = GetDirLibraryBase() + "Q/";
-            if (!Directory.Exists(xPath))
+            string basePath = GetDirLibraryBase();
+            string directoryPath = basePath + "Q/";
+            if (!Directory.Exists(directoryPath))
             {
-                Directory.CreateDirectory(xPath);
+                Directory.CreateDirectory(directoryPath);
             }
-            xPath = GetDirLibraryBase() + "W/";
-            if (!Directory.Exists(xPath))
+            directoryPath = basePath + "W/";
+            if (!Directory.Exists(directoryPath))
             {
-                Directory.CreateDirectory(xPath);
+                Directory.CreateDirectory(directoryPath);
             }
-            xPath = GetDirLibraryBase() + "B/";
-            if (!Directory.Exists(xPath))
+            directoryPath = basePath + "B/";
+            if (!Directory.Exists(directoryPath))
             {
-                Directory.CreateDirectory(xPath);
+                Directory.CreateDirectory(directoryPath);
             }
-            xPath = GetDirLibraryBase() + "B/W/";
-            if (!Directory.Exists(xPath))
+            directoryPath = basePath + "B/W/";
+            if (!Directory.Exists(directoryPath))
             {
-                Directory.CreateDirectory(xPath);
+                Directory.CreateDirectory(directoryPath);
             }
         }
         #endregion

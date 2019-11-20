@@ -4973,7 +4973,7 @@ namespace GSD.Roads
             int eCount = _edgeObjects.Length;
             //Splinated objects first:
             Splination.SplinatedMeshMaker SMM = null;
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string xPath = GSDRootUtil.GetDirLibrary();
             string tPath = xPath + "B/" + _wizardObj.fileName + ".gsd";
             if (_wizardObj.isDefault)
@@ -5016,7 +5016,7 @@ namespace GSD.Roads
 #else
 
             string tPath = "";
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string xPath = GSDRootUtil.GetDirLibrary();
             if (_isDefault)
             {

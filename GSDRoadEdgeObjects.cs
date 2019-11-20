@@ -257,7 +257,7 @@ namespace GSD.Roads.EdgeObjects
         {
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
             EOLM.Setup(this);
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string xPath = GSDRootUtil.GetDirLibrary();
             string tPath = xPath + "EOM" + objectName + ".gsd";
             if (_fileName.Length > 0)
@@ -277,7 +277,7 @@ namespace GSD.Roads.EdgeObjects
 
         public void LoadFromLibrary(string _fileName, bool _isQuickAdd = false)
         {
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string xPath = GSDRootUtil.GetDirLibrary();
             string tPath = xPath + "EOM" + _fileName + ".gsd";
             if (_isQuickAdd)
@@ -292,7 +292,7 @@ namespace GSD.Roads.EdgeObjects
 
         public void LoadFromLibraryWizard(string _fileName)
         {
-            GSDRootUtil.GetDirLibraryCheckSpecialDirs();
+            GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string xPath = GSDRootUtil.GetDirLibrary();
             string tPath = xPath + "W/" + _fileName + ".gsd";
             EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadXML<EdgeObjectLibraryMaker>(ref tPath);
