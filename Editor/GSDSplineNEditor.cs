@@ -40,7 +40,7 @@ public class GSDSplineNEditor : Editor
     private Texture edgeButtonTexture = null;
     private Texture helpButtonTexture = null;
     private Texture refreshButtonTexture = null;
-    private Texture defaultbuttonTexture = null;
+    private Texture defaultButtonTexture = null;
     private Texture2D loadButtonBG = null;
     private Texture2D textAreaBG = null;
     private Texture2D loadButtonBGGlow = null;
@@ -229,6 +229,15 @@ public class GSDSplineNEditor : Editor
     }
 
 
+    private void CheckLoadTexture(Texture _texture, string _path)
+    {
+        if (_texture == null)
+        {
+            _texture = (Texture)AssetDatabase.LoadAssetAtPath(_path, typeof(Texture)) as Texture;
+        }
+    }
+
+
     private void Init()
     {
         isInitialized = true;
@@ -236,58 +245,19 @@ public class GSDSplineNEditor : Editor
         EditorStyles.miniLabel.wordWrap = true;
         string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
-        if (deleteButtonTexture == null)
-        {
-            deleteButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
-        }
-        if (copyButtonTexture == null)
-        {
-            copyButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
-        }
-        if (loadButtonTexture == null)
-        {
-            loadButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
-        }
-        if (saveButtonTexture == null)
-        {
-            saveButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
-        }
-        if (extrudeButtonTexture == null)
-        {
-            extrudeButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
-        }
-        if (edgeButtonTexture == null)
-        {
-            edgeButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
-        }
-        if (helpButtonTexture == null)
-        {
-            helpButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
-        }
-        if (textAreaBG == null)
-        {
-            textAreaBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBG == null)
-        {
-            loadButtonBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBGGlow == null)
-        {
-            loadButtonBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (manualBG == null)
-        {
-            manualBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (refreshButtonTexture == null)
-        {
-            refreshButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
-        }
-        if (defaultbuttonTexture == null)
-        {
-            defaultbuttonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
-        }
+        CheckLoadTexture(deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
+        CheckLoadTexture(copyButtonTexture, basePath + "/Editor/Icons/copy.png");
+        CheckLoadTexture(loadButtonTexture, basePath + "/Editor/Icons/load.png");
+        CheckLoadTexture(saveButtonTexture, basePath + "/Editor/Icons/save.png");
+        CheckLoadTexture(extrudeButtonTexture, basePath + "/Editor/Icons/extrude.png");
+        CheckLoadTexture(edgeButtonTexture, basePath + "/Editor/Icons/edge.png");
+        CheckLoadTexture(helpButtonTexture, basePath + "/Editor/Icons/help.png");
+        CheckLoadTexture(textAreaBG, basePath + "/Editor/Icons/popupbg.png");
+        CheckLoadTexture(loadButtonBG, basePath + "/Editor/Icons/loadbg.png");
+        CheckLoadTexture(loadButtonBGGlow, basePath + "/Editor/Icons/loadbgglow.png");
+        CheckLoadTexture(manualBG, basePath + "/Editor/Icons/manualbg.png");
+        CheckLoadTexture(refreshButtonTexture, basePath + "/Editor/Icons/refresh.png");
+        CheckLoadTexture(defaultButtonTexture, basePath + "/Editor/Icons/refresh2.png");
 
         if (imageButton == null)
         {
@@ -685,7 +655,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             { }
             EditorGUILayout.LabelField("= Resets setting(s) to default.", EditorStyles.miniLabel);
             EditorGUILayout.EndHorizontal();
@@ -957,7 +927,7 @@ public class GSDSplineNEditor : Editor
             //Vector min/max threshold: 
             EditorGUILayout.BeginHorizontal();
             SMM.EM.MinMaxMod = EditorGUILayout.Slider("Vertex min/max threshold: ", SMM.minMaxMod, 0.01f, 0.2f);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.MinMaxMod = 0.05f;
             }
@@ -966,7 +936,7 @@ public class GSDSplineNEditor : Editor
             //Vertex matching precision:
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VertexMatchingPrecision = EditorGUILayout.Slider("Vertex matching precision: ", SMM.vertexMatchingPrecision, 0f, 0.01f);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.VertexMatchingPrecision = 0.005f;
             }
@@ -983,7 +953,7 @@ public class GSDSplineNEditor : Editor
                 EditorGUILayout.BeginVertical("TextArea");
                 EditorGUILayout.BeginHorizontal();
                 SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
-                if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     SMM.EM.isMatchingRoadDefinition = false;
                 }
@@ -1002,7 +972,7 @@ public class GSDSplineNEditor : Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
-                if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+                if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     SMM.EM.isMatchingRoadDefinition = false;
                 }
@@ -1016,7 +986,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VerticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", SMM.VerticalRaise, -512f, 512f);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.VerticalRaise = 0f;
             }
@@ -1031,7 +1001,7 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.BeginHorizontal();
             SMM.EM.VerticalCurve = EditorGUILayout.CurveField("Curve: ", SMM.VerticalCurve);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref SMM.EM.VerticalCurve);
             }
@@ -1072,7 +1042,7 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.BeginHorizontal();
             SMM.EM.HorizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", SMM.EM.HorizontalSep, (-1f * horizRoadMax), horizRoadMax);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.HorizontalSep = 0f;
             }
@@ -1088,7 +1058,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             SMM.EM.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", SMM.HorizontalCurve);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref SMM.EM.HorizontalCurve);
             }
@@ -1276,7 +1246,7 @@ public class GSDSplineNEditor : Editor
             //			if(GUILayout.Button("Reset custom rotation",EditorStyles.miniButton,GUILayout.Width(160f))){
             //				SMM.CustomRotation = new Vector3(0f,0f,0f);
             //			}
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SMM.EM.CustomRotation = new Vector3(0f, 0f, 0f);
             }
@@ -1705,7 +1675,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.verticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", EOM.verticalRaise, -512f, 512f);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.verticalRaise = 0f;
             }
@@ -1717,7 +1687,7 @@ public class GSDSplineNEditor : Editor
             }
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.verticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.verticalCurve);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref EOM.edgeMaker.verticalCurve);
             }
@@ -1777,7 +1747,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.horizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.horizontalSep = 0f;
             }
@@ -1790,7 +1760,7 @@ public class GSDSplineNEditor : Editor
             { EnforceCurve(ref EOM.horizontalCurve); }
             EditorGUILayout.BeginHorizontal();
             EOM.edgeMaker.horizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.horizontalCurve);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 ResetCurve(ref EOM.edgeMaker.horizontalCurve);
             }
@@ -1809,7 +1779,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Custom rotation: ");
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.customRotation = new Vector3(0f, 0f, 0f);
             }
@@ -1823,7 +1793,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.BeginHorizontal();
             float scale = EditorGUILayout.Slider("Custom scale: ", EOM.customScale.x, 1f, 10f);
             EOM.edgeMaker.customScale = new Vector3(scale, scale, scale);
-            if (GUILayout.Button(defaultbuttonTexture, imageButton, GUILayout.Width(16f)))
+            if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 EOM.edgeMaker.customScale = new Vector3(1f, 1f, 1f);
             }
