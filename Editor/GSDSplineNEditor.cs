@@ -228,58 +228,59 @@ public class GSDSplineNEditor : Editor
         isInitialized = true;
         EditorStyles.label.wordWrap = true;
         EditorStyles.miniLabel.wordWrap = true;
+        string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
         if (deleteButtonTexture == null)
         {
-            deleteButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            deleteButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
         if (copyButtonTexture == null)
         {
-            copyButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
+            copyButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/copy.png", typeof(Texture)) as Texture;
         }
         if (loadButtonTexture == null)
         {
-            loadButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
+            loadButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/load.png", typeof(Texture)) as Texture;
         }
         if (saveButtonTexture == null)
         {
-            saveButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
+            saveButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/save.png", typeof(Texture)) as Texture;
         }
         if (extrudeButtonTexture == null)
         {
-            extrudeButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
+            extrudeButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/extrude.png", typeof(Texture)) as Texture;
         }
         if (edgeButtonTexture == null)
         {
-            edgeButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
+            edgeButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/edge.png", typeof(Texture)) as Texture;
         }
         if (helpButtonTexture == null)
         {
-            helpButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
+            helpButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/help.png", typeof(Texture)) as Texture;
         }
         if (textAreaBG == null)
         {
-            textAreaBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
+            textAreaBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/popupbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (loadButtonBG == null)
         {
-            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/loadbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (loadButtonBGGlow == null)
         {
-            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
+            loadButtonBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/loadbgglow.png", typeof(Texture2D)) as Texture2D;
         }
         if (manualBG == null)
         {
-            manualBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
+            manualBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/manualbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (refreshButtonTexture == null)
         {
-            refreshButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
+            refreshButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
         }
         if (defaultbuttonTexture == null)
         {
-            defaultbuttonTexture = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            defaultbuttonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
 
         if (imageButton == null)
@@ -322,22 +323,22 @@ public class GSDSplineNEditor : Editor
             guiButton.normal.textColor = new Color(0.5f, 1f, 0.5f, 1f);
         }
 
-        float tRoadWidthHalf = node.spline.road.RoadWidth() * 0.5f;
+        float halfRoadWidth = node.spline.road.RoadWidth() * 0.5f;
         HorizMatchSubTypeDescriptions = new string[6];
         HorizMatchSubTypeDescriptions[0] = "Select preset";
         HorizMatchSubTypeDescriptions[1] = "Match center: 0 meters";
-        HorizMatchSubTypeDescriptions[2] = "Match road left edge: -" + tRoadWidthHalf.ToString("F1") + " meters";
-        HorizMatchSubTypeDescriptions[4] = "Match road right edge: " + tRoadWidthHalf.ToString("F1") + " meters";
+        HorizMatchSubTypeDescriptions[2] = "Match road left edge: -" + halfRoadWidth.ToString("F1") + " meters";
+        HorizMatchSubTypeDescriptions[4] = "Match road right edge: " + halfRoadWidth.ToString("F1") + " meters";
 
         if (node.spline.road.isShouldersEnabled)
         {
-            HorizMatchSubTypeDescriptions[3] = "Match shoulder left edge: -" + (tRoadWidthHalf + node.spline.road.shoulderWidth).ToString("F1") + " meters";
-            HorizMatchSubTypeDescriptions[5] = "Match shoulder right edge: " + (tRoadWidthHalf + node.spline.road.shoulderWidth).ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[3] = "Match shoulder left edge: -" + (halfRoadWidth + node.spline.road.shoulderWidth).ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[5] = "Match shoulder right edge: " + (halfRoadWidth + node.spline.road.shoulderWidth).ToString("F1") + " meters";
         }
         else
         {
-            HorizMatchSubTypeDescriptions[2] = "Match shoulder left edge: -" + tRoadWidthHalf.ToString("F1") + " meters";
-            HorizMatchSubTypeDescriptions[4] = "Match shoulder right edge: " + tRoadWidthHalf.ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[2] = "Match shoulder left edge: -" + halfRoadWidth.ToString("F1") + " meters";
+            HorizMatchSubTypeDescriptions[4] = "Match shoulder right edge: " + halfRoadWidth.ToString("F1") + " meters";
         }
 
         horizRoadMax = node.spline.road.RoadWidth() * 20;

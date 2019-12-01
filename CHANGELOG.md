@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an issue, which caused long names of physic materials
 - Instantiating EdgeObjects as Prefabs
 - Improved performance of CheckCreateSpecialLibraryDirs
+- Improved performance of SplineNEditor Init function
 
 
 ## [Version: 1.9_FH] - 2019.04.22
