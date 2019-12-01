@@ -10,7 +10,7 @@ using GSD;
 public class GSDRoadIntersectionEditor : Editor
 {
     #region "Vars"
-    protected GSDRoadIntersection intersection { get { return (GSDRoadIntersection) target; } }
+    private GSDRoadIntersection intersection;
 
     private SerializedProperty isAutoUpdatingIntersection;
     private SerializedProperty isDrawingGizmo;
@@ -111,6 +111,8 @@ public class GSDRoadIntersectionEditor : Editor
 
     private void OnEnable()
     {
+        intersection = (GSDRoadIntersection)target;
+
         isAutoUpdatingIntersection = serializedObject.FindProperty("isAutoUpdatingIntersection");
         isDrawingGizmo = serializedObject.FindProperty("isDrawingGizmo");
         isLeftTurnYieldOnGreen = serializedObject.FindProperty("isLeftTurnYieldOnGreen");

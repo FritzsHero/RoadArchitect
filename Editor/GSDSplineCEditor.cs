@@ -8,8 +8,14 @@ using UnityEditor;
 [CustomEditor(typeof(GSDSplineC))]
 public class GSDSplineCEditor : Editor
 {
-    protected GSDSplineC spline { get { return (GSDSplineC) target; } }
+    private GSDSplineC spline;
     private int browseNode = 0;
+
+
+    private void OnEnable()
+    {
+        spline = (GSDSplineC)target;
+    }
 
 
     public override void OnInspectorGUI()

@@ -7,7 +7,13 @@ using UnityEditor;
 [CustomEditor(typeof(GSDSplineF))]
 public class GSDSplineFEditor : Editor
 {
-    protected GSDSplineF splineF { get { return (GSDSplineF) target; } }
+    private GSDSplineF splineF;
+
+
+    private void OnEnable()
+    {
+        splineF = (GSDSplineF)target;
+    }
 
 
     public override void OnInspectorGUI()

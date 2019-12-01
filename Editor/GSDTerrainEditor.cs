@@ -9,7 +9,7 @@ using UnityEditor;
 public class GSDTerrainEditor : Editor
 {
     #region "Vars"
-    protected GSDTerrain terrain { get { return (GSDTerrain) target; } }
+    private GSDTerrain terrain;
 
     //Serialized properties:
     SerializedProperty splatImageWidth;
@@ -62,6 +62,8 @@ public class GSDTerrainEditor : Editor
 
     private void OnEnable()
     {
+        terrain = (GSDTerrain)target;
+
         splatImageWidth = serializedObject.FindProperty("splatResoWidth");
         splatImageHeight = serializedObject.FindProperty("splatResoHeight");
         splatBackgroundColor = serializedObject.FindProperty("splatBackground");

@@ -16,7 +16,7 @@ using GSD;
 public class GSDSplineNEditor : Editor
 {
     #region "Vars"
-    protected GSDSplineN node { get { return (GSDSplineN) target; } }
+    private GSDSplineN node;
     private const string onlineHelpDesc = "Visit the online manual for the most effective help.";
     private int count = -1;
     private int currentCount = 0;
@@ -221,6 +221,12 @@ public class GSDSplineNEditor : Editor
         "Straight line box collider"
     };
     #endregion
+
+
+    private void OnEnable()
+    {
+        node = (GSDSplineN)target;
+    }
 
 
     private void Init()

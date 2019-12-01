@@ -10,7 +10,7 @@ public class GSDRoadSystemEditor : Editor
 {
     #region "Vars"
     //Main target for this editor file:
-    protected GSDRoadSystem roadSystem { get { return (GSDRoadSystem) target; } }
+    private GSDRoadSystem roadSystem;
 
     //Serialized properties:
     private SerializedProperty isTempMultithreading;
@@ -45,6 +45,8 @@ public class GSDRoadSystemEditor : Editor
 
     private void OnEnable()
     {
+        roadSystem = (GSDRoadSystem)target;
+
         isTempMultithreading = serializedObject.FindProperty("isMultithreaded");
         isTempSaveMeshAssets = serializedObject.FindProperty("isSavingMeshes");
     }

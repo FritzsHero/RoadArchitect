@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Instantiating EdgeObjects as Prefabs
 - Improved performance of CheckCreateSpecialLibraryDirs
 - Improved performance of SplineNEditor Init function
+- Reduced target casting in Editor scripts
 
 
 ## [Version: 1.9_FH] - 2019.04.22

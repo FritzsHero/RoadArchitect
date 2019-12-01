@@ -25,7 +25,7 @@ public class GSDRoadEditor : Editor
 
 
     #region "Vars"
-    protected GSDRoad road { get { return (GSDRoad)target; } }
+    private GSDRoad road;
 
     #region "Serialized properties:"
     private SerializedProperty isGizmosEnabled;
@@ -116,6 +116,8 @@ public class GSDRoadEditor : Editor
 
     private void OnEnable()
     {
+        road = (GSDRoad)target;
+
         isGizmosEnabled = serializedObject.FindProperty("isGizmosEnabled");
         lanesAmount = serializedObject.FindProperty("laneAmount");
         laneWidth = serializedObject.FindProperty("laneWidth");
