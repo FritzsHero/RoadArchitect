@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored Init function of SplineNEditor
 - Improved performance of RoadEditor Init function
 - Improved performance of TerrainEditor Init function
+- Improved performance of RoadSystemEditor Init function
 
 
 ## [Version: 1.9_FH] - 2019.04.22
