@@ -179,30 +179,12 @@ public class GSDRoadEditor : Editor
         EditorStyles.label.wordWrap = true;
         string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
-        if (warningLabelBG == null)
-        {
-            warningLabelBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (refreshButtonTexture == null)
-        {
-            refreshButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
-        }
-        if (refreshButtonTextureReal == null)
-        {
-            refreshButtonTextureReal = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
-        }
-        if (loadBtnBG == null)
-        {
-            loadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadBtnBGGlow == null)
-        {
-            loadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (deleteButtonText == null)
-        {
-            deleteButtonText = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
-        }
+        EditorUtilities.CheckLoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
+        EditorUtilities.CheckLoadTexture(ref refreshButtonTextureReal, basePath + "/Editor/Icons/refresh.png");
+        EditorUtilities.CheckLoadTexture(ref deleteButtonText, basePath + "/Editor/Icons/delete.png");
+        EditorUtilities.CheckLoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
+        EditorUtilities.CheckLoadTexture(ref loadBtnBG, basePath + "/Editor/Icons/otherbg.png");
+        EditorUtilities.CheckLoadTexture(ref loadBtnBGGlow, basePath + "/Editor/Icons/otherbg2.png");
 
         if (warningLabelStyle == null)
         {

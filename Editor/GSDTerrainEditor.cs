@@ -223,18 +223,9 @@ public class GSDTerrainEditor : Editor
     {
         string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
-        if (refreshButtonText == null)
-        {
-            refreshButtonText = (Texture) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
-        }
-        if (loadButtonBG == null)
-        {
-            loadButtonBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBGGlow == null)
-        {
-            loadButtonBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
-        }
+        RoadArchitect.EditorUtilities.CheckLoadTexture(ref refreshButtonText, basePath + "/Editor/Icons/refresh2.png");
+        RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/FlexBG.png");
+        RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/FlexBG.png");
 
         if (imageButton == null)
         {

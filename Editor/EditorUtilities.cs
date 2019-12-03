@@ -7,6 +7,16 @@ namespace RoadArchitect
     {
 
 
+        /// <summary> Loads the _texture from _path if necessary </summary>
+        public static void CheckLoadTexture<T>(ref T _texture, string _path) where T : Texture
+        {
+            if (_texture == null)
+            {
+                _texture = (T)UnityEditor.AssetDatabase.LoadAssetAtPath(_path, typeof(T)) as T;
+            }
+        }
+
+
         public static void DrawLine()
         {
             //Horizontal bar

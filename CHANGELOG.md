@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved performance of TerrainEditor Init function
 - Improved performance of RoadSystemEditor Init function
 - Improved performance of RoadIntersectionEditor Init function
+- Refactored CheckLoadTexture into EditorUtilities
 
 
 ## [Version: 1.9_FH] - 2019.04.22

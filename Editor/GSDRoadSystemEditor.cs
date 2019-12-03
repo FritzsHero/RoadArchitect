@@ -152,18 +152,9 @@ public class GSDRoadSystemEditor : Editor
     {
         string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
-        if (warningLabelBG == null)
-        {
-            warningLabelBG = (Texture2D) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBG == null)
-        {
-            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBGGlow == null)
-        {
-            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
-        }
+        RoadArchitect.EditorUtilities.CheckLoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
+        RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
+        RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/otherbg2.png");
 
         if (loadButton == null)
         {

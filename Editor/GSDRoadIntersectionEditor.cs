@@ -1160,22 +1160,10 @@ public class GSDRoadIntersectionEditor : Editor
         isInitialized = true;
         string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
-        if (refreshButtonTexture == null)
-        {
-            refreshButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
-        }
-        if (deleteButtonTexture == null)
-        {
-            deleteButtonTexture = (Texture) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
-        }
-        if (loadButtonBG == null)
-        {
-            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBGGlow == null)
-        {
-            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
-        }
+        EditorUtilities.CheckLoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
+        EditorUtilities.CheckLoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
+        EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
+        EditorUtilities.CheckLoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/otherbg2.png");
 
         if (imageButton == null)
         {
