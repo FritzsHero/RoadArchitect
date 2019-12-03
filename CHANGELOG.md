@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved performance of SplineNEditor Init function
 - Reduced target casting in Editor scripts
 - Refactored Init function of SplineNEditor
+- Improved performance of RoadEditor Init function
 
 
 ## [Version: 1.9_FH] - 2019.04.22

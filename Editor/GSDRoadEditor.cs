@@ -177,30 +177,31 @@ public class GSDRoadEditor : Editor
     {
         isInitialized = true;
         EditorStyles.label.wordWrap = true;
+        string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
 
         if (warningLabelBG == null)
         {
-            warningLabelBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
+            warningLabelBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/WarningLabelBG.png", typeof(Texture2D)) as Texture2D;
         }
         if (refreshButtonTexture == null)
         {
-            refreshButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            refreshButtonTexture = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
         if (refreshButtonTextureReal == null)
         {
-            refreshButtonTextureReal = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
+            refreshButtonTextureReal = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh.png", typeof(Texture)) as Texture;
         }
         if (loadBtnBG == null)
         {
-            loadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
+            loadBtnBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg.png", typeof(Texture2D)) as Texture2D;
         }
         if (loadBtnBGGlow == null)
         {
-            loadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
+            loadBtnBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/otherbg2.png", typeof(Texture2D)) as Texture2D;
         }
         if (deleteButtonText == null)
         {
-            deleteButtonText = (Texture)AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
+            deleteButtonText = (Texture)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/delete.png", typeof(Texture)) as Texture;
         }
 
         if (warningLabelStyle == null)
