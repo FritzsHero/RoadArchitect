@@ -221,10 +221,21 @@ public class GSDTerrainEditor : Editor
 
     private void InitNullChecks()
     {
+        string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+
         if (refreshButtonText == null)
         {
-            refreshButtonText = (Texture) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
+            refreshButtonText = (Texture) AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/refresh2.png", typeof(Texture)) as Texture;
         }
+        if (loadButtonBG == null)
+        {
+            loadButtonBG = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
+        }
+        if (loadButtonBGGlow == null)
+        {
+            loadButtonBGGlow = (Texture2D)AssetDatabase.LoadAssetAtPath(basePath + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
+        }
+
         if (imageButton == null)
         {
             imageButton = new GUIStyle(GUI.skin.button);
@@ -234,14 +245,7 @@ public class GSDTerrainEditor : Editor
             imageButton.padding = new RectOffset(0, 0, 0, 0);
             imageButton.normal.background = null;
         }
-        if (loadButtonBG == null)
-        {
-            loadButtonBG = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
-        }
-        if (loadButtonBGGlow == null)
-        {
-            loadButtonBGGlow = (Texture2D) AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Icons/FlexBG.png", typeof(Texture2D)) as Texture2D;
-        }
+
         if (loadButton == null)
         {
             loadButton = new GUIStyle(GUI.skin.button);
