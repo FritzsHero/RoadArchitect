@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using GSD;
+using RoadArchitect;
 #endregion
 
 
@@ -353,7 +354,7 @@ public class GSDSplineNEditor : Editor
             Init();
         }
 
-        RAEditorUtilitys.Line();
+        EditorUtilities.Line();
 
         #region "Online Manual on Top of SplineN Scripts"
         EditorGUILayout.LabelField(node.editorDisplayString, EditorStyles.boldLabel);
@@ -387,10 +388,10 @@ public class GSDSplineNEditor : Editor
         { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
             if (node.spline.road.isDynamicCutsEnabled)
             {
-                RAEditorUtilitys.Line();
+                EditorUtilities.Line();
                 isRoadCut = EditorGUILayout.Toggle("Cut road at this node: ", node.isRoadCut);
             }
-            RAEditorUtilitys.Line();
+            EditorUtilities.Line();
         }
         #endregion
 
@@ -414,7 +415,7 @@ public class GSDSplineNEditor : Editor
 
             if (bDidBridge)
             {
-                RAEditorUtilitys.Line();
+                RoadArchitect.EditorUtilities.Line();
             }
         }
 
@@ -463,7 +464,7 @@ public class GSDSplineNEditor : Editor
                 EditorGUILayout.LabelField(node.specialNodeCounterpart.spline.road.transform.name + " to " + node.specialNodeCounterpart.specialNodeCounterpart.spline.road.transform.name);
             }
             EditorGUILayout.LabelField("To break this road connection, click the \"Break road connection\" button.");
-            RAEditorUtilitys.Line();
+            EditorUtilities.Line();
         }
 
         //Statistics:
@@ -661,7 +662,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
-            RAEditorUtilitys.Line();
+            EditorUtilities.Line();
         }
         currentCount = 0;
 
@@ -708,7 +709,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.EndHorizontal();
         }
-        RAEditorUtilitys.Line();
+        EditorUtilities.Line();
     }
 
 
@@ -1264,8 +1265,9 @@ public class GSDSplineNEditor : Editor
             SMM.EM.isExactSplination = EditorGUILayout.Toggle("Directional extrusion: ", SMM.isExactSplination);
 
             EditorGUILayout.EndVertical();
-            RAEditorUtilitys.Line(4f, 4f);  // Big Lines
-            RAEditorUtilitys.Line(4f, 4f);
+            // Big Lines
+            EditorUtilities.Line(4f, 4f);
+            EditorUtilities.Line(4f, 4f);
         }
     }
 

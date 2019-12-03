@@ -82,7 +82,7 @@ public class GSDTerrainEditor : Editor
         serializedObject.Update();
         InitNullChecks();
 
-        RAEditorUtilitys.DrawLine();
+        RoadArchitect.EditorUtilities.DrawLine();
         EditorGUILayout.BeginHorizontal();
         //Main label:
         EditorGUILayout.LabelField("Splat map generation:", EditorStyles.boldLabel);

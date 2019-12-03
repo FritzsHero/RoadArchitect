@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using GSD.Roads;
 using GSD;
+using RoadArchitect;
 #endregion
 
 
@@ -268,7 +269,7 @@ public class GSDRoadEditor : Editor
         }
 
 
-        RAEditorUtilitys.Line();
+        EditorUtilities.Line();
         EditorGUILayout.LabelField(road.transform.name, EditorStyles.boldLabel);
         if (GUILayout.Button("Update road", loadButton))
         {
@@ -744,7 +745,7 @@ public class GSDRoadEditor : Editor
             GUILayout.Space(4f);
 
 
-            RAEditorUtilitys.Line();
+            EditorUtilities.Line();
             EditorGUILayout.LabelField("Manual splitting information: ");
             GUILayout.Space(4f);
             EditorGUILayout.LabelField("Choosing manual splitting will force the user to select individual nodes to cut instead of the cuts being performed automatically. This option is recommended if bigger mesh colliders do not cause a slowdown in performance, as it lowers the overall gameobject count.");
@@ -1128,7 +1129,7 @@ public class GSDRoadEditor : Editor
         EditorGUILayout.EndVertical();
 
         //Reset terrain history:
-        RAEditorUtilitys.Line();
+        EditorUtilities.Line();
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Reset road's terrain history:");
         isResetingTH = EditorGUILayout.Toggle(isResetingTH, GUILayout.Width(20f));
