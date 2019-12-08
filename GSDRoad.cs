@@ -1180,9 +1180,6 @@ public class GSDRoad : MonoBehaviour
 
 #if UNITY_EDITOR
     public float EditorCameraTimer = 0f;
-    private float EditorTestTimer = 0f;
-    [UnityEngine.Serialization.FormerlySerializedAs("bEditorTestTimer")]
-    private bool isEditorTestTimer = true;
 
 
     private void Update()
@@ -1194,23 +1191,6 @@ public class GSDRoad : MonoBehaviour
             {
                 EditorCameraTimer = 0f;
                 DoEditorCameraLoop();
-            }
-        }
-
-        if (isEditorTestTimer)
-        {
-            if (transform.name == "Road1")
-            {
-                EditorTestTimer += Time.deltaTime;
-                if (EditorTestTimer > 2f)
-                {
-                    //UpdateRoad(RoadUpdateTypeEnum.Full);
-                    isEditorTestTimer = false;
-                }
-            }
-            else
-            {
-                isEditorTestTimer = false;
             }
         }
     }
