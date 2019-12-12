@@ -174,7 +174,7 @@ public class GSDRoadIntersectionEditor : Editor
             Init();
         }
 
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         EditorGUILayout.BeginHorizontal();
         {
             GSDRoad road1 = intersection.node1.spline.transform.parent.GetComponent<GSDRoad>();
@@ -183,7 +183,7 @@ public class GSDRoadIntersectionEditor : Editor
             EditorGUILayout.LabelField("Second road: " + road2.name + " node: " + intersection.node2.name);
         }
         EditorGUILayout.EndHorizontal();
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         EditorGUILayout.LabelField("Intersection options", EditorStyles.boldLabel);
         if (GUILayout.Button("Update intersection", loadButton))
         {
@@ -213,7 +213,7 @@ public class GSDRoadIntersectionEditor : Editor
         {
             Application.OpenURL(GSD.Roads.GSDRoadUtilityEditor.GetRoadArchitectApplicationPath() + "/RoadArchitectManual.htm");
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         EditorGUILayout.BeginVertical();
         if (GUILayout.Button("Access objects on first road node"))
         {
@@ -225,7 +225,7 @@ public class GSDRoadIntersectionEditor : Editor
         }
         EditorGUILayout.EndVertical();
         //Option: Intersection turn lane options
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         EditorGUILayout.LabelField("Intersection turn lane options:");
         if (intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
         {
@@ -249,7 +249,7 @@ public class GSDRoadIntersectionEditor : Editor
                 EditorGUILayout.EndVertical();
             }
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
 
 
         //Option: Intersection stop type:
@@ -306,7 +306,7 @@ public class GSDRoadIntersectionEditor : Editor
         if (intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
         {
             //Option: Traffic light poles:
-            EditorUtilities.Line();
+            EditorUtilities.DrawLine();
             EditorGUILayout.LabelField("Traffic light poles:");
             isTrafficPoleStreetLight.boolValue = EditorGUILayout.Toggle("Street lights: ", intersection.isTrafficPoleStreetLight);
 
@@ -328,7 +328,7 @@ public class GSDRoadIntersectionEditor : Editor
             }
 
             //Option: Point lights enabled:
-            EditorUtilities.Line();
+            EditorUtilities.DrawLine();
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Point lights:");
             EditorGUILayout.EndHorizontal();
@@ -383,7 +383,7 @@ public class GSDRoadIntersectionEditor : Editor
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
             }
-            EditorUtilities.Line();
+            EditorUtilities.DrawLine();
 
             //Option: Traffic light scaling sensitivity:
             EditorGUILayout.LabelField("Traffic light scaling sensitivity: *Does not auto-update");
@@ -420,7 +420,7 @@ public class GSDRoadIntersectionEditor : Editor
         }
 
         //Option: Grade correction modifier:
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Grade correction factor: *Does not auto-update");
         EditorGUILayout.EndHorizontal();
@@ -458,7 +458,7 @@ public class GSDRoadIntersectionEditor : Editor
         }
 
         //Option: Use default materials:
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         isUsingDefaultMaterials.boolValue = EditorGUILayout.Toggle("Use default materials:", intersection.isUsingDefaultMaterials);
         isShowingDefaultMatHelp = EditorGUILayout.Foldout(isShowingDefaultMatHelp, status);
         if (isShowingDefaultMatHelp)
@@ -469,7 +469,7 @@ public class GSDRoadIntersectionEditor : Editor
         }
 
 
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Center marker material(s):");
         if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
@@ -534,7 +534,7 @@ public class GSDRoadIntersectionEditor : Editor
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
 
         //Options: Marker ext stretched materials:
         EditorGUILayout.BeginHorizontal();
@@ -583,7 +583,7 @@ public class GSDRoadIntersectionEditor : Editor
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
 
         //Options: Marker ext tiled materials:
         EditorGUILayout.BeginHorizontal();
@@ -633,7 +633,7 @@ public class GSDRoadIntersectionEditor : Editor
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
 
         //Option: Lane section 0:
         EditorGUILayout.BeginHorizontal();
@@ -755,7 +755,7 @@ public class GSDRoadIntersectionEditor : Editor
             DoDeleteHelpMat();
             EditorGUILayout.EndVertical();
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
 
         //		if(bDebug){
         //			Line();

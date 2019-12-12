@@ -3,7 +3,7 @@
 
 namespace RoadArchitect
 {
-    public class EditorUtilities : MonoBehaviour
+    public class EditorUtilities
     {
 
 
@@ -17,15 +17,7 @@ namespace RoadArchitect
         }
 
 
-        public static void DrawLine()
-        {
-            //Horizontal bar
-            GUILayout.Space(4f);
-            GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
-        }
-
-
-        public static void Line(float _spacing = 4f, float _size = 1f)
+        public static void DrawLine(float _spacing = 4f, float _size = 1f)
         {
             //Horizontal bar
             GUILayout.Space(_spacing);

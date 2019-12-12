@@ -345,7 +345,7 @@ public class GSDSplineNEditor : Editor
             Init();
         }
 
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
 
         #region "Online Manual on Top of SplineN Scripts"
         EditorGUILayout.LabelField(node.editorDisplayString, EditorStyles.boldLabel);
@@ -376,13 +376,14 @@ public class GSDSplineNEditor : Editor
 
         #region "Option: Manual road cut"
         if (node.idOnSpline > 0 && node.idOnSpline < (node.spline.GetNodeCount() - 1) && !node.isIntersection && !node.isSpecialEndNode)
-        { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
+        {
+            // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
             if (node.spline.road.isDynamicCutsEnabled)
             {
-                EditorUtilities.Line();
+                EditorUtilities.DrawLine();
                 isRoadCut = EditorGUILayout.Toggle("Cut road at this node: ", node.isRoadCut);
             }
-            EditorUtilities.Line();
+            EditorUtilities.DrawLine();
         }
         #endregion
 
@@ -406,7 +407,7 @@ public class GSDSplineNEditor : Editor
 
             if (bDidBridge)
             {
-                RoadArchitect.EditorUtilities.Line();
+                RoadArchitect.EditorUtilities.DrawLine();
             }
         }
 
@@ -455,7 +456,7 @@ public class GSDSplineNEditor : Editor
                 EditorGUILayout.LabelField(node.specialNodeCounterpart.spline.road.transform.name + " to " + node.specialNodeCounterpart.specialNodeCounterpart.spline.road.transform.name);
             }
             EditorGUILayout.LabelField("To break this road connection, click the \"Break road connection\" button.");
-            EditorUtilities.Line();
+            EditorUtilities.DrawLine();
         }
 
         //Statistics:
@@ -653,7 +654,7 @@ public class GSDSplineNEditor : Editor
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
-            EditorUtilities.Line();
+            EditorUtilities.DrawLine();
         }
         currentCount = 0;
 
@@ -700,7 +701,7 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.EndHorizontal();
         }
-        EditorUtilities.Line();
+        EditorUtilities.DrawLine();
     }
 
 
@@ -1257,8 +1258,8 @@ public class GSDSplineNEditor : Editor
 
             EditorGUILayout.EndVertical();
             // Big Lines
-            EditorUtilities.Line(4f, 4f);
-            EditorUtilities.Line(4f, 4f);
+            EditorUtilities.DrawLine(4f, 4f);
+            EditorUtilities.DrawLine(4f, 4f);
         }
     }
 

@@ -62,13 +62,13 @@ public class GSDRoadSystemEditor : Editor
         InitChecks();
 
         //Add road button:
-        RoadArchitect.EditorUtilities.Line();
+        RoadArchitect.EditorUtilities.DrawLine();
         if (GUILayout.Button("Add road", loadButton, GUILayout.Width(128f)))
         {
             // || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
             Selection.activeObject = roadSystem.AddRoad();
         }
-        RoadArchitect.EditorUtilities.Line();
+        RoadArchitect.EditorUtilities.DrawLine();
 
         //Update all roads button:
         if (GUILayout.Button("Update all roads", EditorStyles.miniButton, GUILayout.Width(120f)))
@@ -113,7 +113,7 @@ public class GSDRoadSystemEditor : Editor
         {
             roadSystem.EditorCameraSetSingle();
         }
-        RoadArchitect.EditorUtilities.Line();
+        RoadArchitect.EditorUtilities.DrawLine();
 
         //		bHasDoneEither = false;
 
