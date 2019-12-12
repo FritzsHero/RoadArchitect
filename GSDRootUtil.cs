@@ -391,6 +391,16 @@ namespace GSD
         }
 
 
+        /// <summary> Setup a unique ID </summary>
+        public static void SetupUniqueIdentifier(ref string _uID)
+        {
+            if (_uID == null || _uID.Length < 4)
+            {
+                _uID = System.Guid.NewGuid().ToString();
+            }
+        }
+
+
         #region "Profiling"
         public static void StartProfiling(GSDRoad _road, string _profileName)
         {

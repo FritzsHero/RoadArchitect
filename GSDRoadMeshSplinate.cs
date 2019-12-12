@@ -230,7 +230,7 @@ namespace GSD.Roads.Splination
             spline = _spline;
             node = _node;
             masterObjTrans = _transform;
-            SetupUniqueIdentifier();
+            GSDRootUtil.SetupUniqueIdentifier(ref uID);
         }
 
 
@@ -365,7 +365,7 @@ namespace GSD.Roads.Splination
             SMM.Desc = Desc;
             SMM.DisplayName = DisplayName;
 
-            SMM.SetupUniqueIdentifier();
+            GSDRootUtil.SetupUniqueIdentifier(ref SMM.uID);
 
             return SMM;
         }
@@ -1586,15 +1586,6 @@ namespace GSD.Roads.Splination
 
 
         #region "Static util"
-        public void SetupUniqueIdentifier()
-        {
-            if (uID == null || uID.Length < 4)
-            {
-                uID = System.Guid.NewGuid().ToString();
-            }
-        }
-
-
         public static Vector3 GetVector3Average(Vector3[] _vectors)
         {
             int tCount = _vectors.Length;
@@ -1977,7 +1968,7 @@ namespace GSD.Roads.Splination
         {
 #if UNITY_EDITOR
             isRequiringUpdate = false;
-            SetupUniqueIdentifier();
+            GSDRootUtil.SetupUniqueIdentifier(ref uID);
 
             //Buffers:
             Vector3 tVect1 = default(Vector3);

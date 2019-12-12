@@ -122,7 +122,7 @@ public class GSDSplineC : MonoBehaviour
         //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
 
         //Setup unique ID:
-        SetupUniqueIdentifier();
+        GSDRootUtil.SetupUniqueIdentifier(ref uID);
 
         //Set spline root:
         splineRoot = transform.gameObject;
@@ -332,15 +332,6 @@ public class GSDSplineC : MonoBehaviour
     }
 
 
-    private void SetupUniqueIdentifier()
-    {
-        if (uID == null || uID.Length < 4)
-        {
-            uID = System.Guid.NewGuid().ToString();
-        }
-    }
-
-
     /// <summary> Renames the Nodes to their id on the Spline </summary>
     private void RenameNodes()
     {
@@ -409,7 +400,7 @@ public class GSDSplineC : MonoBehaviour
             }
 
             tNode.Setup(tNode.transform.position, rot, new Vector2(0f, 1f), step * ((float) i), tNode.transform.gameObject.name);
-            tNode.SetupUniqueIdentifier();
+            GSDRootUtil.SetupUniqueIdentifier(ref tNode.uID);
             this.nodes.Add(tNode);
         }
 

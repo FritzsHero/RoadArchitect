@@ -591,8 +591,7 @@ public class GSDRoad : MonoBehaviour
             return;
         }
 
-        SetupUniqueIdentifier();
-
+        GSDRootUtil.SetupUniqueIdentifier(ref UID);
 
         GSDRootUtil.StartProfiling(this, "UpdateRoadPrelim");
         roadDefinition = Mathf.Clamp(roadDefinition, 1f, 50f);
@@ -1763,16 +1762,6 @@ public class GSDRoad : MonoBehaviour
             {
                 node.isGizmosEnabled = isGizmosEnabled;
             }
-        }
-    }
-
-
-    /// <summary> Setup a unique ID </summary>
-    public void SetupUniqueIdentifier()
-    {
-        if (UID == null || UID.Length < 4)
-        {
-            UID = System.Guid.NewGuid().ToString();
         }
     }
 

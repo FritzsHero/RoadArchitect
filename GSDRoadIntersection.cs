@@ -263,14 +263,6 @@ public class GSDRoadIntersection : MonoBehaviour
     public enum RoadTypeEnum { NoTurnLane, TurnLane, BothTurnLanes };
     public enum LightTypeEnum { Timed, Sensors };
 
-    public void SetupUniqueIdentifier()
-    {
-        if (uID == null || uID.Length < 4)
-        {
-            uID = System.Guid.NewGuid().ToString();
-        }
-    }
-
 
     // A struct may be better and faster
     public class CornerPositionMaker

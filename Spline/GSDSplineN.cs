@@ -502,15 +502,6 @@ public class GSDSplineN : MonoBehaviour
     }
 
 
-    public void SetupUniqueIdentifier()
-    {
-        if (uID == null || uID.Length < 4)
-        {
-            uID = System.Guid.NewGuid().ToString();
-        }
-    }
-
-
     #region "Gizmos"
     //	private void TerrainDebugging(){
     //			GSD.Roads.GSDRoadUtil.Construction3DTri tTri = null;

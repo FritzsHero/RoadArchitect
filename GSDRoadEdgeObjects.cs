@@ -225,7 +225,7 @@ namespace GSD.Roads.EdgeObjects
             EOM.isStartMatchRoadDefinition = isStartMatchRoadDefinition;
             EOM.startMatchRoadDef = startMatchRoadDef;
 
-            EOM.SetupUniqueIdentifier();
+            GSDRootUtil.SetupUniqueIdentifier(ref EOM.UID);
 
             EOM.objectName = objectName;
             EOM.thumbString = thumbString;
@@ -244,15 +244,6 @@ namespace GSD.Roads.EdgeObjects
 
 
         #region "Library"
-        public void SetupUniqueIdentifier()
-        {
-            if (UID == null || UID.Length < 4)
-            {
-                UID = System.Guid.NewGuid().ToString();
-            }
-        }
-
-
         public void SaveToLibrary(string _fileName = "", bool _isDefault = false)
         {
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
@@ -915,7 +906,7 @@ namespace GSD.Roads.EdgeObjects
                 verticalCurve.AddKey(1f, 1f);
             }
 
-            SetupUniqueIdentifier();
+            GSDRootUtil.SetupUniqueIdentifier(ref UID);
 
             SetupLocations();
 
