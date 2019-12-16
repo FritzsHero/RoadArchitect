@@ -214,8 +214,6 @@ public class GSDRoadIntersection : MonoBehaviour
     public float height = 50000f;
     [UnityEngine.Serialization.FormerlySerializedAs("SignHeight")]
     public float signHeight = -2000f;
-    [UnityEngine.Serialization.FormerlySerializedAs("BoundsRect")]
-    private GSD.Roads.GSDRoadUtil.Construction2DRect boundsRect;
 
     #region "Traffic Light Vars"
     [UnityEngine.Serialization.FormerlySerializedAs("bLightsEnabled")]
@@ -275,6 +273,10 @@ public class GSDRoadIntersection : MonoBehaviour
 
 
 #if UNITY_EDITOR
+    [UnityEngine.Serialization.FormerlySerializedAs("BoundsRect")]
+    private GSD.Roads.GSDRoadUtil.Construction2DRect boundsRect;
+
+
     #region "Setup"
     public void Setup(GSDSplineN _node1, GSDSplineN _node2)
     {
