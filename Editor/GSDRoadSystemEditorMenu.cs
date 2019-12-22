@@ -90,7 +90,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Run all unit tests (caution)")]
     public static void TestProgram()
     {
-        GSD.Roads.GSDUnitTests.RoadArchitectUnitTests();
+        RoadArchitect.Tests.UnitTests.RoadArchitectUnitTests();
     }
 
 
@@ -100,7 +100,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
     public static void TestCleanup()
     {
-        GSD.Roads.GSDUnitTests.CleanupTests();
+        RoadArchitect.Tests.UnitTests.CleanupTests();
     }
 
 

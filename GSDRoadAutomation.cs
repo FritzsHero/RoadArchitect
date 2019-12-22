@@ -16,7 +16,7 @@ namespace GSD.Roads
      * 5. Call GSDRoadSystem.UpdateAllRoads();
      * 6. Call GSDRoadSystem.UpdateAllRoads(); after step #5 completes.
      * 
-     * See "GSDUnitTests.cs" for an example on automation (ignore unit test #3).
+     * See "UnitTests.cs" for an example on automation (ignore unit test #3).
      */
 
 
