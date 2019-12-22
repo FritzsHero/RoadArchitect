@@ -8319,7 +8319,7 @@ namespace GSD.Threaded
 
 
     #region "Threading core"
-    public class GSDThreadedJob
+    public class ThreadedJob
     {
         [UnityEngine.Serialization.FormerlySerializedAs("m_IsDone")]
         private bool isDone = false;
@@ -8386,35 +8386,10 @@ namespace GSD.Threaded
             IsDone = true;
         }
     }
-
-
-    public class GSDJob : GSDThreadedJob
-    {
-        //public Vector3[] InData; // arbitary job data
-        //public Vector3[] OutData; // arbitary job data
-
-
-        protected override void ThreadFunction()
-        {
-            // Do your threaded task. DON'T use the Unity API here
-            //for (int i = 0; i < 100000000; i++){
-            //InData[i % InData.Length] += InData[(i+1) % InData.Length];
-            //}
-        }
-
-
-        protected override void OnFinished()
-        {
-            // This is executed by the Unity main thread when the job is finished
-            //for (int i = 0; i < InData.Length; i++){
-            //Debug.Log("Results(" + i + "): " + InData[i]);
-            //}
-        }
-    }
     #endregion
 
 
-    public class TerrainCalcs : GSDThreadedJob
+    public class TerrainCalcs : ThreadedJob
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
@@ -8587,7 +8562,7 @@ namespace GSD.Threaded
     }
 
 
-    public class RoadCalcs1 : GSDThreadedJob
+    public class RoadCalcs1 : ThreadedJob
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
@@ -8643,7 +8618,7 @@ namespace GSD.Threaded
     }
 
 
-    public class RoadCalcs2 : GSDThreadedJob
+    public class RoadCalcs2 : ThreadedJob
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
