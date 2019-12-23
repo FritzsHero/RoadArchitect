@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unified DrawLine in EditorUtilities
 - Unified SetupUniqueIdentifier
 - Improved performance by reducing the frequency at which GetBasePath is called
+- Added a warning for Tests
 
 
 ## [Version: 1.9_FH] - 2019.04.22

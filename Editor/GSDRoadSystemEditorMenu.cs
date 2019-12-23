@@ -90,7 +90,10 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Run all unit tests (caution)")]
     public static void TestProgram()
     {
-        RoadArchitect.Tests.UnitTests.RoadArchitectUnitTests();
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your first RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.RoadArchitectUnitTests();
+        }
     }
 
 
@@ -100,7 +103,10 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
     public static void TestCleanup()
     {
-        RoadArchitect.Tests.UnitTests.CleanupTests();
+        if(UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your first RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.CleanupTests();
+        }
     }
 
 
