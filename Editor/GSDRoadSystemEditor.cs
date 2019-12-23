@@ -106,7 +106,7 @@ public class GSDRoadSystemEditor : Editor
         GUILayout.Space(4f);
         if (GUILayout.Button("Offline manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL(GSD.Roads.GSDRoadUtilityEditor.GetRoadArchitectApplicationPath() + "/RoadArchitectManual.htm");
+            RoadArchitect.EditorUtilities.OpenOfflineManual();
         }
 
         if (roadSystem.editorPlayCamera == null)

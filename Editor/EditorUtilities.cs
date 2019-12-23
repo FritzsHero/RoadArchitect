@@ -7,6 +7,13 @@ namespace RoadArchitect
     {
 
 
+        /// <summary> Opens the loacally stored manual </summary>
+        public static void OpenOfflineManual()
+        {
+            Application.OpenURL(System.Environment.CurrentDirectory.Replace(@"\", "/") + "/" + GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/RoadArchitectManual.htm");
+        }
+
+
         /// <summary> Loads the _texture from _path if necessary </summary>
         public static void CheckLoadTexture<T>(ref T _texture, string _path) where T : Texture
         {

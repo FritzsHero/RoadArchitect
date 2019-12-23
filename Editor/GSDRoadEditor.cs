@@ -273,7 +273,7 @@ public class GSDRoadEditor : Editor
         }
         if (GUILayout.Button("Offline manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL(GSD.Roads.GSDRoadUtilityEditor.GetRoadArchitectApplicationPath() + "/RoadArchitectManual.htm");
+            RoadArchitect.EditorUtilities.OpenOfflineManual();
         }
         //Option: Gizmos input:
         isGizmosEnabled.boolValue = EditorGUILayout.Toggle("Gizmos: ", road.isGizmosEnabled);

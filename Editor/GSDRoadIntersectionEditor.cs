@@ -211,7 +211,7 @@ public class GSDRoadIntersectionEditor : Editor
         }
         if (GUILayout.Button("Offline manual", EditorStyles.miniButton, GUILayout.Width(120f)))
         {
-            Application.OpenURL(GSD.Roads.GSDRoadUtilityEditor.GetRoadArchitectApplicationPath() + "/RoadArchitectManual.htm");
+            RoadArchitect.EditorUtilities.OpenOfflineManual();
         }
         EditorUtilities.DrawLine();
         EditorGUILayout.BeginVertical();
