@@ -27,7 +27,6 @@ namespace GSD.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="NodeLocation">The location of the newly created node.</param>
-        /// <returns></returns>
         public static GSDRoad CreateRoadProgrammatically(GSDRoadSystem _RoadSys, ref List<Vector3> _positions)
         {
             GameObject tRoadObj = _RoadSys.AddRoad(false);
@@ -48,7 +47,6 @@ namespace GSD.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="_nodePosition">The location of the newly created node.</param>
-        /// <returns></returns>
         public static GSDSplineN CreateNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
         {
             int splineChildCount = _road.spline.transform.childCount;
@@ -83,7 +81,6 @@ namespace GSD.Roads
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
-        /// <returns></returns>
 		public static GSDSplineN InsertNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;

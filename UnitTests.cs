@@ -20,9 +20,9 @@ namespace RoadArchitect.Tests
             CleanupTests();
 
             //Create new road system and turn off updates:
-            GameObject tRoadSystemObj = new GameObject("RoadArchitectSystem1");
+            GameObject roadSystemObject = new GameObject("RoadArchitectSystem1");
             //Add road system component.
-            roadSystem = tRoadSystemObj.AddComponent<GSDRoadSystem>();
+            roadSystem = roadSystemObject.AddComponent<GSDRoadSystem>();
             roadSystem.isAllowingRoadUpdates = false;
 
             int numTests = 6;

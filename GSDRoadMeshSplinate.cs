@@ -1941,20 +1941,20 @@ namespace GSD.Roads.Splination
         public void Setup(bool _isGettingStrings = false, bool _isCollecting = true)
         {
 #if UNITY_EDITOR
-            GameObject[] tObj = new GameObject[5];
+            GameObject[] objects = new GameObject[5];
             try
             {
-                SplinateMeshDo(_isGettingStrings, ref tObj, _isCollecting);
+                SplinateMeshDo(_isGettingStrings, ref objects, _isCollecting);
             }
             catch (System.Exception exception)
             {
-                if (tObj != null)
+                if (objects != null)
                 {
                     for (int index = 0; index < 5; index++)
                     {
-                        if (tObj[index] != null)
+                        if (objects[index] != null)
                         {
-                            Object.DestroyImmediate(tObj[index]);
+                            Object.DestroyImmediate(objects[index]);
                         }
                     }
                 }
@@ -3969,25 +3969,25 @@ namespace GSD.Roads.Splination
                 return;
             }
             //string tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string tSceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
-            tSceneName = tSceneName.Replace("/", "");
-            tSceneName = tSceneName.Replace(".", "");
-            string tFolderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/Extrusions/";
-            string tRoadName = node.spline.road.transform.name;
-            string FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + ".asset";
+            string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+            sceneName = sceneName.Replace("/", "");
+            sceneName = sceneName.Replace(".", "");
+            string folderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/Extrusions/";
+            string roadName = node.spline.road.transform.name;
+            string finalName = folderName + sceneName + "-" + roadName + "-" + tName + ".asset";
             if (_isCollider)
             {
-                FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + tName + "-collider.asset";
+                finalName = folderName + sceneName + "-" + roadName + "-" + tName + "-collider.asset";
             }
 
-            string xPath = Application.dataPath.Replace("/Assets", "/" + tFolderName);
-            if (!System.IO.Directory.Exists(xPath))
+            string savingPath = Application.dataPath.Replace("/Assets", "/" + folderName);
+            if (!System.IO.Directory.Exists(savingPath))
             {
-                System.IO.Directory.CreateDirectory(xPath);
+                System.IO.Directory.CreateDirectory(savingPath);
             }
 
 
-            UnityEditor.AssetDatabase.CreateAsset(_mesh, FinalName);
+            UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             UnityEditor.AssetDatabase.SaveAssets();
 #endif
         }
@@ -4136,6 +4136,5 @@ namespace GSD.Roads.Splination
             return hitNormal;
         }
     }
-
 #endif
 }

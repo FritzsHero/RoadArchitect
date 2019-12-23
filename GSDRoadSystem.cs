@@ -7,8 +7,6 @@ public class GSDRoadSystem : MonoBehaviour
 {
 #if UNITY_EDITOR
     #region "Vars"
-    public static string assetBasePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "";
-
     [UnityEngine.Serialization.FormerlySerializedAs("opt_bMultithreading")]
     public bool isMultithreaded = true;
     [UnityEngine.Serialization.FormerlySerializedAs("opt_bSaveMeshes")]

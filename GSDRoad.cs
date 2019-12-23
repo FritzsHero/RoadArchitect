@@ -41,7 +41,6 @@ public class GSDRoad : MonoBehaviour
     public GSDSplineC spline;
 
     public int MostRecentNodeCount = -1;
-    //private bool bMostRecentCheck = false;
     public GameObject GSDSplineObj;
     public GSDRoadSystem GSDRS;
     public GSDSplineC[] PiggyBacks = null;
@@ -952,7 +951,8 @@ public class GSDRoad : MonoBehaviour
             {
                 GSDTerraforming.ProcessRoadTerrainHook1(spline, this, false);
                 GSDTerraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
-                ConstructRoad_StoreTerrainHistory();//Store history.
+                //Store history.
+                ConstructRoad_StoreTerrainHistory();
                 int editorTTDListCount = EditorTTDList.Count;
                 for (int i = 0; i < editorTTDListCount; i++)
                 {

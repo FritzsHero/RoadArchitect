@@ -5217,25 +5217,43 @@ namespace GSD.Roads
 
 
                     if (MinX < 0)
-                    { MinX = 0; bXBad = true; }
+                    {
+                        MinX = 0; bXBad = true;
+                    }
                     if (MaxX < 0)
-                    { MaxX = 0; bXBad = true; }
+                    {
+                        MaxX = 0; bXBad = true;
+                    }
                     if (MinY < 0)
-                    { MinY = 0; bYBad = true; }
+                    {
+                        MinY = 0; bYBad = true;
+                    }
                     if (MaxY < 0)
-                    { MaxY = 0; bYBad = true; }
+                    {
+                        MaxY = 0; bYBad = true;
+                    }
 
                     if (MinX > (_width - 1))
-                    { MinX = (_width - 1); bXBad = true; }
+                    {
+                        MinX = (_width - 1); bXBad = true;
+                    }
                     if (MaxX > (_width - 1))
-                    { MaxX = (_width - 1); bXBad = true; }
+                    {
+                        MaxX = (_width - 1); bXBad = true;
+                    }
                     if (MinY > (_height - 1))
-                    { MinY = (_height - 1); bYBad = true; }
+                    {
+                        MinY = (_height - 1); bYBad = true;
+                    }
                     if (MaxY > (_height - 1))
-                    { MaxY = (_height - 1); bYBad = true; }
+                    {
+                        MaxY = (_height - 1); bYBad = true;
+                    }
 
                     if (bXBad && bYBad)
-                    { continue; }
+                    {
+                        continue;
+                    }
 
                     xDiff = MaxX - MinX;
                     yDiff = MaxY - MinY;
@@ -5918,7 +5936,7 @@ namespace GSD.Roads
             //Round up to nearest whole F
             _distanceX = Mathf.Ceil(_distanceX);
             _distance = Mathf.Ceil(_distance);
-                                                //			string assetName = "GSDInterTLB" + tTrafficLightNumber + "_" + tDistance.ToString("F0") + "_" + xDistance.ToString("F0") + ".prefab";
+            //string assetName = "GSDInterTLB" + tTrafficLightNumber + "_" + tDistance.ToString("F0") + "_" + xDistance.ToString("F0") + ".prefab";
             string assetNameAsset = "GSDInterTLB" + tTrafficLightNumber + "_" + _distance.ToString("F0") + "_" + _distanceX.ToString("F0") + ".asset";
             string BackupFBX = "GSDInterTLB" + tTrafficLightNumber + ".FBX";
             float tMod = _distance / 5f;
@@ -6388,7 +6406,9 @@ namespace GSD.Roads
                 }
 
                 if (bScale)
-                { tLeft.transform.localScale = tScale; }
+                {
+                    tLeft.transform.localScale = tScale;
+                }
 
                 if (intersection.isLeftTurnYieldOnGreen)
                 {
@@ -6399,7 +6419,9 @@ namespace GSD.Roads
                     tLeft_Sign.transform.parent = _obj.transform;
                     tLeft_Sign.transform.name = "SignYieldOnGreen";
                     if (bScale)
-                    { tLeft_Sign.transform.localScale = tScale; }
+                    {
+                        tLeft_Sign.transform.localScale = tScale;
+                    }
                 }
             }
             if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
@@ -6616,7 +6638,7 @@ namespace GSD.Roads
         }
 
 
-        //	
+        /*
         //		public static void GetOrigFour(GSDRoadIntersection GSDRI, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
         //			//Get four points:
         //			float tPos1 = 0f;
@@ -6868,7 +6890,7 @@ namespace GSD.Roads
         //			tCubeRR.transform.name = "temp22_LR";
         //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
         //		}
-        //	
+        */
     }
 
 
@@ -8324,7 +8346,6 @@ namespace GSD.Roads
             return true;
         }
         #endregion
-
         #endregion
     }
 

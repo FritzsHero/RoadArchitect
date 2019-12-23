@@ -61,9 +61,7 @@ public class GSDSplineNEditor : Editor
 
     //Checkers:
     //	private float ChangeChecker = -1f;
-    //	private bool bChangeChecker = false;
     //	private Vector3 vChangeChecker = default(Vector3);
-    //	private GameObject tObj = null;
     //	private Material tMat = null;
     private GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
     private EndObjectsDefaultsEnum endObjectAdd = EndObjectsDefaultsEnum.None;
@@ -2311,7 +2309,8 @@ public class GSDSplineNEditor : Editor
                         continue;
                     }
                     if (xNode.spline == node.spline)
-                    { //Don't let intersection be created on consecutive nodes:
+                    {
+                        //Don't let intersection be created on consecutive nodes:
                         if ((node.idOnSpline + 1) == xNode.idOnSpline || (node.idOnSpline - 1) == xNode.idOnSpline)
                         {
                             continue;

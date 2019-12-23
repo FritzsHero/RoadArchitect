@@ -180,7 +180,6 @@ namespace GSD.Threaded
                 //If ends in control node, end construction before the control node:
                 StartMin = _spline.nodes[1].time;
             }
-            //bool bFinalEnd = false;
             //Storage of incremental start values for the road connection mesh construction at the end of this function.
             //float RoadConnection_StartMin1 = StartMin;
             //Storage of incremental end values for the road connection mesh construction at the end of this function.
@@ -218,7 +217,6 @@ namespace GSD.Threaded
             float tIntStrength = 0f;
             float tIntStrength2 = 0f;
             //bool bMaxIntersection = false;
-            //bool bFirstInterNode = false;
             GSDSplineN xNode = null;
             float tIntHeight = 0f;
             float tIntHeight2 = 0f;
@@ -232,8 +230,6 @@ namespace GSD.Threaded
             bool bIntStr2_FullPrev = false;
             bool bIntStr2_FullNext = false;
             Vector3 tVect3 = default(Vector3);
-            //bool bStarted = false;
-            //bool T3Added = false;
             List<int[]> tXYs = new List<int[]>();
             float TreeClearDist = _spline.road.clearTreesDistance;
             if (TreeClearDist < _spline.road.RoadWidth())
@@ -278,8 +274,7 @@ namespace GSD.Threaded
                     //else
                     //{
                     //	bMaxIntersection = false;	
-                    //}	
-                    //bFirstInterNode = false;	
+                    //}
 
                     tIntStrength2 = _spline.IntersectionStrength(ref tVect2, ref tIntHeight2, ref GSDRI, ref bIsPastInter, ref index, ref xNode);
                     if (tIntStrength2 > 1f)
@@ -295,7 +290,8 @@ namespace GSD.Threaded
                         tIntStrength = 1f;
                     }
                     if (tIntStrength >= 0f)
-                    {// || IsApproximately(tIntStrength,0f,0.01f)){
+                    {
+                        // || IsApproximately(tIntStrength,0f,0.01f)){
                         if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.01f))
                         {
                             T1SUB = tIntHeight;
@@ -310,7 +306,10 @@ namespace GSD.Threaded
                             {
                                 T1SUB = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * tVect1.y);
                             }
-                            //						if(tIntStrength <= 0f){ T1SUB = (tIntStrength*tIntHeight) + ((1-tIntStrength)*tVect1.y); }
+                            //if(tIntStrength <= 0f)
+                            //{
+                            //  T1SUB = (tIntStrength*tIntHeight) + ((1-tIntStrength)*tVect1.y);
+                            //}
                         }
 
                         if ((bIntStr1_Full && !bIntStr1_FullPrev) || (!bIntStr1_Full && bIntStr1_FullNext))
@@ -325,9 +324,10 @@ namespace GSD.Threaded
                                 T1SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
                             }
 
-                            //							if(tGrade < 0f){
-                            //								T1SUB *= -1f;
-                            //							}
+                            //if(tGrade < 0f)
+                            //{
+                            //	T1SUB *= -1f;
+                            //}
                         }
                         else if (bIntStr1_Full && !bIntStr1_FullNext)
                         {
@@ -340,9 +340,10 @@ namespace GSD.Threaded
                             {
                                 T1SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
                             }
-                            //							if(tGrade < 0f){
-                            //								T1SUB *= -1f;
-                            //							}
+                            //if(tGrade < 0f)
+                            //{
+                            //	T1SUB *= -1f;
+                            //}
                         }
                         else
                         {
@@ -353,7 +354,7 @@ namespace GSD.Threaded
 
                     if (tIntStrength2 >= 0f || GSDRootUtil.IsApproximately(tIntStrength2, 0f, 0.01f))
                     {
-                        //					if(!IsApproximately(tIntStrength,1f,0.01f)){ 
+                        //if(!IsApproximately(tIntStrength,1f,0.01f)){ 
                         if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.01f))
                         {
                             bIntStr2_Full = true;
@@ -366,7 +367,10 @@ namespace GSD.Threaded
                             {
                                 T2SUB = (tIntStrength2 * tIntHeight) + ((1 - tIntStrength2) * tVect2.y);
                             }
-                            //						if(tIntStrength2 <= 0f){ T2SUB = (tIntStrength2*tIntHeight) + ((1-tIntStrength2)*tVect2.y); }
+                            //if(tIntStrength2 <= 0f)
+                            //{
+                            //T2SUB = (tIntStrength2*tIntHeight) + ((1-tIntStrength2)*tVect2.y);
+                            //}
                         }
 
                         if ((bIntStr2_Full && !bIntStr2_FullPrev))
@@ -380,7 +384,7 @@ namespace GSD.Threaded
                             {
                                 T2SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
                             }
-                            //							T2SUB -= tIntHeight2 - tVect2.y;
+                            //T2SUB -= tIntHeight2 - tVect2.y;
                         }
                         else if (bIntStr2_Full && !bIntStr2_FullNext)
                         {
@@ -393,10 +397,11 @@ namespace GSD.Threaded
                             {
                                 T2SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
                             }
-                            //							if(tGrade < 0f){
-                            //								T2SUB *= -1f;
-                            //							}
-                            //							T2SUB -= tIntHeight2 - tVect2.y;
+                            //if(tGrade < 0f)
+                            //{
+                            //	T2SUB *= -1f;
+                            //}
+                            //T2SUB -= tIntHeight2 - tVect2.y;
                         }
                         else if (!bIntStr2_Full)
                         {
@@ -520,13 +525,14 @@ namespace GSD.Threaded
                 return;
             }
 
-            //			//Temp testing:
-            //			tSpline.mNodes[22].tTriList = new List<GSD.Roads.GSDRoadUtil.Construction3DTri>();
-            //			int tCount = triList.Count;
-            //			for(int i=0;i<tCount;i++){
-            //				tSpline.mNodes[22].tTriList.Add(triList[i]);	
-            //			}
-            //			tSpline.mNodes[22].tHMList = new List<Vector3>();
+            ////Temp testing:
+            //tSpline.mNodes[22].tTriList = new List<GSD.Roads.GSDRoadUtil.Construction3DTri>();
+            //int tCount = triList.Count;
+            //for(int i=0;i<tCount;i++)
+            //{
+            //	tSpline.mNodes[22].tTriList.Add(triList[i]);	
+            //}
+            //tSpline.mNodes[22].tHMList = new List<Vector3>();
 
 
             float tFloat = -1f;
@@ -607,18 +613,23 @@ namespace GSD.Threaded
                 _terrainBoundsList.RemoveRange(0, LastIndexToRemove);
             }
             //			
-            //			mCount = rectList.Count;
-            //			LastIndexToRemove = -1;
-            //			for(int i=0;i<mCount;i++){
-            //				if(tList[i].MaxI < CurrentI){
-            //					LastIndexToRemove = i;
-            //				}else{
-            //					break;
-            //				}
-            //			}
-            //			if(LastIndexToRemove >= 0){
-            //				rectList.RemoveRange(0,LastIndexToRemove);
-            //			}
+            //mCount = rectList.Count;
+            //LastIndexToRemove = -1;
+            //for(int i=0;i<mCount;i++)
+            //{
+            //  if(tList[i].MaxI < CurrentI)
+            //  {
+            //	    LastIndexToRemove = i;
+            //  }
+            //  else
+            //  {
+            //	    break;
+            //  }
+            //}
+            //if(LastIndexToRemove >= 0)
+            //{
+            //	rectList.RemoveRange(0,LastIndexToRemove);
+            //}
         }
 
 
@@ -1034,11 +1045,6 @@ namespace GSD.Threaded
             bool isAdjusted = false;
             float tHeight = -1f;
             float tReturnFloat = 0f;
-            //			int dX = 0;
-            //			int dY = 0;
-            //			int tdX = 0;
-            //			int tdY = 0;
-            //			bool bOneHit = false;
 
             for (int index = MinX; index <= MaxX; index++)
             {
@@ -1073,7 +1079,6 @@ namespace GSD.Threaded
                             _TTD.cI += 1;
 
                             tReturnFloat = xVect.y;
-                            //							bOneHit = true;
                         }
                     }
                     else
@@ -1089,7 +1094,6 @@ namespace GSD.Threaded
                                 tHeight = 0f;
                             }
                             tReturnFloat = tHeight;
-                            //							bOneHit = true;
                         }
                     }
                 }
@@ -1221,8 +1225,6 @@ namespace GSD.Threaded
             Vector3 RampL_R = default(Vector3);
             Vector3 RampL_L = default(Vector3);
 #pragma warning disable CS0219
-            float ShoulderR_OuterAngle = 0f;
-            float ShoulderL_OuterAngle = 0f;
 
             //Previous temp storage values:
             Vector3 tVect_Prev = default(Vector3);
@@ -1251,25 +1253,19 @@ namespace GSD.Threaded
             Vector3 gHeight = default(Vector3);
 
 #pragma warning disable CS0219
-
             //Bridge variables:
             bool isBridge = false;
             bool isTempbridge = false;
-            bool isBridgeInitial = false;
-            bool isBridgeLast = false;
             float BridgeUpComing;
 
             //Tunnel variables:	
             bool isTunnel = false;
             bool isTempTunnel = false;
-            bool isTunnelInitial = false;
-            bool isTunnelLast = false;
-            float TunnelUpComing = 0f;
 
             //Intersection variables:
             float tIntHeight = 0f;
             float tIntStrength = 0f;
-            float tIntStrength_temp = 0f;
+            //float tIntStrength_temp = 0f;
             GSDRoadIntersection intersection = null;
             bool isPastInter = false;
             bool isMaxIntersection = false;
@@ -1306,21 +1302,13 @@ namespace GSD.Threaded
             bool is0LAdded = false;
             bool is1LAdded = false;
             bool is2LAdded = false;
-            bool is3LAdded = false;
             bool isf0LAdded = false;
             bool isf1LAdded = false;
             bool isf2LAdded = false;
             bool isf3LAdded = false;
-            bool is0RAdded = false;
             bool is1RAdded = false;
             bool is2RAdded = false;
             bool is3RAdded = false;
-            bool f0RAdded = false;
-            bool f1RAdded = false;
-            bool f2RAdded = false;
-            bool f3RAdded = false;
-            bool isInterTestAddAfterR = false;
-            bool isInterTestAddAfterL = false;
             bool isShoulderSkipR = false;
             bool isShoulderSkipL = false;
             bool isShrinkRoadB = false;
@@ -1379,23 +1367,11 @@ namespace GSD.Threaded
             //Vector3 ShoulderL_OuterDirectionPrev = default(Vector3);
             //Vector3 ShoulderR_OuterDirection = default(Vector3);
             //Vector3 ShoulderL_OuterDirection = default(Vector3);
-            //float tAngle = 0f;
-            //float OrigStep = 0.06f;
-            //float AngleStep = 5f;
             //Vector3 tHeight2 = new Vector3(0f,0.15f,0f);
             //Vector3 tHeight1 = new Vector3(0f,0.2f,0f);
             //bool bTempYWasNegative = false;
             //Vector3 tY = new Vector3(0f,0f,0f);
             //float[] HeightChecks = new float[5];
-            //int BridgeLIndex;
-            //int BridgeRIndex;
-            //int TunnelLIndex;
-            //int TunnelRIndex;
-            //float tIntDistCheck = 75f;
-            //Vector3 InterTestVect1 = default(Vector3);
-            //Vector3 InterTestVect2 = default(Vector3);
-            //Vector3 InterTestVect3 = default(Vector3);
-            //Vector3 InterTestVect4 = default(Vector3);
             //int eCount = -1;
             //int eIndex = -1;
             //int uCount = -1;
@@ -1403,10 +1379,7 @@ namespace GSD.Threaded
 
             //Unused for now, for later partial construction methods:
             bool isInterseOn = _road.RCS.isInterseOn;
-            //			bool bBridgesOn = tRoad.RCS.bBridgesOn;
-            //			if(tRoad.RCS.bRoadOn){
             isInterseOn = true;
-            //			}
 #pragma warning restore CS0219
             #endregion
 
@@ -1464,7 +1437,6 @@ namespace GSD.Threaded
 
             //int StartIndex = tSpline.GetClosestRoadDefIndex(StartMin,true,false);
             //int EndIndex = tSpline.GetClosestRoadDefIndex(FinalMax,false,true);
-            //float cDist = 0f;
             bool kSkip = true;
             bool kSkipFinal = false;
             int kCount = 0;
@@ -1483,13 +1455,11 @@ namespace GSD.Threaded
             }
 
             //If startmin > 0 then kcount needs to start at proper road def
-            //bool bStartMinEnabled = false;
             int StartMinIndex1 = 0;
 
             if (StartMin > 0f)
             {
                 kCount = spline.GetClosestRoadDefIndex(StartMin, true, false);
-                //bStartMinEnabled = true;
                 StartMinIndex1 = 1;
             }
 
@@ -1508,7 +1478,9 @@ namespace GSD.Threaded
                     {
                         i = FinalMax;
                         if (kSkipFinal)
-                        { break; }
+                        {
+                            break;
+                        }
                     }
                     else
                     {
@@ -1615,21 +1587,13 @@ namespace GSD.Threaded
                 is0LAdded = false;
                 is1LAdded = false;
                 is2LAdded = false;
-                is3LAdded = false;
                 isf0LAdded = false;
                 isf1LAdded = false;
                 isf2LAdded = false;
                 isf3LAdded = false;
-                is0RAdded = false;
                 is1RAdded = false;
                 is2RAdded = false;
                 is3RAdded = false;
-                f0RAdded = false;
-                f1RAdded = false;
-                f2RAdded = false;
-                f3RAdded = false;
-                isInterTestAddAfterR = false;
-                isInterTestAddAfterL = false;
                 isShoulderSkipR = false;
                 isShoulderSkipL = false;
                 isShrinkRoadB = false;
@@ -1644,15 +1608,12 @@ namespace GSD.Threaded
                 isRecordShoulderLForNormals = false;
 
                 //Bridges: Note: This is convoluted due to need for triggers:
-                isBridgeInitial = false;
-                isBridgeLast = false;
                 isTempbridge = spline.IsInBridge(i);
 
 
                 if (!isBridge && isTempbridge)
                 {
                     isBridge = true;
-                    isBridgeInitial = true;
                 }
                 else if (isBridge && !isTempbridge)
                 {
@@ -1664,23 +1625,16 @@ namespace GSD.Threaded
                 if (isBridge)
                 {
                     isTempbridge = spline.IsInBridge(i + Step);
-                    if (!isTempbridge)
-                    {
-                        isBridgeLast = true;
-                    }
                 }
 
 
                 //Tunnels: Note: This is convoluted due to need for triggers:
-                isTunnelInitial = false;
-                isTunnelLast = false;
                 isTempTunnel = spline.IsInTunnel(i);
 
 
                 if (!isTunnel && isTempTunnel)
                 {
                     isTunnel = true;
-                    isTunnelInitial = true;
                 }
                 else if (isTunnel && !isTempTunnel)
                 {
@@ -1692,10 +1646,6 @@ namespace GSD.Threaded
                 if (isTunnel)
                 {
                     isTempTunnel = spline.IsInTunnel(i + Step);
-                    if (!isTempTunnel)
-                    {
-                        isTunnelLast = true;
-                    }
                 }
 
 
@@ -2022,7 +1972,6 @@ namespace GSD.Threaded
                                 if (isf0LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    f0RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
                                 isf1LAdded = true;
@@ -2044,7 +1993,6 @@ namespace GSD.Threaded
                                 if (isf0LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    f0RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
                                 isf1LAdded = true;
@@ -2072,7 +2020,6 @@ namespace GSD.Threaded
                                 if (isf1LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    f1RAdded = true;
                                 }
                             }
                             else
@@ -2093,7 +2040,6 @@ namespace GSD.Threaded
                                 if (isf1LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    f1RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(tempIVect, tIntHeight));
                                 isf2LAdded = true;
@@ -2104,7 +2050,6 @@ namespace GSD.Threaded
                                 {
                                     xNode.intersectionConstruction.iFLane1L.RemoveAt(xNode.intersectionConstruction.iFLane1L.Count - 1);
                                     isf1LAdded = false;
-                                    f1RAdded = false;
                                 }
                             }
                         }
@@ -2124,14 +2069,12 @@ namespace GSD.Threaded
                                 xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
                                 isf3LAdded = true;
                                 xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(leftVector, tIntHeight));
-                                f3RAdded = true;
-                                //								if(bIsNextInter && GSDRI.iType == GSDRoadIntersection.IntersectionTypeEnum.FourWay){
+                                //if(bIsNextInter && GSDRI.iType == GSDRoadIntersection.IntersectionTypeEnum.FourWay){
                                 if (isf2LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                    f2RAdded = true;
                                 }
-                                //								}
+                                //}
                             }
                             else
                             {
@@ -2149,7 +2092,6 @@ namespace GSD.Threaded
                             if (isf2LAdded && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(rightVector, tempIVect))
                             {
                                 xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                f2RAdded = true;
                             }
                             else if (isf2LAdded)
                             {
@@ -2165,7 +2107,7 @@ namespace GSD.Threaded
 
                         if (!isNextInter && !xNode.intersectionConstruction.isFDone)
                         {
-                            //							xNode.iConstruction.bFDone = true;
+                            //xNode.iConstruction.bFDone = true;
                             xNode.intersectionConstruction.isFLane0Done = true;
                             xNode.intersectionConstruction.isFLane1Done = true;
                             xNode.intersectionConstruction.isFLane2Done = true;
@@ -2332,7 +2274,6 @@ namespace GSD.Threaded
                             {
                                 tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0, (laneWidth * 0.5f) * POS.normalized.x));
                                 xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                is0RAdded = true;
                             }
                         }
                         tempIVect_Prev = tempIVect;
@@ -2360,7 +2301,6 @@ namespace GSD.Threaded
                             if (is0LAdded && (xNode.intersectionConstruction.iBLane0L.Count != 2 || intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane))
                             {
                                 xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
-                                is0RAdded = true;
                             }
                             xNode.intersectionConstruction.iBLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
                             is1LAdded = true;
@@ -2420,7 +2360,6 @@ namespace GSD.Threaded
                         if (!xNode.intersectionConstruction.isBLane3Done && !intersection.ContainsLine(rightVector, tempIVect) && !intersection.ContainsLine(rightVector, leftVector))
                         {
                             xNode.intersectionConstruction.iBLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                            is3LAdded = true;
                             xNode.intersectionConstruction.iBLane3R.Add(ReplaceHeight(rightVector, tIntHeight));
                             is3RAdded = true;
                             if (!isFirst123 && intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.FourWay)
@@ -3425,13 +3364,13 @@ namespace GSD.Threaded
                         RampL_R_iTemp = (((RampL_PrevR - RampL_R) * 0.5f) + RampL_R) + iTemp_HeightVect;
                         RampL_L_iTemp = (((RampL_PrevL - RampL_L) * 0.5f) + RampL_L) + iTemp_HeightVect;
 
-                        //						ShoulderL_L_iTemp = lVect_iTemp;
-                        //						RampL_R_iTemp = lVect_iTemp;
-                        //						RampL_L_iTemp = lVect_iTemp;
+                        //ShoulderL_L_iTemp = lVect_iTemp;
+                        //RampL_R_iTemp = lVect_iTemp;
+                        //RampL_L_iTemp = lVect_iTemp;
                         //					
-                        //						ShoulderR_R_iTemp = rVect_iTemp;
-                        //						RampR_R_iTemp = rVect_iTemp;
-                        //						RampR_L_iTemp = rVect_iTemp;
+                        //ShoulderR_R_iTemp = rVect_iTemp;
+                        //RampR_R_iTemp = rVect_iTemp;
+                        //RampR_L_iTemp = rVect_iTemp;
                     }
 
                     if (isTriggerInterAddition && !(intersection.isFlipped && !isFirstInterNode))
@@ -3596,10 +3535,10 @@ namespace GSD.Threaded
                 lVect_Prev = leftVector;
                 ShoulderR_PrevLVect = ShoulderR_lVect;
                 ShoulderL_PrevRVect = ShoulderL_rVect;
-                //				ShoulderR_PrevRVect3 = ShoulderR_PrevRVect2;
-                //				ShoulderL_PrevLVect3 = ShoulderL_PrevLVect2;
-                //				ShoulderR_PrevRVect2 = ShoulderR_PrevRVect;
-                //				ShoulderL_PrevLVect2 = ShoulderL_PrevLVect;
+                //ShoulderR_PrevRVect3 = ShoulderR_PrevRVect2;
+                //ShoulderL_PrevLVect3 = ShoulderL_PrevLVect2;
+                //ShoulderR_PrevRVect2 = ShoulderR_PrevRVect;
+                //ShoulderL_PrevLVect2 = ShoulderL_PrevLVect;
                 ShoulderR_PrevRVect = ShoulderR_rVect;
                 ShoulderL_PrevLVect = ShoulderL_lVect;
                 RampR_PrevR = RampR_R;
@@ -3615,7 +3554,7 @@ namespace GSD.Threaded
                 isInterPrevWasCornerLL = isInterCurreIsCornerLL;
                 isInterPrevWasCornerLR = isInterCurreIsCornerLR;
 
-                //				i+=Step;//Master step incrementer.
+                //i+=Step;//Master step incrementer.
             }
 
             GSDRootUtil.EndStartProfiling(_road, "RoadJob_Prelim_FinalizeInter");
@@ -3629,8 +3568,8 @@ namespace GSD.Threaded
             GSDRootUtil.EndStartProfiling(_road, "RoadJob_Prelim_RoadConnections");
 
             //Creates road connections if necessary:
-            //			float ExtraHeight = 0f;
-            //			float RampPercent = 0.2f;
+            //float ExtraHeight = 0f;
+            //float RampPercent = 0.2f;
             if (spline.isSpecialEndNodeIsStartDelay)
             {
                 Vector3[] RoadConn_verts = new Vector3[4];
@@ -5069,14 +5008,10 @@ namespace GSD.Threaded
         {
 #pragma warning disable CS0219
             bool isBridge = false;
-            bool isBridgeInitial = false;
             bool isTempBridge = false;
-            bool isBridgeLast = false;
 
             bool isTunnel = false;
-            bool isTunnelInitial = false;
             bool isTempTunnel = false;
-            bool isTunnelLast = false;
 
             GSDRoadIntersection GSDRI = null;
             bool isPastInter = false;
@@ -5104,8 +5039,6 @@ namespace GSD.Threaded
             Vector3 RampL_R = default(Vector3);
             Vector3 RampL_L = default(Vector3);
 
-            float ShoulderR_OuterAngle = 0f;
-            float ShoulderL_OuterAngle = 0f;
 #pragma warning restore CS0219
             Vector3 ShoulderR_PrevLVect = default(Vector3);
             Vector3 ShoulderL_PrevRVect = default(Vector3);
@@ -5132,8 +5065,6 @@ namespace GSD.Threaded
             float ShoulderSep1Lane = (ShoulderSeperation + (LaneWidth * 0.5f));
             float ShoulderSep2Lane = (ShoulderSeperation + (LaneWidth * 1.5f));
 
-            //float tAngle = 0f;
-            //float OrigStep = 0.06f;
             float Step = _road.roadDefinition / tSpline.distance;
 
             GSDSplineN xNode = null;
@@ -5192,11 +5123,10 @@ namespace GSD.Threaded
                 StartMin = tSpline.nodes[1].time;
             }
 
-            //			int StartIndex = tSpline.GetClosestRoadDefIndex(StartMin,true,false);
-            //			int EndIndex = tSpline.GetClosestRoadDefIndex(FinalMax,false,true);
-            //			float cDist = 0f;
-            bool kSkip = true;
-            bool kSkipFinal = false;
+            //int StartIndex = tSpline.GetClosestRoadDefIndex(StartMin,true,false);
+            //int EndIndex = tSpline.GetClosestRoadDefIndex(FinalMax,false,true);
+            bool isSkip = true;
+            bool isSkipFinal = false;
             int kCount = 0;
             int kFinalCount = tSpline.RoadDefKeysArray.Length;
             int spamcheckmax1 = 18000;
@@ -5204,29 +5134,31 @@ namespace GSD.Threaded
 
             if (GSDRootUtil.IsApproximately(StartMin, 0f, 0.0001f))
             {
-                kSkip = false;
+                isSkip = false;
             }
             if (GSDRootUtil.IsApproximately(FinalMax, 1f, 0.0001f))
             {
-                kSkipFinal = true;
+                isSkipFinal = true;
             }
 
             while (!isFinalEnd && spamcheck1 < spamcheckmax1)
             {
                 spamcheck1++;
 
-                if (kSkip)
+                if (isSkip)
                 {
                     i = StartMin;
-                    kSkip = false;
+                    isSkip = false;
                 }
                 else
                 {
                     if (kCount >= kFinalCount)
                     {
                         i = FinalMax;
-                        if (kSkipFinal)
-                        { break; }
+                        if (isSkipFinal)
+                        {
+                            break;
+                        }
                     }
                     else
                     {
@@ -5286,13 +5218,10 @@ namespace GSD.Threaded
                     }
 
                     //Convoluted for initial trigger:
-                    isBridgeInitial = false;
-                    isBridgeLast = false;
                     isTempBridge = tSpline.IsInBridge(i);
                     if (!isBridge && isTempBridge)
                     {
                         isBridge = true;
-                        isBridgeInitial = true;
                     }
                     else if (isBridge && !isTempBridge)
                     {
@@ -5302,21 +5231,14 @@ namespace GSD.Threaded
                     if (isBridge)
                     {
                         isTempBridge = tSpline.IsInBridge(i + Step);
-                        if (!isTempBridge)
-                        {
-                            isBridgeLast = true;
-                        }
                     }
 
 
                     //Convoluted for initial trigger:
-                    isTunnelInitial = false;
-                    isTunnelLast = false;
                     isTempTunnel = tSpline.IsInTunnel(i);
                     if (!isTunnel && isTempTunnel)
                     {
                         isTunnel = true;
-                        isTunnelInitial = true;
                     }
                     else if (isTunnel && !isTempTunnel)
                     {
@@ -5326,10 +5248,6 @@ namespace GSD.Threaded
                     if (isTunnel)
                     {
                         isTempTunnel = tSpline.IsInTunnel(i + Step);
-                        if (!isTempTunnel)
-                        {
-                            isTunnelLast = true;
-                        }
                     }
 
                     if (GSDRI.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
@@ -6584,9 +6502,9 @@ namespace GSD.Threaded
         private static void ProcessRoadIntersectionCleanup(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
         {
             List<GSD.Roads.GSDRoadUtil.Construction2DRect> tList = _RCS.tIntersectionBounds;
-            int mCount = tList.Count;
-            _RCS.ShoulderR_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderR_Vectors, ref tList, mCount, ref _RCS.ImmuneVects);
-            _RCS.ShoulderL_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderL_Vectors, ref tList, mCount, ref _RCS.ImmuneVects);
+            int constructionCount = tList.Count;
+            _RCS.ShoulderR_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderR_Vectors, ref tList, constructionCount, ref _RCS.ImmuneVects);
+            _RCS.ShoulderL_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderL_Vectors, ref tList, constructionCount, ref _RCS.ImmuneVects);
         }
 
 
@@ -6594,22 +6512,21 @@ namespace GSD.Threaded
         {
             GSD.Roads.GSDRoadUtil.Construction2DRect tRect = null;
             int MVL = _vects.Count;
-            //Vector3 tVect = default(Vector3);
             Vector2 Vect2D = default(Vector2);
             Vector2 tNearVect = default(Vector2);
             float tMax2 = 2000f;
             float tMax2SQ = 0f;
-            //			GameObject tObj = GameObject.Find("Inter1");
-            //			Vector2 tObj2D = ConvertVect3_To_Vect2(tObj.transform.position);
-            //			int fCount = 0;
-            //			bool bTempNow = false;
+            //GameObject tObj = GameObject.Find("Inter1");
+            //Vector2 tObj2D = ConvertVect3_To_Vect2(tObj.transform.position);
+            //int fCount = 0;
+            //bool bTempNow = false;
             for (int i = 0; i < _count; i++)
             {
                 tRect = _list[i];
                 tMax2 = tRect.MaxDistance * 1.5f;
                 tMax2SQ = (tMax2 * tMax2);
 
-                //				Debug.Log (tRect.ToString());
+                //Debug.Log (tRect.ToString());
 
                 for (int j = 0; j < MVL; j++)
                 {
@@ -6622,40 +6539,47 @@ namespace GSD.Threaded
                         continue;
                     }
 
-                    //					if(Vector2.Distance(Vect2D,tObj2D) < 20f && (j % 16 == 0)){
-                    //						fCount+=1;
-                    //						GameObject xObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    //							xObj.transform.localScale = new Vector3(0.05f,40f,0.05f);
-                    //							xObj.transform.position = tVects[j];
-                    //							xObj.name = "temp22";
-                    //					}
+                    //if(Vector2.Distance(Vect2D,tObj2D) < 20f && (j % 16 == 0))
+                    //{
+                    //	fCount+=1;
+                    //	GameObject xObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    //	xObj.transform.localScale = new Vector3(0.05f,40f,0.05f);
+                    //	xObj.transform.position = tVects[j];
+                    //	xObj.name = "temp22";
+                    //}
 
-                    //					bTempNow = false;
+                    //bTempNow = false;
                     if (tRect.Contains(ref Vect2D))
                     {
                         if (_immuneVects.Contains(_vects[j]))
                         {
                             continue;
                         }
-                        //						if(Vect2D == tRect.P1){
-                        //							continue;
-                        //						}else if(Vect2D == tRect.P2){
-                        //							continue;
-                        //						}else if(Vect2D == tRect.P3){
-                        //							continue;
-                        //						}else if(Vect2D == tRect.P4){
-                        //							continue;
-                        //						}
+                        //if(Vect2D == tRect.P1)
+                        //{
+                        //	continue;
+                        //}
+                        //else if(Vect2D == tRect.P2)
+                        //{
+                        //	continue;
+                        //}else if(Vect2D == tRect.P3)
+                        //{
+                        //	continue;
+                        //}else if(Vect2D == tRect.P4)
+                        //{
+                        //	continue;
+                        //}
 
 
-                        //						if(Mathf.Approximately(tVects[j].x,303.1898f)){
-                        //							GameObject hObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        //							hObj.transform.localScale = new Vector3(0.05f,40f,0.05f);
-                        //							hObj.transform.position = tVects[j];
-                        //							hObj.name = "temp23";
-                        //							bTempNow = true;
-                        //							Debug.Log (tVects[j]);
-                        //						}
+                        //if(Mathf.Approximately(tVects[j].x,303.1898f))
+                        //{
+                        //  GameObject hObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        //	hObj.transform.localScale = new Vector3(0.05f,40f,0.05f);
+                        //	hObj.transform.position = tVects[j];
+                        //	hObj.name = "temp23";
+                        //	bTempNow = true;
+                        //	Debug.Log (tVects[j]);
+                        //}
 
                         //Calling near when it shouldn't ?
                         if (tRect.Near(ref Vect2D, out tNearVect))
@@ -6673,17 +6597,18 @@ namespace GSD.Threaded
 
                         //ImmuneVects.Add(tVects[j]);
 
-                        //						if(bTempNow){
-                        //							GameObject xObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                        //							xObj.transform.localScale = new Vector3(0.05f,40f,0.05f);
-                        //							xObj.transform.position = tVects[j];
-                        //							xObj.name = "temp22";
-                        //							Debug.Log ("to: " + tVects[j]);
-                        //						}
+                        //if(bTempNow)
+                        //{
+                        //	GameObject xObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        //	xObj.transform.localScale = new Vector3(0.05f,40f,0.05f);
+                        //	xObj.transform.position = tVects[j];
+                        //	xObj.name = "temp22";
+                        //	Debug.Log ("to: " + tVects[j]);
+                        //}
                     }
                 }
             }
-            //			Debug.Log ("Fcount: " + fCount);
+            //Debug.Log ("Fcount: " + fCount);
 
             return _vects;
         }
@@ -6728,7 +6653,10 @@ namespace GSD.Threaded
             int TriCount = 0;
             int x1, x2, x3;
             int xCount = (int) (_MVL * 0.25f * 6) - 6;
-            //if(xCount < 0){ xCount = 0; }
+            //if(xCount < 0)
+            //{
+            //  xCount = 0;
+            //}
             int[] tri = new int[xCount];
             for (int i = 0; i < _MVL; i += 4)
             {
@@ -7002,10 +6930,11 @@ namespace GSD.Threaded
             //Bridge normals are processed at same time as tris.
             int MVL = _RCS.RoadVectors.Count;
             Vector3[] normals = new Vector3[MVL];
-            //			Vector3 tVect = -Vector3.forward;
-            //			for(int i=0;i<MVL;i++){
-            //				normals[i] = tVect;
-            //			}
+            //Vector3 tVect = -Vector3.forward;
+            //for(int i=0;i<MVL;i++)
+            //{
+            //	normals[i] = tVect;
+            //}
             _RCS.normals = normals;
 
             //Road cuts normals:
@@ -7050,10 +6979,11 @@ namespace GSD.Threaded
             {
                 int MVL = _RCS.cut_RoadVectors[j].Count;
                 Vector3[] normals = new Vector3[MVL];
-                //				Vector3 tVect = -Vector3.forward;
-                //				for(int i=0;i<MVL;i++){
-                //					normals[i] = tVect;
-                //				}
+                //Vector3 tVect = -Vector3.forward;
+                //for(int i=0;i<MVL;i++)
+                //{
+                //  normals[i] = tVect;
+                //}
                 _RCS.cut_normals.Add(normals);
             }
         }
@@ -7066,10 +6996,11 @@ namespace GSD.Threaded
             {
                 int MVL = _RCS.cut_ShoulderR_Vectors[j].Count;
                 Vector3[] normals = new Vector3[MVL];
-                //				Vector3 tVect = -Vector3.forward;
-                //				for(int i=0;i<MVL;i++){
-                //					normals[i] = tVect;
-                //				}
+                //Vector3 tVect = -Vector3.forward;
+                //for(int i=0;i<MVL;i++)
+                //{
+                //  normals[i] = tVect;
+                //}
                 _RCS.cut_normals_ShoulderR.Add(normals);
             }
         }
@@ -7082,10 +7013,11 @@ namespace GSD.Threaded
             {
                 int MVL = _RCS.cut_ShoulderL_Vectors[j].Count;
                 Vector3[] normals = new Vector3[MVL];
-                //				Vector3 tVect = -Vector3.forward;
-                //				for(int i=0;i<MVL;i++){
-                //					normals[i] = tVect;
-                //				}
+                //Vector3 tVect = -Vector3.forward;
+                //for(int i=0;i<MVL;i++)
+                //{
+                //  normals[i] = tVect;
+                //}
                 _RCS.cut_normals_ShoulderL.Add(normals);
             }
         }
@@ -7098,18 +7030,20 @@ namespace GSD.Threaded
             //With the normals added, the plane will be correctly shaded but remember that you need a light in the scene to see the effect. 
             int MVL = _RCS.ShoulderL_Vectors.Count;
             Vector3[] normals = new Vector3[MVL];
-            //			Vector3 tVect = -Vector3.forward;
-            //			for(int i=0;i<MVL;i++){
-            //				normals[i] = tVect;
-            //			}
+            //Vector3 tVect = -Vector3.forward;
+            //for(int i=0;i<MVL;i++)
+            //{
+            //	normals[i] = tVect;
+            //}
             _RCS.normals_ShoulderL = normals;
             //Right:
             MVL = _RCS.ShoulderR_Vectors.Count;
             normals = new Vector3[MVL];
-            //			tVect = -Vector3.forward;
-            //			for(int i=0;i<MVL;i++){
-            //				normals[i] = tVect;
-            //			}
+            //tVect = -Vector3.forward;
+            //for(int i=0;i<MVL;i++)
+            //{
+            //	normals[i] = tVect;
+            //}
             _RCS.normals_ShoulderR = normals;
         }
 
@@ -7124,14 +7058,15 @@ namespace GSD.Threaded
             int vListCount = _vertexList.Count;
             Vector3[] normals;
             int MVL = -1;
-            //			Vector3 tVect = -Vector3.forward;
+            //Vector3 tVect = -Vector3.forward;
             for (int index = 0; index < vListCount; index++)
             {
                 MVL = _vertexList[index].Length;
                 normals = new Vector3[MVL];
-                //				for(int j=0;j<MVL;j++){
-                //					normals[j] = tVect;
-                //				}
+                //for(int j=0;j<MVL;j++)
+                //{
+                //	normals[j] = tVect;
+                //}
                 _normalList.Add(normals);
             }
         }
@@ -7274,17 +7209,17 @@ namespace GSD.Threaded
             int MVL = _verts.Length;
             Vector2[] uv = new Vector2[MVL];
             int i = 0;
-            //			bool bOddToggle = true;
-            //			float tDistance= 0f;
-            //			float tDistanceLeft = 0f;
-            //			float tDistanceRight = 0f;
-            //			float tDistanceLeftSum = 0f;
-            //			float tDistanceRightSum = 0f;
-            //			float tDistanceSum = 0f;
-            //			float xDistance = 0f;
-            //			float rDistance1 = 0f;
-            //			float rDistance2 = 0f;
-            //			float fDistance = Vector3.Distance(_verts[0],_verts[2]);
+            //bool bOddToggle = true;
+            //float tDistance= 0f;
+            //float tDistanceLeft = 0f;
+            //float tDistanceRight = 0f;
+            //float tDistanceLeftSum = 0f;
+            //float tDistanceRightSum = 0f;
+            //float tDistanceSum = 0f;
+            //float xDistance = 0f;
+            //float rDistance1 = 0f;
+            //float rDistance2 = 0f;
+            //float fDistance = Vector3.Distance(_verts[0],_verts[2]);
 
 
             for (i = 0; i < MVL; i++)
@@ -7293,98 +7228,111 @@ namespace GSD.Threaded
             }
             return uv;
 
-            //			while(i+8 < MVL){
-            //				tDistanceLeft = Vector3.Distance(_verts[i],_verts[i+8]);
-            //				tDistanceRight = Vector3.Distance(_verts[i+2],_verts[i+10]);
+            //while(i+8 < MVL){
+            //	tDistanceLeft = Vector3.Distance(_verts[i],_verts[i+8]);
+            //	tDistanceRight = Vector3.Distance(_verts[i+2],_verts[i+10]);
             //				
-            //				tDistance = tDistance / 5f;
-            //				tDistanceLeft = tDistanceLeft / 5f;
-            //				tDistanceRight = tDistanceRight / 5f;
+            //	tDistance = tDistance / 5f;
+            //	tDistanceLeft = tDistanceLeft / 5f;
+            //	tDistanceRight = tDistanceRight / 5f;
             //				
-            //				uv[i] = new Vector2(0f, tDistanceSum);
-            //				uv[i+2] = new Vector2(1f, tDistanceSum);
-            //				uv[i+8] = new Vector2(0f, tDistance+tDistanceSum);
-            //				uv[i+10] = new Vector2(1f, tDistance+tDistanceSum);	
+            //	uv[i] = new Vector2(0f, tDistanceSum);
+            //	uv[i+2] = new Vector2(1f, tDistanceSum);
+            //	uv[i+8] = new Vector2(0f, tDistance+tDistanceSum);
+            //	uv[i+10] = new Vector2(1f, tDistance+tDistanceSum);	
             //				
-            //				rDistance1 = (Vector3.Distance(_verts[i+4],_verts[i+6]));
-            //				rDistance2 = (Vector3.Distance(_verts[i+12],_verts[i+14]));
+            //	rDistance1 = (Vector3.Distance(_verts[i+4],_verts[i+6]));
+            //	rDistance2 = (Vector3.Distance(_verts[i+12],_verts[i+14]));
             //					
-            //				if(!bIsLeft){
-            //					uv[i+4] = new Vector2(1f, tDistanceSum);
-            //					xDistance = (rDistance1 / fDistance) + 1f;
-            //					uv[i+6] = new Vector2(xDistance, tDistanceSum);
-            //					uv[i+12] = new Vector2(1f, tDistance+tDistanceSum);
-            //					xDistance = (rDistance2 / fDistance) + 1f;
-            //					uv[i+14] = new Vector2(xDistance, tDistance+tDistanceSum);
-            //				}else{
-            //					xDistance = (rDistance1 / fDistance);
-            //					uv[i+4] = new Vector2(-xDistance, tDistanceSum);
-            //					uv[i+6] = new Vector2(0f, tDistanceSum);
-            //					xDistance = (rDistance2 / fDistance);
-            //					uv[i+12] = new Vector2(-xDistance, tDistance+tDistanceSum);
-            //					uv[i+14] = new Vector2(0f, tDistance+tDistanceSum);
-            //				}
+            //	if(!bIsLeft)
+            //  {
+            //		uv[i+4] = new Vector2(1f, tDistanceSum);
+            //		xDistance = (rDistance1 / fDistance) + 1f;
+            //		uv[i+6] = new Vector2(xDistance, tDistanceSum);
+            //		uv[i+12] = new Vector2(1f, tDistance+tDistanceSum);
+            //		xDistance = (rDistance2 / fDistance) + 1f;
+            //		uv[i+14] = new Vector2(xDistance, tDistance+tDistanceSum);
+            //  }
+            //  else
+            //  {
+            //		xDistance = (rDistance1 / fDistance);
+            //		uv[i+4] = new Vector2(-xDistance, tDistanceSum);
+            //		uv[i+6] = new Vector2(0f, tDistanceSum);
+            //		xDistance = (rDistance2 / fDistance);
+            //		uv[i+12] = new Vector2(-xDistance, tDistance+tDistanceSum);
+            //		uv[i+14] = new Vector2(0f, tDistance+tDistanceSum);
+            //	}
             //				
-            //				uv[i] = new Vector2(0f, tDistanceLeftSum);
-            //				uv[i+2] = new Vector2(1f, tDistanceRightSum);
-            //				uv[i+8] = new Vector2(0f, tDistanceLeft+tDistanceLeftSum);
-            //				uv[i+10] = new Vector2(1f, tDistanceRight+tDistanceRightSum);	
+            //	uv[i] = new Vector2(0f, tDistanceLeftSum);
+            //	uv[i+2] = new Vector2(1f, tDistanceRightSum);
+            //	uv[i+8] = new Vector2(0f, tDistanceLeft+tDistanceLeftSum);
+            //	uv[i+10] = new Vector2(1f, tDistanceRight+tDistanceRightSum);	
             //
-            //				uv[i] = new Vector2(_verts[i].x/5f,_verts[i].z/5f);
-            //				uv[i+2] = new Vector2(_verts[i+2].x/5f,_verts[i+2].z/5f);
-            //				uv[i+8] = new Vector2(_verts[i+8].x/5f,_verts[i+8].z/5f);
-            //				uv[i+10] = new Vector2(_verts[i+10].x/5f,_verts[i+10].z/5f);
+            //	uv[i] = new Vector2(_verts[i].x/5f,_verts[i].z/5f);
+            //	uv[i+2] = new Vector2(_verts[i+2].x/5f,_verts[i+2].z/5f);
+            //	uv[i+8] = new Vector2(_verts[i+8].x/5f,_verts[i+8].z/5f);
+            //	uv[i+10] = new Vector2(_verts[i+10].x/5f,_verts[i+10].z/5f);
             //				
             //				
-            //				rDistance1 = (Vector3.Distance(_verts[i+4],_verts[i+6]));
-            //				rDistance2 = (Vector3.Distance(_verts[i+12],_verts[i+14]));
+            //	rDistance1 = (Vector3.Distance(_verts[i+4],_verts[i+6]));
+            //	rDistance2 = (Vector3.Distance(_verts[i+12],_verts[i+14]));
             //					
-            //				if(!bIsLeft){
-            //					uv[i+4] = new Vector2(1f, tDistanceRightSum);
-            //					xDistance = (rDistance1 / fDistance) + 1f;
-            //					uv[i+6] = new Vector2(xDistance, tDistanceRightSum);
-            //					uv[i+12] = new Vector2(1f, tDistanceRight+tDistanceRightSum);
-            //					xDistance = (rDistance2 / fDistance) + 1f;
-            //					uv[i+14] = new Vector2(xDistance, tDistanceRight+tDistanceRightSum);
-            //				}else{
-            //					xDistance = (rDistance1 / fDistance);
-            //					uv[i+4] = new Vector2(-xDistance, tDistanceLeftSum);
-            //					uv[i+6] = new Vector2(0f, tDistanceLeftSum);
-            //					xDistance = (rDistance2 / fDistance);
-            //					uv[i+12] = new Vector2(-xDistance, tDistanceLeft+tDistanceLeftSum);
-            //					uv[i+14] = new Vector2(0f, tDistanceLeft+tDistanceLeftSum);
-            //				}
+            //	if(!bIsLeft)
+            //  {
+            //  	uv[i+4] = new Vector2(1f, tDistanceRightSum);
+            //		xDistance = (rDistance1 / fDistance) + 1f;
+            //		uv[i+6] = new Vector2(xDistance, tDistanceRightSum);
+            //		uv[i+12] = new Vector2(1f, tDistanceRight+tDistanceRightSum);
+            //		xDistance = (rDistance2 / fDistance) + 1f;
+            //		uv[i+14] = new Vector2(xDistance, tDistanceRight+tDistanceRightSum);
+            //	}
+            //  else
+            //  {
+            //		xDistance = (rDistance1 / fDistance);
+            //		uv[i+4] = new Vector2(-xDistance, tDistanceLeftSum);
+            //		uv[i+6] = new Vector2(0f, tDistanceLeftSum);
+            //		xDistance = (rDistance2 / fDistance);
+            //		uv[i+12] = new Vector2(-xDistance, tDistanceLeft+tDistanceLeftSum);
+            //		uv[i+14] = new Vector2(0f, tDistanceLeft+tDistanceLeftSum);
+            //	}
             //				
-            //				uv[i+4] = new Vector2(_verts[i+4].x/5f,_verts[i+4].z/5f);
-            //				uv[i+6] = new Vector2(_verts[i+6].x/5f,(_verts[i+6].z/5f));
-            //				uv[i+12] = new Vector2(_verts[i+12].x/5f,_verts[i+12].z/5f);
-            //				uv[i+14] = new Vector2(_verts[i+14].x/5f,(_verts[i+14].z/5f));
+            //	uv[i+4] = new Vector2(_verts[i+4].x/5f,_verts[i+4].z/5f);
+            //	uv[i+6] = new Vector2(_verts[i+6].x/5f,(_verts[i+6].z/5f));
+            //	uv[i+12] = new Vector2(_verts[i+12].x/5f,_verts[i+12].z/5f);
+            //	uv[i+14] = new Vector2(_verts[i+14].x/5f,(_verts[i+14].z/5f));
             //				
-            //				//Last segment needs adjusted due to double vertices:
-            //				if((i+11) == MVL){
-            //					if(bOddToggle){
-            //						//First set: Debug.Log ("+5:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));		
-            //						uv[MVL-3] = uv[i+4];
-            //						uv[MVL-1] = uv[i+6];
-            //					}else{
-            //						//Last set: Debug.Log ("+3:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));	
-            //						uv[MVL-4] = uv[i+4];
-            //						uv[MVL-2] = uv[i+6];
-            //					}
-            //				}
+            //	//Last segment needs adjusted due to double vertices:
+            //	if((i+11) == MVL)
+            //  {
+            //  	if(bOddToggle)
+            //      {
+            //			//First set: Debug.Log ("+5:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));		
+            //			uv[MVL-3] = uv[i+4];
+            //			uv[MVL-1] = uv[i+6];
+            //		}
+            //      else
+            //      {
+            //			//Last set: Debug.Log ("+3:"+i+" "+(i+2)+" "+(i+4)+" "+(i+6));	
+            //			uv[MVL-4] = uv[i+4];
+            //			uv[MVL-2] = uv[i+6];
+            //		}
+            //	}
             //				
-            //				if(bOddToggle){
-            //					i+=9;	
-            //				}else{
-            //					i+=7;
-            //				}
+            //	if(bOddToggle)
+            //  {
+            //		i+=9;	
+            //	}
+            //  else
+            //  {
+            //		i+=7;
+            //	}
             //				
-            //				tDistanceLeftSum+=tDistanceLeft;
-            //				tDistanceRightSum+=tDistanceRight;
-            //				tDistanceSum+=tDistance;
-            //				bOddToggle = !bOddToggle;
-            //			}
-            //			return uv;
+            //	tDistanceLeftSum+=tDistanceLeft;
+            //	tDistanceRightSum+=tDistanceRight;
+            //	tDistanceSum+=tDistance;
+            //	bOddToggle = !bOddToggle;
+            //}
+            //return uv;
         }
 
 
