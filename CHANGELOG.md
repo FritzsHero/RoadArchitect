@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unified SetupUniqueIdentifier
 - Improved performance by reducing the frequency at which GetBasePath is called
 - Added a warning for Tests
+- Changed TestCodeCount to support more folders
 
 
 ## [Version: 1.9_FH] - 2019.04.22

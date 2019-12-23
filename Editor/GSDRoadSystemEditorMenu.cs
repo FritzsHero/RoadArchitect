@@ -112,9 +112,9 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
 
     /// <summary> Get code line count for RA project. </summary>
     [MenuItem("Window/Road Architect/Testing/Get line count of RA")]
-    public static void testCodeCount()
+    public static void TestCodeCount()
     {
-        string mainDir = Application.dataPath + "/RoadArchitect/";
+        string mainDir = System.Environment.CurrentDirectory + "/" + GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
         string[] files = System.IO.Directory.GetFiles(mainDir, "*.cs", System.IO.SearchOption.AllDirectories);
         int lineCount = 0;
         foreach (string file in files)
