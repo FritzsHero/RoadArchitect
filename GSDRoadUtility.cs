@@ -5751,7 +5751,7 @@ namespace GSD.Roads
                 RB = tObjRL.AddComponent<Rigidbody>();
                 RB.mass = Mass;
                 RB.centerOfMass = COM;
-                tObjRL.AddComponent<GSDRigidBody>();
+                tObjRL.AddComponent<RoadArchitect.RigidBody>();
             }
             tObjRL.transform.position = tPosRL;
             tObjRL.transform.name = "TrafficLightRL";
@@ -5803,7 +5803,7 @@ namespace GSD.Roads
                 RB = tObjLR.AddComponent<Rigidbody>();
                 RB.mass = Mass;
                 RB.centerOfMass = COM;
-                tObjLR.AddComponent<GSDRigidBody>();
+                tObjLR.AddComponent<RoadArchitect.RigidBody>();
             }
             tObjLR.transform.position = tPosLR;
             tObjLR.transform.name = "TrafficLightLR";
@@ -5854,7 +5854,7 @@ namespace GSD.Roads
                 RB = tObjRR.AddComponent<Rigidbody>();
                 RB.mass = Mass;
                 RB.centerOfMass = COM;
-                tObjRR.AddComponent<GSDRigidBody>();
+                tObjRR.AddComponent<RoadArchitect.RigidBody>();
             }
             tObjRR.transform.position = tPosRR;
             tObjRR.transform.name = "TrafficLightRR";
@@ -5907,7 +5907,7 @@ namespace GSD.Roads
                 RB = tObjLL.AddComponent<Rigidbody>();
                 RB.mass = Mass;
                 RB.centerOfMass = COM;
-                tObjLL.AddComponent<GSDRigidBody>();
+                tObjLL.AddComponent<RoadArchitect.RigidBody>();
             }
             tObjLL.transform.position = tPosLL;
             tObjLL.transform.name = "TrafficLightLL";
