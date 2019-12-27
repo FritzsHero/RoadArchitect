@@ -3198,6 +3198,7 @@ namespace GSD.Roads
                 MeshCollider MC = tObj.AddComponent<MeshCollider>();
                 MC.sharedMesh = MF.sharedMesh;
                 MC.material = road.RoadPhysicMaterial;
+                MC.material.name = MC.material.name.Replace(" (Instance)", "");
             }
 
             if (_isMainPlates && tCenter != null)

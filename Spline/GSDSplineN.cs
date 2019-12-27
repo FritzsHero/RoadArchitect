@@ -1082,7 +1082,7 @@ public class GSDSplineN : MonoBehaviour
             if (MC != null)
             {
                 roadCutPhysicMat = MC.material;
-                roadCutPhysicMat.name = roadCutPhysicMat.name.Replace("(Instance)", "");
+                roadCutPhysicMat.name = roadCutPhysicMat.name.Replace(" (Instance)", "");
             }
             //Nullify reference only
             roadCutWorld = null;
@@ -1098,7 +1098,7 @@ public class GSDSplineN : MonoBehaviour
             if (MC != null)
             {
                 shoulderCutRPhysicMat = MC.material;
-                shoulderCutRPhysicMat.name = shoulderCutRPhysicMat.name.Replace("(Instance)", "");
+                shoulderCutRPhysicMat.name = shoulderCutRPhysicMat.name.Replace(" (Instance)", "");
             }
             shoulderCutRWorld = null;
         }
@@ -1113,7 +1113,7 @@ public class GSDSplineN : MonoBehaviour
             if (MC != null)
             {
                 shoulderCutLPhysicMat = MC.material;
-                shoulderCutLPhysicMat.name = shoulderCutLPhysicMat.name.Replace("(Instance)", "");
+                shoulderCutLPhysicMat.name = shoulderCutLPhysicMat.name.Replace(" (Instance)", "");
             }
             shoulderCutLWorld = null;
         }
@@ -1158,7 +1158,40 @@ public class GSDSplineN : MonoBehaviour
         MeshRenderer MR = null;
         MeshCollider MC = null;
 
+        #region "Physic Materials"
         //World:
+        if (roadCutPhysicMat != null && roadCutWorld)
+        {
+            MC = roadCutWorld.GetComponent<MeshCollider>();
+            if (MC != null)
+            {
+                MC.material = roadCutPhysicMat;
+                MC.material.name = MC.material.name.Replace(" (Instance)", "");
+            }
+        }
+
+        if (shoulderCutRPhysicMat != null && shoulderCutRWorld)
+        {
+            MC = shoulderCutRWorld.GetComponent<MeshCollider>();
+            if (MC != null)
+            {
+                MC.material = shoulderCutRPhysicMat;
+                MC.material.name = MC.material.name.Replace(" (Instance)", "");
+            }
+        }
+
+        if (shoulderCutLPhysicMat != null && shoulderCutLWorld)
+        {
+            MC = shoulderCutLWorld.GetComponent<MeshCollider>();
+            if (MC != null)
+            {
+                MC.material = shoulderCutLPhysicMat;
+                MC.material.name = MC.material.name.Replace(" (Instance)", "");
+            }
+        }
+        #endregion
+
+        #region "Get or Add MeshRenderer"
         if (roadCutWorldMats != null && roadCutWorldMats.Length > 0 && roadCutWorld)
         {
             MR = roadCutWorld.GetComponent<MeshRenderer>();
@@ -1171,15 +1204,6 @@ public class GSDSplineN : MonoBehaviour
                 MR.materials = roadCutWorldMats;
             }
         }
-        if (roadCutPhysicMat != null && roadCutWorld)
-        {
-            MC = roadCutWorld.GetComponent<MeshCollider>();
-            if (MC != null)
-            {
-                MC.material = roadCutPhysicMat;
-            }
-        }
-
         if (shoulderCutRWorldMats != null && shoulderCutRWorldMats.Length > 0 && shoulderCutRWorld)
         {
             MR = shoulderCutRWorld.GetComponent<MeshRenderer>();
@@ -1192,15 +1216,6 @@ public class GSDSplineN : MonoBehaviour
                 MR.materials = shoulderCutRWorldMats;
             }
         }
-        if (shoulderCutRPhysicMat != null && shoulderCutRWorld)
-        {
-            MC = shoulderCutRWorld.GetComponent<MeshCollider>();
-            if (MC != null)
-            {
-                MC.material = shoulderCutRPhysicMat;
-            }
-        }
-
         if (shoulderCutLWorldMats != null && shoulderCutLWorldMats.Length > 0 && shoulderCutLWorld)
         {
             MR = shoulderCutLWorld.GetComponent<MeshRenderer>();
@@ -1213,14 +1228,7 @@ public class GSDSplineN : MonoBehaviour
                 MR.materials = shoulderCutLWorldMats;
             }
         }
-        if (shoulderCutLPhysicMat != null && shoulderCutLWorld)
-        {
-            MC = shoulderCutLWorld.GetComponent<MeshCollider>();
-            if (MC != null)
-            {
-                MC.material = shoulderCutLPhysicMat;
-            }
-        }
+
 
         //Markers:
         if (roadCutMarkerMats != null && roadCutMarkerMats.Length > 0 && roadCutMarker)
@@ -1259,7 +1267,9 @@ public class GSDSplineN : MonoBehaviour
                 MR.materials = shoulderCutLMarkerMats;
             }
         }
+        #endregion
 
+        #region "Destroy if empty"
         if (roadCutMarker != null)
         {
             MR = roadCutMarker.GetComponent<MeshRenderer>();
@@ -1284,6 +1294,7 @@ public class GSDSplineN : MonoBehaviour
                 Object.DestroyImmediate(shoulderCutLMarker);
             }
         }
+        #endregion
     }
 
 
