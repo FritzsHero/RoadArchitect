@@ -4,21 +4,24 @@ using UnityEditor;
 #endregion
 
 
-[CustomEditor(typeof(GSDSplineI))]
-public class GSDSplineIEditor : Editor
+namespace RoadArchitect
 {
-    private GSDSplineI splineI;
-
-
-    private void OnEnable()
+    [CustomEditor(typeof(GSDSplineI))]
+    public class GSDSplineIEditor : Editor
     {
-        splineI = (GSDSplineI)target;
-    }
+        private GSDSplineI splineI;
 
 
-    public override void OnInspectorGUI()
-    {
-        //Intentionally left empty.
+        private void OnEnable()
+        {
+            splineI = (GSDSplineI)target;
+        }
+
+
+        public override void OnInspectorGUI()
+        {
+            //Intentionally left empty.
+        }
     }
-}
 #endif
+}

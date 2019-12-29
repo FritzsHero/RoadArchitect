@@ -5,34 +5,37 @@ using UnityEditor;
 #endregion
 
 
-[CustomEditor(typeof(GSDSplineC))]
-public class GSDSplineCEditor : Editor
+namespace RoadArchitect
 {
-    private GSDSplineC spline;
-    private int browseNode = 0;
-
-
-    private void OnEnable()
+    [CustomEditor(typeof(GSDSplineC))]
+    public class GSDSplineCEditor : Editor
     {
-        spline = (GSDSplineC)target;
-    }
+        private GSDSplineC spline;
+        private int browseNode = 0;
 
 
-    public override void OnInspectorGUI()
-    {
-        #region NodeBrowser
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Browse to node:", EditorStyles.boldLabel);
-        browseNode = EditorGUILayout.IntField(browseNode);
-        if (GUILayout.Button("Browse"))
+        private void OnEnable()
         {
-            if (browseNode < spline.nodes.Count)
-            {
-                Selection.objects = new Object[1] { spline.nodes[browseNode] };
-            }
+            spline = (GSDSplineC)target;
         }
-        EditorGUILayout.EndHorizontal();
-        #endregion
+
+
+        public override void OnInspectorGUI()
+        {
+            #region NodeBrowser
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Browse to node:", EditorStyles.boldLabel);
+            browseNode = EditorGUILayout.IntField(browseNode);
+            if (GUILayout.Button("Browse"))
+            {
+                if (browseNode < spline.nodes.Count)
+                {
+                    Selection.objects = new Object[1] { spline.nodes[browseNode] };
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+            #endregion
+        }
     }
-}
 #endif
+}
