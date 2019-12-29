@@ -223,7 +223,7 @@ namespace RoadArchitect
 
         private void InitNullChecks()
         {
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             RoadArchitect.EditorUtilities.CheckLoadTexture(ref refreshButtonText, basePath + "/Editor/Icons/refresh2.png");
             RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/FlexBG.png");
@@ -277,11 +277,11 @@ namespace RoadArchitect
             byte[] bytes = null;
             if (terrain.isSplatSingleRoad && terrain.roadSingleChoiceUID != "")
             {
-                bytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels, terrain.roadSingleChoiceUID);
+                bytes = GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels, terrain.roadSingleChoiceUID);
             }
             else
             {
-                bytes = GSD.Roads.GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels);
+                bytes = GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels);
             }
 
             if (bytes != null && bytes.Length > 3)

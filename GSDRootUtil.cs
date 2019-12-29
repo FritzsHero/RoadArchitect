@@ -335,7 +335,7 @@ namespace RoadArchitect
 
         public static string GetDirLibraryBase()
         {
-            return GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Editor/Library/";
+            return GSDRoadUtilityEditor.GetBasePath() + "/Editor/Library/";
         }
 
 

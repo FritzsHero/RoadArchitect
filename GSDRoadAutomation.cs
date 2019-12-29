@@ -237,7 +237,7 @@ namespace GSD.Roads
             foreach (KeyValuePair<GSDSplineN, GSDSplineN> KVP in keyValuePairs)
             {
                 //Now create the fucking intersection:
-                GameObject tInter = GSD.Roads.GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
+                GameObject tInter = GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
                 GSDRoadIntersection GSDRI_JustCreated = tInter.GetComponent<GSDRoadIntersection>();
                 GSDRI_JustCreated.intersectionStopType = _iStopType;
                 GSDRI_JustCreated.roadType = _roadType;
@@ -350,7 +350,7 @@ namespace GSD.Roads
                                 }
 
                                 //Now create the fucking intersection:
-                                GameObject intersection = GSD.Roads.GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
+                                GameObject intersection = GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
                                 GSDRoadIntersection newRoadIntersection = intersection.GetComponent<GSDRoadIntersection>();
                                 newRoadIntersection.intersectionStopType = _iStopType;
                                 newRoadIntersection.roadType = _roadType;

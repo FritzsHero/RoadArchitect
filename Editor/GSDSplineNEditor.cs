@@ -234,7 +234,7 @@ namespace RoadArchitect
             isInitialized = true;
             EditorStyles.label.wordWrap = true;
             EditorStyles.miniLabel.wordWrap = true;
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             EditorUtilities.CheckLoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
             EditorUtilities.CheckLoadTexture(ref copyButtonTexture, basePath + "/Editor/Icons/copy.png");
@@ -327,7 +327,7 @@ namespace RoadArchitect
             if (Event.current.type != EventType.Layout && isCreatingIntersection)
             {
                 isCreatingIntersection = false;
-                Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(node1, node2);
+                Selection.activeGameObject = GSDIntersections.CreateIntersection(node1, node2);
                 return;
             }
 
@@ -1840,7 +1840,7 @@ namespace RoadArchitect
         #region "Quick adds"
         private void BridgeAddTopBase(float _horizSep = 0f, float _vertRaise = -0.01f, string _mat = "", bool _isOverridenPrefab = false, string _overridePrefab = "")
         {
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             if (_mat == "")
             {
@@ -1929,7 +1929,7 @@ namespace RoadArchitect
             SMM.HorizontalSep = _horizSep;
             SMM.VerticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
-            SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+            SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
 
             BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
@@ -1946,7 +1946,7 @@ namespace RoadArchitect
 
         private void BridgeAddBottomBase(float _horizSep = 0f, float _vertRaise = -1.01f, string _mat = "", bool _isOverridenPrefab = false, string _overridePrefab = "")
         {
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             if (_mat == "")
             {
@@ -2113,39 +2113,39 @@ namespace RoadArchitect
 
             if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(_mat);
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(_mat);
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
             {
-                SMM.SplinatedMaterial1 = GSD.Roads.GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
+                SMM.SplinatedMaterial1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
             }
 
             SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
@@ -2426,7 +2426,7 @@ namespace RoadArchitect
             isCreatingIntersection = true;
             node1 = _node1;
             node2 = _node2;
-            Selection.activeGameObject = GSD.Roads.GSDIntersections.CreateIntersection(_node1, _node2);
+            Selection.activeGameObject = GSDIntersections.CreateIntersection(_node1, _node2);
         }
 
 
@@ -2487,7 +2487,7 @@ namespace RoadArchitect
 
         private GameObject GetEndObjectQuickAdd()
         {
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             string tPath = "";
             if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)

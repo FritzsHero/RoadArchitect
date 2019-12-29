@@ -2072,7 +2072,7 @@ namespace RoadArchitect
                 }
                 else
                 {
-                    NodeCreated1 = GSD.Roads.GSDConstruction.InsertNode(road, true, tNode1_ExtraPos, false, 0, true);
+                    NodeCreated1 = GSDConstruction.InsertNode(road, true, tNode1_ExtraPos, false, 0, true);
                 }
             }
             else
@@ -2087,7 +2087,7 @@ namespace RoadArchitect
                 }
                 else
                 {
-                    NodeCreated1 = GSD.Roads.GSDConstruction.CreateNode(road, true, tNode1_ExtraPos);
+                    NodeCreated1 = GSDConstruction.CreateNode(road, true, tNode1_ExtraPos);
                 }
 
             }
@@ -2103,7 +2103,7 @@ namespace RoadArchitect
                 }
                 else
                 {
-                    NodeCreated2 = GSD.Roads.GSDConstruction.InsertNode(spline.road, true, tNode2_ExtraPos, false, 0, true);
+                    NodeCreated2 = GSDConstruction.InsertNode(spline.road, true, tNode2_ExtraPos, false, 0, true);
                 }
 
             }
@@ -2119,7 +2119,7 @@ namespace RoadArchitect
                 }
                 else
                 {
-                    NodeCreated2 = GSD.Roads.GSDConstruction.CreateNode(spline.road, true, tNode2_ExtraPos);
+                    NodeCreated2 = GSDConstruction.CreateNode(spline.road, true, tNode2_ExtraPos);
                 }
 
             }

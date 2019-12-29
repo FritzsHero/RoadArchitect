@@ -1158,7 +1158,7 @@ namespace RoadArchitect
         {
             EditorStyles.label.wordWrap = true;
             isInitialized = true;
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             EditorUtilities.CheckLoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
             EditorUtilities.CheckLoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");

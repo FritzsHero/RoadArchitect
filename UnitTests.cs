@@ -97,7 +97,7 @@ namespace RoadArchitect.Tests
                 Object[] roads = _roadSystem.GetComponents<GSDRoad>();
                 foreach (GSDRoad road in roads)
                 {
-                    GSD.Roads.GSDTerraforming.TerrainsReset(road);
+                    GSDTerraforming.TerrainsReset(road);
                 }
             }
         }
@@ -266,7 +266,7 @@ namespace RoadArchitect.Tests
 
             if (nodeInter1 != null && nodeInter2 != null)
             {
-                GameObject tInter = GSD.Roads.GSDIntersections.CreateIntersection(nodeInter1, nodeInter2);
+                GameObject tInter = GSDIntersections.CreateIntersection(nodeInter1, nodeInter2);
                 GSDRoadIntersection GSDRI = tInter.GetComponent<GSDRoadIntersection>();
                 GSDRI.intersectionStopType = _iStopType;
                 GSDRI.roadType = _roadType;

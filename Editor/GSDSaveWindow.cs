@@ -202,7 +202,7 @@ namespace RoadArchitect
             if (GUILayout.Button("Save group"))
             {
                 SanitizeFilename();
-                GSD.Roads.GSDRoadUtil.WizardObject WO = new GSD.Roads.GSDRoadUtil.WizardObject();
+                GSDRoadUtil.WizardObject WO = new GSDRoadUtil.WizardObject();
                 WO.thumbString = thumbString;
                 WO.desc = desc;
                 WO.displayName = displayName;
@@ -210,7 +210,7 @@ namespace RoadArchitect
                 WO.isBridge = isBridge;
                 WO.isDefault = false;
 
-                GSD.Roads.GSDRoadUtil.SaveNodeObjects(ref tSMMs, ref tEOMs, ref WO);
+                GSDRoadUtil.SaveNodeObjects(ref tSMMs, ref tEOMs, ref WO);
                 Close();
             }
         }

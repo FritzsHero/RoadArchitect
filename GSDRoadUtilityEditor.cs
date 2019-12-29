@@ -8,7 +8,7 @@ using UnityEditor;
 #endregion
 
 
-namespace GSD.Roads
+namespace RoadArchitect
 {
     public static class GSDRoadUtilityEditor
     {
@@ -23,7 +23,6 @@ namespace GSD.Roads
 
         public static string GetBasePath()
         {
-            // TODO this might break in future versions of Unity
 #if UNITY_EDITOR
             foreach (string folder in validFolders)
             {

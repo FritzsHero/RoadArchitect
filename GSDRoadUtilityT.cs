@@ -14,9 +14,9 @@ namespace GSD.Threaded
     {
         public class TerrainBoundsMaker
         {
-            public List<GSD.Roads.GSDRoadUtil.Construction3DTri> triList;
+            public List<GSDRoadUtil.Construction3DTri> triList;
             [UnityEngine.Serialization.FormerlySerializedAs("tRect")]
-            public GSD.Roads.GSDRoadUtil.Construction2DRect constructRect;
+            public GSDRoadUtil.Construction2DRect constructRect;
             public float MinI = 0f;
             public float MaxI = 1f;
         }
@@ -26,7 +26,7 @@ namespace GSD.Threaded
         private static Vector3 ProcessLineHeights_PrevVect = new Vector3(0f, 0f, 0f);
 
 
-        public static float ProcessLineHeights(GSDSplineC tSpline, ref Vector3 tVect, ref Vector3 POS, float tDistance, GSD.Roads.GSDTerraforming.TempTerrainData TTD, float PrevDesiredHeight)
+        public static float ProcessLineHeights(GSDSplineC tSpline, ref Vector3 tVect, ref Vector3 POS, float tDistance, GSDTerraforming.TempTerrainData TTD, float PrevDesiredHeight)
         {
             Vector3 ShoulderR_rVect = new Vector3(0f, 0f, 0f);
             Vector3 ShoulderL_lVect = new Vector3(0f, 0f, 0f);
@@ -112,14 +112,14 @@ namespace GSD.Threaded
         }
 
 
-        private static float ProcessLineHeights_GetDesiredHeight(Vector3 tVect, ref GSD.Roads.GSDTerraforming.TempTerrainData TTD, ref GSDSplineC tSpline)
+        private static float ProcessLineHeights_GetDesiredHeight(Vector3 tVect, ref GSDTerraforming.TempTerrainData TTD, ref GSDSplineC tSpline)
         {
             return ((((tVect - TTD.TerrainPos).y) - tSpline.tRoad.opt_TerrainSubtract_Alt) / TTD.TerrainSize.y);
         }
         */
 
 
-        private static void GetTempHeightsCoordinates(ref Vector3 _vector, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD, out int _x, out int _y)
+        private static void GetTempHeightsCoordinates(ref Vector3 _vector, ref GSDTerraforming.TempTerrainData _TTD, out int _x, out int _y)
         {
             //Get the normalized position of this game object relative to the terrain:
             Vector3 tempCoord = (_vector - _TTD.TerrainPos);
@@ -135,7 +135,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void GetTempDetailsCoordinates(ref Vector3 _vector, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD, out int _x, out int _y)
+        private static void GetTempDetailsCoordinates(ref Vector3 _vector, ref GSDTerraforming.TempTerrainData _TTD, out int _x, out int _y)
         {
             //Get the normalized position of this game object relative to the terrain:
             Vector3 tempCoord = (_vector - _TTD.TerrainPos);
@@ -152,19 +152,19 @@ namespace GSD.Threaded
 
 
         //Privatized for obfuscate:
-        public static void DoRects(GSDSplineC _spline, GSD.Roads.GSDTerraforming.TempTerrainData _TTD)
+        public static void DoRects(GSDSplineC _spline, GSDTerraforming.TempTerrainData _TTD)
         {
             DoRectsDo(ref _spline, ref _TTD);
         }
 
 
-        private static void DoRectsDo(ref GSDSplineC _spline, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD)
+        private static void DoRectsDo(ref GSDSplineC _spline, ref GSDTerraforming.TempTerrainData _TTD)
         {
             float Sep = _spline.road.RoadWidth() * 0.5f;
             float HeightSep = Sep + (_spline.road.matchHeightsDistance * 0.5f);
             List<TerrainBoundsMaker> TBMList = new List<TerrainBoundsMaker>();
-            //List<GSD.Roads.GSDRoadUtil.Construction3DTri> triList = new List<GSD.Roads.GSDRoadUtil.Construction3DTri>();
-            List<GSD.Roads.GSDRoadUtil.Construction2DRect> TreerectList = new List<GSD.Roads.GSDRoadUtil.Construction2DRect>();
+            //List<GSDRoadUtil.Construction3DTri> triList = new List<GSDRoadUtil.Construction3DTri>();
+            List<GSDRoadUtil.Construction2DRect> TreerectList = new List<GSDRoadUtil.Construction2DRect>();
             float tStep = _spline.road.roadDefinition / _spline.distance;
             //tStep *= 0.5f;
 
@@ -237,7 +237,7 @@ namespace GSD.Threaded
             {
                 TreeClearDist = _spline.road.RoadWidth();
             }
-            GSD.Roads.GSDRoadUtil.Construction2DRect tRect = null;
+            GSDRoadUtil.Construction2DRect tRect = null;
             float tGrade = 0f;
             for (float index = StartMin; index < FinalMax; index += tStep)
             {
@@ -527,7 +527,7 @@ namespace GSD.Threaded
             }
 
             ////Temp testing:
-            //tSpline.mNodes[22].tTriList = new List<GSD.Roads.GSDRoadUtil.Construction3DTri>();
+            //tSpline.mNodes[22].tTriList = new List<GSDRoadUtil.Construction3DTri>();
             //int tCount = triList.Count;
             //for(int i=0;i<tCount;i++)
             //{
@@ -634,7 +634,7 @@ namespace GSD.Threaded
         }
 
 
-        private static int[] CreateTris(float _i, float _i2, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 _POS2, float _sep, ref List<TerrainBoundsMaker> _list, ref float _T1SUB, ref float _T2SUB, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD, float _heightSep)
+        private static int[] CreateTris(float _i, float _i2, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 _POS2, float _sep, ref List<TerrainBoundsMaker> _list, ref float _T1SUB, ref float _T2SUB, ref GSDTerraforming.TempTerrainData _TTD, float _heightSep)
         {
             Vector3 lVect1 = (_vect1 + new Vector3(_sep * -_POS1.normalized.z, 0, _sep * _POS1.normalized.x));
             Vector3 rVect1 = (_vect1 + new Vector3(_sep * _POS1.normalized.z, 0, _sep * -_POS1.normalized.x));
@@ -647,10 +647,10 @@ namespace GSD.Threaded
             rVect2.y = _T2SUB;
 
             TerrainBoundsMaker TBM = new TerrainBoundsMaker();
-            TBM.triList = new List<GSD.Roads.GSDRoadUtil.Construction3DTri>();
+            TBM.triList = new List<GSDRoadUtil.Construction3DTri>();
 
-            TBM.triList.Add(new GSD.Roads.GSDRoadUtil.Construction3DTri(lVect1, rVect1, lVect2, _i, _i2));
-            TBM.triList.Add(new GSD.Roads.GSDRoadUtil.Construction3DTri(lVect2, rVect1, rVect2, _i, _i2));
+            TBM.triList.Add(new GSDRoadUtil.Construction3DTri(lVect1, rVect1, lVect2, _i, _i2));
+            TBM.triList.Add(new GSDRoadUtil.Construction3DTri(lVect2, rVect1, rVect2, _i, _i2));
 
             Vector3 lVect1far = (_vect1 + new Vector3(_heightSep * -_POS1.normalized.z, 0, _heightSep * _POS1.normalized.x));
             Vector3 rVect1far = (_vect1 + new Vector3(_heightSep * _POS1.normalized.z, 0, _heightSep * -_POS1.normalized.x));
@@ -662,12 +662,12 @@ namespace GSD.Threaded
             rVect1far.y = rVect1.y;
             rVect2far.y = rVect2.y;
 
-            TBM.triList.Add(new GSD.Roads.GSDRoadUtil.Construction3DTri(lVect1far, lVect1, lVect2far, _i, _i2));
-            TBM.triList.Add(new GSD.Roads.GSDRoadUtil.Construction3DTri(lVect2far, lVect1, lVect2, _i, _i2));
-            TBM.triList.Add(new GSD.Roads.GSDRoadUtil.Construction3DTri(rVect1, rVect1far, rVect2, _i, _i2));
-            TBM.triList.Add(new GSD.Roads.GSDRoadUtil.Construction3DTri(rVect2, rVect1far, rVect2far, _i, _i2));
+            TBM.triList.Add(new GSDRoadUtil.Construction3DTri(lVect1far, lVect1, lVect2far, _i, _i2));
+            TBM.triList.Add(new GSDRoadUtil.Construction3DTri(lVect2far, lVect1, lVect2, _i, _i2));
+            TBM.triList.Add(new GSDRoadUtil.Construction3DTri(rVect1, rVect1far, rVect2, _i, _i2));
+            TBM.triList.Add(new GSDRoadUtil.Construction3DTri(rVect2, rVect1far, rVect2far, _i, _i2));
 
-            TBM.constructRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
+            TBM.constructRect = new GSDRoadUtil.Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
             //tRect.MinI = i;
             //tRect.MaxI = i2;
 
@@ -706,7 +706,7 @@ namespace GSD.Threaded
         }
 
 
-        private static GSD.Roads.GSDRoadUtil.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD, ref GSDSplineC _spline)
+        private static GSDRoadUtil.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref GSDTerraforming.TempTerrainData _TTD, ref GSDSplineC _spline)
         {
             Vector3 lVect1far = default(Vector3);
             Vector3 rVect1far = default(Vector3);
@@ -772,7 +772,7 @@ namespace GSD.Threaded
 
 
 
-            GSD.Roads.GSDRoadUtil.Construction2DRect tRect = null;
+            GSDRoadUtil.Construction2DRect tRect = null;
             if (_spline.road.isTreeModificationEnabled)
             {
                 bool isQuit = false;
@@ -843,7 +843,7 @@ namespace GSD.Threaded
                     rVect1far = (_vect1 + new Vector3(_treeSep * _POS1.normalized.z, 0, _treeSep * -_POS1.normalized.x));
                     lVect2far = (_vect2 + new Vector3(_treeSep * -POS2.normalized.z, 0, _treeSep * POS2.normalized.x));
                     rVect2far = (_vect2 + new Vector3(_treeSep * POS2.normalized.z, 0, _treeSep * -POS2.normalized.x));
-                    tRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
+                    tRect = new GSDRoadUtil.Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
                 }
             }
 
@@ -1001,7 +1001,7 @@ namespace GSD.Threaded
         }
 
 
-        private static float ProcessCoordinateGrabber(ref float _param, ref GSDSplineC _spline, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
+        private static float ProcessCoordinateGrabber(ref float _param, ref GSDSplineC _spline, ref GSDTerraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
         {
             int MinX = _XY[0];
             int MinY = _XY[1];
@@ -1109,7 +1109,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector3 ConvertTerrainCoordToWorldVect(int _x, int _y, float _height, ref GSD.Roads.GSDTerraforming.TempTerrainData _TTD)
+        private static Vector3 ConvertTerrainCoordToWorldVect(int _x, int _y, float _height, ref GSDTerraforming.TempTerrainData _TTD)
         {
             //Get the normalized position of this game object relative to the terrain:
             float x1 = _x / ((float) _TTD.HM - 1f);
@@ -1132,7 +1132,7 @@ namespace GSD.Threaded
             float OrigHeight = _vect.y;
             int mCount = _terrainList.Count;
             int tCount = 0;
-            GSD.Roads.GSDRoadUtil.Construction3DTri tTri;
+            GSDRoadUtil.Construction3DTri tTri;
             TerrainBoundsMaker TBM;
             _isAdjusted = false;
             _height = 0f;
@@ -3213,7 +3213,7 @@ namespace GSD.Threaded
                     //Get this and prev leftVect rightVect rects:
                     if ((Vector3.SqrMagnitude(xNode.pos - tVect) < CullDistanceSQ) && isGoAhead)
                     {
-                        GSD.Roads.GSDRoadUtil.Construction2DRect vRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(
+                        GSDRoadUtil.Construction2DRect vRect = new GSDRoadUtil.Construction2DRect(
                             new Vector2(leftVector.x, leftVector.z),
                             new Vector2(rightVector.x, rightVector.z),
                             new Vector2(lVect_Prev.x, lVect_Prev.z),
@@ -4049,7 +4049,7 @@ namespace GSD.Threaded
                     //First node set min / max float:
                     if (iNode.intersectionConstruction == null)
                     {
-                        iNode.intersectionConstruction = new GSD.Roads.GSDIntersections.iConstructionMaker();
+                        iNode.intersectionConstruction = new GSDIntersections.iConstructionMaker();
                     }
                     if (!iNode.intersectionConstruction.isTempConstructionProcessedInter1)
                     {
@@ -4225,7 +4225,7 @@ namespace GSD.Threaded
                     //Process second node:
                     if (oNode2.intersectionConstruction == null)
                     {
-                        oNode2.intersectionConstruction = new GSD.Roads.GSDIntersections.iConstructionMaker();
+                        oNode2.intersectionConstruction = new GSDIntersections.iConstructionMaker();
                     }
                     if (!oNode2.intersectionConstruction.isTempConstructionProcessedInter2)
                     {
@@ -4949,8 +4949,8 @@ namespace GSD.Threaded
                     oNode1.intersection.oddAngle = Vector3.Angle(GSDRI.node2.tangent, GSDRI.node1.tangent);
                     oNode1.intersection.evenAngle = 180f - Vector3.Angle(GSDRI.node2.tangent, GSDRI.node1.tangent);
 
-                    GSD.Roads.GSDIntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRROuter, out GSDRI.cornerRLOuter, out GSDRI.cornerLLOuter, out GSDRI.cornerLROuter, tShoulderWidth);
-                    GSD.Roads.GSDIntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRRRampOuter, out GSDRI.cornerRLRampOuter, out GSDRI.cornerLLRampOuter, out GSDRI.cornerLRRampOuter, tRampWidth);
+                    GSDIntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRROuter, out GSDRI.cornerRLOuter, out GSDRI.cornerLLOuter, out GSDRI.cornerLROuter, tShoulderWidth);
+                    GSDIntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRRRampOuter, out GSDRI.cornerRLRampOuter, out GSDRI.cornerLLRampOuter, out GSDRI.cornerLRRampOuter, tRampWidth);
 
                     GSDRI.ConstructBoundsRect();
                     GSDRI.cornerRR2D = new Vector2(tVectRR.x, tVectRR.z);
@@ -5005,7 +5005,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void AddIntersectionBounds(ref GSDRoad _road, ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void AddIntersectionBounds(ref GSDRoad _road, ref RoadConstructorBufferMaker _RCS)
         {
 #pragma warning disable CS0219
             bool isBridge = false;
@@ -5302,7 +5302,7 @@ namespace GSD.Threaded
                     }
 
                     //Add bounds for later removal:
-                    GSD.Roads.GSDRoadUtil.Construction2DRect vRect = null;
+                    GSDRoadUtil.Construction2DRect vRect = null;
                     if (!isBridge && !isTunnel && isMaxIntersection && isWasPrevMaxInter)
                     {
                         bool isGoAhead = true;
@@ -5328,7 +5328,7 @@ namespace GSD.Threaded
                         {
                             if (GSDRI.isFlipped && !isFirstInterNode)
                             {
-                                vRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(
+                                vRect = new GSDRoadUtil.Construction2DRect(
                                     new Vector2(rVect.x, rVect.z),
                                     new Vector2(lVect.x, lVect.z),
                                     new Vector2(rVect_Prev.x, rVect_Prev.z),
@@ -5338,7 +5338,7 @@ namespace GSD.Threaded
                             }
                             else
                             {
-                                vRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(
+                                vRect = new GSDRoadUtil.Construction2DRect(
                                    new Vector2(lVect.x, lVect.z),
                                    new Vector2(rVect.x, rVect.z),
                                    new Vector2(lVect_Prev.x, lVect_Prev.z),
@@ -5598,7 +5598,7 @@ namespace GSD.Threaded
 
         private static void Inter_OrganizeVertices(ref GSDSplineN _node, ref GSDRoad _road)
         {
-            GSD.Roads.GSDIntersections.iConstructionMaker iCon = _node.intersectionConstruction;
+            GSDIntersections.iConstructionMaker iCon = _node.intersectionConstruction;
             GSDRoadIntersection GSDRI = _node.intersection;
 
             //Skipping (3 ways):
@@ -6310,7 +6310,7 @@ namespace GSD.Threaded
 
         /// <summary> Handles most triangles and normals construction. In certain scenarios for efficiency reasons UV might also be processed. </summary>
         /// <param name='_RCS'> The road construction buffer, by reference. </param>/
-        public static void RoadJob1(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        public static void RoadJob1(ref RoadConstructorBufferMaker _RCS)
         {
             //Triangles and normals:
             //GSDRootUtil.StartProfiling(RCS.tRoad, "ProcessRoad_IntersectionCleanup");
@@ -6339,7 +6339,7 @@ namespace GSD.Threaded
         /// Handles most UV and tangent construction. Some scenarios might involve triangles and normals or lack UV construction for efficiency reasons.
         /// </summary>
         /// <param name='_RCS'> The road construction buffer, by reference. </param>
-        public static void RoadJob2(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        public static void RoadJob2(ref RoadConstructorBufferMaker _RCS)
         {
             //Bridge UV is processed with tris and normals.
 
@@ -6404,7 +6404,7 @@ namespace GSD.Threaded
                 ProcessRoadUVsIntersections(ref _RCS);
             }
 
-            //						throw new System.Exception("FFFFFFFF");
+            //throw new System.Exception("FFFFFFFF");
 
             if (_RCS.isRoadOn)
             {
@@ -6500,18 +6500,18 @@ namespace GSD.Threaded
 
 
         #region "Intersection Cleanup"
-        private static void ProcessRoadIntersectionCleanup(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadIntersectionCleanup(ref RoadConstructorBufferMaker _RCS)
         {
-            List<GSD.Roads.GSDRoadUtil.Construction2DRect> tList = _RCS.tIntersectionBounds;
+            List<GSDRoadUtil.Construction2DRect> tList = _RCS.tIntersectionBounds;
             int constructionCount = tList.Count;
             _RCS.ShoulderR_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderR_Vectors, ref tList, constructionCount, ref _RCS.ImmuneVects);
             _RCS.ShoulderL_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderL_Vectors, ref tList, constructionCount, ref _RCS.ImmuneVects);
         }
 
 
-        private static List<Vector3> ProcessRoadIntersectionCleanupHelper(ref List<Vector3> _vects, ref List<GSD.Roads.GSDRoadUtil.Construction2DRect> _list, int _count, ref HashSet<Vector3> _immuneVects)
+        private static List<Vector3> ProcessRoadIntersectionCleanupHelper(ref List<Vector3> _vects, ref List<GSDRoadUtil.Construction2DRect> _list, int _count, ref HashSet<Vector3> _immuneVects)
         {
-            GSD.Roads.GSDRoadUtil.Construction2DRect tRect = null;
+            GSDRoadUtil.Construction2DRect tRect = null;
             int MVL = _vects.Count;
             Vector2 Vect2D = default(Vector2);
             Vector2 tNearVect = default(Vector2);
@@ -6617,7 +6617,7 @@ namespace GSD.Threaded
 
 
         #region "Tris"
-        private static void ProcessRoadTrisBulk(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadTrisBulk(ref RoadConstructorBufferMaker _RCS)
         {
          //, ref Mesh tShoulderR, ref Mesh tShoulderL){
          //Next come the triangles. Since we want two triangles, each defined by three integers, the triangles array will have six elements in total. 
@@ -6692,7 +6692,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadTrisRoadCuts(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadTrisRoadCuts(ref RoadConstructorBufferMaker _RCS)
         {
             //Road cuts aren't working right for the special nodes on cuts
             int cCount = _RCS.RoadCuts.Count;
@@ -6741,7 +6741,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadTrisShoulderCutsR(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadTrisShoulderCutsR(ref RoadConstructorBufferMaker _RCS)
         {
             int cutsCount = _RCS.ShoulderCutsR.Count;
             int PrevRoadCutIndex = 0;
@@ -6789,7 +6789,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadTrisShoulderCutsL(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadTrisShoulderCutsL(ref RoadConstructorBufferMaker _RCS)
         {
             int cCount = _RCS.ShoulderCutsL.Count;
             int PrevRoadCutIndex = 0;
@@ -6923,7 +6923,7 @@ namespace GSD.Threaded
 
 
         #region "Normals"
-        private static void ProcessRoadNormalsBulk(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadNormalsBulk(ref RoadConstructorBufferMaker _RCS)
         {
             //A mesh with just the vertices and triangles set up will be visible in the editor but will not look very convincing since it is not correctly shaded without the normals. 
             //The normals for the flat plane are very simple - they are all identical and point in the negative Z direction in the plane's local space. 
@@ -6973,7 +6973,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadNormalsRoadCuts(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadNormalsRoadCuts(ref RoadConstructorBufferMaker _RCS)
         {
             int cCount = _RCS.cut_RoadVectors.Count;
             for (int j = 0; j < cCount; j++)
@@ -6990,7 +6990,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadNormalsShoulderCutsR(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadNormalsShoulderCutsR(ref RoadConstructorBufferMaker _RCS)
         {
             int cCount = _RCS.cut_ShoulderR_Vectors.Count;
             for (int j = 0; j < cCount; j++)
@@ -7007,7 +7007,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadNormalsShoulderCutsL(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadNormalsShoulderCutsL(ref RoadConstructorBufferMaker _RCS)
         {
             int cCount = _RCS.cut_ShoulderL_Vectors.Count;
             for (int j = 0; j < cCount; j++)
@@ -7024,7 +7024,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadNormalsShoulders(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadNormalsShoulders(ref RoadConstructorBufferMaker _RCS)
         {
             //A mesh with just the vertices and triangles set up will be visible in the editor but will not look very convincing since it is not correctly shaded without the normals. 
             //The normals for the flat plane are very simple - they are all identical and point in the negative Z direction in the plane's local space. 
@@ -7134,7 +7134,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadUVsRoadCuts(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadUVsRoadCuts(ref RoadConstructorBufferMaker _RCS)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7337,7 +7337,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void ProcessRoadUVsShoulderCut(ref GSD.Roads.RoadConstructorBufferMaker _RCS, bool _isLeft, int _j)
+        private static void ProcessRoadUVsShoulderCut(ref RoadConstructorBufferMaker _RCS, bool _isLeft, int _j)
         {
             int i = 0;
             Vector3[] tVerts;
@@ -7461,7 +7461,7 @@ namespace GSD.Threaded
 
 
         #region "Intersection UV"
-        private static void ProcessRoadUVsIntersections(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        private static void ProcessRoadUVsIntersections(ref RoadConstructorBufferMaker _RCS)
         {
             int tCount = -1;
 
@@ -7559,7 +7559,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoadUVsIntersectionFullLane(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts)
+        private static Vector2[] ProcessRoadUVsIntersectionFullLane(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7620,7 +7620,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoadUVsIntersectionLane4(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts)
+        private static Vector2[] ProcessRoadUVsIntersectionLane4(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7693,7 +7693,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoadUVsIntersectionMiddleLane(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts)
+        private static Vector2[] ProcessRoadUVsIntersectionMiddleLane(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7765,7 +7765,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoadUVsIntersectionLane0(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts)
+        private static Vector2[] ProcessRoadUVsIntersectionLane0(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7843,7 +7843,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoad_UVs_Intersection_MarkerPlate(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts)
+        private static Vector2[] ProcessRoad_UVs_Intersection_MarkerPlate(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7907,7 +7907,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoadUVsIntersectionMainPlate(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts)
+        private static Vector2[] ProcessRoadUVsIntersectionMainPlate(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -7985,7 +7985,7 @@ namespace GSD.Threaded
         }
 
 
-        private static Vector2[] ProcessRoadUVsIntersectionMainPlate2(ref GSD.Roads.RoadConstructorBufferMaker _RCS, Vector3[] _verts, GSDRoadIntersection _intersection)
+        private static Vector2[] ProcessRoadUVsIntersectionMainPlate2(ref RoadConstructorBufferMaker _RCS, Vector3[] _verts, GSDRoadIntersection _intersection)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
             //Assuming we want to show the whole image across the plane, the UV values will all be 0 or 1, corresponding to the corners of the texture. 
@@ -8342,14 +8342,14 @@ namespace GSD.Threaded
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
-        private List<GSD.Roads.GSDTerraforming.TempTerrainData> TTDList;
+        private List<GSDTerraforming.TempTerrainData> TTDList;
         [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
         private GSDSplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         private GSDRoad road;
 
 
-        public void Setup(ref List<GSD.Roads.GSDTerraforming.TempTerrainData> _TTDList, GSDSplineC _tSpline, GSDRoad _tRoad)
+        public void Setup(ref List<GSDTerraforming.TempTerrainData> _TTDList, GSDSplineC _tSpline, GSDRoad _tRoad)
         {
             TTDList = _TTDList;
             spline = _tSpline;
@@ -8371,7 +8371,7 @@ namespace GSD.Threaded
             //float tDistance = tRoad.RoadWidth()*2f;
 
             //Vector3 tVect, POS;
-            foreach (GSD.Roads.GSDTerraforming.TempTerrainData TTD in TTDList)
+            foreach (GSDTerraforming.TempTerrainData TTD in TTDList)
             {
                 //float PrevHeight = 0f;
                 //float FinalMax = 1f;
@@ -8437,7 +8437,7 @@ namespace GSD.Threaded
 
     public static class TerrainCalcsStatic
     {
-        public static void RunMe(ref List<GSD.Roads.GSDTerraforming.TempTerrainData> _TTDList, GSDSplineC _spline, GSDRoad _road)
+        public static void RunMe(ref List<GSDTerraforming.TempTerrainData> _TTDList, GSDSplineC _spline, GSDRoad _road)
         {
             float Step = (_road.roadDefinition * 0.4f) / _spline.distance;
             if (Step > 2f)
@@ -8452,7 +8452,7 @@ namespace GSD.Threaded
 
             //Vector3 tVect,POS;
 
-            foreach (GSD.Roads.GSDTerraforming.TempTerrainData TTD in _TTDList)
+            foreach (GSDTerraforming.TempTerrainData TTD in _TTDList)
             {
                 //float PrevHeight = 0f;
                 //float FinalMax = 1f;
@@ -8515,12 +8515,12 @@ namespace GSD.Threaded
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
-        private GSD.Roads.RoadConstructorBufferMaker RCS;
+        private RoadConstructorBufferMaker RCS;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         private GSDRoad road;
 
 
-        public void Setup(ref GSD.Roads.RoadConstructorBufferMaker _RCS, ref GSDRoad _road)
+        public void Setup(ref RoadConstructorBufferMaker _RCS, ref GSDRoad _road)
         {
             RCS = _RCS;
             road = _road;
@@ -8546,9 +8546,9 @@ namespace GSD.Threaded
         }
 
 
-        public GSD.Roads.RoadConstructorBufferMaker GetRCS()
+        public RoadConstructorBufferMaker GetRCS()
         {
-            GSD.Roads.RoadConstructorBufferMaker refrenceRCS;
+            RoadConstructorBufferMaker refrenceRCS;
             lock (handle)
             {
                 refrenceRCS = RCS;
@@ -8560,7 +8560,7 @@ namespace GSD.Threaded
 
     public static class RoadCalcs1Static
     {
-        public static void RunMe(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        public static void RunMe(ref RoadConstructorBufferMaker _RCS)
         {
             GSDRoadCreationT.RoadJob1(ref _RCS);
         }
@@ -8571,10 +8571,10 @@ namespace GSD.Threaded
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
-        private GSD.Roads.RoadConstructorBufferMaker RCS;
+        private RoadConstructorBufferMaker RCS;
 
 
-        public void Setup(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        public void Setup(ref RoadConstructorBufferMaker _RCS)
         {
             RCS = _RCS;
         }
@@ -8597,9 +8597,9 @@ namespace GSD.Threaded
         }
 
 
-        public GSD.Roads.RoadConstructorBufferMaker GetRCS()
+        public RoadConstructorBufferMaker GetRCS()
         {
-            GSD.Roads.RoadConstructorBufferMaker tRCS;
+            RoadConstructorBufferMaker tRCS;
             lock (handle)
             {
                 tRCS = RCS;
@@ -8611,7 +8611,7 @@ namespace GSD.Threaded
 
     public static class RoadCalcs2Static
     {
-        public static void RunMe(ref GSD.Roads.RoadConstructorBufferMaker _RCS)
+        public static void RunMe(ref RoadConstructorBufferMaker _RCS)
         {
             GSDRoadCreationT.RoadJob2(ref _RCS);
         }

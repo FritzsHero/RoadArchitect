@@ -59,7 +59,7 @@ namespace GSD.Roads.EdgeObjects
         [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjects")]
         public List<GameObject> edgeObjects;
         [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
-        public GSD.Roads.SignPlacementSubTypeEnum subType = GSD.Roads.SignPlacementSubTypeEnum.Right;
+        public SignPlacementSubTypeEnum subType = SignPlacementSubTypeEnum.Right;
         [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
         public float meterSep = 5f;
         [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
@@ -386,7 +386,7 @@ namespace GSD.Roads.EdgeObjects
 
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string folderName = GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
+            string folderName = GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
             string roadName = node.spline.road.transform.name;
             string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
             if (_isCollider)
@@ -421,7 +421,7 @@ namespace GSD.Roads.EdgeObjects
             [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
             public List<Vector3> edgeObjectRotations;
             [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
-            public GSD.Roads.SignPlacementSubTypeEnum subType = GSD.Roads.SignPlacementSubTypeEnum.Right;
+            public SignPlacementSubTypeEnum subType = SignPlacementSubTypeEnum.Right;
             [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
             public float meterSep = 5f;
             [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
@@ -591,7 +591,7 @@ namespace GSD.Roads.EdgeObjects
             [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
             public List<Vector3> edgeObjectRotations;
             [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
-            public GSD.Roads.SignPlacementSubTypeEnum subType = GSD.Roads.SignPlacementSubTypeEnum.Right;
+            public SignPlacementSubTypeEnum subType = SignPlacementSubTypeEnum.Right;
 
             // Sounds like Speration
             [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
@@ -966,7 +966,7 @@ namespace GSD.Roads.EdgeObjects
                     //OrigRot = tObj.transform.rotation;
                     tObj.transform.rotation *= xRot;
                     tObj.transform.localScale = customScale;
-                    if (isOncomingRotation && subType == GSD.Roads.SignPlacementSubTypeEnum.Left)
+                    if (isOncomingRotation && subType == SignPlacementSubTypeEnum.Left)
                     {
                         Quaternion tRot = new Quaternion(0f, 0f, 0f, 0f);
                         tRot = Quaternion.identity;

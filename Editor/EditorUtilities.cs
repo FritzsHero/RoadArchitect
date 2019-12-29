@@ -10,7 +10,7 @@ namespace RoadArchitect
         /// <summary> Opens the loacally stored manual </summary>
         public static void OpenOfflineManual()
         {
-            Application.OpenURL(System.Environment.CurrentDirectory.Replace(@"\", "/") + "/" + GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/RoadArchitectManual.htm");
+            Application.OpenURL(System.Environment.CurrentDirectory.Replace(@"\", "/") + "/" + GSDRoadUtilityEditor.GetBasePath() + "/RoadArchitectManual.htm");
         }
 
 

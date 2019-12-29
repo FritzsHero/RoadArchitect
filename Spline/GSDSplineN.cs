@@ -155,7 +155,7 @@ namespace RoadArchitect
         #endregion
 #if UNITY_EDITOR
         [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
-        public GSD.Roads.GSDIntersections.iConstructionMaker intersectionConstruction;
+        public GSDIntersections.iConstructionMaker intersectionConstruction;
 
 
         #region "Edge Objects"
@@ -481,7 +481,7 @@ namespace RoadArchitect
                 RemoveAllSplinatedObjects(true);
                 RemoveAllEdgeObjects(true);
             }
-            GSD.Roads.GSDRoadUtil.LoadNodeObjects(_fileName, this, _isDefault, _isBridge);
+            GSDRoadUtil.LoadNodeObjects(_fileName, this, _isDefault, _isBridge);
         }
 
 
@@ -641,7 +641,7 @@ namespace RoadArchitect
         //	}
         //	
 
-        public List<GSD.Roads.GSDRoadUtil.Construction3DTri> tTriList;
+        public List<GSDRoadUtil.Construction3DTri> tTriList;
         public List<Vector3> tHMList;
         [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDrawIntersectionHighlight")]
         public bool isDrawingIntersectionHighlightGizmos = false;

@@ -5,11 +5,10 @@ using System.IO;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-using RoadArchitect;
 #endregion
 
 
-namespace GSD.Roads
+namespace RoadArchitect
 {
     //Generic http://www.fhwa.dot.gov/bridge/bridgerail/br053504.cfm
     public enum RailingTypeEnum { None, Generic1, Generic2, K_Rail, WBeam };
@@ -430,7 +429,7 @@ namespace GSD.Roads
                     }
                 }
 
-                //rRect = new GSD.Roads.GSDRoadUtil.Construction2DRect(tSpline.RoadV0,tSpline.RoadV1,tSpline.RoadV2,tSpline.RoadV3);
+                //rRect = new GSDRoadUtil.Construction2DRect(tSpline.RoadV0,tSpline.RoadV1,tSpline.RoadV2,tSpline.RoadV3);
 
 
                 if (isContaining && !TempTerrainDict.ContainsKey(terrain))
@@ -1212,7 +1211,7 @@ namespace GSD.Roads
 
         public Terrain tTerrain;
 
-        public List<GSD.Roads.GSDRoadUtil.Construction2DRect> tIntersectionBounds;
+        public List<GSDRoadUtil.Construction2DRect> tIntersectionBounds;
         public HashSet<Vector3> ImmuneVects;
 
         public Mesh tMesh;
@@ -1474,7 +1473,7 @@ namespace GSD.Roads
             tMesh_iFMainPlates = new List<Mesh>();
             tMesh_iBMarkerPlates = new List<Mesh>();
             tMesh_iFMarkerPlates = new List<Mesh>();
-            tIntersectionBounds = new List<GSD.Roads.GSDRoadUtil.Construction2DRect>();
+            tIntersectionBounds = new List<GSDRoadUtil.Construction2DRect>();
             ImmuneVects = new HashSet<Vector3>();
             //}
 
@@ -2318,7 +2317,7 @@ namespace GSD.Roads
                     }
                 }
 
-                string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+                string basePath = GSDRoadUtilityEditor.GetBasePath();
 
                 for (int index = 0; index < RoadConnections_tangents.Count; index++)
                 {
@@ -2332,18 +2331,18 @@ namespace GSD.Roads
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 2f))
                         {
-                            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-4L.mat", MR);
+                            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-4L.mat", MR);
                         }
                         else if (fDist == Mathf.Round(road.RoadWidth() * 3f))
                         {
-                            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-2L.mat", MR);
+                            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-2L.mat", MR);
                         }
                     }
                     else if (road.laneAmount == 4)
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 1.5f))
                         {
-                            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-4L.mat", MR);
+                            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-4L.mat", MR);
                         }
                     }
                     MF.sharedMesh = tMesh_RoadConnections[index];
@@ -2369,7 +2368,7 @@ namespace GSD.Roads
                     MeshCollider MC = tObj.AddComponent<MeshCollider>();
                     MF.sharedMesh = vMesh;
                     MC.sharedMesh = MF.sharedMesh;
-                    GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/GSDRoad1.mat", MR);
+                    GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/GSDRoad1.mat", MR);
                     tObj.transform.parent = road.MeshRoad.transform;
 
                     SaveMesh(SaveMeshTypeEnum.RoadConn, vMesh, road, "RoadConn" + index.ToString());
@@ -2510,7 +2509,7 @@ namespace GSD.Roads
             Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane3_Disabled = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
             Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane1_DisabledActive = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
 
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             vCount = iBLane0s.Count;
             for (int index = 0; index < vCount; index++)
@@ -3239,7 +3238,7 @@ namespace GSD.Roads
             }
             MeshRenderer MR = tObj.AddComponent<MeshRenderer>();
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(_mat, MR);
+            GSDRoadUtilityEditor.SetRoadMaterial(_mat, MR);
             if (road.isLightmapped)
             {
                 #if UNITY_2019_2_OR_NEWER
@@ -3789,7 +3788,7 @@ namespace GSD.Roads
             tSceneName = tSceneName.Replace(".", "");
             string tFolderName = "";
 
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             if (_saveType == SaveMeshTypeEnum.Road)
             {
@@ -4969,18 +4968,18 @@ namespace GSD.Roads
         }
 
 
-        public static void SaveNodeObjects(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
+        public static void SaveNodeObjects(ref GSD.Roads.Splination.SplinatedMeshMaker[] _splinatedObjects, ref GSD.Roads.EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
         {
             SaveNodeObjectsDO(ref _splinatedObjects, ref _edgeObjects, ref _wizardObj);
         }
 
 
-        private static void SaveNodeObjectsDO(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
+        private static void SaveNodeObjectsDO(ref GSD.Roads.Splination.SplinatedMeshMaker[] _splinatedObjects, ref GSD.Roads.EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
         {
             int sCount = _splinatedObjects.Length;
             int eCount = _edgeObjects.Length;
             //Splinated objects first:
-            Splination.SplinatedMeshMaker SMM = null;
+            GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
             GSDRootUtil.CheckCreateSpecialLibraryDirs();
             string xPath = GSDRootUtil.GetDirLibrary();
             string tPath = xPath + "B/" + _wizardObj.fileName + ".gsd";
@@ -5001,7 +5000,7 @@ namespace GSD.Roads
                 builder.Append(FileSepString);
             }
 
-            EdgeObjects.EdgeObjectMaker EOM = null;
+            GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
             for (int index = 0; index < eCount; index++)
             {
                 EOM = _edgeObjects[index];
@@ -5041,16 +5040,16 @@ namespace GSD.Roads
             tSep[1] = FileSepStringCRLF;
             string[] tSplit = tData.Split(tSep, System.StringSplitOptions.RemoveEmptyEntries);
 
-            Splination.SplinatedMeshMaker SMM = null;
-            Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;
-            EdgeObjects.EdgeObjectMaker EOM = null;
-            EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = null;
+            GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
+            GSD.Roads.Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;
+            GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
+            GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = null;
             int tSplitCount = tSplit.Length;
 
             for (int index = 0; index < tSplitCount; index++)
             {
                 SLM = null;
-                SLM = Splination.SplinatedMeshMaker.SLMFromData(tSplit[index]);
+                SLM = GSD.Roads.Splination.SplinatedMeshMaker.SLMFromData(tSplit[index]);
                 if (SLM != null)
                 {
                     SMM = _node.AddSplinatedObject();
@@ -5067,7 +5066,7 @@ namespace GSD.Roads
                 }
 
                 ELM = null;
-                ELM = EdgeObjects.EdgeObjectMaker.ELMFromData(tSplit[index]);
+                ELM = GSD.Roads.EdgeObjects.EdgeObjectMaker.ELMFromData(tSplit[index]);
                 if (ELM != null)
                 {
                     EOM = _node.AddEdgeObject();
@@ -5455,7 +5454,7 @@ namespace GSD.Roads
 
         private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, bool _isRB)
         {
-            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
+            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
 
             GSDRoadIntersection GSDRI = _masterGameObj.GetComponent<GSDRoadIntersection>();
             GSDSplineC tSpline = GSDRI.node1.spline;
@@ -5954,7 +5953,7 @@ namespace GSD.Roads
                 bXMod = true;
             }
 
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             Mesh xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/RoadObj/Signs/TrafficLightBases/" + assetNameAsset, typeof(Mesh));
             if (xMesh == null)
@@ -5974,7 +5973,7 @@ namespace GSD.Roads
             {
                 MR = tObj.AddComponent<MeshRenderer>();
             }
-            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Signs/GSDInterTLB" + tTrafficLightNumber + ".mat", MR);
+            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Signs/GSDInterTLB" + tTrafficLightNumber + ".mat", MR);
 
             if (!bDoCustom)
             {
@@ -6237,7 +6236,7 @@ namespace GSD.Roads
 
         private static void AdjustLightPrefab(GameObject _light)
         {
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             foreach (Light light in _light.GetComponentsInChildren<Light>())
             {
@@ -6379,7 +6378,7 @@ namespace GSD.Roads
             MeshRenderer[] MR_Mains = new MeshRenderer[LanesHalf];
             int cCount = -1;
 
-            string basePath = GSD.Roads.GSDRoadUtilityEditor.GetBasePath();
+            string basePath = GSDRoadUtilityEditor.GetBasePath();
 
             if (intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
             {
@@ -7355,14 +7354,14 @@ namespace GSD.Roads
                 {
                     if (isFirstNode)
                     {
-                        zNode = GSD.Roads.GSDConstruction.InsertNode(tNode1.spline.road, true, tPos, false, 0, true, true);
+                        zNode = GSDConstruction.InsertNode(tNode1.spline.road, true, tPos, false, 0, true, true);
                         zNode.isSpecialEndNodeIsStart = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode1.tangent;
                     }
                     else
                     {
-                        zNode = GSD.Roads.GSDConstruction.CreateNode(tNode1.spline.road, true, tPos, true);
+                        zNode = GSDConstruction.CreateNode(tNode1.spline.road, true, tPos, true);
                         zNode.isSpecialEndNodeIsEnd = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode1.tangent;
@@ -7422,14 +7421,14 @@ namespace GSD.Roads
                 {
                     if (isFirstNode)
                     {
-                        zNode = GSD.Roads.GSDConstruction.InsertNode(tNode2.spline.road, true, tPos, false, 0, true, true);
+                        zNode = GSDConstruction.InsertNode(tNode2.spline.road, true, tPos, false, 0, true, true);
                         zNode.isSpecialEndNodeIsStart = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode2.tangent;
                     }
                     else
                     {
-                        zNode = GSD.Roads.GSDConstruction.CreateNode(tNode2.spline.road, true, tPos, true);
+                        zNode = GSDConstruction.CreateNode(tNode2.spline.road, true, tPos, true);
                         zNode.isSpecialEndNodeIsEnd = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode2.tangent;
@@ -7851,7 +7850,7 @@ namespace GSD.Roads
                 MF = _obj.AddComponent<MeshFilter>();
             }
             MF.sharedMesh = tMesh;
-            //			MeshToFile(MF,GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Intersections/" + tName +".obj");
+            //MeshToFile(MF,GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Intersections/" + tName +".obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
             if (MC)
@@ -7868,7 +7867,7 @@ namespace GSD.Roads
             }
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             MR.receiveShadows = true;
-            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoadIntersection.mat", MR);
+            GSDRoadUtilityEditor.SetRoadMaterial(GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDRoadIntersection.mat", MR);
         }
 
 
@@ -7992,15 +7991,15 @@ namespace GSD.Roads
             }
             MF.sharedMesh = tMesh;
 
-            //			MeshToFile(MF,GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Intersections/" + tName +"-overlay.obj");
+            //MeshToFile(MF,GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Intersections/" + tName +"-overlay.obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
             if (MC)
             {
                 Object.DestroyImmediate(MC);
             }
-            //			if(!MC){ MC = iObj.AddComponent<MeshCollider>(); }
-            //			MC.sharedMesh = MF.sharedMesh;
+            //if(!MC){ MC = iObj.AddComponent<MeshCollider>(); }
+            //MC.sharedMesh = MF.sharedMesh;
 
             MeshRenderer MR = _obj.GetComponent<MeshRenderer>();
             if (!MR)
@@ -8009,7 +8008,7 @@ namespace GSD.Roads
             }
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             MR.receiveShadows = true;
-            GSD.Roads.GSDRoadUtilityEditor.SetRoadMaterial(GSD.Roads.GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDInterText.mat", MR);
+            GSDRoadUtilityEditor.SetRoadMaterial(GSDRoadUtilityEditor.GetBasePath() + "/Materials/GSDInterText.mat", MR);
         }
 
 
