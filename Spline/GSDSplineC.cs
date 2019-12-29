@@ -1,490 +1,514 @@
 #region "Imports"
 using UnityEngine;
 using System.Collections.Generic;
-using RoadArchitect;
 #endregion
 
 
-public class GSDSplineC : MonoBehaviour
+namespace RoadArchitect
 {
-    #region "Vars"
-    [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
-    public List<GSDSplineN> nodes = new List<GSDSplineN>();
-    [UnityEngine.Serialization.FormerlySerializedAs("mSplineRoot")]
-    public GameObject splineRoot;
-    [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
-    public GSDRoad road;
-    public float distance = -1f;
-    [UnityEngine.Serialization.FormerlySerializedAs("CachedPoints")]
-    public Vector3[] cachedPoints;
-    [UnityEngine.Serialization.FormerlySerializedAs("CachedPointsSeperation")]
-    private const float cachedPointsSeperation = 1f;
-
-    //Editor preview splines for add and insert:
-    [UnityEngine.Serialization.FormerlySerializedAs("PreviewSpline")]
-    public GSDSplineF previewSpline;
-    [UnityEngine.Serialization.FormerlySerializedAs("PreviewSplineInsert")]
-    public GSDSplineI previewSplineInsert;
-
-
-    #region "Nav data Vars"
-    public float RoadWidth;
-    public int Lanes;
-    [UnityEngine.Serialization.FormerlySerializedAs("id_connected")]
-    public List<int> connectedIDs;
-    public int id = 0;
-    //Unique ID
-    [UnityEngine.Serialization.FormerlySerializedAs("UID")]
-    public string uID;
-    public List<KeyValuePair<float, float>> BridgeParams;
-    public List<KeyValuePair<float, float>> TunnelParams;
-    public List<KeyValuePair<float, float>> HeightHistory;
-    public int[] RoadDefKeysArray;
-    public float[] RoadDefValuesArray;
-    [UnityEngine.Serialization.FormerlySerializedAs("EditorOnly_LastNode_TimeSinceStartup")]
-    public double editorOnlyLastNodeTimeSinceStartup = -1f;
-    #endregion
-
-
-    #region "Vars for intersections"
-    [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_NoTurnLane")]
-    private const float metersToCheckNoTurnLane = 75f;
-    [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_NoTurnLaneSQ")]
-    private const float metersToCheckNoTurnLaneSQ = 5625f;
-    [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_TurnLane")]
-    private const float metersToCheckTurnLane = 125f;
-    [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_TurnLaneSQ")]
-    private const float metersToCheckTurnLaneSQ = 15625f;
-    [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_BothTurnLane")]
-    private const float metersToCheckBothTurnLane = 125f;
-    [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_BothTurnLaneSQ")]
-    private const float metersToCheckBothTurnLaneSQ = 15625f;
-    [UnityEngine.Serialization.FormerlySerializedAs("bUseSQ")]
-    private const bool isUsingSQ = true;
-    #endregion
-
-
-    #region "Road connections and 3-way intersections"
-    [UnityEngine.Serialization.FormerlySerializedAs("bSpecialStartControlNode")]
-    public bool isSpecialStartControlNode = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndControlNode")]
-    public bool isSpecialEndControlNode = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsStart_Delay")]
-    public bool isSpecialEndNodeIsStartDelay = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsEnd_Delay")]
-    public bool isSpecialEndNodeIsEndDelay = false;
-    [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_Start")]
-    public float specialEndNodeDelayStart = 10f;
-    [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_Start_Result")]
-    public float specialEndNodeDelayStartResult = 10f;
-    [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End")]
-    public float specialEndNodeDelayEnd = 10f;
-    [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End_Result")]
-    public float specialEndNodeDelayEndResult = 10f;
-    [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_Start_OtherSpline")]
-    public GSDSplineC specialEndNodeStartOtherSpline = null;
-    [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_End_OtherSpline")]
-    public GSDSplineC specialEndNodeEndOtherSpline = null;
-    #endregion
-
-
-    public Vector2 RoadV0 = default(Vector2);
-    public Vector2 RoadV1 = default(Vector2);
-    public Vector2 RoadV2 = default(Vector2);
-    public Vector2 RoadV3 = default(Vector2);
-    #endregion
-
-
-#if UNITY_EDITOR
-    #region "Setup"
-    public void TriggerSetup()
+    public class GSDSplineC : MonoBehaviour
     {
-#if UNITY_EDITOR
-        if (!road)
-        {
-            if (splineRoot != null)
-            {
-                road = splineRoot.transform.parent.transform.gameObject.GetComponent<GSDRoad>();
-            }
-        }
-        if (road)
-        {
-            road.UpdateRoad();
-        }
-#endif
-    }
+        #region "Vars"
+        [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
+        public List<GSDSplineN> nodes = new List<GSDSplineN>();
+        [UnityEngine.Serialization.FormerlySerializedAs("mSplineRoot")]
+        public GameObject splineRoot;
+        [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
+        public GSDRoad road;
+        public float distance = -1f;
+        [UnityEngine.Serialization.FormerlySerializedAs("CachedPoints")]
+        public Vector3[] cachedPoints;
+        [UnityEngine.Serialization.FormerlySerializedAs("CachedPointsSeperation")]
+        private const float cachedPointsSeperation = 1f;
+
+        //Editor preview splines for add and insert:
+        [UnityEngine.Serialization.FormerlySerializedAs("PreviewSpline")]
+        public GSDSplineF previewSpline;
+        [UnityEngine.Serialization.FormerlySerializedAs("PreviewSplineInsert")]
+        public GSDSplineI previewSplineInsert;
 
 
-    public void Setup()
-    {
-#if UNITY_EDITOR
-        //Don't setup if playing:
-        //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
-
-        //Setup unique ID:
-        GSDRootUtil.SetupUniqueIdentifier(ref uID);
-
-        //Set spline root:
-        splineRoot = transform.gameObject;
-
-        //Create spline nodes:
-        GSDSplineN[] tNodesRaw = splineRoot.GetComponentsInChildren<GSDSplineN>();
-        List<GSDSplineN> nodeList = new List<GSDSplineN>();
-        int tNodesRawLength = tNodesRaw.Length;
-        if (tNodesRawLength == 0)
-        {
-            return;
-        }
-        for (int i = 0; i < tNodesRawLength; i++)
-        {
-            if (tNodesRaw[i] != null)
-            {
-                tNodesRaw[i].pos = tNodesRaw[i].transform.position;
-                nodeList.Add(tNodesRaw[i]);
-            }
-        }
-        nodeList.Sort(CompareListByName);
-        //tList.Sort(delegate(GSDSplin i1, Item i2) { return i1.name.CompareTo(i2.name); });
-        tNodesRaw = nodeList.ToArray();
-        nodeList = null;
-        SetupNodes(ref tNodesRaw);
-
-        //Setup spline length, if more than 1 node:
-        if (GetNodeCount() > 1)
-        {
-            //GSDRootUtil.StartProfiling(tRoad, "SplineSetupLength");
-            SetupSplineLength();
-            //GSDRootUtil.EndProfiling(tRoad);
-        }
-        else if (GetNodeCount() == 1)
-        {
-            nodes[0].time = 0f;
-        }
-
-
-#if UNITY_EDITOR
-        //Setup preview spline:
-        if (previewSpline == null)
-        {
-            previewSpline = splineRoot.AddComponent<GSDSplineF>();
-            previewSpline.spline = this;
-        }
-        //Setup preview spline for insertion mode:
-        if (previewSplineInsert == null)
-        {
-            previewSplineInsert = splineRoot.AddComponent<GSDSplineI>();
-            previewSplineInsert.spline = this;
-        }
-#endif
-
-
-        int mNodesCount = nodes.Count;
-        GSDSplineN tNode = null;
-        Vector3[] pVects = new Vector3[mNodesCount + 1];
-        for (int i = 0; i < mNodesCount; i++)
-        {
-            tNode = nodes[i];
-            tNode.idOnSpline = i;
-            tNode.isEndPoint = false;
-            pVects[i] = tNode.pos;
-        }
-        pVects[pVects.Length - 1] = new Vector3(0f, 0f, 0f);
-#if UNITY_EDITOR
-        previewSpline.Setup(ref pVects);
-#endif
-
-
-        RenameNodes();
-
-
-        #region "Setup bridge params"
-        if (BridgeParams != null)
-        {
-            BridgeParams.Clear();
-        }
-        BridgeParams = new List<KeyValuePair<float, float>>();
-        KeyValuePair<float, float> KVP;
+        #region "Nav data Vars"
+        public float RoadWidth;
+        public int Lanes;
+        [UnityEngine.Serialization.FormerlySerializedAs("id_connected")]
+        public List<int> connectedIDs;
+        public int id = 0;
+        //Unique ID
+        [UnityEngine.Serialization.FormerlySerializedAs("UID")]
+        public string uID;
+        public List<KeyValuePair<float, float>> BridgeParams;
+        public List<KeyValuePair<float, float>> TunnelParams;
+        public List<KeyValuePair<float, float>> HeightHistory;
+        public int[] RoadDefKeysArray;
+        public float[] RoadDefValuesArray;
+        [UnityEngine.Serialization.FormerlySerializedAs("EditorOnly_LastNode_TimeSinceStartup")]
+        public double editorOnlyLastNodeTimeSinceStartup = -1f;
         #endregion
 
 
-        //Setup tunnel params:
-        if (TunnelParams != null)
-        {
-            TunnelParams.Clear();
-        }
-        TunnelParams = new List<KeyValuePair<float, float>>();
+        #region "Vars for intersections"
+        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_NoTurnLane")]
+        private const float metersToCheckNoTurnLane = 75f;
+        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_NoTurnLaneSQ")]
+        private const float metersToCheckNoTurnLaneSQ = 5625f;
+        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_TurnLane")]
+        private const float metersToCheckTurnLane = 125f;
+        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_TurnLaneSQ")]
+        private const float metersToCheckTurnLaneSQ = 15625f;
+        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_BothTurnLane")]
+        private const float metersToCheckBothTurnLane = 125f;
+        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_BothTurnLaneSQ")]
+        private const float metersToCheckBothTurnLaneSQ = 15625f;
+        [UnityEngine.Serialization.FormerlySerializedAs("bUseSQ")]
+        private const bool isUsingSQ = true;
+        #endregion
 
-        if (mNodesCount > 1)
+
+        #region "Road connections and 3-way intersections"
+        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialStartControlNode")]
+        public bool isSpecialStartControlNode = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndControlNode")]
+        public bool isSpecialEndControlNode = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsStart_Delay")]
+        public bool isSpecialEndNodeIsStartDelay = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsEnd_Delay")]
+        public bool isSpecialEndNodeIsEndDelay = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_Start")]
+        public float specialEndNodeDelayStart = 10f;
+        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_Start_Result")]
+        public float specialEndNodeDelayStartResult = 10f;
+        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End")]
+        public float specialEndNodeDelayEnd = 10f;
+        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End_Result")]
+        public float specialEndNodeDelayEndResult = 10f;
+        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_Start_OtherSpline")]
+        public GSDSplineC specialEndNodeStartOtherSpline = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_End_OtherSpline")]
+        public GSDSplineC specialEndNodeEndOtherSpline = null;
+        #endregion
+
+
+        public Vector2 RoadV0 = default(Vector2);
+        public Vector2 RoadV1 = default(Vector2);
+        public Vector2 RoadV2 = default(Vector2);
+        public Vector2 RoadV3 = default(Vector2);
+        #endregion
+
+
+#if UNITY_EDITOR
+        #region "Setup"
+        public void TriggerSetup()
         {
-            if (isSpecialStartControlNode)
+#if UNITY_EDITOR
+            if (!road)
             {
-                nodes[1].isEndPoint = true;
+                if (splineRoot != null)
+                {
+                    road = splineRoot.transform.parent.transform.gameObject.GetComponent<GSDRoad>();
+                }
             }
-            else
+            if (road)
             {
-                nodes[0].isEndPoint = true;
+                road.UpdateRoad();
             }
-            if (isSpecialEndControlNode)
-            {
-                nodes[mNodesCount - 2].isEndPoint = true;
-            }
-            else
-            {
-                nodes[mNodesCount - 1].isEndPoint = true;
-            }
-        }
-        else if (mNodesCount == 1)
-        {
-            nodes[0].isEndPoint = true;
-            distance = 1;
+#endif
         }
 
-        float fStart = -1f;
-        float fEnd = -1f;
-        if (mNodesCount > 1)
+
+        public void Setup()
         {
+#if UNITY_EDITOR
+            //Don't setup if playing:
+            //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
+
+            //Setup unique ID:
+            GSDRootUtil.SetupUniqueIdentifier(ref uID);
+
+            //Set spline root:
+            splineRoot = transform.gameObject;
+
+            //Create spline nodes:
+            GSDSplineN[] tNodesRaw = splineRoot.GetComponentsInChildren<GSDSplineN>();
+            List<GSDSplineN> nodeList = new List<GSDSplineN>();
+            int tNodesRawLength = tNodesRaw.Length;
+            if (tNodesRawLength == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < tNodesRawLength; i++)
+            {
+                if (tNodesRaw[i] != null)
+                {
+                    tNodesRaw[i].pos = tNodesRaw[i].transform.position;
+                    nodeList.Add(tNodesRaw[i]);
+                }
+            }
+            nodeList.Sort(CompareListByName);
+            //tList.Sort(delegate(GSDSplin i1, Item i2) { return i1.name.CompareTo(i2.name); });
+            tNodesRaw = nodeList.ToArray();
+            nodeList = null;
+            SetupNodes(ref tNodesRaw);
+
+            //Setup spline length, if more than 1 node:
+            if (GetNodeCount() > 1)
+            {
+                //GSDRootUtil.StartProfiling(tRoad, "SplineSetupLength");
+                SetupSplineLength();
+                //GSDRootUtil.EndProfiling(tRoad);
+            }
+            else if (GetNodeCount() == 1)
+            {
+                nodes[0].time = 0f;
+            }
+
+
+#if UNITY_EDITOR
+            //Setup preview spline:
+            if (previewSpline == null)
+            {
+                previewSpline = splineRoot.AddComponent<GSDSplineF>();
+                previewSpline.spline = this;
+            }
+            //Setup preview spline for insertion mode:
+            if (previewSplineInsert == null)
+            {
+                previewSplineInsert = splineRoot.AddComponent<GSDSplineI>();
+                previewSplineInsert.spline = this;
+            }
+#endif
+
+
+            int mNodesCount = nodes.Count;
+            GSDSplineN tNode = null;
+            Vector3[] pVects = new Vector3[mNodesCount + 1];
             for (int i = 0; i < mNodesCount; i++)
             {
                 tNode = nodes[i];
-
-                //Bridges:
-                fStart = -1f;
-                fEnd = -1f;
-                if (tNode.isBridgeStart && !tNode.isTunnelStart)
-                {
-                    fStart = tNode.time;
-                    for (int j = i; j < mNodesCount; j++)
-                    {
-                        if (nodes[j].isBridgeEnd)
-                        {
-                            fEnd = nodes[j].time;
-                            break;
-                        }
-                    }
-                    if (fEnd > 0f || GSDRootUtil.IsApproximately(fEnd, 0f, 0.0001f))
-                    {
-                        KVP = new KeyValuePair<float, float>(fStart, fEnd);
-                        BridgeParams.Add(KVP);
-                    }
-                }
-
-                //Tunnels:
-                fStart = -1f;
-                fEnd = -1f;
-                if (!tNode.isBridgeStart && tNode.isTunnelStart)
-                {
-                    fStart = tNode.time;
-                    for (int j = i; j < mNodesCount; j++)
-                    {
-                        if (nodes[j].isTunnelEnd)
-                        {
-                            fEnd = nodes[j].time;
-                            break;
-                        }
-                    }
-
-                    if (fEnd > 0f || GSDRootUtil.IsApproximately(fEnd, 0f, 0.0001f))
-                    {
-                        KVP = new KeyValuePair<float, float>(fStart, fEnd);
-                        TunnelParams.Add(KVP);
-                    }
-                }
-
-                tNode.SetGradePercent(mNodesCount);
-                //                tNode.bIsEndPoint = false;
-                tNode.tangent = GetSplineValue(nodes[i].time, true);
-                if (i < (mNodesCount - 1))
-                {
-                    tNode.nextTime = nodes[i + 1].time;
-                    tNode.nextTan = nodes[i + 1].tangent;
-                }
+                tNode.idOnSpline = i;
+                tNode.isEndPoint = false;
+                pVects[i] = tNode.pos;
             }
-        }
-        else if (mNodesCount == 1)
-        {
-            nodes[0].tangent = default(Vector3);
-        }
-
-        //Get bounds of road system:
-        float[] tMaxEffects = new float[3];
-        tMaxEffects[0] = road.matchHeightsDistance;
-        tMaxEffects[1] = road.clearDetailsDistance;
-        tMaxEffects[2] = road.clearTreesDistance;
-        float MaxEffectDistance = Mathf.Max(tMaxEffects) * 2f; //Add min/max clear diff to bound checks
-        int mCount1 = GetNodeCount();
-        float[] tMinMaxX = new float[mCount1];
-        float[] tMinMaxZ = new float[mCount1];
-        //		Vector3 tVect1 = default(Vector3);
-        for (int i = 0; i < mCount1; i++)
-        {
-            tMinMaxX[i] = nodes[i].pos.x;
-            tMinMaxZ[i] = nodes[i].pos.z;
-        }
-        float MinX = Mathf.Min(tMinMaxX) - MaxEffectDistance;
-        float MaxX = Mathf.Max(tMinMaxX) + MaxEffectDistance;
-        float MinZ = Mathf.Min(tMinMaxZ) - MaxEffectDistance;
-        float MaxZ = Mathf.Max(tMinMaxZ) + MaxEffectDistance;
-        RoadV0 = new Vector3(MinX, MinZ);
-        RoadV1 = new Vector3(MaxX, MinZ);
-        RoadV2 = new Vector3(MaxX, MaxZ);
-        RoadV3 = new Vector3(MinX, MaxZ);
+            pVects[pVects.Length - 1] = new Vector3(0f, 0f, 0f);
+#if UNITY_EDITOR
+            previewSpline.Setup(ref pVects);
 #endif
-    }
 
 
-    /// <summary> Renames the Nodes to their id on the Spline </summary>
-    private void RenameNodes()
-    {
-        int nodesCount = nodes.Count;
-        for (int i = 0; i < nodesCount; i++)
-        {
-            GSDSplineN tNode = nodes[i];
-            tNode.name = "Node" + tNode.idOnSpline;
-            tNode.transform.gameObject.name = tNode.name;
-            tNode.editorDisplayString = road.transform.name + "-" + tNode.name;
-        }
-    }
+            RenameNodes();
 
 
-    private int CompareListByName(GSDSplineN _i1, GSDSplineN _i2)
-    {
-        return _i1.idOnSpline.CompareTo(_i2.idOnSpline);
-    }
-
-
-    private void SetupNodes(ref GSDSplineN[] _rawNodes)
-    {
-        //Process nodes:
-        int i = 0;
-        List<GSDSplineN> nodes = new List<GSDSplineN>();
-        int tNodesRawLength = _rawNodes.Length;
-        for (i = 0; i < tNodesRawLength; i++)
-        {
-            if (!_rawNodes[i].isDestroyed)
+            #region "Setup bridge params"
+            if (BridgeParams != null)
             {
-                nodes.Add(_rawNodes[i]);
+                BridgeParams.Clear();
             }
-        }
+            BridgeParams = new List<KeyValuePair<float, float>>();
+            KeyValuePair<float, float> KVP;
+            #endregion
 
-        this.nodes.Clear();
-        this.nodes = new List<GSDSplineN>();
-        GSDSplineN tNode;
-        float step;
-        Quaternion rot;
-        bool bClosed = false;
-        step = (bClosed) ? 1f / ((float) nodes.Count) : 1f / ((float) (nodes.Count - 1));
-        int tNodesCount = nodes.Count;
-        for (i = 0; i < tNodesCount; i++)
-        {
-            tNode = nodes[i];
 
-            rot = Quaternion.identity;
-            if (i != nodes.Count - 1)
+            //Setup tunnel params:
+            if (TunnelParams != null)
             {
-                if ((nodes[i + 1].transform.position - tNode.transform.position) == Vector3.zero)
+                TunnelParams.Clear();
+            }
+            TunnelParams = new List<KeyValuePair<float, float>>();
+
+            if (mNodesCount > 1)
+            {
+                if (isSpecialStartControlNode)
                 {
-                    rot = Quaternion.identity;
+                    nodes[1].isEndPoint = true;
                 }
                 else
                 {
-                    rot = Quaternion.LookRotation(nodes[i + 1].transform.position - tNode.transform.position, transform.up);
+                    nodes[0].isEndPoint = true;
+                }
+                if (isSpecialEndControlNode)
+                {
+                    nodes[mNodesCount - 2].isEndPoint = true;
+                }
+                else
+                {
+                    nodes[mNodesCount - 1].isEndPoint = true;
                 }
             }
-            else if (bClosed)
+            else if (mNodesCount == 1)
             {
-                rot = Quaternion.LookRotation(nodes[0].transform.position - tNode.transform.position, transform.up);
+                nodes[0].isEndPoint = true;
+                distance = 1;
             }
-            else
+
+            float fStart = -1f;
+            float fEnd = -1f;
+            if (mNodesCount > 1)
             {
+                for (int i = 0; i < mNodesCount; i++)
+                {
+                    tNode = nodes[i];
+
+                    //Bridges:
+                    fStart = -1f;
+                    fEnd = -1f;
+                    if (tNode.isBridgeStart && !tNode.isTunnelStart)
+                    {
+                        fStart = tNode.time;
+                        for (int j = i; j < mNodesCount; j++)
+                        {
+                            if (nodes[j].isBridgeEnd)
+                            {
+                                fEnd = nodes[j].time;
+                                break;
+                            }
+                        }
+                        if (fEnd > 0f || GSDRootUtil.IsApproximately(fEnd, 0f, 0.0001f))
+                        {
+                            KVP = new KeyValuePair<float, float>(fStart, fEnd);
+                            BridgeParams.Add(KVP);
+                        }
+                    }
+
+                    //Tunnels:
+                    fStart = -1f;
+                    fEnd = -1f;
+                    if (!tNode.isBridgeStart && tNode.isTunnelStart)
+                    {
+                        fStart = tNode.time;
+                        for (int j = i; j < mNodesCount; j++)
+                        {
+                            if (nodes[j].isTunnelEnd)
+                            {
+                                fEnd = nodes[j].time;
+                                break;
+                            }
+                        }
+
+                        if (fEnd > 0f || GSDRootUtil.IsApproximately(fEnd, 0f, 0.0001f))
+                        {
+                            KVP = new KeyValuePair<float, float>(fStart, fEnd);
+                            TunnelParams.Add(KVP);
+                        }
+                    }
+
+                    tNode.SetGradePercent(mNodesCount);
+                    //                tNode.bIsEndPoint = false;
+                    tNode.tangent = GetSplineValue(nodes[i].time, true);
+                    if (i < (mNodesCount - 1))
+                    {
+                        tNode.nextTime = nodes[i + 1].time;
+                        tNode.nextTan = nodes[i + 1].tangent;
+                    }
+                }
+            }
+            else if (mNodesCount == 1)
+            {
+                nodes[0].tangent = default(Vector3);
+            }
+
+            //Get bounds of road system:
+            float[] tMaxEffects = new float[3];
+            tMaxEffects[0] = road.matchHeightsDistance;
+            tMaxEffects[1] = road.clearDetailsDistance;
+            tMaxEffects[2] = road.clearTreesDistance;
+            float MaxEffectDistance = Mathf.Max(tMaxEffects) * 2f; //Add min/max clear diff to bound checks
+            int mCount1 = GetNodeCount();
+            float[] tMinMaxX = new float[mCount1];
+            float[] tMinMaxZ = new float[mCount1];
+            //		Vector3 tVect1 = default(Vector3);
+            for (int i = 0; i < mCount1; i++)
+            {
+                tMinMaxX[i] = nodes[i].pos.x;
+                tMinMaxZ[i] = nodes[i].pos.z;
+            }
+            float MinX = Mathf.Min(tMinMaxX) - MaxEffectDistance;
+            float MaxX = Mathf.Max(tMinMaxX) + MaxEffectDistance;
+            float MinZ = Mathf.Min(tMinMaxZ) - MaxEffectDistance;
+            float MaxZ = Mathf.Max(tMinMaxZ) + MaxEffectDistance;
+            RoadV0 = new Vector3(MinX, MinZ);
+            RoadV1 = new Vector3(MaxX, MinZ);
+            RoadV2 = new Vector3(MaxX, MaxZ);
+            RoadV3 = new Vector3(MinX, MaxZ);
+#endif
+        }
+
+
+        /// <summary> Renames the Nodes to their id on the Spline </summary>
+        private void RenameNodes()
+        {
+            int nodesCount = nodes.Count;
+            for (int i = 0; i < nodesCount; i++)
+            {
+                GSDSplineN tNode = nodes[i];
+                tNode.name = "Node" + tNode.idOnSpline;
+                tNode.transform.gameObject.name = tNode.name;
+                tNode.editorDisplayString = road.transform.name + "-" + tNode.name;
+            }
+        }
+
+
+        private int CompareListByName(GSDSplineN _i1, GSDSplineN _i2)
+        {
+            return _i1.idOnSpline.CompareTo(_i2.idOnSpline);
+        }
+
+
+        private void SetupNodes(ref GSDSplineN[] _rawNodes)
+        {
+            //Process nodes:
+            int i = 0;
+            List<GSDSplineN> nodes = new List<GSDSplineN>();
+            int tNodesRawLength = _rawNodes.Length;
+            for (i = 0; i < tNodesRawLength; i++)
+            {
+                if (!_rawNodes[i].isDestroyed)
+                {
+                    nodes.Add(_rawNodes[i]);
+                }
+            }
+
+            this.nodes.Clear();
+            this.nodes = new List<GSDSplineN>();
+            GSDSplineN tNode;
+            float step;
+            Quaternion rot;
+            bool bClosed = false;
+            step = (bClosed) ? 1f / ((float)nodes.Count) : 1f / ((float)(nodes.Count - 1));
+            int tNodesCount = nodes.Count;
+            for (i = 0; i < tNodesCount; i++)
+            {
+                tNode = nodes[i];
+
                 rot = Quaternion.identity;
+                if (i != nodes.Count - 1)
+                {
+                    if ((nodes[i + 1].transform.position - tNode.transform.position) == Vector3.zero)
+                    {
+                        rot = Quaternion.identity;
+                    }
+                    else
+                    {
+                        rot = Quaternion.LookRotation(nodes[i + 1].transform.position - tNode.transform.position, transform.up);
+                    }
+                }
+                else if (bClosed)
+                {
+                    rot = Quaternion.LookRotation(nodes[0].transform.position - tNode.transform.position, transform.up);
+                }
+                else
+                {
+                    rot = Quaternion.identity;
+                }
+
+                tNode.Setup(tNode.transform.position, rot, new Vector2(0f, 1f), step * ((float)i), tNode.transform.gameObject.name);
+                GSDRootUtil.SetupUniqueIdentifier(ref tNode.uID);
+                this.nodes.Add(tNode);
             }
 
-            tNode.Setup(tNode.transform.position, rot, new Vector2(0f, 1f), step * ((float) i), tNode.transform.gameObject.name);
-            GSDRootUtil.SetupUniqueIdentifier(ref tNode.uID);
-            this.nodes.Add(tNode);
+            nodes = null;
+            _rawNodes = null;
         }
 
-        nodes = null;
-        _rawNodes = null;
-    }
 
-
-    private void SetupSplineLength()
-    {
-        int nodeCount = nodes.Count;
-
-        //First lets get the general distance, node to node:
-        nodes[0].time = 0f;
-        nodes[nodeCount - 1].time = 1f;
-        Vector3 tVect1 = new Vector3(0f, 0f, 0f);
-        Vector3 tVect2 = new Vector3(0f, 0f, 0f);
-        float mDistance = 0f;
-        float mDistance_NoMod = 0f;
-        for (int j = 0; j < nodeCount; j++)
+        private void SetupSplineLength()
         {
-            tVect2 = nodes[j].pos;
-            if (j > 0)
+            int nodeCount = nodes.Count;
+
+            //First lets get the general distance, node to node:
+            nodes[0].time = 0f;
+            nodes[nodeCount - 1].time = 1f;
+            Vector3 tVect1 = new Vector3(0f, 0f, 0f);
+            Vector3 tVect2 = new Vector3(0f, 0f, 0f);
+            float mDistance = 0f;
+            float mDistance_NoMod = 0f;
+            for (int j = 0; j < nodeCount; j++)
             {
-                mDistance += Vector3.Distance(tVect1, tVect2);
+                tVect2 = nodes[j].pos;
+                if (j > 0)
+                {
+                    mDistance += Vector3.Distance(tVect1, tVect2);
+                }
+                tVect1 = tVect2;
             }
-            tVect1 = tVect2;
-        }
-        mDistance_NoMod = mDistance;
-        mDistance = mDistance * 1.05f;
-        float step = 0.5f / mDistance;
+            mDistance_NoMod = mDistance;
+            mDistance = mDistance * 1.05f;
+            float step = 0.5f / mDistance;
 
-        //Get a slightly more accurate portrayal of the time:
-        float tTime = 0f;
-        for (int j = 0; j < (nodeCount - 1); j++)
-        {
-            tVect2 = nodes[j].pos;
-            if (j > 0)
+            //Get a slightly more accurate portrayal of the time:
+            float tTime = 0f;
+            for (int j = 0; j < (nodeCount - 1); j++)
             {
-                tTime += (Vector3.Distance(tVect1, tVect2) / mDistance_NoMod);
-                nodes[j].time = tTime;
+                tVect2 = nodes[j].pos;
+                if (j > 0)
+                {
+                    tTime += (Vector3.Distance(tVect1, tVect2) / mDistance_NoMod);
+                    nodes[j].time = tTime;
+                }
+                tVect1 = tVect2;
             }
-            tVect1 = tVect2;
-        }
 
-        //Using general distance and calculated step, get an accurate distance:
-        float tDistance = 0f;
-        Vector3 prevPos = nodes[0].pos;
-        Vector3 cPos = new Vector3(0f, 0f, 0f);
-        GSDSplineN tNode;
+            //Using general distance and calculated step, get an accurate distance:
+            float tDistance = 0f;
+            Vector3 prevPos = nodes[0].pos;
+            Vector3 cPos = new Vector3(0f, 0f, 0f);
+            GSDSplineN tNode;
 
-        prevPos = GetSplineValue(0f);
-        for (float i = 0f; i < 1f; i += step)
-        {
-            cPos = GetSplineValue(i);
-            //			if(float.IsNaN(cPos.x)){
-            //				int xsagfdsdgsd = 0;	
-            //			}
-            tDistance += Vector3.Distance(cPos, prevPos);
-            prevPos = cPos;
-        }
-
-        distance = tDistance;
-
-        //Now get fine distance between nodes:
-
-        float newTotalDistance = 0f;
-        step = 0.5f / distance;
-        GSDSplineN PrevNode = null;
-        GSDSplineN ThisNode = null;
-        prevPos = GetSplineValue(0f, false);
-        for (int j = 1; j < (nodeCount - 1); j++)
-        {
-            PrevNode = nodes[j - 1];
-            ThisNode = nodes[j];
-
-            if (j == 1)
+            prevPos = GetSplineValue(0f);
+            for (float i = 0f; i < 1f; i += step)
             {
-                prevPos = GetSplineValue(PrevNode.time);
+                cPos = GetSplineValue(i);
+                //			if(float.IsNaN(cPos.x)){
+                //				int xsagfdsdgsd = 0;	
+                //			}
+                tDistance += Vector3.Distance(cPos, prevPos);
+                prevPos = cPos;
             }
+
+            distance = tDistance;
+
+            //Now get fine distance between nodes:
+
+            float newTotalDistance = 0f;
+            step = 0.5f / distance;
+            GSDSplineN PrevNode = null;
+            GSDSplineN ThisNode = null;
+            prevPos = GetSplineValue(0f, false);
+            for (int j = 1; j < (nodeCount - 1); j++)
+            {
+                PrevNode = nodes[j - 1];
+                ThisNode = nodes[j];
+
+                if (j == 1)
+                {
+                    prevPos = GetSplineValue(PrevNode.time);
+                }
+                tDistance = 0.00001f;
+                for (float i = PrevNode.time; i < ThisNode.time; i += step)
+                {
+                    cPos = GetSplineValue(i);
+                    if (!float.IsNaN(cPos.x))
+                    {
+                        if (float.IsNaN(prevPos.x))
+                        {
+                            prevPos = cPos;
+                        }
+                        tDistance += Vector3.Distance(cPos, prevPos);
+                        prevPos = cPos;
+                    }
+                }
+                ThisNode.tempSegmentTime = (tDistance / distance);
+                newTotalDistance += tDistance;
+                ThisNode.dist = newTotalDistance;
+            }
+
+
+            nodes[0].dist = 0f;
+            PrevNode = nodes[nodeCount - 2];
+            ThisNode = nodes[nodeCount - 1];
             tDistance = 0.00001f;
             for (float i = PrevNode.time; i < ThisNode.time; i += step)
             {
-                cPos = GetSplineValue(i);
+                cPos = GetSplineValue(i, false);
                 if (!float.IsNaN(cPos.x))
                 {
                     if (float.IsNaN(prevPos.x))
@@ -498,357 +522,472 @@ public class GSDSplineC : MonoBehaviour
             ThisNode.tempSegmentTime = (tDistance / distance);
             newTotalDistance += tDistance;
             ThisNode.dist = newTotalDistance;
-        }
+            distance = newTotalDistance;
 
 
-        nodes[0].dist = 0f;
-        PrevNode = nodes[nodeCount - 2];
-        ThisNode = nodes[nodeCount - 1];
-        tDistance = 0.00001f;
-        for (float i = PrevNode.time; i < ThisNode.time; i += step)
-        {
-            cPos = GetSplineValue(i, false);
-            if (!float.IsNaN(cPos.x))
+            tTime = 0f;
+            for (int j = 1; j < (nodeCount - 1); j++)
             {
-                if (float.IsNaN(prevPos.x))
-                {
-                    prevPos = cPos;
-                }
-                tDistance += Vector3.Distance(cPos, prevPos);
-                prevPos = cPos;
+                tNode = nodes[j];
+                tTime += tNode.tempSegmentTime;
+                tNode.oldTime = tNode.time;
+                tNode.time = tTime;
+                tNode.tangent = GetSplineValueSkipOpt(tNode.time, true);
+                tNode.transform.rotation = Quaternion.LookRotation(tNode.tangent);
             }
+            nodes[0].tangent = GetSplineValueSkipOpt(0f, true);
+            nodes[nodeCount - 1].tangent = GetSplineValueSkipOpt(1f, true);
+
+
+            nodes[0].dist = 0f;
+
+            step = distance / cachedPointsSeperation;
+            int ArrayCount = (int)Mathf.Floor(step) + 2;
+            cachedPoints = null;
+            cachedPoints = new Vector3[ArrayCount];
+            step = cachedPointsSeperation / distance;
+            for (int j = 1; j < (ArrayCount - 1); j++)
+            {
+                cachedPoints[j] = GetSplineValue(step * j);
+            }
+            cachedPoints[0] = nodes[0].pos;
+            cachedPoints[ArrayCount - 1] = nodes[nodeCount - 1].pos;
+
+            RoadDefCalcs();
         }
-        ThisNode.tempSegmentTime = (tDistance / distance);
-        newTotalDistance += tDistance;
-        ThisNode.dist = newTotalDistance;
-        distance = newTotalDistance;
-
-
-        tTime = 0f;
-        for (int j = 1; j < (nodeCount - 1); j++)
-        {
-            tNode = nodes[j];
-            tTime += tNode.tempSegmentTime;
-            tNode.oldTime = tNode.time;
-            tNode.time = tTime;
-            tNode.tangent = GetSplineValueSkipOpt(tNode.time, true);
-            tNode.transform.rotation = Quaternion.LookRotation(tNode.tangent);
-        }
-        nodes[0].tangent = GetSplineValueSkipOpt(0f, true);
-        nodes[nodeCount - 1].tangent = GetSplineValueSkipOpt(1f, true);
-
-
-        nodes[0].dist = 0f;
-
-        step = distance / cachedPointsSeperation;
-        int ArrayCount = (int) Mathf.Floor(step) + 2;
-        cachedPoints = null;
-        cachedPoints = new Vector3[ArrayCount];
-        step = cachedPointsSeperation / distance;
-        for (int j = 1; j < (ArrayCount - 1); j++)
-        {
-            cachedPoints[j] = GetSplineValue(step * j);
-        }
-        cachedPoints[0] = nodes[0].pos;
-        cachedPoints[ArrayCount - 1] = nodes[nodeCount - 1].pos;
-
-        RoadDefCalcs();
-    }
-    #endregion
+        #endregion
 #endif
 
 
-    #region "Road definition cache and translation"
-    private void RoadDefCalcs()
-    {
-        float tMod = Mathf.Lerp(0.05f, 0.2f, distance / 9000f);
-        float step = tMod / distance;
-        Vector3 cPos = GetSplineValue(0f);
-        Vector3 prevPos = cPos;
-        float tempDistanceModMax = road.roadDefinition - step;
-        float tempDistanceMod = 0f;
-        float tempTotalDistance = 0f;
-        float tempDistanceHolder = 0f;
-        if (RoadDefKeysArray != null)
+        #region "Road definition cache and translation"
+        private void RoadDefCalcs()
         {
-            RoadDefKeysArray = null;
-        }
-        if (RoadDefValuesArray != null)
-        {
-            RoadDefValuesArray = null;
-        }
-
-        List<int> RoadDefKeys = new List<int>();
-        List<float> RoadDefValues = new List<float>();
-
-        RoadDefKeys.Add(0);
-        RoadDefValues.Add(0f);
-
-        for (float index = 0f; index < 1f; index += step)
-        {
-            cPos = GetSplineValue(index);
-            tempDistanceHolder = Vector3.Distance(cPos, prevPos);
-            tempTotalDistance += tempDistanceHolder;
-            tempDistanceMod += tempDistanceHolder;
-            if (tempDistanceMod > tempDistanceModMax)
+            float tMod = Mathf.Lerp(0.05f, 0.2f, distance / 9000f);
+            float step = tMod / distance;
+            Vector3 cPos = GetSplineValue(0f);
+            Vector3 prevPos = cPos;
+            float tempDistanceModMax = road.roadDefinition - step;
+            float tempDistanceMod = 0f;
+            float tempTotalDistance = 0f;
+            float tempDistanceHolder = 0f;
+            if (RoadDefKeysArray != null)
             {
-                tempDistanceMod = 0f;
-                RoadDefKeys.Add(TranslateParamToInt(index));
-                RoadDefValues.Add(tempTotalDistance);
+                RoadDefKeysArray = null;
             }
-            prevPos = cPos;
-        }
-
-        RoadDefKeysArray = RoadDefKeys.ToArray();
-        RoadDefValuesArray = RoadDefValues.ToArray();
-    }
-
-
-    public int TranslateParamToInt(float _value)
-    {
-        return Mathf.Clamp((int) (_value * 10000000f), 0, 10000000);
-    }
-
-
-    public float TranslateInverseParamToFloat(int _value)
-    {
-        return Mathf.Clamp(((float) (float) _value / 10000000f), 0f, 1f);
-    }
-
-
-    private void GetClosestRoadDefKeys(float _x, out int _lo, out int _hi, out int _loIndex, out int _hiIndex)
-    {
-        int x = TranslateParamToInt(_x);
-        _lo = -1;
-        _hi = RoadDefKeysArray.Length - 1;
-
-        int mid = -1;
-
-        while ((_hi - _lo) > 1)
-        {
-            mid = Mathf.RoundToInt((_lo + _hi) / 2);
-            if (RoadDefKeysArray[mid] <= x)
+            if (RoadDefValuesArray != null)
             {
-                _lo = mid;
+                RoadDefValuesArray = null;
             }
-            else
+
+            List<int> RoadDefKeys = new List<int>();
+            List<float> RoadDefValues = new List<float>();
+
+            RoadDefKeys.Add(0);
+            RoadDefValues.Add(0f);
+
+            for (float index = 0f; index < 1f; index += step)
             {
-                _hi = mid;
+                cPos = GetSplineValue(index);
+                tempDistanceHolder = Vector3.Distance(cPos, prevPos);
+                tempTotalDistance += tempDistanceHolder;
+                tempDistanceMod += tempDistanceHolder;
+                if (tempDistanceMod > tempDistanceModMax)
+                {
+                    tempDistanceMod = 0f;
+                    RoadDefKeys.Add(TranslateParamToInt(index));
+                    RoadDefValues.Add(tempTotalDistance);
+                }
+                prevPos = cPos;
             }
+
+            RoadDefKeysArray = RoadDefKeys.ToArray();
+            RoadDefValuesArray = RoadDefValues.ToArray();
         }
 
-        if (RoadDefKeysArray[_lo] == x)
+
+        public int TranslateParamToInt(float _value)
         {
-            _hi = _lo;
-        }
-        //		if(hi > RoadDefKeysArray.Length-1){ hi = RoadDefKeysArray.Length-1; }
-
-        _loIndex = _lo;
-        _hiIndex = _hi;
-        _lo = RoadDefKeysArray[_lo];
-        _hi = RoadDefKeysArray[_hi];
-    }
-
-
-    public int GetClosestRoadDefIndex(float _x, bool _isRoundUp = false, bool _isRoundDown = false)
-    {
-        int lo, hi, loIndex, hiIndex;
-
-        GetClosestRoadDefKeys(_x, out lo, out hi, out loIndex, out hiIndex);
-
-        int x = TranslateParamToInt(_x);
-
-        if (_isRoundUp)
-        {
-            return hiIndex;
-        }
-        if (_isRoundDown)
-        {
-            return loIndex;
+            return Mathf.Clamp((int)(_value * 10000000f), 0, 10000000);
         }
 
-        if ((x - lo) > (hi - x))
+
+        public float TranslateInverseParamToFloat(int _value)
         {
-            return hiIndex;
+            return Mathf.Clamp(((float)(float)_value / 10000000f), 0f, 1f);
         }
-        else
+
+
+        private void GetClosestRoadDefKeys(float _x, out int _lo, out int _hi, out int _loIndex, out int _hiIndex)
         {
-            return loIndex;
-        }
-    }
+            int x = TranslateParamToInt(_x);
+            _lo = -1;
+            _hi = RoadDefKeysArray.Length - 1;
 
+            int mid = -1;
 
-    private void GetClosestRoadDefValues(float _x, out float _loF, out float _hiF, out int _loIndex, out int _hiIndex)
-    {
-        int lo = -1;
-        int hi = RoadDefValuesArray.Length - 1;
-        int mid = -1;
-
-        while ((hi - lo) > 1)
-        {
-            mid = Mathf.RoundToInt((lo + hi) / 2);
-            if (RoadDefValuesArray[mid] < _x || GSDRootUtil.IsApproximately(RoadDefValuesArray[mid], _x, 0.02f))
+            while ((_hi - _lo) > 1)
             {
-                lo = mid;
+                mid = Mathf.RoundToInt((_lo + _hi) / 2);
+                if (RoadDefKeysArray[mid] <= x)
+                {
+                    _lo = mid;
+                }
+                else
+                {
+                    _hi = mid;
+                }
+            }
+
+            if (RoadDefKeysArray[_lo] == x)
+            {
+                _hi = _lo;
+            }
+            //		if(hi > RoadDefKeysArray.Length-1){ hi = RoadDefKeysArray.Length-1; }
+
+            _loIndex = _lo;
+            _hiIndex = _hi;
+            _lo = RoadDefKeysArray[_lo];
+            _hi = RoadDefKeysArray[_hi];
+        }
+
+
+        public int GetClosestRoadDefIndex(float _x, bool _isRoundUp = false, bool _isRoundDown = false)
+        {
+            int lo, hi, loIndex, hiIndex;
+
+            GetClosestRoadDefKeys(_x, out lo, out hi, out loIndex, out hiIndex);
+
+            int x = TranslateParamToInt(_x);
+
+            if (_isRoundUp)
+            {
+                return hiIndex;
+            }
+            if (_isRoundDown)
+            {
+                return loIndex;
+            }
+
+            if ((x - lo) > (hi - x))
+            {
+                return hiIndex;
             }
             else
             {
-                hi = mid;
+                return loIndex;
             }
         }
 
-        if (GSDRootUtil.IsApproximately(RoadDefValuesArray[lo], _x, 0.02f))
+
+        private void GetClosestRoadDefValues(float _x, out float _loF, out float _hiF, out int _loIndex, out int _hiIndex)
         {
-            hi = lo;
-        }
+            int lo = -1;
+            int hi = RoadDefValuesArray.Length - 1;
+            int mid = -1;
 
-        _loIndex = lo;
-        _hiIndex = hi;
-        _loF = RoadDefValuesArray[lo];
-        _hiF = RoadDefValuesArray[hi];
-    }
-
-
-    public int GetClosestRoadDefValuesIndex(float _x, bool _isRoundUp = false, bool _isRoundDown = false)
-    {
-        float lo, hi;
-        int loIndex, hiIndex;
-
-        GetClosestRoadDefValues(_x, out lo, out hi, out loIndex, out hiIndex);
-
-        if (_isRoundUp)
-        {
-            return hiIndex;
-        }
-        if (_isRoundDown)
-        {
-            return loIndex;
-        }
-
-        if ((_x - lo) > (hi - _x))
-        {
-            return hiIndex;
-        }
-        else
-        {
-            return loIndex;
-        }
-    }
-
-
-    public float TranslateDistBasedToParam(float _dist)
-    {
-        int tIndex = GetClosestRoadDefValuesIndex(_dist, false, false);
-        float tKey = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex]);
-        int tCount = RoadDefKeysArray.Length;
-        float kDist = RoadDefValuesArray[tIndex];
-
-        if (tIndex < (tCount - 1))
-        {
-            if (_dist > kDist)
+            while ((hi - lo) > 1)
             {
-                float NextValue = RoadDefValuesArray[tIndex + 1];
-                float tDiff1 = (_dist - kDist) / (NextValue - kDist);
-                tKey += (tDiff1 * (TranslateInverseParamToFloat(RoadDefKeysArray[tIndex + 1]) - tKey));
+                mid = Mathf.RoundToInt((lo + hi) / 2);
+                if (RoadDefValuesArray[mid] < _x || GSDRootUtil.IsApproximately(RoadDefValuesArray[mid], _x, 0.02f))
+                {
+                    lo = mid;
+                }
+                else
+                {
+                    hi = mid;
+                }
             }
-        }
-        if (tIndex > 0)
-        {
-            if (_dist < kDist)
+
+            if (GSDRootUtil.IsApproximately(RoadDefValuesArray[lo], _x, 0.02f))
             {
-                float PrevValue = RoadDefValuesArray[tIndex - 1];
-                float tDiff1 = (_dist - PrevValue) / (kDist - PrevValue);
-                tKey -= (tDiff1 * (tKey - TranslateInverseParamToFloat(RoadDefKeysArray[tIndex - 1])));
+                hi = lo;
             }
+
+            _loIndex = lo;
+            _hiIndex = hi;
+            _loF = RoadDefValuesArray[lo];
+            _hiF = RoadDefValuesArray[hi];
         }
 
-        return tKey;
-    }
 
-
-    public float TranslateParamToDist(float _param)
-    {
-        int tIndex = GetClosestRoadDefIndex(_param, false, false);
-        float tKey = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex]);
-        int tCount = RoadDefKeysArray.Length;
-        float kDist = RoadDefValuesArray[tIndex];
-        float xDiff = kDist;
-
-        if (tIndex < (tCount - 1))
+        public int GetClosestRoadDefValuesIndex(float _x, bool _isRoundUp = false, bool _isRoundDown = false)
         {
-            if (_param > tKey)
+            float lo, hi;
+            int loIndex, hiIndex;
+
+            GetClosestRoadDefValues(_x, out lo, out hi, out loIndex, out hiIndex);
+
+            if (_isRoundUp)
             {
-                float NextValue = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex + 1]);
-                float tDiff1 = (_param - tKey) / (NextValue - tKey);
-                xDiff += (tDiff1 * (RoadDefValuesArray[tIndex + 1] - kDist));
+                return hiIndex;
             }
-        }
-        if (tIndex > 0)
-        {
-            if (_param < tKey)
+            if (_isRoundDown)
             {
-                float PrevValue = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex - 1]);
-                float tDiff1 = 1f - ((_param - PrevValue) / (tKey - PrevValue));
-                xDiff -= (tDiff1 * (kDist - RoadDefValuesArray[tIndex - 1]));
+                return loIndex;
             }
-        }
 
-        return xDiff;
-    }
-    #endregion
-
-
-    #region "Hermite math"
-    /// <summary> Gets the spline value. </summary>
-    /// <param name='_value'> The relevant param (0-1) of the spline. </param>
-    /// <param name='_isTangent'> True for is tangent, false (default) for vector3 position. </param>
-    /// float _value, formerly f; Renamed boolb to reflect its use according to the summary of this function
-    public Vector3 GetSplineValue(float _value, bool _isTangent = false)
-    {
-        int index;
-        int idx = -1;
-
-
-        if (nodes.Count == 0)
-        {
-            return default(Vector3);
-        }
-        if (nodes.Count == 1)
-        {
-            return nodes[0].pos;
-        }
-
-        // FH / This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
-        // This Fixes the Bug with 1f -> -0.0001f as descripted by embeddedt/RoadArchitect/issues/4 
-        if (GSDRootUtil.IsApproximately(_value, 0f, 0.00001f))
-        {
-            if (_isTangent)
+            if ((_x - lo) > (hi - _x))
             {
-                return nodes[0].tangent;
+                return hiIndex;
             }
             else
+            {
+                return loIndex;
+            }
+        }
+
+
+        public float TranslateDistBasedToParam(float _dist)
+        {
+            int tIndex = GetClosestRoadDefValuesIndex(_dist, false, false);
+            float tKey = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex]);
+            int tCount = RoadDefKeysArray.Length;
+            float kDist = RoadDefValuesArray[tIndex];
+
+            if (tIndex < (tCount - 1))
+            {
+                if (_dist > kDist)
+                {
+                    float NextValue = RoadDefValuesArray[tIndex + 1];
+                    float tDiff1 = (_dist - kDist) / (NextValue - kDist);
+                    tKey += (tDiff1 * (TranslateInverseParamToFloat(RoadDefKeysArray[tIndex + 1]) - tKey));
+                }
+            }
+            if (tIndex > 0)
+            {
+                if (_dist < kDist)
+                {
+                    float PrevValue = RoadDefValuesArray[tIndex - 1];
+                    float tDiff1 = (_dist - PrevValue) / (kDist - PrevValue);
+                    tKey -= (tDiff1 * (tKey - TranslateInverseParamToFloat(RoadDefKeysArray[tIndex - 1])));
+                }
+            }
+
+            return tKey;
+        }
+
+
+        public float TranslateParamToDist(float _param)
+        {
+            int tIndex = GetClosestRoadDefIndex(_param, false, false);
+            float tKey = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex]);
+            int tCount = RoadDefKeysArray.Length;
+            float kDist = RoadDefValuesArray[tIndex];
+            float xDiff = kDist;
+
+            if (tIndex < (tCount - 1))
+            {
+                if (_param > tKey)
+                {
+                    float NextValue = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex + 1]);
+                    float tDiff1 = (_param - tKey) / (NextValue - tKey);
+                    xDiff += (tDiff1 * (RoadDefValuesArray[tIndex + 1] - kDist));
+                }
+            }
+            if (tIndex > 0)
+            {
+                if (_param < tKey)
+                {
+                    float PrevValue = TranslateInverseParamToFloat(RoadDefKeysArray[tIndex - 1]);
+                    float tDiff1 = 1f - ((_param - PrevValue) / (tKey - PrevValue));
+                    xDiff -= (tDiff1 * (kDist - RoadDefValuesArray[tIndex - 1]));
+                }
+            }
+
+            return xDiff;
+        }
+        #endregion
+
+
+        #region "Hermite math"
+        /// <summary> Gets the spline value. </summary>
+        /// <param name='_value'> The relevant param (0-1) of the spline. </param>
+        /// <param name='_isTangent'> True for is tangent, false (default) for vector3 position. </param>
+        /// float _value, formerly f; Renamed boolb to reflect its use according to the summary of this function
+        public Vector3 GetSplineValue(float _value, bool _isTangent = false)
+        {
+            int index;
+            int idx = -1;
+
+
+            if (nodes.Count == 0)
+            {
+                return default(Vector3);
+            }
+            if (nodes.Count == 1)
             {
                 return nodes[0].pos;
             }
-        }
-        else
-        if (GSDRootUtil.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
-        {
-            if (_isTangent)
+
+            // FH / This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
+            // This Fixes the Bug with 1f -> -0.0001f as descripted by embeddedt/RoadArchitect/issues/4 
+            if (GSDRootUtil.IsApproximately(_value, 0f, 0.00001f))
             {
-                return nodes[nodes.Count - 1].tangent;
+                if (_isTangent)
+                {
+                    return nodes[0].tangent;
+                }
+                else
+                {
+                    return nodes[0].pos;
+                }
+            }
+            else
+            if (GSDRootUtil.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
+            {
+                if (_isTangent)
+                {
+                    return nodes[nodes.Count - 1].tangent;
+                }
+                else
+                {
+                    return nodes[nodes.Count - 1].pos;
+                }
             }
             else
             {
-                return nodes[nodes.Count - 1].pos;
-            }
+                GSDRootUtil.IsApproximately(_value, 1f, 0.00001f);
+                // FH 03.02.19 // End of the former outcommented Code
+
+                for (index = 0; index < nodes.Count; index++)
+                {
+                    if (index == nodes.Count - 1)
+                    {
+                        idx = index - 1;
+                        break;
+                    }
+                    if (nodes[index].time > _value)
+                    {
+                        idx = index - 1;
+                        break;
+                    }
+                }
+                if (idx < 0)
+                {
+                    idx = 0;
+                }
+            }   // // FH / also former outcommented Code, see above
+
+            float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
+            param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            return GetHermiteInternal(idx, param, _isTangent);
         }
-        else
+
+
+        // former VarNames: f = _value
+        public void GetSplineValueBoth(float _value, out Vector3 _vect1, out Vector3 _vect2)
         {
-            GSDRootUtil.IsApproximately(_value, 1f, 0.00001f);
+            int index;
+            int idx = -1;
+            int nodeCount = GetNodeCount();
+
+            if (_value < 0f)
+            {
+                _value = 0f;
+            }
+            if (_value > 1f)
+            {
+                _value = 1f;
+            }
+
+
+            if (nodeCount == 0)
+            {
+                _vect1 = default(Vector3);
+                _vect2 = default(Vector3);
+                return;
+            }
+
+            if (nodeCount == 1)
+            {
+                if (nodes[0])
+                {
+                    _vect1 = nodes[0].pos;
+                    _vect2 = default(Vector3);
+                }
+                else
+                {
+                    _vect1 = default(Vector3);
+                    _vect2 = default(Vector3);
+                }
+                return;
+            }
+
+
+            // FH 03.02.19 // This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
+            // This code needs to be reevealuated if this isn't taken care of by the function above this one. GetSplineValue() 
+            // Right now, I would say that it is not really a part of embeddedt/RoadArchitect/issues/4
+            if (GSDRootUtil.IsApproximately(_value, 1f, 0.0001f))
+            {
+                _vect1 = nodes[nodes.Count - 1].pos;
+                _vect2 = nodes[nodes.Count - 1].tangent;
+                return;
+            }
+            else if (GSDRootUtil.IsApproximately(_value, 0f, 0.0001f))
+            {
+                _vect1 = nodes[0].pos;
+                _vect2 = nodes[0].tangent;
+                return;
+            }
+            // FH 10.02.19 // Do Note: This does prevent EdgeObjects from being placed before or after 0f/1f on the Spline, but also causes the EdgeObject to be placed at the same Position at the End of the Spline.
             // FH 03.02.19 // End of the former outcommented Code
 
-            for (index = 0; index < nodes.Count; index++)
+            for (index = 1; index < nodeCount; index++)
+            {
+                if (index == nodeCount - 1)
+                {
+                    idx = index - 1;
+                    break;
+                }
+                if (nodes[index].time > _value)
+                {
+                    idx = index - 1;
+                    break;
+                }
+            }
+            if (idx < 0)
+            {
+                idx = 0;
+            }
+
+            float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
+            param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+
+            _vect1 = GetHermiteInternal(idx, param, false);
+            _vect2 = GetHermiteInternal(idx, param, true);
+        }
+
+
+        public Vector3 GetSplineValueSkipOpt(float _value, bool _isTangent = false)
+        {
+            int index;
+            int idx = -1;
+
+            if (nodes.Count == 0)
+            {
+                return default(Vector3);
+            }
+            if (nodes.Count == 1)
+            {
+                return nodes[0].pos;
+            }
+
+
+            //		if(GSDRootUtil.IsApproximately(f,0f,0.00001f)){
+            //			if(_isTangent){
+            //				return mNodes[0].tangent;
+            //			}else{
+            //				return mNodes[0].pos;	
+            //			}
+            //		}else
+            //		if(GSDRootUtil.IsApproximately(f,1f,0.00001f) || f > 1f){
+            //			if(_isTangent){
+            //				return mNodes[mNodes.Count-1].tangent;
+            //			}else{
+            //				return mNodes[mNodes.Count-1].pos;	
+            //			}
+            //		}else{
+            for (index = 1; index < nodes.Count; index++)
             {
                 if (index == nodes.Count - 1)
                 {
@@ -865,448 +1004,310 @@ public class GSDSplineC : MonoBehaviour
             {
                 idx = 0;
             }
-        }   // // FH / also former outcommented Code, see above
+            //			if(b && GSDRootUtil.IsApproximately(f,1f,0.00001f)){
+            //				idx = mNodes.Count-2;
+            //			}
+            //		}
 
-        float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
-        return GetHermiteInternal(idx, param, _isTangent);
-    }
-
-
-    // former VarNames: f = _value
-    public void GetSplineValueBoth(float _value, out Vector3 _vect1, out Vector3 _vect2)
-    {
-        int index;
-        int idx = -1;
-        int nodeCount = GetNodeCount();
-
-        if (_value < 0f)
-        {
-            _value = 0f;
-        }
-        if (_value > 1f)
-        {
-            _value = 1f;
+            float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
+            param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            return GetHermiteInternal(idx, param, _isTangent);
         }
 
 
-        if (nodeCount == 0)
+        public float GetClosestParam(Vector3 _vect, bool _is20cmPrecision = false, bool _is1MeterPrecision = false)
         {
-            _vect1 = default(Vector3);
-            _vect2 = default(Vector3);
-            return;
+            return GetClosestParamDo(ref _vect, _is20cmPrecision, _is1MeterPrecision);
         }
 
-        if (nodeCount == 1)
+
+        private float GetClosestParamDo(ref Vector3 _vect, bool _is20cmPrecision, bool _is1MeterPrecision)
         {
-            if (nodes[0])
+            //5m to 1m	
+            float Step1 = cachedPointsSeperation / distance;
+            //20 cm	
+            float Step2 = Step1 * 0.2f;
+            //8 cm 
+            float Step3 = Step2 * 0.4f;
+            //2 cm
+            float Step4 = Step3 * 0.25f;
+
+
+            float tMin = 0f;
+            float tMax = 1f;
+
+            // Why is Best value set to -1f? at init
+            float BestValue = -1f;
+            float MaxStretch = 0.9f;
+            Vector3 BestVect_p = new Vector3(0f, 0f, 0f);
+            Vector3 BestVect_n = new Vector3(0f, 0f, 0f);
+
+            if (nodes.Count == 0)
             {
-                _vect1 = nodes[0].pos;
-                _vect2 = default(Vector3);
+                return 0f;
+            }
+            if (nodes.Count == 1)
+            {
+                return 1f;
+            }
+
+            //Step 1: 1m 
+            BestValue = GetClosestPointHelper(ref _vect, Step1, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n, true);
+            if (_is1MeterPrecision)
+            {
+                return BestValue;
+            }
+
+            //Step 2: 20cm 
+            tMin = BestValue - (Step1 * MaxStretch);
+            tMax = BestValue + (Step1 * MaxStretch);
+            BestValue = GetClosestPointHelper(ref _vect, Step2, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n);
+            if (_is20cmPrecision)
+            {
+                return BestValue;
+            }
+
+            //Step 3: 8cm 
+            tMin = BestValue - (Step2 * MaxStretch);
+            tMax = BestValue + (Step2 * MaxStretch);
+            BestValue = GetClosestPointHelper(ref _vect, Step3, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n);
+
+            //Step 4: 2cm
+            tMin = BestValue - (Step3 * MaxStretch);
+            tMax = BestValue + (Step3 * MaxStretch);
+            BestValue = GetClosestPointHelper(ref _vect, Step4, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n);
+
+            return BestValue;
+        }
+
+
+        private float GetClosestPointHelper(ref Vector3 _vect, float _step, float _bestValue, float _min, float _max, ref Vector3 _bestVectP, ref Vector3 _bestVectN, bool _isMeterCache = false)
+        {
+            float mDistance = 5000f;
+            float tDistance = 0f;
+            Vector3 cVect = new Vector3(0f, 0f, 0f);
+            Vector3 pVect = new Vector3(0f, 0f, 0f);
+            bool isFirstLoopHappened = false;
+            bool isSetBestValue = false;
+
+            //Get lean for tmin/tmax:
+            if (GetClosetPointMinMaxDirection(ref _vect, ref _bestVectP, ref _bestVectN))
+            {
+                _max = _bestValue;
             }
             else
             {
-                _vect1 = default(Vector3);
-                _vect2 = default(Vector3);
+                _min = _bestValue;
             }
-            return;
-        }
 
+            _min = Mathf.Clamp(_min, 0f, 1f);
+            _max = Mathf.Clamp(_max, 0f, 1f);
 
-        // FH 03.02.19 // This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
-        // This code needs to be reevealuated if this isn't taken care of by the function above this one. GetSplineValue() 
-        // Right now, I would say that it is not really a part of embeddedt/RoadArchitect/issues/4
-        if (GSDRootUtil.IsApproximately(_value, 1f, 0.0001f))
-        {
-            _vect1 = nodes[nodes.Count - 1].pos;
-            _vect2 = nodes[nodes.Count - 1].tangent;
-            return;
-        }
-        else if (GSDRootUtil.IsApproximately(_value, 0f, 0.0001f))
-        {
-            _vect1 = nodes[0].pos;
-            _vect2 = nodes[0].tangent;
-            return;
-        }
-        // FH 10.02.19 // Do Note: This does prevent EdgeObjects from being placed before or after 0f/1f on the Spline, but also causes the EdgeObject to be placed at the same Position at the End of the Spline.
-        // FH 03.02.19 // End of the former outcommented Code
-
-        for (index = 1; index < nodeCount; index++)
-        {
-            if (index == nodeCount - 1)
+            if (_isMeterCache)
             {
-                idx = index - 1;
-                break;
-            }
-            if (nodes[index].time > _value)
-            {
-                idx = index - 1;
-                break;
-            }
-        }
-        if (idx < 0)
-        {
-            idx = 0;
-        }
+                int CachedIndex = -1;
+                int Step1 = 10;
 
-        float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
-
-        _vect1 = GetHermiteInternal(idx, param, false);
-        _vect2 = GetHermiteInternal(idx, param, true);
-    }
-
-
-    public Vector3 GetSplineValueSkipOpt(float _value, bool _isTangent = false)
-    {
-        int index;
-        int idx = -1;
-
-        if (nodes.Count == 0)
-        {
-            return default(Vector3);
-        }
-        if (nodes.Count == 1)
-        {
-            return nodes[0].pos;
-        }
-
-
-        //		if(GSDRootUtil.IsApproximately(f,0f,0.00001f)){
-        //			if(_isTangent){
-        //				return mNodes[0].tangent;
-        //			}else{
-        //				return mNodes[0].pos;	
-        //			}
-        //		}else
-        //		if(GSDRootUtil.IsApproximately(f,1f,0.00001f) || f > 1f){
-        //			if(_isTangent){
-        //				return mNodes[mNodes.Count-1].tangent;
-        //			}else{
-        //				return mNodes[mNodes.Count-1].pos;	
-        //			}
-        //		}else{
-        for (index = 1; index < nodes.Count; index++)
-        {
-            if (index == nodes.Count - 1)
-            {
-                idx = index - 1;
-                break;
-            }
-            if (nodes[index].time > _value)
-            {
-                idx = index - 1;
-                break;
-            }
-        }
-        if (idx < 0)
-        {
-            idx = 0;
-        }
-        //			if(b && GSDRootUtil.IsApproximately(f,1f,0.00001f)){
-        //				idx = mNodes.Count-2;
-        //			}
-        //		}
-
-        float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
-        return GetHermiteInternal(idx, param, _isTangent);
-    }
-
-
-    public float GetClosestParam(Vector3 _vect, bool _is20cmPrecision = false, bool _is1MeterPrecision = false)
-    {
-        return GetClosestParamDo(ref _vect, _is20cmPrecision, _is1MeterPrecision);
-    }
-
-
-    private float GetClosestParamDo(ref Vector3 _vect, bool _is20cmPrecision, bool _is1MeterPrecision)
-    {
-        //5m to 1m	
-        float Step1 = cachedPointsSeperation / distance;
-        //20 cm	
-        float Step2 = Step1 * 0.2f;
-        //8 cm 
-        float Step3 = Step2 * 0.4f;
-        //2 cm
-        float Step4 = Step3 * 0.25f;
-
-
-        float tMin = 0f;
-        float tMax = 1f;
-
-        // Why is Best value set to -1f? at init
-        float BestValue = -1f;
-        float MaxStretch = 0.9f;
-        Vector3 BestVect_p = new Vector3(0f, 0f, 0f);
-        Vector3 BestVect_n = new Vector3(0f, 0f, 0f);
-
-        if (nodes.Count == 0)
-        {
-            return 0f;
-        }
-        if (nodes.Count == 1)
-        {
-            return 1f;
-        }
-
-        //Step 1: 1m 
-        BestValue = GetClosestPointHelper(ref _vect, Step1, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n, true);
-        if (_is1MeterPrecision)
-        {
-            return BestValue;
-        }
-
-        //Step 2: 20cm 
-        tMin = BestValue - (Step1 * MaxStretch);
-        tMax = BestValue + (Step1 * MaxStretch);
-        BestValue = GetClosestPointHelper(ref _vect, Step2, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n);
-        if (_is20cmPrecision)
-        {
-            return BestValue;
-        }
-
-        //Step 3: 8cm 
-        tMin = BestValue - (Step2 * MaxStretch);
-        tMax = BestValue + (Step2 * MaxStretch);
-        BestValue = GetClosestPointHelper(ref _vect, Step3, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n);
-
-        //Step 4: 2cm
-        tMin = BestValue - (Step3 * MaxStretch);
-        tMax = BestValue + (Step3 * MaxStretch);
-        BestValue = GetClosestPointHelper(ref _vect, Step4, BestValue, tMin, tMax, ref BestVect_p, ref BestVect_n);
-
-        return BestValue;
-    }
-
-
-    private float GetClosestPointHelper(ref Vector3 _vect, float _step, float _bestValue, float _min, float _max, ref Vector3 _bestVectP, ref Vector3 _bestVectN, bool _isMeterCache = false)
-    {
-        float mDistance = 5000f;
-        float tDistance = 0f;
-        Vector3 cVect = new Vector3(0f, 0f, 0f);
-        Vector3 pVect = new Vector3(0f, 0f, 0f);
-        bool isFirstLoopHappened = false;
-        bool isSetBestValue = false;
-
-        //Get lean for tmin/tmax:
-        if (GetClosetPointMinMaxDirection(ref _vect, ref _bestVectP, ref _bestVectN))
-        {
-            _max = _bestValue;
-        }
-        else
-        {
-            _min = _bestValue;
-        }
-
-        _min = Mathf.Clamp(_min, 0f, 1f);
-        _max = Mathf.Clamp(_max, 0f, 1f);
-
-        if (_isMeterCache)
-        {
-            int CachedIndex = -1;
-            int Step1 = 10;
-
-            int CachedPointsLength = cachedPoints.Length;
-            for (int j = 0; j < CachedPointsLength; j += Step1)
-            {
-                cVect = cachedPoints[j];
-                tDistance = Vector3.Distance(_vect, cVect);
-                if (tDistance < mDistance)
+                int CachedPointsLength = cachedPoints.Length;
+                for (int j = 0; j < CachedPointsLength; j += Step1)
                 {
-                    mDistance = tDistance;
-                    CachedIndex = j;
-                }
-            }
-
-            int jStart = (CachedIndex - Step1);
-            if (jStart < 50)
-            {
-                jStart = 0;
-            }
-            int jEnd = (CachedIndex + Step1);
-            if (jEnd > (CachedPointsLength))
-            {
-                jEnd = CachedPointsLength;
-            }
-            for (int j = jStart; j < jEnd; j++)
-            {
-                cVect = cachedPoints[j];
-                if (isSetBestValue)
-                {
-                    _bestVectN = cVect;
-                    isSetBestValue = false;
-                }
-                tDistance = Vector3.Distance(_vect, cVect);
-                if (tDistance < mDistance)
-                {
-                    mDistance = tDistance;
-                    if (!isFirstLoopHappened)
+                    cVect = cachedPoints[j];
+                    tDistance = Vector3.Distance(_vect, cVect);
+                    if (tDistance < mDistance)
                     {
-                        _bestVectP = cVect;
+                        mDistance = tDistance;
+                        CachedIndex = j;
                     }
-                    else
-                    {
-                        _bestVectP = pVect;
-                    }
-                    CachedIndex = j;
-                    isSetBestValue = true;
-                    isFirstLoopHappened = true;
                 }
-                pVect = cVect;
-            }
 
-            _bestValue = (CachedIndex / distance);
-
-        }
-        else
-        {
-            for (float index = _min; index <= _max; index += _step)
-            {
-                cVect = GetSplineValue(index);
-                if (isSetBestValue)
+                int jStart = (CachedIndex - Step1);
+                if (jStart < 50)
                 {
-                    _bestVectN = cVect;
-                    isSetBestValue = false;
+                    jStart = 0;
                 }
-                tDistance = Vector3.Distance(_vect, cVect);
-                if (tDistance < mDistance)
+                int jEnd = (CachedIndex + Step1);
+                if (jEnd > (CachedPointsLength))
                 {
-                    mDistance = tDistance;
-                    _bestValue = index;
-                    if (!isFirstLoopHappened)
-                    {
-                        _bestVectP = cVect;
-                    }
-                    else
-                    {
-                        _bestVectP = pVect;
-                    }
-
-                    isSetBestValue = true;
-                    isFirstLoopHappened = true;
+                    jEnd = CachedPointsLength;
                 }
-                pVect = cVect;
+                for (int j = jStart; j < jEnd; j++)
+                {
+                    cVect = cachedPoints[j];
+                    if (isSetBestValue)
+                    {
+                        _bestVectN = cVect;
+                        isSetBestValue = false;
+                    }
+                    tDistance = Vector3.Distance(_vect, cVect);
+                    if (tDistance < mDistance)
+                    {
+                        mDistance = tDistance;
+                        if (!isFirstLoopHappened)
+                        {
+                            _bestVectP = cVect;
+                        }
+                        else
+                        {
+                            _bestVectP = pVect;
+                        }
+                        CachedIndex = j;
+                        isSetBestValue = true;
+                        isFirstLoopHappened = true;
+                    }
+                    pVect = cVect;
+                }
+
+                _bestValue = (CachedIndex / distance);
+
             }
-        }
-
-        if (isSetBestValue)
-        {
-            _bestVectN = cVect;
-        }
-
-        //Debug.Log ("returning: " + BestValue + " tmin:" + tMin + " tmax:" + tMax);
-        return _bestValue;
-    }
-
-
-    //Returns true for tmin lean:
-    private bool GetClosetPointMinMaxDirection(ref Vector3 _vect, ref Vector3 _bestVectP, ref Vector3 _bestVectN)
-    {
-        float Distance1 = Vector3.Distance(_vect, _bestVectP);
-        float Distance2 = Vector3.Distance(_vect, _bestVectN);
-
-        if (Distance1 < Distance2)
-        {
-            //tMin lean
-            return true;
-        }
-        else
-        {
-            //tMax lean
-            return false;
-        }
-    }
-
-
-    private Vector3 GetHermiteInternal(int _i, double _t, bool _isTangent = false)
-    {
-        double t2, t3;
-        float BL0, BL1, BL2, BL3, tension;
-
-        if (!_isTangent)
-        {
-            t2 = _t * _t;
-            t3 = t2 * _t;
-        }
-        else
-        {
-            t2 = _t * _t;
-            _t = _t * 2.0;
-            t2 = t2 * 3.0;
-            t3 = 0; //Necessary for compiler error.
-        }
-
-        //Vectors:
-        Vector3 P0 = nodes[NGI(_i, NI[0])].pos;
-        Vector3 P1 = nodes[NGI(_i, NI[1])].pos;
-        Vector3 P2 = nodes[NGI(_i, NI[2])].pos;
-        Vector3 P3 = nodes[NGI(_i, NI[3])].pos;
-
-        //Tension:
-        tension = 0.5f;
-
-
-
-        //Tangents:
-        Vector3 xVect1 = (P1 - P2) * tension;
-        Vector3 xVect2 = (P3 - P0) * tension;
-        float tMaxMag = road.magnitudeThreshold;
-
-        if (Vector3.Distance(P1, P3) > tMaxMag)
-        {
-            if (xVect1.magnitude > tMaxMag)
+            else
             {
-                xVect1 = Vector3.ClampMagnitude(xVect1, tMaxMag);
+                for (float index = _min; index <= _max; index += _step)
+                {
+                    cVect = GetSplineValue(index);
+                    if (isSetBestValue)
+                    {
+                        _bestVectN = cVect;
+                        isSetBestValue = false;
+                    }
+                    tDistance = Vector3.Distance(_vect, cVect);
+                    if (tDistance < mDistance)
+                    {
+                        mDistance = tDistance;
+                        _bestValue = index;
+                        if (!isFirstLoopHappened)
+                        {
+                            _bestVectP = cVect;
+                        }
+                        else
+                        {
+                            _bestVectP = pVect;
+                        }
+
+                        isSetBestValue = true;
+                        isFirstLoopHappened = true;
+                    }
+                    pVect = cVect;
+                }
             }
-            if (xVect2.magnitude > tMaxMag)
+
+            if (isSetBestValue)
             {
-                xVect2 = Vector3.ClampMagnitude(xVect2, tMaxMag);
+                _bestVectN = cVect;
             }
+
+            //Debug.Log ("returning: " + BestValue + " tmin:" + tMin + " tmax:" + tMax);
+            return _bestValue;
         }
-        else if (Vector3.Distance(P0, P2) > tMaxMag)
+
+
+        //Returns true for tmin lean:
+        private bool GetClosetPointMinMaxDirection(ref Vector3 _vect, ref Vector3 _bestVectP, ref Vector3 _bestVectN)
         {
-            if (xVect1.magnitude > tMaxMag)
+            float Distance1 = Vector3.Distance(_vect, _bestVectP);
+            float Distance2 = Vector3.Distance(_vect, _bestVectN);
+
+            if (Distance1 < Distance2)
             {
-                xVect1 = Vector3.ClampMagnitude(xVect1, tMaxMag);
+                //tMin lean
+                return true;
             }
-            if (xVect2.magnitude > tMaxMag)
+            else
             {
-                xVect2 = Vector3.ClampMagnitude(xVect2, tMaxMag);
+                //tMax lean
+                return false;
             }
         }
 
 
-        if (!_isTangent)
+        private Vector3 GetHermiteInternal(int _i, double _t, bool _isTangent = false)
         {
-            BL0 = (float) (CM[0] * t3 + CM[1] * t2 + CM[2] * _t + CM[3]);
-            BL1 = (float) (CM[4] * t3 + CM[5] * t2 + CM[6] * _t + CM[7]);
-            BL2 = (float) (CM[8] * t3 + CM[9] * t2 + CM[10] * _t + CM[11]);
-            BL3 = (float) (CM[12] * t3 + CM[13] * t2 + CM[14] * _t + CM[15]);
-        }
-        else
-        {
-            BL0 = (float) (CM[0] * t2 + CM[1] * _t + CM[2]);
-            BL1 = (float) (CM[4] * t2 + CM[5] * _t + CM[6]);
-            BL2 = (float) (CM[8] * t2 + CM[9] * _t + CM[10]);
-            BL3 = (float) (CM[12] * t2 + CM[13] * _t + CM[14]);
-        }
+            double t2, t3;
+            float BL0, BL1, BL2, BL3, tension;
 
-        Vector3 tVect = BL0 * P0 + BL1 * P1 + BL2 * xVect1 + BL3 * xVect2;
-
-        if (!_isTangent)
-        {
-            if (tVect.y < 0f)
+            if (!_isTangent)
             {
-                tVect.y = 0f;
+                t2 = _t * _t;
+                t3 = t2 * _t;
             }
+            else
+            {
+                t2 = _t * _t;
+                _t = _t * 2.0;
+                t2 = t2 * 3.0;
+                t3 = 0; //Necessary for compiler error.
+            }
+
+            //Vectors:
+            Vector3 P0 = nodes[NGI(_i, NI[0])].pos;
+            Vector3 P1 = nodes[NGI(_i, NI[1])].pos;
+            Vector3 P2 = nodes[NGI(_i, NI[2])].pos;
+            Vector3 P3 = nodes[NGI(_i, NI[3])].pos;
+
+            //Tension:
+            tension = 0.5f;
+
+
+
+            //Tangents:
+            Vector3 xVect1 = (P1 - P2) * tension;
+            Vector3 xVect2 = (P3 - P0) * tension;
+            float tMaxMag = road.magnitudeThreshold;
+
+            if (Vector3.Distance(P1, P3) > tMaxMag)
+            {
+                if (xVect1.magnitude > tMaxMag)
+                {
+                    xVect1 = Vector3.ClampMagnitude(xVect1, tMaxMag);
+                }
+                if (xVect2.magnitude > tMaxMag)
+                {
+                    xVect2 = Vector3.ClampMagnitude(xVect2, tMaxMag);
+                }
+            }
+            else if (Vector3.Distance(P0, P2) > tMaxMag)
+            {
+                if (xVect1.magnitude > tMaxMag)
+                {
+                    xVect1 = Vector3.ClampMagnitude(xVect1, tMaxMag);
+                }
+                if (xVect2.magnitude > tMaxMag)
+                {
+                    xVect2 = Vector3.ClampMagnitude(xVect2, tMaxMag);
+                }
+            }
+
+
+            if (!_isTangent)
+            {
+                BL0 = (float)(CM[0] * t3 + CM[1] * t2 + CM[2] * _t + CM[3]);
+                BL1 = (float)(CM[4] * t3 + CM[5] * t2 + CM[6] * _t + CM[7]);
+                BL2 = (float)(CM[8] * t3 + CM[9] * t2 + CM[10] * _t + CM[11]);
+                BL3 = (float)(CM[12] * t3 + CM[13] * t2 + CM[14] * _t + CM[15]);
+            }
+            else
+            {
+                BL0 = (float)(CM[0] * t2 + CM[1] * _t + CM[2]);
+                BL1 = (float)(CM[4] * t2 + CM[5] * _t + CM[6]);
+                BL2 = (float)(CM[8] * t2 + CM[9] * _t + CM[10]);
+                BL3 = (float)(CM[12] * t2 + CM[13] * _t + CM[14]);
+            }
+
+            Vector3 tVect = BL0 * P0 + BL1 * P1 + BL2 * xVect1 + BL3 * xVect2;
+
+            if (!_isTangent)
+            {
+                if (tVect.y < 0f)
+                {
+                    tVect.y = 0f;
+                }
+            }
+
+            return tVect;
         }
 
-        return tVect;
-    }
 
-
-    private static readonly double[] CM = new double[] {
+        private static readonly double[] CM = new double[] {
          2.0, -3.0,  0.0,  1.0,
         -2.0,  3.0,  0.0,  0.0,
          1.0, -2.0,  1.0,  0.0,
@@ -1314,301 +1315,314 @@ public class GSDSplineC : MonoBehaviour
     };
 
 
-    private static readonly int[] NI = new int[] { 0, 1, -1, 2 };
+        private static readonly int[] NI = new int[] { 0, 1, -1, 2 };
 
 
-    private int NGI(int _i, int _o)
-    {
-        int NGITI = _i + _o;
-        //		if(bClosed){
-        //			return (NGITI % mNodes.Count + mNodes.Count) % mNodes.Count;
-        //		}else{
-        return Mathf.Clamp(NGITI, 0, nodes.Count - 1);
-        //		}
-    }
-    #endregion
+        private int NGI(int _i, int _o)
+        {
+            int NGITI = _i + _o;
+            //		if(bClosed){
+            //			return (NGITI % mNodes.Count + mNodes.Count) % mNodes.Count;
+            //		}else{
+            return Mathf.Clamp(NGITI, 0, nodes.Count - 1);
+            //		}
+        }
+        #endregion
 
 
-    #region "Gizmos"
-    //	private const bool bGizmoDraw = true;
-    private float GizmoDrawMeters = 1f;
+        #region "Gizmos"
+        //	private const bool bGizmoDraw = true;
+        private float GizmoDrawMeters = 1f;
 
 
-    private void OnDrawGizmosSelected()
-    {
-        //		if(!bGizmoDraw){ return; }
-        if (nodes == null || nodes.Count < 2)
+        private void OnDrawGizmosSelected()
         {
-            return;
-        }
-        if (transform == null)
-        {
-            return;
-        }
-        float DistanceFromCam = Vector3.SqrMagnitude(Camera.current.transform.position - nodes[0].transform.position);
-
-        if (DistanceFromCam > 16777216f)
-        {
-            return;
-        }
-        else if (DistanceFromCam > 4194304f)
-        {
-            GizmoDrawMeters = 16f;
-        }
-        else if (DistanceFromCam > 1048576f)
-        {
-            GizmoDrawMeters = 8f;
-        }
-        else if (DistanceFromCam > 262144f)
-        {
-            GizmoDrawMeters = 4f;
-        }
-        else if (DistanceFromCam > 65536)
-        {
-            GizmoDrawMeters = 1f;
-        }
-        else if (DistanceFromCam > 16384f)
-        {
-            GizmoDrawMeters = 0.5f;
-        }
-        else
-        {
-            GizmoDrawMeters = 0.1f;
-        }
-
-        Vector3 prevPos = nodes[0].pos;
-        Vector3 tempVect = new Vector3(0f, 0f, 0f);
-        float step = GizmoDrawMeters / distance;
-        step = Mathf.Clamp(step, 0f, 1f);
-        Gizmos.color = new Color(1f, 0f, 0f, 1f);
-        float index = 0f;
-        Vector3 cPos;
-        float tCheck = 0f;
-        Vector3 camPos = Camera.current.transform.position;
-        for (index = 0f; index <= 1f; index += step)
-        {
-            tCheck += step;
-            cPos = GetSplineValue(index);
-
-            if (tCheck > 0.1f)
+            //		if(!bGizmoDraw){ return; }
+            if (nodes == null || nodes.Count < 2)
             {
-                DistanceFromCam = Vector3.SqrMagnitude(camPos - cPos);
-                if (DistanceFromCam > 16777216f)
-                {
-                    return;
-                }
-                else if (DistanceFromCam > 4194304f)
-                {
-                    GizmoDrawMeters = 16f;
-                }
-                else if (DistanceFromCam > 1048576f)
-                {
-                    GizmoDrawMeters = 10f;
-                }
-                else if (DistanceFromCam > 262144f)
-                {
-                    GizmoDrawMeters = 4f;
-                }
-                else if (DistanceFromCam > 65536)
-                {
-                    GizmoDrawMeters = 1f;
-                }
-                else if (DistanceFromCam > 16384f)
-                {
-                    GizmoDrawMeters = 0.5f;
-                }
-                else
-                {
-                    GizmoDrawMeters = 0.1f;
-                }
-                step = GizmoDrawMeters / distance;
-                step = Mathf.Clamp(step, 0f, 1f);
-                tCheck = 0f;
+                return;
+            }
+            if (transform == null)
+            {
+                return;
+            }
+            float DistanceFromCam = Vector3.SqrMagnitude(Camera.current.transform.position - nodes[0].transform.position);
+
+            if (DistanceFromCam > 16777216f)
+            {
+                return;
+            }
+            else if (DistanceFromCam > 4194304f)
+            {
+                GizmoDrawMeters = 16f;
+            }
+            else if (DistanceFromCam > 1048576f)
+            {
+                GizmoDrawMeters = 8f;
+            }
+            else if (DistanceFromCam > 262144f)
+            {
+                GizmoDrawMeters = 4f;
+            }
+            else if (DistanceFromCam > 65536)
+            {
+                GizmoDrawMeters = 1f;
+            }
+            else if (DistanceFromCam > 16384f)
+            {
+                GizmoDrawMeters = 0.5f;
+            }
+            else
+            {
+                GizmoDrawMeters = 0.1f;
             }
 
-            Gizmos.DrawLine(prevPos + tempVect, cPos + tempVect);
-            prevPos = cPos;
-            if ((index + step) > 1f)
+            Vector3 prevPos = nodes[0].pos;
+            Vector3 tempVect = new Vector3(0f, 0f, 0f);
+            float step = GizmoDrawMeters / distance;
+            step = Mathf.Clamp(step, 0f, 1f);
+            Gizmos.color = new Color(1f, 0f, 0f, 1f);
+            float index = 0f;
+            Vector3 cPos;
+            float tCheck = 0f;
+            Vector3 camPos = Camera.current.transform.position;
+            for (index = 0f; index <= 1f; index += step)
             {
-                cPos = GetSplineValue(1f);
+                tCheck += step;
+                cPos = GetSplineValue(index);
+
+                if (tCheck > 0.1f)
+                {
+                    DistanceFromCam = Vector3.SqrMagnitude(camPos - cPos);
+                    if (DistanceFromCam > 16777216f)
+                    {
+                        return;
+                    }
+                    else if (DistanceFromCam > 4194304f)
+                    {
+                        GizmoDrawMeters = 16f;
+                    }
+                    else if (DistanceFromCam > 1048576f)
+                    {
+                        GizmoDrawMeters = 10f;
+                    }
+                    else if (DistanceFromCam > 262144f)
+                    {
+                        GizmoDrawMeters = 4f;
+                    }
+                    else if (DistanceFromCam > 65536)
+                    {
+                        GizmoDrawMeters = 1f;
+                    }
+                    else if (DistanceFromCam > 16384f)
+                    {
+                        GizmoDrawMeters = 0.5f;
+                    }
+                    else
+                    {
+                        GizmoDrawMeters = 0.1f;
+                    }
+                    step = GizmoDrawMeters / distance;
+                    step = Mathf.Clamp(step, 0f, 1f);
+                    tCheck = 0f;
+                }
+
                 Gizmos.DrawLine(prevPos + tempVect, cPos + tempVect);
-            }
-
-        }
-    }
-    #endregion
-
-
-    #region "Intersections"
-    public bool IsNearIntersection(ref Vector3 _pos, ref float _result)
-    {
-        int mCount = GetNodeCount();
-        GSDSplineN tNode;
-        float MetersToCheck = 75f * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-        float tDist;
-        for (int index = 0; index < mCount; index++)
-        {
-            tNode = nodes[index];
-            if (tNode.isIntersection)
-            {
-                tNode.intersection.height = tNode.pos.y;
-
-                if (isUsingSQ)
+                prevPos = cPos;
+                if ((index + step) > 1f)
                 {
-                    tDist = Vector3.SqrMagnitude(_pos - tNode.pos);
-                }
-                //				else{
-                //					tDist = Vector3.Distance(tPos,tNode.pos);
-                //				}
-
-                if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
-                {
-                    if (isUsingSQ)
-                    {
-                        MetersToCheck = metersToCheckNoTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-                    }
-                    //					else{
-                    //						MetersToCheck = MetersToCheck_NoTurnLane;
-                    //					}
-                }
-                else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
-                {
-                    if (isUsingSQ)
-                    {
-                        MetersToCheck = metersToCheckTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-                        ;
-                    }
-                    //					else{
-                    //						MetersToCheck = MetersToCheck_TurnLane;
-                    //					}
-                }
-                else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
-                {
-                    if (isUsingSQ)
-                    {
-                        MetersToCheck = metersToCheckBothTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-                        ;
-                    }
-                    //					else{
-                    //						MetersToCheck = MetersToCheck_BothTurnLane;
-                    //					}
+                    cPos = GetSplineValue(1f);
+                    Gizmos.DrawLine(prevPos + tempVect, cPos + tempVect);
                 }
 
-                MetersToCheck *= 0.8f;
-                if (road.laneAmount == 4)
-                {
-                    MetersToCheck *= 1.25f;
-                }
-                else if (road.laneAmount == 6)
-                {
-                    MetersToCheck *= 1.35f;
-                }
-
-                if (tDist <= MetersToCheck)
-                {
-                    _result = tNode.pos.y;
-                    return true;
-                }
             }
         }
-        _result = _pos.y;
-        return false;
-    }
+        #endregion
 
 
-    public float IntersectionStrength(ref Vector3 _pos, ref float _result, ref GSDRoadIntersection _inter, ref bool _isPast, ref float _p, ref GSDSplineN _node)
-    {
-        int nodeCount = GetNodeCount();
-        float tDist;
-        GSDSplineN tNode;
-
-        float MetersToCheck = 75f * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-
-        for (int index = 0; index < nodeCount; index++)
+        #region "Intersections"
+        public bool IsNearIntersection(ref Vector3 _pos, ref float _result)
         {
-            tNode = nodes[index];
-            if (tNode.isIntersection)
+            int mCount = GetNodeCount();
+            GSDSplineN tNode;
+            float MetersToCheck = 75f * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+            float tDist;
+            for (int index = 0; index < mCount; index++)
             {
-                tNode.intersection.height = tNode.pos.y;
-                GSDSplineN xNode;
-                if (isUsingSQ)
+                tNode = nodes[index];
+                if (tNode.isIntersection)
                 {
-                    tDist = Vector3.SqrMagnitude(_pos - tNode.pos);
-                }
-                //				else{
-                //					tDist = Vector3.Distance(tPos,tNode.pos);
-                //				}
+                    tNode.intersection.height = tNode.pos.y;
 
-                if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
-                {
                     if (isUsingSQ)
                     {
-                        MetersToCheck = metersToCheckNoTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+                        tDist = Vector3.SqrMagnitude(_pos - tNode.pos);
                     }
-                    //					else{
-                    //						MetersToCheck = MetersToCheck_NoTurnLane;
-                    //					}
-                }
-                else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
-                {
-                    if (isUsingSQ)
-                    {
-                        MetersToCheck = metersToCheckTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-                    }
-                    //					else{
-                    //						MetersToCheck = MetersToCheck_TurnLane;
-                    //					}
-                }
-                else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
-                {
-                    if (isUsingSQ)
-                    {
-                        MetersToCheck = metersToCheckBothTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
-                    }
-                    //					else{
-                    //						MetersToCheck = MetersToCheck_BothTurnLane;
-                    //					}
-                }
-                if (road.laneAmount == 4)
-                {
-                    MetersToCheck *= 1.25f;
-                }
-                else if (road.laneAmount == 6)
-                {
-                    MetersToCheck *= 1.35f;
-                }
+                    //				else{
+                    //					tDist = Vector3.Distance(tPos,tNode.pos);
+                    //				}
 
-                if (tDist <= MetersToCheck)
-                {
-                    if (tNode.intersection.isSameSpline)
+                    if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
-                        if (tNode.intersection.node1.uID != tNode.uID)
+                        if (isUsingSQ)
                         {
-                            xNode = tNode.intersection.node1;
+                            MetersToCheck = metersToCheckNoTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
                         }
-                        else
+                        //					else{
+                        //						MetersToCheck = MetersToCheck_NoTurnLane;
+                        //					}
+                    }
+                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    {
+                        if (isUsingSQ)
                         {
-                            xNode = tNode.intersection.node2;
+                            MetersToCheck = metersToCheckTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+                            ;
                         }
-
-                        float P1 = tNode.time - _p;
-                        if (P1 < 0f)
-                        { P1 *= -1f; }
-                        float P2 = xNode.time - _p;
-                        if (P2 < 0f)
-                        { P2 *= -1f; }
-
-                        if (P1 > P2)
+                        //					else{
+                        //						MetersToCheck = MetersToCheck_TurnLane;
+                        //					}
+                    }
+                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    {
+                        if (isUsingSQ)
                         {
-                            if (_p > xNode.time)
+                            MetersToCheck = metersToCheckBothTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+                            ;
+                        }
+                        //					else{
+                        //						MetersToCheck = MetersToCheck_BothTurnLane;
+                        //					}
+                    }
+
+                    MetersToCheck *= 0.8f;
+                    if (road.laneAmount == 4)
+                    {
+                        MetersToCheck *= 1.25f;
+                    }
+                    else if (road.laneAmount == 6)
+                    {
+                        MetersToCheck *= 1.35f;
+                    }
+
+                    if (tDist <= MetersToCheck)
+                    {
+                        _result = tNode.pos.y;
+                        return true;
+                    }
+                }
+            }
+            _result = _pos.y;
+            return false;
+        }
+
+
+        public float IntersectionStrength(ref Vector3 _pos, ref float _result, ref GSDRoadIntersection _inter, ref bool _isPast, ref float _p, ref GSDSplineN _node)
+        {
+            int nodeCount = GetNodeCount();
+            float tDist;
+            GSDSplineN tNode;
+
+            float MetersToCheck = 75f * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+
+            for (int index = 0; index < nodeCount; index++)
+            {
+                tNode = nodes[index];
+                if (tNode.isIntersection)
+                {
+                    tNode.intersection.height = tNode.pos.y;
+                    GSDSplineN xNode;
+                    if (isUsingSQ)
+                    {
+                        tDist = Vector3.SqrMagnitude(_pos - tNode.pos);
+                    }
+                    //				else{
+                    //					tDist = Vector3.Distance(tPos,tNode.pos);
+                    //				}
+
+                    if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                    {
+                        if (isUsingSQ)
+                        {
+                            MetersToCheck = metersToCheckNoTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+                        }
+                        //					else{
+                        //						MetersToCheck = MetersToCheck_NoTurnLane;
+                        //					}
+                    }
+                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    {
+                        if (isUsingSQ)
+                        {
+                            MetersToCheck = metersToCheckTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+                        }
+                        //					else{
+                        //						MetersToCheck = MetersToCheck_TurnLane;
+                        //					}
+                    }
+                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    {
+                        if (isUsingSQ)
+                        {
+                            MetersToCheck = metersToCheckBothTurnLaneSQ * ((road.laneWidth / 5f) * (road.laneWidth / 5f));
+                        }
+                        //					else{
+                        //						MetersToCheck = MetersToCheck_BothTurnLane;
+                        //					}
+                    }
+                    if (road.laneAmount == 4)
+                    {
+                        MetersToCheck *= 1.25f;
+                    }
+                    else if (road.laneAmount == 6)
+                    {
+                        MetersToCheck *= 1.35f;
+                    }
+
+                    if (tDist <= MetersToCheck)
+                    {
+                        if (tNode.intersection.isSameSpline)
+                        {
+                            if (tNode.intersection.node1.uID != tNode.uID)
                             {
-                                _isPast = true;
+                                xNode = tNode.intersection.node1;
                             }
                             else
                             {
-                                _isPast = false;
+                                xNode = tNode.intersection.node2;
                             }
-                            _node = xNode;
+
+                            float P1 = tNode.time - _p;
+                            if (P1 < 0f)
+                            { P1 *= -1f; }
+                            float P2 = xNode.time - _p;
+                            if (P2 < 0f)
+                            { P2 *= -1f; }
+
+                            if (P1 > P2)
+                            {
+                                if (_p > xNode.time)
+                                {
+                                    _isPast = true;
+                                }
+                                else
+                                {
+                                    _isPast = false;
+                                }
+                                _node = xNode;
+                            }
+                            else
+                            {
+                                if (_p > tNode.time)
+                                {
+                                    _isPast = true;
+                                }
+                                else
+                                {
+                                    _isPast = false;
+                                }
+                                _node = tNode;
+                            }
                         }
                         else
                         {
@@ -1622,744 +1636,752 @@ public class GSDSplineC : MonoBehaviour
                             }
                             _node = tNode;
                         }
-                    }
-                    else
-                    {
-                        if (_p > tNode.time)
+
+
+                        if (isUsingSQ)
                         {
-                            _isPast = true;
+                            tDist = Mathf.Sqrt(tDist);
+                            MetersToCheck = Mathf.Sqrt(MetersToCheck);
                         }
-                        else
-                        {
-                            _isPast = false;
-                        }
-                        _node = tNode;
+
+                        _inter = tNode.intersection;
+                        _result = tNode.pos.y + 0.1f;
+                        tDist = 1f - (tDist / MetersToCheck);
+                        tDist = Mathf.Pow(tDist, 3f) * 5f;
+                        if (tDist > 1f)
+                            tDist = 1f;
+                        if (tDist < 0f)
+                            tDist = 0f;
+                        return tDist;
                     }
+                }
+            }
+            _result = _pos.y;
+            return 0f;
+        }
 
 
-                    if (isUsingSQ)
+        public float IntersectionStrengthNext(Vector3 _pos)
+        {
+            float result = 0f;
+            GSDRoadIntersection intersection = null;
+            bool isPast = false;
+            float p = 0f;
+            GSDSplineN node = null;
+            return IntersectionStrength(ref _pos, ref result, ref intersection, ref isPast, ref p, ref node);
+        }
+
+
+        public bool IntersectionIsPast(ref float _p, ref GSDSplineN _node)
+        {
+            //		int mCount = GetNodeCount();
+            //		bool bIsPast;
+            //		GSDSplineN tNode = null;
+            //		for(int i=0;i<mCount;i++){
+            //			tNode = mNodes[i];
+            //			if(tNode.bIsIntersection){
+            //				float P1 = tNode.GSDRI.Node1.tTime - p; if(P1 < 0f){ P1 *= -1f; }
+            //				float P2 = tNode.GSDRI.Node2.tTime - p; if(P2 < 0f){ P2 *= -1f; }
+            //				
+            //				if(P1 > P2){
+            //					if(p > tNode.GSDRI.Node2.tTime){
+            //						bIsPast = true;	
+            //					}else{
+            //						bIsPast = false;	
+            //					}
+            //				}else{
+            //					if(p > tNode.GSDRI.Node1.tTime){
+            //						bIsPast = true;	
+            //					}else{
+            //						bIsPast = false;	
+            //					}
+            //				}
+            //				return bIsPast;
+            //			}
+            //		}
+            //		return false;
+
+
+            if (_p < _node.time)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        private void DestroyIntersection(GSDSplineN _node)
+        {
+            if (_node != null)
+            {
+                if (_node.isEndPoint)
+                {
+                    if (_node.idOnSpline == 1 && _node.spline.nodes[0].isSpecialEndNodeIsStart)
                     {
-                        tDist = Mathf.Sqrt(tDist);
-                        MetersToCheck = Mathf.Sqrt(MetersToCheck);
+                        Object.DestroyImmediate(_node.spline.nodes[0].transform.gameObject);
+                        _node.spline.isSpecialStartControlNode = false;
+                    }
+                    else if (_node.idOnSpline == _node.spline.GetNodeCount() - 2 && _node.spline.nodes[_node.spline.GetNodeCount() - 1].isSpecialEndNodeIsEnd)
+                    {
+                        Object.DestroyImmediate(_node.spline.nodes[_node.spline.GetNodeCount() - 1].transform.gameObject);
+                        _node.spline.isSpecialEndControlNode = false;
                     }
 
-                    _inter = tNode.intersection;
-                    _result = tNode.pos.y + 0.1f;
-                    tDist = 1f - (tDist / MetersToCheck);
-                    tDist = Mathf.Pow(tDist, 3f) * 5f;
-                    if (tDist > 1f)
-                        tDist = 1f;
-                    if (tDist < 0f)
-                        tDist = 0f;
-                    return tDist;
                 }
+                _node.isIntersection = false;
+                _node.isSpecialIntersection = false;
             }
-        }
-        _result = _pos.y;
-        return 0f;
-    }
-
-
-    public float IntersectionStrengthNext(Vector3 _pos)
-    {
-        float result = 0f;
-        GSDRoadIntersection intersection = null;
-        bool isPast = false;
-        float p = 0f;
-        GSDSplineN node = null;
-        return IntersectionStrength(ref _pos, ref result, ref intersection, ref isPast, ref p, ref node);
-    }
-
-
-    public bool IntersectionIsPast(ref float _p, ref GSDSplineN _node)
-    {
-        //		int mCount = GetNodeCount();
-        //		bool bIsPast;
-        //		GSDSplineN tNode = null;
-        //		for(int i=0;i<mCount;i++){
-        //			tNode = mNodes[i];
-        //			if(tNode.bIsIntersection){
-        //				float P1 = tNode.GSDRI.Node1.tTime - p; if(P1 < 0f){ P1 *= -1f; }
-        //				float P2 = tNode.GSDRI.Node2.tTime - p; if(P2 < 0f){ P2 *= -1f; }
-        //				
-        //				if(P1 > P2){
-        //					if(p > tNode.GSDRI.Node2.tTime){
-        //						bIsPast = true;	
-        //					}else{
-        //						bIsPast = false;	
-        //					}
-        //				}else{
-        //					if(p > tNode.GSDRI.Node1.tTime){
-        //						bIsPast = true;	
-        //					}else{
-        //						bIsPast = false;	
-        //					}
-        //				}
-        //				return bIsPast;
-        //			}
-        //		}
-        //		return false;
-
-
-        if (_p < _node.time)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-
-    private void DestroyIntersection(GSDSplineN _node)
-    {
-        if (_node != null)
-        {
-            if (_node.isEndPoint)
+            if (_node.intersectionOtherNode != null)
             {
-                if (_node.idOnSpline == 1 && _node.spline.nodes[0].isSpecialEndNodeIsStart)
+                if (_node.intersectionOtherNode.isEndPoint)
                 {
-                    Object.DestroyImmediate(_node.spline.nodes[0].transform.gameObject);
-                    _node.spline.isSpecialStartControlNode = false;
+                    if (_node.intersectionOtherNode.idOnSpline == 1 && _node.intersectionOtherNode.spline.nodes[0].isSpecialEndNodeIsStart)
+                    {
+                        Object.DestroyImmediate(_node.intersectionOtherNode.spline.nodes[0].transform.gameObject);
+                        _node.intersectionOtherNode.spline.isSpecialStartControlNode = false;
+                    }
+                    else if (_node.intersectionOtherNode.idOnSpline == _node.intersectionOtherNode.spline.GetNodeCount() - 2 && _node.intersectionOtherNode.spline.nodes[_node.intersectionOtherNode.spline.GetNodeCount() - 1].isSpecialEndNodeIsEnd)
+                    {
+                        Object.DestroyImmediate(_node.intersectionOtherNode.spline.nodes[_node.intersectionOtherNode.spline.GetNodeCount() - 1].transform.gameObject);
+                        _node.intersectionOtherNode.spline.isSpecialEndControlNode = false;
+                    }
                 }
-                else if (_node.idOnSpline == _node.spline.GetNodeCount() - 2 && _node.spline.nodes[_node.spline.GetNodeCount() - 1].isSpecialEndNodeIsEnd)
-                {
-                    Object.DestroyImmediate(_node.spline.nodes[_node.spline.GetNodeCount() - 1].transform.gameObject);
-                    _node.spline.isSpecialEndControlNode = false;
-                }
-
+                _node.intersectionOtherNode.isIntersection = false;
+                _node.intersectionOtherNode.isSpecialIntersection = false;
             }
-            _node.isIntersection = false;
-            _node.isSpecialIntersection = false;
-        }
-        if (_node.intersectionOtherNode != null)
-        {
-            if (_node.intersectionOtherNode.isEndPoint)
-            {
-                if (_node.intersectionOtherNode.idOnSpline == 1 && _node.intersectionOtherNode.spline.nodes[0].isSpecialEndNodeIsStart)
-                {
-                    Object.DestroyImmediate(_node.intersectionOtherNode.spline.nodes[0].transform.gameObject);
-                    _node.intersectionOtherNode.spline.isSpecialStartControlNode = false;
-                }
-                else if (_node.intersectionOtherNode.idOnSpline == _node.intersectionOtherNode.spline.GetNodeCount() - 2 && _node.intersectionOtherNode.spline.nodes[_node.intersectionOtherNode.spline.GetNodeCount() - 1].isSpecialEndNodeIsEnd)
-                {
-                    Object.DestroyImmediate(_node.intersectionOtherNode.spline.nodes[_node.intersectionOtherNode.spline.GetNodeCount() - 1].transform.gameObject);
-                    _node.intersectionOtherNode.spline.isSpecialEndControlNode = false;
-                }
-            }
-            _node.intersectionOtherNode.isIntersection = false;
-            _node.intersectionOtherNode.isSpecialIntersection = false;
-        }
 
-        if (_node != null && _node.intersectionOtherNode != null)
-        {
-            if (_node.spline != _node.intersectionOtherNode.spline)
+            if (_node != null && _node.intersectionOtherNode != null)
             {
-                if (_node != null)
+                if (_node.spline != _node.intersectionOtherNode.spline)
+                {
+                    if (_node != null)
+                    {
+                        _node.spline.road.isUpdatingSpline = true;
+                    }
+                    if (_node.intersectionOtherNode != null)
+                    {
+                        _node.intersectionOtherNode.spline.road.isUpdatingSpline = true;
+                    }
+                }
+                else
                 {
                     _node.spline.road.isUpdatingSpline = true;
                 }
-                if (_node.intersectionOtherNode != null)
-                {
-                    _node.intersectionOtherNode.spline.road.isUpdatingSpline = true;
-                }
             }
-            else
+            else if (_node != null)
             {
                 _node.spline.road.isUpdatingSpline = true;
             }
         }
-        else if (_node != null)
-        {
-            _node.spline.road.isUpdatingSpline = true;
-        }
-    }
-    #endregion
+        #endregion
 
 
-    #region "Bridges"
-    public bool IsInBridge(float _p)
-    {
-        KeyValuePair<float, float> KVP;
-        if (BridgeParams == null)
+        #region "Bridges"
+        public bool IsInBridge(float _p)
         {
+            KeyValuePair<float, float> KVP;
+            if (BridgeParams == null)
+            {
+                return false;
+            }
+            int cCount = BridgeParams.Count;
+            if (cCount < 1)
+            {
+                return false;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = BridgeParams[index];
+                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                {
+                    return true;
+                }
+                if (_p > KVP.Key && _p < KVP.Value)
+                {
+                    return true;
+                }
+            }
             return false;
         }
-        int cCount = BridgeParams.Count;
-        if (cCount < 1)
-        {
-            return false;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = BridgeParams[index];
-            if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
-            {
-                return true;
-            }
-            if (_p > KVP.Key && _p < KVP.Value)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
-    public float BridgeUpComing(float _p)
-    {
-        float tDist = 20f / distance;
-        float OrigP = _p;
-        _p += tDist;
-        KeyValuePair<float, float> KVP;
-        if (BridgeParams == null)
+        public float BridgeUpComing(float _p)
         {
+            float tDist = 20f / distance;
+            float OrigP = _p;
+            _p += tDist;
+            KeyValuePair<float, float> KVP;
+            if (BridgeParams == null)
+            {
+                return 1f;
+            }
+            int cCount = BridgeParams.Count;
+            if (cCount < 1)
+            {
+                return 1f;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = BridgeParams[index];
+
+                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                {
+                    return ((KVP.Key - OrigP) / tDist);
+                }
+                if (_p > KVP.Key && _p < KVP.Value)
+                {
+                    return ((KVP.Key - OrigP) / tDist);
+                }
+            }
             return 1f;
         }
-        int cCount = BridgeParams.Count;
-        if (cCount < 1)
+
+
+        public bool IsInBridgeTerrain(float _p)
         {
+            KeyValuePair<float, float> KVP;
+            if (BridgeParams == null)
+            {
+                return false;
+            }
+            int cCount = BridgeParams.Count;
+            if (cCount < 1)
+            {
+                return false;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = BridgeParams[index];
+                if (GSDRootUtil.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
+                {
+                    return true;
+                }
+                if (_p > (KVP.Key + (10f / distance)) && _p < (KVP.Value - (10f / distance)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        public float GetBridgeEnd(float _p)
+        {
+            KeyValuePair<float, float> KVP;
+            if (BridgeParams == null)
+            {
+                return -1f;
+            }
+            int cCount = BridgeParams.Count;
+            if (cCount < 1)
+            {
+                return -1f;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = BridgeParams[index];
+                if (_p >= KVP.Key && _p <= KVP.Value)
+                {
+                    return KVP.Value;
+                }
+            }
+            return -1f;
+        }
+        #endregion
+
+
+        #region "Tunnels"
+        public bool IsInTunnel(float _p)
+        {
+            KeyValuePair<float, float> KVP;
+            if (TunnelParams == null)
+            {
+                return false;
+            }
+            int cCount = TunnelParams.Count;
+            if (cCount < 1)
+            {
+                return false;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = TunnelParams[index];
+                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                {
+                    return true;
+                }
+                if (_p > KVP.Key && _p < KVP.Value)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        public float TunnelUpComing(float _p)
+        {
+            float tDist = 20f / distance;
+            float OrigP = _p;
+            _p += tDist;
+            KeyValuePair<float, float> KVP;
+            if (TunnelParams == null)
+            {
+                return 1f;
+            }
+            int cCount = TunnelParams.Count;
+            if (cCount < 1)
+            {
+                return 1f;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = TunnelParams[index];
+
+                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                {
+                    return ((KVP.Key - OrigP) / tDist);
+                }
+                if (_p > KVP.Key && _p < KVP.Value)
+                {
+                    return ((KVP.Key - OrigP) / tDist);
+                }
+            }
             return 1f;
         }
-        for (int index = 0; index < cCount; index++)
+
+
+        public bool IsInTunnelTerrain(float _p)
         {
-            KVP = BridgeParams[index];
-
-            if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+            KeyValuePair<float, float> KVP;
+            if (TunnelParams == null)
             {
-                return ((KVP.Key - OrigP) / tDist);
+                return false;
             }
-            if (_p > KVP.Key && _p < KVP.Value)
+            int cCount = TunnelParams.Count;
+            if (cCount < 1)
             {
-                return ((KVP.Key - OrigP) / tDist);
+                return false;
             }
-        }
-        return 1f;
-    }
-
-
-    public bool IsInBridgeTerrain(float _p)
-    {
-        KeyValuePair<float, float> KVP;
-        if (BridgeParams == null)
-        {
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = TunnelParams[index];
+                if (GSDRootUtil.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
+                {
+                    return true;
+                }
+                if (_p > (KVP.Key + (10f / distance)) && _p < (KVP.Value - (10f / distance)))
+                {
+                    return true;
+                }
+            }
             return false;
         }
-        int cCount = BridgeParams.Count;
-        if (cCount < 1)
-        {
-            return false;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = BridgeParams[index];
-            if (GSDRootUtil.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
-            {
-                return true;
-            }
-            if (_p > (KVP.Key + (10f / distance)) && _p < (KVP.Value - (10f / distance)))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
-    public float GetBridgeEnd(float _p)
-    {
-        KeyValuePair<float, float> KVP;
-        if (BridgeParams == null)
+        public float GetTunnelEnd(float _p)
         {
+            KeyValuePair<float, float> KVP;
+            if (TunnelParams == null)
+            {
+                return -1f;
+            }
+            int cCount = TunnelParams.Count;
+            if (cCount < 1)
+            {
+                return -1f;
+            }
+            for (int index = 0; index < cCount; index++)
+            {
+                KVP = TunnelParams[index];
+                if (_p >= KVP.Key && _p <= KVP.Value)
+                {
+                    return KVP.Value;
+                }
+            }
             return -1f;
         }
-        int cCount = BridgeParams.Count;
-        if (cCount < 1)
-        {
-            return -1f;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = BridgeParams[index];
-            if (_p >= KVP.Key && _p <= KVP.Value)
-            {
-                return KVP.Value;
-            }
-        }
-        return -1f;
-    }
-    #endregion
-
-
-    #region "Tunnels"
-    public bool IsInTunnel(float _p)
-    {
-        KeyValuePair<float, float> KVP;
-        if (TunnelParams == null)
-        {
-            return false;
-        }
-        int cCount = TunnelParams.Count;
-        if (cCount < 1)
-        {
-            return false;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = TunnelParams[index];
-            if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
-            {
-                return true;
-            }
-            if (_p > KVP.Key && _p < KVP.Value)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public float TunnelUpComing(float _p)
-    {
-        float tDist = 20f / distance;
-        float OrigP = _p;
-        _p += tDist;
-        KeyValuePair<float, float> KVP;
-        if (TunnelParams == null)
-        {
-            return 1f;
-        }
-        int cCount = TunnelParams.Count;
-        if (cCount < 1)
-        {
-            return 1f;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = TunnelParams[index];
-
-            if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
-            {
-                return ((KVP.Key - OrigP) / tDist);
-            }
-            if (_p > KVP.Key && _p < KVP.Value)
-            {
-                return ((KVP.Key - OrigP) / tDist);
-            }
-        }
-        return 1f;
-    }
-
-
-    public bool IsInTunnelTerrain(float _p)
-    {
-        KeyValuePair<float, float> KVP;
-        if (TunnelParams == null)
-        {
-            return false;
-        }
-        int cCount = TunnelParams.Count;
-        if (cCount < 1)
-        {
-            return false;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = TunnelParams[index];
-            if (GSDRootUtil.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
-            {
-                return true;
-            }
-            if (_p > (KVP.Key + (10f / distance)) && _p < (KVP.Value - (10f / distance)))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public float GetTunnelEnd(float _p)
-    {
-        KeyValuePair<float, float> KVP;
-        if (TunnelParams == null)
-        {
-            return -1f;
-        }
-        int cCount = TunnelParams.Count;
-        if (cCount < 1)
-        {
-            return -1f;
-        }
-        for (int index = 0; index < cCount; index++)
-        {
-            KVP = TunnelParams[index];
-            if (_p >= KVP.Key && _p <= KVP.Value)
-            {
-                return KVP.Value;
-            }
-        }
-        return -1f;
-    }
-    #endregion
+        #endregion
 
 
 #if UNITY_EDITOR
-    #region "Road connections"
-    public void ActivateEndNodeConnection(GSDSplineN _node1, GSDSplineN _node2)
-    {
-        ActivateEndNodeConnectionDo(_node1, _node2);
-    }
-
-
-    private void ActivateEndNodeConnectionDo(GSDSplineN _node1, GSDSplineN _node2)
-    {
-        GSDSplineC spline = _node2.spline;
-        int nodeCount = spline.GetNodeCount();
-        int mCount = GetNodeCount();
-        //Don't allow connection with less than 3 nodes:
-        if (mCount < 3 || nodeCount < 3)
+        #region "Road connections"
+        public void ActivateEndNodeConnection(GSDSplineN _node1, GSDSplineN _node2)
         {
+            ActivateEndNodeConnectionDo(_node1, _node2);
+        }
+
+
+        private void ActivateEndNodeConnectionDo(GSDSplineN _node1, GSDSplineN _node2)
+        {
+            GSDSplineC spline = _node2.spline;
+            int nodeCount = spline.GetNodeCount();
+            int mCount = GetNodeCount();
+            //Don't allow connection with less than 3 nodes:
+            if (mCount < 3 || nodeCount < 3)
+            {
 #if UNITY_EDITOR
-            UnityEditor.EditorUtility.DisplayDialog("Cannot connect roads", "Roads must have at least 3 nodes to be connected.", "ok");
+                UnityEditor.EditorUtility.DisplayDialog("Cannot connect roads", "Roads must have at least 3 nodes to be connected.", "ok");
 #endif
-            return;
-        }
+                return;
+            }
 
-        Vector3 tNode1_ExtraPos = default(Vector3);
-        Vector3 tNode2_ExtraPos = default(Vector3);
+            Vector3 tNode1_ExtraPos = default(Vector3);
+            Vector3 tNode2_ExtraPos = default(Vector3);
 
-        bool bFirstNode_Start = false;
-        //		bool bFirstNode_End = false;
-        if (_node1.idOnSpline == 0)
-        {
-            bFirstNode_Start = true;
-            tNode2_ExtraPos = nodes[1].transform.position;
-        }
-        else
-        {
-            //			bFirstNode_End = true;
-            tNode2_ExtraPos = nodes[mCount - 2].transform.position;
-        }
-
-        bool bSecondNode_Start = false;
-        //		bool bSecondNode_End = false;
-        if (_node2.idOnSpline == 0)
-        {
-            bSecondNode_Start = true;
-            tNode1_ExtraPos = spline.nodes[1].transform.position;
-        }
-        else
-        {
-            //			bSecondNode_End = true;
-            tNode1_ExtraPos = spline.nodes[nodeCount - 2].transform.position;
-        }
-
-        GSDSplineN NodeCreated1 = null;
-        GSDSplineN NodeCreated2 = null;
-
-        if (bFirstNode_Start)
-        {
-            isSpecialStartControlNode = true;
-            if (nodes[0].isSpecialEndNode)
+            bool bFirstNode_Start = false;
+            //		bool bFirstNode_End = false;
+            if (_node1.idOnSpline == 0)
             {
-                nodes[0].transform.position = tNode1_ExtraPos;
-                nodes[0].pos = tNode1_ExtraPos;
-                NodeCreated1 = nodes[0];
+                bFirstNode_Start = true;
+                tNode2_ExtraPos = nodes[1].transform.position;
             }
             else
             {
-                NodeCreated1 = GSD.Roads.GSDConstruction.InsertNode(road, true, tNode1_ExtraPos, false, 0, true);
+                //			bFirstNode_End = true;
+                tNode2_ExtraPos = nodes[mCount - 2].transform.position;
             }
-        }
-        else
-        {
-            isSpecialEndControlNode = true;
-            GSDSplineN zNode1 = spline.GetLastNodeAll();
-            if (zNode1 != null && zNode1.isSpecialEndNode)
+
+            bool bSecondNode_Start = false;
+            //		bool bSecondNode_End = false;
+            if (_node2.idOnSpline == 0)
             {
-                zNode1.transform.position = tNode1_ExtraPos;
-                zNode1.pos = tNode1_ExtraPos;
-                NodeCreated1 = GetLastNodeAll();
+                bSecondNode_Start = true;
+                tNode1_ExtraPos = spline.nodes[1].transform.position;
             }
             else
             {
-                NodeCreated1 = GSD.Roads.GSDConstruction.CreateNode(road, true, tNode1_ExtraPos);
+                //			bSecondNode_End = true;
+                tNode1_ExtraPos = spline.nodes[nodeCount - 2].transform.position;
             }
 
-        }
+            GSDSplineN NodeCreated1 = null;
+            GSDSplineN NodeCreated2 = null;
 
-        if (bSecondNode_Start)
-        {
-            spline.isSpecialStartControlNode = true;
-            if (spline.nodes[0].isSpecialEndNode)
+            if (bFirstNode_Start)
             {
-                spline.nodes[0].transform.position = tNode2_ExtraPos;
-                spline.nodes[0].pos = tNode2_ExtraPos;
-                NodeCreated2 = spline.nodes[0];
+                isSpecialStartControlNode = true;
+                if (nodes[0].isSpecialEndNode)
+                {
+                    nodes[0].transform.position = tNode1_ExtraPos;
+                    nodes[0].pos = tNode1_ExtraPos;
+                    NodeCreated1 = nodes[0];
+                }
+                else
+                {
+                    NodeCreated1 = GSD.Roads.GSDConstruction.InsertNode(road, true, tNode1_ExtraPos, false, 0, true);
+                }
             }
             else
             {
-                NodeCreated2 = GSD.Roads.GSDConstruction.InsertNode(spline.road, true, tNode2_ExtraPos, false, 0, true);
+                isSpecialEndControlNode = true;
+                GSDSplineN zNode1 = spline.GetLastNodeAll();
+                if (zNode1 != null && zNode1.isSpecialEndNode)
+                {
+                    zNode1.transform.position = tNode1_ExtraPos;
+                    zNode1.pos = tNode1_ExtraPos;
+                    NodeCreated1 = GetLastNodeAll();
+                }
+                else
+                {
+                    NodeCreated1 = GSD.Roads.GSDConstruction.CreateNode(road, true, tNode1_ExtraPos);
+                }
+
             }
 
-        }
-        else
-        {
-            spline.isSpecialEndControlNode = true;
-            GSDSplineN zNode2 = spline.GetLastNodeAll();
-            if (zNode2 != null && zNode2.isSpecialEndNode)
-            {
-                zNode2.transform.position = tNode2_ExtraPos;
-                zNode2.pos = tNode2_ExtraPos;
-                NodeCreated2 = spline.GetLastNodeAll();
-            }
-            else
-            {
-                NodeCreated2 = GSD.Roads.GSDConstruction.CreateNode(spline.road, true, tNode2_ExtraPos);
-            }
-
-        }
-
-        NodeCreated1.isSpecialEndNodeIsStart = bFirstNode_Start;
-        NodeCreated2.isSpecialEndNodeIsStart = bSecondNode_Start;
-        NodeCreated1.isSpecialEndNodeIsEnd = !bFirstNode_Start;
-        NodeCreated2.isSpecialEndNodeIsEnd = !bSecondNode_Start;
-        NodeCreated1.specialNodeCounterpart = NodeCreated2;
-        NodeCreated2.specialNodeCounterpart = NodeCreated1;
-
-        float lWidth1 = _node1.spline.road.laneWidth;
-        float lWidth2 = _node2.spline.road.laneWidth;
-        float xWidth = Mathf.Max(lWidth1, lWidth2);
-
-        float tDelay = 0f;
-        if (_node1.spline.road.laneAmount > _node2.spline.road.laneAmount)
-        {
-            _node2.isSpecialRoadConnPrimary = true;
-            NodeCreated2.isSpecialRoadConnPrimary = true;
-            if (_node2.spline.road.laneAmount == 4)
-            {
-                xWidth *= 2f;
-            }
-            tDelay = (_node1.spline.road.laneAmount - _node2.spline.road.laneAmount) * xWidth;
-            if (tDelay < 10f)
-            {
-                tDelay = 10f;
-            }
             if (bSecondNode_Start)
             {
-                _node2.spline.isSpecialEndNodeIsStartDelay = true;
-                _node2.spline.specialEndNodeDelayStart = tDelay;
-                _node2.spline.specialEndNodeDelayStartResult = _node1.spline.road.RoadWidth();
-                _node2.spline.specialEndNodeStartOtherSpline = _node1.spline;
+                spline.isSpecialStartControlNode = true;
+                if (spline.nodes[0].isSpecialEndNode)
+                {
+                    spline.nodes[0].transform.position = tNode2_ExtraPos;
+                    spline.nodes[0].pos = tNode2_ExtraPos;
+                    NodeCreated2 = spline.nodes[0];
+                }
+                else
+                {
+                    NodeCreated2 = GSD.Roads.GSDConstruction.InsertNode(spline.road, true, tNode2_ExtraPos, false, 0, true);
+                }
+
             }
             else
             {
-                _node2.spline.isSpecialEndNodeIsEndDelay = true;
+                spline.isSpecialEndControlNode = true;
+                GSDSplineN zNode2 = spline.GetLastNodeAll();
+                if (zNode2 != null && zNode2.isSpecialEndNode)
+                {
+                    zNode2.transform.position = tNode2_ExtraPos;
+                    zNode2.pos = tNode2_ExtraPos;
+                    NodeCreated2 = spline.GetLastNodeAll();
+                }
+                else
+                {
+                    NodeCreated2 = GSD.Roads.GSDConstruction.CreateNode(spline.road, true, tNode2_ExtraPos);
+                }
+
+            }
+
+            NodeCreated1.isSpecialEndNodeIsStart = bFirstNode_Start;
+            NodeCreated2.isSpecialEndNodeIsStart = bSecondNode_Start;
+            NodeCreated1.isSpecialEndNodeIsEnd = !bFirstNode_Start;
+            NodeCreated2.isSpecialEndNodeIsEnd = !bSecondNode_Start;
+            NodeCreated1.specialNodeCounterpart = NodeCreated2;
+            NodeCreated2.specialNodeCounterpart = NodeCreated1;
+
+            float lWidth1 = _node1.spline.road.laneWidth;
+            float lWidth2 = _node2.spline.road.laneWidth;
+            float xWidth = Mathf.Max(lWidth1, lWidth2);
+
+            float tDelay = 0f;
+            if (_node1.spline.road.laneAmount > _node2.spline.road.laneAmount)
+            {
+                _node2.isSpecialRoadConnPrimary = true;
+                NodeCreated2.isSpecialRoadConnPrimary = true;
+                if (_node2.spline.road.laneAmount == 4)
+                {
+                    xWidth *= 2f;
+                }
+                tDelay = (_node1.spline.road.laneAmount - _node2.spline.road.laneAmount) * xWidth;
+                if (tDelay < 10f)
+                {
+                    tDelay = 10f;
+                }
+                if (bSecondNode_Start)
+                {
+                    _node2.spline.isSpecialEndNodeIsStartDelay = true;
+                    _node2.spline.specialEndNodeDelayStart = tDelay;
+                    _node2.spline.specialEndNodeDelayStartResult = _node1.spline.road.RoadWidth();
+                    _node2.spline.specialEndNodeStartOtherSpline = _node1.spline;
+                }
+                else
+                {
+                    _node2.spline.isSpecialEndNodeIsEndDelay = true;
+                    _node2.spline.specialEndNodeDelayEnd = tDelay;
+                    _node2.spline.specialEndNodeDelayEndResult = _node1.spline.road.RoadWidth();
+                    _node2.spline.specialEndNodeEndOtherSpline = _node1.spline;
+                }
+            }
+            else if (_node2.spline.road.laneAmount > _node1.spline.road.laneAmount)
+            {
+                _node1.isSpecialRoadConnPrimary = true;
+                NodeCreated1.isSpecialRoadConnPrimary = true;
+                if (_node1.spline.road.laneAmount == 4)
+                { xWidth *= 2f; }
+                tDelay = (_node2.spline.road.laneAmount - _node1.spline.road.laneAmount) * xWidth;
+                if (tDelay < 10f)
+                {
+                    tDelay = 10f;
+                }
+                if (bFirstNode_Start)
+                {
+                    _node1.spline.isSpecialEndNodeIsStartDelay = true;
+                    _node1.spline.specialEndNodeDelayStart = tDelay;
+                    _node1.spline.specialEndNodeDelayStartResult = _node2.spline.road.RoadWidth();
+                    _node1.spline.specialEndNodeStartOtherSpline = _node2.spline;
+                }
+                else
+                {
+                    _node1.spline.isSpecialEndNodeIsEndDelay = true;
+                    _node1.spline.specialEndNodeDelayEnd = tDelay;
+                    _node1.spline.specialEndNodeDelayEndResult = _node2.spline.road.RoadWidth();
+                    _node1.spline.specialEndNodeEndOtherSpline = _node2.spline;
+                }
+            }
+            else
+            {
+                _node1.isSpecialRoadConnPrimary = true;
+                NodeCreated1.isSpecialRoadConnPrimary = true;
+                tDelay = 0f;
+                _node1.spline.isSpecialEndNodeIsEndDelay = false;
+                _node1.spline.isSpecialEndNodeIsStartDelay = false;
+                _node1.spline.specialEndNodeDelayEnd = tDelay;
+                _node1.spline.specialEndNodeDelayEndResult = _node2.spline.road.RoadWidth();
+                _node1.spline.specialEndNodeEndOtherSpline = _node2.spline;
+                _node2.spline.isSpecialEndNodeIsEndDelay = false;
+                _node2.spline.isSpecialEndNodeIsStartDelay = false;
                 _node2.spline.specialEndNodeDelayEnd = tDelay;
                 _node2.spline.specialEndNodeDelayEndResult = _node1.spline.road.RoadWidth();
                 _node2.spline.specialEndNodeEndOtherSpline = _node1.spline;
             }
-        }
-        else if (_node2.spline.road.laneAmount > _node1.spline.road.laneAmount)
-        {
-            _node1.isSpecialRoadConnPrimary = true;
-            NodeCreated1.isSpecialRoadConnPrimary = true;
-            if (_node1.spline.road.laneAmount == 4)
-            { xWidth *= 2f; }
-            tDelay = (_node2.spline.road.laneAmount - _node1.spline.road.laneAmount) * xWidth;
-            if (tDelay < 10f)
+
+            _node1.specialNodeCounterpart = NodeCreated1;
+            _node2.specialNodeCounterpart = NodeCreated2;
+            NodeCreated1.specialNodeCounterpartMaster = _node1;
+            NodeCreated2.specialNodeCounterpartMaster = _node2;
+
+
+            NodeCreated1.ToggleHideFlags(true);
+            NodeCreated2.ToggleHideFlags(true);
+
+            GSDSplineN[] OrigNodes = new GSDSplineN[2];
+            OrigNodes[0] = _node1;
+            OrigNodes[1] = _node2;
+            _node1.originalConnectionNodes = OrigNodes;
+            _node2.originalConnectionNodes = OrigNodes;
+
+            //		tNode1.GSDSpline.Setup_Trigger();
+            //		if(tNode1.GSDSpline != tNode2.GSDSpline){
+            //			tNode2.GSDSpline.Setup_Trigger();
+            //		}
+
+            if (_node1 != null && _node2 != null)
             {
-                tDelay = 10f;
+                if (_node1.spline != _node2.spline)
+                {
+                    _node1.spline.road.PiggyBacks = new GSDSplineC[1];
+                    _node1.spline.road.PiggyBacks[0] = _node2.spline;
+                }
+                _node1.spline.road.isUpdateRequired = true;
             }
-            if (bFirstNode_Start)
-            {
-                _node1.spline.isSpecialEndNodeIsStartDelay = true;
-                _node1.spline.specialEndNodeDelayStart = tDelay;
-                _node1.spline.specialEndNodeDelayStartResult = _node2.spline.road.RoadWidth();
-                _node1.spline.specialEndNodeStartOtherSpline = _node2.spline;
-            }
-            else
-            {
-                _node1.spline.isSpecialEndNodeIsEndDelay = true;
-                _node1.spline.specialEndNodeDelayEnd = tDelay;
-                _node1.spline.specialEndNodeDelayEndResult = _node2.spline.road.RoadWidth();
-                _node1.spline.specialEndNodeEndOtherSpline = _node2.spline;
-            }
+            previewSpline.isDrawingGizmos = false;
+            spline.previewSpline.isDrawingGizmos = false;
+            UnityEditor.SceneView.RepaintAll();
         }
-        else
-        {
-            _node1.isSpecialRoadConnPrimary = true;
-            NodeCreated1.isSpecialRoadConnPrimary = true;
-            tDelay = 0f;
-            _node1.spline.isSpecialEndNodeIsEndDelay = false;
-            _node1.spline.isSpecialEndNodeIsStartDelay = false;
-            _node1.spline.specialEndNodeDelayEnd = tDelay;
-            _node1.spline.specialEndNodeDelayEndResult = _node2.spline.road.RoadWidth();
-            _node1.spline.specialEndNodeEndOtherSpline = _node2.spline;
-            _node2.spline.isSpecialEndNodeIsEndDelay = false;
-            _node2.spline.isSpecialEndNodeIsStartDelay = false;
-            _node2.spline.specialEndNodeDelayEnd = tDelay;
-            _node2.spline.specialEndNodeDelayEndResult = _node1.spline.road.RoadWidth();
-            _node2.spline.specialEndNodeEndOtherSpline = _node1.spline;
-        }
-
-        _node1.specialNodeCounterpart = NodeCreated1;
-        _node2.specialNodeCounterpart = NodeCreated2;
-        NodeCreated1.specialNodeCounterpartMaster = _node1;
-        NodeCreated2.specialNodeCounterpartMaster = _node2;
-
-
-        NodeCreated1.ToggleHideFlags(true);
-        NodeCreated2.ToggleHideFlags(true);
-
-        GSDSplineN[] OrigNodes = new GSDSplineN[2];
-        OrigNodes[0] = _node1;
-        OrigNodes[1] = _node2;
-        _node1.originalConnectionNodes = OrigNodes;
-        _node2.originalConnectionNodes = OrigNodes;
-
-        //		tNode1.GSDSpline.Setup_Trigger();
-        //		if(tNode1.GSDSpline != tNode2.GSDSpline){
-        //			tNode2.GSDSpline.Setup_Trigger();
-        //		}
-
-        if (_node1 != null && _node2 != null)
-        {
-            if (_node1.spline != _node2.spline)
-            {
-                _node1.spline.road.PiggyBacks = new GSDSplineC[1];
-                _node1.spline.road.PiggyBacks[0] = _node2.spline;
-            }
-            _node1.spline.road.isUpdateRequired = true;
-        }
-        previewSpline.isDrawingGizmos = false;
-        spline.previewSpline.isDrawingGizmos = false;
-        UnityEditor.SceneView.RepaintAll();
-    }
-    #endregion
+        #endregion
 #endif
 
-    #region "General Util"
-    public int GetNodeCount()
-    {
-        return nodes.Count;
-    }
-
-
-    public int GetNodeCountNonNull()
-    {
-        int nodeCount = GetNodeCount();
-        int tCount = 0;
-        for (int index = 0; index < nodeCount; index++)
+        #region "General Util"
+        public int GetNodeCount()
         {
-            if (nodes[index] != null)
+            return nodes.Count;
+        }
+
+
+        public int GetNodeCountNonNull()
+        {
+            int nodeCount = GetNodeCount();
+            int tCount = 0;
+            for (int index = 0; index < nodeCount; index++)
             {
-                tCount += 1;
-                if (nodes[index].isIntersection && nodes[index].intersection == null)
+                if (nodes[index] != null)
                 {
-                    DestroyIntersection(nodes[index]);
+                    tCount += 1;
+                    if (nodes[index].isIntersection && nodes[index].intersection == null)
+                    {
+                        DestroyIntersection(nodes[index]);
+                    }
                 }
             }
+            return tCount;
         }
-        return tCount;
-    }
 
 
-    public bool CheckInvalidNodeCount()
-    {
-        int nodeCount = GetNodeCount();
-        int tCount = 0;
-        for (int index = 0; index < nodeCount; index++)
+        public bool CheckInvalidNodeCount()
         {
-            if (nodes[index] != null)
+            int nodeCount = GetNodeCount();
+            int tCount = 0;
+            for (int index = 0; index < nodeCount; index++)
             {
-                tCount += 1;
-                if (nodes[index].isIntersection && nodes[index].intersection == null)
+                if (nodes[index] != null)
                 {
-                    DestroyIntersection(nodes[index]);
+                    tCount += 1;
+                    if (nodes[index].isIntersection && nodes[index].intersection == null)
+                    {
+                        DestroyIntersection(nodes[index]);
+                    }
                 }
+                else
+                {
+
+                }
+            }
+            if (tCount != nodeCount)
+            {
+                return true;
             }
             else
             {
-
+                return false;
             }
         }
-        if (tCount != nodeCount)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
 
-    public GSDSplineN GetCurrentNode(float _p)
-    {
-        int nodeCount = GetNodeCount();
-        GSDSplineN node = null;
-        for (int index = 0; index < nodeCount; index++)
+        public GSDSplineN GetCurrentNode(float _p)
         {
-            node = nodes[index];
-            if (node.time > _p)
+            int nodeCount = GetNodeCount();
+            GSDSplineN node = null;
+            for (int index = 0; index < nodeCount; index++)
             {
-                node = nodes[index - 1];
-                return node;
+                node = nodes[index];
+                if (node.time > _p)
+                {
+                    node = nodes[index - 1];
+                    return node;
+                }
             }
+            return node;
         }
-        return node;
-    }
 
 
-    public GSDSplineN GetLastLegitimateNode()
-    {
-        int nodeCount = GetNodeCount();
-        GSDSplineN node = null;
-        for (int index = (nodeCount - 1); index >= 0; index--)
+        public GSDSplineN GetLastLegitimateNode()
         {
-            node = nodes[index];
-            if (node.IsLegitimate())
+            int nodeCount = GetNodeCount();
+            GSDSplineN node = null;
+            for (int index = (nodeCount - 1); index >= 0; index--)
             {
-                return node;
-            }
-        }
-        return null;
-    }
-
-
-    public GSDSplineN GetLastNodeAll()
-    {
-        int nodeCount = GetNodeCount();
-        int startIndex = (nodeCount - 1);
-        GSDSplineN node = null;
-
-        int i = startIndex;
-        while (i >= 0)
-        {
-            if (i <= (nodes.Count - 1))
-            {
-                node = nodes[i];
-                if (node != null)
+                node = nodes[index];
+                if (node.IsLegitimate())
                 {
                     return node;
                 }
             }
-            i -= 1;
+            return null;
         }
-        return null;
-    }
 
 
-    public GSDSplineN GetPrevLegitimateNode(int _index)
-    {
-        try
+        public GSDSplineN GetLastNodeAll()
+        {
+            int nodeCount = GetNodeCount();
+            int startIndex = (nodeCount - 1);
+            GSDSplineN node = null;
+
+            int i = startIndex;
+            while (i >= 0)
+            {
+                if (i <= (nodes.Count - 1))
+                {
+                    node = nodes[i];
+                    if (node != null)
+                    {
+                        return node;
+                    }
+                }
+                i -= 1;
+            }
+            return null;
+        }
+
+
+        public GSDSplineN GetPrevLegitimateNode(int _index)
+        {
+            try
+            {
+                GSDSplineN node = null;
+                for (int index = (_index - 1); index >= 0; index--)
+                {
+                    node = nodes[index];
+                    if (node.IsLegitimateGrade())
+                    {
+                        return node;
+                    }
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        public GSDSplineN GetNextLegitimateNode(int _index)
         {
             GSDSplineN node = null;
-            for (int index = (_index - 1); index >= 0; index--)
+            int nodeCount = GetNodeCount();
+            for (int index = (_index + 1); index < nodeCount; index++)
             {
                 node = nodes[index];
                 if (node.IsLegitimateGrade())
@@ -2369,60 +2391,40 @@ public class GSDSplineC : MonoBehaviour
             }
             return null;
         }
-        catch
-        {
-            return null;
-        }
-    }
-
-
-    public GSDSplineN GetNextLegitimateNode(int _index)
-    {
-        GSDSplineN node = null;
-        int nodeCount = GetNodeCount();
-        for (int index = (_index + 1); index < nodeCount; index++)
-        {
-            node = nodes[index];
-            if (node.IsLegitimateGrade())
-            {
-                return node;
-            }
-        }
-        return null;
-    }
 
 
 #if UNITY_EDITOR
-    public void ClearAllRoadCuts()
-    {
-        int nodeCount = GetNodeCount();
-        for (int index = 0; index < nodeCount; index++)
+        public void ClearAllRoadCuts()
         {
-            nodes[index].ClearCuts();
+            int nodeCount = GetNodeCount();
+            for (int index = 0; index < nodeCount; index++)
+            {
+                nodes[index].ClearCuts();
+            }
         }
-    }
 #endif
 
 
-    public void ResetNavigationData()
-    {
-        connectedIDs = null;
-        connectedIDs = new List<int>();
-    }
-    #endregion
+        public void ResetNavigationData()
+        {
+            connectedIDs = null;
+            connectedIDs = new List<int>();
+        }
+        #endregion
 
 
-    //#endif
+        //#endif
 
 
-    #region "Start"
-    private void Start()
-    {
+        #region "Start"
+        private void Start()
+        {
 #if UNITY_EDITOR
-        //CachedPoints = null;
+            //CachedPoints = null;
 #else
 			this.enabled = false;
 #endif
+        }
+        #endregion
     }
-    #endregion
 }
