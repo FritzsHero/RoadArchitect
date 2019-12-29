@@ -1,6 +1,7 @@
 ﻿#region "Imports"
 using UnityEngine;
 using System.Collections.Generic;
+using RoadArchitect;
 #endregion
 
 
@@ -285,7 +286,7 @@ namespace GSD.Roads
                             xVector2 = new Vector2(vector.x, vector.z);
 
                             //Now see if these two lines intersect:
-                            if (GSD.GSDRootUtil.Intersects2D(ref vector1, ref vector2, ref xVector1, ref xVector2, out intersectPoint2D))
+                            if (GSDRootUtil.Intersects2D(ref vector1, ref vector2, ref xVector1, ref xVector2, out intersectPoint2D))
                             {
                                 //Get height of intersection on primary road:
                                 float height = 0f;

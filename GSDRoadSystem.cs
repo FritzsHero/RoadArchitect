@@ -37,7 +37,7 @@ public class GSDRoadSystem : MonoBehaviour
         road.spline.road = road;
         road.GSDSplineObj = splineObj;
         road.GSDRS = this;
-        GSD.GSDRootUtil.SetupUniqueIdentifier(ref road.UID);
+        RoadArchitect.GSDRootUtil.SetupUniqueIdentifier(ref road.UID);
 
         road.ConstructRoad_ResetTerrainHistory();
 

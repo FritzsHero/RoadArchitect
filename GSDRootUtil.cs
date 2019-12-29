@@ -7,7 +7,7 @@ using System.Text;
 #endregion
 
 
-namespace GSD
+namespace RoadArchitect
 {
     public static class GSDRootUtil
     {

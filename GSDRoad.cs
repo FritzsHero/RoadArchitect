@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using GSD.Roads;
-using GSD;
+using RoadArchitect;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

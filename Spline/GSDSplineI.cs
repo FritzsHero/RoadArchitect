@@ -359,7 +359,7 @@ public class GSDSplineI : MonoBehaviour
         //}    // FH/ Do note, that someone outcommented stuff here, for whatever Reason, but why?
 
         float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSD.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+        param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
         return GetHermiteInternal(idx, param, _isTangent);
     }
 
@@ -413,7 +413,7 @@ public class GSDSplineI : MonoBehaviour
         // }      
 
         float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSD.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+        param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
         return GetHermiteInternal(idx, param, _isTangent);
     }
 

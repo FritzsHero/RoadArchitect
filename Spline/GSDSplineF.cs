@@ -332,7 +332,7 @@ public class GSDSplineF : MonoBehaviour
         //		}
 
         float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSD.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+        param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
         return GetHermiteInternal(idx, param, _isTangent);
     }
 
@@ -402,7 +402,7 @@ public class GSDSplineF : MonoBehaviour
         //		}
 
         float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-        param = GSD.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+        param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
         return GetHermiteInternal(idx, param, _isTangent);
     }
 
