@@ -239,9 +239,13 @@ public class GSDRoad : MonoBehaviour
     public Vector3 editorMousePos = new Vector3(0f, 0f, 0f);
     [UnityEngine.Serialization.FormerlySerializedAs("Color_NodeDefaultColor")]
     public Color defaultNodeColor = new Color(0f, 1f, 1f, 0.75f);
+    /// <summary> Connection node color </summary>
     public readonly Color Color_NodeConnColor = new Color(0f, 1f, 0f, 0.75f);
+    /// <summary> Intersection node color </summary>
     public readonly Color Color_NodeInter = new Color(0f, 1f, 0f, 0.75f);
+    /// <summary> The color of the nodes when they are selected </summary>
     public Color selectedColor = Color.yellow;
+    /// <summary> Color of the node preview when adding a new node </summary>
     public Color newNodePreviewColor = Color.red;
     #endregion
 
@@ -429,14 +433,16 @@ public class GSDRoad : MonoBehaviour
         {
             isEditorCameraSetup = true;
             if (spline.isSpecialEndControlNode)
-            {   //If control node, start after the control node:
+            {
+                //If control node, start after the control node:
                 EditorCameraEndPos = spline.nodes[spline.GetNodeCount() - 2].time;
             }
             if (spline.isSpecialStartControlNode)
-            {   //If ends in control node, end construction before the control node:
+            {
+                //If ends in control node, end construction before the control node:
                 EditorCameraStartPos = spline.nodes[1].time;
             }
-            //			EditorCameraPos_Full = 0f;
+            //EditorCameraPos_Full = 0f;
             ChangeEditorCameraMetersPerSec();
         }
 
@@ -563,7 +569,7 @@ public class GSDRoad : MonoBehaviour
         if (isEditorConstructing)
         {
             EditorUtility.DisplayProgressBar(
-                "GSD Road Update",
+                "RoadArchitect: Road Update",
                 editorTitleString,
                 ((float)editorProgress / 100f));
         }
@@ -592,8 +598,10 @@ public class GSDRoad : MonoBehaviour
         GSDRootUtil.SetupUniqueIdentifier(ref UID);
 
         GSDRootUtil.StartProfiling(this, "UpdateRoadPrelim");
+
         roadDefinition = Mathf.Clamp(roadDefinition, 1f, 50f);
         laneWidth = Mathf.Clamp(laneWidth, 0.2f, 500f);
+
         EditorConstructionStartTime = Time.realtimeSinceStartup;
         editorTitleString = "Updating " + transform.name + "...";
         System.GC.Collect();
@@ -882,7 +890,7 @@ public class GSDRoad : MonoBehaviour
         if (isSavingTerrainHistoryOnDisk && TerrainHistory != null && TerrainHistory.Count > 0)
         {
             GSDRootUtil.StartProfiling(this, "TerrainHistory_Save");
-            GSDGeneralEditor.TerrainHistorySave(TerrainHistory, this);
+            GSDGeneralEditor.SaveTerrainHistory(TerrainHistory, this);
             GSDRootUtil.EndProfiling(this);
             TerrainHistory.Clear();
             TerrainHistory = null;
@@ -911,7 +919,7 @@ public class GSDRoad : MonoBehaviour
         GSDRoad tRoad = this;
         if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
         {
-            GSDGeneralEditor.TerrainHistoryDelete(this);
+            GSDGeneralEditor.DeleteTerrainHistory(this);
         }
         else
         {
@@ -929,11 +937,11 @@ public class GSDRoad : MonoBehaviour
                 TerrainHistory.Clear();
                 TerrainHistory = null;
             }
-            TerrainHistory = GSDGeneralEditor.TerrainHistoryLoad(this);
+            TerrainHistory = GSDGeneralEditor.LoadTerrainHistory(this);
         }
         if (_isForced)
         {
-            GSDGeneralEditor.TerrainHistoryDelete(this);
+            GSDGeneralEditor.DeleteTerrainHistory(this);
         }
     }
     #endregion
@@ -1538,6 +1546,7 @@ public class GSDRoad : MonoBehaviour
 
 
     #region "Materials"
+    /// <summary> Loads the standard materials if the road uses default materials </summary>
     private void CheckMats()
     {
         if (!isUsingDefaultMaterials)

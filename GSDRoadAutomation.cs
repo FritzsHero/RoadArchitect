@@ -9,11 +9,11 @@ namespace GSD.Roads
 {
 #if UNITY_EDITOR
     /* Proper automation flow:
-     * 1. Make sure opt_bAllowRoadUpdates in the scene's GSDRoadSystem is set to FALSE.
+     * 1. Make sure isAllowingRoadUpdates in the scene's GSDRoadSystem is set to FALSE.
      * 2. Create your roads programmatically via CreateRoadProgrammatically (pass it the road, and then the points in a list)
      *      a. Optionally you can do it via CreateNodeProgrammatically and InsertNodeProgrammatically
      * 3. Call CreateIntersectionsProgrammaticallyForRoad for each road to create intersections automatically at intersection points.
-     * 4. Set opt_bAllowRoadUpdates in the scene's GSDRoadSystem is set to TRUE.
+     * 4. Set isAllowingRoadUpdates in the scene's GSDRoadSystem is set to TRUE.
      * 5. Call GSDRoadSystem.UpdateAllRoads();
      * 6. Call GSDRoadSystem.UpdateAllRoads(); after step #5 completes.
      * 

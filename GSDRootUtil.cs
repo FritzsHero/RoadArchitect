@@ -77,6 +77,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Gives the asset path to this object </summary>
         public static string GetPrefabString(GameObject _object)
         {
             string path = "";
@@ -89,7 +90,7 @@ namespace RoadArchitect
 #if UNITY_2018_2_OR_NEWER
                     Object parentObject = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(_object);
 #else
-                    Object parentObject = UnityEditor.PrefabUtility.GetPrefabParent(tObj);
+                    Object parentObject = UnityEditor.PrefabUtility.GetPrefabParent(_object);
 #endif
                     path = UnityEditor.AssetDatabase.GetAssetPath(parentObject);
                 }
@@ -316,23 +317,26 @@ namespace RoadArchitect
 
 
         #region "Default directory for library etc"
+        /// <summary> Returns the path to the RoadArchitect folder where Terrain History is saved </summary>
         public static string GetDirBase()
         {
             return Application.dataPath.Replace("/Assets", "/GSD/");
         }
 
 
+        /// <summary> Returns the path where Terrain History is saved </summary>
         public static string GetTHDir()
         {
-            string xPath = GetDirBase() + "TH/";
-            if (!Directory.Exists(xPath))
+            string path = GetDirBase() + "TH/";
+            if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(xPath);
+                Directory.CreateDirectory(path);
             }
-            return xPath;
+            return path;
         }
 
 
+        /// <summary> Gives the RoadArchitect Library </summary>
         public static string GetDirLibraryBase()
         {
             return GSDRoadUtilityEditor.GetBasePath() + "/Editor/Library/";
@@ -341,12 +345,12 @@ namespace RoadArchitect
 
         public static string GetDirLibrary()
         {
-            string xPath = GetDirLibraryBase();
-            if (!Directory.Exists(xPath))
+            string path = GetDirLibraryBase();
+            if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(xPath);
+                Directory.CreateDirectory(path);
             }
-            return xPath;
+            return path;
         }
 
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using GSD.Roads.Splination;
 using GSD.Roads.EdgeObjects;
 using System.IO;
-using GSD.Roads;
 #endregion
 
 
@@ -354,10 +353,7 @@ namespace RoadArchitect
         {
             int nameCount = _names.Length;
             string path = "";
-            //		string tStringPath = "";
-            //		string tDesc = "";
-            //		string tDisplayName = "";
-            //		string ThumbString = "";
+            //string ThumbString = "";
             for (int index = 0; index < nameCount; index++)
             {
                 GSDRoadUtil.WizardObject tO = GSDRoadUtil.WizardObject.LoadFromLibrary(_paths[index]);

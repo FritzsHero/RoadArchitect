@@ -19,7 +19,6 @@ namespace RoadArchitect
     {
         #region "Vars"
         private GSDSplineN node;
-        private const string onlineHelpDesc = "Visit the online manual for the most effective help.";
         private int count = -1;
         private int currentCount = 0;
         public bool isSplinatedObjectHelp = false;
@@ -61,9 +60,6 @@ namespace RoadArchitect
         public List<string> loadingEOMPaths = null;
 
         //Checkers:
-        //	private float ChangeChecker = -1f;
-        //	private Vector3 vChangeChecker = default(Vector3);
-        //	private Material tMat = null;
         private GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
         private EndObjectsDefaultsEnum endObjectAdd = EndObjectsDefaultsEnum.None;
         private SMMDefaultsEnum SMMQuickAdd = SMMDefaultsEnum.None;

@@ -947,7 +947,7 @@ namespace GSD.Roads.EdgeObjects
                     if (edgeObjectRotations[j] == default(Vector3))
                     {
                         // Line to instantiate the object instead of an prefab
-                        //tObj = GameObject.Instantiate(EdgeObject);
+                        //tObj = GameObject.Instantiate(edgeObject);
                         // Instantiate prefab instead of object
                         tObj = (GameObject) UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
                         _errorObjs.Add(tObj);
@@ -956,7 +956,7 @@ namespace GSD.Roads.EdgeObjects
                     else
                     {
                         // Line to instantiate the object instead of an prefab
-                        //tObj = GameObject.Instantiate(EdgeObject, EdgeObjectLocations[j], Quaternion.LookRotation(EdgeObjectRotations[j]));
+                        //tObj = GameObject.Instantiate(edgeObject, edgeObjectLocations[j], Quaternion.LookRotation(edgeObjectRotations[j]));
                         // Instantiate prefab instead of object
                         tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
                         tObj.transform.position = edgeObjectLocations[j];

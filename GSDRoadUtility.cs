@@ -304,7 +304,7 @@ namespace RoadArchitect
         }
 
 
-        /// <summary> Checks all terrains and adds GSDTerrain if necessary </summary>
+        /// <summary> Checks all terrains and adds RATerrain if necessary </summary>
         private static void CheckAllTerrains()
         {
             Object[] allTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
@@ -323,6 +323,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Checks if every Terrain uses a RATerrain script and set it to 0 on y </summary>
         public static void CheckAllTerrainsHeight0()
         {
             CheckAllTerrains();
@@ -662,36 +663,39 @@ namespace RoadArchitect
                 return;
             }
             Object[] TIDs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
-            Terrain tTerrain;
+            Terrain terrain;
             int[,] tDetails = null;
             int IntBufferX = 0;
             int IntBufferY = 0;
             int tVal = 0;
-            //			ushort Invalid = 16384;
             foreach (TempTerrainData TTD in _TTDList)
             {
                 foreach (GSDTerrain TID in TIDs)
                 {
                     if (TID.UID == TTD.uID)
                     {
-                        tTerrain = TID.transform.gameObject.GetComponent<Terrain>();
-                        if (tTerrain != null)
+                        terrain = TID.transform.gameObject.GetComponent<Terrain>();
+                        if (terrain != null)
                         {
                             //Details:
                             if (_spline.road.isDetailModificationEnabled)
                             {
                                 for (int index = 0; index < TTD.DetailLayersCount; index++)
                                 {
-                                    //									if(TTD.DetailLayersSkip.Contains(i) || TTD.DetailValues[i] == null){ continue; }
-                                    //									if(TTD.DetailsI[i] > 0){
-                                    //										tTerrain.terrainData.SetDetailLayer(0,0,i,TTD.DetailValues[i]);	
-                                    //									}
+                                    //if(TTD.DetailLayersSkip.Contains(i) || TTD.DetailValues[i] == null)
+                                    //{
+                                    //  continue;
+                                    //}
+                                    //if(TTD.DetailsI[i] > 0)
+                                    //{
+                                    //	tTerrain.terrainData.SetDetailLayer(0, 0, i, TTD.DetailValues[i]);	
+                                    //}
 
                                     if (TTD.DetailLayersSkip.Contains(index) || TTD.MainDetailsX == null || TTD.MainDetailsX.Count < 1)
                                     {
                                         continue;
                                     }
-                                    tDetails = tTerrain.terrainData.GetDetailLayer(0, 0, TTD.DetailMaxIndex, TTD.DetailMaxIndex, index);
+                                    tDetails = terrain.terrainData.GetDetailLayer(0, 0, TTD.DetailMaxIndex, TTD.DetailMaxIndex, index);
 
                                     int MaxCount = TTD.MainDetailsX.Count;
                                     for (int j = 0; j < MaxCount; j++)
@@ -709,7 +713,7 @@ namespace RoadArchitect
                                     }
                                     TTD.DetailsI[index] = TTD.DetailsX[index].Count;
 
-                                    tTerrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
+                                    terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
                                     tDetails = null;
                                     TTD.DetailHasProcessed = null;
                                 }
@@ -720,13 +724,13 @@ namespace RoadArchitect
                             //Trees:
                             if (_spline.road.isTreeModificationEnabled && TTD.TreesCurrent != null && TTD.TreesI > 0)
                             {
-                                tTerrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
+                                terrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
                             }
                             //Heights:
                             if (_spline.road.isHeightModificationEnabled && TTD.heights != null && TTD.cI > 0)
                             {
                                 //Do heights last to trigger collisions and stuff properly:
-                                tTerrain.terrainData.SetHeights(0, 0, TTD.heights);
+                                terrain.terrainData.SetHeights(0, 0, TTD.heights);
                             }
                         }
                     }
@@ -758,15 +762,15 @@ namespace RoadArchitect
             int ArrayCount;
             foreach (GSDTerrainHistoryMaker TH in _road.TerrainHistory)
             {
-                Terrain tTerrain = null;
+                Terrain terrain = null;
                 foreach (GSDTerrain TID in TIDs)
                 {
                     if (TID.UID == TH.TID)
                     {
-                        tTerrain = TID.terrain;
+                        terrain = TID.terrain;
                     }
                 }
-                if (!tTerrain)
+                if (!terrain)
                 {
                     continue;
                 }
@@ -774,18 +778,18 @@ namespace RoadArchitect
                 //Heights:
                 if (TH.x1 != null)
                 {
-                    heights = tTerrain.terrainData.GetHeights(0, 0, tTerrain.terrainData.heightmapWidth, tTerrain.terrainData.heightmapHeight);
+                    heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight);
                     ArrayCount = TH.cI;
                     for (int index = 0; index < ArrayCount; index++)
                     {
                         heights[TH.x1[index], TH.y1[index]] = TH.h[index];
                     }
-                    tTerrain.terrainData.SetHeights(0, 0, heights);
+                    terrain.terrainData.SetHeights(0, 0, heights);
                 }
                 //Details:
                 if (TH.DetailsI != null && TH.DetailsX != null && TH.DetailsY != null && TH.DetailsOldValue != null)
                 {
-                    int RealLayerCount = tTerrain.terrainData.detailPrototypes.Length;
+                    int RealLayerCount = terrain.terrainData.detailPrototypes.Length;
                     int StartIndex = 0;
                     int EndIndex = 0;
                     for (int index = 0; index < TH.DetailLayersCount; index++)
@@ -807,7 +811,7 @@ namespace RoadArchitect
                             continue;
                         }
 
-                        tDetails = tTerrain.terrainData.GetDetailLayer(0, 0, tTerrain.terrainData.detailWidth, tTerrain.terrainData.detailHeight, index);
+                        tDetails = terrain.terrainData.GetDetailLayer(0, 0, terrain.terrainData.detailWidth, terrain.terrainData.detailHeight, index);
                         ArrayCount = TH.DetailsI[index];
                         if (ArrayCount == 0)
                         {
@@ -819,7 +823,7 @@ namespace RoadArchitect
                             tDetails[TH.DetailsX[j], TH.DetailsY[j]] = TH.DetailsOldValue[j];
                         }
                         StartIndex = EndIndex;
-                        tTerrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
+                        terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
                         tDetails = null;
                     }
                 }
@@ -830,12 +834,11 @@ namespace RoadArchitect
                     ArrayCount = xTress.Length;
                     if (ArrayCount > 0 && TH.TreesOld != null)
                     {
-                        int TerrainTreeCount = tTerrain.terrainData.treeInstances.Length;
-                        ;
+                        int TerrainTreeCount = terrain.terrainData.treeInstances.Length;
                         TreeInstance[] tTrees = new TreeInstance[ArrayCount + TerrainTreeCount];
-                        System.Array.Copy(tTerrain.terrainData.treeInstances, 0, tTrees, 0, TerrainTreeCount);
+                        System.Array.Copy(terrain.terrainData.treeInstances, 0, tTrees, 0, TerrainTreeCount);
                         System.Array.Copy(xTress, 0, tTrees, TerrainTreeCount, ArrayCount);
-                        tTerrain.terrainData.treeInstances = tTrees;
+                        terrain.terrainData.treeInstances = tTrees;
                     }
                     xTress = null;
                 }
@@ -2327,6 +2330,7 @@ namespace RoadArchitect
                     MeshRenderer MR = tObj.AddComponent<MeshRenderer>();
                     float fDist = Vector3.Distance(RoadConnections_verts[index][2], RoadConnections_verts[index][3]);
                     fDist = Mathf.Round(fDist);
+
                     if (road.laneAmount == 2)
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 2f))
@@ -3210,6 +3214,7 @@ namespace RoadArchitect
         }
 
 
+
         private MeshFilter MeshSetup2IntersectionHelper(ref Mesh _mesh, ref Vector2[] _uv, ref Vector4[] _tangents, ref GameObject _masterObj, string _name, string _mat, bool _isCollider = false)
         {
             if (_mesh == null)
@@ -3866,7 +3871,8 @@ namespace RoadArchitect
         }
 
 
-        public static void TerrainHistorySave(List<GSDTerrainHistoryMaker> _obj, GSDRoad _road)
+        /// <summary> Saves the Terrain History to disk </summary>
+        public static void SaveTerrainHistory(List<GSDTerrainHistoryMaker> _obj, GSDRoad _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
@@ -3882,17 +3888,19 @@ namespace RoadArchitect
         }
 
 
-        public static void TerrainHistoryDelete(GSDRoad _road)
+        /// <summary> Deletes the Terrain History from disk </summary>
+        public static void DeleteTerrainHistory(GSDRoad _road)
         {
-            string tPath = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
-            if (System.IO.File.Exists(tPath))
+            string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
+            if (System.IO.File.Exists(path))
             {
-                System.IO.File.Delete(tPath);
+                System.IO.File.Delete(path);
             }
         }
 
 
-        public static List<GSDTerrainHistoryMaker> TerrainHistoryLoad(GSDRoad _road)
+        /// <summary> Loads the Terrain History from disk </summary>
+        public static List<GSDTerrainHistoryMaker> LoadTerrainHistory(GSDRoad _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
@@ -3917,27 +3925,29 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Generates the Terrain History file name </summary>
         private static string GetRoadTHFilename(ref GSDRoad _road)
         {
-            //string tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string tSceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
-            tSceneName = tSceneName.Replace("/", "");
-            tSceneName = tSceneName.Replace(".", "");
-            string tRoadName = _road.GSDRS.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;
-            return tSceneName + "-" + tRoadName + "-TH.gsd";
+            //string sceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
+            string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+            sceneName = sceneName.Replace("/", "");
+            sceneName = sceneName.Replace(".", "");
+            string roadName = _road.GSDRS.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;
+            return sceneName + "-" + roadName + "-TH.gsd";
         }
 
 
-        public static string CheckNonAssetDir()
+        /// <summary> Checks if RoadArchitect folder exists </summary>
+        public static string CheckRoadArchitectDirectory()
         {
-            string tPath = GSDRootUtil.GetDirBase();
-            if (!System.IO.Directory.Exists(tPath))
+            string path = GSDRootUtil.GetDirBase();
+            if (!System.IO.Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(tPath);
+                System.IO.Directory.CreateDirectory(path);
             }
-            if (System.IO.Directory.Exists(tPath))
+            if (System.IO.Directory.Exists(path))
             {
-                return tPath + "/";
+                return path + "/";
             }
             else
             {
@@ -3948,15 +3958,15 @@ namespace RoadArchitect
 
         public static string CheckNonAssetDirTH()
         {
-            CheckNonAssetDir();
-            string xPath = GSDRootUtil.GetTHDir();
-            if (!System.IO.Directory.Exists(xPath))
+            CheckRoadArchitectDirectory();
+            string path = GSDRootUtil.GetTHDir();
+            if (!System.IO.Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(xPath);
+                System.IO.Directory.CreateDirectory(path);
             }
-            if (System.IO.Directory.Exists(xPath))
+            if (System.IO.Directory.Exists(path))
             {
-                return xPath;
+                return path;
             }
             else
             {
@@ -3967,7 +3977,7 @@ namespace RoadArchitect
 
         public static string CheckNonAssetDirLibrary()
         {
-            CheckNonAssetDir();
+            CheckRoadArchitectDirectory();
             string xPath = GSDRootUtil.GetDirLibrary();
             if (!System.IO.Directory.Exists(xPath))
             {
@@ -3986,7 +3996,7 @@ namespace RoadArchitect
 
         public static void CheckNonAssetDirs()
         {
-            CheckNonAssetDir();
+            CheckRoadArchitectDirectory();
             CheckNonAssetDirTH();
             CheckNonAssetDirLibrary();
         }
@@ -4082,12 +4092,12 @@ namespace RoadArchitect
             if (_road.TerrainHistory != null && _road.TerrainHistory.Count > 0)
             {
                 //Delete unnecessary terrain histories:
-                foreach (GSDTerrainHistoryMaker THf in _road.TerrainHistory)
+                foreach (GSDTerrainHistoryMaker THMaker in _road.TerrainHistory)
                 {
-                    if (!tTIDS.Contains(THf.TID))
+                    if (!tTIDS.Contains(THMaker.TID))
                     {
-                        THf.Nullify();
-                        THf.isDestroySheduled = true;
+                        THMaker.Nullify();
+                        THMaker.isDestroySheduled = true;
                     }
                 }
 
@@ -4096,11 +4106,11 @@ namespace RoadArchitect
                 {
                     if (_road.TerrainHistory[index].isDestroySheduled)
                     {
-                        GSDTerrainHistoryMaker THf = _road.TerrainHistory[index];
+                        GSDTerrainHistoryMaker THMaker = _road.TerrainHistory[index];
                         _road.TerrainHistory.RemoveAt(index);
-                        if (THf != null)
+                        if (THMaker != null)
                         {
-                            THf = null;
+                            THMaker = null;
                         }
                     }
                 }
@@ -4133,21 +4143,21 @@ namespace RoadArchitect
                 }
 
                 int THCount = _road.TerrainHistory.Count;
-                bool bContainsTID = false;
+                bool isContainingTID = false;
                 for (int index = 0; index < THCount; index++)
                 {
                     if (_road.TerrainHistory[index].TID == TID.UID)
                     {
-                        bContainsTID = true;
+                        isContainingTID = true;
                         break;
                     }
                 }
 
-                if (!bContainsTID)
+                if (!isContainingTID)
                 {
-                    GSDTerrainHistoryMaker THx = new GSDTerrainHistoryMaker();
-                    THx.TID = TID.UID;
-                    _road.TerrainHistory.Add(THx);
+                    GSDTerrainHistoryMaker THMaker = new GSDTerrainHistoryMaker();
+                    THMaker.TID = TID.UID;
+                    _road.TerrainHistory.Add(THMaker);
                 }
 
                 TH = null;
@@ -4193,9 +4203,6 @@ namespace RoadArchitect
                     {
                         TotalSize += TTD.DetailsI[i];
                     }
-
-                    //					float tHalf = (float)TotalSize / 2f;
-                    //					int IntHalf = Mathf.CeilToInt(tHalf);
 
                     TH.DetailsX = new int[TotalSize];
                     TH.DetailsY = new int[TotalSize];

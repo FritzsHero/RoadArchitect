@@ -53,6 +53,5 @@ public class GSDEditorProgressWindow : EditorWindow
     {
         Repaint();
     }
-
 }
 #endif

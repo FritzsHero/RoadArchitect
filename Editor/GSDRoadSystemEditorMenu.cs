@@ -6,6 +6,7 @@ using RoadArchitect;
 #endregion
 
 
+/// <summary> Provides the menu items inside the editor  </summary>
 public class GSDRoadSystemEditorMenu : ScriptableObject
 {
     /// <summary> Creates the road system. </summary>
@@ -18,7 +19,8 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
 
         GameObject newRoadSystemObject = new GameObject("RoadArchitectSystem" + nextCount.ToString());
         GSDRoadSystem newRoadSystem = newRoadSystemObject.AddComponent<GSDRoadSystem>();
-        newRoadSystem.AddRoad(true);//Add road for new road system.
+        //Add road for new road system.
+        newRoadSystem.AddRoad(true);
 
         GameObject masterIntersectionsObject = new GameObject("Intersections");
         masterIntersectionsObject.transform.parent = newRoadSystemObject.transform;
@@ -85,9 +87,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     }
 
 
-    /// <summary>
-    /// WARNING: Only call this on an empty scene that has some terrains on it. MicroGSD LLC is not responsbile for data loss if this function is called by user.
-    /// </summary>
+    /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. We are not responsbile for data loss if this function is called by the user. </summary>
     [MenuItem("Window/Road Architect/Testing/Run all unit tests (caution)")]
     public static void TestProgram()
     {
@@ -98,9 +98,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     }
 
 
-    /// <summary>
-    /// WARNING: Only call this on an empty scene that has some terrains on it. MicroGSD LLC is not responsbile for data loss if this function is called by user.
-    /// </summary>
+    /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. We are not responsbile for data loss if this function is called by the user. </summary>
     [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
     public static void TestCleanup()
     {
