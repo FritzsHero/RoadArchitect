@@ -890,7 +890,7 @@ public class GSDRoad : MonoBehaviour
         if (isSavingTerrainHistoryOnDisk && TerrainHistory != null && TerrainHistory.Count > 0)
         {
             GSDRootUtil.StartProfiling(this, "TerrainHistory_Save");
-            GSDGeneralEditor.SaveTerrainHistory(TerrainHistory, this);
+            TerrainHistoryUtility.SaveTerrainHistory(TerrainHistory, this);
             GSDRootUtil.EndProfiling(this);
             TerrainHistory.Clear();
             TerrainHistory = null;
@@ -919,7 +919,7 @@ public class GSDRoad : MonoBehaviour
         GSDRoad tRoad = this;
         if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
         {
-            GSDGeneralEditor.DeleteTerrainHistory(this);
+            TerrainHistoryUtility.DeleteTerrainHistory(this);
         }
         else
         {
@@ -937,11 +937,11 @@ public class GSDRoad : MonoBehaviour
                 TerrainHistory.Clear();
                 TerrainHistory = null;
             }
-            TerrainHistory = GSDGeneralEditor.LoadTerrainHistory(this);
+            TerrainHistory = TerrainHistoryUtility.LoadTerrainHistory(this);
         }
         if (_isForced)
         {
-            GSDGeneralEditor.DeleteTerrainHistory(this);
+            TerrainHistoryUtility.DeleteTerrainHistory(this);
         }
     }
     #endregion

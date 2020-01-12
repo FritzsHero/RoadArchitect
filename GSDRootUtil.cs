@@ -317,25 +317,6 @@ namespace RoadArchitect
 
 
         #region "Default directory for library etc"
-        /// <summary> Returns the path to the RoadArchitect folder where Terrain History is saved </summary>
-        public static string GetDirBase()
-        {
-            return Application.dataPath.Replace("/Assets", "/GSD/");
-        }
-
-
-        /// <summary> Returns the path where Terrain History is saved </summary>
-        public static string GetTHDir()
-        {
-            string path = GetDirBase() + "TH/";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            return path;
-        }
-
-
         /// <summary> Gives the RoadArchitect Library </summary>
         public static string GetDirLibraryBase()
         {
