@@ -25,7 +25,7 @@ using System;
 
 namespace RoadArchitect
 {
-    public class GSDObjExporter : ScriptableObject
+    public class ObjExporter : ScriptableObject
     {
         private static int vertexOffset = 0;
         private static int normalOffset = 0;
