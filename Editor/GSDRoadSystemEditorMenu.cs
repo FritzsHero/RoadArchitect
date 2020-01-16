@@ -82,7 +82,7 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Help")]
     public static void GSDRoadsHelp()
     {
-        GSDHelpWindow helpWindow = EditorWindow.GetWindow<GSDHelpWindow>();
+        HelpWindow helpWindow = EditorWindow.GetWindow<HelpWindow>();
         helpWindow.Initialize();
     }
 
