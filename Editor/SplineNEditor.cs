@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(GSDSplineN))]
-    public class GSDSplineNEditor : Editor
+    public class SplineNEditor : Editor
     {
         #region "Vars"
         private GSDSplineN node;
@@ -548,14 +548,14 @@ namespace RoadArchitect
 
             if (GUILayout.Button("Save group", EditorStyles.miniButton, GUILayout.Width(108f)) || GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                GSDSaveWindow tSave = EditorWindow.GetWindow<GSDSaveWindow>();
+                SaveWindow tSave = EditorWindow.GetWindow<SaveWindow>();
                 if (node.isBridge)
                 {
-                    tSave.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.BridgeWizard, node);
+                    tSave.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
                 }
                 else
                 {
-                    tSave.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.BridgeWizard, node);
+                    tSave.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
                 }
             }
             EditorGUILayout.EndHorizontal();
@@ -776,8 +776,8 @@ namespace RoadArchitect
                 }
                 if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    GSDSaveWindow tSave = EditorWindow.GetWindow<GSDSaveWindow>();
-                    tSave.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.Extrusion, node, SMM);
+                    SaveWindow tSave = EditorWindow.GetWindow<SaveWindow>();
+                    tSave.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.Extrusion, node, SMM);
                 }
                 if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
@@ -1396,8 +1396,8 @@ namespace RoadArchitect
                 }
                 if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    GSDSaveWindow saveWindow = EditorWindow.GetWindow<GSDSaveWindow>();
-                    saveWindow.Initialize(ref sceneRect, GSDSaveWindow.WindowTypeEnum.Edge, node, null, EOM);
+                    SaveWindow saveWindow = EditorWindow.GetWindow<SaveWindow>();
+                    saveWindow.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.Edge, node, null, EOM);
                 }
 
                 if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))

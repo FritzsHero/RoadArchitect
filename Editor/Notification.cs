@@ -6,14 +6,14 @@ using UnityEditor;
 
 
 /// <summary> Used for notifications in other areas of RA. </summary>
-public class GSDNotification : EditorWindow
+public class Notification : EditorWindow
 {
     private string notification = "This is a Notification";
 
 
     private static void Initialize()
     {
-        GSDNotification window = EditorWindow.GetWindow<GSDNotification>();
+        Notification window = EditorWindow.GetWindow<Notification>();
         window.Show();
     }
 

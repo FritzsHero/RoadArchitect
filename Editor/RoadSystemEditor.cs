@@ -8,7 +8,7 @@ using UnityEditor;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(GSDRoadSystem))]
-    public class GSDRoadSystemEditor : Editor
+    public class RoadSystemEditor : Editor
     {
         #region "Vars"
         //Main target for this editor file:

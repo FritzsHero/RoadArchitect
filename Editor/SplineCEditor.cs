@@ -8,7 +8,7 @@ using UnityEditor;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(GSDSplineC))]
-    public class GSDSplineCEditor : Editor
+    public class SplineCEditor : Editor
     {
         private GSDSplineC spline;
         private int browseNode = 0;

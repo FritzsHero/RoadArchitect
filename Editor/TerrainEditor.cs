@@ -8,7 +8,7 @@ using UnityEditor;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(GSDTerrain))]
-    public class GSDTerrainEditor : Editor
+    public class TerrainEditor : Editor
     {
         #region "Vars"
         private GSDTerrain terrain;

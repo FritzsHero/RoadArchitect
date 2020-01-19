@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace RoadArchitect
 {
-    public class GSDSaveWindow : EditorWindow
+    public class SaveWindow : EditorWindow
     {
         public enum WindowTypeEnum
         {

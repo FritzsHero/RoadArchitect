@@ -8,7 +8,7 @@ using UnityEditor;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(GSDRoad))]
-    public class GSDRoadEditor : Editor
+    public class RoadEditor : Editor
     {
         private static string[] RoadMaterialDropdownEnumDesc = new string[]{
         "Asphalt",

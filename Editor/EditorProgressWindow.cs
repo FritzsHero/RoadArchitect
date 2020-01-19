@@ -6,7 +6,7 @@ using UnityEngine;
 
 
 /// <summary> Used for progress information for other areas of RA. </summary>
-public class GSDEditorProgressWindow : EditorWindow
+public class EditorProgressWindow : EditorWindow
 {
     private float seconds = 10.0f;
     private float startValue = 0f;
@@ -15,7 +15,7 @@ public class GSDEditorProgressWindow : EditorWindow
 
     private static void Init()
     {
-        GSDEditorProgressWindow window = (GSDEditorProgressWindow) EditorWindow.GetWindow(typeof(GSDEditorProgressWindow));
+        EditorProgressWindow window = (EditorProgressWindow) EditorWindow.GetWindow(typeof(EditorProgressWindow));
         window.Show();
     }
 

@@ -8,7 +8,7 @@ using UnityEditor;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(GSDRoadIntersection))]
-    public class GSDRoadIntersectionEditor : Editor
+    public class RoadIntersectionEditor : Editor
     {
         #region "Vars"
         private GSDRoadIntersection intersection;
