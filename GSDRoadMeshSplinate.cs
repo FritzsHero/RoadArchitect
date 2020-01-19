@@ -157,7 +157,7 @@ namespace GSD.Roads.Splination
         [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
         public SplineC spline = null;
         [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
-        public GSDSplineN node = null;
+        public SplineN node = null;
         public AxisTypeEnum Axis = AxisTypeEnum.X;
 
         public RepeatUVTypeEnum RepeatUVType = RepeatUVTypeEnum.None;
@@ -226,7 +226,7 @@ namespace GSD.Roads.Splination
         #endregion
 
 
-        public void Init(SplineC _spline, GSDSplineN _node, Transform _transform)
+        public void Init(SplineC _spline, SplineN _node, Transform _transform)
         {
             spline = _spline;
             node = _node;
@@ -2824,7 +2824,7 @@ namespace GSD.Roads.Splination
             float tIntHeight = 0f;
             GSDRoadIntersection GSDRI = null;
             bool bIsPastInter = false;
-            GSDSplineN xNode = null;
+            SplineN xNode = null;
             List<float> tOrigHeights = new List<float>();
 
             //			List<Terrain> xTerrains = null;

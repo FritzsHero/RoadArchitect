@@ -82,7 +82,7 @@ namespace RoadArchitect
                 return;
             }
             GSDSplineIN tNode;
-            GSDSplineN xNode;
+            SplineN xNode;
             nodes.Clear();
             float tParam = spline.GetClosestParam(mousePos, false, true);
             bool bEndInsert = false;

@@ -8,7 +8,7 @@ using GSD.Roads.EdgeObjects;
 
 namespace RoadArchitect
 {
-    public class GSDSplineN : MonoBehaviour
+    public class SplineN : MonoBehaviour
     {
         #region "Vars"
         public Vector3 pos;
@@ -42,13 +42,13 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode")]
         public bool isSpecialEndNode = false;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart")]
-        public GSDSplineN specialNodeCounterpart = null;
+        public SplineN specialNodeCounterpart = null;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart_Master")]
-        public GSDSplineN specialNodeCounterpartMaster = null;
+        public SplineN specialNodeCounterpartMaster = null;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart_Old")]
-        public GSDSplineN specialNodeCounterpartOld = null;
+        public SplineN specialNodeCounterpartOld = null;
         [UnityEngine.Serialization.FormerlySerializedAs("OriginalConnectionNodes")]
-        public GSDSplineN[] originalConnectionNodes = null;
+        public SplineN[] originalConnectionNodes = null;
 
         [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsStart")]
         public bool isSpecialEndNodeIsStart = false;
@@ -78,7 +78,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("UID")]
         public string uID;
         [UnityEngine.Serialization.FormerlySerializedAs("Intersection_OtherNode")]
-        public GSDSplineN intersectionOtherNode;
+        public SplineN intersectionOtherNode;
 #if UNITY_EDITOR
         //Editor only:
         [UnityEngine.Serialization.FormerlySerializedAs("bEditorSelected")]
@@ -109,7 +109,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("id_connected")]
         public List<int> connectedID;
         [UnityEngine.Serialization.FormerlySerializedAs("node_connected")]
-        public List<GSDSplineN> connectedNode;
+        public List<SplineN> connectedNode;
         [UnityEngine.Serialization.FormerlySerializedAs("bDeleteMe")]
         public bool isDeleteMe = false;
         public float tempDistance = 0f;
@@ -134,7 +134,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("bIsTunnelMatched")]
         public bool isTunnelMatched = false;
         [UnityEngine.Serialization.FormerlySerializedAs("TunnelCounterpartNode")]
-        public GSDSplineN tunnelCounterpartNode = null;
+        public SplineN tunnelCounterpartNode = null;
         #endregion
 
 
@@ -148,7 +148,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("bIsBridgeMatched")]
         public bool isBridgeMatched = false;
         [UnityEngine.Serialization.FormerlySerializedAs("BridgeCounterpartNode")]
-        public GSDSplineN bridgeCounterpartNode = null;
+        public SplineN bridgeCounterpartNode = null;
 
         [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
         public GSDRoadIntersection intersection = null;
@@ -831,8 +831,8 @@ namespace RoadArchitect
             {
                 return;
             }
-            GSDSplineN PrevNode = null;
-            GSDSplineN NextNode = null;
+            SplineN PrevNode = null;
+            SplineN NextNode = null;
 
             if (_isAddToEnd && spline.GetNodeCount() > 0)
             {
@@ -930,13 +930,13 @@ namespace RoadArchitect
             connectedID = null;
             connectedID = new List<int>();
             connectedNode = null;
-            connectedNode = new List<GSDSplineN>();
+            connectedNode = new List<SplineN>();
         }
 
 
         public void BreakConnection()
         {
-            GSDSplineN tNode2 = specialNodeCounterpart;
+            SplineN tNode2 = specialNodeCounterpart;
 
             if (isSpecialEndNodeIsStart)
             {
@@ -995,7 +995,7 @@ namespace RoadArchitect
             }
 
             //Figure out min splination:
-            GSDSplineN node = null;
+            SplineN node = null;
             minSplination = time;
             for (int index = idOnSpline; index >= 0; index--)
             {
@@ -1336,7 +1336,7 @@ namespace RoadArchitect
             if (isBridgeEnd)
             {
                 int nodeCount = spline.GetNodeCount();
-                GSDSplineN node = null;
+                SplineN node = null;
                 for (int i = 1; i < (nodeCount - 1); i++)
                 {
                     node = spline.nodes[i];
@@ -1384,7 +1384,7 @@ namespace RoadArchitect
             isBridgeMatched = false;
             bridgeCounterpartNode = null;
             int StartI = idOnSpline + 1;
-            GSDSplineN tNode = null;
+            SplineN tNode = null;
             for (int i = StartI; i < nodeCount; i++)
             {
                 tNode = spline.nodes[i];
@@ -1569,7 +1569,7 @@ namespace RoadArchitect
             if (isTunnelEnd)
             {
                 int nodeCount = spline.GetNodeCount();
-                GSDSplineN node = null;
+                SplineN node = null;
                 for (int index = 1; index < (nodeCount - 1); index++)
                 {
                     node = spline.nodes[index];
@@ -1617,7 +1617,7 @@ namespace RoadArchitect
             isTunnelMatched = false;
             tunnelCounterpartNode = null;
             int StartI = idOnSpline + 1;
-            GSDSplineN node = null;
+            SplineN node = null;
             for (int i = StartI; i < mCount; i++)
             {
                 node = spline.nodes[i];

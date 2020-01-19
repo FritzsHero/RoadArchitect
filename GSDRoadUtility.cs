@@ -23,15 +23,15 @@ namespace RoadArchitect
 #if UNITY_EDITOR
     public static class GSDConstruction
     {
-        public static GSDSplineN CreateNode(GSDRoad _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
+        public static SplineN CreateNode(GSDRoad _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
         {
-            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(GSDSplineN));
+            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
             GameObject nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
             if (!_isInterNode)
             {
                 UnityEditor.Undo.RegisterCreatedObjectUndo(nodeObj, "Created node");
             }
-            GSDSplineN tNode = nodeObj.AddComponent<GSDSplineN>();
+            SplineN tNode = nodeObj.AddComponent<SplineN>();
 
             if (_isSpecialEndNode)
             {
@@ -83,10 +83,10 @@ namespace RoadArchitect
         /// Determine which node is closest (up or down) on spline
         /// Place node, adjust all id on splines
         /// Setup spline </summary>
-        public static GSDSplineN InsertNode(GSDRoad _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
+        public static SplineN InsertNode(GSDRoad _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(GSDSplineN));
+            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
             if (!_isForcedLoc)
             {
                 nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
@@ -166,7 +166,7 @@ namespace RoadArchitect
             {
                 for (int index = 0; index < childCount; index++)
                 {
-                    GSDSplineN xNode = _road.spline.nodes[index];
+                    SplineN xNode = _road.spline.nodes[index];
                     if (!isZeroInsert && !isEndInsert)
                     {
                         if (param > xNode.time)
@@ -189,7 +189,7 @@ namespace RoadArchitect
                 }
             }
 
-            GSDSplineN node = nodeObj.AddComponent<GSDSplineN>();
+            SplineN node = nodeObj.AddComponent<SplineN>();
             if (_isForcedLoc && !_isSpecialEndNode)
             {
                 node.isBridge = true;
@@ -1158,21 +1158,21 @@ namespace RoadArchitect
         public List<GSDRoadIntersection> iFMarkerPlates_tID;
 
         //Back lanes:
-        public List<GSDSplineN> iBLane0s_nID;
-        public List<GSDSplineN> iBLane1s_nID;
-        public List<GSDSplineN> iBLane2s_nID;
-        public List<GSDSplineN> iBLane3s_nID;
+        public List<SplineN> iBLane0s_nID;
+        public List<SplineN> iBLane1s_nID;
+        public List<SplineN> iBLane2s_nID;
+        public List<SplineN> iBLane3s_nID;
         //Front lanes:
-        public List<GSDSplineN> iFLane0s_nID;
-        public List<GSDSplineN> iFLane1s_nID;
-        public List<GSDSplineN> iFLane2s_nID;
-        public List<GSDSplineN> iFLane3s_nID;
+        public List<SplineN> iFLane0s_nID;
+        public List<SplineN> iFLane1s_nID;
+        public List<SplineN> iFLane2s_nID;
+        public List<SplineN> iFLane3s_nID;
         //Main plates:
-        public List<GSDSplineN> iBMainPlates_nID;
-        public List<GSDSplineN> iFMainPlates_nID;
+        public List<SplineN> iBMainPlates_nID;
+        public List<SplineN> iFMainPlates_nID;
         //Marker plates:
-        public List<GSDSplineN> iBMarkerPlates_nID;
-        public List<GSDSplineN> iFMarkerPlates_nID;
+        public List<SplineN> iBMarkerPlates_nID;
+        public List<SplineN> iFMarkerPlates_nID;
 
         //Back lanes:
         public List<Vector2[]> iBLane0s_uv;
@@ -1257,11 +1257,11 @@ namespace RoadArchitect
         public bool isInterseOn = true;
 
         public List<int> RoadCuts;
-        public List<GSDSplineN> RoadCutNodes;
+        public List<SplineN> RoadCutNodes;
         public List<int> ShoulderCutsR;
-        public List<GSDSplineN> ShoulderCutsRNodes;
+        public List<SplineN> ShoulderCutsRNodes;
         public List<int> ShoulderCutsL;
-        public List<GSDSplineN> ShoulderCutsLNodes;
+        public List<SplineN> ShoulderCutsLNodes;
 
         public enum SaveMeshTypeEnum { Road, Shoulder, Intersection, Railing, Center, Bridge, RoadCut, SCut, BSCut, RoadConn };
 
@@ -1308,9 +1308,9 @@ namespace RoadArchitect
             cut_tangents_SR_world = new List<Vector4[]>();
             cut_tangents_SL_world = new List<Vector4[]>();
 
-            RoadCutNodes = new List<GSDSplineN>();
-            ShoulderCutsRNodes = new List<GSDSplineN>();
-            ShoulderCutsLNodes = new List<GSDSplineN>();
+            RoadCutNodes = new List<SplineN>();
+            ShoulderCutsRNodes = new List<SplineN>();
+            ShoulderCutsLNodes = new List<SplineN>();
 
             RoadConnections_verts = new List<Vector3[]>();
             RoadConnections_tris = new List<int[]>();
@@ -1432,21 +1432,21 @@ namespace RoadArchitect
             iBMarkerPlates_tID = new List<GSDRoadIntersection>();
             iFMarkerPlates_tID = new List<GSDRoadIntersection>();
 
-            iBLane0s_nID = new List<GSDSplineN>();
-            iBLane1s_nID = new List<GSDSplineN>();
-            iBLane2s_nID = new List<GSDSplineN>();
-            iBLane3s_nID = new List<GSDSplineN>();
+            iBLane0s_nID = new List<SplineN>();
+            iBLane1s_nID = new List<SplineN>();
+            iBLane2s_nID = new List<SplineN>();
+            iBLane3s_nID = new List<SplineN>();
             //Front lanes:
-            iFLane0s_nID = new List<GSDSplineN>();
-            iFLane1s_nID = new List<GSDSplineN>();
-            iFLane2s_nID = new List<GSDSplineN>();
-            iFLane3s_nID = new List<GSDSplineN>();
+            iFLane0s_nID = new List<SplineN>();
+            iFLane1s_nID = new List<SplineN>();
+            iFLane2s_nID = new List<SplineN>();
+            iFLane3s_nID = new List<SplineN>();
             //Main plates:
-            iBMainPlates_nID = new List<GSDSplineN>();
-            iFMainPlates_nID = new List<GSDSplineN>();
+            iBMainPlates_nID = new List<SplineN>();
+            iFMainPlates_nID = new List<SplineN>();
             //Marker plates:
-            iBMarkerPlates_nID = new List<GSDSplineN>();
-            iFMarkerPlates_nID = new List<GSDSplineN>();
+            iBMarkerPlates_nID = new List<SplineN>();
+            iFMarkerPlates_nID = new List<SplineN>();
             //}
 
             tTerrain = null;
@@ -2846,7 +2846,7 @@ namespace RoadArchitect
             }
 
             vCount = road.spline.GetNodeCount();
-            GSDSplineN tNode = null;
+            SplineN tNode = null;
             for (int index = 0; index < vCount; index++)
             {
                 tNode = road.spline.nodes[index];
@@ -4865,7 +4865,7 @@ namespace RoadArchitect
         }
 
 
-        public static void LoadNodeObjects(string _fileName, GSDSplineN _node, bool _isDefault = false, bool _isBridge = false)
+        public static void LoadNodeObjects(string _fileName, SplineN _node, bool _isDefault = false, bool _isBridge = false)
         {
 #if UNITY_WEBPLAYER
 			return;
@@ -7085,13 +7085,13 @@ namespace RoadArchitect
         }
 
 
-        public static GameObject CreateIntersection(GSDSplineN _node1, GSDSplineN _node2)
+        public static GameObject CreateIntersection(SplineN _node1, SplineN _node2)
         {
             return CreateIntersectionDo(_node1, _node2);
         }
 
 
-        private static GameObject CreateIntersectionDo(GSDSplineN _node1, GSDSplineN _node2)
+        private static GameObject CreateIntersectionDo(SplineN _node1, SplineN _node2)
         {
             float RoadMod = 10f;
             GameObject SystemObj = _node1.transform.parent.parent.parent.gameObject;
@@ -7130,8 +7130,8 @@ namespace RoadArchitect
             GSDRI.isSecondSpecialFirst = false;
             GSDRI.isSecondSpecialLast = false;
 
-            GSDSplineN tNode1 = null;
-            GSDSplineN tNode2 = null;
+            SplineN tNode1 = null;
+            SplineN tNode2 = null;
             if (_node1.spline == _node2.spline)
             {
                 if (_node1.idOnSpline < _node2.idOnSpline)
@@ -7171,7 +7171,7 @@ namespace RoadArchitect
                 GSDRI.intersectionType = GSDRoadIntersection.IntersectionTypeEnum.ThreeWay;
             }
 
-            GSDSplineN zNode = null;
+            SplineN zNode = null;
             if (tNode1.isEndPoint)
             {
                 bool isFirstNode = false;
@@ -7346,7 +7346,7 @@ namespace RoadArchitect
         public static Vector3[] GetCornerVectorsTest(GSDRoadIntersection _roadIntersection)
         {
             Vector3[] tVects = new Vector3[4];
-            GSDSplineN tNode;
+            SplineN tNode;
             tNode = _roadIntersection.node1;
             SplineC tSpline = tNode.spline;
 
@@ -7485,7 +7485,7 @@ namespace RoadArchitect
         private static Vector3[] GetCornerVectors(GSDRoadIntersection _roadIntersection, bool _isPrimary = true)
         {
             Vector3[] tVects = new Vector3[4];
-            GSDSplineN tNode;
+            SplineN tNode;
             if (_isPrimary)
             {
                 tNode = _roadIntersection.node1;
@@ -7516,7 +7516,7 @@ namespace RoadArchitect
         private static Vector3[] GetExtendedVectors(GSDRoadIntersection _roadIntersection, bool _isPrimary = true)
         {
             Vector3[] tVects = new Vector3[4];
-            GSDSplineN tNode;
+            SplineN tNode;
             if (_isPrimary)
             {
                 tNode = _roadIntersection.node1;
@@ -7893,10 +7893,10 @@ namespace RoadArchitect
             }
 
             //Contains int IDs of connected nodes:			
-            List<GSDSplineN> tList = new List<GSDSplineN>();
+            List<SplineN> tList = new List<SplineN>();
             //Get all connected nodes on intersection node1:
             int cCount = _roadIntersection.node1.connectedID.Count;
-            GSDSplineN tNode;
+            SplineN tNode;
             for (int index = 0; index < cCount; index++)
             {
                 //tNode = GetNodeByID(GSDRI.Node1.id_connected[i]);
@@ -7918,7 +7918,7 @@ namespace RoadArchitect
                 }
             }
             //Declare connected nodes:
-            GSDSplineN n1, n2, n3, n4;
+            SplineN n1, n2, n3, n4;
             n1 = tList[0];
             n2 = tList[1];
             n3 = tList[2];
@@ -7997,10 +7997,10 @@ namespace RoadArchitect
         }
 
 
-        private static GSDSplineN GetNodeByID(int _ID)
+        private static SplineN GetNodeByID(int _ID)
         {
-            Object[] SplineNodeObjects = GameObject.FindObjectsOfType(typeof(GSDSplineN));
-            foreach (GSDSplineN tNode in SplineNodeObjects)
+            Object[] SplineNodeObjects = GameObject.FindObjectsOfType(typeof(SplineN));
+            foreach (SplineN tNode in SplineNodeObjects)
             {
                 if (tNode.id == _ID)
                 {
@@ -8011,9 +8011,9 @@ namespace RoadArchitect
         }
 
 
-        static Vector3 GetFourCornerPoint(ref SplineC _spline, ref GSDSplineN _node, GSDRoadIntersection _roadIntersection)
+        static Vector3 GetFourCornerPoint(ref SplineC _spline, ref SplineN _node, GSDRoadIntersection _roadIntersection)
         {
-            GSDSplineN iNode;
+            SplineN iNode;
             if (_node.connectedNode.Contains(_roadIntersection.node1))
             {
                 iNode = _roadIntersection.node1;
@@ -8209,7 +8209,7 @@ namespace RoadArchitect
             Object[] allSplines = GameObject.FindObjectsOfType(typeof(SplineC));
 
             //Store connected spline nodes on each other:
-            GSDSplineN node;
+            SplineN node;
             foreach (SplineC spline in allSplines)
             {
                 int nodeCount = spline.nodes.Count;
@@ -8241,7 +8241,7 @@ namespace RoadArchitect
             foreach (SplineC spline in allSplines)
             {
                 splineCount += 1;
-                foreach (GSDSplineN node in spline.nodes)
+                foreach (SplineN node in spline.nodes)
                 {
                     nodeCount += 1;
                     node.ResetNavigationData();

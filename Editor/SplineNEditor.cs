@@ -14,11 +14,11 @@ using System.Collections.Generic;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDSplineN))]
+    [CustomEditor(typeof(SplineN))]
     public class SplineNEditor : Editor
     {
         #region "Vars"
-        private GSDSplineN node;
+        private SplineN node;
         private int count = -1;
         private int currentCount = 0;
         public bool isSplinatedObjectHelp = false;
@@ -27,8 +27,8 @@ namespace RoadArchitect
         private bool isRemovingAll = false;
         private float horizRoadMax = 0;
 
-        private GSDSplineN node1 = null;
-        private GSDSplineN node2 = null;
+        private SplineN node1 = null;
+        private SplineN node2 = null;
         private bool isCreatingIntersection = false;
 
 
@@ -221,7 +221,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
-            node = (GSDSplineN)target;
+            node = (SplineN)target;
         }
 
 
@@ -408,7 +408,7 @@ namespace RoadArchitect
 
 
 
-            if ((Selection.objects.Length == 1 && Selection.objects[0] is GSDSplineN) || (node.specialNodeCounterpart == null && !node.isSpecialRoadConnPrimary))
+            if ((Selection.objects.Length == 1 && Selection.objects[0] is SplineN) || (node.specialNodeCounterpart == null && !node.isSpecialRoadConnPrimary))
             {
                 //Do extrusion and edge objects overview:
                 DoExtAndEdgeOverview();
@@ -431,8 +431,8 @@ namespace RoadArchitect
                 EditorGUILayout.BeginVertical();
                 if (GUILayout.Button("Update road connection"))
                 {
-                    GSDSplineN tNode1 = node.originalConnectionNodes[0];
-                    GSDSplineN tNode2 = node.originalConnectionNodes[1];
+                    SplineN tNode1 = node.originalConnectionNodes[0];
+                    SplineN tNode2 = node.originalConnectionNodes[1];
                     node.specialNodeCounterpart.BreakConnection();
                     node.spline.road.UpdateRoad();
                     tNode1.spline.ActivateEndNodeConnection(tNode1, tNode2);
@@ -2270,9 +2270,9 @@ namespace RoadArchitect
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
             {
-                Object[] xNodeObjects = GameObject.FindObjectsOfType(typeof(GSDSplineN));
+                Object[] xNodeObjects = GameObject.FindObjectsOfType(typeof(SplineN));
                 Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(GSDRoadConnector));
-                foreach (GSDSplineN xNode in xNodeObjects)
+                foreach (SplineN xNode in xNodeObjects)
                 {
                     if (Vector3.Distance(xNode.transform.position, node.transform.position) < 2f)
                     {
@@ -2411,13 +2411,13 @@ namespace RoadArchitect
 
 
         #region "Triggers Interesctions; Connections; Update"
-        private void TriggerRoadConnection(GSDSplineN _node1, GSDSplineN _node2)
+        private void TriggerRoadConnection(SplineN _node1, SplineN _node2)
         {
             node.spline.ActivateEndNodeConnection(_node1, _node2);
         }
 
 
-        private void TriggerIntersection(GSDSplineN _node1, GSDSplineN _node2)
+        private void TriggerIntersection(SplineN _node1, SplineN _node2)
         {
             isCreatingIntersection = true;
             node1 = _node1;

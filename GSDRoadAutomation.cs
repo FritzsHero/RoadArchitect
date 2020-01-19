@@ -48,12 +48,12 @@ namespace GSD.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="_nodePosition">The location of the newly created node.</param>
-        public static GSDSplineN CreateNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
+        public static SplineN CreateNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
         {
             int splineChildCount = _road.spline.transform.childCount;
             //Add the node
             GameObject nodeObj = new GameObject("Node" + (splineChildCount + 1).ToString());
-            GSDSplineN node = nodeObj.AddComponent<GSDSplineN>();
+            SplineN node = nodeObj.AddComponent<SplineN>();
 
             //Set node location:
             //Make sure it doesn't try to create a node below 0 height
@@ -82,10 +82,10 @@ namespace GSD.Roads
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
-		public static GSDSplineN InsertNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
+		public static SplineN InsertNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(GSDSplineN));
+            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
             nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             //Set node location:
@@ -121,7 +121,7 @@ namespace GSD.Roads
             //Figure out where to insert the node:
             for (int index = 0; index < nodesCount; index++)
             {
-                GSDSplineN node = _road.spline.nodes[index];
+                SplineN node = _road.spline.nodes[index];
                 if (!isInsertZero && !isInsertEnded)
                 {
                     if (param > node.time)
@@ -135,7 +135,7 @@ namespace GSD.Roads
                 _road.spline.nodes[index].idOnSpline += 1;
             }
 
-            GSDSplineN newNode = nodeObj.AddComponent<GSDSplineN>();
+            SplineN newNode = nodeObj.AddComponent<SplineN>();
             newNode.spline = _road.spline;
             newNode.idOnSpline = start;
             newNode.pos = _nodePosition;
@@ -208,16 +208,16 @@ namespace GSD.Roads
             }
 
             //See if any end point nodes are on top of each other already since T might not intersect all the time.:
-            List<KeyValuePair<GSDSplineN, GSDSplineN>> keyValuePairs = new List<KeyValuePair<GSDSplineN, GSDSplineN>>();
+            List<KeyValuePair<SplineN, SplineN>> keyValuePairs = new List<KeyValuePair<SplineN, SplineN>>();
             foreach (GSDRoad road in roads)
             {
-                foreach (GSDSplineN intersectionNode1 in _road.spline.nodes)
+                foreach (SplineN intersectionNode1 in _road.spline.nodes)
                 {
                     if (intersectionNode1.isIntersection || !intersectionNode1.IsLegitimate())
                     {
                         continue;
                     }
-                    foreach (GSDSplineN intersectionNode2 in road.spline.nodes)
+                    foreach (SplineN intersectionNode2 in road.spline.nodes)
                     {
                         if (intersectionNode2.isIntersection || !intersectionNode2.IsLegitimate())
                         {
@@ -228,13 +228,13 @@ namespace GSD.Roads
                             //Only do T intersections and let the next algorithm handle the +, since T might not intersect all the time.
                             if (intersectionNode1.isEndPoint || intersectionNode2.isEndPoint)
                             {
-                                keyValuePairs.Add(new KeyValuePair<GSDSplineN, GSDSplineN>(intersectionNode1, intersectionNode2));
+                                keyValuePairs.Add(new KeyValuePair<SplineN, SplineN>(intersectionNode1, intersectionNode2));
                             }
                         }
                     }
                 }
             }
-            foreach (KeyValuePair<GSDSplineN, GSDSplineN> KVP in keyValuePairs)
+            foreach (KeyValuePair<SplineN, SplineN> KVP in keyValuePairs)
             {
                 //Now create the fucking intersection:
                 GameObject tInter = GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
@@ -304,13 +304,13 @@ namespace GSD.Roads
                                     }
                                 }
 
-                                GSDSplineN IntersectionNode1 = null;
-                                GSDSplineN IntersectionNode2 = null;
+                                SplineN IntersectionNode1 = null;
+                                SplineN IntersectionNode2 = null;
                                 Vector3 IntersectionPoint3D = new Vector3(intersectPoint2D.x, height, intersectPoint2D.y);
                                 //Debug.Log("Instersect found road: " + xRoad.transform.name + " at point: " + IntersectionPoint3D.ToString());
 
                                 //Check primary road if any nodes are nearby and usable for intersection
-                                foreach (GSDSplineN node in _road.spline.nodes)
+                                foreach (SplineN node in _road.spline.nodes)
                                 {
                                     if (node.IsLegitimate())
                                     {
@@ -325,7 +325,7 @@ namespace GSD.Roads
                                 }
 
                                 //Check secondary road if any nodes are nearby and usable for intersection
-                                foreach (GSDSplineN node in road.spline.nodes)
+                                foreach (SplineN node in road.spline.nodes)
                                 {
                                     if (node.IsLegitimate())
                                     {

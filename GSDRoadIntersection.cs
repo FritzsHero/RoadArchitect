@@ -11,9 +11,9 @@ namespace RoadArchitect
     {
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("Node1")]
-        public GSDSplineN node1;
+        public SplineN node1;
         [UnityEngine.Serialization.FormerlySerializedAs("Node2")]
-        public GSDSplineN node2;
+        public SplineN node2;
 
         [UnityEngine.Serialization.FormerlySerializedAs("Node1UID")]
         public string node1uID;
@@ -280,7 +280,7 @@ namespace RoadArchitect
 
 
         #region "Setup"
-        public void Setup(GSDSplineN _node1, GSDSplineN _node2)
+        public void Setup(SplineN _node1, SplineN _node2)
         {
             if (_node1.spline == _node2.spline)
             {
@@ -321,7 +321,7 @@ namespace RoadArchitect
         }
 
 
-        public void DeleteRelevantChildren(GSDSplineN _node, string _string)
+        public void DeleteRelevantChildren(SplineN _node, string _string)
         {
             int childCount = transform.childCount;
             for (int index = childCount - 1; index >= 0; index--)

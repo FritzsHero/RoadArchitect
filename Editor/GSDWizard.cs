@@ -54,7 +54,7 @@ namespace RoadArchitect
 
         private GUIStyle thumbStyle;
         private Vector2 scrollPos = new Vector2(0f, 25f);
-        private GSDSplineN thisNode = null;
+        private SplineN thisNode = null;
         private List<GSDRoadUtil.WizardObject> objectList = null;
         private bool isUsingNoGUI = false;
         public Rect rect;
@@ -272,7 +272,7 @@ namespace RoadArchitect
 
 
         #region "Init"
-        public void Initialize(WindowTypeEnum _windowType, GSDSplineN _node)
+        public void Initialize(WindowTypeEnum _windowType, SplineN _node)
         {
             if (rect.width < 1f && rect.height < 1f)
             {

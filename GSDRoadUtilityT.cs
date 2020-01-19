@@ -218,7 +218,7 @@ namespace GSD.Threaded
             float tIntStrength = 0f;
             float tIntStrength2 = 0f;
             //bool bMaxIntersection = false;
-            GSDSplineN xNode = null;
+            SplineN xNode = null;
             float tIntHeight = 0f;
             float tIntHeight2 = 0f;
             GSDRoadIntersection GSDRI = null;
@@ -1271,7 +1271,7 @@ namespace GSD.Threaded
             bool isPastInter = false;
             bool isMaxIntersection = false;
             bool isWasPrevMaxInter = false;
-            GSDSplineN xNode = null;
+            SplineN xNode = null;
             float tInterSubtract = 4f;
             float tLastInterHeight = -4f;
             bool isOverridenRampR = false;
@@ -1316,7 +1316,7 @@ namespace GSD.Threaded
             bool isShrinkRoadFNext = false;
             bool isShrinkRoadF = false;
             bool isNextInter = false;
-            GSDSplineN currentNode = null;
+            SplineN currentNode = null;
             int currentNodeID = -1;
             int previousNodeID = -1;
             int NodeCount = spline.GetNodeCount();
@@ -3809,7 +3809,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void InterFinalizeiBLane0(ref GSDSplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode)
+        private static void InterFinalizeiBLane0(ref SplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode)
         {
             if (_node.intersectionConstruction.isBLane0DoneFinal)
             {
@@ -3853,7 +3853,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void InterFinalizeiBLane1(ref GSDSplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is0LAdded, ref bool _is1RAdded)
+        private static void InterFinalizeiBLane1(ref SplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is0LAdded, ref bool _is1RAdded)
         {
             if (_node.intersectionConstruction.isBLane1DoneFinal)
             {
@@ -3910,7 +3910,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void InterFinalizeiBLane2(ref GSDSplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded, ref bool _is1RAdded)
+        private static void InterFinalizeiBLane2(ref SplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded, ref bool _is1RAdded)
         {
             if (_node.intersectionConstruction.isBLane2DoneFinal)
             {
@@ -3965,7 +3965,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void InterFinalizeiBLane3(ref GSDSplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded, ref bool _is1RAdded)
+        private static void InterFinalizeiBLane3(ref SplineN _node, ref GSDRoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded, ref bool _is1RAdded)
         {
             if (_is2LAdded && !_node.intersectionConstruction.isBLane2DoneFinal)
             {
@@ -4039,7 +4039,7 @@ namespace GSD.Threaded
                 PreInter_RoadWidthMod = 5.5f;
             }
             float preInterDistance = (spline.RoadWidth * PreInter_RoadWidthMod) / spline.distance;
-            GSDSplineN iNode = null;
+            SplineN iNode = null;
             for (int j = 0; j < nodeCount; j++)
             {
                 isTempCancel = false;
@@ -4119,8 +4119,8 @@ namespace GSD.Threaded
             }
 
             //Now get the four points per intersection:
-            GSDSplineN oNode1 = null;
-            GSDSplineN oNode2 = null;
+            SplineN oNode1 = null;
+            SplineN oNode2 = null;
             float PreInterPrecision1 = -1f;
             float PreInterPrecision2 = -1f;
             Vector3 PreInterVect = default(Vector3);
@@ -5068,7 +5068,7 @@ namespace GSD.Threaded
 
             float Step = _road.roadDefinition / tSpline.distance;
 
-            GSDSplineN xNode = null;
+            SplineN xNode = null;
             float tInterSubtract = 4f;
             float tLastInterHeight = -4f;
 
@@ -5387,7 +5387,7 @@ namespace GSD.Threaded
         private static void RoadJobPrelimFinalizeInter(ref GSDRoad _road)
         {
             int mCount = _road.spline.GetNodeCount();
-            GSDSplineN tNode;
+            SplineN tNode;
             for (int index = 0; index < mCount; index++)
             {
                 tNode = _road.spline.nodes[index];
@@ -5596,7 +5596,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void Inter_OrganizeVertices(ref GSDSplineN _node, ref GSDRoad _road)
+        private static void Inter_OrganizeVertices(ref SplineN _node, ref GSDRoad _road)
         {
             GSDIntersections.iConstructionMaker iCon = _node.intersectionConstruction;
             GSDRoadIntersection GSDRI = _node.intersection;

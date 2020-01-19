@@ -232,7 +232,7 @@ namespace RoadArchitect.Tests
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
-            foreach (GSDSplineN tNode in road1.spline.nodes)
+            foreach (SplineN tNode in road1.spline.nodes)
             {
                 if (tNode.isIntersection)
                 {
@@ -249,11 +249,11 @@ namespace RoadArchitect.Tests
         /// <summary> This will create an intersection if two nodes overlap on the road. Only good if the roads only overlap once. </summary>
         private static void UnitTestIntersectionHelper(GSDRoad _road1, GSDRoad _road2, GSDRoadIntersection.iStopTypeEnum _iStopType, GSDRoadIntersection.RoadTypeEnum _roadType)
         {
-            GSDSplineN nodeInter1 = null;
-            GSDSplineN nodeInter2 = null;
-            foreach (GSDSplineN node in _road1.spline.nodes)
+            SplineN nodeInter1 = null;
+            SplineN nodeInter2 = null;
+            foreach (SplineN node in _road1.spline.nodes)
             {
-                foreach (GSDSplineN xNode in _road2.spline.nodes)
+                foreach (SplineN xNode in _road2.spline.nodes)
                 {
                     if (GSDRootUtil.IsApproximately(Vector3.Distance(node.transform.position, xNode.transform.position), 0f, 0.05f))
                     {
@@ -347,7 +347,7 @@ namespace RoadArchitect.Tests
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
-            foreach (GSDSplineN node in road1.spline.nodes)
+            foreach (SplineN node in road1.spline.nodes)
             {
                 if (node.isIntersection)
                 {

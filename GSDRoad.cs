@@ -652,9 +652,9 @@ public class GSDRoad : MonoBehaviour
 
         //In here for intersection patching purposes:
         int nodeCount = spline.GetNodeCount();
-        GSDSplineN node = null;
-        GSDSplineN node1 = null;
-        GSDSplineN node2 = null;
+        SplineN node = null;
+        SplineN node1 = null;
+        SplineN node2 = null;
         if (spline.CheckInvalidNodeCount())
         {
             spline.Setup();
@@ -1072,7 +1072,7 @@ public class GSDRoad : MonoBehaviour
         }
         isEditorConstructing = false;
         int nodeCount = spline.GetNodeCount();
-        GSDSplineN node;
+        SplineN node;
         for (int i = 0; i < nodeCount; i++)
         {
             node = spline.nodes[i];
@@ -1766,7 +1766,7 @@ public class GSDRoad : MonoBehaviour
         {
             return;
         }
-        GSDSplineN node = null;
+        SplineN node = null;
 
         int nodeCount = spline.GetNodeCount();
         for (int i = 0; i < nodeCount; i++)

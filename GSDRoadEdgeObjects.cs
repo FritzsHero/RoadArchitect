@@ -18,7 +18,7 @@ namespace GSD.Roads.EdgeObjects
         public bool isRequiringUpdate = false;
         public string UID = "";
         [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
-        public GSDSplineN node = null;
+        public SplineN node = null;
         [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
         public bool isGSD = false;
         [UnityEngine.Serialization.FormerlySerializedAs("EdgeObject")]

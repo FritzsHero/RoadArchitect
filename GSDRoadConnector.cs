@@ -10,7 +10,7 @@ using RoadArchitect;
 [ExecuteInEditMode]
 public class GSDRoadConnector : MonoBehaviour
 {
-    public GSDSplineN connectedNode;
+    public SplineN connectedNode;
     [HideInInspector]
     public GSDOffRoadObject offRoadObject { get { return transform.parent.GetComponent<GSDOffRoadObject>(); } }
 
@@ -32,7 +32,7 @@ public class GSDRoadConnector : MonoBehaviour
     #endregion
 
 
-    public void ConnectToNode(GSDSplineN _node)
+    public void ConnectToNode(SplineN _node)
     {
         Debug.Log("Would connect to " + _node);
         connectedNode = _node;

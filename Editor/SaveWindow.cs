@@ -226,7 +226,7 @@ namespace RoadArchitect
 
 
         #region "Init"
-        public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, GSDSplineN _node, GSD.Roads.Splination.SplinatedMeshMaker _SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker _EOM = null)
+        public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, SplineN _node, GSD.Roads.Splination.SplinatedMeshMaker _SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker _EOM = null)
         {
             int rectHeight = 300;
             int rectWidth = 360;
