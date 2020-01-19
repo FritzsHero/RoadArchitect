@@ -3,7 +3,7 @@ using UnityEngine;
 #endregion
 
 
-public class GSDOffRoadObject : MonoBehaviour
+public class OffRoadObject : MonoBehaviour
 {
     /// <summary> The color of the offRoadNode Gizmo inside Editor </summary>
     public static readonly Color offRoadNodeColor = new Color(1f, 0f, 0.5f, 0.75f);

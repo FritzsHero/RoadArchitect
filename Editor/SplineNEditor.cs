@@ -565,7 +565,7 @@ namespace RoadArchitect
             EditorGUILayout.LabelField("");
             if (GUILayout.Button("Open Wizard", loadButton, GUILayout.Width(128f)))
             {// || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
-                GSDWizard wizard = EditorWindow.GetWindow<GSDWizard>();
+                Wizard wizard = EditorWindow.GetWindow<Wizard>();
                 if (sceneRect.x < 0)
                 {
                     sceneRect.x = 0f;
@@ -577,11 +577,11 @@ namespace RoadArchitect
                 wizard.rect = sceneRect;
                 if (node.isBridgeStart)
                 {
-                    wizard.Initialize(GSDWizard.WindowTypeEnum.BridgeComplete, node);
+                    wizard.Initialize(Wizard.WindowTypeEnum.BridgeComplete, node);
                 }
                 else
                 {
-                    wizard.Initialize(GSDWizard.WindowTypeEnum.Extrusion, node);
+                    wizard.Initialize(Wizard.WindowTypeEnum.Extrusion, node);
                 }
             }
             EditorGUILayout.EndHorizontal();

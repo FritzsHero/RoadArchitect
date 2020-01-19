@@ -7,7 +7,7 @@ using RoadArchitect;
 
 
 /// <summary> Provides the menu items inside the editor  </summary>
-public class GSDRoadSystemEditorMenu : ScriptableObject
+public class RoadSystemEditorMenu : ScriptableObject
 {
     /// <summary> Creates the road system. </summary>
     [MenuItem("Window/Road Architect/Create road system")]

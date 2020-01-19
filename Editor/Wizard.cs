@@ -11,7 +11,7 @@ using System.IO;
 
 namespace RoadArchitect
 {
-    public class GSDWizard : EditorWindow
+    public class Wizard : EditorWindow
     {
         public enum WindowTypeEnum
         {
@@ -31,18 +31,18 @@ namespace RoadArchitect
 
 
         private static string[] WindowTypeDescBridge = new string[]{
-        "Extrusion items",
-        "Edge objects",
-        "Complete bridges",
-        "Other groups"
-    };
+            "Extrusion items",
+            "Edge objects",
+            "Complete bridges",
+            "Other groups"
+        };
 
 
         private static string[] WindowTypeDesc = new string[]{
-        "Extrusion items",
-        "Edge objects",
-        "Other groups"
-    };
+            "Extrusion items",
+            "Edge objects",
+            "Other groups"
+        };
 
 
         #region "Vars"
@@ -184,7 +184,9 @@ namespace RoadArchitect
                     else
                     {
                         if (i % yMod == 0)
-                        { EditorGUILayout.EndHorizontal(); EditorGUILayout.BeginHorizontal(); yCount += 1; xCount = 0; }
+                        {
+                            EditorGUILayout.EndHorizontal(); EditorGUILayout.BeginHorizontal(); yCount += 1; xCount = 0;
+                        }
                     }
                 }
 

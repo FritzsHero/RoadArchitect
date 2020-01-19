@@ -12,21 +12,21 @@ public class GSDRoadConnector : MonoBehaviour
 {
     public SplineN connectedNode;
     [HideInInspector]
-    public GSDOffRoadObject offRoadObject { get { return transform.parent.GetComponent<GSDOffRoadObject>(); } }
+    public OffRoadObject offRoadObject { get { return transform.parent.GetComponent<OffRoadObject>(); } }
 
 
 #if UNITY_EDITOR
     #region "Gizmos"
     private void OnDrawGizmos()
     {
-        Gizmos.color = GSDOffRoadObject.offRoadNodeColor;
+        Gizmos.color = OffRoadObject.offRoadNodeColor;
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6f, 0f), new Vector3(2f, 11f, 2f));
     }
 
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = GSDOffRoadObject.offRoadSelectedNodeColor;
+        Gizmos.color = OffRoadObject.offRoadSelectedNodeColor;
         Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
     }
     #endregion
