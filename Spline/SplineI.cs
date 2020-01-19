@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace RoadArchitect
 {
-    public class GSDSplineI : MonoBehaviour
+    public class SplineI : MonoBehaviour
     {
 #if UNITY_EDITOR
         public class GSDSplineIN
@@ -33,7 +33,7 @@ namespace RoadArchitect
 
             public int idOnSpline;
             [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
-            public GSDSplineC spline;
+            public SplineC spline;
             [UnityEngine.Serialization.FormerlySerializedAs("bDestroyed")]
             public bool isDestroyed = false;
             [UnityEngine.Serialization.FormerlySerializedAs("bPreviewNode")]
@@ -63,7 +63,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("MousePos")]
         public Vector3 mousePos = new Vector3(0f, 0f, 0f);
         [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
-        public GSDSplineC spline;
+        public SplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("ActionNode")]
         public GSDSplineIN actionNode;
         // Gizmos

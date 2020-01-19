@@ -6,15 +6,15 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDSplineF))]
+    [CustomEditor(typeof(SplineF))]
     public class SplineFEditor : Editor
     {
-        private GSDSplineF splineF;
+        private SplineF splineF;
 
 
         private void OnEnable()
         {
-            splineF = (GSDSplineF)target;
+            splineF = (SplineF)target;
         }
 
 

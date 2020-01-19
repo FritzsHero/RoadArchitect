@@ -155,7 +155,7 @@ namespace GSD.Roads.Splination
         public Vector3 StartPos = default(Vector3);
         public Vector3 EndPos = default(Vector3);
         [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
-        public GSDSplineC spline = null;
+        public SplineC spline = null;
         [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
         public GSDSplineN node = null;
         public AxisTypeEnum Axis = AxisTypeEnum.X;
@@ -226,7 +226,7 @@ namespace GSD.Roads.Splination
         #endregion
 
 
-        public void Init(GSDSplineC _spline, GSDSplineN _node, Transform _transform)
+        public void Init(SplineC _spline, GSDSplineN _node, Transform _transform)
         {
             spline = _spline;
             node = _node;

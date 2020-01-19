@@ -34,7 +34,7 @@ namespace RoadArchitect
             //Spline:
             GameObject splineObj = new GameObject("Spline");
             splineObj.transform.parent = road.transform;
-            road.spline = splineObj.AddComponent<GSDSplineC>();
+            road.spline = splineObj.AddComponent<SplineC>();
             road.spline.splineRoot = splineObj;
             road.spline.road = road;
             road.GSDSplineObj = splineObj;
@@ -70,10 +70,10 @@ namespace RoadArchitect
             GSDRoad[] allRoadObjs = GetComponentsInChildren<GSDRoad>();
             int roadCount = allRoadObjs.Length;
             GSDRoad road = null;
-            GSDSplineC[] piggys = null;
+            SplineC[] piggys = null;
             if (roadCount > 1)
             {
-                piggys = new GSDSplineC[roadCount];
+                piggys = new SplineC[roadCount];
                 for (int i = 0; i < roadCount; i++)
                 {
                     road = allRoadObjs[i];

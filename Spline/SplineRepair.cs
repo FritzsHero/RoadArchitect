@@ -7,25 +7,25 @@ using RoadArchitect;
 
 
 [ExecuteInEditMode]
-public class GSDSplineRepair : MonoBehaviour
+public class SplineRepair : MonoBehaviour
 {
     public void RemoveLastNode()
     {
-        GSDSplineC spline = GetComponent<GSDSplineC>();
+        SplineC spline = GetComponent<SplineC>();
         spline.nodes.RemoveAt(spline.nodes.Count - 1);
         spline.road.UpdateRoad();
     }
 }
 
 
-[CustomEditor(typeof(GSDSplineRepair))]
+[CustomEditor(typeof(SplineRepair))]
 public class GSDSplineRepairEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        GSDSplineRepair repair = (GSDSplineRepair) target;
+        SplineRepair repair = (SplineRepair) target;
         if (GUILayout.Button("Remove last node"))
         {
             repair.RemoveLastNode();

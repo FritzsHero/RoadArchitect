@@ -7,16 +7,16 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDSplineC))]
+    [CustomEditor(typeof(SplineC))]
     public class SplineCEditor : Editor
     {
-        private GSDSplineC spline;
+        private SplineC spline;
         private int browseNode = 0;
 
 
         private void OnEnable()
         {
-            spline = (GSDSplineC)target;
+            spline = (SplineC)target;
         }
 
 

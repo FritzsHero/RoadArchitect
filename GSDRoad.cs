@@ -37,12 +37,12 @@ public class GSDRoad : MonoBehaviour
     public string editorTitleString = "";
 
     [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
-    public GSDSplineC spline;
+    public SplineC spline;
 
     public int MostRecentNodeCount = -1;
     public GameObject GSDSplineObj;
     public GSDRoadSystem GSDRS;
-    public GSDSplineC[] PiggyBacks = null;
+    public SplineC[] PiggyBacks = null;
     [UnityEngine.Serialization.FormerlySerializedAs("bEditorProgressBar")]
     public bool isEditorProgressBar = false;
     //Unique ID
@@ -1134,13 +1134,13 @@ public class GSDRoad : MonoBehaviour
 
             if (PiggyBacks != null)
             {
-                GSDSplineC tPiggy = PiggyBacks[0];
-                GSDSplineC[] NewPiggys = null;
+                SplineC tPiggy = PiggyBacks[0];
+                SplineC[] NewPiggys = null;
 
                 PiggyBacks[0] = null;
                 if (PiggyBacks.Length > 1)
                 {
-                    NewPiggys = new GSDSplineC[PiggyBacks.Length - 1];
+                    NewPiggys = new SplineC[PiggyBacks.Length - 1];
                     for (int i = 1; i < PiggyBacks.Length; i++)
                     {
                         NewPiggys[i - 1] = PiggyBacks[i];

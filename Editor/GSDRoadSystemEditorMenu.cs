@@ -54,10 +54,10 @@ public class GSDRoadSystemEditorMenu : ScriptableObject
         int roadCount = allRoadObjects.Length;
 
         GSDRoad singleRoad = null;
-        GSDSplineC[] tPiggys = null;
+        SplineC[] tPiggys = null;
         if (roadCount > 1)
         {
-            tPiggys = new GSDSplineC[roadCount - 1];
+            tPiggys = new SplineC[roadCount - 1];
         }
 
         for (int count = 0; count < roadCount; count++)

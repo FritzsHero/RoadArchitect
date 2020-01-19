@@ -340,13 +340,13 @@ namespace RoadArchitect
         }
 
 
-        public static void ProcessRoadTerrainHook1(GSDSplineC _spline, GSDRoad _road, bool _isMultithreaded = true)
+        public static void ProcessRoadTerrainHook1(SplineC _spline, GSDRoad _road, bool _isMultithreaded = true)
         {
             ProcessRoadTerrainHook1Do(ref _spline, ref _road, _isMultithreaded);
         }
 
 
-        private static void ProcessRoadTerrainHook1Do(ref GSDSplineC _spline, ref GSDRoad _road, bool _isMultithreaded)
+        private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref GSDRoad _road, bool _isMultithreaded)
         {
             GSDRootUtil.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
             //First lets make sure all terrains have GSDTerrain shit on them:
@@ -647,7 +647,7 @@ namespace RoadArchitect
         }
 
 
-        public static void ProcessRoadTerrainHook2(GSDSplineC _spline, ref List<TempTerrainData> _TTDList)
+        public static void ProcessRoadTerrainHook2(SplineC _spline, ref List<TempTerrainData> _TTDList)
         {
             GSDRootUtil.StartProfiling(_spline.road, "ProcessRoad_Terrain_Hook2");
             ProcessRoadTerrainHook2Do(ref _spline, ref _TTDList);
@@ -655,7 +655,7 @@ namespace RoadArchitect
         }
 
 
-        private static void ProcessRoadTerrainHook2Do(ref GSDSplineC _spline, ref List<TempTerrainData> _TTDList)
+        private static void ProcessRoadTerrainHook2Do(ref SplineC _spline, ref List<TempTerrainData> _TTDList)
         {
             if (!_spline.road.isTreeModificationEnabled && !_spline.road.isHeightModificationEnabled && !_spline.road.isDetailModificationEnabled)
             {
@@ -4989,7 +4989,7 @@ namespace RoadArchitect
             Vector3 tSize = _terrain.terrainData.size;
             foreach (GSDRoad tRoad in tRoads)
             {
-                GSDSplineC tSpline = tRoad.spline;
+                SplineC tSpline = tRoad.spline;
                 int tCount = tSpline.RoadDefKeysArray.Length;
 
                 Vector3 POS1 = default(Vector3);
@@ -5306,7 +5306,7 @@ namespace RoadArchitect
             Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
 
             GSDRoadIntersection GSDRI = _masterGameObj.GetComponent<GSDRoadIntersection>();
-            GSDSplineC tSpline = GSDRI.node1.spline;
+            SplineC tSpline = GSDRI.node1.spline;
 
             GameObject tObj = null;
             //			Vector3 xDir = default(Vector3);
@@ -5414,7 +5414,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotRR(GSDRoadIntersection _intersection, GSDSplineC _spline)
+        private static Vector3 StopSignGetRotRR(GSDRoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRL, _intersection.cornerRR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time - tDist, 0f, 1f);
@@ -5423,7 +5423,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotLL(GSDRoadIntersection _intersection, GSDSplineC _spline)
+        private static Vector3 StopSignGetRotLL(GSDRoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time + tDist, 0f, 1f);
@@ -5432,7 +5432,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotRL(GSDRoadIntersection _intersetion, GSDSplineC _spline)
+        private static Vector3 StopSignGetRotRL(GSDRoadIntersection _intersetion, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersetion.cornerLL, _intersetion.cornerRL) / 2f) + (0.025f * Vector3.Distance(_intersetion.cornerLR, _intersetion.cornerRL))) / _spline.distance;
             float p = -1f;
@@ -5457,7 +5457,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotLR(GSDRoadIntersection _intersection, GSDSplineC _spline)
+        private static Vector3 StopSignGetRotLR(GSDRoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerLR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLR, _intersection.cornerRL))) / _spline.distance;
             float p = -1f;
@@ -5493,7 +5493,7 @@ namespace RoadArchitect
         private static void CreateTrafficLightBases_Do(ref GameObject _masterGameObj, bool _isTrafficLight1)
         {
             GSDRoadIntersection intersection = _masterGameObj.GetComponent<GSDRoadIntersection>();
-            GSDSplineC spline = intersection.node1.spline;
+            SplineC spline = intersection.node1.spline;
             bool isRB = true;
 
             //float RoadWidth = tSpline.tRoad.RoadWidth();
@@ -5932,7 +5932,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotRL(GSDRoadIntersection _intersection, GSDSplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotRL(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -5951,7 +5951,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotLR(GSDRoadIntersection _intersection, GSDSplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotLR(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -5970,7 +5970,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotRR(GSDRoadIntersection _intersection, GSDSplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotRR(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -5992,7 +5992,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotLL(GSDRoadIntersection _intersection, GSDSplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotLL(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -6019,7 +6019,7 @@ namespace RoadArchitect
         private static void CreateTrafficLightMains(GameObject _masterGameObj, GameObject _RR, GameObject _RL, GameObject _LL, GameObject _LR)
         {
             GSDRoadIntersection GSDRI = _masterGameObj.GetComponent<GSDRoadIntersection>();
-            GSDSplineC tSpline = GSDRI.node1.spline;
+            SplineC tSpline = GSDRI.node1.spline;
 
             float tDist = (Vector3.Distance(GSDRI.cornerRL, GSDRI.cornerRR) / 2f) / tSpline.distance;
             Vector3 tan = tSpline.GetSplineValue(GSDRI.node1.time + tDist, true);
@@ -6100,7 +6100,7 @@ namespace RoadArchitect
         private static void ProcessPole(GameObject _masterGameObj, GameObject _obj, Vector3 _tan, int _corner, float _interDist)
         {
             GSDRoadIntersection intersection = _masterGameObj.GetComponent<GSDRoadIntersection>();
-            GSDSplineC spline = intersection.node1.spline;
+            SplineC spline = intersection.node1.spline;
             //			bool bIsRB = true;
 
             //			float RoadWidth = tSpline.tRoad.RoadWidth();
@@ -7328,7 +7328,7 @@ namespace RoadArchitect
             {
                 if (!GSDRI.isSameSpline)
                 {
-                    GSDRI.node1.spline.road.PiggyBacks = new GSDSplineC[4];
+                    GSDRI.node1.spline.road.PiggyBacks = new SplineC[4];
                     GSDRI.node1.spline.road.PiggyBacks[0] = GSDRI.node2.spline;
 
                     GSDRI.node1.spline.road.PiggyBacks[1] = GSDRI.node1.spline;
@@ -7348,7 +7348,7 @@ namespace RoadArchitect
             Vector3[] tVects = new Vector3[4];
             GSDSplineN tNode;
             tNode = _roadIntersection.node1;
-            GSDSplineC tSpline = tNode.spline;
+            SplineC tSpline = tNode.spline;
 
             //RR = Node1 - 5, Node2 + 5
             //RL = Node1 + 5, Node2 + 5
@@ -7494,7 +7494,7 @@ namespace RoadArchitect
             {
                 tNode = _roadIntersection.node2;
             }
-            GSDSplineC tSpline = tNode.spline;
+            SplineC tSpline = tNode.spline;
 
             float tOffset = 7f;
             float tPos1 = tNode.time - (tOffset / tSpline.distance);
@@ -7525,7 +7525,7 @@ namespace RoadArchitect
             {
                 tNode = _roadIntersection.node2;
             }
-            GSDSplineC tSpline = tNode.spline;
+            SplineC tSpline = tNode.spline;
             Vector3 NodePos = tNode.transform.position;
 
             float tOffset = tNode.spline.road.RoadWidth();
@@ -7929,10 +7929,10 @@ namespace RoadArchitect
             }
 
             //Determine most relevant spline:
-            GSDSplineC n1Spline = n1.spline;
-            GSDSplineC n2Spline = n2.spline;
-            GSDSplineC n3Spline = n3.spline;
-            GSDSplineC n4Spline = null;
+            SplineC n1Spline = n1.spline;
+            SplineC n2Spline = n2.spline;
+            SplineC n3Spline = n3.spline;
+            SplineC n4Spline = null;
             if (n4 != null)
             {
                 n4Spline = n4.spline;
@@ -7984,7 +7984,7 @@ namespace RoadArchitect
 
 
         #region "Intersection creation helpers"
-        private static float GetLongestSplineDistance(GSDSplineC _spline1, GSDSplineC _spline2)
+        private static float GetLongestSplineDistance(SplineC _spline1, SplineC _spline2)
         {
             if (_spline1.distance > _spline2.distance)
             {
@@ -8011,7 +8011,7 @@ namespace RoadArchitect
         }
 
 
-        static Vector3 GetFourCornerPoint(ref GSDSplineC _spline, ref GSDSplineN _node, GSDRoadIntersection _roadIntersection)
+        static Vector3 GetFourCornerPoint(ref SplineC _spline, ref GSDSplineN _node, GSDRoadIntersection _roadIntersection)
         {
             GSDSplineN iNode;
             if (_node.connectedNode.Contains(_roadIntersection.node1))
@@ -8206,11 +8206,11 @@ namespace RoadArchitect
         {
             InitResetNavigationData();
 
-            Object[] allSplines = GameObject.FindObjectsOfType(typeof(GSDSplineC));
+            Object[] allSplines = GameObject.FindObjectsOfType(typeof(SplineC));
 
             //Store connected spline nodes on each other:
             GSDSplineN node;
-            foreach (GSDSplineC spline in allSplines)
+            foreach (SplineC spline in allSplines)
             {
                 int nodeCount = spline.nodes.Count;
                 for (int i = 0; i < nodeCount; i++)
@@ -8235,10 +8235,10 @@ namespace RoadArchitect
 
         public static void InitResetNavigationData()
         {
-            Object[] allSplines = GameObject.FindObjectsOfType(typeof(GSDSplineC));
+            Object[] allSplines = GameObject.FindObjectsOfType(typeof(SplineC));
             int splineCount = 0;
             int nodeCount = 0;
-            foreach (GSDSplineC spline in allSplines)
+            foreach (SplineC spline in allSplines)
             {
                 splineCount += 1;
                 foreach (GSDSplineN node in spline.nodes)

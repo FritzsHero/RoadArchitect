@@ -152,13 +152,13 @@ namespace GSD.Threaded
 
 
         //Privatized for obfuscate:
-        public static void DoRects(GSDSplineC _spline, GSDTerraforming.TempTerrainData _TTD)
+        public static void DoRects(SplineC _spline, GSDTerraforming.TempTerrainData _TTD)
         {
             DoRectsDo(ref _spline, ref _TTD);
         }
 
 
-        private static void DoRectsDo(ref GSDSplineC _spline, ref GSDTerraforming.TempTerrainData _TTD)
+        private static void DoRectsDo(ref SplineC _spline, ref GSDTerraforming.TempTerrainData _TTD)
         {
             float Sep = _spline.road.RoadWidth() * 0.5f;
             float HeightSep = Sep + (_spline.road.matchHeightsDistance * 0.5f);
@@ -706,7 +706,7 @@ namespace GSD.Threaded
         }
 
 
-        private static GSDRoadUtil.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref GSDTerraforming.TempTerrainData _TTD, ref GSDSplineC _spline)
+        private static GSDRoadUtil.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref GSDTerraforming.TempTerrainData _TTD, ref SplineC _spline)
         {
             Vector3 lVect1far = default(Vector3);
             Vector3 rVect1far = default(Vector3);
@@ -1001,7 +1001,7 @@ namespace GSD.Threaded
         }
 
 
-        private static float ProcessCoordinateGrabber(ref float _param, ref GSDSplineC _spline, ref GSDTerraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
+        private static float ProcessCoordinateGrabber(ref float _param, ref SplineC _spline, ref GSDTerraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
         {
             int MinX = _XY[0];
             int MinY = _XY[1];
@@ -1201,7 +1201,7 @@ namespace GSD.Threaded
         private static void RoadJobPrelimDo(ref GSDRoad _road)
         {
             #region "Vars"
-            GSDSplineC spline = _road.spline;
+            SplineC spline = _road.spline;
             //Road,shoulder,ramp and lane widths:
             float roadWidth = _road.RoadWidth();
             float shoulderWidth = _road.shoulderWidth;
@@ -4012,7 +4012,7 @@ namespace GSD.Threaded
         #region "Intersection Prelim"
         private static void RoadJobPrelimInter(ref GSDRoad _road)
         {
-            GSDSplineC spline = _road.spline;
+            SplineC spline = _road.spline;
             float roadWidth = _road.RoadWidth();
             float shoulderWidth = _road.shoulderWidth;
             float roadSeperation = roadWidth / 2f;
@@ -5053,7 +5053,7 @@ namespace GSD.Threaded
             Vector3 RampR_PrevL = default(Vector3);
             Vector3 RampL_PrevR = default(Vector3);
             Vector3 RampL_PrevL = default(Vector3);
-            GSDSplineC tSpline = _road.spline;
+            SplineC tSpline = _road.spline;
             //Road width:
             float RoadWidth = _road.RoadWidth();
             float ShoulderWidth = _road.shoulderWidth;
@@ -8180,7 +8180,7 @@ namespace GSD.Threaded
 
 
         #region "Set vector heights"
-        private static void SetVectorHeight2(ref Vector3 _worldVector, ref float _p, ref List<KeyValuePair<float, float>> _list, ref GSDSplineC _spline)
+        private static void SetVectorHeight2(ref Vector3 _worldVector, ref float _p, ref List<KeyValuePair<float, float>> _list, ref SplineC _spline)
         {
             int mCount = _list.Count;
             int index = 0;
@@ -8344,12 +8344,12 @@ namespace GSD.Threaded
         private object handle = new object();
         private List<GSDTerraforming.TempTerrainData> TTDList;
         [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
-        private GSDSplineC spline;
+        private SplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         private GSDRoad road;
 
 
-        public void Setup(ref List<GSDTerraforming.TempTerrainData> _TTDList, GSDSplineC _tSpline, GSDRoad _tRoad)
+        public void Setup(ref List<GSDTerraforming.TempTerrainData> _TTDList, SplineC _tSpline, GSDRoad _tRoad)
         {
             TTDList = _TTDList;
             spline = _tSpline;
@@ -8437,7 +8437,7 @@ namespace GSD.Threaded
 
     public static class TerrainCalcsStatic
     {
-        public static void RunMe(ref List<GSDTerraforming.TempTerrainData> _TTDList, GSDSplineC _spline, GSDRoad _road)
+        public static void RunMe(ref List<GSDTerraforming.TempTerrainData> _TTDList, SplineC _spline, GSDRoad _road)
         {
             float Step = (_road.roadDefinition * 0.4f) / _spline.distance;
             if (Step > 2f)

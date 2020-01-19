@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace RoadArchitect
 {
-    public class GSDSplineC : MonoBehaviour
+    public class SplineC : MonoBehaviour
     {
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
@@ -23,9 +23,9 @@ namespace RoadArchitect
 
         //Editor preview splines for add and insert:
         [UnityEngine.Serialization.FormerlySerializedAs("PreviewSpline")]
-        public GSDSplineF previewSpline;
+        public SplineF previewSpline;
         [UnityEngine.Serialization.FormerlySerializedAs("PreviewSplineInsert")]
-        public GSDSplineI previewSplineInsert;
+        public SplineI previewSplineInsert;
 
 
         #region "Nav data Vars"
@@ -83,9 +83,9 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End_Result")]
         public float specialEndNodeDelayEndResult = 10f;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_Start_OtherSpline")]
-        public GSDSplineC specialEndNodeStartOtherSpline = null;
+        public SplineC specialEndNodeStartOtherSpline = null;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_End_OtherSpline")]
-        public GSDSplineC specialEndNodeEndOtherSpline = null;
+        public SplineC specialEndNodeEndOtherSpline = null;
         #endregion
 
 
@@ -167,13 +167,13 @@ namespace RoadArchitect
             //Setup preview spline:
             if (previewSpline == null)
             {
-                previewSpline = splineRoot.AddComponent<GSDSplineF>();
+                previewSpline = splineRoot.AddComponent<SplineF>();
                 previewSpline.spline = this;
             }
             //Setup preview spline for insertion mode:
             if (previewSplineInsert == null)
             {
-                previewSplineInsert = splineRoot.AddComponent<GSDSplineI>();
+                previewSplineInsert = splineRoot.AddComponent<SplineI>();
                 previewSplineInsert.spline = this;
             }
 #endif
@@ -2017,7 +2017,7 @@ namespace RoadArchitect
 
         private void ActivateEndNodeConnectionDo(GSDSplineN _node1, GSDSplineN _node2)
         {
-            GSDSplineC spline = _node2.spline;
+            SplineC spline = _node2.spline;
             int nodeCount = spline.GetNodeCount();
             int mCount = GetNodeCount();
             //Don't allow connection with less than 3 nodes:
@@ -2231,7 +2231,7 @@ namespace RoadArchitect
             {
                 if (_node1.spline != _node2.spline)
                 {
-                    _node1.spline.road.PiggyBacks = new GSDSplineC[1];
+                    _node1.spline.road.PiggyBacks = new SplineC[1];
                     _node1.spline.road.PiggyBacks[0] = _node2.spline;
                 }
                 _node1.spline.road.isUpdateRequired = true;

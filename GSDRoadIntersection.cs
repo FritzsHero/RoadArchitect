@@ -348,7 +348,7 @@ namespace RoadArchitect
 #if UNITY_EDITOR
             if (!isSameSpline)
             {
-                GSDSplineC[] piggys = new GSDSplineC[1];
+                SplineC[] piggys = new SplineC[1];
                 piggys[0] = node2.spline;
                 node1.spline.road.PiggyBacks = piggys;
                 node1.spline.TriggerSetup();

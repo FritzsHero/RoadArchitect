@@ -71,7 +71,7 @@ namespace RoadArchitect
 
         public int idOnSpline = -1;
         [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
-        public GSDSplineC spline;
+        public SplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("bDestroyed")]
         public bool isDestroyed = false;
         //Unique ID

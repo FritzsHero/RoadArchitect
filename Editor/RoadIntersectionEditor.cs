@@ -1145,7 +1145,7 @@ namespace RoadArchitect
                 {
                     if (!intersection.isSameSpline)
                     {
-                        intersection.node1.spline.road.PiggyBacks = new GSDSplineC[1];
+                        intersection.node1.spline.road.PiggyBacks = new SplineC[1];
                         intersection.node1.spline.road.PiggyBacks[0] = intersection.node2.spline;
                     }
                     intersection.node1.spline.road.isUpdateRequired = true;
