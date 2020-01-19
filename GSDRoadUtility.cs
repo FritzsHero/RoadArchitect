@@ -1141,21 +1141,21 @@ namespace RoadArchitect
         public List<Vector3[]> iFMarkerPlates_normals;
 
         //Back lanes:
-        public List<GSDRoadIntersection> iBLane0s_tID;
-        public List<GSDRoadIntersection> iBLane1s_tID;
-        public List<GSDRoadIntersection> iBLane2s_tID;
-        public List<GSDRoadIntersection> iBLane3s_tID;
+        public List<RoadIntersection> iBLane0s_tID;
+        public List<RoadIntersection> iBLane1s_tID;
+        public List<RoadIntersection> iBLane2s_tID;
+        public List<RoadIntersection> iBLane3s_tID;
         //Front lanes:
-        public List<GSDRoadIntersection> iFLane0s_tID;
-        public List<GSDRoadIntersection> iFLane1s_tID;
-        public List<GSDRoadIntersection> iFLane2s_tID;
-        public List<GSDRoadIntersection> iFLane3s_tID;
+        public List<RoadIntersection> iFLane0s_tID;
+        public List<RoadIntersection> iFLane1s_tID;
+        public List<RoadIntersection> iFLane2s_tID;
+        public List<RoadIntersection> iFLane3s_tID;
         //Main plates:
-        public List<GSDRoadIntersection> iBMainPlates_tID;
-        public List<GSDRoadIntersection> iFMainPlates_tID;
+        public List<RoadIntersection> iBMainPlates_tID;
+        public List<RoadIntersection> iFMainPlates_tID;
         //Marker plates:
-        public List<GSDRoadIntersection> iBMarkerPlates_tID;
-        public List<GSDRoadIntersection> iFMarkerPlates_tID;
+        public List<RoadIntersection> iBMarkerPlates_tID;
+        public List<RoadIntersection> iFMarkerPlates_tID;
 
         //Back lanes:
         public List<SplineN> iBLane0s_nID;
@@ -1416,21 +1416,21 @@ namespace RoadArchitect
             iBLane1s_IsMiddleLane = new List<bool>();
 
             //Back lanes:
-            iBLane0s_tID = new List<GSDRoadIntersection>();
-            iBLane1s_tID = new List<GSDRoadIntersection>();
-            iBLane2s_tID = new List<GSDRoadIntersection>();
-            iBLane3s_tID = new List<GSDRoadIntersection>();
+            iBLane0s_tID = new List<RoadIntersection>();
+            iBLane1s_tID = new List<RoadIntersection>();
+            iBLane2s_tID = new List<RoadIntersection>();
+            iBLane3s_tID = new List<RoadIntersection>();
             //Front lanes:
-            iFLane0s_tID = new List<GSDRoadIntersection>();
-            iFLane1s_tID = new List<GSDRoadIntersection>();
-            iFLane2s_tID = new List<GSDRoadIntersection>();
-            iFLane3s_tID = new List<GSDRoadIntersection>();
+            iFLane0s_tID = new List<RoadIntersection>();
+            iFLane1s_tID = new List<RoadIntersection>();
+            iFLane2s_tID = new List<RoadIntersection>();
+            iFLane3s_tID = new List<RoadIntersection>();
             //Main plates:
-            iBMainPlates_tID = new List<GSDRoadIntersection>();
-            iFMainPlates_tID = new List<GSDRoadIntersection>();
+            iBMainPlates_tID = new List<RoadIntersection>();
+            iFMainPlates_tID = new List<RoadIntersection>();
             //Marker plates:
-            iBMarkerPlates_tID = new List<GSDRoadIntersection>();
-            iFMarkerPlates_tID = new List<GSDRoadIntersection>();
+            iBMarkerPlates_tID = new List<RoadIntersection>();
+            iFMarkerPlates_tID = new List<RoadIntersection>();
 
             iBLane0s_nID = new List<SplineN>();
             iBLane1s_nID = new List<SplineN>();
@@ -1838,7 +1838,7 @@ namespace RoadArchitect
         private void MeshSetup1IntersectionObjectsSetup()
         {
             int nodeCount = road.spline.GetNodeCount();
-            List<GSDRoadIntersection> tGSDRIs = new List<GSDRoadIntersection>();
+            List<RoadIntersection> tGSDRIs = new List<RoadIntersection>();
             for (int index = 0; index < nodeCount; index++)
             {
                 if (road.spline.nodes[index].isIntersection)
@@ -1851,22 +1851,22 @@ namespace RoadArchitect
             }
 
             //Cleanups:
-            foreach (GSDRoadIntersection GSDRI in tGSDRIs)
+            foreach (RoadIntersection GSDRI in tGSDRIs)
             {
                 GSDIntersectionObjects.CleanupIntersectionObjects(GSDRI.transform.gameObject);
-                if (GSDRI.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.StopSign_AllWay)
+                if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.StopSign_AllWay)
                 {
                     GSDIntersectionObjects.CreateStopSignsAllWay(GSDRI.transform.gameObject, true);
                 }
-                else if (GSDRI.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1)
+                else if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1)
                 {
                     GSDIntersectionObjects.CreateTrafficLightBases(GSDRI.transform.gameObject, true);
                 }
-                else if (GSDRI.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
+                else if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
                 {
 
                 }
-                else if (GSDRI.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.None)
+                else if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.None)
                 {
                     //Do nothing.
                 }
@@ -2498,20 +2498,20 @@ namespace RoadArchitect
             Vector2[] tUV = null;
             Vector4[] tTangents = null;
             MeshFilter MF = null;
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane0 = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane1 = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane2 = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane3 = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_MainPlate = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_MainPlateM = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            HashSet<GSDRoadIntersection> UniqueGSDRI = new HashSet<GSDRoadIntersection>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane0 = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane1 = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane2 = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane3 = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_MainPlate = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_MainPlateM = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            HashSet<RoadIntersection> UniqueGSDRI = new HashSet<RoadIntersection>();
 
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane1_Disabled = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane2_Disabled = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane2_DisabledActive = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane2_DisabledActiveR = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane3_Disabled = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
-            Dictionary<GSDRoadIntersection, List<MeshFilter>> tCombineDict_Lane1_DisabledActive = new Dictionary<GSDRoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane1_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane2_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane2_DisabledActive = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane2_DisabledActiveR = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane3_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
+            Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane1_DisabledActive = new Dictionary<RoadIntersection, List<MeshFilter>>();
 
             string basePath = GSDRoadUtilityEditor.GetBasePath();
 
@@ -2532,7 +2532,7 @@ namespace RoadArchitect
             for (int index = 0; index < vCount; index++)
             {
                 bool isPrimaryNode = (iBLane1s_tID[index].node1 == iBLane1s_nID[index]);
-                if (!isPrimaryNode && iBLane1s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && (iBLane1s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane || iBLane1s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes) && !iBLane1s_tID[index].isNode2BLeftTurnLane)
+                if (!isPrimaryNode && iBLane1s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && (iBLane1s_tID[index].roadType == RoadIntersection.RoadTypeEnum.TurnLane || iBLane1s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes) && !iBLane1s_tID[index].isNode2BLeftTurnLane)
                 {
                     tUV = iBLane1s_uv[index];
                     tTangents = iBLane1s_tangents[index];
@@ -2544,7 +2544,7 @@ namespace RoadArchitect
                     }
                     tCombineDict_Lane1_Disabled[iBLane1s_tID[index]].Add(MF);
                 }
-                else if (isPrimaryNode && iBLane1s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane1s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                else if (isPrimaryNode && iBLane1s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane1s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     tUV = iBLane1s_uv[index];
                     tTangents = iBLane1s_tangents[index];
@@ -2573,7 +2573,7 @@ namespace RoadArchitect
             for (int index = 0; index < vCount; index++)
             {
                 bool bPrimaryNode = (iBLane2s_tID[index].node1 == iBLane2s_nID[index]);
-                if (!bPrimaryNode && iBLane2s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && (iBLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane || iBLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes) && !iBLane2s_tID[index].isNode2BLeftTurnLane)
+                if (!bPrimaryNode && iBLane2s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && (iBLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.TurnLane || iBLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes) && !iBLane2s_tID[index].isNode2BLeftTurnLane)
                 {
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
@@ -2585,7 +2585,7 @@ namespace RoadArchitect
                     }
                     tCombineDict_Lane2_DisabledActive[iBLane2s_tID[index]].Add(MF);
                 }
-                else if (!bPrimaryNode && iBLane2s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes && !iBLane2s_tID[index].isNode2BRightTurnLane)
+                else if (!bPrimaryNode && iBLane2s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes && !iBLane2s_tID[index].isNode2BRightTurnLane)
                 {
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
@@ -2597,7 +2597,7 @@ namespace RoadArchitect
                     }
                     tCombineDict_Lane2_DisabledActiveR[iBLane2s_tID[index]].Add(MF);
                 }
-                else if (bPrimaryNode && iBLane2s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                else if (bPrimaryNode && iBLane2s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
@@ -2626,7 +2626,7 @@ namespace RoadArchitect
             for (int index = 0; index < vCount; index++)
             {
                 bool bPrimaryNode = (iBLane3s_tID[index].node1 == iBLane3s_nID[index]);
-                if (!bPrimaryNode && iBLane3s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane3s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes && !iBLane3s_tID[index].isNode2BRightTurnLane)
+                if (!bPrimaryNode && iBLane3s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iBLane3s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes && !iBLane3s_tID[index].isNode2BRightTurnLane)
                 {
                     tUV = iBLane3s_uv[index];
                     tTangents = iBLane3s_tangents[index];
@@ -2670,7 +2670,7 @@ namespace RoadArchitect
             for (int index = 0; index < vCount; index++)
             {
                 bool bPrimaryNode = (iFLane1s_tID[index].node1 == iFLane1s_nID[index]);
-                if (!bPrimaryNode && iFLane1s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && (iFLane1s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes || iFLane1s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane) && !iFLane1s_tID[index].isNode2FLeftTurnLane)
+                if (!bPrimaryNode && iFLane1s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && (iFLane1s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes || iFLane1s_tID[index].roadType == RoadIntersection.RoadTypeEnum.TurnLane) && !iFLane1s_tID[index].isNode2FLeftTurnLane)
                 {
                     tUV = iFLane1s_uv[index];
                     tTangents = iFLane1s_tangents[index];
@@ -2682,7 +2682,7 @@ namespace RoadArchitect
                     }
                     tCombineDict_Lane1_Disabled[iFLane1s_tID[index]].Add(MF);
                 }
-                else if (bPrimaryNode && iFLane1s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane1s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                else if (bPrimaryNode && iFLane1s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane1s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     tUV = iFLane1s_uv[index];
                     tTangents = iFLane1s_tangents[index];
@@ -2711,7 +2711,7 @@ namespace RoadArchitect
             for (int index = 0; index < vCount; index++)
             {
                 bool bPrimaryNode = (iFLane2s_tID[index].node1 == iFLane2s_nID[index]);
-                if (!bPrimaryNode && iFLane2s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && (iFLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes || iFLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane) && !iFLane2s_tID[index].isNode2FLeftTurnLane)
+                if (!bPrimaryNode && iFLane2s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && (iFLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes || iFLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.TurnLane) && !iFLane2s_tID[index].isNode2FLeftTurnLane)
                 {
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
@@ -2723,7 +2723,7 @@ namespace RoadArchitect
                     }
                     tCombineDict_Lane2_DisabledActive[iFLane2s_tID[index]].Add(MF);
                 }
-                else if (!bPrimaryNode && iFLane2s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes && !iFLane2s_tID[index].isNode2FRightTurnLane)
+                else if (!bPrimaryNode && iFLane2s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes && !iFLane2s_tID[index].isNode2FRightTurnLane)
                 {
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
@@ -2735,7 +2735,7 @@ namespace RoadArchitect
                     }
                     tCombineDict_Lane2_DisabledActiveR[iFLane2s_tID[index]].Add(MF);
                 }
-                else if (bPrimaryNode && iFLane2s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane2s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                else if (bPrimaryNode && iFLane2s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane2s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
@@ -2764,7 +2764,7 @@ namespace RoadArchitect
             for (int index = 0; index < vCount; index++)
             {
                 bool bPrimaryNode = (iFLane3s_tID[index].node1 == iFLane3s_nID[index]);
-                if (!bPrimaryNode && iFLane3s_tID[index].intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane3s_tID[index].roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes && !iFLane3s_tID[index].isNode2FRightTurnLane)
+                if (!bPrimaryNode && iFLane3s_tID[index].intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay && iFLane3s_tID[index].roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes && !iFLane3s_tID[index].isNode2FRightTurnLane)
                 {
                     tUV = iFLane3s_uv[index];
                     tTangents = iFLane3s_tangents[index];
@@ -2994,7 +2994,7 @@ namespace RoadArchitect
 
             //			List<Mesh> MeshToDelete = new List<Mesh>();
 
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane0)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane0)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3002,7 +3002,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane0");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3010,7 +3010,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane1");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3018,7 +3018,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane2");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane3)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane3)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3026,7 +3026,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane3");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_MainPlate)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_MainPlate)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3034,7 +3034,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "TiledExt", true);
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_MainPlateM)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_MainPlateM)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3042,7 +3042,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "StretchExt");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1_Disabled)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1_Disabled)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3050,7 +3050,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneD1");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane3_Disabled)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane3_Disabled)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3058,7 +3058,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneD3");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_DisabledActive)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_DisabledActive)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3066,7 +3066,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneDA2");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_DisabledActiveR)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_DisabledActiveR)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3074,7 +3074,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneDAR2");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_Disabled)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_Disabled)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3082,7 +3082,7 @@ namespace RoadArchitect
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneD2");
             }
-            foreach (KeyValuePair<GSDRoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1_DisabledActive)
+            foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1_DisabledActive)
             {
                 if (!UniqueGSDRI.Contains(KVP.Key))
                 {
@@ -3091,7 +3091,7 @@ namespace RoadArchitect
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneDA1");
             }
 
-            foreach (GSDRoadIntersection GSDRI in UniqueGSDRI)
+            foreach (RoadIntersection GSDRI in UniqueGSDRI)
             {
                 GSDRI.UpdateMaterials();
             }
@@ -3099,7 +3099,7 @@ namespace RoadArchitect
         }
 
 
-        private void MeshSetup2CombineIntersections(KeyValuePair<GSDRoadIntersection, List<MeshFilter>> _valuePair, string _name, bool _isMainPlates = false)
+        private void MeshSetup2CombineIntersections(KeyValuePair<RoadIntersection, List<MeshFilter>> _valuePair, string _name, bool _isMainPlates = false)
         {
             int vCount = _valuePair.Value.Count;
             if (vCount < 1)
@@ -5305,7 +5305,7 @@ namespace RoadArchitect
         {
             Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
 
-            GSDRoadIntersection GSDRI = _masterGameObj.GetComponent<GSDRoadIntersection>();
+            RoadIntersection GSDRI = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC tSpline = GSDRI.node1.spline;
 
             GameObject tObj = null;
@@ -5414,7 +5414,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotRR(GSDRoadIntersection _intersection, SplineC _spline)
+        private static Vector3 StopSignGetRotRR(RoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRL, _intersection.cornerRR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time - tDist, 0f, 1f);
@@ -5423,7 +5423,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotLL(GSDRoadIntersection _intersection, SplineC _spline)
+        private static Vector3 StopSignGetRotLL(RoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time + tDist, 0f, 1f);
@@ -5432,7 +5432,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotRL(GSDRoadIntersection _intersetion, SplineC _spline)
+        private static Vector3 StopSignGetRotRL(RoadIntersection _intersetion, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersetion.cornerLL, _intersetion.cornerRL) / 2f) + (0.025f * Vector3.Distance(_intersetion.cornerLR, _intersetion.cornerRL))) / _spline.distance;
             float p = -1f;
@@ -5457,7 +5457,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 StopSignGetRotLR(GSDRoadIntersection _intersection, SplineC _spline)
+        private static Vector3 StopSignGetRotLR(RoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerLR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLR, _intersection.cornerRL))) / _spline.distance;
             float p = -1f;
@@ -5492,7 +5492,7 @@ namespace RoadArchitect
 
         private static void CreateTrafficLightBases_Do(ref GameObject _masterGameObj, bool _isTrafficLight1)
         {
-            GSDRoadIntersection intersection = _masterGameObj.GetComponent<GSDRoadIntersection>();
+            RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = intersection.node1.spline;
             bool isRB = true;
 
@@ -5503,11 +5503,11 @@ namespace RoadArchitect
             int Lanes = spline.road.laneAmount;
             int LanesHalf = Lanes / 2;
             float LanesForInter = -1;
-            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+            if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
                 LanesForInter = LanesHalf + 1f;
             }
-            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+            else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
             {
                 LanesForInter = LanesHalf + 1f;
             }
@@ -5767,7 +5767,7 @@ namespace RoadArchitect
         }
 
 
-        private static bool CreateTrafficLightBase_IsInIntersection(GSDRoadIntersection _intersection, ref Vector3 _startVec, ref Vector3 _endVec)
+        private static bool CreateTrafficLightBase_IsInIntersection(RoadIntersection _intersection, ref Vector3 _startVec, ref Vector3 _endVec)
         {
             return _intersection.ContainsLine(_startVec, _endVec);
         }
@@ -5932,7 +5932,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotRL(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotRL(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -5951,7 +5951,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotLR(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotLR(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -5970,7 +5970,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotRR(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotRR(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -5992,7 +5992,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotLL(GSDRoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotLL(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -6018,7 +6018,7 @@ namespace RoadArchitect
         #region "Traffic light mains"
         private static void CreateTrafficLightMains(GameObject _masterGameObj, GameObject _RR, GameObject _RL, GameObject _LL, GameObject _LR)
         {
-            GSDRoadIntersection GSDRI = _masterGameObj.GetComponent<GSDRoadIntersection>();
+            RoadIntersection GSDRI = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC tSpline = GSDRI.node1.spline;
 
             float tDist = (Vector3.Distance(GSDRI.cornerRL, GSDRI.cornerRR) / 2f) / tSpline.distance;
@@ -6099,7 +6099,7 @@ namespace RoadArchitect
 
         private static void ProcessPole(GameObject _masterGameObj, GameObject _obj, Vector3 _tan, int _corner, float _interDist)
         {
-            GSDRoadIntersection intersection = _masterGameObj.GetComponent<GSDRoadIntersection>();
+            RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = intersection.node1.spline;
             //			bool bIsRB = true;
 
@@ -6110,11 +6110,11 @@ namespace RoadArchitect
             int Lanes = spline.road.laneAmount;
             int LanesHalf = Lanes / 2;
             float LanesForInter = -1;
-            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+            if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
                 LanesForInter = LanesHalf + 1f;
             }
-            else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+            else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
             {
                 LanesForInter = LanesHalf + 1f;
             }
@@ -6229,7 +6229,7 @@ namespace RoadArchitect
 
             string basePath = GSDRoadUtilityEditor.GetBasePath();
 
-            if (intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+            if (intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
             {
                 if (intersection.isLeftTurnYieldOnGreen)
                 {
@@ -6274,7 +6274,7 @@ namespace RoadArchitect
                     }
                 }
             }
-            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+            if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
                 prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/RoadObj/Signs/GSDTrafficLightRight.prefab", typeof(GameObject));
                 tRight = (GameObject) GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
@@ -6347,13 +6347,13 @@ namespace RoadArchitect
         #endregion
 
 
-        public static void GetFourPoints(GSDRoadIntersection _roadIntersection, out Vector3 _posRR, out Vector3 _posRL, out Vector3 _posLL, out Vector3 _posLR, float _distFromCorner)
+        public static void GetFourPoints(RoadIntersection _roadIntersection, out Vector3 _posRR, out Vector3 _posRL, out Vector3 _posLL, out Vector3 _posLR, float _distFromCorner)
         {
             GetFourPointsDo(ref _roadIntersection, out _posRR, out _posRL, out _posLL, out _posLR, _distFromCorner);
         }
 
 
-        private static void GetFourPointsDo(ref GSDRoadIntersection _roadIntersection, out Vector3 _posRR, out Vector3 _posRL, out Vector3 _posLL, out Vector3 _posLR, float _distFromCorner)
+        private static void GetFourPointsDo(ref RoadIntersection _roadIntersection, out Vector3 _posRR, out Vector3 _posRL, out Vector3 _posLL, out Vector3 _posLR, float _distFromCorner)
         {
             //Get four points:
             float tPos1 = 0f;
@@ -6385,7 +6385,7 @@ namespace RoadArchitect
                 Node1Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
                 Node2Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
                 tPos1 = _roadIntersection.node1.time + Node1Width;
-                if (_roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+                if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
                     tPos1 = _roadIntersection.node1.time;
                 }
@@ -6398,7 +6398,7 @@ namespace RoadArchitect
                 Node1Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
                 Node2Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
                 tPos1 = _roadIntersection.node1.time + Node1Width;
-                if (_roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+                if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
                     tPos1 = _roadIntersection.node1.time;
                 }
@@ -6432,7 +6432,7 @@ namespace RoadArchitect
                 Node1Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
                 Node2Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
                 tPos1 = _roadIntersection.node1.time + Node1Width;
-                if (_roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+                if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
                     tPos1 = _roadIntersection.node1.time;
                 }
@@ -6445,7 +6445,7 @@ namespace RoadArchitect
                 Node1Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
                 Node2Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
                 tPos1 = _roadIntersection.node1.time + Node1Width;
-                if (_roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+                if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
                     tPos1 = _roadIntersection.node1.time;
                 }
@@ -7123,7 +7123,7 @@ namespace RoadArchitect
 
             GameObject tObj = new GameObject("Inter" + (cCount + 1).ToString());
             tObj.transform.parent = InterMaster.transform;
-            GSDRoadIntersection GSDRI = tObj.AddComponent<GSDRoadIntersection>();
+            RoadIntersection GSDRI = tObj.AddComponent<RoadIntersection>();
             GSDRI.ignoreSide = -1;
             GSDRI.isFirstSpecialFirst = false;
             GSDRI.isFirstSpecialLast = false;
@@ -7168,7 +7168,7 @@ namespace RoadArchitect
 
             if (tNode1.isEndPoint || tNode2.isEndPoint)
             {
-                GSDRI.intersectionType = GSDRoadIntersection.IntersectionTypeEnum.ThreeWay;
+                GSDRI.intersectionType = RoadIntersection.IntersectionTypeEnum.ThreeWay;
             }
 
             SplineN zNode = null;
@@ -7343,7 +7343,7 @@ namespace RoadArchitect
         }
 
 
-        public static Vector3[] GetCornerVectorsTest(GSDRoadIntersection _roadIntersection)
+        public static Vector3[] GetCornerVectorsTest(RoadIntersection _roadIntersection)
         {
             Vector3[] tVects = new Vector3[4];
             SplineN tNode;
@@ -7373,7 +7373,7 @@ namespace RoadArchitect
 
 
         #region "Old intersection"
-        public static void CreateIntersection(GSDRoadIntersection _roadIntersection)
+        public static void CreateIntersection(RoadIntersection _roadIntersection)
         {
             //1. Overlap sphere to find all road objects within intersection:
             float intersectionWidth = _roadIntersection.intersectionWidth * 1.25f;
@@ -7418,7 +7418,7 @@ namespace RoadArchitect
         }
 
 
-        private static void FlattenIntersectionArea(ref List<GSDRoad> _roads, GSDRoadIntersection _roadIntersection, float _width, out float _height)
+        private static void FlattenIntersectionArea(ref List<GSDRoad> _roads, RoadIntersection _roadIntersection, float _width, out float _height)
         {
             //Cycle through each road and get all mesh vertices that are within range:
             Vector3 tInterPos = _roadIntersection.transform.position;
@@ -7482,7 +7482,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3[] GetCornerVectors(GSDRoadIntersection _roadIntersection, bool _isPrimary = true)
+        private static Vector3[] GetCornerVectors(RoadIntersection _roadIntersection, bool _isPrimary = true)
         {
             Vector3[] tVects = new Vector3[4];
             SplineN tNode;
@@ -7513,7 +7513,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3[] GetExtendedVectors(GSDRoadIntersection _roadIntersection, bool _isPrimary = true)
+        private static Vector3[] GetExtendedVectors(RoadIntersection _roadIntersection, bool _isPrimary = true)
         {
             Vector3[] tVects = new Vector3[4];
             SplineN tNode;
@@ -7617,7 +7617,7 @@ namespace RoadArchitect
         }
 
 
-        private static void CreateIntersectionMeshMain(GSDRoadIntersection _roadIntersection, float _height, out Vector3[] _vectors, ref string _name)
+        private static void CreateIntersectionMeshMain(RoadIntersection _roadIntersection, float _height, out Vector3[] _vectors, ref string _name)
         {
             //Get four points:
             Vector3[] pVects = GetCornerVectors(_roadIntersection);
@@ -7720,7 +7720,7 @@ namespace RoadArchitect
         }
 
 
-        private static void CreateIntersectionMeshOuter(GSDRoadIntersection _roadIntersection, Vector3[] _vects, ref string _name)
+        private static void CreateIntersectionMeshOuter(RoadIntersection _roadIntersection, Vector3[] _vects, ref string _name)
         {
             Vector3[] bVects1 = GetExtendedVectors(_roadIntersection);
             Vector3[] bVects2 = GetExtendedVectors(_roadIntersection, false);
@@ -7862,7 +7862,7 @@ namespace RoadArchitect
 
 
         #region "Intersection creation"
-        private static void InitializeIntersectionObjects(GSDRoadIntersection _roadIntersection)
+        private static void InitializeIntersectionObjects(RoadIntersection _roadIntersection)
         {
             if (_roadIntersection != null)
             {
@@ -7870,9 +7870,9 @@ namespace RoadArchitect
             }
             else
             {
-                Object[] iObjects = GameObject.FindObjectsOfType(typeof(GSDRoadIntersection));
+                Object[] iObjects = GameObject.FindObjectsOfType(typeof(RoadIntersection));
                 //Add intersection components, if necessary:
-                foreach (GSDRoadIntersection GSDRI in iObjects)
+                foreach (RoadIntersection GSDRI in iObjects)
                 {
                     InitializeIntersectionObjectsInternal(GSDRI);
                 }
@@ -7880,16 +7880,16 @@ namespace RoadArchitect
         }
 
 
-        private static void InitializeIntersectionObjectsInternal(GSDRoadIntersection _roadIntersection)
+        private static void InitializeIntersectionObjectsInternal(RoadIntersection _roadIntersection)
         {
             //1. Determine 3-way or 4-way. # of corners for 3-way: 2. 4-way = 4.
-            if (_roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+            if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
             {
-                _roadIntersection.cornerPoints = new GSDRoadIntersection.CornerPositionMaker[2];
+                _roadIntersection.cornerPoints = new RoadIntersection.CornerPositionMaker[2];
             }
             else
             {
-                _roadIntersection.cornerPoints = new GSDRoadIntersection.CornerPositionMaker[4];
+                _roadIntersection.cornerPoints = new RoadIntersection.CornerPositionMaker[4];
             }
 
             //Contains int IDs of connected nodes:			
@@ -7949,7 +7949,7 @@ namespace RoadArchitect
             }
 
             //2. If 3 way, we know that 2 of the nodes have the same spline.
-            if (1 == 1 && _roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+            if (1 == 1 && _roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
             {
                 //Should be size 3:
                 if (tList.Count != 3)
@@ -7963,7 +7963,7 @@ namespace RoadArchitect
                 ProcessFourCorners(ref n2Point, ref n3Point, _roadIntersection.transform.gameObject, GetLongestSplineDistance(n2Spline, n3Spline));
 
             }
-            else if (_roadIntersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.FourWay)
+            else if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.FourWay)
             {
                 //Should be size 3:
                 if (tList.Count != 4)
@@ -8011,7 +8011,7 @@ namespace RoadArchitect
         }
 
 
-        static Vector3 GetFourCornerPoint(ref SplineC _spline, ref SplineN _node, GSDRoadIntersection _roadIntersection)
+        static Vector3 GetFourCornerPoint(ref SplineC _spline, ref SplineN _node, RoadIntersection _roadIntersection)
         {
             SplineN iNode;
             if (_node.connectedNode.Contains(_roadIntersection.node1))

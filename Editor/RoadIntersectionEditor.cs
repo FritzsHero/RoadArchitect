@@ -7,11 +7,11 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDRoadIntersection))]
+    [CustomEditor(typeof(RoadIntersection))]
     public class RoadIntersectionEditor : Editor
     {
         #region "Vars"
-        private GSDRoadIntersection intersection;
+        private RoadIntersection intersection;
 
         private SerializedProperty isAutoUpdatingIntersection;
         private SerializedProperty isDrawingGizmo;
@@ -112,7 +112,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
-            intersection = (GSDRoadIntersection)target;
+            intersection = (RoadIntersection)target;
 
             isAutoUpdatingIntersection = serializedObject.FindProperty("isAutoUpdatingIntersection");
             isDrawingGizmo = serializedObject.FindProperty("isDrawingGizmo");
@@ -197,7 +197,7 @@ namespace RoadArchitect
             isDrawingGizmo.boolValue = EditorGUILayout.Toggle("Gizmo:", intersection.isDrawingGizmo);
 
             //UI:
-            if (intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+            if (intersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
             {
                 EditorGUILayout.LabelField("Intersection type: 3 way");
             }
@@ -227,7 +227,7 @@ namespace RoadArchitect
             //Option: Intersection turn lane options
             EditorUtilities.DrawLine();
             EditorGUILayout.LabelField("Intersection turn lane options:");
-            if (intersection.intersectionType == GSDRoadIntersection.IntersectionTypeEnum.ThreeWay)
+            if (intersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
             {
                 roadType.enumValueIndex = (int)EditorGUILayout.Popup((int)intersection.roadType, rTypeDescriptions_3Way);
             }
@@ -237,7 +237,7 @@ namespace RoadArchitect
             }
 
             //Option: Left yield on green:
-            if (intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+            if (intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
             {
                 isLeftTurnYieldOnGreen.boolValue = EditorGUILayout.Toggle("Left yield on green: ", intersection.isLeftTurnYieldOnGreen);
 
@@ -256,13 +256,13 @@ namespace RoadArchitect
             intersectionStopType.enumValueIndex = (int)EditorGUILayout.Popup("Intersection stop type:", (int)intersection.intersectionStopType, iStopTypeEnumDescriptions);
 
 
-            if (intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
+            if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
             {
                 //Option: Traffic light timing type:
                 lightType.enumValueIndex = (int)EditorGUILayout.Popup("Traffic light timing:", (int)intersection.lightType, iTrafficLightSequenceTypeDesc);
 
                 //Options: Traffic fixed light timings:
-                if (intersection.lightType == GSDRoadIntersection.LightTypeEnum.Timed)
+                if (intersection.lightType == RoadIntersection.LightTypeEnum.Timed)
                 {
                     EditorGUILayout.LabelField("Traffic light fixed time lengths (in seconds):");
                     EditorGUILayout.BeginHorizontal();
@@ -273,7 +273,7 @@ namespace RoadArchitect
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    if (intersection.roadType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                    if (intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
                         EditorGUILayout.BeginHorizontal();
                         fixedTimeLeftTurnLightLength.floatValue = EditorGUILayout.Slider("Left turn only length: ", intersection.fixedTimeLeftTurnLightLength, 0.1f, 180f);
@@ -303,7 +303,7 @@ namespace RoadArchitect
             }
 
 
-            if (intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2)
+            if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
             {
                 //Option: Traffic light poles:
                 EditorUtilities.DrawLine();
@@ -684,7 +684,7 @@ namespace RoadArchitect
             }
 
             //Option: Lane section 2:
-            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes || intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+            if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes || intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(lane2Mat1, new GUIContent("Lane section 2 mat #1:"));
@@ -707,7 +707,7 @@ namespace RoadArchitect
             GUILayout.Space(4f);
 
             //Option: Lane section 3:
-            if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+            if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PropertyField(lane3Mat1, new GUIContent("Lane section 3 mat #1:"));
@@ -734,18 +734,18 @@ namespace RoadArchitect
                 EditorGUILayout.LabelField("Covers individual lane sections in the intersection. Used for high-definition line marking.");
                 EditorGUILayout.LabelField("Lane section 0 = Left side of the intersection where oncoming traffic travels. Use lane texture which matches the number of lanes used on the road system, with a white left line and a yellow right line.");
 
-                if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
                     EditorGUILayout.LabelField("Lane section 1 = Left turn lane. Use a single lane texture with a yellow left line and a white right line.");
                     EditorGUILayout.LabelField("Lane section 2 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
                     EditorGUILayout.LabelField("Lane section 3 = Right turn lane. Use a single lane texture with a white right line.");
                 }
-                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                 {
                     EditorGUILayout.LabelField("Lane section 1 = Left turn lane. Use a single lane texture with a yellow left line and a white right line.");
                     EditorGUILayout.LabelField("Lane section 2 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
                 }
-                else if (intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                else if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                 {
                     EditorGUILayout.LabelField("Lane section 1 = Right outgoing traffic lane. Use lane texture which matches the number of lanes used on the road system with a white right line.");
                 }

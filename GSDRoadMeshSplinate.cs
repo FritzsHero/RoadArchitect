@@ -2822,7 +2822,7 @@ namespace GSD.Roads.Splination
             //			bool bIsCenter = GSDRootUtil.IsApproximately(HorizontalSep,0f,0.02f);
             float tIntStrength = 0f;
             float tIntHeight = 0f;
-            GSDRoadIntersection GSDRI = null;
+            RoadIntersection GSDRI = null;
             bool bIsPastInter = false;
             SplineN xNode = null;
             List<float> tOrigHeights = new List<float>();

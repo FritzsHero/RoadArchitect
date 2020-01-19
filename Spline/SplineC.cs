@@ -1462,7 +1462,7 @@ namespace RoadArchitect
                     //					tDist = Vector3.Distance(tPos,tNode.pos);
                     //				}
 
-                    if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                    if (tNode.intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
                         if (isUsingSQ)
                         {
@@ -1472,7 +1472,7 @@ namespace RoadArchitect
                         //						MetersToCheck = MetersToCheck_NoTurnLane;
                         //					}
                     }
-                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    else if (tNode.intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                     {
                         if (isUsingSQ)
                         {
@@ -1483,7 +1483,7 @@ namespace RoadArchitect
                         //						MetersToCheck = MetersToCheck_TurnLane;
                         //					}
                     }
-                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    else if (tNode.intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
                         if (isUsingSQ)
                         {
@@ -1517,7 +1517,7 @@ namespace RoadArchitect
         }
 
 
-        public float IntersectionStrength(ref Vector3 _pos, ref float _result, ref GSDRoadIntersection _inter, ref bool _isPast, ref float _p, ref SplineN _node)
+        public float IntersectionStrength(ref Vector3 _pos, ref float _result, ref RoadIntersection _inter, ref bool _isPast, ref float _p, ref SplineN _node)
         {
             int nodeCount = GetNodeCount();
             float tDist;
@@ -1540,7 +1540,7 @@ namespace RoadArchitect
                     //					tDist = Vector3.Distance(tPos,tNode.pos);
                     //				}
 
-                    if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+                    if (tNode.intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                     {
                         if (isUsingSQ)
                         {
@@ -1550,7 +1550,7 @@ namespace RoadArchitect
                         //						MetersToCheck = MetersToCheck_NoTurnLane;
                         //					}
                     }
-                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.TurnLane)
+                    else if (tNode.intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                     {
                         if (isUsingSQ)
                         {
@@ -1560,7 +1560,7 @@ namespace RoadArchitect
                         //						MetersToCheck = MetersToCheck_TurnLane;
                         //					}
                     }
-                    else if (tNode.intersection.roadType == GSDRoadIntersection.RoadTypeEnum.BothTurnLanes)
+                    else if (tNode.intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
                         if (isUsingSQ)
                         {
@@ -1664,7 +1664,7 @@ namespace RoadArchitect
         public float IntersectionStrengthNext(Vector3 _pos)
         {
             float result = 0f;
-            GSDRoadIntersection intersection = null;
+            RoadIntersection intersection = null;
             bool isPast = false;
             float p = 0f;
             SplineN node = null;

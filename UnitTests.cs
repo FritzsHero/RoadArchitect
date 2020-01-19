@@ -228,7 +228,7 @@ namespace RoadArchitect.Tests
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
 
-            RoadAutomation.CreateIntersectionsProgrammaticallyForRoad(road1, GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            RoadAutomation.CreateIntersectionsProgrammaticallyForRoad(road1, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;
@@ -247,7 +247,7 @@ namespace RoadArchitect.Tests
 
 
         /// <summary> This will create an intersection if two nodes overlap on the road. Only good if the roads only overlap once. </summary>
-        private static void UnitTestIntersectionHelper(GSDRoad _road1, GSDRoad _road2, GSDRoadIntersection.iStopTypeEnum _iStopType, GSDRoadIntersection.RoadTypeEnum _roadType)
+        private static void UnitTestIntersectionHelper(GSDRoad _road1, GSDRoad _road2, RoadIntersection.iStopTypeEnum _iStopType, RoadIntersection.RoadTypeEnum _roadType)
         {
             SplineN nodeInter1 = null;
             SplineN nodeInter2 = null;
@@ -267,7 +267,7 @@ namespace RoadArchitect.Tests
             if (nodeInter1 != null && nodeInter2 != null)
             {
                 GameObject tInter = GSDIntersections.CreateIntersection(nodeInter1, nodeInter2);
-                GSDRoadIntersection GSDRI = tInter.GetComponent<GSDRoadIntersection>();
+                RoadIntersection GSDRI = tInter.GetComponent<RoadIntersection>();
                 GSDRI.intersectionStopType = _iStopType;
                 GSDRI.roadType = _roadType;
             }
@@ -303,7 +303,7 @@ namespace RoadArchitect.Tests
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #2:
             nodeLocations.Clear();
@@ -313,7 +313,7 @@ namespace RoadArchitect.Tests
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #3:
             nodeLocations.Clear();
@@ -323,7 +323,7 @@ namespace RoadArchitect.Tests
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #4:
             nodeLocations.Clear();
@@ -333,7 +333,7 @@ namespace RoadArchitect.Tests
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #5:
             nodeLocations.Clear();
@@ -343,7 +343,7 @@ namespace RoadArchitect.Tests
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
-            UnitTestIntersectionHelper(road1, road2, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Now count road intersections, if not 5 throw error
             int iCount = 0;

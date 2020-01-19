@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace RoadArchitect
 {
-    public class GSDRoadIntersection : MonoBehaviour
+    public class RoadIntersection : MonoBehaviour
     {
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("Node1")]

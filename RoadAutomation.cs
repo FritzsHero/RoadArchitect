@@ -154,7 +154,7 @@ namespace GSD.Roads
         /// <param name="_road">The primary road to create intersections for.</param>
         /// <param name="_iStopType">Stop signs, traffic lights #1 (US) or traffic lights #2 (Euro). Defaults to none.</param>
         /// <param name="_roadType">Intersection type: No turn lane, left turn lane or both turn lanes. Defaults to no turn lane.</param>
-        public static void CreateIntersectionsProgrammaticallyForRoad(GSDRoad _road, GSDRoadIntersection.iStopTypeEnum _iStopType = GSDRoadIntersection.iStopTypeEnum.None, GSDRoadIntersection.RoadTypeEnum _roadType = GSDRoadIntersection.RoadTypeEnum.NoTurnLane)
+        public static void CreateIntersectionsProgrammaticallyForRoad(GSDRoad _road, RoadIntersection.iStopTypeEnum _iStopType = RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum _roadType = RoadIntersection.RoadTypeEnum.NoTurnLane)
         {
             /*
             General logic:
@@ -238,7 +238,7 @@ namespace GSD.Roads
             {
                 //Now create the fucking intersection:
                 GameObject tInter = GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
-                GSDRoadIntersection GSDRI_JustCreated = tInter.GetComponent<GSDRoadIntersection>();
+                RoadIntersection GSDRI_JustCreated = tInter.GetComponent<RoadIntersection>();
                 GSDRI_JustCreated.intersectionStopType = _iStopType;
                 GSDRI_JustCreated.roadType = _roadType;
             }
@@ -295,8 +295,8 @@ namespace GSD.Roads
                                 height = paramVector.y;
 
                                 //if any intersections already within 75m or 100m, dont create intersection here
-                                Object[] allInterectionObjects = Object.FindObjectsOfType<GSDRoadIntersection>();
-                                foreach (GSDRoadIntersection roadIntersection in allInterectionObjects)
+                                Object[] allInterectionObjects = Object.FindObjectsOfType<RoadIntersection>();
+                                foreach (RoadIntersection roadIntersection in allInterectionObjects)
                                 {
                                     if (Vector2.Distance(new Vector2(roadIntersection.transform.position.x, roadIntersection.transform.position.z), intersectPoint2D) < 100f)
                                     {
@@ -351,7 +351,7 @@ namespace GSD.Roads
 
                                 //Now create the fucking intersection:
                                 GameObject intersection = GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
-                                GSDRoadIntersection newRoadIntersection = intersection.GetComponent<GSDRoadIntersection>();
+                                RoadIntersection newRoadIntersection = intersection.GetComponent<RoadIntersection>();
                                 newRoadIntersection.intersectionStopType = _iStopType;
                                 newRoadIntersection.roadType = _roadType;
                             }

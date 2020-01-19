@@ -151,7 +151,7 @@ namespace RoadArchitect
         public SplineN bridgeCounterpartNode = null;
 
         [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
-        public GSDRoadIntersection intersection = null;
+        public RoadIntersection intersection = null;
         #endregion
 #if UNITY_EDITOR
         [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
