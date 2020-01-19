@@ -21,7 +21,7 @@ namespace GSD.Roads
      */
 
 
-    public static class GSDRoadAutomation
+    public static class RoadAutomation
     {
         /// <summary>
         /// Use this to create nodes via coding while in editor mode. Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates.
