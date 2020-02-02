@@ -557,7 +557,7 @@ namespace GSD.Threaded
                     break;
                 }
 
-                //If in bridg mode:
+                //If in bridge mode:
                 if (_spline.IsInBridgeTerrain(index))
                 {
                     isBridge = true;
@@ -8423,12 +8423,12 @@ namespace GSD.Threaded
                 //	}
                 //}
             }
-            spline.HeightHistory.Sort(Compare1);
+            spline.HeightHistory.Sort(CompareKeys);
             IsDone = true;
         }
 
 
-        private int Compare1(KeyValuePair<float, float> _a, KeyValuePair<float, float> _b)
+        private int CompareKeys(KeyValuePair<float, float> _a, KeyValuePair<float, float> _b)
         {
             return _a.Key.CompareTo(_b.Key);
         }

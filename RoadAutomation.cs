@@ -24,7 +24,7 @@ namespace GSD.Roads
     public static class RoadAutomation
     {
         /// <summary>
-        /// Use this to create nodes via coding while in editor mode. Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates.
+        /// Use this to create nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates.
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="NodeLocation">The location of the newly created node.</param>
@@ -44,7 +44,7 @@ namespace GSD.Roads
 
 
         /// <summary>
-        /// Use this to create nodes via coding while in editor mode. Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates.
+        /// Use this to create nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates.
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="_nodePosition">The location of the newly created node.</param>
@@ -70,7 +70,7 @@ namespace GSD.Roads
             node.idOnSpline = (splineChildCount + 1);
             node.spline = _road.spline;
 
-            //Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates
+            //Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates
             _road.UpdateRoad();
 
             return node;
@@ -78,7 +78,7 @@ namespace GSD.Roads
 
 
         /// <summary>
-        /// Use this to insert nodes via coding while in editor mode. Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates.
+        /// Use this to insert nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates.
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
@@ -89,9 +89,10 @@ namespace GSD.Roads
             nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             //Set node location:
+            //Make sure it doesn't try to create a node below 0 height.
             if (_nodePosition.y < 0.03f)
             {
-                _nodePosition.y = 0.03f; //Make sure it doesn't try to create a node below 0 height.
+                _nodePosition.y = 0.03f;
             }
             nodeObj.transform.position = _nodePosition;
 
@@ -141,16 +142,14 @@ namespace GSD.Roads
             newNode.pos = _nodePosition;
             _road.spline.nodes.Insert(start, newNode);
 
-            //Make sure opt_bAllowRoadUpdates is set to false in RS.GSDRS.opt_bAllowRoadUpdates
+            //Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates
             _road.UpdateRoad();
 
             return newNode;
         }
 
 
-        /// <summary>
-        /// Creates intersections where this road intersects with other roads.
-        /// </summary>
+        /// <summary> Creates intersections where this road intersects with other roads. </summary>
         /// <param name="_road">The primary road to create intersections for.</param>
         /// <param name="_iStopType">Stop signs, traffic lights #1 (US) or traffic lights #2 (Euro). Defaults to none.</param>
         /// <param name="_roadType">Intersection type: No turn lane, left turn lane or both turn lanes. Defaults to no turn lane.</param>

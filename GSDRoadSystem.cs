@@ -20,6 +20,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Adds a new road to this RoadSystem </summary>
         public GameObject AddRoad(bool _isForceSelected = false)
         {
             GSDRoad[] allRoadObj = GetComponentsInChildren<GSDRoad>();
@@ -52,6 +53,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Sets the editorPlayCamera to the first camera, if it is the only camera in this scene </summary>
         public void EditorCameraSetSingle()
         {
             if (editorPlayCamera == null)
@@ -65,23 +67,22 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Updates all roads of this RoadSystem </summary>
         public void UpdateAllRoads()
         {
             GSDRoad[] allRoadObjs = GetComponentsInChildren<GSDRoad>();
             int roadCount = allRoadObjs.Length;
-            GSDRoad road = null;
             SplineC[] piggys = null;
             if (roadCount > 1)
             {
                 piggys = new SplineC[roadCount];
                 for (int i = 0; i < roadCount; i++)
                 {
-                    road = allRoadObjs[i];
-                    piggys[i] = road.spline;
+                    piggys[i] = allRoadObjs[i].spline;
                 }
             }
 
-            road = allRoadObjs[0];
+            GSDRoad road = allRoadObjs[0];
             if (piggys != null && piggys.Length > 0)
             {
                 road.PiggyBacks = piggys;

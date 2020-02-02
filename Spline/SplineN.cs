@@ -11,6 +11,7 @@ namespace RoadArchitect
     public class SplineN : MonoBehaviour
     {
         #region "Vars"
+        /// <summary> Stores the position data </summary>
         public Vector3 pos;
         public Quaternion rot;
         public Vector3 tangent;
@@ -485,14 +486,14 @@ namespace RoadArchitect
         }
 
 
-        public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _time, string _name)
+        public void Setup(Vector3 _pos, Quaternion _rot, Vector2 _io, float _time, string _name)
         {
             if (!Application.isEditor)
             {
                 return;
             }
-            pos = _p;
-            rot = _q;
+            pos = _pos;
+            rot = _rot;
             easeIO = _io;
             time = _time;
             name = _name;

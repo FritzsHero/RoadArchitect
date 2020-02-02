@@ -280,6 +280,7 @@ namespace RoadArchitect
 
 
         #region "Setup"
+        /// <summary> Links nodes and intersection </summary>
         public void Setup(SplineN _node1, SplineN _node2)
         {
             if (_node1.spline == _node2.spline)
