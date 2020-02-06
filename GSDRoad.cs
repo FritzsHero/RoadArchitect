@@ -398,11 +398,7 @@ public class GSDRoad : MonoBehaviour
             }
         }
 
-        if (isEditorConstructing)
-        {
-            RoadUpdateProgressBar();
-        }
-        else if (isEditorProgressBar)
+        if (isEditorConstructing || isEditorProgressBar)
         {
             RoadUpdateProgressBar();
         }
@@ -655,11 +651,15 @@ public class GSDRoad : MonoBehaviour
         SplineN node = null;
         SplineN node1 = null;
         SplineN node2 = null;
+
+
         if (spline.CheckInvalidNodeCount())
         {
             spline.Setup();
             nodeCount = spline.GetNodeCount();
         }
+
+
         if (nodeCount > 1)
         {
             for (int i = 0; i < nodeCount; i++)
@@ -675,7 +675,7 @@ public class GSDRoad : MonoBehaviour
                 //	return;	
                 //}
 
-                //If node is intersection with an invalid GSDRI, mark it at non-intersection. Just-in-case.
+                //If node is intersection with an invalid RoadIntersection, mark it as non-intersection. Just-in-case.
                 if (node.isIntersection && node.intersection == null)
                 {
                     node.isIntersection = false;
@@ -749,23 +749,20 @@ public class GSDRoad : MonoBehaviour
                 }
             }
         }
-        
+
+
+        // Delete mainMeshes of this road
         int childCount = transform.childCount;
         GameObject mainMeshes = null;
-        List<GameObject> objects = new List<GameObject>();
         for (int i = 0; i < childCount; i++)
         {
             if (transform.GetChild(i).transform.name.ToLower().Contains("mainmeshes"))
             {
                 mainMeshes = transform.GetChild(i).transform.gameObject;
-                objects.Add(mainMeshes);
+                Object.DestroyImmediate(mainMeshes);
             }
         }
-        for (int i = (objects.Count - 1); i >= 0; i--)
-        {
-            mainMeshes = objects[i];
-            Object.DestroyImmediate(mainMeshes);
-        }
+
 
         if (nodeCount < 2)
         {
