@@ -5,7 +5,7 @@ using RoadArchitect;
 #endregion
 
 
-namespace GSD.Roads
+namespace RoadArchitect.Roads
 {
 #if UNITY_EDITOR
     /* Proper automation flow:
@@ -30,16 +30,16 @@ namespace GSD.Roads
         /// <param name="NodeLocation">The location of the newly created node.</param>
         public static GSDRoad CreateRoadProgrammatically(RoadSystem _RoadSys, ref List<Vector3> _positions)
         {
-            GameObject tRoadObj = _RoadSys.AddRoad(false);
-            GSDRoad tRoad = tRoadObj.GetComponent<GSDRoad>();
+            GameObject roadObject = _RoadSys.AddRoad(false);
+            GSDRoad road = roadObject.GetComponent<GSDRoad>();
 
             int count = _positions.Count;
             for (int index = 0; index < count; index++)
             {
-                CreateNodeProgrammatically(tRoad, _positions[index]);
+                CreateNodeProgrammatically(road, _positions[index]);
             }
 
-            return tRoad;
+            return road;
         }
 
 
@@ -167,11 +167,11 @@ namespace GSD.Roads
              create intersection with above two nodes
             */
 
-            Object[] roadObjs = Object.FindObjectsOfType<GSDRoad>();
+            Object[] roadObjects = Object.FindObjectsOfType<GSDRoad>();
 
             //20m increments to gather collection of which roads intersect
             List<GSDRoad> roads = new List<GSDRoad>();
-            foreach (GSDRoad road in roadObjs)
+            foreach (GSDRoad road in roadObjects)
             {
                 if (_road != road)
                 {

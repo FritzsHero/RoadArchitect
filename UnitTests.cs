@@ -1,8 +1,7 @@
 ﻿#region "Imports"
 using UnityEngine;
 using System.Collections.Generic;
-using GSD;
-using GSD.Roads;
+using RoadArchitect.Roads;
 #endregion
 
 
