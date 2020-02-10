@@ -41,7 +41,7 @@ public class GSDRoad : MonoBehaviour
 
     public int MostRecentNodeCount = -1;
     public GameObject GSDSplineObj;
-    public GSDRoadSystem GSDRS;
+    public RoadSystem GSDRS;
     public SplineC[] PiggyBacks = null;
     [UnityEngine.Serialization.FormerlySerializedAs("bEditorProgressBar")]
     public bool isEditorProgressBar = false;
@@ -818,7 +818,7 @@ public class GSDRoad : MonoBehaviour
         spline.HeightHistory = new List<KeyValuePair<float, float>>();
         if (GSDRS == null)
         {
-            GSDRS = transform.parent.GetComponent<GSDRoadSystem>();
+            GSDRS = transform.parent.GetComponent<RoadSystem>();
         }
         //Compatibility update.
         if (GSDRS.isMultithreaded)

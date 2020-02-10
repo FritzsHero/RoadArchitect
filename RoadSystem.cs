@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RoadArchitect
 {
-    public class GSDRoadSystem : MonoBehaviour
+    public class RoadSystem : MonoBehaviour
     {
 #if UNITY_EDITOR
         #region "Vars"

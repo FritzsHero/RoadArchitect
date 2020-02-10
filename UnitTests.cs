@@ -11,7 +11,7 @@ namespace RoadArchitect.Tests
 #if UNITY_EDITOR
     public static class UnitTests
     {
-        private static GSDRoadSystem roadSystem;
+        private static RoadSystem roadSystem;
 
 
         /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. MicroGSD LLC is not responsbile for data loss if this function is called by user. </summary>
@@ -22,7 +22,7 @@ namespace RoadArchitect.Tests
             //Create new road system and turn off updates:
             GameObject roadSystemObject = new GameObject("RoadArchitectSystem1");
             //Add road system component.
-            roadSystem = roadSystemObject.AddComponent<GSDRoadSystem>();
+            roadSystem = roadSystemObject.AddComponent<RoadSystem>();
             roadSystem.isAllowingRoadUpdates = false;
 
             int numTests = 6;

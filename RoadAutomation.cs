@@ -28,7 +28,7 @@ namespace GSD.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="NodeLocation">The location of the newly created node.</param>
-        public static GSDRoad CreateRoadProgrammatically(GSDRoadSystem _RoadSys, ref List<Vector3> _positions)
+        public static GSDRoad CreateRoadProgrammatically(RoadSystem _RoadSys, ref List<Vector3> _positions)
         {
             GameObject tRoadObj = _RoadSys.AddRoad(false);
             GSDRoad tRoad = tRoadObj.GetComponent<GSDRoad>();

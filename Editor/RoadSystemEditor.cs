@@ -7,12 +7,12 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDRoadSystem))]
+    [CustomEditor(typeof(RoadSystem))]
     public class RoadSystemEditor : Editor
     {
         #region "Vars"
         //Main target for this editor file:
-        private GSDRoadSystem roadSystem;
+        private RoadSystem roadSystem;
 
         //Serialized properties:
         private SerializedProperty isTempMultithreading;
@@ -47,7 +47,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
-            roadSystem = (GSDRoadSystem)target;
+            roadSystem = (RoadSystem)target;
 
             isTempMultithreading = serializedObject.FindProperty("isMultithreaded");
             isTempSaveMeshAssets = serializedObject.FindProperty("isSavingMeshes");

@@ -13,12 +13,12 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Create road system")]
     public static void CreateRoadSystem()
     {
-        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType(typeof(GSDRoadSystem));
+        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType(typeof(RoadSystem));
         int nextCount = (allRoadSystemObjects.Length + 1);
         allRoadSystemObjects = null;
 
         GameObject newRoadSystemObject = new GameObject("RoadArchitectSystem" + nextCount.ToString());
-        GSDRoadSystem newRoadSystem = newRoadSystemObject.AddComponent<GSDRoadSystem>();
+        RoadSystem newRoadSystem = newRoadSystemObject.AddComponent<RoadSystem>();
         //Add road for new road system.
         newRoadSystem.AddRoad(true);
 
@@ -31,7 +31,7 @@ public class RoadSystemEditorMenu : ScriptableObject
 	[MenuItem("Window/Road Architect/Add road")]
     public static void AddRoad()
     {
-        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType(typeof(GSDRoadSystem));
+        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType(typeof(RoadSystem));
         if (allRoadSystemObjects != null && allRoadSystemObjects.Length == 0)
         {
             CreateRoadSystem();
@@ -39,7 +39,7 @@ public class RoadSystemEditorMenu : ScriptableObject
         }
         else
         {
-            GSDRoadSystem firstRoadSystem = (GSDRoadSystem) allRoadSystemObjects[0];
+            RoadSystem firstRoadSystem = (RoadSystem) allRoadSystemObjects[0];
             Selection.activeGameObject = firstRoadSystem.AddRoad();
         }
     }
