@@ -6,7 +6,7 @@ using UnityEngine;
 namespace RoadArchitect
 {
     [System.Serializable]
-    public class GSDTrafficLightController
+    public class TrafficLightController
     {
         //Enums for controller:
         public enum iLightControllerEnum { Regular, LeftTurn, MasterLeft1, MasterLeft2, Red }
@@ -75,7 +75,7 @@ namespace RoadArchitect
 
 
         #region "Constructor"
-        public GSDTrafficLightController(ref GameObject _LightLeft, ref GameObject _LightRight, ref GameObject[] _Lights, ref MeshRenderer _MR_Left, ref MeshRenderer _MR_Right, ref MeshRenderer[] MR_Mains)
+        public TrafficLightController(ref GameObject _LightLeft, ref GameObject _LightRight, ref GameObject[] _Lights, ref MeshRenderer _MR_Left, ref MeshRenderer _MR_Right, ref MeshRenderer[] MR_Mains)
         {
             lightLeftObject = _LightLeft;
             lightRightObject = _LightRight;
@@ -566,19 +566,19 @@ namespace RoadArchitect
     }
 
 
-    public class GSDTrafficLightSequence
+    public class TrafficLightSequence
     {
         [UnityEngine.Serialization.FormerlySerializedAs("bLightMasterPath1")]
         public bool isLightMasterPath1 = true;
         [UnityEngine.Serialization.FormerlySerializedAs("iLightController")]
-        public GSDTrafficLightController.iLightControllerEnum lightController = GSDTrafficLightController.iLightControllerEnum.Regular;
+        public TrafficLightController.iLightControllerEnum lightController = TrafficLightController.iLightControllerEnum.Regular;
         [UnityEngine.Serialization.FormerlySerializedAs("iLightSubcontroller")]
-        public GSDTrafficLightController.iLightSubStatusEnum lightSubcontroller = GSDTrafficLightController.iLightSubStatusEnum.Green;
+        public TrafficLightController.iLightSubStatusEnum lightSubcontroller = TrafficLightController.iLightSubStatusEnum.Green;
         [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
         public float time = 10f;
 
 
-        public GSDTrafficLightSequence(bool _isPath1, GSDTrafficLightController.iLightControllerEnum _lightController, GSDTrafficLightController.iLightSubStatusEnum _lightSubcontroller, float _time)
+        public TrafficLightSequence(bool _isPath1, TrafficLightController.iLightControllerEnum _lightController, TrafficLightController.iLightSubStatusEnum _lightSubcontroller, float _time)
         {
             isLightMasterPath1 = _isPath1;
             lightController = _lightController;

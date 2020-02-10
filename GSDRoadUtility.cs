@@ -6322,7 +6322,7 @@ namespace RoadArchitect
                 }
             }
 
-            GSDTrafficLightController LM = new GSDTrafficLightController(ref tLeft, ref tRight, ref tLanes, ref MR_Left, ref MR_Right, ref MR_Mains);
+            TrafficLightController LM = new TrafficLightController(ref tLeft, ref tRight, ref tLanes, ref MR_Left, ref MR_Right, ref MR_Mains);
             if (_corner == 0)
             {
                 intersection.lightsRR = null;

@@ -237,13 +237,13 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("FixedTimeIndex")]
         private int fixedTimeIndex = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("LightsRR")]
-        public GSDTrafficLightController lightsRR;
+        public TrafficLightController lightsRR;
         [UnityEngine.Serialization.FormerlySerializedAs("LightsRL")]
-        public GSDTrafficLightController lightsRL;
+        public TrafficLightController lightsRL;
         [UnityEngine.Serialization.FormerlySerializedAs("LightsLL")]
-        public GSDTrafficLightController lightsLL;
+        public TrafficLightController lightsLL;
         [UnityEngine.Serialization.FormerlySerializedAs("LightsLR")]
-        public GSDTrafficLightController lightsLR;
+        public TrafficLightController lightsLR;
         [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_RegularLightLength")]
         public float fixedTimeRegularLightLength = 10f;
         [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_LeftTurnLightLength")]
@@ -253,7 +253,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_YellowLightLength")]
         public float fixedTimeYellowLightLength = 2f;
         [UnityEngine.Serialization.FormerlySerializedAs("FixedTimeSequenceList")]
-        public List<GSDTrafficLightSequence> fixedTimeSequenceList;
+        public List<TrafficLightSequence> fixedTimeSequenceList;
         #endregion
         #endregion
 
@@ -496,44 +496,44 @@ namespace RoadArchitect
 
         private void CreateFixedSequence()
         {
-            GSDTrafficLightSequence SequenceMaker = null;
-            fixedTimeSequenceList = new List<GSDTrafficLightSequence>();
+            TrafficLightSequence SequenceMaker = null;
+            fixedTimeSequenceList = new List<TrafficLightSequence>();
             if (roadType != RoadTypeEnum.NoTurnLane)
             {
-                SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeLeftTurnLightLength);
+                SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.LeftTurn, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeLeftTurnLightLength);
                 fixedTimeSequenceList.Add(SequenceMaker);
             }
             if (roadType != RoadTypeEnum.NoTurnLane)
             {
-                SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+                SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.LeftTurn, TrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
                 fixedTimeSequenceList.Add(SequenceMaker);
             }
-            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+            SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.Red, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
-            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeRegularLightLength);
+            SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.Regular, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeRegularLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
-            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+            SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.Regular, TrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
-            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+            SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.Red, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
 
             if (roadType != RoadTypeEnum.NoTurnLane)
             {
-                SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeLeftTurnLightLength);
+                SequenceMaker = new TrafficLightSequence(false, TrafficLightController.iLightControllerEnum.LeftTurn, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeLeftTurnLightLength);
                 fixedTimeSequenceList.Add(SequenceMaker);
             }
             if (roadType != RoadTypeEnum.NoTurnLane)
             {
-                SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.LeftTurn, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+                SequenceMaker = new TrafficLightSequence(false, TrafficLightController.iLightControllerEnum.LeftTurn, TrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
                 fixedTimeSequenceList.Add(SequenceMaker);
             }
-            SequenceMaker = new GSDTrafficLightSequence(true, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+            SequenceMaker = new TrafficLightSequence(true, TrafficLightController.iLightControllerEnum.Red, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
-            SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeRegularLightLength);
+            SequenceMaker = new TrafficLightSequence(false, TrafficLightController.iLightControllerEnum.Regular, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeRegularLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
-            SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Regular, GSDTrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
+            SequenceMaker = new TrafficLightSequence(false, TrafficLightController.iLightControllerEnum.Regular, TrafficLightController.iLightSubStatusEnum.Yellow, fixedTimeYellowLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
-            SequenceMaker = new GSDTrafficLightSequence(false, GSDTrafficLightController.iLightControllerEnum.Red, GSDTrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
+            SequenceMaker = new TrafficLightSequence(false, TrafficLightController.iLightControllerEnum.Red, TrafficLightController.iLightSubStatusEnum.Green, fixedTimeAllRedLightLength);
             fixedTimeSequenceList.Add(SequenceMaker);
         }
 
@@ -547,18 +547,18 @@ namespace RoadArchitect
 
         private void FixedTimeIncrement()
         {
-            GSDTrafficLightSequence SequenceMaker = fixedTimeSequenceList[fixedTimeIndex];
+            TrafficLightSequence SequenceMaker = fixedTimeSequenceList[fixedTimeIndex];
             fixedTimeIndex += 1;
             if (fixedTimeIndex > (fixedTimeSequenceList.Count - 1))
             {
                 fixedTimeIndex = 0;
             }
 
-            GSDTrafficLightController lights1 = null;
-            GSDTrafficLightController lights2 = null;
+            TrafficLightController lights1 = null;
+            TrafficLightController lights2 = null;
 
-            GSDTrafficLightController lightsOuter1 = null;
-            GSDTrafficLightController lightsOuter2 = null;
+            TrafficLightController lightsOuter1 = null;
+            TrafficLightController lightsOuter2 = null;
 
             if (SequenceMaker.isLightMasterPath1)
             {
@@ -593,29 +593,29 @@ namespace RoadArchitect
                 lightsOuter2 = lightsLR;
             }
 
-            GSDTrafficLightController.iLightControllerEnum LCE = SequenceMaker.lightController;
-            GSDTrafficLightController.iLightSubStatusEnum LCESub = SequenceMaker.lightSubcontroller;
+            TrafficLightController.iLightControllerEnum LCE = SequenceMaker.lightController;
+            TrafficLightController.iLightSubStatusEnum LCESub = SequenceMaker.lightSubcontroller;
 
-            if (LCE == GSDTrafficLightController.iLightControllerEnum.Regular)
+            if (LCE == TrafficLightController.iLightControllerEnum.Regular)
             {
-                lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Regular, LCESub, isLightsEnabled);
-                lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Regular, LCESub, isLightsEnabled);
-                lightsOuter1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
-                lightsOuter2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+                lights1.UpdateLights(TrafficLightController.iLightStatusEnum.Regular, LCESub, isLightsEnabled);
+                lights2.UpdateLights(TrafficLightController.iLightStatusEnum.Regular, LCESub, isLightsEnabled);
+                lightsOuter1.UpdateLights(TrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+                lightsOuter2.UpdateLights(TrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
             }
-            else if (LCE == GSDTrafficLightController.iLightControllerEnum.LeftTurn)
+            else if (LCE == TrafficLightController.iLightControllerEnum.LeftTurn)
             {
-                lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.LeftTurn, LCESub, isLightsEnabled);
-                lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.LeftTurn, LCESub, isLightsEnabled);
-                lightsOuter1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.RightTurn, LCESub, isLightsEnabled);
-                lightsOuter2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.RightTurn, LCESub, isLightsEnabled);
+                lights1.UpdateLights(TrafficLightController.iLightStatusEnum.LeftTurn, LCESub, isLightsEnabled);
+                lights2.UpdateLights(TrafficLightController.iLightStatusEnum.LeftTurn, LCESub, isLightsEnabled);
+                lightsOuter1.UpdateLights(TrafficLightController.iLightStatusEnum.RightTurn, LCESub, isLightsEnabled);
+                lightsOuter2.UpdateLights(TrafficLightController.iLightStatusEnum.RightTurn, LCESub, isLightsEnabled);
             }
-            else if (LCE == GSDTrafficLightController.iLightControllerEnum.Red)
+            else if (LCE == TrafficLightController.iLightControllerEnum.Red)
             {
-                lights1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
-                lights2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
-                lightsOuter1.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
-                lightsOuter2.UpdateLights(GSDTrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+                lights1.UpdateLights(TrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+                lights2.UpdateLights(TrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+                lightsOuter1.UpdateLights(TrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
+                lightsOuter2.UpdateLights(TrafficLightController.iLightStatusEnum.Red, LCESub, isLightsEnabled);
             }
 
             //Debug.Log ("Starting: " + SMaker.ToString());
