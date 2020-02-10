@@ -308,15 +308,15 @@ namespace RoadArchitect
         private static void CheckAllTerrains()
         {
             Object[] allTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
-            GSDTerrain TID;
+            RoadTerrain TID;
             GameObject terrainObj;
             foreach (Terrain terrain in allTerrains)
             {
                 terrainObj = terrain.transform.gameObject;
-                TID = terrainObj.GetComponent<GSDTerrain>();
+                TID = terrainObj.GetComponent<RoadTerrain>();
                 if (TID == null)
                 {
-                    TID = terrainObj.AddComponent<GSDTerrain>();
+                    TID = terrainObj.AddComponent<RoadTerrain>();
                 }
                 TID.CheckID();
             }
@@ -364,7 +364,7 @@ namespace RoadArchitect
             Dictionary<Terrain, TempTerrainData> TempTerrainDict = new Dictionary<Terrain, TempTerrainData>();
             //Populate dictionary:
             Object[] allTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
-            GSDTerrain TID;
+            RoadTerrain TID;
             int aSize = 0;
             int dSize = 0;
             TempTerrainData TTD;
@@ -461,7 +461,7 @@ namespace RoadArchitect
                         TTD.TerrainSize = terrain.terrainData.size;
                         TTD.TerrainPos = terrain.transform.position;
                         TTD.tHeights = new bool[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
-                        TID = terrain.transform.gameObject.GetComponent<GSDTerrain>();
+                        TID = terrain.transform.gameObject.GetComponent<RoadTerrain>();
                         if (TID != null)
                         {
                             TTD.uID = TID.UID;
@@ -662,7 +662,7 @@ namespace RoadArchitect
                 //Exit if no mod taking place.
                 return;
             }
-            Object[] TIDs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
+            Object[] TIDs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
             Terrain terrain;
             int[,] tDetails = null;
             int IntBufferX = 0;
@@ -670,7 +670,7 @@ namespace RoadArchitect
             int tVal = 0;
             foreach (TempTerrainData TTD in _TTDList)
             {
-                foreach (GSDTerrain TID in TIDs)
+                foreach (RoadTerrain TID in TIDs)
                 {
                     if (TID.UID == TTD.uID)
                     {
@@ -756,14 +756,14 @@ namespace RoadArchitect
                 return;
             }
 
-            Object[] TIDs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
+            Object[] TIDs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
             float[,] heights;
             int[,] tDetails;
             int ArrayCount;
             foreach (GSDTerrainHistoryMaker TH in _road.TerrainHistory)
             {
                 Terrain terrain = null;
-                foreach (GSDTerrain TID in TIDs)
+                foreach (RoadTerrain TID in TIDs)
                 {
                     if (TID.UID == TH.TID)
                     {
@@ -3923,10 +3923,10 @@ namespace RoadArchitect
 
         private static void ConstructRoadStoreTerrainHistoryDo(ref GSDRoad _road)
         {
-            Object[] TIDs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
+            Object[] TIDs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
 
             HashSet<int> tTIDS = new HashSet<int>();
-            foreach (GSDTerrain TID in TIDs)
+            foreach (RoadTerrain TID in TIDs)
             {
                 tTIDS.Add(TID.UID);
             }
@@ -3965,9 +3965,9 @@ namespace RoadArchitect
             foreach (GSDTerraforming.TempTerrainData TTD in _road.EditorTTDList)
             {
                 GSDTerrainHistoryMaker TH = null;
-                GSDTerrain TID = null;
+                RoadTerrain TID = null;
                 //Get TID:
-                foreach (GSDTerrain _TID in TIDs)
+                foreach (RoadTerrain _TID in TIDs)
                 {
                     if (_TID.UID == TTD.uID)
                     {
@@ -4758,7 +4758,7 @@ namespace RoadArchitect
             foreach (Terrain tTerrain in tTerrainsObj)
             {
                 tInfo = new GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo();
-                tInfo.uID = tTerrain.transform.gameObject.GetComponent<GSDTerrain>().UID;
+                tInfo.uID = tTerrain.transform.gameObject.GetComponent<RoadTerrain>().UID;
                 tInfo.bounds = new Rect(tTerrain.transform.position.x, tTerrain.transform.position.z, tTerrain.terrainData.size.x, tTerrain.terrainData.size.z);
                 tInfo.hmWidth = tTerrain.terrainData.heightmapWidth;
                 tInfo.hmHeight = tTerrain.terrainData.heightmapHeight;

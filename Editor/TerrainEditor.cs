@@ -7,11 +7,11 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDTerrain))]
+    [CustomEditor(typeof(RoadTerrain))]
     public class TerrainEditor : Editor
     {
         #region "Vars"
-        private GSDTerrain terrain;
+        private RoadTerrain terrain;
 
         //Serialized properties:
         SerializedProperty splatImageWidth;
@@ -64,7 +64,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
-            terrain = (GSDTerrain)target;
+            terrain = (RoadTerrain)target;
 
             splatImageWidth = serializedObject.FindProperty("splatResoWidth");
             splatImageHeight = serializedObject.FindProperty("splatResoHeight");

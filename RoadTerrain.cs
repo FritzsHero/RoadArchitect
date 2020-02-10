@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace RoadArchitect
 {
     [ExecuteInEditMode]
-    public class GSDTerrain : MonoBehaviour
+    public class RoadTerrain : MonoBehaviour
     {
 #if UNITY_EDITOR
         #region "Vars"
@@ -74,9 +74,9 @@ namespace RoadArchitect
 
         private int GetNewID()
         {
-            Object[] allTerrainObjs = GameObject.FindObjectsOfType(typeof(GSDTerrain));
+            Object[] allTerrainObjs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
             List<int> allIDS = new List<int>();
-            foreach (GSDTerrain Terrain in allTerrainObjs)
+            foreach (RoadTerrain Terrain in allTerrainObjs)
             {
                 if (Terrain.UID > 0)
                 {
