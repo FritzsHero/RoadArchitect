@@ -116,6 +116,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Setup Spline values </summary>
         public void Setup()
         {
 #if UNITY_EDITOR
@@ -129,26 +130,31 @@ namespace RoadArchitect
             splineRoot = transform.gameObject;
 
             //Create spline nodes:
-            SplineN[] tNodesRaw = splineRoot.GetComponentsInChildren<SplineN>();
+            SplineN[] rawNodes = splineRoot.GetComponentsInChildren<SplineN>();
             List<SplineN> nodeList = new List<SplineN>();
-            int tNodesRawLength = tNodesRaw.Length;
-            if (tNodesRawLength == 0)
+            int rawNodesLength = rawNodes.Length;
+            if (rawNodesLength == 0)
             {
                 return;
             }
-            for (int i = 0; i < tNodesRawLength; i++)
+
+
+            // Stores nodes positions in pos and adds them to nodeList
+            for (int i = 0; i < rawNodesLength; i++)
             {
-                if (tNodesRaw[i] != null)
+                if (rawNodes[i] != null)
                 {
-                    tNodesRaw[i].pos = tNodesRaw[i].transform.position;
-                    nodeList.Add(tNodesRaw[i]);
+                    rawNodes[i].pos = rawNodes[i].transform.position;
+                    nodeList.Add(rawNodes[i]);
                 }
             }
-            nodeList.Sort(CompareListByName);
+
+
+            nodeList.Sort(CompareListByID);
             //tList.Sort(delegate(GSDSplin i1, Item i2) { return i1.name.CompareTo(i2.name); });
-            tNodesRaw = nodeList.ToArray();
+            rawNodes = nodeList.ToArray();
             nodeList = null;
-            SetupNodes(ref tNodesRaw);
+            SetupNodes(ref rawNodes);
 
             //Setup spline length, if more than 1 node:
             if (GetNodeCount() > 1)
@@ -163,7 +169,6 @@ namespace RoadArchitect
             }
 
 
-#if UNITY_EDITOR
             //Setup preview spline:
             if (previewSpline == null)
             {
@@ -176,24 +181,24 @@ namespace RoadArchitect
                 previewSplineInsert = splineRoot.AddComponent<SplineI>();
                 previewSplineInsert.spline = this;
             }
-#endif
 
 
-            int mNodesCount = nodes.Count;
-            SplineN tNode = null;
-            Vector3[] pVects = new Vector3[mNodesCount + 1];
-            for (int i = 0; i < mNodesCount; i++)
+            int nodesCount = nodes.Count;
+            SplineN splineNode = null;
+            Vector3[] nodePositions = new Vector3[nodesCount + 1];
+
+
+            for (int i = 0; i < nodesCount; i++)
             {
-                tNode = nodes[i];
-                tNode.idOnSpline = i;
-                tNode.isEndPoint = false;
-                pVects[i] = tNode.pos;
+                splineNode = nodes[i];
+                splineNode.idOnSpline = i;
+                splineNode.isEndPoint = false;
+                nodePositions[i] = splineNode.pos;
             }
-            pVects[pVects.Length - 1] = new Vector3(0f, 0f, 0f);
-#if UNITY_EDITOR
-            previewSpline.Setup(ref pVects);
-#endif
+            nodePositions[nodePositions.Length - 1] = new Vector3(0f, 0f, 0f);
 
+
+            previewSpline.Setup(ref nodePositions);
 
             RenameNodes();
 
@@ -215,7 +220,7 @@ namespace RoadArchitect
             }
             TunnelParams = new List<KeyValuePair<float, float>>();
 
-            if (mNodesCount > 1)
+            if (nodesCount > 1)
             {
                 if (isSpecialStartControlNode)
                 {
@@ -227,108 +232,115 @@ namespace RoadArchitect
                 }
                 if (isSpecialEndControlNode)
                 {
-                    nodes[mNodesCount - 2].isEndPoint = true;
+                    nodes[nodesCount - 2].isEndPoint = true;
                 }
                 else
                 {
-                    nodes[mNodesCount - 1].isEndPoint = true;
+                    nodes[nodesCount - 1].isEndPoint = true;
                 }
             }
-            else if (mNodesCount == 1)
+            else if (nodesCount == 1)
             {
                 nodes[0].isEndPoint = true;
                 distance = 1;
             }
 
-            float fStart = -1f;
-            float fEnd = -1f;
-            if (mNodesCount > 1)
+            float splineStart = -1f;
+            float splineEnd = -1f;
+
+            if (nodesCount > 1)
             {
-                for (int i = 0; i < mNodesCount; i++)
+                for (int i = 0; i < nodesCount; i++)
                 {
-                    tNode = nodes[i];
+                    splineNode = nodes[i];
 
                     //Bridges:
-                    fStart = -1f;
-                    fEnd = -1f;
-                    if (tNode.isBridgeStart && !tNode.isTunnelStart)
+                    splineStart = -1f;
+                    splineEnd = -1f;
+                    if (splineNode.isBridgeStart && !splineNode.isTunnelStart)
                     {
-                        fStart = tNode.time;
-                        for (int j = i; j < mNodesCount; j++)
+                        splineStart = splineNode.time;
+                        for (int j = i; j < nodesCount; j++)
                         {
                             if (nodes[j].isBridgeEnd)
                             {
-                                fEnd = nodes[j].time;
+                                splineEnd = nodes[j].time;
                                 break;
                             }
                         }
-                        if (fEnd > 0f || GSDRootUtil.IsApproximately(fEnd, 0f, 0.0001f))
+                        if (splineEnd > 0f || GSDRootUtil.IsApproximately(splineEnd, 0f, 0.0001f))
                         {
-                            KVP = new KeyValuePair<float, float>(fStart, fEnd);
+                            KVP = new KeyValuePair<float, float>(splineStart, splineEnd);
                             BridgeParams.Add(KVP);
                         }
                     }
 
                     //Tunnels:
-                    fStart = -1f;
-                    fEnd = -1f;
-                    if (!tNode.isBridgeStart && tNode.isTunnelStart)
+                    splineStart = -1f;
+                    splineEnd = -1f;
+                    if (!splineNode.isBridgeStart && splineNode.isTunnelStart)
                     {
-                        fStart = tNode.time;
-                        for (int j = i; j < mNodesCount; j++)
+                        splineStart = splineNode.time;
+                        for (int j = i; j < nodesCount; j++)
                         {
                             if (nodes[j].isTunnelEnd)
                             {
-                                fEnd = nodes[j].time;
+                                splineEnd = nodes[j].time;
                                 break;
                             }
                         }
 
-                        if (fEnd > 0f || GSDRootUtil.IsApproximately(fEnd, 0f, 0.0001f))
+                        if (splineEnd > 0f || GSDRootUtil.IsApproximately(splineEnd, 0f, 0.0001f))
                         {
-                            KVP = new KeyValuePair<float, float>(fStart, fEnd);
+                            KVP = new KeyValuePair<float, float>(splineStart, splineEnd);
                             TunnelParams.Add(KVP);
                         }
                     }
 
-                    tNode.SetGradePercent(mNodesCount);
-                    //                tNode.bIsEndPoint = false;
-                    tNode.tangent = GetSplineValue(nodes[i].time, true);
-                    if (i < (mNodesCount - 1))
+                    splineNode.SetGradePercent(nodesCount);
+                    //splineNode.isEndPoint = false;
+                    splineNode.tangent = GetSplineValue(nodes[i].time, true);
+                    if (i < (nodesCount - 1))
                     {
-                        tNode.nextTime = nodes[i + 1].time;
-                        tNode.nextTan = nodes[i + 1].tangent;
+                        splineNode.nextTime = nodes[i + 1].time;
+                        splineNode.nextTan = nodes[i + 1].tangent;
                     }
                 }
             }
-            else if (mNodesCount == 1)
+            else if (nodesCount == 1)
             {
                 nodes[0].tangent = default(Vector3);
             }
 
             //Get bounds of road system:
-            float[] tMaxEffects = new float[3];
-            tMaxEffects[0] = road.matchHeightsDistance;
-            tMaxEffects[1] = road.clearDetailsDistance;
-            tMaxEffects[2] = road.clearTreesDistance;
-            float MaxEffectDistance = Mathf.Max(tMaxEffects) * 2f; //Add min/max clear diff to bound checks
-            int mCount1 = GetNodeCount();
-            float[] tMinMaxX = new float[mCount1];
-            float[] tMinMaxZ = new float[mCount1];
-            //		Vector3 tVect1 = default(Vector3);
-            for (int i = 0; i < mCount1; i++)
+            float[] maxEffects = new float[3];
+            maxEffects[0] = road.matchHeightsDistance;
+            maxEffects[1] = road.clearDetailsDistance;
+            maxEffects[2] = road.clearTreesDistance;
+
+            //Add min/max clear diff to bound checks
+            float maxEffectDistance = Mathf.Max(maxEffects) * 2f;
+
+            nodesCount = GetNodeCount();
+            float[] minMaxX = new float[nodesCount];
+            float[] minMaxZ = new float[nodesCount];
+
+            for (int i = 0; i < nodesCount; i++)
             {
-                tMinMaxX[i] = nodes[i].pos.x;
-                tMinMaxZ[i] = nodes[i].pos.z;
+                minMaxX[i] = nodes[i].pos.x;
+                minMaxZ[i] = nodes[i].pos.z;
             }
-            float MinX = Mathf.Min(tMinMaxX) - MaxEffectDistance;
-            float MaxX = Mathf.Max(tMinMaxX) + MaxEffectDistance;
-            float MinZ = Mathf.Min(tMinMaxZ) - MaxEffectDistance;
-            float MaxZ = Mathf.Max(tMinMaxZ) + MaxEffectDistance;
-            RoadV0 = new Vector3(MinX, MinZ);
-            RoadV1 = new Vector3(MaxX, MinZ);
-            RoadV2 = new Vector3(MaxX, MaxZ);
-            RoadV3 = new Vector3(MinX, MaxZ);
+
+            // calculate the biggest and lowest x and z positions
+            float minX = Mathf.Min(minMaxX) - maxEffectDistance;
+            float maxX = Mathf.Max(minMaxX) + maxEffectDistance;
+            float minZ = Mathf.Min(minMaxZ) - maxEffectDistance;
+            float maxZ = Mathf.Max(minMaxZ) + maxEffectDistance;
+
+            RoadV0 = new Vector3(minX, minZ);
+            RoadV1 = new Vector3(maxX, minZ);
+            RoadV2 = new Vector3(maxX, maxZ);
+            RoadV3 = new Vector3(minX, maxZ);
 #endif
         }
 
@@ -337,29 +349,31 @@ namespace RoadArchitect
         private void RenameNodes()
         {
             int nodesCount = nodes.Count;
+            SplineN node;
             for (int i = 0; i < nodesCount; i++)
             {
-                SplineN tNode = nodes[i];
-                tNode.name = "Node" + tNode.idOnSpline;
-                tNode.transform.gameObject.name = tNode.name;
-                tNode.editorDisplayString = road.transform.name + "-" + tNode.name;
+                node = nodes[i];
+                node.name = "Node" + node.idOnSpline;
+                node.transform.gameObject.name = node.name;
+                node.editorDisplayString = road.transform.name + "-" + node.name;
             }
         }
 
 
-        private int CompareListByName(SplineN _i1, SplineN _i2)
+        private int CompareListByID(SplineN _i1, SplineN _i2)
         {
             return _i1.idOnSpline.CompareTo(_i2.idOnSpline);
         }
 
 
+        /// <summary> Setup all nodes of this road </summary>
         private void SetupNodes(ref SplineN[] _rawNodes)
         {
             //Process nodes:
             int i = 0;
             List<SplineN> nodes = new List<SplineN>();
-            int tNodesRawLength = _rawNodes.Length;
-            for (i = 0; i < tNodesRawLength; i++)
+            int rawNodesLength = _rawNodes.Length;
+            for (i = 0; i < rawNodesLength; i++)
             {
                 if (!_rawNodes[i].isDestroyed)
                 {
@@ -369,40 +383,44 @@ namespace RoadArchitect
 
             this.nodes.Clear();
             this.nodes = new List<SplineN>();
-            SplineN tNode;
+            SplineN node;
             float step;
             Quaternion rot;
-            bool bClosed = false;
-            step = (bClosed) ? 1f / ((float)nodes.Count) : 1f / ((float)(nodes.Count - 1));
-            int tNodesCount = nodes.Count;
-            for (i = 0; i < tNodesCount; i++)
+            Vector3 positionChange;
+            bool isClosed = false;
+            step = (isClosed) ? 1f / ((float)nodes.Count) : 1f / ((float)(nodes.Count - 1));
+            int nodesCount = nodes.Count;
+            for (i = 0; i < nodesCount; i++)
             {
-                tNode = nodes[i];
+                node = nodes[i];
 
+
+                // Calculate the rotation to the next node
                 rot = Quaternion.identity;
                 if (i != nodes.Count - 1)
                 {
-                    if ((nodes[i + 1].transform.position - tNode.transform.position) == Vector3.zero)
+                    positionChange = (nodes[i + 1].transform.position - node.transform.position);
+                    if (positionChange == Vector3.zero)
                     {
                         rot = Quaternion.identity;
                     }
                     else
                     {
-                        rot = Quaternion.LookRotation(nodes[i + 1].transform.position - tNode.transform.position, transform.up);
+                        rot = Quaternion.LookRotation(positionChange, transform.up);
                     }
                 }
-                else if (bClosed)
+                else if (isClosed)
                 {
-                    rot = Quaternion.LookRotation(nodes[0].transform.position - tNode.transform.position, transform.up);
+                    rot = Quaternion.LookRotation(nodes[0].transform.position - node.transform.position, transform.up);
                 }
                 else
                 {
                     rot = Quaternion.identity;
                 }
 
-                tNode.Setup(tNode.transform.position, rot, new Vector2(0f, 1f), step * ((float)i), tNode.transform.gameObject.name);
-                GSDRootUtil.SetupUniqueIdentifier(ref tNode.uID);
-                this.nodes.Add(tNode);
+                node.Setup(node.transform.position, rot, new Vector2(0f, 1f), step * ((float)i), node.transform.gameObject.name);
+                GSDRootUtil.SetupUniqueIdentifier(ref node.uID);
+                this.nodes.Add(node);
             }
 
             nodes = null;
@@ -417,133 +435,134 @@ namespace RoadArchitect
             //First lets get the general distance, node to node:
             nodes[0].time = 0f;
             nodes[nodeCount - 1].time = 1f;
-            Vector3 tVect1 = new Vector3(0f, 0f, 0f);
-            Vector3 tVect2 = new Vector3(0f, 0f, 0f);
-            float mDistance = 0f;
-            float mDistance_NoMod = 0f;
+            Vector3 node1 = new Vector3(0f, 0f, 0f);
+            Vector3 node2 = new Vector3(0f, 0f, 0f);
+            float roadLength = 0f;
+            float roadLengthOriginal = 0f;
+
+            // Calculate accumulated distance between nodes
             for (int j = 0; j < nodeCount; j++)
             {
-                tVect2 = nodes[j].pos;
+                node2 = nodes[j].pos;
                 if (j > 0)
                 {
-                    mDistance += Vector3.Distance(tVect1, tVect2);
+                    roadLength += Vector3.Distance(node1, node2);
                 }
-                tVect1 = tVect2;
+                node1 = node2;
             }
-            mDistance_NoMod = mDistance;
-            mDistance = mDistance * 1.05f;
-            float step = 0.5f / mDistance;
+
+
+            roadLengthOriginal = roadLength;
+            roadLength = roadLength * 1.05f;
+            float step = 0.5f / roadLength;
 
             //Get a slightly more accurate portrayal of the time:
-            float tTime = 0f;
+            float nodeTime = 0f;
             for (int j = 0; j < (nodeCount - 1); j++)
             {
-                tVect2 = nodes[j].pos;
+                node2 = nodes[j].pos;
                 if (j > 0)
                 {
-                    tTime += (Vector3.Distance(tVect1, tVect2) / mDistance_NoMod);
-                    nodes[j].time = tTime;
+                    nodeTime += (Vector3.Distance(node1, node2) / roadLengthOriginal);
+                    nodes[j].time = nodeTime;
                 }
-                tVect1 = tVect2;
+                node1 = node2;
             }
 
             //Using general distance and calculated step, get an accurate distance:
-            float tDistance = 0f;
+            float splineDistance = 0f;
             Vector3 prevPos = nodes[0].pos;
-            Vector3 cPos = new Vector3(0f, 0f, 0f);
-            SplineN tNode;
+            Vector3 currentPos = new Vector3(0f, 0f, 0f);
 
             prevPos = GetSplineValue(0f);
             for (float i = 0f; i < 1f; i += step)
             {
-                cPos = GetSplineValue(i);
-                //			if(float.IsNaN(cPos.x)){
-                //				int xsagfdsdgsd = 0;	
-                //			}
-                tDistance += Vector3.Distance(cPos, prevPos);
-                prevPos = cPos;
+                currentPos = GetSplineValue(i);
+                splineDistance += Vector3.Distance(currentPos, prevPos);
+                prevPos = currentPos;
             }
 
-            distance = tDistance;
+            distance = splineDistance;
+
 
             //Now get fine distance between nodes:
-
             float newTotalDistance = 0f;
             step = 0.5f / distance;
-            SplineN PrevNode = null;
-            SplineN ThisNode = null;
+            SplineN prevNode = null;
+            SplineN currentNode = null;
             prevPos = GetSplineValue(0f, false);
             for (int j = 1; j < (nodeCount - 1); j++)
             {
-                PrevNode = nodes[j - 1];
-                ThisNode = nodes[j];
+                prevNode = nodes[j - 1];
+                currentNode = nodes[j];
 
                 if (j == 1)
                 {
-                    prevPos = GetSplineValue(PrevNode.time);
+                    prevPos = GetSplineValue(prevNode.time);
                 }
-                tDistance = 0.00001f;
-                for (float i = PrevNode.time; i < ThisNode.time; i += step)
+                splineDistance = 0.00001f;
+
+                for (float i = prevNode.time; i < currentNode.time; i += step)
                 {
-                    cPos = GetSplineValue(i);
-                    if (!float.IsNaN(cPos.x))
+                    currentPos = GetSplineValue(i);
+                    if (!float.IsNaN(currentPos.x))
                     {
                         if (float.IsNaN(prevPos.x))
                         {
-                            prevPos = cPos;
+                            prevPos = currentPos;
                         }
-                        tDistance += Vector3.Distance(cPos, prevPos);
-                        prevPos = cPos;
+                        splineDistance += Vector3.Distance(currentPos, prevPos);
+                        prevPos = currentPos;
                     }
                 }
-                ThisNode.tempSegmentTime = (tDistance / distance);
-                newTotalDistance += tDistance;
-                ThisNode.dist = newTotalDistance;
+                currentNode.tempSegmentTime = (splineDistance / distance);
+                newTotalDistance += splineDistance;
+                currentNode.dist = newTotalDistance;
             }
 
 
             nodes[0].dist = 0f;
-            PrevNode = nodes[nodeCount - 2];
-            ThisNode = nodes[nodeCount - 1];
-            tDistance = 0.00001f;
-            for (float i = PrevNode.time; i < ThisNode.time; i += step)
+            prevNode = nodes[nodeCount - 2];
+            currentNode = nodes[nodeCount - 1];
+            splineDistance = 0.00001f;
+            for (float i = prevNode.time; i < currentNode.time; i += step)
             {
-                cPos = GetSplineValue(i, false);
-                if (!float.IsNaN(cPos.x))
+                currentPos = GetSplineValue(i, false);
+                if (!float.IsNaN(currentPos.x))
                 {
                     if (float.IsNaN(prevPos.x))
                     {
-                        prevPos = cPos;
+                        prevPos = currentPos;
                     }
-                    tDistance += Vector3.Distance(cPos, prevPos);
-                    prevPos = cPos;
+                    splineDistance += Vector3.Distance(currentPos, prevPos);
+                    prevPos = currentPos;
                 }
             }
-            ThisNode.tempSegmentTime = (tDistance / distance);
-            newTotalDistance += tDistance;
-            ThisNode.dist = newTotalDistance;
+            currentNode.tempSegmentTime = (splineDistance / distance);
+            newTotalDistance += splineDistance;
+            currentNode.dist = newTotalDistance;
+
             distance = newTotalDistance;
 
-
-            tTime = 0f;
+            // Set node data
+            SplineN node;
+            nodeTime = 0f;
             for (int j = 1; j < (nodeCount - 1); j++)
             {
-                tNode = nodes[j];
-                tTime += tNode.tempSegmentTime;
-                tNode.oldTime = tNode.time;
-                tNode.time = tTime;
-                tNode.tangent = GetSplineValueSkipOpt(tNode.time, true);
-                tNode.transform.rotation = Quaternion.LookRotation(tNode.tangent);
+                node = nodes[j];
+                nodeTime += node.tempSegmentTime;
+                node.oldTime = node.time;
+                node.time = nodeTime;
+                node.tangent = GetSplineValueSkipOpt(node.time, true);
+                node.transform.rotation = Quaternion.LookRotation(node.tangent);
             }
             nodes[0].tangent = GetSplineValueSkipOpt(0f, true);
             nodes[nodeCount - 1].tangent = GetSplineValueSkipOpt(1f, true);
-
-
+            
             nodes[0].dist = 0f;
 
             step = distance / cachedPointsSeperation;
             int ArrayCount = (int)Mathf.Floor(step) + 2;
-            cachedPoints = null;
             cachedPoints = new Vector3[ArrayCount];
             step = cachedPointsSeperation / distance;
             for (int j = 1; j < (ArrayCount - 1); j++)
@@ -564,8 +583,8 @@ namespace RoadArchitect
         {
             float tMod = Mathf.Lerp(0.05f, 0.2f, distance / 9000f);
             float step = tMod / distance;
-            Vector3 cPos = GetSplineValue(0f);
-            Vector3 prevPos = cPos;
+            Vector3 currentPos = GetSplineValue(0f);
+            Vector3 prevPos = currentPos;
             float tempDistanceModMax = road.roadDefinition - step;
             float tempDistanceMod = 0f;
             float tempTotalDistance = 0f;
@@ -587,8 +606,8 @@ namespace RoadArchitect
 
             for (float index = 0f; index < 1f; index += step)
             {
-                cPos = GetSplineValue(index);
-                tempDistanceHolder = Vector3.Distance(cPos, prevPos);
+                currentPos = GetSplineValue(index);
+                tempDistanceHolder = Vector3.Distance(currentPos, prevPos);
                 tempTotalDistance += tempDistanceHolder;
                 tempDistanceMod += tempDistanceHolder;
                 if (tempDistanceMod > tempDistanceModMax)
@@ -597,7 +616,7 @@ namespace RoadArchitect
                     RoadDefKeys.Add(TranslateParamToInt(index));
                     RoadDefValues.Add(tempTotalDistance);
                 }
-                prevPos = cPos;
+                prevPos = currentPos;
             }
 
             RoadDefKeysArray = RoadDefKeys.ToArray();
@@ -1729,11 +1748,11 @@ namespace RoadArchitect
                         Object.DestroyImmediate(_node.spline.nodes[_node.spline.GetNodeCount() - 1].transform.gameObject);
                         _node.spline.isSpecialEndControlNode = false;
                     }
-
                 }
                 _node.isIntersection = false;
                 _node.isSpecialIntersection = false;
             }
+
             if (_node.intersectionOtherNode != null)
             {
                 if (_node.intersectionOtherNode.isEndPoint)
@@ -2243,6 +2262,7 @@ namespace RoadArchitect
         #endregion
 #endif
 
+
         #region "General Util"
         public int GetNodeCount()
         {
@@ -2253,42 +2273,44 @@ namespace RoadArchitect
         public int GetNodeCountNonNull()
         {
             int nodeCount = GetNodeCount();
-            int tCount = 0;
+            int validCount = 0;
+
             for (int index = 0; index < nodeCount; index++)
             {
                 if (nodes[index] != null)
                 {
-                    tCount += 1;
+                    validCount += 1;
                     if (nodes[index].isIntersection && nodes[index].intersection == null)
                     {
                         DestroyIntersection(nodes[index]);
                     }
                 }
             }
-            return tCount;
+            return validCount;
         }
 
 
+        /// <summary> Checks if the Nodes are null </summary>
         public bool CheckInvalidNodeCount()
         {
             int nodeCount = GetNodeCount();
-            int tCount = 0;
+            int validCount = 0;
+
+
             for (int index = 0; index < nodeCount; index++)
             {
                 if (nodes[index] != null)
                 {
-                    tCount += 1;
+                    validCount += 1;
                     if (nodes[index].isIntersection && nodes[index].intersection == null)
                     {
                         DestroyIntersection(nodes[index]);
                     }
                 }
-                else
-                {
-
-                }
             }
-            if (tCount != nodeCount)
+
+
+            if (validCount != nodeCount)
             {
                 return true;
             }
@@ -2299,10 +2321,12 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Get node from spline progress </summary>
         public SplineN GetCurrentNode(float _p)
         {
             int nodeCount = GetNodeCount();
             SplineN node = null;
+
             for (int index = 0; index < nodeCount; index++)
             {
                 node = nodes[index];
@@ -2334,8 +2358,7 @@ namespace RoadArchitect
 
         public SplineN GetLastNodeAll()
         {
-            int nodeCount = GetNodeCount();
-            int startIndex = (nodeCount - 1);
+            int startIndex = (GetNodeCount() - 1);
             SplineN node = null;
 
             int i = startIndex;
@@ -2411,8 +2434,6 @@ namespace RoadArchitect
             connectedIDs = new List<int>();
         }
         #endregion
-
-
         //#endif
 
 
