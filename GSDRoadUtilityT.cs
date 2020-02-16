@@ -293,7 +293,7 @@ namespace GSD.Threaded
                     if (tIntStrength >= 0f)
                     {
                         // || IsApproximately(tIntStrength,0f,0.01f)){
-                        if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.01f))
+                        if (RootUtils.IsApproximately(tIntStrength, 1f, 0.01f))
                         {
                             T1SUB = tIntHeight;
                             bIntStr1_Full = true;
@@ -303,7 +303,7 @@ namespace GSD.Threaded
                         {
                             bIntStr1_Full = false;
                             bIntStr1_FullNext = (tIntStrength2 >= 1f);
-                            if (!GSDRootUtil.IsApproximately(tIntStrength, 0f, 0.01f))
+                            if (!RootUtils.IsApproximately(tIntStrength, 0f, 0.01f))
                             {
                                 T1SUB = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * tVect1.y);
                             }
@@ -353,10 +353,10 @@ namespace GSD.Threaded
                         bIntStr1_FullPrev = bIntStr1_Full;
                     }
 
-                    if (tIntStrength2 >= 0f || GSDRootUtil.IsApproximately(tIntStrength2, 0f, 0.01f))
+                    if (tIntStrength2 >= 0f || RootUtils.IsApproximately(tIntStrength2, 0f, 0.01f))
                     {
                         //if(!IsApproximately(tIntStrength,1f,0.01f)){ 
-                        if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.01f))
+                        if (RootUtils.IsApproximately(tIntStrength, 1f, 0.01f))
                         {
                             bIntStr2_Full = true;
                             T2SUB = tIntHeight2;
@@ -364,7 +364,7 @@ namespace GSD.Threaded
                         else
                         {
                             bIntStr2_Full = false;
-                            if (!GSDRootUtil.IsApproximately(tIntStrength2, 0f, 0.01f))
+                            if (!RootUtils.IsApproximately(tIntStrength2, 0f, 0.01f))
                             {
                                 T2SUB = (tIntStrength2 * tIntHeight) + ((1 - tIntStrength2) * tVect2.y);
                             }
@@ -484,7 +484,7 @@ namespace GSD.Threaded
                 }
             }
 
-            GSDRootUtil.StartProfiling(_spline.road, "DoRectsTree");
+            RootUtils.StartProfiling(_spline.road, "DoRectsTree");
             if (_spline.road.isTreeModificationEnabled && TreerectList != null && TreerectList.Count > 0)
             {
                 int tCount = _TTD.TreeSize;
@@ -519,7 +519,7 @@ namespace GSD.Threaded
                 }
                 _TTD.TreesCurrent.RemoveAll(item => item.prototypeIndex < -1);
             }
-            GSDRootUtil.EndProfiling(_spline.road);
+            RootUtils.EndProfiling(_spline.road);
 
             if (!_spline.road.isHeightModificationEnabled)
             {
@@ -580,7 +580,7 @@ namespace GSD.Threaded
                 {
                     tXY = tXYs[k];
                     tFloat = ProcessCoordinateGrabber(ref index, ref _spline, ref _TTD, ref TBMList, ref tXY, isBridge, isTunnel);
-                    if (!GSDRootUtil.IsApproximately(tFloat, 0f, 0.0001f))
+                    if (!RootUtils.IsApproximately(tFloat, 0f, 0.0001f))
                     {
                         _spline.HeightHistory.Add(new KeyValuePair<float, float>(index, tFloat));
                     }
@@ -954,7 +954,7 @@ namespace GSD.Threaded
                 }
 
                 //int DetailI = 0;
-                GSDRootUtil.StartProfiling(_spline.road, "Dorectsdetails");
+                RootUtils.StartProfiling(_spline.road, "Dorectsdetails");
                 int tInt = 0;
                 for (int index = MinX; index <= MaxX; index++)
                 {
@@ -994,7 +994,7 @@ namespace GSD.Threaded
                         }
                     }
                 }
-                GSDRootUtil.EndProfiling(_spline.road);
+                RootUtils.EndProfiling(_spline.road);
             }
 
             return tRect;
@@ -1100,7 +1100,7 @@ namespace GSD.Threaded
                 }
             }
 
-            if (_isBridge && GSDRootUtil.IsApproximately(tReturnFloat, 0f, 0.0001f))
+            if (_isBridge && RootUtils.IsApproximately(tReturnFloat, 0f, 0.0001f))
             {
                 tReturnFloat = _spline.GetSplineValue(_param, false).y;
             }
@@ -1386,12 +1386,12 @@ namespace GSD.Threaded
 
 
             //Prelim intersection construction and profiling:
-            GSDRootUtil.StartProfiling(_road, "RoadJob_Prelim_Inter");
+            RootUtils.StartProfiling(_road, "RoadJob_Prelim_Inter");
             if (isInterseOn)
             {
                 RoadJobPrelimInter(ref _road);
             }
-            GSDRootUtil.EndStartProfiling(_road, "RoadPrelimForLoop");
+            RootUtils.EndStartProfiling(_road, "RoadPrelimForLoop");
 
             //Road/shoulder cuts: Init necessary since a road cut is added for the last segment after this function:
             if (_road.isRoadCutsEnabled || _road.isDynamicCutsEnabled)
@@ -1446,11 +1446,11 @@ namespace GSD.Threaded
             int spamcheckmax1 = 18000;
             int spamcheck1 = 0;
 
-            if (GSDRootUtil.IsApproximately(StartMin, 0f, 0.0001f))
+            if (RootUtils.IsApproximately(StartMin, 0f, 0.0001f))
             {
                 kSkip = false;
             }
-            if (GSDRootUtil.IsApproximately(FinalMax, 1f, 0.0001f))
+            if (RootUtils.IsApproximately(FinalMax, 1f, 0.0001f))
             {
                 kSkipFinal = true;
             }
@@ -1499,7 +1499,7 @@ namespace GSD.Threaded
                     i = 0f;
                 }
 
-                if (GSDRootUtil.IsApproximately(i, FinalMax, 0.00001f))
+                if (RootUtils.IsApproximately(i, FinalMax, 0.00001f))
                 {
                     isFinalEnd = true;
                 }
@@ -1812,7 +1812,7 @@ namespace GSD.Threaded
 
                     param2 = spline.TranslateInverseParamToFloat(spline.RoadDefKeysArray[vCount]);
                     float tInterStrNext = _road.spline.IntersectionStrengthNext(spline.GetSplineValue(param2, false));
-                    if (GSDRootUtil.IsApproximately(tInterStrNext, 1f, 0.001f) || tInterStrNext > 1f)
+                    if (RootUtils.IsApproximately(tInterStrNext, 1f, 0.001f) || tInterStrNext > 1f)
                     {
                         isNextInter = true;
                     }
@@ -2600,7 +2600,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRR.x, 0.01f) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRR.z, 0.01f)))
+                                        if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRR.x, 0.01f) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRR.z, 0.01f)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2625,7 +2625,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRR.x, 0.01f) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRR.z, 0.01f)))
+                                        if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRR.x, 0.01f) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRR.z, 0.01f)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2669,7 +2669,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRR.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRR.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRR.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2717,7 +2717,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRL.z)))
+                                        if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2756,7 +2756,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRL.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                             {
                                                 eList.Add(m);
                                                 if (m == vList.Count - 1)
@@ -2834,7 +2834,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerRL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerRL.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2906,7 +2906,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLR.z)))
+                                        if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerLR.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerLR.z)))
                                         {
                                             eList.Add(m);
                                         }
@@ -2949,7 +2949,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLR.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerLR.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerLR.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -2985,7 +2985,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLR.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLR.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerLR.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerLR.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -3034,7 +3034,7 @@ namespace GSD.Threaded
                                 {
                                     if (Vector3.SqrMagnitude(vList[m] - ShoulderR_lVect) < 0.01f)
                                     {
-                                        if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLL.z)))
+                                        if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerLL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerLL.z)))
                                         {
                                             eList.Add(m);
                                         }
@@ -3084,7 +3084,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLL.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerLL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerLL.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -3112,7 +3112,7 @@ namespace GSD.Threaded
                                     {
                                         if (Vector3.SqrMagnitude(vList[m] - ShoulderL_rVect) < 0.01f)
                                         {
-                                            if (!(GSDRootUtil.IsApproximately(vList[m].x, intersection.cornerLL.x) && GSDRootUtil.IsApproximately(vList[m].z, intersection.cornerLL.z)))
+                                            if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerLL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerLL.z)))
                                             {
                                                 eList.Add(m);
                                             }
@@ -3558,7 +3558,7 @@ namespace GSD.Threaded
                 //i+=Step;//Master step incrementer.
             }
 
-            GSDRootUtil.EndStartProfiling(_road, "RoadJob_Prelim_FinalizeInter");
+            RootUtils.EndStartProfiling(_road, "RoadJob_Prelim_FinalizeInter");
 
             //Finalize intersection vectors:
             if (isInterseOn)
@@ -3566,7 +3566,7 @@ namespace GSD.Threaded
                 RoadJobPrelimFinalizeInter(ref _road);
             }
 
-            GSDRootUtil.EndStartProfiling(_road, "RoadJob_Prelim_RoadConnections");
+            RootUtils.EndStartProfiling(_road, "RoadJob_Prelim_RoadConnections");
 
             //Creates road connections if necessary:
             //float ExtraHeight = 0f;
@@ -3782,7 +3782,7 @@ namespace GSD.Threaded
                 _road.RCS.RoadConnections_normals.Add(RoadConn_normals);
                 _road.RCS.RoadConnections_uv.Add(RoadConn_uv);
             }
-            GSDRootUtil.EndProfiling(_road);
+            RootUtils.EndProfiling(_road);
         }
 
 
@@ -4994,7 +4994,7 @@ namespace GSD.Threaded
                     isDidIntersect = false;
                     t2D_Line2Start = _secondaryList[k - 1];
                     t2D_Line2End = _secondaryList[k];
-                    isDidIntersect = GSDRootUtil.Intersects2D(ref t2D_Line1Start, ref t2D_Line1End, ref t2D_Line2Start, ref t2D_Line2End, out tIntersectLocation);
+                    isDidIntersect = RootUtils.Intersects2D(ref t2D_Line1Start, ref t2D_Line1End, ref t2D_Line2Start, ref t2D_Line2End, out tIntersectLocation);
                     if (isDidIntersect)
                     {
                         return tIntersectLocation;
@@ -5133,11 +5133,11 @@ namespace GSD.Threaded
             int spamcheckmax1 = 18000;
             int spamcheck1 = 0;
 
-            if (GSDRootUtil.IsApproximately(StartMin, 0f, 0.0001f))
+            if (RootUtils.IsApproximately(StartMin, 0f, 0.0001f))
             {
                 isSkip = false;
             }
-            if (GSDRootUtil.IsApproximately(FinalMax, 1f, 0.0001f))
+            if (RootUtils.IsApproximately(FinalMax, 1f, 0.0001f))
             {
                 isSkipFinal = true;
             }
@@ -5177,7 +5177,7 @@ namespace GSD.Threaded
                     i = 0f;
                 }
 
-                if (GSDRootUtil.IsApproximately(i, FinalMax, 0.00001f))
+                if (RootUtils.IsApproximately(i, FinalMax, 0.00001f))
                 {
                     isFinalEnd = true;
                 }
@@ -5198,7 +5198,7 @@ namespace GSD.Threaded
                 tSpline.GetSplineValueBoth(i, out tVect, out POS);
                 isPastInter = false;
                 tIntStrength = tSpline.IntersectionStrength(ref tVect, ref tIntHeight, ref GSDRI, ref isPastInter, ref i, ref xNode);
-                if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.001f) || tIntStrength > 1f)
+                if (RootUtils.IsApproximately(tIntStrength, 1f, 0.001f) || tIntStrength > 1f)
                 {
                     isMaxIntersection = true;
                 }
@@ -5289,12 +5289,12 @@ namespace GSD.Threaded
                     }
                     else
                     {
-                        if (!GSDRootUtil.IsApproximately(tIntStrength, 0f, 0.001f))
+                        if (!RootUtils.IsApproximately(tIntStrength, 0f, 0.001f))
                         {
                             tVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * tVect.y);
                         }
                         tIntStrength_temp = _road.spline.IntersectionStrength(ref rVect, ref tIntHeight, ref GSDRI, ref isPastInter, ref i, ref xNode);
-                        if (!GSDRootUtil.IsApproximately(tIntStrength_temp, 0f, 0.001f))
+                        if (!RootUtils.IsApproximately(tIntStrength_temp, 0f, 0.001f))
                         {
                             rVect.y = (tIntStrength_temp * tIntHeight) + ((1 - tIntStrength_temp) * rVect.y);
                             ShoulderR_lVect = rVect;
@@ -6313,12 +6313,12 @@ namespace GSD.Threaded
         public static void RoadJob1(ref RoadConstructorBufferMaker _RCS)
         {
             //Triangles and normals:
-            //GSDRootUtil.StartProfiling(RCS.tRoad, "ProcessRoad_IntersectionCleanup");
+            //RootUtils.StartProfiling(RCS.tRoad, "ProcessRoad_IntersectionCleanup");
             if (_RCS.isInterseOn)
             {
                 ProcessRoadIntersectionCleanup(ref _RCS);
             }
-            //GSDRootUtil.EndProfiling(RCS.tRoad);
+            //RootUtils.EndProfiling(RCS.tRoad);
 
             ProcessRoadTrisBulk(ref _RCS);
 
@@ -6378,8 +6378,8 @@ namespace GSD.Threaded
                 int cCount = _RCS.cut_RoadVectors.Count;
                 for (int index = 0; index < cCount; index++)
                 {
-                    _RCS.cut_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.cut_tris[index], _RCS.cut_normals[index], _RCS.cut_uv[index], _RCS.cut_RoadVectors[index].ToArray()));
-                    _RCS.cut_tangents_world.Add(GSDRootUtil.ProcessTangents(_RCS.cut_tris[index], _RCS.cut_normals[index], _RCS.cut_uv_world[index], _RCS.cut_RoadVectors[index].ToArray()));
+                    _RCS.cut_tangents.Add(RootUtils.ProcessTangents(_RCS.cut_tris[index], _RCS.cut_normals[index], _RCS.cut_uv[index], _RCS.cut_RoadVectors[index].ToArray()));
+                    _RCS.cut_tangents_world.Add(RootUtils.ProcessTangents(_RCS.cut_tris[index], _RCS.cut_normals[index], _RCS.cut_uv_world[index], _RCS.cut_RoadVectors[index].ToArray()));
                 }
             }
             if (_RCS.road.isShoulderCutsEnabled || _RCS.road.isDynamicCutsEnabled)
@@ -6388,15 +6388,15 @@ namespace GSD.Threaded
                 for (int index = 0; index < rCount; index++)
                 {
                     ProcessRoadUVsShoulderCut(ref _RCS, false, index);
-                    _RCS.cut_tangents_SR.Add(GSDRootUtil.ProcessTangents(_RCS.cut_tris_ShoulderR[index], _RCS.cut_normals_ShoulderR[index], _RCS.cut_uv_SR[index], _RCS.cut_ShoulderR_Vectors[index].ToArray()));
-                    _RCS.cut_tangents_SR_world.Add(GSDRootUtil.ProcessTangents(_RCS.cut_tris_ShoulderR[index], _RCS.cut_normals_ShoulderR[index], _RCS.cut_uv_SR_world[index], _RCS.cut_ShoulderR_Vectors[index].ToArray()));
+                    _RCS.cut_tangents_SR.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderR[index], _RCS.cut_normals_ShoulderR[index], _RCS.cut_uv_SR[index], _RCS.cut_ShoulderR_Vectors[index].ToArray()));
+                    _RCS.cut_tangents_SR_world.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderR[index], _RCS.cut_normals_ShoulderR[index], _RCS.cut_uv_SR_world[index], _RCS.cut_ShoulderR_Vectors[index].ToArray()));
                 }
                 int lCount = _RCS.cut_ShoulderL_Vectors.Count;
                 for (int index = 0; index < lCount; index++)
                 {
                     ProcessRoadUVsShoulderCut(ref _RCS, true, index);
-                    _RCS.cut_tangents_SL.Add(GSDRootUtil.ProcessTangents(_RCS.cut_tris_ShoulderL[index], _RCS.cut_normals_ShoulderL[index], _RCS.cut_uv_SL[index], _RCS.cut_ShoulderL_Vectors[index].ToArray()));
-                    _RCS.cut_tangents_SL_world.Add(GSDRootUtil.ProcessTangents(_RCS.cut_tris_ShoulderL[index], _RCS.cut_normals_ShoulderL[index], _RCS.cut_uv_SL_world[index], _RCS.cut_ShoulderL_Vectors[index].ToArray()));
+                    _RCS.cut_tangents_SL.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderL[index], _RCS.cut_normals_ShoulderL[index], _RCS.cut_uv_SL[index], _RCS.cut_ShoulderL_Vectors[index].ToArray()));
+                    _RCS.cut_tangents_SL_world.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderL[index], _RCS.cut_normals_ShoulderL[index], _RCS.cut_uv_SL_world[index], _RCS.cut_ShoulderL_Vectors[index].ToArray()));
                 }
             }
             if (_RCS.isInterseOn)
@@ -6410,23 +6410,23 @@ namespace GSD.Threaded
             {
                 if (!_RCS.tMeshSkip)
                 {
-                    _RCS.tangents = GSDRootUtil.ProcessTangents(_RCS.tris, _RCS.normals, _RCS.uv, _RCS.RoadVectors.ToArray());
+                    _RCS.tangents = RootUtils.ProcessTangents(_RCS.tris, _RCS.normals, _RCS.uv, _RCS.RoadVectors.ToArray());
                 }
                 if (!_RCS.tMeshSkip)
                 {
-                    _RCS.tangents2 = GSDRootUtil.ProcessTangents(_RCS.tris, _RCS.normals, _RCS.uv2, _RCS.RoadVectors.ToArray());
+                    _RCS.tangents2 = RootUtils.ProcessTangents(_RCS.tris, _RCS.normals, _RCS.uv2, _RCS.RoadVectors.ToArray());
                 }
                 if (!_RCS.tMesh_SRSkip)
                 {
-                    _RCS.tangents_SR = GSDRootUtil.ProcessTangents(_RCS.tris_ShoulderR, _RCS.normals_ShoulderR, _RCS.uv_SR, _RCS.ShoulderR_Vectors.ToArray());
+                    _RCS.tangents_SR = RootUtils.ProcessTangents(_RCS.tris_ShoulderR, _RCS.normals_ShoulderR, _RCS.uv_SR, _RCS.ShoulderR_Vectors.ToArray());
                 }
                 if (!_RCS.tMesh_SLSkip)
                 {
-                    _RCS.tangents_SL = GSDRootUtil.ProcessTangents(_RCS.tris_ShoulderL, _RCS.normals_ShoulderL, _RCS.uv_SL, _RCS.ShoulderL_Vectors.ToArray());
+                    _RCS.tangents_SL = RootUtils.ProcessTangents(_RCS.tris_ShoulderL, _RCS.normals_ShoulderL, _RCS.uv_SL, _RCS.ShoulderL_Vectors.ToArray());
                 }
                 for (int index = 0; index < _RCS.tMesh_RoadConnections.Count; index++)
                 {
-                    _RCS.RoadConnections_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.RoadConnections_tris[index], _RCS.RoadConnections_normals[index], _RCS.RoadConnections_uv[index], _RCS.RoadConnections_verts[index]));
+                    _RCS.RoadConnections_tangents.Add(RootUtils.ProcessTangents(_RCS.RoadConnections_tris[index], _RCS.RoadConnections_normals[index], _RCS.RoadConnections_uv[index], _RCS.RoadConnections_verts[index]));
                 }
             }
 
@@ -6436,64 +6436,64 @@ namespace GSD.Threaded
                 int vCount = _RCS.iBLane0s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iBLane0s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iBLane0s_tris[index], _RCS.iBLane0s_normals[index], _RCS.iBLane0s_uv[index], _RCS.iBLane0s[index]));
+                    _RCS.iBLane0s_tangents.Add(RootUtils.ProcessTangents(_RCS.iBLane0s_tris[index], _RCS.iBLane0s_normals[index], _RCS.iBLane0s_uv[index], _RCS.iBLane0s[index]));
                 }
                 vCount = _RCS.iBLane1s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iBLane1s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iBLane1s_tris[index], _RCS.iBLane1s_normals[index], _RCS.iBLane1s_uv[index], _RCS.iBLane1s[index]));
+                    _RCS.iBLane1s_tangents.Add(RootUtils.ProcessTangents(_RCS.iBLane1s_tris[index], _RCS.iBLane1s_normals[index], _RCS.iBLane1s_uv[index], _RCS.iBLane1s[index]));
                 }
                 vCount = _RCS.iBLane2s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iBLane2s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iBLane2s_tris[index], _RCS.iBLane2s_normals[index], _RCS.iBLane2s_uv[index], _RCS.iBLane2s[index]));
+                    _RCS.iBLane2s_tangents.Add(RootUtils.ProcessTangents(_RCS.iBLane2s_tris[index], _RCS.iBLane2s_normals[index], _RCS.iBLane2s_uv[index], _RCS.iBLane2s[index]));
                 }
                 vCount = _RCS.iBLane3s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iBLane3s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iBLane3s_tris[index], _RCS.iBLane3s_normals[index], _RCS.iBLane3s_uv[index], _RCS.iBLane3s[index]));
+                    _RCS.iBLane3s_tangents.Add(RootUtils.ProcessTangents(_RCS.iBLane3s_tris[index], _RCS.iBLane3s_normals[index], _RCS.iBLane3s_uv[index], _RCS.iBLane3s[index]));
                 }
                 //Front lanes:
                 vCount = _RCS.iFLane0s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iFLane0s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iFLane0s_tris[index], _RCS.iFLane0s_normals[index], _RCS.iFLane0s_uv[index], _RCS.iFLane0s[index]));
+                    _RCS.iFLane0s_tangents.Add(RootUtils.ProcessTangents(_RCS.iFLane0s_tris[index], _RCS.iFLane0s_normals[index], _RCS.iFLane0s_uv[index], _RCS.iFLane0s[index]));
                 }
                 vCount = _RCS.iFLane1s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iFLane1s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iFLane1s_tris[index], _RCS.iFLane1s_normals[index], _RCS.iFLane1s_uv[index], _RCS.iFLane1s[index]));
+                    _RCS.iFLane1s_tangents.Add(RootUtils.ProcessTangents(_RCS.iFLane1s_tris[index], _RCS.iFLane1s_normals[index], _RCS.iFLane1s_uv[index], _RCS.iFLane1s[index]));
                 }
                 vCount = _RCS.iFLane2s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iFLane2s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iFLane2s_tris[index], _RCS.iFLane2s_normals[index], _RCS.iFLane2s_uv[index], _RCS.iFLane2s[index]));
+                    _RCS.iFLane2s_tangents.Add(RootUtils.ProcessTangents(_RCS.iFLane2s_tris[index], _RCS.iFLane2s_normals[index], _RCS.iFLane2s_uv[index], _RCS.iFLane2s[index]));
                 }
                 vCount = _RCS.iFLane3s.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iFLane3s_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iFLane3s_tris[index], _RCS.iFLane3s_normals[index], _RCS.iFLane3s_uv[index], _RCS.iFLane3s[index]));
+                    _RCS.iFLane3s_tangents.Add(RootUtils.ProcessTangents(_RCS.iFLane3s_tris[index], _RCS.iFLane3s_normals[index], _RCS.iFLane3s_uv[index], _RCS.iFLane3s[index]));
                 }
                 //Main plates:
                 vCount = _RCS.iBMainPlates.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iBMainPlates_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iBMainPlates_tris[index], _RCS.iBMainPlates_normals[index], _RCS.iBMainPlates_uv[index], _RCS.iBMainPlates[index]));
+                    _RCS.iBMainPlates_tangents.Add(RootUtils.ProcessTangents(_RCS.iBMainPlates_tris[index], _RCS.iBMainPlates_normals[index], _RCS.iBMainPlates_uv[index], _RCS.iBMainPlates[index]));
                 }
                 vCount = _RCS.iBMainPlates.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iBMainPlates_tangents2.Add(GSDRootUtil.ProcessTangents(_RCS.iBMainPlates_tris[index], _RCS.iBMainPlates_normals[index], _RCS.iBMainPlates_uv2[index], _RCS.iBMainPlates[index]));
+                    _RCS.iBMainPlates_tangents2.Add(RootUtils.ProcessTangents(_RCS.iBMainPlates_tris[index], _RCS.iBMainPlates_normals[index], _RCS.iBMainPlates_uv2[index], _RCS.iBMainPlates[index]));
                 }
                 vCount = _RCS.iFMainPlates.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iFMainPlates_tangents.Add(GSDRootUtil.ProcessTangents(_RCS.iFMainPlates_tris[index], _RCS.iFMainPlates_normals[index], _RCS.iFMainPlates_uv[index], _RCS.iFMainPlates[index]));
+                    _RCS.iFMainPlates_tangents.Add(RootUtils.ProcessTangents(_RCS.iFMainPlates_tris[index], _RCS.iFMainPlates_normals[index], _RCS.iFMainPlates_uv[index], _RCS.iFMainPlates[index]));
                 }
                 vCount = _RCS.iFMainPlates.Count;
                 for (int index = 0; index < vCount; index++)
                 {
-                    _RCS.iFMainPlates_tangents2.Add(GSDRootUtil.ProcessTangents(_RCS.iFMainPlates_tris[index], _RCS.iFMainPlates_normals[index], _RCS.iFMainPlates_uv2[index], _RCS.iFMainPlates[index]));
+                    _RCS.iFMainPlates_tangents2.Add(RootUtils.ProcessTangents(_RCS.iFMainPlates_tris[index], _RCS.iFMainPlates_normals[index], _RCS.iFMainPlates_uv2[index], _RCS.iFMainPlates[index]));
                 }
             }
         }
@@ -8231,7 +8231,7 @@ namespace GSD.Threaded
                 }
             }
 
-            //if(p > 0.95f && GSDRootUtil.IsApproximately(cValue,0f,0.001f)){
+            //if(p > 0.95f && RootUtils.IsApproximately(cValue,0f,0.001f)){
             //    float DeadValue = 0f;
             //    Vector3 tPos = tSpline.GetSplineValue(p,false);
             //    if(!tSpline.IsNearIntersection(ref tPos,ref DeadValue)){
@@ -8240,7 +8240,7 @@ namespace GSD.Threaded
             //}
 
             //Zero protection: 
-            if (GSDRootUtil.IsApproximately(cValue, 0f, 0.001f) && _worldVector.y > 0f)
+            if (RootUtils.IsApproximately(cValue, 0f, 0.001f) && _worldVector.y > 0f)
             {
                 cValue = _worldVector.y - 0.35f;
             }
@@ -8468,9 +8468,9 @@ namespace GSD.Threaded
 
                 //if(tRoad.opt_MatchTerrain)
                 //{
-                GSDRootUtil.StartProfiling(_road, "DoRects");
+                RootUtils.StartProfiling(_road, "DoRects");
                 GSDTerraformingT.DoRects(_spline, TTD);
-                GSDRootUtil.EndProfiling(_road);
+                RootUtils.EndProfiling(_road);
                 //}
                 //else
                 //{

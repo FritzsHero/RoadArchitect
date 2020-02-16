@@ -107,12 +107,12 @@ namespace RoadArchitect.Roads
             bool isInsertEnded = false;
             bool isInsertZero = false;
             int start = 0;
-            if (GSDRootUtil.IsApproximately(param, 0f, 0.0001f))
+            if (RootUtils.IsApproximately(param, 0f, 0.0001f))
             {
                 isInsertZero = true;
                 start = 0;
             }
-            else if (GSDRootUtil.IsApproximately(param, 1f, 0.0001f))
+            else if (RootUtils.IsApproximately(param, 1f, 0.0001f))
             {
                 //Inserted at end, switch to create node instead:
                 Object.DestroyImmediate(nodeObj);
@@ -285,7 +285,7 @@ namespace RoadArchitect.Roads
                             xVector2 = new Vector2(vector.x, vector.z);
 
                             //Now see if these two lines intersect:
-                            if (GSDRootUtil.Intersects2D(ref vector1, ref vector2, ref xVector1, ref xVector2, out intersectPoint2D))
+                            if (RootUtils.Intersects2D(ref vector1, ref vector2, ref xVector1, ref xVector2, out intersectPoint2D))
                             {
                                 //Get height of intersection on primary road:
                                 float height = 0f;

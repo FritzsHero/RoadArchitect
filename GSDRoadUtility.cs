@@ -148,12 +148,12 @@ namespace RoadArchitect
             bool isEndInsert = false;
             bool isZeroInsert = false;
             int iStart = 0;
-            if (GSDRootUtil.IsApproximately(param, 0f, 0.0001f))
+            if (RootUtils.IsApproximately(param, 0f, 0.0001f))
             {
                 isZeroInsert = true;
                 iStart = 0;
             }
-            else if (GSDRootUtil.IsApproximately(param, 1f, 0.0001f))
+            else if (RootUtils.IsApproximately(param, 1f, 0.0001f))
             {
                 isEndInsert = true;
             }
@@ -330,7 +330,7 @@ namespace RoadArchitect
             Object[] allTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
             foreach (Terrain terrain in allTerrains)
             {
-                if (!GSDRootUtil.IsApproximately(terrain.transform.position.y, 0f, 0.0001f))
+                if (!RootUtils.IsApproximately(terrain.transform.position.y, 0f, 0.0001f))
                 {
                     Vector3 tVect = terrain.transform.position;
                     tVect.y = 0f;
@@ -348,14 +348,14 @@ namespace RoadArchitect
 
         private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref GSDRoad _road, bool _isMultithreaded)
         {
-            GSDRootUtil.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
+            RootUtils.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
             //First lets make sure all terrains have GSDTerrain shit on them:
             CheckAllTerrains();
 
             //Reset the terrain:
-            GSDRootUtil.StartProfiling(_road, "TerrainsReset");
+            RootUtils.StartProfiling(_road, "TerrainsReset");
             GSDTerraforming.TerrainsReset(_road);
-            GSDRootUtil.EndProfiling(_road);
+            RootUtils.EndProfiling(_road);
 
             float heightDistance = _road.matchHeightsDistance;
             //float treeDistance = tRoad.opt_ClearTreesDistance;
@@ -444,7 +444,7 @@ namespace RoadArchitect
                     float DetailRatio = terrain.terrainData.detailResolution / terrain.terrainData.size.x;
 
                     //Heights:
-                    GSDRootUtil.StartProfiling(_road, "Heights");
+                    RootUtils.StartProfiling(_road, "Heights");
                     if (_road.isHeightModificationEnabled)
                     {
                         aSize = (int) _spline.distance * ((int) (heightDistance * 1.65f * TTD.HMRatio) + 2);
@@ -470,7 +470,7 @@ namespace RoadArchitect
                     }
 
                     //Details:
-                    GSDRootUtil.EndStartProfiling(_road, "Details");
+                    RootUtils.EndStartProfiling(_road, "Details");
                     if (_road.isDetailModificationEnabled)
                     {
                         //						TTD.DetailValues = new Dictionary<int, int[,]>();
@@ -486,7 +486,7 @@ namespace RoadArchitect
 
                         // Get all of layer zero.
                         //						int[] mMinMaxDetailEntryCount = new int[TTD.DetailLayersCount];
-                        //						GSDRootUtil.StartProfiling(tRoad, "DetailValues");
+                        //						RootUtils.StartProfiling(tRoad, "DetailValues");
                         //						Vector3 bVect = default(Vector3);
                         //						Vector2 bVect2D = default(Vector2);
                         //						int DetailRes = tTerrain.terrainData.detailResolution;
@@ -515,7 +515,7 @@ namespace RoadArchitect
                         //								TTD.DetailHasProcessed.Add(i,new bool[tTerrain.terrainData.detailWidth,tTerrain.terrainData.detailHeight]);
                         //							}
                         //						}
-                        //						GSDRootUtil.EndProfiling(tRoad);
+                        //						RootUtils.EndProfiling(tRoad);
 
 
                         dSize = (int) _spline.distance * ((int) (detailDistance * 3f * DetailRatio) + 2);
@@ -566,7 +566,7 @@ namespace RoadArchitect
                     }
 
                     //Trees:
-                    GSDRootUtil.EndStartProfiling(_road, "Trees");
+                    RootUtils.EndStartProfiling(_road, "Trees");
                     if (_road.isTreeModificationEnabled)
                     {
                         //						TTD.TreesCurrent = tTerrain.terrainData.treeInstances;
@@ -575,7 +575,7 @@ namespace RoadArchitect
                         TTD.TreesI = 0;
                         TTD.TreesOld = new List<TreeInstance>();
                     }
-                    GSDRootUtil.EndProfiling(_road);
+                    RootUtils.EndProfiling(_road);
                 }
             }
 
@@ -592,7 +592,7 @@ namespace RoadArchitect
                 }
             }
 
-            GSDRootUtil.EndProfiling(_road);
+            RootUtils.EndProfiling(_road);
 
             //Start job now, for each relevant TTD:
             _road.EditorTerrainCalcs(ref EditorTTDList);
@@ -649,9 +649,9 @@ namespace RoadArchitect
 
         public static void ProcessRoadTerrainHook2(SplineC _spline, ref List<TempTerrainData> _TTDList)
         {
-            GSDRootUtil.StartProfiling(_spline.road, "ProcessRoad_Terrain_Hook2");
+            RootUtils.StartProfiling(_spline.road, "ProcessRoad_Terrain_Hook2");
             ProcessRoadTerrainHook2Do(ref _spline, ref _TTDList);
-            GSDRootUtil.EndProfiling(_spline.road);
+            RootUtils.EndProfiling(_spline.road);
         }
 
 
@@ -2364,7 +2364,7 @@ namespace RoadArchitect
                     vMesh.uv = vUV;
                     vMesh.RecalculateNormals();
                     RoadConnections_normals[index] = vMesh.normals;
-                    vMesh.tangents = GSDRootUtil.ProcessTangents(vMesh.triangles, vMesh.normals, vMesh.uv, vMesh.vertices);
+                    vMesh.tangents = RootUtils.ProcessTangents(vMesh.triangles, vMesh.normals, vMesh.uv, vMesh.vertices);
 
                     tObj = new GameObject("RoadConnectionBase");
                     MF = tObj.AddComponent<MeshFilter>();
@@ -2887,7 +2887,7 @@ namespace RoadArchitect
                     vMesh.uv = xUV;
                     vMesh.RecalculateBounds();
                     vMesh.RecalculateNormals();
-                    vMesh.tangents = GSDRootUtil.ProcessTangents(xTris, vMesh.normals, xUV, xVerts);
+                    vMesh.tangents = RootUtils.ProcessTangents(xTris, vMesh.normals, xUV, xVerts);
                     if (road.isLightmapped)
                     {
                         //UnityEditor.Unwrapping.GenerateSecondaryUVSet(vMesh);
@@ -2938,7 +2938,7 @@ namespace RoadArchitect
                     mMesh.uv = xUV2;
                     mMesh.RecalculateBounds();
                     mMesh.RecalculateNormals();
-                    mMesh.tangents = GSDRootUtil.ProcessTangents(xTris, vMesh.normals, xUV, xVerts);
+                    mMesh.tangents = RootUtils.ProcessTangents(xTris, vMesh.normals, xUV, xVerts);
 
 
                     GameObject tMarker = new GameObject("CenterMarkers");
@@ -3178,7 +3178,7 @@ namespace RoadArchitect
             tObj.transform.localPosition = new Vector3(0f, 0f, 0f);
             MF.sharedMesh.RecalculateBounds();
             MF.sharedMesh.RecalculateNormals();
-            MF.sharedMesh.tangents = GSDRootUtil.ProcessTangents(MF.sharedMesh.triangles, MF.sharedMesh.normals, MF.sharedMesh.uv, MF.sharedMesh.vertices);
+            MF.sharedMesh.tangents = RootUtils.ProcessTangents(MF.sharedMesh.triangles, MF.sharedMesh.normals, MF.sharedMesh.uv, MF.sharedMesh.vertices);
             if (road.isLightmapped)
             {
                 UnityEditor.Unwrapping.GenerateSecondaryUVSet(MF.sharedMesh);
@@ -4098,9 +4098,9 @@ namespace RoadArchitect
             }
 
             //			//TerrainHistoryRaw
-            //			GSDRootUtil.StartProfiling(tRoad, "TerrainHistorySerialize");
+            //			RootUtils.StartProfiling(tRoad, "TerrainHistorySerialize");
             //			TerrainHistorySerialize(ref tRoad);
-            //			GSDRootUtil.EndProfiling(tRoad);
+            //			RootUtils.EndProfiling(tRoad);
         }
 
 
@@ -4207,7 +4207,7 @@ namespace RoadArchitect
                 float dotDenominator = Vector3.Dot(Vector3.up.normalized, normal);
 
                 //line and plane are not parallel
-                if (!GSDRootUtil.IsApproximately(0f, dotDenominator, 0.001f))
+                if (!RootUtils.IsApproximately(0f, dotDenominator, 0.001f))
                 {
                     //get the coordinates of the line-plane intersection point
                     return (_F1 + (Vector3.up.normalized * (dotNumerator / dotDenominator)));
@@ -4421,52 +4421,52 @@ namespace RoadArchitect
                 P4 = _P4;
                 Height = _height;
 
-                if (GSDRootUtil.IsApproximately(P1.x, P2.x, 0.0001f))
+                if (RootUtils.IsApproximately(P1.x, P2.x, 0.0001f))
                 {
                     P2.x += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P1.x, P3.x, 0.0001f))
+                if (RootUtils.IsApproximately(P1.x, P3.x, 0.0001f))
                 {
                     P3.x += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P1.x, P4.x, 0.0001f))
+                if (RootUtils.IsApproximately(P1.x, P4.x, 0.0001f))
                 {
                     P4.x += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P2.x, P3.x, 0.0001f))
+                if (RootUtils.IsApproximately(P2.x, P3.x, 0.0001f))
                 {
                     P3.x += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P2.x, P4.x, 0.0001f))
+                if (RootUtils.IsApproximately(P2.x, P4.x, 0.0001f))
                 {
                     P4.x += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P3.x, P4.x, 0.0001f))
+                if (RootUtils.IsApproximately(P3.x, P4.x, 0.0001f))
                 {
                     P4.x += 0.0002f;
                 }
 
-                if (GSDRootUtil.IsApproximately(P1.y, P2.y, 0.0001f))
+                if (RootUtils.IsApproximately(P1.y, P2.y, 0.0001f))
                 {
                     P2.y += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P1.y, P3.y, 0.0001f))
+                if (RootUtils.IsApproximately(P1.y, P3.y, 0.0001f))
                 {
                     P3.y += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P1.y, P4.y, 0.0001f))
+                if (RootUtils.IsApproximately(P1.y, P4.y, 0.0001f))
                 {
                     P4.y += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P2.y, P3.y, 0.0001f))
+                if (RootUtils.IsApproximately(P2.y, P3.y, 0.0001f))
                 {
                     P3.y += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P2.y, P4.y, 0.0001f))
+                if (RootUtils.IsApproximately(P2.y, P4.y, 0.0001f))
                 {
                     P4.y += 0.0002f;
                 }
-                if (GSDRootUtil.IsApproximately(P3.y, P4.y, 0.0001f))
+                if (RootUtils.IsApproximately(P3.y, P4.y, 0.0001f))
                 {
                     P4.y += 0.0002f;
                 }
@@ -4493,22 +4493,22 @@ namespace RoadArchitect
                 MinX1 = Mathf.Min(tX);
                 tX = new float[3];
                 int tCounter = 0;
-                if (!GSDRootUtil.IsApproximately(MinX1, P1.x, 0.0001f))
+                if (!RootUtils.IsApproximately(MinX1, P1.x, 0.0001f))
                 {
                     tX[tCounter] = P1.x;
                     tCounter += 1;
                 }
-                if (!GSDRootUtil.IsApproximately(MinX1, P2.x, 0.0001f))
+                if (!RootUtils.IsApproximately(MinX1, P2.x, 0.0001f))
                 {
                     tX[tCounter] = P2.x;
                     tCounter += 1;
                 }
-                if (!GSDRootUtil.IsApproximately(MinX1, P3.x, 0.0001f))
+                if (!RootUtils.IsApproximately(MinX1, P3.x, 0.0001f))
                 {
                     tX[tCounter] = P3.x;
                     tCounter += 1;
                 }
-                if (!GSDRootUtil.IsApproximately(MinX1, P4.x, 0.0001f))
+                if (!RootUtils.IsApproximately(MinX1, P4.x, 0.0001f))
                 {
                     tX[tCounter] = P4.x;
                     tCounter += 1;
@@ -4517,43 +4517,43 @@ namespace RoadArchitect
 
                 Vector2 xMin1 = default(Vector2);
                 Vector2 xMin2 = default(Vector2);
-                if (GSDRootUtil.IsApproximately(MinX1, P1.x, 0.0001f))
+                if (RootUtils.IsApproximately(MinX1, P1.x, 0.0001f))
                 {
                     xMin1 = P1;
                     bIgnoreP1 = true;
                 }
-                else if (GSDRootUtil.IsApproximately(MinX1, P2.x, 0.0001f))
+                else if (RootUtils.IsApproximately(MinX1, P2.x, 0.0001f))
                 {
                     xMin1 = P2;
                     bIgnoreP2 = true;
                 }
-                else if (GSDRootUtil.IsApproximately(MinX1, P3.x, 0.0001f))
+                else if (RootUtils.IsApproximately(MinX1, P3.x, 0.0001f))
                 {
                     xMin1 = P3;
                     bIgnoreP3 = true;
                 }
-                else if (GSDRootUtil.IsApproximately(MinX1, P4.x, 0.0001f))
+                else if (RootUtils.IsApproximately(MinX1, P4.x, 0.0001f))
                 {
                     xMin1 = P4;
                     bIgnoreP4 = true;
                 }
 
-                if (GSDRootUtil.IsApproximately(MinX2, P1.x, 0.0001f))
+                if (RootUtils.IsApproximately(MinX2, P1.x, 0.0001f))
                 {
                     xMin2 = P1;
                     bIgnoreP1 = true;
                 }
-                else if (GSDRootUtil.IsApproximately(MinX2, P2.x, 0.0001f))
+                else if (RootUtils.IsApproximately(MinX2, P2.x, 0.0001f))
                 {
                     xMin2 = P2;
                     bIgnoreP2 = true;
                 }
-                else if (GSDRootUtil.IsApproximately(MinX2, P3.x, 0.0001f))
+                else if (RootUtils.IsApproximately(MinX2, P3.x, 0.0001f))
                 {
                     xMin2 = P3;
                     bIgnoreP3 = true;
                 }
-                else if (GSDRootUtil.IsApproximately(MinX2, P4.x, 0.0001f))
+                else if (RootUtils.IsApproximately(MinX2, P4.x, 0.0001f))
                 {
                     xMin2 = P4;
                     bIgnoreP4 = true;
@@ -4829,8 +4829,8 @@ namespace RoadArchitect
             int eCount = _edgeObjects.Length;
             //Splinated objects first:
             GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string xPath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string xPath = RootUtils.GetDirLibrary();
             string tPath = xPath + "B/" + _wizardObj.fileName + ".gsd";
             if (_wizardObj.isDefault)
             {
@@ -4872,8 +4872,8 @@ namespace RoadArchitect
 #else
 
             string tPath = "";
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string xPath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string xPath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
                 tPath = xPath + "B/W/" + _fileName + ".gsd";
@@ -5170,7 +5170,7 @@ namespace RoadArchitect
             {
                 WizardObjectLibrary WOL = new WizardObjectLibrary();
                 WOL.LoadFrom(this);
-                return GSDRootUtil.GetString<WizardObjectLibrary>(WOL);
+                return RootUtils.GetString<WizardObjectLibrary>(WOL);
             }
 
 
@@ -5244,7 +5244,7 @@ namespace RoadArchitect
                 {
                     try
                     {
-                        WizardObjectLibrary WOL = (WizardObjectLibrary) GSDRootUtil.LoadData<WizardObjectLibrary>(ref _data);
+                        WizardObjectLibrary WOL = (WizardObjectLibrary) RootUtils.LoadData<WizardObjectLibrary>(ref _data);
                         return WOL;
                     }
                     catch
@@ -5797,7 +5797,7 @@ namespace RoadArchitect
             hMod = Mathf.Clamp(hMod, 1f, 20f);
 
             bool bXMod = false;
-            if (!GSDRootUtil.IsApproximately(xMod, 1f, 0.0001f))
+            if (!RootUtils.IsApproximately(xMod, 1f, 0.0001f))
             {
                 bXMod = true;
             }
@@ -5859,7 +5859,7 @@ namespace RoadArchitect
                 for (int index = 0; index < mCount; index++)
                 {
                     bIgnoreMe = false;
-                    if (GSDRootUtil.IsApproximately(tVerts[index].y, 5f, 0.01f))
+                    if (RootUtils.IsApproximately(tVerts[index].y, 5f, 0.01f))
                     {
                         tVerts[index].y = _distance;
                         if (uv[index].y > 3.5f)
@@ -6203,14 +6203,14 @@ namespace RoadArchitect
             float tScaleSense = ((200f - intersection.scalingSense) / 200f) * 200f;
             tScaleSense = Mathf.Clamp(tScaleSense * 0.1f, 0f, 20f);
             float ScaleMod = ((mDistance / 17f) + tScaleSense) * (1f / (tScaleSense + 1f));
-            if (GSDRootUtil.IsApproximately(tScaleSense, 20f, 0.05f))
+            if (RootUtils.IsApproximately(tScaleSense, 20f, 0.05f))
             {
                 ScaleMod = 1f;
             }
             ScaleMod = Mathf.Clamp(ScaleMod, 1f, 1.5f);
             Vector3 tScale = new Vector3(ScaleMod, ScaleMod, ScaleMod);
             bool bScale = true;
-            if (GSDRootUtil.IsApproximately(ScaleMod, 1f, 0.001f))
+            if (RootUtils.IsApproximately(ScaleMod, 1f, 0.001f))
             {
                 bScale = false;
             }
@@ -7690,7 +7690,7 @@ namespace RoadArchitect
             uv[3] = new Vector2(1f, 1f);
             tMesh.uv = uv;
 
-            GSDRootUtil.ProcessTangents(ref tMesh);
+            RootUtils.ProcessTangents(ref tMesh);
 
             //Final processing:
             MeshFilter MF = _obj.GetComponent<MeshFilter>();
@@ -7830,7 +7830,7 @@ namespace RoadArchitect
             }
             tMesh.uv = uv;
 
-            GSDRootUtil.ProcessTangents(ref tMesh);
+            RootUtils.ProcessTangents(ref tMesh);
 
             //Final processing:
             MeshFilter MF = _obj.GetComponent<MeshFilter>();

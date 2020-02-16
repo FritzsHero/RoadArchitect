@@ -1560,7 +1560,7 @@ namespace RoadArchitect
                     if (node.isBridgeStart && node.isBridgeMatched)
                     {
                         EOM.edgeMaker.singleOnlyBridgePercent = EditorGUILayout.Slider("Bridge %: ", EOM.singleOnlyBridgePercent, 0f, 1f);
-                        if (!GSDRootUtil.IsApproximately(EOM.singleOnlyBridgePercent, EOM.edgeMaker.singleOnlyBridgePercent, 0.001f))
+                        if (!RootUtils.IsApproximately(EOM.singleOnlyBridgePercent, EOM.edgeMaker.singleOnlyBridgePercent, 0.001f))
                         {
                             EOM.edgeMaker.singleOnlyBridgePercent = Mathf.Clamp(EOM.edgeMaker.singleOnlyBridgePercent, 0f, 1f);
                             float dist = (EOM.edgeMaker.singleOnlyBridgePercent * (node.bridgeCounterpartNode.dist - node.dist) + node.dist);
@@ -1587,7 +1587,7 @@ namespace RoadArchitect
                 if (EOM.isStartMatchRoadDefinition)
                 {
                     EOM.edgeMaker.startMatchRoadDef = EditorGUILayout.Slider("Position fine tuning: ", EOM.startMatchRoadDef, 0f, 1f);
-                    if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.startMatchRoadDef, EOM.startMatchRoadDef, 0.001f))
+                    if (!RootUtils.IsApproximately(EOM.edgeMaker.startMatchRoadDef, EOM.startMatchRoadDef, 0.001f))
                     {
                         EOM.edgeMaker.startMatchRoadDef = Mathf.Clamp(EOM.edgeMaker.startMatchRoadDef, 0f, 1f);
                     }
@@ -1728,7 +1728,7 @@ namespace RoadArchitect
                     }
                     horizMatching = HorizMatchingDefaultsEnum.None;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
+                if (!RootUtils.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
                 {
                     EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
                 }
@@ -1740,7 +1740,7 @@ namespace RoadArchitect
                 {
                     EOM.edgeMaker.horizontalSep = 0f;
                 }
-                if (!GSDRootUtil.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
+                if (!RootUtils.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
                 {
                     EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
                 }
@@ -2394,19 +2394,37 @@ namespace RoadArchitect
 
         private bool VectorDiff(Vector3 _vect1, Vector3 _vect2)
         {
-            if (!GSDRootUtil.IsApproximately(_vect1.x, _vect2.x, 0.0001f))
+            if (!RootUtils.IsApproximately(_vect1.x, _vect2.x, 0.0001f))
             {
                 return true;
             }
-            if (!GSDRootUtil.IsApproximately(_vect1.y, _vect2.y, 0.0001f))
+            if (!RootUtils.IsApproximately(_vect1.y, _vect2.y, 0.0001f))
             {
                 return true;
             }
-            if (!GSDRootUtil.IsApproximately(_vect1.z, _vect2.z, 0.0001f))
+            if (!RootUtils.IsApproximately(_vect1.z, _vect2.z, 0.0001f))
             {
                 return true;
             }
             return false;
+        }
+
+
+        private bool VectorEquals(ref Vector3 _v1, ref Vector3 _v2)
+        {
+            if (!RootUtils.IsApproximately(_v1.x, _v2.x, 0.001f))
+            {
+                return false;
+            }
+            if (!RootUtils.IsApproximately(_v1.y, _v2.y, 0.001f))
+            {
+                return false;
+            }
+            if (!RootUtils.IsApproximately(_v1.z, _v2.z, 0.001f))
+            {
+                return false;
+            }
+            return true;
         }
 
 
@@ -2441,24 +2459,6 @@ namespace RoadArchitect
             _curve = null;
             _curve = new AnimationCurve();
             EnforceCurve(ref _curve);
-        }
-
-
-        private bool V3Equal(ref Vector3 _v1, ref Vector3 _v2)
-        {
-            if (!GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.001f))
-            {
-                return false;
-            }
-            if (!GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.001f))
-            {
-                return false;
-            }
-            if (!GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.001f))
-            {
-                return false;
-            }
-            return true;
         }
 
 

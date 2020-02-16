@@ -286,7 +286,7 @@ namespace RoadArchitect
 
 
             /*
-            if (GSDRootUtil.IsApproximately(_value, 0f, 0.00001f))
+            if (RootUtils.IsApproximately(_value, 0f, 0.00001f))
             {
                 if (_isTangent)
                 {
@@ -298,7 +298,7 @@ namespace RoadArchitect
                 }
             }
             else
-            if (GSDRootUtil.IsApproximately(_value, 1f, 0.00001f) || f > 1f)
+            if (RootUtils.IsApproximately(_value, 1f, 0.00001f) || f > 1f)
             {
                 if (_isTangent)
                 {
@@ -334,7 +334,7 @@ namespace RoadArchitect
             //		}
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RoadArchitect.RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
             return GetHermiteInternal(idx, param, _isTangent);
         }
 
@@ -356,7 +356,7 @@ namespace RoadArchitect
 
 
             /* 
-            if (GSDRootUtil.IsApproximately(f, 0f, 0.00001f))
+            if (RootUtils.IsApproximately(f, 0f, 0.00001f))
             {
                 if (_isTangent)
                 {
@@ -368,7 +368,7 @@ namespace RoadArchitect
                 }
             }
             else
-            if (GSDRootUtil.IsApproximately(f, 1f, 0.00001f) || f > 1f)
+            if (RootUtils.IsApproximately(f, 1f, 0.00001f) || f > 1f)
             {
                 if (_isTangent)
                 {
@@ -404,7 +404,7 @@ namespace RoadArchitect
             //		}
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RoadArchitect.RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
             return GetHermiteInternal(idx, param, _isTangent);
         }
 

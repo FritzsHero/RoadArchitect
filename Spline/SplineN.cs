@@ -1821,15 +1821,15 @@ namespace RoadArchitect
         private static bool IsApproxTwoThirds(ref Vector3 _v1, Vector3 _v2)
         {
             int cCount = 0;
-            if (GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.02f))
+            if (RootUtils.IsApproximately(_v1.x, _v2.x, 0.02f))
             {
                 cCount += 1;
             }
-            if (GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.02f))
+            if (RootUtils.IsApproximately(_v1.y, _v2.y, 0.02f))
             {
                 cCount += 1;
             }
-            if (GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.02f))
+            if (RootUtils.IsApproximately(_v1.z, _v2.z, 0.02f))
             {
                 cCount += 1;
             }

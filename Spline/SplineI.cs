@@ -312,7 +312,7 @@ namespace RoadArchitect
 
             // FH / Do note, that someone outcommented stuff here, for whatever Reason, but why?
             /*
-            if (GSDRootUtil.IsApproximately(_value, 0f, 0.00001f))
+            if (RootUtils.IsApproximately(_value, 0f, 0.00001f))
             {
                 if (_isTangent)
                 {
@@ -324,7 +324,7 @@ namespace RoadArchitect
                 }
             }
             else
-            if (GSDRootUtil.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
+            if (RootUtils.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
             {
                 if (_isTangent)
                 {
@@ -361,7 +361,7 @@ namespace RoadArchitect
             //}    // FH/ Do note, that someone outcommented stuff here, for whatever Reason, but why?
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RoadArchitect.RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
             return GetHermiteInternal(idx, param, _isTangent);
         }
 
@@ -381,14 +381,14 @@ namespace RoadArchitect
                 return nodes[0].pos;
             }
 
-            //		if(GSDRootUtil.IsApproximately(_value,0f,0.00001f)){
+            //		if(RootUtils.IsApproximately(_value,0f,0.00001f)){
             //			if(_isTangent){
             //				return mNodes[0].tangent;
             //			}else{
             //				return mNodes[0].pos;	
             //			}
             //		}else 
-            //		if(GSDRootUtil.IsApproximately(_value,1f,0.00001f) || _value > 1f){
+            //		if(RootUtils.IsApproximately(_value,1f,0.00001f) || _value > 1f){
             //			if(_isTangent){
             //				return mNodes[mNodes.Count-1].tangent;
             //			}else{
@@ -415,7 +415,7 @@ namespace RoadArchitect
             // }      
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = RoadArchitect.GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RoadArchitect.RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
             return GetHermiteInternal(idx, param, _isTangent);
         }
 

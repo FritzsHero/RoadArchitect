@@ -231,7 +231,7 @@ namespace GSD.Roads.Splination
             spline = _spline;
             node = _node;
             masterObjTrans = _transform;
-            GSDRootUtil.SetupUniqueIdentifier(ref uID);
+            RootUtils.SetupUniqueIdentifier(ref uID);
         }
 
 
@@ -366,7 +366,7 @@ namespace GSD.Roads.Splination
             SMM.Desc = Desc;
             SMM.DisplayName = DisplayName;
 
-            GSDRootUtil.SetupUniqueIdentifier(ref SMM.uID);
+            RootUtils.SetupUniqueIdentifier(ref SMM.uID);
 
             return SMM;
         }
@@ -406,8 +406,8 @@ namespace GSD.Roads.Splination
         {
             SplinatedMeshLibraryMaker SLM = new SplinatedMeshLibraryMaker();
             SLM.Setup(this);
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string basePath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "ESO" + tName + ".gsd";
             if (_name.Length > 0)
             {
@@ -420,20 +420,20 @@ namespace GSD.Roads.Splination
                     filePath = basePath + "ESO" + _name + ".gsd";
                 }
             }
-            GSDRootUtil.CreateXML<SplinatedMeshLibraryMaker>(ref filePath, SLM);
+            RootUtils.CreateXML<SplinatedMeshLibraryMaker>(ref filePath, SLM);
         }
 
 
         public void LoadFromLibrary(string _name, bool _isQuickAdd = false)
         {
-            string basePath = GSDRootUtil.GetDirLibrary();
+            string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "ESO" + _name + ".gsd";
             if (_isQuickAdd)
             {
-                GSDRootUtil.CheckCreateSpecialLibraryDirs();
+                RootUtils.CheckCreateSpecialLibraryDirs();
                 filePath = basePath + "Q/ESO" + _name + ".gsd";
             }
-            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
+            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
             isRequiringUpdate = true;
         }
@@ -441,10 +441,10 @@ namespace GSD.Roads.Splination
 
         public void LoadFromLibraryWizard(string _name)
         {
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string basePath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "W/" + _name + ".gsd";
-            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
+            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
             isRequiringUpdate = true;
         }
@@ -461,7 +461,7 @@ namespace GSD.Roads.Splination
         {
             try
             {
-                SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) GSDRootUtil.LoadData<SplinatedMeshLibraryMaker>(ref _data);
+                SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadData<SplinatedMeshLibraryMaker>(ref _data);
                 return SLM;
             }
             catch
@@ -475,7 +475,7 @@ namespace GSD.Roads.Splination
         {
             SplinatedMeshLibraryMaker SLM = new SplinatedMeshLibraryMaker();
             SLM.Setup(this);
-            return GSDRootUtil.GetString<SplinatedMeshLibraryMaker>(SLM);
+            return RootUtils.GetString<SplinatedMeshLibraryMaker>(SLM);
         }
 
 
@@ -490,7 +490,7 @@ namespace GSD.Roads.Splination
             _names = null;
             _paths = null;
             DirectoryInfo info;
-            string basePath = GSDRootUtil.GetDirLibrary();
+            string basePath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
                 info = new DirectoryInfo(basePath + "Q/");
@@ -1292,11 +1292,11 @@ namespace GSD.Roads.Splination
                     return false;
                 }
 
-                if (!GSDRootUtil.IsApproximately(_SMM.capHeightOffset1, CapHeightOffset1, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.capHeightOffset1, CapHeightOffset1, 0.0001f))
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.capHeightOffset2, CapHeightOffset2, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.capHeightOffset2, CapHeightOffset2, 0.0001f))
                 {
                     return false;
                 }
@@ -1339,7 +1339,7 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.minMaxMod, MinMaxMod, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.minMaxMod, MinMaxMod, 0.0001f))
                 {
                     return false;
                 }
@@ -1347,7 +1347,7 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.vertexMatchingPrecision, VertexMatchingPrecision, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.vertexMatchingPrecision, VertexMatchingPrecision, 0.0001f))
                 {
                     return false;
                 }
@@ -1372,7 +1372,7 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.stretchUVThreshold, stretchedUVThreshold, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.stretchUVThreshold, stretchedUVThreshold, 0.0001f))
                 {
                     return false;
                 }
@@ -1390,7 +1390,7 @@ namespace GSD.Roads.Splination
                 }
 
                 //Horizontal offsets:
-                if (!GSDRootUtil.IsApproximately(_SMM.HorizontalSep, HorizontalSep, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.HorizontalSep, HorizontalSep, 0.0001f))
                 {
                     return false;
                 }
@@ -1399,7 +1399,7 @@ namespace GSD.Roads.Splination
                     return false;
                 }
                 //Vertical offset:
-                if (!GSDRootUtil.IsApproximately(_SMM.VerticalRaise, VerticalRaise, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.VerticalRaise, VerticalRaise, 0.0001f))
                 {
                     return false;
                 }
@@ -1408,7 +1408,7 @@ namespace GSD.Roads.Splination
                     return false;
                 }
                 //Vertical cutoff:
-                if (!GSDRootUtil.IsApproximately(_SMM.VerticalCutoff, VerticalCutoff, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.VerticalCutoff, VerticalCutoff, 0.0001f))
                 {
                     return false;
                 }
@@ -1424,7 +1424,7 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.VerticalMeshCutoffOffset, VerticalMeshCutoffOffset, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.VerticalMeshCutoffOffset, VerticalMeshCutoffOffset, 0.0001f))
                 {
                     return false;
                 }
@@ -1433,7 +1433,7 @@ namespace GSD.Roads.Splination
                     return false;
                 }
 
-                if (!GSDRootUtil.IsApproximately(_SMM.RoadRaise, RoadRaise, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.RoadRaise, RoadRaise, 0.0001f))
                 {
                     return false;
                 }
@@ -1449,11 +1449,11 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.StartTime, StartTime, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.StartTime, StartTime, 0.0001f))
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.EndTime, EndTime, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.EndTime, EndTime, 0.0001f))
                 {
                     return false;
                 }
@@ -1511,7 +1511,7 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.startTypeDownOverride, startTypeDownOverriden, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.startTypeDownOverride, startTypeDownOverriden, 0.0001f))
                 {
                     return false;
                 }
@@ -1523,7 +1523,7 @@ namespace GSD.Roads.Splination
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_SMM.endTypeDownOverride, endTypeDownOverriden, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.endTypeDownOverride, endTypeDownOverriden, 0.0001f))
                 {
                     return false;
                 }
@@ -1602,7 +1602,7 @@ namespace GSD.Roads.Splination
 
         private static bool FloatsNear(float _near, float _val1, float _val2)
         {
-            if (GSDRootUtil.IsApproximately(_val1, _val2, _near))
+            if (RootUtils.IsApproximately(_val1, _val2, _near))
             {
                 return true;
             }
@@ -1785,15 +1785,15 @@ namespace GSD.Roads.Splination
         private static bool IsApproxTwoThirds(ref Vector3 _v1, Vector3 _v2, float _precision = 0.005f)
         {
             int cCount = 0;
-            if (GSDRootUtil.IsApproximately(_v1.x, _v2.x, _precision))
+            if (RootUtils.IsApproximately(_v1.x, _v2.x, _precision))
             {
                 cCount += 1;
             }
-            if (GSDRootUtil.IsApproximately(_v1.y, _v2.y, _precision))
+            if (RootUtils.IsApproximately(_v1.y, _v2.y, _precision))
             {
                 cCount += 1;
             }
-            if (GSDRootUtil.IsApproximately(_v1.z, _v2.z, _precision))
+            if (RootUtils.IsApproximately(_v1.z, _v2.z, _precision))
             {
                 cCount += 1;
             }
@@ -1816,17 +1816,17 @@ namespace GSD.Roads.Splination
             bool bYMatch = false;
             bool bZMatch = false;
 
-            if (GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.02f))
+            if (RootUtils.IsApproximately(_v1.x, _v2.x, 0.02f))
             {
                 cCount += 1;
                 bXMatch = true;
             }
-            if (GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.02f))
+            if (RootUtils.IsApproximately(_v1.y, _v2.y, 0.02f))
             {
                 cCount += 1;
                 bYMatch = true;
             }
-            if (GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.02f))
+            if (RootUtils.IsApproximately(_v1.z, _v2.z, 0.02f))
             {
                 cCount += 1;
                 bZMatch = true;
@@ -1834,15 +1834,15 @@ namespace GSD.Roads.Splination
 
             if (cCount == 2)
             {
-                if (!bXMatch && GSDRootUtil.IsApproximately(_v1.x, _v2.x * -1f, 0.02f))
+                if (!bXMatch && RootUtils.IsApproximately(_v1.x, _v2.x * -1f, 0.02f))
                 {
                     return true;
                 }
-                else if (!bYMatch && GSDRootUtil.IsApproximately(_v1.y, _v2.y * -1f, 0.02f))
+                else if (!bYMatch && RootUtils.IsApproximately(_v1.y, _v2.y * -1f, 0.02f))
                 {
                     return true;
                 }
-                else if (!bZMatch && GSDRootUtil.IsApproximately(_v1.z, _v2.z * -1f, 0.02f))
+                else if (!bZMatch && RootUtils.IsApproximately(_v1.z, _v2.z * -1f, 0.02f))
                 {
                     return true;
                 }
@@ -1860,15 +1860,15 @@ namespace GSD.Roads.Splination
 
         private static bool V3EqualToNone(Vector3 _v1)
         {
-            if (!GSDRootUtil.IsApproximately(_v1.x, 0f, 0.0001f))
+            if (!RootUtils.IsApproximately(_v1.x, 0f, 0.0001f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(_v1.y, 0f, 0.0001f))
+            if (!RootUtils.IsApproximately(_v1.y, 0f, 0.0001f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(_v1.z, 0f, 0.0001f))
+            if (!RootUtils.IsApproximately(_v1.z, 0f, 0.0001f))
             {
                 return false;
             }
@@ -1878,15 +1878,15 @@ namespace GSD.Roads.Splination
 
         private static bool V3EqualNormal(Vector3 _v1, Vector3 _v2)
         {
-            if (!GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.01f))
+            if (!RootUtils.IsApproximately(_v1.x, _v2.x, 0.01f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.01f))
+            if (!RootUtils.IsApproximately(_v1.y, _v2.y, 0.01f))
             {
                 return false;
             }
-            if (!GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.01f))
+            if (!RootUtils.IsApproximately(_v1.z, _v2.z, 0.01f))
             {
                 return false;
             }
@@ -1896,21 +1896,21 @@ namespace GSD.Roads.Splination
 
         private static bool IsApproxExtruded(ref Vector3 _v1, ref Vector3 _v2, bool _isZAxis)
         {
-            if (!GSDRootUtil.IsApproximately(_v1.y, _v2.y, 0.02f))
+            if (!RootUtils.IsApproximately(_v1.y, _v2.y, 0.02f))
             {
                 return false;
             }
 
             if (_isZAxis)
             {
-                if (!GSDRootUtil.IsApproximately(_v1.x, _v2.x, 0.02f))
+                if (!RootUtils.IsApproximately(_v1.x, _v2.x, 0.02f))
                 {
                     return false;
                 }
             }
             else
             {
-                if (!GSDRootUtil.IsApproximately(_v1.z, _v2.z, 0.02f))
+                if (!RootUtils.IsApproximately(_v1.z, _v2.z, 0.02f))
                 {
                     return false;
                 }
@@ -1969,7 +1969,7 @@ namespace GSD.Roads.Splination
         {
 #if UNITY_EDITOR
             isRequiringUpdate = false;
-            GSDRootUtil.SetupUniqueIdentifier(ref uID);
+            RootUtils.SetupUniqueIdentifier(ref uID);
 
             //Buffers:
             Vector3 tVect1 = default(Vector3);
@@ -2019,22 +2019,22 @@ namespace GSD.Roads.Splination
             //Setup strings:
             if (_isGettingStrings)
             {
-                currentSplinationString = GSDRootUtil.GetPrefabString(currentSplination);
+                currentSplinationString = RootUtils.GetPrefabString(currentSplination);
                 if (currentSplinationCap1 != null)
                 {
-                    currentSplinationCap1String = GSDRootUtil.GetPrefabString(currentSplinationCap1);
+                    currentSplinationCap1String = RootUtils.GetPrefabString(currentSplinationCap1);
                 }
                 if (currentSplinationCap2 != null)
                 {
-                    currentSplinationCap2String = GSDRootUtil.GetPrefabString(currentSplinationCap2);
+                    currentSplinationCap2String = RootUtils.GetPrefabString(currentSplinationCap2);
                 }
                 if (EndCapStart != null)
                 {
-                    EndCapStartString = GSDRootUtil.GetPrefabString(EndCapStart);
+                    EndCapStartString = RootUtils.GetPrefabString(EndCapStart);
                 }
                 if (EndCapEnd != null)
                 {
-                    EndCapEndString = GSDRootUtil.GetPrefabString(EndCapEnd);
+                    EndCapEndString = RootUtils.GetPrefabString(EndCapEnd);
                 }
                 if (SplinatedMaterial1 != null)
                 {
@@ -2219,14 +2219,14 @@ namespace GSD.Roads.Splination
                 {
                     if (Axis == AxisTypeEnum.Z)
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts1[index].z, oMaxZ, minMaxMod))
+                        if (RootUtils.IsApproximately(CapOrigVerts1[index].z, oMaxZ, minMaxMod))
                         {
                             tCapMatchIndices1.Add(index);
                         }
                     }
                     else
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts1[index].x, oMaxX, minMaxMod))
+                        if (RootUtils.IsApproximately(CapOrigVerts1[index].x, oMaxX, minMaxMod))
                         {
                             tCapMatchIndices1.Add(index);
                         }
@@ -2266,14 +2266,14 @@ namespace GSD.Roads.Splination
                 {
                     if (Axis == AxisTypeEnum.Z)
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts2[index].z, oMinZ, minMaxMod))
+                        if (RootUtils.IsApproximately(CapOrigVerts2[index].z, oMinZ, minMaxMod))
                         {
                             tCapMatchIndices2.Add(index);
                         }
                     }
                     else
                     {
-                        if (GSDRootUtil.IsApproximately(CapOrigVerts2[index].x, oMinX, minMaxMod))
+                        if (RootUtils.IsApproximately(CapOrigVerts2[index].x, oMinX, minMaxMod))
                         {
                             tCapMatchIndices2.Add(index);
                         }
@@ -2671,7 +2671,7 @@ namespace GSD.Roads.Splination
                 float tMatchingMaxY_f = Mathf.Max(tMatchingMaxY);
                 foreach (KeyValuePair<int, int> KVP in MatchingIndices)
                 {
-                    if (GSDRootUtil.IsApproximately(OrigVerts[KVP.Key].y, tMatchingMaxY_f, 0.0001f))
+                    if (RootUtils.IsApproximately(OrigVerts[KVP.Key].y, tMatchingMaxY_f, 0.0001f))
                     {
                         VertCutTriIndex1 = KVP.Key;
                         VertCutTriIndex2 = KVP.Value;
@@ -2819,7 +2819,7 @@ namespace GSD.Roads.Splination
 
             Vector3[] VectorSeries = new Vector3[vSeriesCount];
             Vector3[] VectorSeriesTangents = new Vector3[vSeriesCount];
-            //			bool bIsCenter = GSDRootUtil.IsApproximately(HorizontalSep,0f,0.02f);
+            //			bool bIsCenter = RootUtils.IsApproximately(HorizontalSep,0f,0.02f);
             float tIntStrength = 0f;
             float tIntHeight = 0f;
             RoadIntersection GSDRI = null;
@@ -2875,11 +2875,11 @@ namespace GSD.Roads.Splination
 
                 tIntStrength = spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref cTime, ref xNode);
 
-                if (GSDRootUtil.IsApproximately(tIntStrength, 1f, 0.0001f))
+                if (RootUtils.IsApproximately(tIntStrength, 1f, 0.0001f))
                 {
                     tVect1.y = tIntHeight;
                 }
-                else if (!GSDRootUtil.IsApproximately(tIntStrength, 0f, 0.001f))
+                else if (!RootUtils.IsApproximately(tIntStrength, 0f, 0.001f))
                 {
                     tVect1.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * tVect1.y);
                 }
@@ -3703,7 +3703,7 @@ namespace GSD.Roads.Splination
                 }
                 xMesh.normals = tNormals;
             }
-            xMesh.tangents = GSDRootUtil.ProcessTangents(tTris, tNormals, tUV, tVerts);
+            xMesh.tangents = RootUtils.ProcessTangents(tTris, tNormals, tUV, tVerts);
 
             if (tName == null || tName.Length < 1)
             {
@@ -3741,7 +3741,7 @@ namespace GSD.Roads.Splination
                     if (node.spline.road.GSDRS.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
-                        cMesh.tangents = GSDRootUtil.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
+                        cMesh.tangents = RootUtils.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
                         SaveMesh(ref cMesh, true);
                     }
                 }
@@ -3764,7 +3764,7 @@ namespace GSD.Roads.Splination
                     if (node.spline.road.GSDRS.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
-                        cMesh.tangents = GSDRootUtil.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
+                        cMesh.tangents = RootUtils.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
                         SaveMesh(ref cMesh, true);
                     }
                 }

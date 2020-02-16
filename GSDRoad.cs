@@ -338,7 +338,7 @@ public class GSDRoad : MonoBehaviour
             if (Time.realtimeSinceStartup > triggerGCEnd)
             {
                 isTriggeredGCExecuting = false;
-                GSDRootUtil.ForceCollection();
+                RootUtils.ForceCollection();
                 triggerGCEnd = 200000f;
             }
         }
@@ -591,9 +591,9 @@ public class GSDRoad : MonoBehaviour
             return;
         }
 
-        GSDRootUtil.SetupUniqueIdentifier(ref UID);
+        RootUtils.SetupUniqueIdentifier(ref UID);
 
-        GSDRootUtil.StartProfiling(this, "UpdateRoadPrelim");
+        RootUtils.StartProfiling(this, "UpdateRoadPrelim");
 
         roadDefinition = Mathf.Clamp(roadDefinition, 1f, 50f);
         laneWidth = Mathf.Clamp(laneWidth, 0.2f, 500f);
@@ -708,9 +708,9 @@ public class GSDRoad : MonoBehaviour
 
 
         spline.RoadWidth = RoadWidth();
-        //GSDRootUtil.StartProfiling(this, "SplineSetup");
+        //RootUtils.StartProfiling(this, "SplineSetup");
         spline.Setup();
-        //GSDRootUtil.EndProfiling(this);
+        //RootUtils.EndProfiling(this);
         nodeCount = spline.GetNodeCount();
 
         if (spline == null || spline.nodes == null)
@@ -811,7 +811,7 @@ public class GSDRoad : MonoBehaviour
             {
                 Object.DestroyImmediate(MeshiMarkerPlates);
             }
-            GSDRootUtil.EndProfiling(this);
+            RootUtils.EndProfiling(this);
             return;
         }
         
@@ -856,7 +856,7 @@ public class GSDRoad : MonoBehaviour
         }
         terrain = null;
         
-        GSDRootUtil.EndProfiling(this);
+        RootUtils.EndProfiling(this);
         if (GSDRS.isMultithreaded)
         {
             if (RCS.isTerrainOn || TerrainHistory == null)
@@ -886,9 +886,9 @@ public class GSDRoad : MonoBehaviour
 
         if (isSavingTerrainHistoryOnDisk && TerrainHistory != null && TerrainHistory.Count > 0)
         {
-            GSDRootUtil.StartProfiling(this, "TerrainHistory_Save");
+            RootUtils.StartProfiling(this, "TerrainHistory_Save");
             TerrainHistoryUtility.SaveTerrainHistory(TerrainHistory, this);
-            GSDRootUtil.EndProfiling(this);
+            RootUtils.EndProfiling(this);
             TerrainHistory.Clear();
             TerrainHistory = null;
         }
@@ -950,7 +950,7 @@ public class GSDRoad : MonoBehaviour
     {
         if (isHeightModificationEnabled || isDetailModificationEnabled || isTreeModificationEnabled)
         {
-            GSDRootUtil.StartProfiling(this, "RoadCon_Terrain");
+            RootUtils.StartProfiling(this, "RoadCon_Terrain");
             if (RCS.isTerrainOn || TerrainHistory == null)
             {
                 GSDTerraforming.ProcessRoadTerrainHook1(spline, this, false);
@@ -965,28 +965,28 @@ public class GSDRoad : MonoBehaviour
                 EditorTTDList = null;
                 System.GC.Collect();
             }
-            GSDRootUtil.EndProfiling(this);
+            RootUtils.EndProfiling(this);
         }
 
         editorProgress = 50;
         GSDRoad road = this;
-        GSDRootUtil.StartProfiling(this, "RoadCon_RoadPrelim");
+        RootUtils.StartProfiling(this, "RoadCon_RoadPrelim");
 
         editorProgress = 80;
         GSD.Threaded.GSDRoadCreationT.RoadJobPrelim(ref road);
-        GSDRootUtil.EndStartProfiling(this, "RoadCon_Road1");
+        RootUtils.EndStartProfiling(this, "RoadCon_Road1");
         editorProgress = 90;
         GSD.Threaded.RoadCalcs1Static.RunMe(ref RCS);
-        GSDRootUtil.EndStartProfiling(this, "MeshSetup1");
+        RootUtils.EndStartProfiling(this, "MeshSetup1");
         editorProgress = 92;
         RCS.MeshSetup1();
-        GSDRootUtil.EndStartProfiling(this, "RoadCon_Road2");
+        RootUtils.EndStartProfiling(this, "RoadCon_Road2");
         editorProgress = 94;
         GSD.Threaded.RoadCalcs2Static.RunMe(ref RCS);
-        GSDRootUtil.EndStartProfiling(this, "MeshSetup2");
+        RootUtils.EndStartProfiling(this, "MeshSetup2");
         editorProgress = 96;
         RCS.MeshSetup2();
-        GSDRootUtil.EndProfiling(this);
+        RootUtils.EndProfiling(this);
         ConstructionCleanup();
     }
     #endregion

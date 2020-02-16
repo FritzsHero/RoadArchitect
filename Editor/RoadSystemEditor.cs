@@ -273,13 +273,13 @@ namespace RoadArchitect
                 if (EditorApplication.isPlaying)
                 {
                     float ChangeChecker = EditorGUILayout.Slider("Zoom factor:", CameraZoomFactor, 0.02f, 10f);
-                    if (!GSDRootUtil.IsApproximately(ChangeChecker, CameraZoomFactor, 0.001f))
+                    if (!RootUtils.IsApproximately(ChangeChecker, CameraZoomFactor, 0.001f))
                     {
                         CameraZoomFactor = ChangeChecker;
                         ShowBridge(tBridgesIndex);
                     }
                     ChangeChecker = EditorGUILayout.Slider("Height offset:", CameraHeightOffset, 0f, 8f);
-                    if (!GSDRootUtil.IsApproximately(ChangeChecker, CameraHeightOffset, 0.001f))
+                    if (!RootUtils.IsApproximately(ChangeChecker, CameraHeightOffset, 0.001f))
                     {
                         CameraHeightOffset = ChangeChecker;
                         ShowBridge(tBridgesIndex);

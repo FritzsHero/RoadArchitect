@@ -228,7 +228,7 @@ namespace GSD.Roads.EdgeObjects
             EOM.isStartMatchRoadDefinition = isStartMatchRoadDefinition;
             EOM.startMatchRoadDef = startMatchRoadDef;
 
-            GSDRootUtil.SetupUniqueIdentifier(ref EOM.UID);
+            RootUtils.SetupUniqueIdentifier(ref EOM.UID);
 
             EOM.objectName = objectName;
             EOM.thumbString = thumbString;
@@ -251,8 +251,8 @@ namespace GSD.Roads.EdgeObjects
         {
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
             EOLM.Setup(this);
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string basePath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "EOM" + objectName + ".gsd";
             if (_fileName.Length > 0)
             {
@@ -265,20 +265,20 @@ namespace GSD.Roads.EdgeObjects
                     filePath = basePath + "EOM" + _fileName + ".gsd";
                 }
             }
-            GSDRootUtil.CreateXML<EdgeObjectLibraryMaker>(ref filePath, EOLM);
+            RootUtils.CreateXML<EdgeObjectLibraryMaker>(ref filePath, EOLM);
         }
 
 
         public void LoadFromLibrary(string _fileName, bool _isQuickAdd = false)
         {
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string basePath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "EOM" + _fileName + ".gsd";
             if (_isQuickAdd)
             {
                 filePath = basePath + "Q/EOM" + _fileName + ".gsd";
             }
-            EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
+            EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
             isRequiringUpdate = true;
         }
@@ -286,10 +286,10 @@ namespace GSD.Roads.EdgeObjects
 
         public void LoadFromLibraryWizard(string _fileName)
         {
-            GSDRootUtil.CheckCreateSpecialLibraryDirs();
-            string basePath = GSDRootUtil.GetDirLibrary();
+            RootUtils.CheckCreateSpecialLibraryDirs();
+            string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "W/" + _fileName + ".gsd";
-            EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
+            EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
             isRequiringUpdate = true;
         }
@@ -299,7 +299,7 @@ namespace GSD.Roads.EdgeObjects
         {
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
             EOLM.Setup(this);
-            return GSDRootUtil.GetString<EdgeObjectLibraryMaker>(EOLM);
+            return RootUtils.GetString<EdgeObjectLibraryMaker>(EOLM);
         }
 
 
@@ -313,7 +313,7 @@ namespace GSD.Roads.EdgeObjects
         {
             try
             {
-                EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) GSDRootUtil.LoadData<EdgeObjectLibraryMaker>(ref _data);
+                EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadData<EdgeObjectLibraryMaker>(ref _data);
                 return ELM;
             }
             catch
@@ -334,7 +334,7 @@ namespace GSD.Roads.EdgeObjects
             _names = null;
             _paths = null;
             DirectoryInfo info;
-            string basePath = GSDRootUtil.GetDirLibrary();
+            string basePath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
                 info = new DirectoryInfo(basePath + "Q/");
@@ -778,14 +778,14 @@ namespace GSD.Roads.EdgeObjects
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_EOM.meterSep, meterSep, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.meterSep, meterSep, 0.001f))
                 {
                     return false;
                 }
                 //				if(EOM.bToggle != bToggle)
                 //              { return false; }
 
-                if (!GSDRootUtil.IsApproximately(_EOM.horizontalSep, horizontalSep, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.horizontalSep, horizontalSep, 0.001f))
                 {
                     return false;
                 }
@@ -793,7 +793,7 @@ namespace GSD.Roads.EdgeObjects
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_EOM.verticalRaise, verticalRaise, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.verticalRaise, verticalRaise, 0.001f))
                 {
                     return false;
                 }
@@ -827,15 +827,15 @@ namespace GSD.Roads.EdgeObjects
                     return false;
                 }
 
-                if (!GSDRootUtil.IsApproximately(_EOM.singlePosition, singlePosition, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.singlePosition, singlePosition, 0.001f))
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_EOM.startTime, startTime, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.startTime, startTime, 0.001f))
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_EOM.endTime, endTime, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.endTime, endTime, 0.001f))
                 {
                     return false;
                 }
@@ -843,7 +843,7 @@ namespace GSD.Roads.EdgeObjects
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_EOM.singleOnlyBridgePercent, singleOnlyBridgePercent, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.singleOnlyBridgePercent, singleOnlyBridgePercent, 0.001f))
                 {
                     return false;
                 }
@@ -851,7 +851,7 @@ namespace GSD.Roads.EdgeObjects
                 {
                     return false;
                 }
-                if (!GSDRootUtil.IsApproximately(_EOM.startMatchRoadDef, startMatchRoadDef, 0.001f))
+                if (!RootUtils.IsApproximately(_EOM.startMatchRoadDef, startMatchRoadDef, 0.001f))
                 {
                     return false;
                 }
@@ -909,11 +909,11 @@ namespace GSD.Roads.EdgeObjects
                 verticalCurve.AddKey(1f, 1f);
             }
 
-            GSDRootUtil.SetupUniqueIdentifier(ref UID);
+            RootUtils.SetupUniqueIdentifier(ref UID);
 
             SetupLocations();
 
-            edgeObjectString = GSDRootUtil.GetPrefabString(edgeObject);
+            edgeObjectString = RootUtils.GetPrefabString(edgeObject);
             if (edgeMaterial1 != null)
             {
                 edgeMaterial1String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial1);
@@ -1229,7 +1229,7 @@ namespace GSD.Roads.EdgeObjects
                 edgeObjectRotations = null;
             }
             edgeObjectRotations = new List<Vector3>();
-            bool bIsCenter = GSDRootUtil.IsApproximately(horizontalSep, 0f, 0.02f);
+            bool bIsCenter = RootUtils.IsApproximately(horizontalSep, 0f, 0.02f);
 
 
             //Set rotation and locations:
@@ -1432,7 +1432,7 @@ namespace GSD.Roads.EdgeObjects
             mesh.normals = tNormals;
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
-            mesh.tangents = GSDRootUtil.ProcessTangents(tTris, tNormals, tUV, tVerts);
+            mesh.tangents = RootUtils.ProcessTangents(tTris, tNormals, tUV, tVerts);
             return mesh;
         }
 

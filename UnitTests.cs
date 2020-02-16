@@ -254,7 +254,7 @@ namespace RoadArchitect.Tests
             {
                 foreach (SplineN xNode in _road2.spline.nodes)
                 {
-                    if (GSDRootUtil.IsApproximately(Vector3.Distance(node.transform.position, xNode.transform.position), 0f, 0.05f))
+                    if (RootUtils.IsApproximately(Vector3.Distance(node.transform.position, xNode.transform.position), 0f, 0.05f))
                     {
                         nodeInter1 = node;
                         nodeInter2 = xNode;

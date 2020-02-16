@@ -60,7 +60,7 @@ namespace RoadArchitect
 
             if (path.Length < 5)
             {
-                path = GSDRootUtil.GetDirLibrary();
+                path = RootUtils.GetDirLibrary();
             }
 
             EditorGUILayout.LabelField("Short description (optional):");
@@ -301,7 +301,7 @@ namespace RoadArchitect
 
             if (path.Length < 5)
             {
-                path = GSDRootUtil.GetDirLibrary();
+                path = RootUtils.GetDirLibrary();
             }
 
             if (windowType == WindowTypeEnum.Edge)

@@ -1191,7 +1191,7 @@ namespace RoadArchitect
                 }
 
                 //Option pre-handle for editor camera speed:
-                if (!GSDRootUtil.IsApproximately(editorCameraMetersPerSecond.floatValue, road.EditorCameraMetersPerSecond, 0.001f))
+                if (!RootUtils.IsApproximately(editorCameraMetersPerSecond.floatValue, road.EditorCameraMetersPerSecond, 0.001f))
                 {
                     isEditorCameraSpeedChanged = true;
                 }

@@ -158,7 +158,7 @@ namespace RoadArchitect
         public static string CheckNonAssetDirLibrary()
         {
             CheckRoadArchitectDirectory();
-            string xPath = GSDRootUtil.GetDirLibrary();
+            string xPath = RootUtils.GetDirLibrary();
             if (!System.IO.Directory.Exists(xPath))
             {
                 System.IO.Directory.CreateDirectory(xPath);

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace RoadArchitect
 {
-    public static class GSDRootUtil
+    public static class RootUtils
     {
         /// <summary>
         /// Smooths the input parameter t.

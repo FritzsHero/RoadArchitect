@@ -841,13 +841,13 @@ namespace RoadArchitect
                 }
 
                 //Option: Street light range:
-                if (!GSDRootUtil.IsApproximately(streetLightRange.floatValue, intersection.streetLightRange, 0.01f))
+                if (!RootUtils.IsApproximately(streetLightRange.floatValue, intersection.streetLightRange, 0.01f))
                 {
                     isPointLightsToggled = true;
                 }
 
                 //Option: Street light intensity:
-                if (!GSDRootUtil.IsApproximately(streetLightIntensity.floatValue, intersection.streetLightIntensity, 0.01f))
+                if (!RootUtils.IsApproximately(streetLightIntensity.floatValue, intersection.streetLightIntensity, 0.01f))
                 {
                     isPointLightsToggled = true;
                 }

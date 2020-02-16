@@ -124,7 +124,7 @@ namespace RoadArchitect
             //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
 
             //Setup unique ID:
-            GSDRootUtil.SetupUniqueIdentifier(ref uID);
+            RootUtils.SetupUniqueIdentifier(ref uID);
 
             //Set spline root:
             splineRoot = transform.gameObject;
@@ -159,9 +159,9 @@ namespace RoadArchitect
             //Setup spline length, if more than 1 node:
             if (GetNodeCount() > 1)
             {
-                //GSDRootUtil.StartProfiling(tRoad, "SplineSetupLength");
+                //RootUtils.StartProfiling(tRoad, "SplineSetupLength");
                 SetupSplineLength();
-                //GSDRootUtil.EndProfiling(tRoad);
+                //RootUtils.EndProfiling(tRoad);
             }
             else if (GetNodeCount() == 1)
             {
@@ -268,7 +268,7 @@ namespace RoadArchitect
                                 break;
                             }
                         }
-                        if (splineEnd > 0f || GSDRootUtil.IsApproximately(splineEnd, 0f, 0.0001f))
+                        if (splineEnd > 0f || RootUtils.IsApproximately(splineEnd, 0f, 0.0001f))
                         {
                             KVP = new KeyValuePair<float, float>(splineStart, splineEnd);
                             BridgeParams.Add(KVP);
@@ -290,7 +290,7 @@ namespace RoadArchitect
                             }
                         }
 
-                        if (splineEnd > 0f || GSDRootUtil.IsApproximately(splineEnd, 0f, 0.0001f))
+                        if (splineEnd > 0f || RootUtils.IsApproximately(splineEnd, 0f, 0.0001f))
                         {
                             KVP = new KeyValuePair<float, float>(splineStart, splineEnd);
                             TunnelParams.Add(KVP);
@@ -419,7 +419,7 @@ namespace RoadArchitect
                 }
 
                 node.Setup(node.transform.position, rot, new Vector2(0f, 1f), step * ((float)i), node.transform.gameObject.name);
-                GSDRootUtil.SetupUniqueIdentifier(ref node.uID);
+                RootUtils.SetupUniqueIdentifier(ref node.uID);
                 this.nodes.Add(node);
             }
 
@@ -707,7 +707,7 @@ namespace RoadArchitect
             while ((hi - lo) > 1)
             {
                 mid = Mathf.RoundToInt((lo + hi) / 2);
-                if (RoadDefValuesArray[mid] < _x || GSDRootUtil.IsApproximately(RoadDefValuesArray[mid], _x, 0.02f))
+                if (RoadDefValuesArray[mid] < _x || RootUtils.IsApproximately(RoadDefValuesArray[mid], _x, 0.02f))
                 {
                     lo = mid;
                 }
@@ -717,7 +717,7 @@ namespace RoadArchitect
                 }
             }
 
-            if (GSDRootUtil.IsApproximately(RoadDefValuesArray[lo], _x, 0.02f))
+            if (RootUtils.IsApproximately(RoadDefValuesArray[lo], _x, 0.02f))
             {
                 hi = lo;
             }
@@ -840,7 +840,7 @@ namespace RoadArchitect
 
             // FH / This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
             // This Fixes the Bug with 1f -> -0.0001f as descripted by embeddedt/RoadArchitect/issues/4 
-            if (GSDRootUtil.IsApproximately(_value, 0f, 0.00001f))
+            if (RootUtils.IsApproximately(_value, 0f, 0.00001f))
             {
                 if (_isTangent)
                 {
@@ -852,7 +852,7 @@ namespace RoadArchitect
                 }
             }
             else
-            if (GSDRootUtil.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
+            if (RootUtils.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
             {
                 if (_isTangent)
                 {
@@ -865,7 +865,7 @@ namespace RoadArchitect
             }
             else
             {
-                GSDRootUtil.IsApproximately(_value, 1f, 0.00001f);
+                RootUtils.IsApproximately(_value, 1f, 0.00001f);
                 // FH 03.02.19 // End of the former outcommented Code
 
                 for (index = 0; index < nodes.Count; index++)
@@ -888,7 +888,7 @@ namespace RoadArchitect
             }   // // FH / also former outcommented Code, see above
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
             return GetHermiteInternal(idx, param, _isTangent);
         }
 
@@ -936,13 +936,13 @@ namespace RoadArchitect
             // FH 03.02.19 // This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
             // This code needs to be reevealuated if this isn't taken care of by the function above this one. GetSplineValue() 
             // Right now, I would say that it is not really a part of embeddedt/RoadArchitect/issues/4
-            if (GSDRootUtil.IsApproximately(_value, 1f, 0.0001f))
+            if (RootUtils.IsApproximately(_value, 1f, 0.0001f))
             {
                 _vect1 = nodes[nodes.Count - 1].pos;
                 _vect2 = nodes[nodes.Count - 1].tangent;
                 return;
             }
-            else if (GSDRootUtil.IsApproximately(_value, 0f, 0.0001f))
+            else if (RootUtils.IsApproximately(_value, 0f, 0.0001f))
             {
                 _vect1 = nodes[0].pos;
                 _vect2 = nodes[0].tangent;
@@ -970,7 +970,7 @@ namespace RoadArchitect
             }
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
 
             _vect1 = GetHermiteInternal(idx, param, false);
             _vect2 = GetHermiteInternal(idx, param, true);
@@ -992,14 +992,14 @@ namespace RoadArchitect
             }
 
 
-            //		if(GSDRootUtil.IsApproximately(f,0f,0.00001f)){
+            //		if(RootUtils.IsApproximately(f,0f,0.00001f)){
             //			if(_isTangent){
             //				return mNodes[0].tangent;
             //			}else{
             //				return mNodes[0].pos;	
             //			}
             //		}else
-            //		if(GSDRootUtil.IsApproximately(f,1f,0.00001f) || f > 1f){
+            //		if(RootUtils.IsApproximately(f,1f,0.00001f) || f > 1f){
             //			if(_isTangent){
             //				return mNodes[mNodes.Count-1].tangent;
             //			}else{
@@ -1023,13 +1023,13 @@ namespace RoadArchitect
             {
                 idx = 0;
             }
-            //			if(b && GSDRootUtil.IsApproximately(f,1f,0.00001f)){
+            //			if(b && RootUtils.IsApproximately(f,1f,0.00001f)){
             //				idx = mNodes.Count-2;
             //			}
             //		}
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
-            param = GSDRootUtil.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
+            param = RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
             return GetHermiteInternal(idx, param, _isTangent);
         }
 
@@ -1814,7 +1814,7 @@ namespace RoadArchitect
             for (int index = 0; index < cCount; index++)
             {
                 KVP = BridgeParams[index];
-                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                if (RootUtils.IsApproximately(KVP.Key, _p, 0.0001f) || RootUtils.IsApproximately(KVP.Value, _p, 0.0001f))
                 {
                     return true;
                 }
@@ -1846,7 +1846,7 @@ namespace RoadArchitect
             {
                 KVP = BridgeParams[index];
 
-                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                if (RootUtils.IsApproximately(KVP.Key, _p, 0.0001f) || RootUtils.IsApproximately(KVP.Value, _p, 0.0001f))
                 {
                     return ((KVP.Key - OrigP) / tDist);
                 }
@@ -1874,7 +1874,7 @@ namespace RoadArchitect
             for (int index = 0; index < cCount; index++)
             {
                 KVP = BridgeParams[index];
-                if (GSDRootUtil.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
+                if (RootUtils.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || RootUtils.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
                 {
                     return true;
                 }
@@ -1928,7 +1928,7 @@ namespace RoadArchitect
             for (int index = 0; index < cCount; index++)
             {
                 KVP = TunnelParams[index];
-                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                if (RootUtils.IsApproximately(KVP.Key, _p, 0.0001f) || RootUtils.IsApproximately(KVP.Value, _p, 0.0001f))
                 {
                     return true;
                 }
@@ -1960,7 +1960,7 @@ namespace RoadArchitect
             {
                 KVP = TunnelParams[index];
 
-                if (GSDRootUtil.IsApproximately(KVP.Key, _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value, _p, 0.0001f))
+                if (RootUtils.IsApproximately(KVP.Key, _p, 0.0001f) || RootUtils.IsApproximately(KVP.Value, _p, 0.0001f))
                 {
                     return ((KVP.Key - OrigP) / tDist);
                 }
@@ -1988,7 +1988,7 @@ namespace RoadArchitect
             for (int index = 0; index < cCount; index++)
             {
                 KVP = TunnelParams[index];
-                if (GSDRootUtil.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || GSDRootUtil.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
+                if (RootUtils.IsApproximately(KVP.Key + (10f / distance), _p, 0.0001f) || RootUtils.IsApproximately(KVP.Value - (10f / distance), _p, 0.0001f))
                 {
                     return true;
                 }
