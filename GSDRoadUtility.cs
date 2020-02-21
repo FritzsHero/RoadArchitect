@@ -760,7 +760,7 @@ namespace RoadArchitect
             float[,] heights;
             int[,] tDetails;
             int ArrayCount;
-            foreach (GSDTerrainHistoryMaker TH in _road.TerrainHistory)
+            foreach (TerrainHistoryMaker TH in _road.TerrainHistory)
             {
                 Terrain terrain = null;
                 foreach (RoadTerrain TID in TIDs)
@@ -844,183 +844,6 @@ namespace RoadArchitect
                 }
             }
             System.GC.Collect();
-        }
-    }
-
-
-    [System.Serializable]
-    public class GSDTerrainHistoryMaker
-    {
-        public int TID;
-        //Heights:
-        public int[] x1;
-        public int[] y1;
-        public float[] h;
-        public int cI;
-        public bool bHeightHistoryEnabled;
-        //Details:
-        public int DetailLayersCount;
-
-        public int[] DetailsX;
-        public int[] DetailsY;
-        public int[] DetailsOldValue;
-        public int[] DetailsI;
-
-        [UnityEngine.Serialization.FormerlySerializedAs("bDetailHistoryEnabled")]
-        public bool isDetailHistoryEnabled;
-        //Trees:
-        public GSDTreeInstance[] TreesOld;
-        public int TreesI;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTreeHistoryEnabled")]
-        public bool isTreeHistoryEnabled;
-        [UnityEngine.Serialization.FormerlySerializedAs("bDestroyMe")]
-        public bool isDestroySheduled = false;
-
-
-        public void Nullify()
-        {
-            //Heights:
-            x1 = null;
-            y1 = null;
-            h = null;
-            DetailsX = null;
-            DetailsY = null;
-            DetailsOldValue = null;
-            DetailsI = null;
-            //Trees:
-            TreesOld = null;
-        }
-
-
-        [System.Serializable]
-        public class GSDTreeInstance
-        {
-            public float colorR;//4
-            public float colorG;//8
-            public float colorB;//12
-            public float colorA;//16
-            public float heightScale;//20
-            public float lightmapColorR;//24
-            public float lightmapColorG;//28
-            public float lightmapColorB;//32
-            public float lightmapColorA;//36
-            public float positionX;//40
-            public float positionY;//44
-            public float positionZ;//48
-            public int prototypeIndex;//52
-            public float widthScale;//56
-        }
-
-
-        public void MakeRATrees(ref List<TreeInstance> _trees)
-        {
-            int tSize = _trees.Count;
-            TreesOld = new GSDTreeInstance[tSize];
-            GSDTreeInstance tTree = null;
-            TreeInstance xTree;
-            for (int index = 0; index < tSize; index++)
-            {
-                xTree = _trees[index];
-                tTree = new GSDTreeInstance();
-                tTree.colorR = xTree.color.r;
-                tTree.colorG = xTree.color.g;
-                tTree.colorB = xTree.color.b;
-                tTree.colorA = xTree.color.a;
-                tTree.heightScale = xTree.heightScale;
-                tTree.lightmapColorR = xTree.lightmapColor.r;
-                tTree.lightmapColorG = xTree.lightmapColor.g;
-                tTree.lightmapColorB = xTree.lightmapColor.b;
-                tTree.lightmapColorA = xTree.lightmapColor.a;
-                tTree.positionX = xTree.position.x;
-                tTree.positionY = xTree.position.y;
-                tTree.positionZ = xTree.position.z;
-                tTree.prototypeIndex = xTree.prototypeIndex;
-                tTree.widthScale = xTree.widthScale;
-                TreesOld[index] = tTree;
-            }
-        }
-
-
-        public TreeInstance[] MakeTrees()
-        {
-            if (TreesOld == null || TreesOld.Length < 1)
-            {
-                return null;
-            }
-            int tSize = TreesOld.Length;
-            TreeInstance[] tTrees = new TreeInstance[tSize];
-            GSDTreeInstance tTree = null;
-            TreeInstance xTree;
-            for (int index = 0; index < tSize; index++)
-            {
-                tTree = TreesOld[index];
-                xTree = new TreeInstance();
-                xTree.color = new Color(tTree.colorR, tTree.colorG, tTree.colorB, tTree.colorA);
-                xTree.heightScale = tTree.heightScale;
-                xTree.lightmapColor = new Color(tTree.lightmapColorR, tTree.lightmapColorG, tTree.lightmapColorB, tTree.lightmapColorA);
-                xTree.position = new Vector3(tTree.positionX, tTree.positionY, tTree.positionZ);
-                xTree.prototypeIndex = tTree.prototypeIndex;
-                xTree.widthScale = tTree.widthScale;
-                tTrees[index] = xTree;
-            }
-            return tTrees;
-        }
-
-
-        public int GetSize()
-        {
-            int tSize = 4;
-            if (x1 != null)
-            {
-                tSize += (x1.Length * 4);
-                tSize += 20;
-            }
-            if (y1 != null)
-            {
-                tSize += (y1.Length * 4);
-                tSize += 20;
-            }
-            if (h != null)
-            {
-                tSize += (h.Length * 4);
-                tSize += 20;
-            }
-            tSize += 4;
-            tSize += 1;
-            //Details:
-            tSize += 4;
-            if (DetailsX != null)
-            {
-                tSize += (DetailsX.Length * 4);
-                tSize += 20;
-            }
-            if (DetailsY != null)
-            {
-                tSize += (DetailsY.Length * 4);
-                tSize += 20;
-            }
-            if (DetailsOldValue != null)
-            {
-                tSize += (DetailsOldValue.Length * 4);
-                tSize += 20;
-            }
-            if (DetailsI != null)
-            {
-                tSize += (DetailsI.Length * 4);
-                tSize += 20;
-            }
-            tSize += 1;
-            //Trees:
-            if (TreesOld != null)
-            {
-                tSize += (TreesOld.Length * 56);
-                tSize += 20;
-            }
-            tSize += 4;
-            tSize += 1;
-            tSize += 1;
-
-            return tSize;
         }
     }
 
@@ -3934,7 +3757,7 @@ namespace RoadArchitect
             if (_road.TerrainHistory != null && _road.TerrainHistory.Count > 0)
             {
                 //Delete unnecessary terrain histories:
-                foreach (GSDTerrainHistoryMaker THMaker in _road.TerrainHistory)
+                foreach (TerrainHistoryMaker THMaker in _road.TerrainHistory)
                 {
                     if (!tTIDS.Contains(THMaker.TID))
                     {
@@ -3948,7 +3771,7 @@ namespace RoadArchitect
                 {
                     if (_road.TerrainHistory[index].isDestroySheduled)
                     {
-                        GSDTerrainHistoryMaker THMaker = _road.TerrainHistory[index];
+                        TerrainHistoryMaker THMaker = _road.TerrainHistory[index];
                         _road.TerrainHistory.RemoveAt(index);
                         if (THMaker != null)
                         {
@@ -3960,11 +3783,11 @@ namespace RoadArchitect
 
             if (_road.TerrainHistory == null)
             {
-                _road.TerrainHistory = new List<GSDTerrainHistoryMaker>();
+                _road.TerrainHistory = new List<TerrainHistoryMaker>();
             }
             foreach (GSDTerraforming.TempTerrainData TTD in _road.EditorTTDList)
             {
-                GSDTerrainHistoryMaker TH = null;
+                TerrainHistoryMaker TH = null;
                 RoadTerrain TID = null;
                 //Get TID:
                 foreach (RoadTerrain _TID in TIDs)
@@ -3977,7 +3800,7 @@ namespace RoadArchitect
 
                 if (_road.TerrainHistory == null)
                 {
-                    _road.TerrainHistory = new List<GSDTerrainHistoryMaker>();
+                    _road.TerrainHistory = new List<TerrainHistoryMaker>();
                 }
                 if (TID == null)
                 {
@@ -3997,7 +3820,7 @@ namespace RoadArchitect
 
                 if (!isContainingTID)
                 {
-                    GSDTerrainHistoryMaker THMaker = new GSDTerrainHistoryMaker();
+                    TerrainHistoryMaker THMaker = new TerrainHistoryMaker();
                     THMaker.TID = TID.UID;
                     _road.TerrainHistory.Add(THMaker);
                 }

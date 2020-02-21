@@ -49,7 +49,7 @@ public class GSDRoad : MonoBehaviour
     public string UID;
 #if UNITY_EDITOR
     [SerializeField]
-    public List<GSDTerrainHistoryMaker> TerrainHistory;
+    public List<TerrainHistoryMaker> TerrainHistory;
     public string TerrainHistoryByteSize = "";
 #endif
     [System.NonSerialized]

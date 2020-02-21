@@ -33,7 +33,7 @@ namespace RoadArchitect
 
 
         /// <summary> Saves the Terrain History to disk </summary>
-        public static void SaveTerrainHistory(List<GSDTerrainHistoryMaker> _obj, GSDRoad _road)
+        public static void SaveTerrainHistory(List<TerrainHistoryMaker> _obj, GSDRoad _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
@@ -61,7 +61,7 @@ namespace RoadArchitect
 
 
         /// <summary> Loads the Terrain History from disk </summary>
-        public static List<GSDTerrainHistoryMaker> LoadTerrainHistory(GSDRoad _road)
+        public static List<TerrainHistoryMaker> LoadTerrainHistory(GSDRoad _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
@@ -72,15 +72,13 @@ namespace RoadArchitect
             {
                 return null;
             }
-            List<GSDTerrainHistoryMaker> result;
+            List<TerrainHistoryMaker> result;
             Stream stream = File.Open(path, FileMode.Open);
             BinaryFormatter bFormatter = new BinaryFormatter();
             bFormatter.Binder = new VersionDeserializationBinder();
-            //			try{
-            result = (List<GSDTerrainHistoryMaker>)bFormatter.Deserialize(stream) as List<GSDTerrainHistoryMaker>;
-            //			}catch{
-            //				result = null;	
-            //			}
+
+            result = (List<TerrainHistoryMaker>)bFormatter.Deserialize(stream) as List<TerrainHistoryMaker>;
+
             stream.Close();
             return result;
         }
