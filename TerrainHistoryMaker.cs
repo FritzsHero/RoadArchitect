@@ -26,7 +26,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("bDetailHistoryEnabled")]
         public bool isDetailHistoryEnabled;
         //Trees:
-        public GSDTreeInstance[] TreesOld;
+        public TerrainTreeInstance[] TreesOld;
         public int TreesI;
         [UnityEngine.Serialization.FormerlySerializedAs("bTreeHistoryEnabled")]
         public bool isTreeHistoryEnabled;
@@ -51,7 +51,7 @@ namespace RoadArchitect
 
 
         [System.Serializable]
-        public class GSDTreeInstance
+        public class TerrainTreeInstance
         {
             public float colorR;
             public float colorG;
@@ -75,13 +75,13 @@ namespace RoadArchitect
         public void MakeRATrees(ref List<TreeInstance> _trees)
         {
             int tSize = _trees.Count;
-            TreesOld = new GSDTreeInstance[tSize];
-            GSDTreeInstance tTree = null;
+            TreesOld = new TerrainTreeInstance[tSize];
+            TerrainTreeInstance tTree = null;
             TreeInstance xTree;
             for (int index = 0; index < tSize; index++)
             {
                 xTree = _trees[index];
-                tTree = new GSDTreeInstance();
+                tTree = new TerrainTreeInstance();
                 tTree.colorR = xTree.color.r;
                 tTree.colorG = xTree.color.g;
                 tTree.colorB = xTree.color.b;
@@ -109,7 +109,7 @@ namespace RoadArchitect
             }
             int tSize = TreesOld.Length;
             TreeInstance[] tTrees = new TreeInstance[tSize];
-            GSDTreeInstance tTree = null;
+            TerrainTreeInstance tTree = null;
             TreeInstance xTree;
             for (int index = 0; index < tSize; index++)
             {
