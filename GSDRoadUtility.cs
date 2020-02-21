@@ -7411,7 +7411,7 @@ namespace RoadArchitect
             CreateIntersectionMeshOuter(_roadIntersection, vects, ref name);
 
             //Update connected nodes:
-            GSDNavigation.UpdateConnectedNodes();
+            Navigation.UpdateConnectedNodes();
 
             //Now initialize intersection objects:
             InitializeIntersectionObjects(_roadIntersection);

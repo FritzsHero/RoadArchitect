@@ -3,7 +3,7 @@
 
 namespace RoadArchitect
 {
-    public static class GSDNavigation
+    public static class Navigation
     {
         public static void UpdateConnectedNodes()
         {
