@@ -4949,8 +4949,8 @@ namespace GSD.Threaded
                     oNode1.intersection.oddAngle = Vector3.Angle(GSDRI.node2.tangent, GSDRI.node1.tangent);
                     oNode1.intersection.evenAngle = 180f - Vector3.Angle(GSDRI.node2.tangent, GSDRI.node1.tangent);
 
-                    GSDIntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRROuter, out GSDRI.cornerRLOuter, out GSDRI.cornerLLOuter, out GSDRI.cornerLROuter, tShoulderWidth);
-                    GSDIntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRRRampOuter, out GSDRI.cornerRLRampOuter, out GSDRI.cornerLLRampOuter, out GSDRI.cornerLRRampOuter, tRampWidth);
+                    IntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRROuter, out GSDRI.cornerRLOuter, out GSDRI.cornerLLOuter, out GSDRI.cornerLROuter, tShoulderWidth);
+                    IntersectionObjects.GetFourPoints(GSDRI, out GSDRI.cornerRRRampOuter, out GSDRI.cornerRLRampOuter, out GSDRI.cornerLLRampOuter, out GSDRI.cornerLRRampOuter, tRampWidth);
 
                     GSDRI.ConstructBoundsRect();
                     GSDRI.cornerRR2D = new Vector2(tVectRR.x, tVectRR.z);
