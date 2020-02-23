@@ -236,7 +236,7 @@ namespace RoadArchitect.Roads
             foreach (KeyValuePair<SplineN, SplineN> KVP in keyValuePairs)
             {
                 //Now create the fucking intersection:
-                GameObject tInter = GSDIntersections.CreateIntersection(KVP.Key, KVP.Value);
+                GameObject tInter = Intersections.CreateIntersection(KVP.Key, KVP.Value);
                 RoadIntersection GSDRI_JustCreated = tInter.GetComponent<RoadIntersection>();
                 GSDRI_JustCreated.intersectionStopType = _iStopType;
                 GSDRI_JustCreated.roadType = _roadType;
@@ -349,7 +349,7 @@ namespace RoadArchitect.Roads
                                 }
 
                                 //Now create the fucking intersection:
-                                GameObject intersection = GSDIntersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
+                                GameObject intersection = Intersections.CreateIntersection(IntersectionNode1, IntersectionNode2);
                                 RoadIntersection newRoadIntersection = intersection.GetComponent<RoadIntersection>();
                                 newRoadIntersection.intersectionStopType = _iStopType;
                                 newRoadIntersection.roadType = _roadType;

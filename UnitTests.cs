@@ -265,7 +265,7 @@ namespace RoadArchitect.Tests
 
             if (nodeInter1 != null && nodeInter2 != null)
             {
-                GameObject tInter = GSDIntersections.CreateIntersection(nodeInter1, nodeInter2);
+                GameObject tInter = Intersections.CreateIntersection(nodeInter1, nodeInter2);
                 RoadIntersection GSDRI = tInter.GetComponent<RoadIntersection>();
                 GSDRI.intersectionStopType = _iStopType;
                 GSDRI.roadType = _roadType;

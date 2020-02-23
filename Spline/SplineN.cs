@@ -156,7 +156,7 @@ namespace RoadArchitect
         #endregion
 #if UNITY_EDITOR
         [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
-        public GSDIntersections.iConstructionMaker intersectionConstruction;
+        public Intersections.iConstructionMaker intersectionConstruction;
 
 
         #region "Edge Objects"

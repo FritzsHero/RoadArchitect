@@ -2870,7 +2870,7 @@ namespace GSD.Threaded
                     //First node set min / max float:
                     if (iNode.intersectionConstruction == null)
                     {
-                        iNode.intersectionConstruction = new GSDIntersections.iConstructionMaker();
+                        iNode.intersectionConstruction = new Intersections.iConstructionMaker();
                     }
                     if (!iNode.intersectionConstruction.isTempConstructionProcessedInter1)
                     {
@@ -3046,7 +3046,7 @@ namespace GSD.Threaded
                     //Process second node:
                     if (oNode2.intersectionConstruction == null)
                     {
-                        oNode2.intersectionConstruction = new GSDIntersections.iConstructionMaker();
+                        oNode2.intersectionConstruction = new Intersections.iConstructionMaker();
                     }
                     if (!oNode2.intersectionConstruction.isTempConstructionProcessedInter2)
                     {
@@ -4419,7 +4419,7 @@ namespace GSD.Threaded
 
         private static void Inter_OrganizeVertices(ref SplineN _node, ref GSDRoad _road)
         {
-            GSDIntersections.iConstructionMaker iCon = _node.intersectionConstruction;
+            Intersections.iConstructionMaker iCon = _node.intersectionConstruction;
             RoadIntersection GSDRI = _node.intersection;
 
             //Skipping (3 ways):

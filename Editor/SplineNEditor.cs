@@ -323,7 +323,7 @@ namespace RoadArchitect
             if (Event.current.type != EventType.Layout && isCreatingIntersection)
             {
                 isCreatingIntersection = false;
-                Selection.activeGameObject = GSDIntersections.CreateIntersection(node1, node2);
+                Selection.activeGameObject = Intersections.CreateIntersection(node1, node2);
                 return;
             }
 
@@ -2440,7 +2440,7 @@ namespace RoadArchitect
             isCreatingIntersection = true;
             node1 = _node1;
             node2 = _node2;
-            Selection.activeGameObject = GSDIntersections.CreateIntersection(_node1, _node2);
+            Selection.activeGameObject = Intersections.CreateIntersection(_node1, _node2);
         }
 
 

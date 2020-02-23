@@ -696,8 +696,8 @@ public class GSDRoad : MonoBehaviour
                         node.intersection.name = node.intersection.transform.name;
                     }
                     //Setup construction objects:
-                    node.intersection.node1.intersectionConstruction = new GSDIntersections.iConstructionMaker();
-                    node.intersection.node2.intersectionConstruction = new GSDIntersections.iConstructionMaker();
+                    node.intersection.node1.intersectionConstruction = new Intersections.iConstructionMaker();
+                    node.intersection.node2.intersectionConstruction = new Intersections.iConstructionMaker();
                 }
 
                 //Store materials and physical materials for road and or shoulder cuts on each node, if necessary:
