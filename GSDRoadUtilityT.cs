@@ -7163,14 +7163,14 @@ namespace GSD.Threaded
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
-        private List<GSDTerraforming.TempTerrainData> TTDList;
+        private List<Terraforming.TempTerrainData> TTDList;
         [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
         private SplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         private GSDRoad road;
 
 
-        public void Setup(ref List<GSDTerraforming.TempTerrainData> _TTDList, SplineC _tSpline, GSDRoad _tRoad)
+        public void Setup(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _tSpline, GSDRoad _tRoad)
         {
             TTDList = _TTDList;
             spline = _tSpline;
@@ -7192,7 +7192,7 @@ namespace GSD.Threaded
             //float tDistance = tRoad.RoadWidth()*2f;
 
             //Vector3 tVect, POS;
-            foreach (GSDTerraforming.TempTerrainData TTD in TTDList)
+            foreach (Terraforming.TempTerrainData TTD in TTDList)
             {
                 //float PrevHeight = 0f;
                 //float FinalMax = 1f;
@@ -7258,7 +7258,7 @@ namespace GSD.Threaded
 
     public static class TerrainCalcsStatic
     {
-        public static void RunMe(ref List<GSDTerraforming.TempTerrainData> _TTDList, SplineC _spline, GSDRoad _road)
+        public static void RunMe(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _spline, GSDRoad _road)
         {
             float Step = (_road.roadDefinition * 0.4f) / _spline.distance;
             if (Step > 2f)
@@ -7273,7 +7273,7 @@ namespace GSD.Threaded
 
             //Vector3 tVect,POS;
 
-            foreach (GSDTerraforming.TempTerrainData TTD in _TTDList)
+            foreach (Terraforming.TempTerrainData TTD in _TTDList)
             {
                 //float PrevHeight = 0f;
                 //float FinalMax = 1f;

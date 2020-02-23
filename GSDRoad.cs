@@ -225,7 +225,7 @@ public class GSDRoad : MonoBehaviour
     [UnityEngine.Serialization.FormerlySerializedAs("EditorCameraBadVec")]
     private Vector3 editorCameraBadVec = default(Vector3);
 
-    public List<GSDTerraforming.TempTerrainData> EditorTTDList;
+    public List<Terraforming.TempTerrainData> EditorTTDList;
 
     [UnityEngine.Serialization.FormerlySerializedAs("Editor_bIsConstructing")]
     public bool isEditorConstructing = false;
@@ -618,7 +618,7 @@ public class GSDRoad : MonoBehaviour
         }
 
         //Set all terrains to height 0:
-        GSDTerraforming.CheckAllTerrainsHeight0();
+        Terraforming.CheckAllTerrainsHeight0();
 
         editorProgress = 20;
         isEditorProgressBar = true;
@@ -861,7 +861,7 @@ public class GSDRoad : MonoBehaviour
         {
             if (RCS.isTerrainOn || TerrainHistory == null)
             {
-                GSDTerraforming.ProcessRoadTerrainHook1(spline, this);
+                Terraforming.ProcessRoadTerrainHook1(spline, this);
             }
             else
             {
@@ -953,8 +953,8 @@ public class GSDRoad : MonoBehaviour
             RootUtils.StartProfiling(this, "RoadCon_Terrain");
             if (RCS.isTerrainOn || TerrainHistory == null)
             {
-                GSDTerraforming.ProcessRoadTerrainHook1(spline, this, false);
-                GSDTerraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
+                Terraforming.ProcessRoadTerrainHook1(spline, this, false);
+                Terraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
                 //Store history.
                 ConstructRoad_StoreTerrainHistory();
                 int editorTTDListCount = EditorTTDList.Count;
@@ -998,7 +998,7 @@ public class GSDRoad : MonoBehaviour
         if (RCS.isTerrainOn)
         {
             //Store history:
-            GSDTerraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
+            Terraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
             ConstructRoad_StoreTerrainHistory();
             int editorTTDListCount = EditorTTDList.Count;
             for (int i = 0; i < editorTTDListCount; i++)
@@ -1155,7 +1155,7 @@ public class GSDRoad : MonoBehaviour
     }
 
 
-    public void EditorTerrainCalcs(ref List<GSDTerraforming.TempTerrainData> _tddList)
+    public void EditorTerrainCalcs(ref List<Terraforming.TempTerrainData> _tddList)
     {
         EditorTTDList = _tddList;
     }

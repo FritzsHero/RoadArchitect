@@ -96,7 +96,7 @@ namespace RoadArchitect.Tests
                 Object[] roads = _roadSystem.GetComponents<GSDRoad>();
                 foreach (GSDRoad road in roads)
                 {
-                    GSDTerraforming.TerrainsReset(road);
+                    Terraforming.TerrainsReset(road);
                 }
             }
         }

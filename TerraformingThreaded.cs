@@ -113,7 +113,7 @@ namespace RoadArchitect.Threading
         */
 
 
-        private static void GetTempHeightsCoordinates(ref Vector3 _vector, ref GSDTerraforming.TempTerrainData _TTD, out int _x, out int _y)
+        private static void GetTempHeightsCoordinates(ref Vector3 _vector, ref Terraforming.TempTerrainData _TTD, out int _x, out int _y)
         {
             //Get the normalized position of this game object relative to the terrain:
             Vector3 tempCoord = (_vector - _TTD.TerrainPos);
@@ -129,7 +129,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void GetTempDetailsCoordinates(ref Vector3 _vector, ref GSDTerraforming.TempTerrainData _TTD, out int _x, out int _y)
+        private static void GetTempDetailsCoordinates(ref Vector3 _vector, ref Terraforming.TempTerrainData _TTD, out int _x, out int _y)
         {
             //Get the normalized position of this game object relative to the terrain:
             Vector3 tempCoord = (_vector - _TTD.TerrainPos);
@@ -146,13 +146,13 @@ namespace RoadArchitect.Threading
 
 
         //Privatized for obfuscate:
-        public static void DoRects(SplineC _spline, GSDTerraforming.TempTerrainData _TTD)
+        public static void DoRects(SplineC _spline, Terraforming.TempTerrainData _TTD)
         {
             DoRectsDo(ref _spline, ref _TTD);
         }
 
 
-        private static void DoRectsDo(ref SplineC _spline, ref GSDTerraforming.TempTerrainData _TTD)
+        private static void DoRectsDo(ref SplineC _spline, ref Terraforming.TempTerrainData _TTD)
         {
             float Sep = _spline.road.RoadWidth() * 0.5f;
             float HeightSep = Sep + (_spline.road.matchHeightsDistance * 0.5f);
@@ -628,7 +628,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static int[] CreateTris(float _i, float _i2, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 _POS2, float _sep, ref List<TerrainBoundsMaker> _list, ref float _T1SUB, ref float _T2SUB, ref GSDTerraforming.TempTerrainData _TTD, float _heightSep)
+        private static int[] CreateTris(float _i, float _i2, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 _POS2, float _sep, ref List<TerrainBoundsMaker> _list, ref float _T1SUB, ref float _T2SUB, ref Terraforming.TempTerrainData _TTD, float _heightSep)
         {
             Vector3 lVect1 = (_vect1 + new Vector3(_sep * -_POS1.normalized.z, 0, _sep * _POS1.normalized.x));
             Vector3 rVect1 = (_vect1 + new Vector3(_sep * _POS1.normalized.z, 0, _sep * -_POS1.normalized.x));
@@ -700,7 +700,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static GSDRoadUtil.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref GSDTerraforming.TempTerrainData _TTD, ref SplineC _spline)
+        private static GSDRoadUtil.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref Terraforming.TempTerrainData _TTD, ref SplineC _spline)
         {
             Vector3 lVect1far = default(Vector3);
             Vector3 rVect1far = default(Vector3);
@@ -995,7 +995,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static float ProcessCoordinateGrabber(ref float _param, ref SplineC _spline, ref GSDTerraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
+        private static float ProcessCoordinateGrabber(ref float _param, ref SplineC _spline, ref Terraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
         {
             int MinX = _XY[0];
             int MinY = _XY[1];
@@ -1103,7 +1103,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static Vector3 ConvertTerrainCoordToWorldVect(int _x, int _y, float _height, ref GSDTerraforming.TempTerrainData _TTD)
+        private static Vector3 ConvertTerrainCoordToWorldVect(int _x, int _y, float _height, ref Terraforming.TempTerrainData _TTD)
         {
             //Get the normalized position of this game object relative to the terrain:
             float x1 = _x / ((float)_TTD.HM - 1f);
