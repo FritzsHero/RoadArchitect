@@ -18,11 +18,15 @@ namespace RoadArchitect
             public List<Vector3> iFLane2L, iFLane2R;
             public List<Vector3> iFLane3L, iFLane3R;
             //Main plate:
-            public List<Vector3> iBMainPlateL; public List<Vector3> iBMainPlateR;
-            public List<Vector3> iFMainPlateL; public List<Vector3> iFMainPlateR;
+            public List<Vector3> iBMainPlateL;
+            public List<Vector3> iBMainPlateR;
+            public List<Vector3> iFMainPlateL;
+            public List<Vector3> iFMainPlateR;
             //Front marker plates:
-            public List<Vector3> iBMarkerPlateL; public List<Vector3> iBMarkerPlateR;
-            public List<Vector3> iFMarkerPlateL; public List<Vector3> iFMarkerPlateR;
+            public List<Vector3> iBMarkerPlateL;
+            public List<Vector3> iBMarkerPlateR;
+            public List<Vector3> iFMarkerPlateL;
+            public List<Vector3> iFMarkerPlateR;
 
             public List<Vector2> tempconstruction_R_RightTurn;
             public List<Vector2> tempconstruction_L_RightTurn;
@@ -153,129 +157,32 @@ namespace RoadArchitect
 
             public void Nullify()
             {
-
                 //Intersection construction:
-                if (iBLane0L != null)
-                {
-                    iBLane0L.Clear();
-                    iBLane0L = null;
-                }
-                if (iBLane0R != null)
-                {
-                    iBLane0R.Clear();
-                    iBLane0R = null;
-                }
-                if (iBLane1L != null)
-                {
-                    iBLane1L.Clear();
-                    iBLane1L = null;
-                }
-                if (iBLane1R != null)
-                {
-                    iBLane1R.Clear();
-                    iBLane1R = null;
-                }
-                if (iBLane2L != null)
-                {
-                    iBLane2L.Clear();
-                    iBLane2L = null;
-                }
-                if (iBLane2R != null)
-                {
-                    iBLane2R.Clear();
-                    iBLane2R = null;
-                }
-                if (iBLane3L != null)
-                {
-                    iBLane3L.Clear();
-                    iBLane3L = null;
-                }
-                if (iBLane3R != null)
-                {
-                    iBLane3R.Clear();
-                    iBLane3R = null;
-                }
-                if (iFLane0L != null)
-                {
-                    iFLane0L.Clear();
-                    iFLane0L = null;
-                }
-                if (iFLane0R != null)
-                {
-                    iFLane0R.Clear();
-                    iFLane0R = null;
-                }
-                if (iFLane1L != null)
-                {
-                    iFLane1L.Clear();
-                    iFLane1L = null;
-                }
-                if (iFLane1R != null)
-                {
-                    iFLane1R.Clear();
-                    iFLane1R = null;
-                }
-                if (iFLane2L != null)
-                {
-                    iFLane2L.Clear();
-                    iFLane2L = null;
-                }
-                if (iFLane2R != null)
-                {
-                    iFLane2R.Clear();
-                    iFLane2R = null;
-                }
-                if (iFLane3L != null)
-                {
-                    iFLane3L.Clear();
-                    iFLane3L = null;
-                }
-                if (iFLane3R != null)
-                {
-                    iFLane3R.Clear();
-                    iFLane3R = null;
-                }
-                if (iBMainPlateL != null)
-                {
-                    iBMainPlateL.Clear();
-                    iBMainPlateL = null;
-                }
-                if (iBMainPlateR != null)
-                {
-                    iBMainPlateR.Clear();
-                    iBMainPlateR = null;
-                }
-                if (iFMainPlateL != null)
-                {
-                    iFMainPlateL.Clear();
-                    iFMainPlateL = null;
-                }
-                if (iFMainPlateR != null)
-                {
-                    iFMainPlateR.Clear();
-                    iFMainPlateR = null;
-                }
+                NullifyList(iBLane0L);
+                NullifyList(iBLane0R);
+                NullifyList(iBLane1L);
+                NullifyList(iBLane1R);
+                NullifyList(iBLane2L);
+                NullifyList(iBLane2R);
+                NullifyList(iBLane3L);
+                NullifyList(iBLane3R);
+                NullifyList(iFLane0L);
+                NullifyList(iFLane0R);
+                NullifyList(iFLane1L);
+                NullifyList(iFLane1R);
+                NullifyList(iFLane2L);
+                NullifyList(iFLane2R);
+                NullifyList(iFLane3L);
+                NullifyList(iFLane3R);
+                NullifyList(iBMainPlateL);
+                NullifyList(iBMainPlateR);
+                NullifyList(iFMainPlateL);
+                NullifyList(iFMainPlateR);
+                NullifyList(iBMarkerPlateL);
+                NullifyList(iBMarkerPlateR);
+                NullifyList(iFMarkerPlateL);
+                NullifyList(iFMarkerPlateR);
 
-                if (iBMarkerPlateL != null)
-                {
-                    iBMarkerPlateL.Clear();
-                    iBMarkerPlateL = null;
-                }
-                if (iBMarkerPlateR != null)
-                {
-                    iBMarkerPlateR.Clear();
-                    iBMarkerPlateR = null;
-                }
-                if (iFMarkerPlateL != null)
-                {
-                    iFMarkerPlateL.Clear();
-                    iFMarkerPlateL = null;
-                }
-                if (iFMarkerPlateR != null)
-                {
-                    iFMarkerPlateR.Clear();
-                    iFMarkerPlateR = null;
-                }
 
                 if (tempconstruction_R != null)
                 {
@@ -284,6 +191,16 @@ namespace RoadArchitect
                 if (tempconstruction_L != null)
                 {
                     tempconstruction_L = null;
+                }
+            }
+
+
+            private void NullifyList(List<Vector3> _constructionMaker)
+            {
+                if (_constructionMaker != null)
+                {
+                    _constructionMaker.Clear();
+                    _constructionMaker = null;
                 }
             }
 
@@ -346,12 +263,6 @@ namespace RoadArchitect
 
 
         public static GameObject CreateIntersection(SplineN _node1, SplineN _node2)
-        {
-            return CreateIntersectionDo(_node1, _node2);
-        }
-
-
-        private static GameObject CreateIntersectionDo(SplineN _node1, SplineN _node2)
         {
             float RoadMod = 10f;
             GameObject SystemObj = _node1.transform.parent.parent.parent.gameObject;
