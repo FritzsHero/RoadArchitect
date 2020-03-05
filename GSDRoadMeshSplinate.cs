@@ -12,9 +12,8 @@ namespace GSD.Roads.Splination
     public enum CollisionTypeEnum { None, SimpleMeshTriangle, SimpleMeshTrapezoid, MeshCollision, BoxCollision };
     public enum RepeatUVTypeEnum { None, X, Y };
 
+
 #if UNITY_EDITOR
-
-
     [System.Serializable]
     public class SplinatedMeshMaker
     {

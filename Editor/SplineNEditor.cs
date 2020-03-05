@@ -342,7 +342,7 @@ namespace RoadArchitect
 
             EditorUtilities.DrawLine();
 
-            #region "Online Manual on Top of SplineN Scripts"
+            #region "Manuals on Top of SplineN Scripts"
             EditorGUILayout.LabelField(node.editorDisplayString, EditorStyles.boldLabel);
 
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(128f)))
@@ -383,29 +383,29 @@ namespace RoadArchitect
             #endregion
 
 
-            //Option: Bridge options
-            bool bDidBridge = false;
+            #region "Option: Bridge options"
+            bool isBridgeDisplayed = false;
             if (!node.isEndPoint)
             {
                 //Bridge start:
                 if (!node.isBridgeEnd && node.CanBridgeStart())
                 {
                     isBridgeStart = EditorGUILayout.Toggle(" Bridge start", node.isBridgeStart);
-                    bDidBridge = true;
+                    isBridgeDisplayed = true;
                 }
                 //Bridge end:
                 if (!node.isBridgeStart && node.CanBridgeEnd())
                 {
                     isBridgeEnd = EditorGUILayout.Toggle(" Bridge end", node.isBridgeEnd);
-                    bDidBridge = true;
+                    isBridgeDisplayed = true;
                 }
 
-                if (bDidBridge)
+                if (isBridgeDisplayed)
                 {
                     RoadArchitect.EditorUtilities.DrawLine();
                 }
             }
-
+            #endregion
 
 
             if ((Selection.objects.Length == 1 && Selection.objects[0] is SplineN) || (node.specialNodeCounterpart == null && !node.isSpecialRoadConnPrimary))
@@ -431,11 +431,11 @@ namespace RoadArchitect
                 EditorGUILayout.BeginVertical();
                 if (GUILayout.Button("Update road connection"))
                 {
-                    SplineN tNode1 = node.originalConnectionNodes[0];
-                    SplineN tNode2 = node.originalConnectionNodes[1];
+                    SplineN node1 = node.originalConnectionNodes[0];
+                    SplineN node2 = node.originalConnectionNodes[1];
                     node.specialNodeCounterpart.BreakConnection();
                     node.spline.road.UpdateRoad();
-                    tNode1.spline.ActivateEndNodeConnection(tNode1, tNode2);
+                    node1.spline.ActivateEndNodeConnection(node1, node2);
                 }
                 if (GUILayout.Button("Break road connection"))
                 {
@@ -475,7 +475,8 @@ namespace RoadArchitect
 
                 //Option: Manual cut:
                 if (node.idOnSpline > 0 && node.idOnSpline < (node.spline.GetNodeCount() - 1) && !node.isIntersection && !node.isSpecialEndNode)
-                { // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
+                {
+                    // && !cNode.bIsBridge_PreNode && !cNode.bIsBridge_PostNode){
                     if (node.spline.road.isDynamicCutsEnabled)
                     {
                         if (isRoadCut != node.isRoadCut)
@@ -485,7 +486,7 @@ namespace RoadArchitect
                     }
                 }
 
-                //Option: Bridge options
+                #region "Option: Bridge options"
                 //Bridge start:
                 if (!node.isEndPoint)
                 {
@@ -510,6 +511,7 @@ namespace RoadArchitect
                         }
                     }
                 }
+                #endregion
 
                 UpdateSplineObjects();
                 UpdateEdgeObjects();
@@ -523,9 +525,6 @@ namespace RoadArchitect
         {
             Repaint();
         }
-
-
-        //GUIStyle SectionBG;
 
 
         private void DoExtAndEdgeOverview()
@@ -548,14 +547,14 @@ namespace RoadArchitect
 
             if (GUILayout.Button("Save group", EditorStyles.miniButton, GUILayout.Width(108f)) || GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                SaveWindow tSave = EditorWindow.GetWindow<SaveWindow>();
+                SaveWindow saveWindow = EditorWindow.GetWindow<SaveWindow>();
                 if (node.isBridge)
                 {
-                    tSave.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
+                    saveWindow.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
                 }
                 else
                 {
-                    tSave.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
+                    saveWindow.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
                 }
             }
             EditorGUILayout.EndHorizontal();
@@ -564,7 +563,8 @@ namespace RoadArchitect
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("");
             if (GUILayout.Button("Open Wizard", loadButton, GUILayout.Width(128f)))
-            {// || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
+            {
+                // || GUILayout.Button(btnLoadText,GSDImageButton,GUILayout.Width(16f))){
                 Wizard wizard = EditorWindow.GetWindow<Wizard>();
                 if (sceneRect.x < 0)
                 {
@@ -1595,6 +1595,7 @@ namespace RoadArchitect
                 #endregion
 
 
+                // Multi placed edge objects
                 if (!EOM.isSingle)
                 {
                     if (EOM.edgeMaker.startTime < node.minSplination)
@@ -1609,7 +1610,7 @@ namespace RoadArchitect
 
                     #region "Start param"
                     EditorGUILayout.BeginHorizontal();
-                    EOM.edgeMaker.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, node.minSplination, EOM.endTime);  // EndTime = 1f??
+                    EOM.edgeMaker.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, node.minSplination, EOM.endTime);
 
                     if (EOM.edgeMaker.endTime < EOM.edgeMaker.startTime)
                     {
@@ -1631,20 +1632,10 @@ namespace RoadArchitect
                     //Mathf.Clamp(EditorGUILayout.Slider( "End param: ", EOM.EndTime, 0f/*EOM.StartTime*/, 1f/*tNode.MaxSplination*/ ), 0f, 1f);
                     // FH EXPERIMENTAL fix for EdgeObjects???
 
-                    /*
-                    if(EOM.EndTime != 1f) // Does not fix the problem, anyway a really dirty and shitty bugfix...
-                    {
-                        EOM.EndTime = 1f;
-                    }
-                    */
-
                     if (EOM.edgeMaker.startTime > EOM.edgeMaker.endTime)
                     {
                         EOM.edgeMaker.startTime = Mathf.Clamp(EOM.endTime - 0.01f, 0f, 1f);
                     }
-
-
-
 
                     if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
                     {
@@ -1811,7 +1802,7 @@ namespace RoadArchitect
                         EOM.edgeMaker.LoadTo(EOM);
                         EOM.UpdatePositions();
                         EOM.Setup();
-                        //					Debug.Log ("Setup EOM"); 
+                        //Debug.Log ("Setup EOM"); 
                     }
                 }
             }
@@ -2226,7 +2217,7 @@ namespace RoadArchitect
         {
             Event current = Event.current;
             int controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
-            bool bUsed = false;
+            bool isUsed = false;
 
             if (!isSceneRectSet)
             {
@@ -2270,9 +2261,8 @@ namespace RoadArchitect
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
             {
-                Object[] xNodeObjects = GameObject.FindObjectsOfType(typeof(SplineN));
-                Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(GSDRoadConnector));
-                foreach (SplineN xNode in xNodeObjects)
+                Object[] nodeObjects = GameObject.FindObjectsOfType(typeof(SplineN));
+                foreach (SplineN xNode in nodeObjects)
                 {
                     if (Vector3.Distance(xNode.transform.position, node.transform.position) < 2f)
                     {
@@ -2290,7 +2280,7 @@ namespace RoadArchitect
                             node.transform.position = xNode.transform.position;
                             //Activate special end node for tnode
                             TriggerRoadConnection(node, xNode);
-                            bUsed = true;
+                            isUsed = true;
                             break;
                         }
                         if (xNode.isIntersection)
@@ -2315,7 +2305,7 @@ namespace RoadArchitect
                         }
                         node.transform.position = xNode.transform.position;
                         TriggerIntersection(node, xNode);
-                        bUsed = true;
+                        isUsed = true;
                         break;
                     }
                     else
@@ -2323,6 +2313,9 @@ namespace RoadArchitect
                         continue;
                     }
                 }
+
+
+                Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(GSDRoadConnector));
                 foreach (GSDRoadConnector connector in connectorObjects)
                 {
                     if (Vector3.Distance(connector.transform.position, node.transform.position) < 2f)
@@ -2344,11 +2337,11 @@ namespace RoadArchitect
                         node.EnsureGradeValidity();
                     }
                     TriggerRoadUpdate();
-                    bUsed = true;
+                    isUsed = true;
                 }
                 isMouseDragProcessed = true;
                 node.isDrawingIntersectionHighlightGizmos = false;
-                bUsed = true;
+                isUsed = true;
             }
 
             //Enforce maximum road grade:
@@ -2365,7 +2358,7 @@ namespace RoadArchitect
                     }
                     TriggerRoadUpdate();
                 }
-                bUsed = true;
+                isUsed = true;
             }
 
             if (Selection.activeGameObject == node.transform.gameObject)
@@ -2376,7 +2369,7 @@ namespace RoadArchitect
                 }
             }
 
-            if (bUsed)
+            if (isUsed)
             {
                 //			switch(current.type){
                 //				case EventType.layout:
@@ -2485,49 +2478,49 @@ namespace RoadArchitect
         {
             string basePath = GSDRoadUtilityEditor.GetBasePath();
 
-            string tPath = "";
+            string path = "";
             if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDWarningSign_Static.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDWarningSign_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign2_Static)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDWarningSign2_Static.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDWarningSign2_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Atten_Static)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDAtten_Static.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDAtten_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Static)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Static.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Rigid)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Rigid.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Rigid.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Static)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Static.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Rigid)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Static)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Static.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Rigid)
             {
-                tPath = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab";
+                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab";
             }
             else
             {
                 return null;
             }
 
-            return (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tPath, typeof(GameObject)) as GameObject;
+            return (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
         }
     }
 #endif

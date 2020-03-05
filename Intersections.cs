@@ -268,7 +268,7 @@ namespace RoadArchitect
             GameObject SystemObj = _node1.transform.parent.parent.parent.gameObject;
             if (!SystemObj)
             {
-                Debug.LogWarning("Could not find GSD road system master object.");
+                Debug.LogWarning("Could not find road system master object.");
                 return null;
             }
             GameObject InterMaster = null;
