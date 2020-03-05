@@ -23,14 +23,14 @@ namespace RoadArchitect
         /// <summary> Adds a new road to this RoadSystem </summary>
         public GameObject AddRoad(bool _isForceSelected = false)
         {
-            GSDRoad[] allRoadObj = GetComponentsInChildren<GSDRoad>();
+            Road[] allRoadObj = GetComponentsInChildren<Road>();
             int newRoadNumber = (allRoadObj.Length + 1);
 
             //Road:
             GameObject roadObj = new GameObject("Road" + newRoadNumber.ToString());
             UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Created road");
             roadObj.transform.parent = transform;
-            GSDRoad road = roadObj.AddComponent<GSDRoad>();
+            Road road = roadObj.AddComponent<Road>();
 
             //Spline:
             GameObject splineObj = new GameObject("Spline");
@@ -70,7 +70,7 @@ namespace RoadArchitect
         /// <summary> Updates all roads of this RoadSystem </summary>
         public void UpdateAllRoads()
         {
-            GSDRoad[] allRoadObjs = GetComponentsInChildren<GSDRoad>();
+            Road[] allRoadObjs = GetComponentsInChildren<Road>();
             int roadCount = allRoadObjs.Length;
             SplineC[] piggys = null;
             if (roadCount > 1)
@@ -82,7 +82,7 @@ namespace RoadArchitect
                 }
             }
 
-            GSDRoad road = allRoadObjs[0];
+            Road road = allRoadObjs[0];
             if (piggys != null && piggys.Length > 0)
             {
                 road.PiggyBacks = piggys;
@@ -94,9 +94,9 @@ namespace RoadArchitect
         //Workaround for submission rules:
         public void UpdateAllRoadsMultiThreadedOption()
         {
-            GSDRoad[] allRoadObjs = (GSDRoad[])GetComponentsInChildren<GSDRoad>();
+            Road[] allRoadObjs = (Road[])GetComponentsInChildren<Road>();
             int roadCount = allRoadObjs.Length;
-            GSDRoad road = null;
+            Road road = null;
             for (int i = 0; i < roadCount; i++)
             {
                 road = allRoadObjs[i];
@@ -111,9 +111,9 @@ namespace RoadArchitect
         //Workaround for submission rules:
         public void UpdateAllRoadsSavingMeshesOption()
         {
-            GSDRoad[] allRoadObjs = (GSDRoad[])GetComponentsInChildren<GSDRoad>();
+            Road[] allRoadObjs = (Road[])GetComponentsInChildren<Road>();
             int roadsCount = allRoadObjs.Length;
-            GSDRoad road = null;
+            Road road = null;
             for (int i = 0; i < roadsCount; i++)
             {
                 road = allRoadObjs[i];

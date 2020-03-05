@@ -553,12 +553,12 @@ namespace RoadArchitect
             {
                 return;
             }
-            List<GSDRoad> roads = new List<GSDRoad>();
+            List<Road> roads = new List<Road>();
             foreach (Collider collider in colliders)
             {
                 if (collider.transform.parent)
                 {
-                    GSDRoad tRoad = collider.transform.parent.GetComponent<GSDRoad>();
+                    Road tRoad = collider.transform.parent.GetComponent<Road>();
                     if (tRoad)
                     {
                         if (!roads.Contains(tRoad))
@@ -589,12 +589,12 @@ namespace RoadArchitect
         }
 
 
-        private static void FlattenIntersectionArea(ref List<GSDRoad> _roads, RoadIntersection _roadIntersection, float _width, out float _height)
+        private static void FlattenIntersectionArea(ref List<Road> _roads, RoadIntersection _roadIntersection, float _width, out float _height)
         {
             //Cycle through each road and get all mesh vertices that are within range:
             Vector3 tInterPos = _roadIntersection.transform.position;
             float tInterPosY = tInterPos.y;
-            foreach (GSDRoad tRoad in _roads)
+            foreach (Road tRoad in _roads)
             {
                 MeshFilter MF_Road = tRoad.MeshRoad.GetComponent<MeshFilter>();
                 MeshFilter MF_Road_SR = tRoad.MeshShoR.GetComponent<MeshFilter>();

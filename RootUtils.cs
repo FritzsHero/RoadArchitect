@@ -388,7 +388,7 @@ namespace RoadArchitect
 
         #region "Profiling"
 #if UNITY_EDITOR
-        public static void StartProfiling(GSDRoad _road, string _profileName)
+        public static void StartProfiling(Road _road, string _profileName)
         {
             if (_road.isProfiling)
             {
@@ -397,7 +397,7 @@ namespace RoadArchitect
         }
 
 
-        public static void EndProfiling(GSDRoad _road)
+        public static void EndProfiling(Road _road)
         {
             if (_road.isProfiling)
             {
@@ -406,7 +406,7 @@ namespace RoadArchitect
         }
 
 
-        public static void EndStartProfiling(GSDRoad _road, string _profileName)
+        public static void EndStartProfiling(Road _road, string _profileName)
         {
             if (_road.isProfiling)
             {

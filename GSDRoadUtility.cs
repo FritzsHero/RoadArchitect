@@ -23,7 +23,7 @@ namespace RoadArchitect
 #if UNITY_EDITOR
     public static class GSDConstruction
     {
-        public static SplineN CreateNode(GSDRoad _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
+        public static SplineN CreateNode(Road _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
         {
             Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
             GameObject nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
@@ -31,11 +31,11 @@ namespace RoadArchitect
             {
                 UnityEditor.Undo.RegisterCreatedObjectUndo(nodeObj, "Created node");
             }
-            SplineN tNode = nodeObj.AddComponent<SplineN>();
+            SplineN node = nodeObj.AddComponent<SplineN>();
 
             if (_isSpecialEndNode)
             {
-                tNode.isSpecialEndNode = true;
+                node.isSpecialEndNode = true;
                 nodeObj.transform.position = _vectorSpecialLoc;
             }
             else
@@ -61,20 +61,20 @@ namespace RoadArchitect
             nodeObj.transform.position = xVect;
 
             nodeObj.transform.parent = _road.GSDSplineObj.transform;
-            tNode.idOnSpline = _road.spline.GetNodeCount() + 1;
-            tNode.spline = _road.spline;
+            node.idOnSpline = _road.spline.GetNodeCount() + 1;
+            node.spline = _road.spline;
 
             //Enforce max road grade:
             if (_road.isMaxGradeEnabled && !_isSpecialEndNode)
             {
-                tNode.EnsureGradeValidity(-1, true);
+                node.EnsureGradeValidity(-1, true);
             }
 
             if (!_isInterNode && !_isSpecialEndNode)
             {
                 _road.UpdateRoad();
             }
-            return tNode;
+            return node;
         }
 
 
@@ -83,7 +83,7 @@ namespace RoadArchitect
         /// Determine which node is closest (up or down) on spline
         /// Place node, adjust all id on splines
         /// Setup spline </summary>
-        public static SplineN InsertNode(GSDRoad _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
+        public static SplineN InsertNode(Road _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
         {
             GameObject nodeObj;
             Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
@@ -233,7 +233,7 @@ namespace RoadArchitect
     public class RoadConstructorBufferMaker
     {
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
-        public GSDRoad road;
+        public Road road;
 
         public List<Vector3> RoadVectors;
         public List<Vector3> ShoulderR_Vectors;
@@ -471,7 +471,7 @@ namespace RoadArchitect
         public enum SaveMeshTypeEnum { Road, Shoulder, Intersection, Railing, Center, Bridge, RoadCut, SCut, BSCut, RoadConn };
 
 
-        public RoadConstructorBufferMaker(GSDRoad _road, RoadUpdateTypeEnum _updateType)
+        public RoadConstructorBufferMaker(Road _road, RoadUpdateTypeEnum _updateType)
         {
             tUpdateType = _updateType;
             isRoadOn = (tUpdateType == RoadUpdateTypeEnum.Full || tUpdateType == RoadUpdateTypeEnum.Intersection || tUpdateType == RoadUpdateTypeEnum.Bridges);
@@ -2985,7 +2985,7 @@ namespace RoadArchitect
         #endregion
 
 
-        private static void SaveMesh(SaveMeshTypeEnum _saveType, Mesh _mesh, GSDRoad _road, string _name)
+        private static void SaveMesh(SaveMeshTypeEnum _saveType, Mesh _mesh, Road _road, string _name)
         {
             if (!_road.GSDRS.isSavingMeshes)
             {
@@ -3120,13 +3120,13 @@ namespace RoadArchitect
 
 
         #region "Terrain history"
-        public static void ConstructRoadStoreTerrainHistory(ref GSDRoad _road)
+        public static void ConstructRoadStoreTerrainHistory(ref Road _road)
         {
             ConstructRoadStoreTerrainHistoryDo(ref _road);
         }
 
 
-        private static void ConstructRoadStoreTerrainHistoryDo(ref GSDRoad _road)
+        private static void ConstructRoadStoreTerrainHistoryDo(ref Road _road)
         {
             Object[] TIDs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
 
@@ -3327,13 +3327,13 @@ namespace RoadArchitect
         //	    }
 
 
-        public static void ConstructRoadResetTerrainHistory(ref GSDRoad _road)
+        public static void ConstructRoadResetTerrainHistory(ref Road _road)
         {
             ConstructRoadResetTerrainHistoryDo(ref _road);
         }
 
 
-        private static void ConstructRoadResetTerrainHistoryDo(ref GSDRoad _road)
+        private static void ConstructRoadResetTerrainHistoryDo(ref Road _road)
         {
             if (_road.TerrainHistory != null)
             {
@@ -4176,8 +4176,8 @@ namespace RoadArchitect
             if (_roadUID != "")
             {
                 tRoads = new Object[1];
-                Object[] roads = GameObject.FindObjectsOfType(typeof(GSDRoad));
-                foreach (GSDRoad road in roads)
+                Object[] roads = GameObject.FindObjectsOfType(typeof(Road));
+                foreach (Road road in roads)
                 {
                     if (string.CompareOrdinal(road.UID, _roadUID) == 0)
                     {
@@ -4188,11 +4188,11 @@ namespace RoadArchitect
             }
             else
             {
-                tRoads = GameObject.FindObjectsOfType(typeof(GSDRoad));
+                tRoads = GameObject.FindObjectsOfType(typeof(Road));
             }
             Vector3 tPos = _terrain.transform.position;
             Vector3 tSize = _terrain.terrainData.size;
-            foreach (GSDRoad tRoad in tRoads)
+            foreach (Road tRoad in tRoads)
             {
                 SplineC tSpline = tRoad.spline;
                 int tCount = tSpline.RoadDefKeysArray.Length;

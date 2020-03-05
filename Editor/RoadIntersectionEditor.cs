@@ -177,8 +177,8 @@ namespace RoadArchitect
             EditorUtilities.DrawLine();
             EditorGUILayout.BeginHorizontal();
             {
-                GSDRoad road1 = intersection.node1.spline.transform.parent.GetComponent<GSDRoad>();
-                GSDRoad road2 = intersection.node2.spline.transform.parent.GetComponent<GSDRoad>();
+                Road road1 = intersection.node1.spline.transform.parent.GetComponent<Road>();
+                Road road2 = intersection.node2.spline.transform.parent.GetComponent<Road>();
                 EditorGUILayout.LabelField("First road: " + road1.name + " node: " + intersection.node1.name);
                 EditorGUILayout.LabelField("Second road: " + road2.name + " node: " + intersection.node2.name);
             }

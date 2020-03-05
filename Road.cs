@@ -9,7 +9,7 @@ using UnityEditor;
 
 
 [ExecuteInEditMode]
-public class GSDRoad : MonoBehaviour
+public class Road : MonoBehaviour
 {
     public enum RoadMaterialDropdownEnum
     {
@@ -880,7 +880,7 @@ public class GSDRoad : MonoBehaviour
     {
         if (!_isDiskOnly)
         {
-            GSDRoad road = this;
+            Road road = this;
             GSDRoadUtil.ConstructRoadStoreTerrainHistory(ref road);
         }
 
@@ -913,7 +913,7 @@ public class GSDRoad : MonoBehaviour
 
     public void ConstructRoad_ResetTerrainHistory()
     {
-        GSDRoad tRoad = this;
+        Road tRoad = this;
         if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
         {
             TerrainHistoryUtility.DeleteTerrainHistory(this);
@@ -969,7 +969,7 @@ public class GSDRoad : MonoBehaviour
         }
 
         editorProgress = 50;
-        GSDRoad road = this;
+        Road road = this;
         RootUtils.StartProfiling(this, "RoadCon_RoadPrelim");
 
         editorProgress = 80;
@@ -1015,7 +1015,7 @@ public class GSDRoad : MonoBehaviour
             TerrainCalcsJob.Abort();
             TerrainCalcsJob = null;
         }
-        GSDRoad road = this;
+        Road road = this;
         editorProgress = 72;
         RoadCalcsJob1 = new GSD.Threaded.RoadCalcs1();
         RoadCalcsJob1.Setup(ref RCS, ref road);
@@ -1782,7 +1782,7 @@ public class GSDRoad : MonoBehaviour
         GameObject roadObj = GSDRS.AddRoad();
         UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Duplicate");
 
-        GSDRoad road = roadObj.GetComponent<GSDRoad>();
+        Road road = roadObj.GetComponent<Road>();
         if (road == null)
         {
             return;

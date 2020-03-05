@@ -258,12 +258,12 @@ namespace RoadArchitect
         {
             roads = null;
             roadsString = null;
-            Object[] allRoads = GameObject.FindObjectsOfType(typeof(GSDRoad));
+            Object[] allRoads = GameObject.FindObjectsOfType(typeof(Road));
             int roadsCount = allRoads.Length;
             roads = new string[roadsCount];
             roadsString = new string[roadsCount];
             int counter = 0;
-            foreach (GSDRoad road in allRoads)
+            foreach (Road road in allRoads)
             {
                 roads[counter] = road.UID;
                 roadsString[counter] = road.transform.name;

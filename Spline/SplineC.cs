@@ -14,7 +14,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("mSplineRoot")]
         public GameObject splineRoot;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
-        public GSDRoad road;
+        public Road road;
         public float distance = -1f;
         [UnityEngine.Serialization.FormerlySerializedAs("CachedPoints")]
         public Vector3[] cachedPoints;
@@ -105,7 +105,7 @@ namespace RoadArchitect
             {
                 if (splineRoot != null)
                 {
-                    road = splineRoot.transform.parent.transform.gameObject.GetComponent<GSDRoad>();
+                    road = splineRoot.transform.parent.transform.gameObject.GetComponent<Road>();
                 }
             }
             if (road)

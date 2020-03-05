@@ -49,11 +49,11 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Update All Roads")]
     public static void UpdateAllRoads()
     {
-        GSDRoad[] allRoadObjects = (GSDRoad[]) GameObject.FindObjectsOfType(typeof(GSDRoad));
+        Road[] allRoadObjects = (Road[]) GameObject.FindObjectsOfType(typeof(Road));
 
         int roadCount = allRoadObjects.Length;
 
-        GSDRoad singleRoad = null;
+        Road singleRoad = null;
         SplineC[] tPiggys = null;
         if (roadCount > 1)
         {

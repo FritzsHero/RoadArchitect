@@ -33,7 +33,7 @@ namespace RoadArchitect
 
 
         /// <summary> Saves the Terrain History to disk </summary>
-        public static void SaveTerrainHistory(List<TerrainHistoryMaker> _obj, GSDRoad _road)
+        public static void SaveTerrainHistory(List<TerrainHistoryMaker> _obj, Road _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
@@ -50,7 +50,7 @@ namespace RoadArchitect
 
 
         /// <summary> Deletes the Terrain History from disk </summary>
-        public static void DeleteTerrainHistory(GSDRoad _road)
+        public static void DeleteTerrainHistory(Road _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (System.IO.File.Exists(path))
@@ -61,7 +61,7 @@ namespace RoadArchitect
 
 
         /// <summary> Loads the Terrain History from disk </summary>
-        public static List<TerrainHistoryMaker> LoadTerrainHistory(GSDRoad _road)
+        public static List<TerrainHistoryMaker> LoadTerrainHistory(Road _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
@@ -85,7 +85,7 @@ namespace RoadArchitect
 
 
         /// <summary> Generates the Terrain History file name </summary>
-        private static string GetRoadTHFilename(ref GSDRoad _road)
+        private static string GetRoadTHFilename(ref Road _road)
         {
             //string sceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
             string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;

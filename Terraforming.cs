@@ -114,13 +114,13 @@ namespace RoadArchitect
         }
 
 
-        public static void ProcessRoadTerrainHook1(SplineC _spline, GSDRoad _road, bool _isMultithreaded = true)
+        public static void ProcessRoadTerrainHook1(SplineC _spline, Road _road, bool _isMultithreaded = true)
         {
             ProcessRoadTerrainHook1Do(ref _spline, ref _road, _isMultithreaded);
         }
 
 
-        private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref GSDRoad _road, bool _isMultithreaded)
+        private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref Road _road, bool _isMultithreaded)
         {
             RootUtils.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
             //First lets make sure all terrains have GSDTerrain shit on them:
@@ -513,13 +513,13 @@ namespace RoadArchitect
         }
 
 
-        public static void TerrainsReset(GSDRoad _road)
+        public static void TerrainsReset(Road _road)
         {
             TerrainsResetDo(ref _road);
         }
 
 
-        private static void TerrainsResetDo(ref GSDRoad _road)
+        private static void TerrainsResetDo(ref Road _road)
         {
             if (_road.TerrainHistory == null)
             {

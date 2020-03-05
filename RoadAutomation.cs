@@ -28,10 +28,10 @@ namespace RoadArchitect.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="NodeLocation">The location of the newly created node.</param>
-        public static GSDRoad CreateRoadProgrammatically(RoadSystem _RoadSys, ref List<Vector3> _positions)
+        public static Road CreateRoadProgrammatically(RoadSystem _RoadSys, ref List<Vector3> _positions)
         {
             GameObject roadObject = _RoadSys.AddRoad(false);
-            GSDRoad road = roadObject.GetComponent<GSDRoad>();
+            Road road = roadObject.GetComponent<Road>();
 
             int count = _positions.Count;
             for (int index = 0; index < count; index++)
@@ -48,7 +48,7 @@ namespace RoadArchitect.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="_nodePosition">The location of the newly created node.</param>
-        public static SplineN CreateNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
+        public static SplineN CreateNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             int splineChildCount = _road.spline.transform.childCount;
             //Add the node
@@ -82,7 +82,7 @@ namespace RoadArchitect.Roads
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
-		public static SplineN InsertNodeProgrammatically(GSDRoad _road, Vector3 _nodePosition)
+		public static SplineN InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;
             Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
@@ -153,7 +153,7 @@ namespace RoadArchitect.Roads
         /// <param name="_road">The primary road to create intersections for.</param>
         /// <param name="_iStopType">Stop signs, traffic lights #1 (US) or traffic lights #2 (Euro). Defaults to none.</param>
         /// <param name="_roadType">Intersection type: No turn lane, left turn lane or both turn lanes. Defaults to no turn lane.</param>
-        public static void CreateIntersectionsProgrammaticallyForRoad(GSDRoad _road, RoadIntersection.iStopTypeEnum _iStopType = RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum _roadType = RoadIntersection.RoadTypeEnum.NoTurnLane)
+        public static void CreateIntersectionsProgrammaticallyForRoad(Road _road, RoadIntersection.iStopTypeEnum _iStopType = RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum _roadType = RoadIntersection.RoadTypeEnum.NoTurnLane)
         {
             /*
             General logic:
@@ -167,11 +167,11 @@ namespace RoadArchitect.Roads
              create intersection with above two nodes
             */
 
-            Object[] roadObjects = Object.FindObjectsOfType<GSDRoad>();
+            Object[] roadObjects = Object.FindObjectsOfType<Road>();
 
             //20m increments to gather collection of which roads intersect
-            List<GSDRoad> roads = new List<GSDRoad>();
-            foreach (GSDRoad road in roadObjects)
+            List<Road> roads = new List<Road>();
+            foreach (Road road in roadObjects)
             {
                 if (_road != road)
                 {
@@ -208,7 +208,7 @@ namespace RoadArchitect.Roads
 
             //See if any end point nodes are on top of each other already since T might not intersect all the time.:
             List<KeyValuePair<SplineN, SplineN>> keyValuePairs = new List<KeyValuePair<SplineN, SplineN>>();
-            foreach (GSDRoad road in roads)
+            foreach (Road road in roads)
             {
                 foreach (SplineN intersectionNode1 in _road.spline.nodes)
                 {
@@ -243,7 +243,7 @@ namespace RoadArchitect.Roads
             }
 
             //Main algorithm: 2m increments to find actual intersection point:
-            foreach (GSDRoad road in roads)
+            foreach (Road road in roads)
             {
                 if (_road != road)
                 {

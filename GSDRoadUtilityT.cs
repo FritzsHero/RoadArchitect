@@ -13,13 +13,13 @@ namespace GSD.Threaded
     {
         #region "Road Prelim"
         //Privatized for obfuscate:
-        public static void RoadJobPrelim(ref GSDRoad _road)
+        public static void RoadJobPrelim(ref Road _road)
         {
             RoadJobPrelimDo(ref _road);
         }
 
 
-        private static void RoadJobPrelimDo(ref GSDRoad _road)
+        private static void RoadJobPrelimDo(ref Road _road)
         {
             #region "Vars"
             SplineC spline = _road.spline;
@@ -2831,7 +2831,7 @@ namespace GSD.Threaded
 
 
         #region "Intersection Prelim"
-        private static void RoadJobPrelimInter(ref GSDRoad _road)
+        private static void RoadJobPrelimInter(ref Road _road)
         {
             SplineC spline = _road.spline;
             float roadWidth = _road.RoadWidth();
@@ -3826,7 +3826,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void AddIntersectionBounds(ref GSDRoad _road, ref RoadConstructorBufferMaker _RCS)
+        private static void AddIntersectionBounds(ref Road _road, ref RoadConstructorBufferMaker _RCS)
         {
 #pragma warning disable CS0219
             bool isBridge = false;
@@ -4205,7 +4205,7 @@ namespace GSD.Threaded
 
 
         #region "Intersection Prelim Finalization"		
-        private static void RoadJobPrelimFinalizeInter(ref GSDRoad _road)
+        private static void RoadJobPrelimFinalizeInter(ref Road _road)
         {
             int mCount = _road.spline.GetNodeCount();
             SplineN tNode;
@@ -4417,7 +4417,7 @@ namespace GSD.Threaded
         }
 
 
-        private static void Inter_OrganizeVertices(ref SplineN _node, ref GSDRoad _road)
+        private static void Inter_OrganizeVertices(ref SplineN _node, ref Road _road)
         {
             Intersections.iConstructionMaker iCon = _node.intersectionConstruction;
             RoadIntersection GSDRI = _node.intersection;
@@ -7167,10 +7167,10 @@ namespace GSD.Threaded
         [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
         private SplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
-        private GSDRoad road;
+        private Road road;
 
 
-        public void Setup(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _tSpline, GSDRoad _tRoad)
+        public void Setup(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _tSpline, Road _tRoad)
         {
             TTDList = _TTDList;
             spline = _tSpline;
@@ -7258,7 +7258,7 @@ namespace GSD.Threaded
 
     public static class TerrainCalcsStatic
     {
-        public static void RunMe(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _spline, GSDRoad _road)
+        public static void RunMe(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _spline, Road _road)
         {
             float Step = (_road.roadDefinition * 0.4f) / _spline.distance;
             if (Step > 2f)
@@ -7338,10 +7338,10 @@ namespace GSD.Threaded
         private object handle = new object();
         private RoadConstructorBufferMaker RCS;
         [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
-        private GSDRoad road;
+        private Road road;
 
 
-        public void Setup(ref RoadConstructorBufferMaker _RCS, ref GSDRoad _road)
+        public void Setup(ref RoadConstructorBufferMaker _RCS, ref Road _road)
         {
             RCS = _RCS;
             road = _road;

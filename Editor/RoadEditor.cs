@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(GSDRoad))]
+    [CustomEditor(typeof(Road))]
     public class RoadEditor : Editor
     {
         private static string[] RoadMaterialDropdownEnumDesc = new string[]{
@@ -25,7 +25,7 @@ namespace RoadArchitect
 
 
         #region "Vars"
-        private GSDRoad road;
+        private Road road;
 
         #region "Serialized properties:"
         private SerializedProperty isGizmosEnabled;
@@ -116,7 +116,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
-            road = (GSDRoad)target;
+            road = (Road)target;
 
             isGizmosEnabled = serializedObject.FindProperty("isGizmosEnabled");
             lanesAmount = serializedObject.FindProperty("laneAmount");

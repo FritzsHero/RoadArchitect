@@ -93,8 +93,8 @@ namespace RoadArchitect.Tests
             //Destroy the terrain histories:
             if (_roadSystem != null)
             {
-                Object[] roads = _roadSystem.GetComponents<GSDRoad>();
-                foreach (GSDRoad road in roads)
+                Object[] roads = _roadSystem.GetComponents<Road>();
+                foreach (Road road in roads)
                 {
                     Terraforming.TerrainsReset(road);
                 }
@@ -127,7 +127,7 @@ namespace RoadArchitect.Tests
             }
 
             //Get road system create road:
-            GSDRoad tRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
+            Road tRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Bridge0: (Arch)
             tRoad.spline.nodes[4].isBridgeStart = true;
@@ -171,8 +171,8 @@ namespace RoadArchitect.Tests
             float StartLocY = 200f;
             float StartLocYSep = 200f;
             float tHeight = 20f;
-            GSDRoad road1 = null;
-            GSDRoad road2 = null;
+            Road road1 = null;
+            Road road2 = null;
 
             //Create base road:
             List<Vector3> nodeLocations = new List<Vector3>();
@@ -246,7 +246,7 @@ namespace RoadArchitect.Tests
 
 
         /// <summary> This will create an intersection if two nodes overlap on the road. Only good if the roads only overlap once. </summary>
-        private static void UnitTestIntersectionHelper(GSDRoad _road1, GSDRoad _road2, RoadIntersection.iStopTypeEnum _iStopType, RoadIntersection.RoadTypeEnum _roadType)
+        private static void UnitTestIntersectionHelper(Road _road1, Road _road2, RoadIntersection.iStopTypeEnum _iStopType, RoadIntersection.RoadTypeEnum _roadType)
         {
             SplineN nodeInter1 = null;
             SplineN nodeInter2 = null;
@@ -281,8 +281,8 @@ namespace RoadArchitect.Tests
             float startLocY = 2500f;
             float startLocYSep = 300f;
             float height = 20f;
-            GSDRoad road1;
-            GSDRoad road2;
+            Road road1;
+            Road road2;
 
             //Create base road:
             List<Vector3> nodeLocations = new List<Vector3>();
@@ -369,7 +369,7 @@ namespace RoadArchitect.Tests
             {
                 nodeLocations.Add(new Vector3(3500f, 90f, 200f + (800f * index)));
             }
-            GSDRoad tRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
+            Road tRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Suspension bridge:
             tRoad.spline.nodes[1].isBridgeStart = true;
