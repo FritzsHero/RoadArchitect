@@ -223,7 +223,7 @@ namespace RoadArchitect
 
         private void InitNullChecks()
         {
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             RoadArchitect.EditorUtilities.CheckLoadTexture(ref refreshButtonText, basePath + "/Editor/Icons/refresh2.png");
             RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/FlexBG.png");

@@ -1525,7 +1525,7 @@ namespace RoadArchitect
                     }
                 }
 
-                string basePath = GSDRoadUtilityEditor.GetBasePath();
+                string basePath = RoadEditorUtility.GetBasePath();
 
                 for (int index = 0; index < RoadConnections_tangents.Count; index++)
                 {
@@ -1540,18 +1540,18 @@ namespace RoadArchitect
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 2f))
                         {
-                            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-4L.mat", MR);
+                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-4L.mat", MR);
                         }
                         else if (fDist == Mathf.Round(road.RoadWidth() * 3f))
                         {
-                            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-2L.mat", MR);
+                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-2L.mat", MR);
                         }
                     }
                     else if (road.laneAmount == 4)
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 1.5f))
                         {
-                            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-4L.mat", MR);
+                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-4L.mat", MR);
                         }
                     }
                     MF.sharedMesh = tMesh_RoadConnections[index];
@@ -1577,7 +1577,7 @@ namespace RoadArchitect
                     MeshCollider MC = tObj.AddComponent<MeshCollider>();
                     MF.sharedMesh = vMesh;
                     MC.sharedMesh = MF.sharedMesh;
-                    GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/GSDRoad1.mat", MR);
+                    RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/GSDRoad1.mat", MR);
                     tObj.transform.parent = road.MeshRoad.transform;
 
                     SaveMesh(SaveMeshTypeEnum.RoadConn, vMesh, road, "RoadConn" + index.ToString());
@@ -1718,7 +1718,7 @@ namespace RoadArchitect
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane3_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane1_DisabledActive = new Dictionary<RoadIntersection, List<MeshFilter>>();
 
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             vCount = iBLane0s.Count;
             for (int index = 0; index < vCount; index++)
@@ -2448,7 +2448,7 @@ namespace RoadArchitect
             }
             MeshRenderer MR = tObj.AddComponent<MeshRenderer>();
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            GSDRoadUtilityEditor.SetRoadMaterial(_mat, MR);
+            RoadEditorUtility.SetRoadMaterial(_mat, MR);
             if (road.isLightmapped)
             {
                 #if UNITY_2019_2_OR_NEWER
@@ -2998,7 +2998,7 @@ namespace RoadArchitect
             tSceneName = tSceneName.Replace(".", "");
             string tFolderName = "";
 
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             if (_saveType == SaveMeshTypeEnum.Road)
             {

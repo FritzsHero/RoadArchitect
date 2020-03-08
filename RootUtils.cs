@@ -320,7 +320,7 @@ namespace RoadArchitect
         /// <summary> Gives the RoadArchitect Library </summary>
         public static string GetDirLibraryBase()
         {
-            return GSDRoadUtilityEditor.GetBasePath() + "/Editor/Library/";
+            return RoadEditorUtility.GetBasePath() + "/Editor/Library/";
         }
 
 

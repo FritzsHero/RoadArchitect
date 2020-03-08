@@ -10,7 +10,7 @@ using UnityEditor;
 
 namespace RoadArchitect
 {
-    public static class GSDRoadUtilityEditor
+    public static class RoadEditorUtility
     {
         private static readonly string[] validFolders =
         {

@@ -49,7 +49,7 @@ namespace RoadArchitect
 
         private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, bool _isRB)
         {
-            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(GSDRoadUtilityEditor.GetBasePath() + "/Mesh/RoadObj/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
+            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(RoadEditorUtility.GetBasePath() + "/Mesh/RoadObj/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
 
             RoadIntersection GSDRI = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC tSpline = GSDRI.node1.spline;
@@ -548,7 +548,7 @@ namespace RoadArchitect
                 bXMod = true;
             }
 
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             Mesh xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/RoadObj/Signs/TrafficLightBases/" + assetNameAsset, typeof(Mesh));
             if (xMesh == null)
@@ -568,7 +568,7 @@ namespace RoadArchitect
             {
                 MR = tObj.AddComponent<MeshRenderer>();
             }
-            GSDRoadUtilityEditor.SetRoadMaterial(basePath + "/Materials/Signs/GSDInterTLB" + tTrafficLightNumber + ".mat", MR);
+            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Signs/GSDInterTLB" + tTrafficLightNumber + ".mat", MR);
 
             if (!bDoCustom)
             {
@@ -831,7 +831,7 @@ namespace RoadArchitect
 
         private static void AdjustLightPrefab(GameObject _light)
         {
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             foreach (Light light in _light.GetComponentsInChildren<Light>())
             {
@@ -973,7 +973,7 @@ namespace RoadArchitect
             MeshRenderer[] MR_Mains = new MeshRenderer[LanesHalf];
             int cCount = -1;
 
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             if (intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
             {

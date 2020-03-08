@@ -1211,12 +1211,12 @@ namespace RoadArchitect
                 return false;
             }
 
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             MeshRenderer[] MRs = MeshRoad.GetComponentsInChildren<MeshRenderer>();
-            Material tMat2Lanes = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
-            Material tMat4Lanes = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-4L.mat");
-            Material tMat6Lanes = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-6L.mat");
+            Material tMat2Lanes = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
+            Material tMat4Lanes = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-4L.mat");
+            Material tMat6Lanes = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-6L.mat");
             foreach (MeshRenderer MR in MRs)
             {
                 lowerName = MR.transform.name.ToLower();
@@ -1553,114 +1553,114 @@ namespace RoadArchitect
                 return;
             }
 
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             if (!RoadMaterial1)
             {
-                RoadMaterial1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
-                RoadMaterial2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                RoadMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
+                RoadMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
             }
             if (!RoadMaterialMarker1)
             {
                 if (laneAmount == 2)
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
                 }
                 else if (laneAmount == 4)
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-4L.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-4L.mat");
                 }
                 else if (laneAmount == 6)
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-6L.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-6L.mat");
                 }
                 else
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
                 }
 
                 if (laneAmount == 2)
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
                 }
                 else if (laneAmount == 4)
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-4L.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-4L.mat");
                 }
                 else if (laneAmount == 6)
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-6L.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-6L.mat");
                 }
                 else
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
                 }
             }
             if (isShouldersEnabled && !ShoulderMaterial1)
             {
-                ShoulderMaterial1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDShoulder1.mat");
-                ShoulderMaterial2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                ShoulderMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDShoulder1.mat");
+                ShoulderMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
             }
 
             if (isShouldersEnabled && !RoadPhysicMaterial)
             {
-                RoadPhysicMaterial = GSDRoadUtilityEditor.LoadPhysicsMaterial(basePath + "/Physics/GSDPavement.physicMaterial");
+                RoadPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDPavement.physicMaterial");
             }
             if (isShouldersEnabled && !ShoulderPhysicMaterial)
             {
-                ShoulderPhysicMaterial = GSDRoadUtilityEditor.LoadPhysicsMaterial(basePath + "/Physics/GSDDirt.physicMaterial");
+                ShoulderPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDDirt.physicMaterial");
             }
         }
 
 
         public void SetDefaultMats()
         {
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             if (roadMaterialDropdown == RoadMaterialDropdownEnum.Asphalt)
             {
-                RoadMaterial1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
-                RoadMaterial2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                RoadMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
+                RoadMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
 
                 if (laneAmount == 2)
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
                 }
                 else if (laneAmount == 4)
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-4L.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-4L.mat");
                 }
                 else if (laneAmount == 6)
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-6L.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble-6L.mat");
                 }
                 else
                 {
-                    RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDWhiteYellowDouble.mat");
                 }
 
                 if (laneAmount == 2)
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
                 }
                 else if (laneAmount == 4)
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-4L.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-4L.mat");
                 }
                 else if (laneAmount == 6)
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-6L.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks-6L.mat");
                 }
                 else
                 {
-                    RoadMaterialMarker2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDTireMarks.mat");
                 }
 
-                ShoulderMaterial1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDShoulder1.mat");
-                ShoulderMaterial2 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                ShoulderMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDShoulder1.mat");
+                ShoulderMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
 
-                RoadPhysicMaterial = GSDRoadUtilityEditor.LoadPhysicsMaterial(basePath + "/Physics/GSDPavement.physicMaterial");
-                ShoulderPhysicMaterial = GSDRoadUtilityEditor.LoadPhysicsMaterial(basePath + "/Physics/GSDDirt.physicMaterial");
+                RoadPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDPavement.physicMaterial");
+                ShoulderPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDDirt.physicMaterial");
             }
             else if (roadMaterialDropdown == RoadMaterialDropdownEnum.Dirt)
             {
@@ -1668,7 +1668,7 @@ namespace RoadArchitect
                 RoadMaterial2 = null;
                 RoadMaterial3 = null;
                 RoadMaterial4 = null;
-                RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDDirtRoad.mat");
+                RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDDirtRoad.mat");
                 RoadMaterialMarker2 = null;
                 RoadMaterialMarker3 = null;
                 RoadMaterialMarker4 = null;
@@ -1679,7 +1679,7 @@ namespace RoadArchitect
                 RoadMaterial2 = null;
                 RoadMaterial3 = null;
                 RoadMaterial4 = null;
-                RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDBrickRoad.mat");
+                RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDBrickRoad.mat");
                 RoadMaterialMarker2 = null;
                 RoadMaterialMarker3 = null;
                 RoadMaterialMarker4 = null;
@@ -1690,7 +1690,7 @@ namespace RoadArchitect
                 RoadMaterial2 = null;
                 RoadMaterial3 = null;
                 RoadMaterial4 = null;
-                RoadMaterialMarker1 = GSDRoadUtilityEditor.LoadMaterial(basePath + "/Materials/GSDCobblestoneRoad.mat");
+                RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDCobblestoneRoad.mat");
                 RoadMaterialMarker2 = null;
                 RoadMaterialMarker3 = null;
                 RoadMaterialMarker4 = null;

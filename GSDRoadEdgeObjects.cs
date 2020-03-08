@@ -386,7 +386,7 @@ namespace GSD.Roads.EdgeObjects
 
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string folderName = GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
+            string folderName = RoadEditorUtility.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
             string roadName = node.spline.road.transform.name;
             string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
             if (_isCollider)

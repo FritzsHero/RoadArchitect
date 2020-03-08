@@ -3972,7 +3972,7 @@ namespace GSD.Roads.Splination
             string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string folderName = GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Generated/Extrusions/";
+            string folderName = RoadEditorUtility.GetBasePath() + "/Mesh/Generated/Extrusions/";
             string roadName = node.spline.road.transform.name;
             string finalName = folderName + sceneName + "-" + roadName + "-" + tName + ".asset";
             if (_isCollider)

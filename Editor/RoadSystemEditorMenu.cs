@@ -113,7 +113,7 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Get line count of RA")]
     public static void TestCodeCount()
     {
-        string mainDir = System.Environment.CurrentDirectory + "/" + GSDRoadUtilityEditor.GetBasePath();
+        string mainDir = System.Environment.CurrentDirectory + "/" + RoadEditorUtility.GetBasePath();
         string[] files = System.IO.Directory.GetFiles(mainDir, "*.cs", System.IO.SearchOption.AllDirectories);
         int lineCount = 0;
         foreach (string file in files)

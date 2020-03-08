@@ -151,7 +151,7 @@ namespace RoadArchitect
 
         private void InitChecks()
         {
-            string basePath = GSDRoadUtilityEditor.GetBasePath();
+            string basePath = RoadEditorUtility.GetBasePath();
 
             RoadArchitect.EditorUtilities.CheckLoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
             RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
