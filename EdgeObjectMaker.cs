@@ -6,7 +6,7 @@ using RoadArchitect;
 #endregion
 
 
-namespace GSD.Roads.EdgeObjects
+namespace RoadArchitect.EdgeObjects
 {
 #if UNITY_EDITOR
 

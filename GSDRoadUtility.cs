@@ -4022,7 +4022,7 @@ namespace RoadArchitect
         }
 
 
-        public static void SaveNodeObjects(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref GSD.Roads.EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
+        public static void SaveNodeObjects(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
         {
             int sCount = _splinatedObjects.Length;
             int eCount = _edgeObjects.Length;
@@ -4048,7 +4048,7 @@ namespace RoadArchitect
                 builder.Append(FileSepString);
             }
 
-            GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
+            EdgeObjects.EdgeObjectMaker EOM = null;
             for (int index = 0; index < eCount; index++)
             {
                 EOM = _edgeObjects[index];
@@ -4090,8 +4090,8 @@ namespace RoadArchitect
 
             Splination.SplinatedMeshMaker SMM = null;
             Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;
-            GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
-            GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = null;
+            EdgeObjects.EdgeObjectMaker EOM = null;
+            EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = null;
             int tSplitCount = tSplit.Length;
 
             for (int index = 0; index < tSplitCount; index++)
@@ -4114,7 +4114,7 @@ namespace RoadArchitect
                 }
 
                 ELM = null;
-                ELM = GSD.Roads.EdgeObjects.EdgeObjectMaker.ELMFromData(tSplit[index]);
+                ELM = EdgeObjects.EdgeObjectMaker.ELMFromData(tSplit[index]);
                 if (ELM != null)
                 {
                     EOM = _node.AddEdgeObject();

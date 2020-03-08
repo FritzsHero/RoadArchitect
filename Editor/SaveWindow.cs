@@ -40,7 +40,7 @@ namespace RoadArchitect
         private bool isBridge = false;
 
         private Splination.SplinatedMeshMaker[] tSMMs = null;
-        private GSD.Roads.EdgeObjects.EdgeObjectMaker[] tEOMs = null;
+        private EdgeObjects.EdgeObjectMaker[] tEOMs = null;
         private string path = "";
         private const int titleLabelHeight = 20;
         #endregion
@@ -226,7 +226,7 @@ namespace RoadArchitect
 
 
         #region "Init"
-        public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, SplineN _node, Splination.SplinatedMeshMaker _SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker _EOM = null)
+        public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, SplineN _node, Splination.SplinatedMeshMaker _SMM = null, EdgeObjects.EdgeObjectMaker _EOM = null)
         {
             int rectHeight = 300;
             int rectWidth = 360;
@@ -281,7 +281,7 @@ namespace RoadArchitect
             else if (windowType == WindowTypeEnum.Edge)
             {
                 titleText = "Save edge object";
-                tEOMs = new GSD.Roads.EdgeObjects.EdgeObjectMaker[1];
+                tEOMs = new EdgeObjects.EdgeObjectMaker[1];
                 tEOMs[0] = _EOM;
                 if (_EOM != null)
                 {

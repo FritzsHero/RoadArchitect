@@ -71,7 +71,7 @@ namespace RoadArchitect
 
         //GSD.Roads.Splination.CollisionTypeEnum tCollisionTypeSpline = GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle;
         //GSD.Roads.Splination.RepeatUVTypeEnum tRepeatUVType = GSD.Roads.Splination.RepeatUVTypeEnum.None;
-        private GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
+        private EdgeObjects.EdgeObjectMaker EOM = null;
         private GUIStyle imageButton = null;
         private GUIStyle loadButton = null;
         private GUIStyle manualButton = null;
@@ -1357,7 +1357,7 @@ namespace RoadArchitect
 
             if (node.EdgeObjects == null)
             {
-                node.EdgeObjects = new List<GSD.Roads.EdgeObjects.EdgeObjectMaker>();
+                node.EdgeObjects = new List<EdgeObjects.EdgeObjectMaker>();
             }
             count = node.EdgeObjects.Count;
 
@@ -1368,7 +1368,7 @@ namespace RoadArchitect
                 EOM = node.EdgeObjects[index];
                 if (EOM.edgeMaker == null)
                 {
-                    EOM.edgeMaker = new GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
+                    EOM.edgeMaker = new EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
                 }
                 EOM.edgeMaker.Setup(EOM);
 

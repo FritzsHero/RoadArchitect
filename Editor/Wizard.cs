@@ -3,7 +3,6 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using GSD.Roads.EdgeObjects;
 using System.IO;
 #endregion
 
@@ -210,7 +209,7 @@ namespace RoadArchitect
                     }
                     else if (tWindowType == WindowTypeEnum.Edge)
                     {
-                        GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = thisNode.AddEdgeObject();
+                        EdgeObjects.EdgeObjectMaker EOM = thisNode.AddEdgeObject();
                         EOM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
                         EOM.LoadFromLibrary(objectList[i].fileName, objectList[i].isDefault);
                         EOM.isGSD = objectList[i].isDefault;
@@ -588,7 +587,7 @@ namespace RoadArchitect
             }
             else
             {
-                EdgeObjectMaker.GetLibraryFiles(out names, out paths, false);
+                EdgeObjects.EdgeObjectMaker.GetLibraryFiles(out names, out paths, false);
             }
             LoadObjs(ref names, ref paths, false);
             //Load GSD ones last:
@@ -598,7 +597,7 @@ namespace RoadArchitect
             }
             else
             {
-                EdgeObjectMaker.GetLibraryFiles(out names, out paths, true);
+                EdgeObjects.EdgeObjectMaker.GetLibraryFiles(out names, out paths, true);
             }
             LoadObjs(ref names, ref paths, true);
         }
@@ -633,7 +632,7 @@ namespace RoadArchitect
                 }
                 else if (tWindowType == WindowTypeEnum.Edge)
                 {
-                    EdgeObjectMaker.EdgeObjectLibraryMaker ELM = (EdgeObjectMaker.EdgeObjectLibraryMaker)RootUtils.LoadXML<EdgeObjectMaker.EdgeObjectLibraryMaker>(ref path);
+                    EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = (EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker)RootUtils.LoadXML<EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker>(ref path);
                     if (ELM == null)
                     {
                         continue;

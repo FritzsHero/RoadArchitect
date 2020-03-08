@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using RoadArchitect.Splination;
-using GSD.Roads.EdgeObjects;
+using RoadArchitect.EdgeObjects;
 #endregion
 
 
