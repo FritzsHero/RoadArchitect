@@ -60,7 +60,7 @@ namespace RoadArchitect
         public List<string> loadingEOMPaths = null;
 
         //Checkers:
-        private GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
+        private Splination.SplinatedMeshMaker SMM = null;
         private EndObjectsDefaultsEnum endObjectAdd = EndObjectsDefaultsEnum.None;
         private SMMDefaultsEnum SMMQuickAdd = SMMDefaultsEnum.None;
         private BridgeTopBaseDefaultsEnum BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
@@ -730,7 +730,7 @@ namespace RoadArchitect
             }
             if (node.SplinatedObjects == null)
             {
-                node.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+                node.SplinatedObjects = new List<Splination.SplinatedMeshMaker>();
             }
             count = node.SplinatedObjects.Count;
 
@@ -747,7 +747,7 @@ namespace RoadArchitect
                 SMM = node.SplinatedObjects[index];
                 if (SMM.EM == null)
                 {
-                    SMM.EM = new GSD.Roads.Splination.SplinatedMeshMaker.SplinatedMeshEditorMaker();
+                    SMM.EM = new Splination.SplinatedMeshMaker.SplinatedMeshEditorMaker();
                 }
                 SMM.EM.Setup(SMM);
 
@@ -833,7 +833,7 @@ namespace RoadArchitect
                 }
 
                 //Axis:
-                SMM.EM.Axis = (GSD.Roads.Splination.AxisTypeEnum)EditorGUILayout.Popup("Extrusion axis: ", (int)SMM.Axis, TheAxisDescriptionsSpline, GUILayout.Width(250f));
+                SMM.EM.Axis = (Splination.AxisTypeEnum)EditorGUILayout.Popup("Extrusion axis: ", (int)SMM.Axis, TheAxisDescriptionsSpline, GUILayout.Width(250f));
 
                 //Start time:
                 if (SMM.StartTime < node.minSplination)
@@ -888,7 +888,7 @@ namespace RoadArchitect
                         SMM.EM.stretchedUVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.stretchUVThreshold, 0.01f, 0.5f);
 
                         //UV repeats:
-                        SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV stretch axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
+                        SMM.EM.repeatUVType = (Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV stretch axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
                         EditorGUILayout.EndVertical();
                     }
                 }
@@ -933,7 +933,7 @@ namespace RoadArchitect
                 //UV repeats:
                 if (!SMM.isStretch)
                 {
-                    SMM.EM.repeatUVType = (GSD.Roads.Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV repeat axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
+                    SMM.EM.repeatUVType = (Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV repeat axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
                 }
 
                 if (SMM.isMatchingRoadDefinition)
@@ -1147,22 +1147,22 @@ namespace RoadArchitect
                 //Collision:
                 EditorGUILayout.LabelField("Collision options:");
                 EditorGUILayout.BeginVertical("box");
-                SMM.EM.collisionType = (GSD.Roads.Splination.CollisionTypeEnum)EditorGUILayout.Popup("Collision type: ", (int)SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
+                SMM.EM.collisionType = (Splination.CollisionTypeEnum)EditorGUILayout.Popup("Collision type: ", (int)SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
                 //Mesh collison convex option
-                if (SMM.CollisionType != GSD.Roads.Splination.CollisionTypeEnum.None && SMM.CollisionType != GSD.Roads.Splination.CollisionTypeEnum.BoxCollision)
+                if (SMM.CollisionType != Splination.CollisionTypeEnum.None && SMM.CollisionType != Splination.CollisionTypeEnum.BoxCollision)
                 {
                     SMM.EM.isCollisionConvex = EditorGUILayout.Toggle(" Convex: ", SMM.isCollisionConvex);
                     SMM.EM.isCollisionTriggered = EditorGUILayout.Toggle(" Trigger: ", SMM.isCollisionTrigger);
                 }
 
-                if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle || SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
+                if (SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTriangle || SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
                 {
                     SMM.EM.isSimpleCollisionAutomatic = EditorGUILayout.Toggle(" Automatic simple collision: ", SMM.isSimpleCollisionAutomatic);
                 }
                 //If not automatic simple collisions:
                 if (!SMM.isSimpleCollisionAutomatic)
                 {
-                    if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle)
+                    if (SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTriangle)
                     {
                         SMM.EM.CollisionTriBL = SMM.CollisionTriBL;
                         SMM.EM.CollisionTriBR = SMM.CollisionTriBR;
@@ -1184,7 +1184,7 @@ namespace RoadArchitect
                         SMM.EM.CollisionTriT.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriT.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
 
                     }
-                    else if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
+                    else if (SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
                     {
                         SMM.EM.CollisionBoxBL = EditorGUILayout.Vector3Field(" Bottom left:", SMM.CollisionBoxBL);
                         SMM.EM.CollisionBoxBR = EditorGUILayout.Vector3Field(" Bottom right:", SMM.CollisionBoxBR);
@@ -1193,7 +1193,7 @@ namespace RoadArchitect
                     }
                 }
 
-                if (SMM.CollisionType == GSD.Roads.Splination.CollisionTypeEnum.BoxCollision)
+                if (SMM.CollisionType == Splination.CollisionTypeEnum.BoxCollision)
                 {
                     SMM.EM.stretchedBCLocOffset = EditorGUILayout.Vector3Field("Box collider center offset:", SMM.StretchBC_LocOffset);
                     SMM.EM.isBCFlippedX = EditorGUILayout.Toggle("Flip center X:", SMM.isBCFlipX);
@@ -1267,7 +1267,7 @@ namespace RoadArchitect
             }
             if (node.SplinatedObjects == null)
             {
-                node.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+                node.SplinatedObjects = new List<Splination.SplinatedMeshMaker>();
             }
             count = node.SplinatedObjects.Count;
             for (int index = 0; index < count; index++)
@@ -1284,7 +1284,7 @@ namespace RoadArchitect
                         {
                             if (SMM.isStretch)
                             {
-                                SMM.CollisionType = GSD.Roads.Splination.CollisionTypeEnum.BoxCollision;
+                                SMM.CollisionType = Splination.CollisionTypeEnum.BoxCollision;
                                 SMM.isMatchingRoadDefinition = false;
                                 SMM.isMatchingTerrain = false;
                                 SMM.isCollisionConvex = false;
@@ -1312,7 +1312,7 @@ namespace RoadArchitect
             }
             if (node.SplinatedObjects == null)
             {
-                node.SplinatedObjects = new List<GSD.Roads.Splination.SplinatedMeshMaker>();
+                node.SplinatedObjects = new List<Splination.SplinatedMeshMaker>();
             }
 
             //Destroy all children:
@@ -1330,7 +1330,7 @@ namespace RoadArchitect
                 //if(SMM.bIsStretch != SMM.bIsStretch){ 
                 if (SMM.isStretch)
                 {
-                    SMM.CollisionType = GSD.Roads.Splination.CollisionTypeEnum.BoxCollision;
+                    SMM.CollisionType = Splination.CollisionTypeEnum.BoxCollision;
                     SMM.isMatchingRoadDefinition = false;
                     SMM.isMatchingTerrain = false;
                     SMM.isCollisionConvex = false;
@@ -1917,7 +1917,7 @@ namespace RoadArchitect
             SMM.VerticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
             SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(_mat);
-            SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
+            SMM.Axis = Splination.AxisTypeEnum.Z;
 
             BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
             if (SMM.StartTime < node.minSplination)
@@ -2135,7 +2135,7 @@ namespace RoadArchitect
                 SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
             }
 
-            SMM.Axis = GSD.Roads.Splination.AxisTypeEnum.Z;
+            SMM.Axis = Splination.AxisTypeEnum.Z;
 
             BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
             if (SMM.StartTime < node.minSplination)
@@ -2172,7 +2172,7 @@ namespace RoadArchitect
         }
 
 
-        private void ExtrudeHelper(string _path, string _name, float DefaultHoriz, GSD.Roads.Splination.AxisTypeEnum _axisType = GSD.Roads.Splination.AxisTypeEnum.Z, bool _isHorizOverriden = false, float _horizSep = 0f, bool _isVertOverriden = false, float _vertRaise = 0f, bool _isFlippingRot = false)
+        private void ExtrudeHelper(string _path, string _name, float DefaultHoriz, Splination.AxisTypeEnum _axisType = Splination.AxisTypeEnum.Z, bool _isHorizOverriden = false, float _horizSep = 0f, bool _isVertOverriden = false, float _vertRaise = 0f, bool _isFlippingRot = false)
         {
             SMM = node.AddSplinatedObject();
             SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(_path, typeof(GameObject));

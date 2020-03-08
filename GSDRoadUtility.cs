@@ -4022,18 +4022,12 @@ namespace RoadArchitect
         }
 
 
-        public static void SaveNodeObjects(ref GSD.Roads.Splination.SplinatedMeshMaker[] _splinatedObjects, ref GSD.Roads.EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
-        {
-            SaveNodeObjectsDO(ref _splinatedObjects, ref _edgeObjects, ref _wizardObj);
-        }
-
-
-        private static void SaveNodeObjectsDO(ref GSD.Roads.Splination.SplinatedMeshMaker[] _splinatedObjects, ref GSD.Roads.EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
+        public static void SaveNodeObjects(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref GSD.Roads.EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
         {
             int sCount = _splinatedObjects.Length;
             int eCount = _edgeObjects.Length;
             //Splinated objects first:
-            GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
+            Splination.SplinatedMeshMaker SMM = null;
             RootUtils.CheckCreateSpecialLibraryDirs();
             string xPath = RootUtils.GetDirLibrary();
             string tPath = xPath + "B/" + _wizardObj.fileName + ".gsd";
@@ -4094,8 +4088,8 @@ namespace RoadArchitect
             tSep[1] = FileSepStringCRLF;
             string[] tSplit = tData.Split(tSep, System.StringSplitOptions.RemoveEmptyEntries);
 
-            GSD.Roads.Splination.SplinatedMeshMaker SMM = null;
-            GSD.Roads.Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;
+            Splination.SplinatedMeshMaker SMM = null;
+            Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;
             GSD.Roads.EdgeObjects.EdgeObjectMaker EOM = null;
             GSD.Roads.EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = null;
             int tSplitCount = tSplit.Length;
@@ -4103,7 +4097,7 @@ namespace RoadArchitect
             for (int index = 0; index < tSplitCount; index++)
             {
                 SLM = null;
-                SLM = GSD.Roads.Splination.SplinatedMeshMaker.SLMFromData(tSplit[index]);
+                SLM = Splination.SplinatedMeshMaker.SLMFromData(tSplit[index]);
                 if (SLM != null)
                 {
                     SMM = _node.AddSplinatedObject();

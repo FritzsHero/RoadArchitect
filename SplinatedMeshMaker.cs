@@ -6,7 +6,7 @@ using RoadArchitect;
 #endregion
 
 
-namespace GSD.Roads.Splination
+namespace RoadArchitect.Splination
 {
     public enum AxisTypeEnum { X, Z };
     public enum CollisionTypeEnum { None, SimpleMeshTriangle, SimpleMeshTrapezoid, MeshCollision, BoxCollision };

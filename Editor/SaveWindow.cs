@@ -39,7 +39,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         private bool isBridge = false;
 
-        private GSD.Roads.Splination.SplinatedMeshMaker[] tSMMs = null;
+        private Splination.SplinatedMeshMaker[] tSMMs = null;
         private GSD.Roads.EdgeObjects.EdgeObjectMaker[] tEOMs = null;
         private string path = "";
         private const int titleLabelHeight = 20;
@@ -226,7 +226,7 @@ namespace RoadArchitect
 
 
         #region "Init"
-        public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, SplineN _node, GSD.Roads.Splination.SplinatedMeshMaker _SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker _EOM = null)
+        public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, SplineN _node, Splination.SplinatedMeshMaker _SMM = null, GSD.Roads.EdgeObjects.EdgeObjectMaker _EOM = null)
         {
             int rectHeight = 300;
             int rectWidth = 360;
@@ -270,7 +270,7 @@ namespace RoadArchitect
             if (windowType == WindowTypeEnum.Extrusion)
             {
                 titleText = "Save extrusion";
-                tSMMs = new GSD.Roads.Splination.SplinatedMeshMaker[1];
+                tSMMs = new Splination.SplinatedMeshMaker[1];
                 tSMMs[0] = _SMM;
                 if (_SMM != null)
                 {

@@ -1,7 +1,7 @@
 #region "Imports"
 using UnityEngine;
 using System.Collections.Generic;
-using GSD.Roads.Splination;
+using RoadArchitect.Splination;
 using GSD.Roads.EdgeObjects;
 #endregion
 

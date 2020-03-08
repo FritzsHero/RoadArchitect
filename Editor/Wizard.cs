@@ -3,7 +3,6 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using GSD.Roads.Splination;
 using GSD.Roads.EdgeObjects;
 using System.IO;
 #endregion
@@ -203,7 +202,7 @@ namespace RoadArchitect
                 {
                     if (tWindowType == WindowTypeEnum.Extrusion)
                     {
-                        GSD.Roads.Splination.SplinatedMeshMaker SMM = thisNode.AddSplinatedObject();
+                        Splination.SplinatedMeshMaker SMM = thisNode.AddSplinatedObject();
                         SMM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
                         SMM.LoadFromLibrary(objectList[i].fileName, objectList[i].isDefault);
                         SMM.isGSD = objectList[i].isDefault;
@@ -585,7 +584,7 @@ namespace RoadArchitect
             //Load user custom ones first:
             if (tWindowType == WindowTypeEnum.Extrusion)
             {
-                SplinatedMeshMaker.GetLibraryFiles(out names, out paths, false);
+                Splination.SplinatedMeshMaker.GetLibraryFiles(out names, out paths, false);
             }
             else
             {
@@ -595,7 +594,7 @@ namespace RoadArchitect
             //Load GSD ones last:
             if (tWindowType == WindowTypeEnum.Extrusion)
             {
-                SplinatedMeshMaker.GetLibraryFiles(out names, out paths, true);
+                Splination.SplinatedMeshMaker.GetLibraryFiles(out names, out paths, true);
             }
             else
             {
@@ -621,7 +620,7 @@ namespace RoadArchitect
 
                 if (tWindowType == WindowTypeEnum.Extrusion)
                 {
-                    SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = (SplinatedMeshMaker.SplinatedMeshLibraryMaker)RootUtils.LoadXML<SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref path);
+                    Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = (Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker)RootUtils.LoadXML<Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref path);
                     if (SLM == null)
                     {
                         continue;
