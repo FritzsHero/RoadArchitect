@@ -8,7 +8,7 @@ using RoadArchitect;
 
 
 [ExecuteInEditMode]
-public class GSDRoadConnector : MonoBehaviour
+public class RoadConnector : MonoBehaviour
 {
     public SplineN connectedNode;
     [HideInInspector]
@@ -62,10 +62,10 @@ public class GSDRoadConnector : MonoBehaviour
 
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(GSDRoadConnector))]
-public class GSDRoadConnectorEditor : Editor
+[CustomEditor(typeof(RoadConnector))]
+public class RoadConnectorEditor : Editor
 {
-    public GSDRoadConnector connector { get { return (GSDRoadConnector) target; } }
+    public RoadConnector connector { get { return (RoadConnector) target; } }
 
 
     public override void OnInspectorGUI()

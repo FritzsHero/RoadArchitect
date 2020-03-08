@@ -2315,8 +2315,8 @@ namespace RoadArchitect
                 }
 
 
-                Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(GSDRoadConnector));
-                foreach (GSDRoadConnector connector in connectorObjects)
+                Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(RoadConnector));
+                foreach (RoadConnector connector in connectorObjects)
                 {
                     if (Vector3.Distance(connector.transform.position, node.transform.position) < 2f)
                     {
