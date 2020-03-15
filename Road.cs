@@ -978,13 +978,13 @@ namespace RoadArchitect
             GSD.Threaded.GSDRoadCreationT.RoadJobPrelim(ref road);
             RootUtils.EndStartProfiling(this, "RoadCon_Road1");
             editorProgress = 90;
-            GSD.Threaded.RoadCalcs1Static.RunMe(ref RCS);
+            GSD.Threaded.RoadCalcsStatic.RunCalc1(ref RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup1");
             editorProgress = 92;
             RCS.MeshSetup1();
             RootUtils.EndStartProfiling(this, "RoadCon_Road2");
             editorProgress = 94;
-            GSD.Threaded.RoadCalcs2Static.RunMe(ref RCS);
+            GSD.Threaded.RoadCalcsStatic.RunCalc2(ref RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup2");
             editorProgress = 96;
             RCS.MeshSetup2();

@@ -7379,15 +7379,6 @@ namespace GSD.Threaded
     }
 
 
-    public static class RoadCalcs1Static
-    {
-        public static void RunMe(ref RoadConstructorBufferMaker _RCS)
-        {
-            GSDRoadCreationT.RoadJob1(ref _RCS);
-        }
-    }
-
-
     public class RoadCalcs2 : ThreadedJob
     {
         [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
@@ -7430,9 +7421,15 @@ namespace GSD.Threaded
     }
 
 
-    public static class RoadCalcs2Static
+    public static class RoadCalcsStatic
     {
-        public static void RunMe(ref RoadConstructorBufferMaker _RCS)
+        public static void RunCalc1(ref RoadConstructorBufferMaker _RCS)
+        {
+            GSDRoadCreationT.RoadJob1(ref _RCS);
+        }
+
+
+        public static void RunCalc2(ref RoadConstructorBufferMaker _RCS)
         {
             GSDRoadCreationT.RoadJob2(ref _RCS);
         }
