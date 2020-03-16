@@ -158,11 +158,11 @@ namespace RoadArchitect
         #region "Road Construction"
         #region "Vars"
         [System.NonSerialized]
-        public GSD.Threaded.TerrainCalcs TerrainCalcsJob;
+        public Threading.TerrainCalcs TerrainCalcsJob;
         [System.NonSerialized]
-        public GSD.Threaded.RoadCalcs1 RoadCalcsJob1;
+        public Threading.RoadCalcs1 RoadCalcsJob1;
         [System.NonSerialized]
-        public GSD.Threaded.RoadCalcs2 RoadCalcsJob2;
+        public Threading.RoadCalcs2 RoadCalcsJob2;
         [System.NonSerialized]
         public RoadConstructorBufferMaker RCS;
 
@@ -975,16 +975,16 @@ namespace RoadArchitect
             RootUtils.StartProfiling(this, "RoadCon_RoadPrelim");
 
             editorProgress = 80;
-            GSD.Threaded.GSDRoadCreationT.RoadJobPrelim(ref road);
+            Threading.RoadCreationT.RoadJobPrelim(ref road);
             RootUtils.EndStartProfiling(this, "RoadCon_Road1");
             editorProgress = 90;
-            GSD.Threaded.RoadCalcsStatic.RunCalc1(ref RCS);
+            Threading.RoadCalcsStatic.RunCalc1(ref RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup1");
             editorProgress = 92;
             RCS.MeshSetup1();
             RootUtils.EndStartProfiling(this, "RoadCon_Road2");
             editorProgress = 94;
-            GSD.Threaded.RoadCalcsStatic.RunCalc2(ref RCS);
+            Threading.RoadCalcsStatic.RunCalc2(ref RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup2");
             editorProgress = 96;
             RCS.MeshSetup2();
@@ -1019,7 +1019,7 @@ namespace RoadArchitect
             }
             Road road = this;
             editorProgress = 72;
-            RoadCalcsJob1 = new GSD.Threaded.RoadCalcs1();
+            RoadCalcsJob1 = new Threading.RoadCalcs1();
             RoadCalcsJob1.Setup(ref RCS, ref road);
             RoadCalcsJob1.Start();
         }
@@ -1035,7 +1035,7 @@ namespace RoadArchitect
                 RoadCalcsJob1.Abort();
                 RoadCalcsJob1 = null;
             }
-            RoadCalcsJob2 = new GSD.Threaded.RoadCalcs2();
+            RoadCalcsJob2 = new Threading.RoadCalcs2();
             RoadCalcsJob2.Setup(ref RCS);
             RoadCalcsJob2.Start();
             editorProgress = 98;

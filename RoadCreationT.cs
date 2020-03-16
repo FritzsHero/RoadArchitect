@@ -6,10 +6,10 @@ using RoadArchitect.Threading;
 #endregion
 
 
-namespace GSD.Threaded
+namespace RoadArchitect.Threading
 {
 #if UNITY_EDITOR
-    public static class GSDRoadCreationT
+    public static class RoadCreationT
     {
         #region "Road Prelim"
         //Privatized for obfuscate:
@@ -7352,8 +7352,8 @@ namespace GSD.Threaded
         {
             try
             {
-                GSDRoadCreationT.RoadJobPrelim(ref road);
-                GSDRoadCreationT.RoadJob1(ref RCS);
+                RoadCreationT.RoadJobPrelim(ref road);
+                RoadCreationT.RoadJob1(ref RCS);
             }
             catch (System.Exception exception)
             {
@@ -7396,7 +7396,7 @@ namespace GSD.Threaded
         {
             try
             {
-                GSDRoadCreationT.RoadJob2(ref RCS);
+                RoadCreationT.RoadJob2(ref RCS);
             }
             catch (System.Exception exception)
             {
@@ -7425,13 +7425,13 @@ namespace GSD.Threaded
     {
         public static void RunCalc1(ref RoadConstructorBufferMaker _RCS)
         {
-            GSDRoadCreationT.RoadJob1(ref _RCS);
+            RoadCreationT.RoadJob1(ref _RCS);
         }
 
 
         public static void RunCalc2(ref RoadConstructorBufferMaker _RCS)
         {
-            GSDRoadCreationT.RoadJob2(ref _RCS);
+            RoadCreationT.RoadJob2(ref _RCS);
         }
     }
 #endif

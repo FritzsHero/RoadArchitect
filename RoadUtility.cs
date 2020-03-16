@@ -925,14 +925,14 @@ namespace RoadArchitect
         }
 
 
-        public static GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo[] GetRoadTerrainInfos()
+        public static Threading.RoadCreationT.RoadTerrainInfo[] GetRoadTerrainInfos()
         {
             Object[] tTerrainsObj = GameObject.FindObjectsOfType(typeof(Terrain));
-            GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo tInfo;
-            List<GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo> tInfos = new List<GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo>();
+            Threading.RoadCreationT.RoadTerrainInfo tInfo;
+            List<Threading.RoadCreationT.RoadTerrainInfo> tInfos = new List<Threading.RoadCreationT.RoadTerrainInfo>();
             foreach (Terrain tTerrain in tTerrainsObj)
             {
-                tInfo = new GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo();
+                tInfo = new Threading.RoadCreationT.RoadTerrainInfo();
                 tInfo.uID = tTerrain.transform.gameObject.GetComponent<RoadTerrain>().UID;
                 tInfo.bounds = new Rect(tTerrain.transform.position.x, tTerrain.transform.position.z, tTerrain.terrainData.size.x, tTerrain.terrainData.size.z);
                 tInfo.hmWidth = tTerrain.terrainData.heightmapWidth;
@@ -942,7 +942,7 @@ namespace RoadArchitect
                 tInfo.heights = tTerrain.terrainData.GetHeights(0, 0, tInfo.hmWidth, tInfo.hmHeight);
                 tInfos.Add(tInfo);
             }
-            GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo[] fInfos = new GSD.Threaded.GSDRoadCreationT.RoadTerrainInfo[tInfos.Count];
+            Threading.RoadCreationT.RoadTerrainInfo[] fInfos = new Threading.RoadCreationT.RoadTerrainInfo[tInfos.Count];
             int fInfosLength = fInfos.Length;
             for (int index = 0; index < fInfosLength; index++)
             {
