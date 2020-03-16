@@ -374,14 +374,14 @@ namespace RoadArchitect
                 {
                     if (isFirstNode)
                     {
-                        zNode = GSDConstruction.InsertNode(tNode1.spline.road, true, tPos, false, 0, true, true);
+                        zNode = Construction.InsertNode(tNode1.spline.road, true, tPos, false, 0, true, true);
                         zNode.isSpecialEndNodeIsStart = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode1.tangent;
                     }
                     else
                     {
-                        zNode = GSDConstruction.CreateNode(tNode1.spline.road, true, tPos, true);
+                        zNode = Construction.CreateNode(tNode1.spline.road, true, tPos, true);
                         zNode.isSpecialEndNodeIsEnd = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode1.tangent;
@@ -441,14 +441,14 @@ namespace RoadArchitect
                 {
                     if (isFirstNode)
                     {
-                        zNode = GSDConstruction.InsertNode(tNode2.spline.road, true, tPos, false, 0, true, true);
+                        zNode = Construction.InsertNode(tNode2.spline.road, true, tPos, false, 0, true, true);
                         zNode.isSpecialEndNodeIsStart = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode2.tangent;
                     }
                     else
                     {
-                        zNode = GSDConstruction.CreateNode(tNode2.spline.road, true, tPos, true);
+                        zNode = Construction.CreateNode(tNode2.spline.road, true, tPos, true);
                         zNode.isSpecialEndNodeIsEnd = true;
                         zNode.isSpecialIntersection = true;
                         zNode.tangent = tNode2.tangent;

@@ -1398,7 +1398,7 @@ namespace RoadArchitect
                             //						if((EditorApplication.timeSinceStartup - RS.GSDSpline.EditorOnly_LastNode_TimeSinceStartup) > 0.05){
                             //							RS.GSDSpline.EditorOnly_LastNode_TimeSinceStartup = EditorApplication.timeSinceStartup;
                             Event.current.Use();
-                            GSDConstruction.CreateNode(road);
+                            Construction.CreateNode(road);
                             isUsed = true;
                             //						}
                         }
@@ -1419,7 +1419,7 @@ namespace RoadArchitect
                         if (road.isEditorMouseHittingTerrain)
                         {
                             Event.current.Use();
-                            GSDConstruction.InsertNode(road);
+                            Construction.InsertNode(road);
                             isUsed = true;
                         }
                         else
