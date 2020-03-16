@@ -92,21 +92,21 @@ namespace RoadArchitect
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
             string roadName = _road.GSDRS.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;
-            return sceneName + "-" + roadName + "-TH.gsd";
+            return sceneName + "-" + roadName + ".th";
         }
 
 
         /// <summary> Returns the path to the RoadArchitect folder where Terrain History is saved </summary>
         public static string GetDirBase()
         {
-            return UnityEngine.Application.dataPath.Replace("/Assets", "/GSD/");
+            return UnityEngine.Application.dataPath.Replace("/Assets", "/RoadArchitect/");
         }
 
 
         /// <summary> Returns the path where Terrain History is saved </summary>
         public static string GetTHDir()
         {
-            string path = GetDirBase() + "TH/";
+            string path = GetDirBase() + "TerrainHistory/";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
