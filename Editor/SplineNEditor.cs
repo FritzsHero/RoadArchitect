@@ -2481,39 +2481,39 @@ namespace RoadArchitect
             string path = "";
             if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDWarningSign_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDWarningSign_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign2_Static)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDWarningSign2_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDWarningSign2_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Atten_Static)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDAtten_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDAtten_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Static)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Rigid)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel_Rigid.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel_Rigid.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Static)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel3_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Rigid)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel3_Rigid.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Static)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel7_Static.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Rigid)
             {
-                path = basePath + "/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab";
+                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel7_Rigid.prefab";
             }
             else
             {
