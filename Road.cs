@@ -835,11 +835,11 @@ namespace RoadArchitect
 
 
             //Check if road takes place on only 1 terrain:
-            Terrain terrain = GSDRoadUtil.GetTerrain(spline.nodes[0].pos);
+            Terrain terrain = RoadUtility.GetTerrain(spline.nodes[0].pos);
             bool isSameTerrain = true;
             for (int i = 1; i < nodeCount; i++)
             {
-                if (terrain != GSDRoadUtil.GetTerrain(spline.nodes[0].pos))
+                if (terrain != RoadUtility.GetTerrain(spline.nodes[0].pos))
                 {
                     isSameTerrain = false;
                     break;
@@ -883,7 +883,7 @@ namespace RoadArchitect
             if (!_isDiskOnly)
             {
                 Road road = this;
-                GSDRoadUtil.ConstructRoadStoreTerrainHistory(ref road);
+                RoadUtility.ConstructRoadStoreTerrainHistory(ref road);
             }
 
             if (isSavingTerrainHistoryOnDisk && TerrainHistory != null && TerrainHistory.Count > 0)
@@ -922,7 +922,7 @@ namespace RoadArchitect
             }
             else
             {
-                GSDRoadUtil.ConstructRoadResetTerrainHistory(ref tRoad);
+                RoadUtility.ConstructRoadResetTerrainHistory(ref tRoad);
             }
         }
 

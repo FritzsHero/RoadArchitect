@@ -277,11 +277,11 @@ namespace RoadArchitect
             byte[] bytes = null;
             if (terrain.isSplatSingleRoad && terrain.roadSingleChoiceUID != "")
             {
-                bytes = GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels, terrain.roadSingleChoiceUID);
+                bytes = RoadUtility.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels, terrain.roadSingleChoiceUID);
             }
             else
             {
-                bytes = GSDRoadUtil.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels);
+                bytes = RoadUtility.MakeSplatMap(terrain.terrain, terrain.splatBackground, terrain.splatForeground, terrain.splatResoWidth, terrain.splatResoHeight, terrain.splatWidth, terrain.isSplatSkipBridges, terrain.isSplatSkipTunnels);
             }
 
             if (bytes != null && bytes.Length > 3)

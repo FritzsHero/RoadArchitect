@@ -2034,7 +2034,7 @@ namespace GSD.Threaded
                     //Get this and prev leftVect rightVect rects:
                     if ((Vector3.SqrMagnitude(xNode.pos - tVect) < CullDistanceSQ) && isGoAhead)
                     {
-                        GSDRoadUtil.Construction2DRect vRect = new GSDRoadUtil.Construction2DRect(
+                        RoadUtility.Construction2DRect vRect = new RoadUtility.Construction2DRect(
                             new Vector2(leftVector.x, leftVector.z),
                             new Vector2(rightVector.x, rightVector.z),
                             new Vector2(lVect_Prev.x, lVect_Prev.z),
@@ -4123,7 +4123,7 @@ namespace GSD.Threaded
                     }
 
                     //Add bounds for later removal:
-                    GSDRoadUtil.Construction2DRect vRect = null;
+                    RoadUtility.Construction2DRect vRect = null;
                     if (!isBridge && !isTunnel && isMaxIntersection && isWasPrevMaxInter)
                     {
                         bool isGoAhead = true;
@@ -4149,7 +4149,7 @@ namespace GSD.Threaded
                         {
                             if (GSDRI.isFlipped && !isFirstInterNode)
                             {
-                                vRect = new GSDRoadUtil.Construction2DRect(
+                                vRect = new RoadUtility.Construction2DRect(
                                     new Vector2(rVect.x, rVect.z),
                                     new Vector2(lVect.x, lVect.z),
                                     new Vector2(rVect_Prev.x, rVect_Prev.z),
@@ -4159,7 +4159,7 @@ namespace GSD.Threaded
                             }
                             else
                             {
-                                vRect = new GSDRoadUtil.Construction2DRect(
+                                vRect = new RoadUtility.Construction2DRect(
                                    new Vector2(lVect.x, lVect.z),
                                    new Vector2(rVect.x, rVect.z),
                                    new Vector2(lVect_Prev.x, lVect_Prev.z),
@@ -5323,16 +5323,16 @@ namespace GSD.Threaded
         #region "Intersection Cleanup"
         private static void ProcessRoadIntersectionCleanup(ref RoadConstructorBufferMaker _RCS)
         {
-            List<GSDRoadUtil.Construction2DRect> tList = _RCS.tIntersectionBounds;
+            List<RoadUtility.Construction2DRect> tList = _RCS.tIntersectionBounds;
             int constructionCount = tList.Count;
             _RCS.ShoulderR_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderR_Vectors, ref tList, constructionCount, ref _RCS.ImmuneVects);
             _RCS.ShoulderL_Vectors = ProcessRoadIntersectionCleanupHelper(ref _RCS.ShoulderL_Vectors, ref tList, constructionCount, ref _RCS.ImmuneVects);
         }
 
 
-        private static List<Vector3> ProcessRoadIntersectionCleanupHelper(ref List<Vector3> _vects, ref List<GSDRoadUtil.Construction2DRect> _list, int _count, ref HashSet<Vector3> _immuneVects)
+        private static List<Vector3> ProcessRoadIntersectionCleanupHelper(ref List<Vector3> _vects, ref List<RoadUtility.Construction2DRect> _list, int _count, ref HashSet<Vector3> _immuneVects)
         {
-            GSDRoadUtil.Construction2DRect tRect = null;
+            RoadUtility.Construction2DRect tRect = null;
             int MVL = _vects.Count;
             Vector2 Vect2D = default(Vector2);
             Vector2 tNearVect = default(Vector2);

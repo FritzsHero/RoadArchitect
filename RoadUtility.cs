@@ -21,7 +21,7 @@ namespace RoadArchitect
 
 
 #if UNITY_EDITOR
-    public static class GSDRoadUtil
+    public static class RoadUtility
     {
         private const string FileSepString = "\n!!!! MICROGSD !!!!\n";
         private const string FileSepStringCRLF = "\r\n!!!! MICROGSD !!!!\r\n";

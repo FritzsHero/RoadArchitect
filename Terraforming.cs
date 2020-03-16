@@ -143,8 +143,8 @@ namespace RoadArchitect
             int dSize = 0;
             TempTerrainData TTD;
             bool isContaining = false;
-            GSDRoadUtil.Construction2DRect tRect = null;
-            //GSDRoadUtil.Construction2DRect rRect = null;
+            RoadUtility.Construction2DRect tRect = null;
+            //RoadUtility.Construction2DRect rRect = null;
             foreach (Terrain terrain in allTerrains)
             {
                 if (terrain.terrainData == null)
@@ -204,7 +204,7 @@ namespace RoadArchitect
                     }
                 }
 
-                //rRect = new GSDRoadUtil.Construction2DRect(tSpline.RoadV0,tSpline.RoadV1,tSpline.RoadV2,tSpline.RoadV3);
+                //rRect = new RoadUtility.Construction2DRect(tSpline.RoadV0,tSpline.RoadV1,tSpline.RoadV2,tSpline.RoadV3);
 
 
                 if (isContaining && !TempTerrainDict.ContainsKey(terrain))
@@ -384,7 +384,7 @@ namespace RoadArchitect
         }
 
 
-        public static GSDRoadUtil.Construction2DRect GetTerrainBounds(Terrain _terrain)
+        public static RoadUtility.Construction2DRect GetTerrainBounds(Terrain _terrain)
         {
             float terrainWidth = _terrain.terrainData.size.x;
             float terrainLength = _terrain.terrainData.size.z;
@@ -417,7 +417,7 @@ namespace RoadArchitect
             //P2 = tTerrain.transform.TransformPoint(P2);
             //P3 = tTerrain.transform.TransformPoint(P3);
 
-            return new GSDRoadUtil.Construction2DRect(P0, P1, P2, P3, _terrain.transform.position.y);
+            return new RoadUtility.Construction2DRect(P0, P1, P2, P3, _terrain.transform.position.y);
         }
 
 

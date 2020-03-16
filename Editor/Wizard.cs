@@ -53,7 +53,7 @@ namespace RoadArchitect
         private GUIStyle thumbStyle;
         private Vector2 scrollPos = new Vector2(0f, 25f);
         private SplineN thisNode = null;
-        private List<GSDRoadUtil.WizardObject> objectList = null;
+        private List<RoadUtility.WizardObject> objectList = null;
         private bool isUsingNoGUI = false;
         public Rect rect;
         #endregion
@@ -297,7 +297,7 @@ namespace RoadArchitect
                 objectList.Clear();
                 objectList = null;
             }
-            objectList = new List<GSDRoadUtil.WizardObject>();
+            objectList = new List<RoadUtility.WizardObject>();
             if (tWindowType == WindowTypeEnum.Extrusion)
             {
                 titleContent.text = "Extrusion";
@@ -356,7 +356,7 @@ namespace RoadArchitect
             //string ThumbString = "";
             for (int index = 0; index < nameCount; index++)
             {
-                GSDRoadUtil.WizardObject tO = GSDRoadUtil.WizardObject.LoadFromLibrary(_paths[index]);
+                RoadUtility.WizardObject tO = RoadUtility.WizardObject.LoadFromLibrary(_paths[index]);
                 if (tO == null)
                 {
                     continue;
@@ -650,7 +650,7 @@ namespace RoadArchitect
                     continue;
                 }
 
-                GSDRoadUtil.WizardObject tO = new GSDRoadUtil.WizardObject();
+                RoadUtility.WizardObject tO = new RoadUtility.WizardObject();
                 try
                 {
                     tO.thumb = (Texture2D)AssetDatabase.LoadAssetAtPath(thumbString, typeof(Texture2D)) as Texture2D;
@@ -989,7 +989,7 @@ namespace RoadArchitect
 
         private void oListSort()
         {
-            objectList.Sort((GSDRoadUtil.WizardObject object1, GSDRoadUtil.WizardObject object2) =>
+            objectList.Sort((RoadUtility.WizardObject object1, RoadUtility.WizardObject object2) =>
             {
                 if (object1.isDefault != object2.isDefault)
                 {

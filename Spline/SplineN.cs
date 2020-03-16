@@ -482,7 +482,7 @@ namespace RoadArchitect
                 RemoveAllSplinatedObjects(true);
                 RemoveAllEdgeObjects(true);
             }
-            GSDRoadUtil.LoadNodeObjects(_fileName, this, _isDefault, _isBridge);
+            RoadUtility.LoadNodeObjects(_fileName, this, _isDefault, _isBridge);
         }
 
 
@@ -506,7 +506,7 @@ namespace RoadArchitect
 
         #region "Gizmos"
         //	private void TerrainDebugging(){
-        //			GSD.Roads.GSDRoadUtil.Construction3DTri tTri = null;
+        //			GSD.Roads.RoadUtility.Construction3DTri tTri = null;
         //			Vector3 tHeightVec = new Vector3(0f,10f,0f);
         //			if(tTriList != null){
         //				
@@ -614,7 +614,7 @@ namespace RoadArchitect
         ////			Gizmos.DrawCube(P3,new Vector3(1f,1f,1f));
         ////			Gizmos.DrawCube(P4,new Vector3(1f,1f,1f));
         ////			
-        ////			tRect = new GSD.Roads.GSDRoadUtil.Construction3DRect(P1,P2,P3,P4);
+        ////			tRect = new GSD.Roads.RoadUtility.Construction3DRect(P1,P2,P3,P4);
         ////
         ////			Gizmos.color = new Color(0f,0f,1f,1f);
         ////			Gizmos.DrawCube(tRect.pMiddle,new Vector3(0.1f,0.1f,0.1f));
@@ -642,7 +642,7 @@ namespace RoadArchitect
         //	}
         //	
 
-        public List<GSDRoadUtil.Construction3DTri> tTriList;
+        public List<RoadUtility.Construction3DTri> tTriList;
         public List<Vector3> tHMList;
         [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDrawIntersectionHighlight")]
         public bool isDrawingIntersectionHighlightGizmos = false;
