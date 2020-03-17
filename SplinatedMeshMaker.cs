@@ -544,6 +544,7 @@ namespace RoadArchitect.Splination
         [System.Serializable]
         public class SplinatedMeshLibraryMaker
         {
+            #region "Vars"
             public string CurrentSplinationString = "";
             public string CurrentSplinationCap1String = "";
             public string CurrentSplinationCap2String = "";
@@ -590,11 +591,15 @@ namespace RoadArchitect.Splination
             public bool isBCFlippedZ = false;
 
             //Horizontal offsets:
-            public float HorizontalSep = 5f;
-            public AnimationCurve HorizontalCurve;
+            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
+            public float horizontalSep = 5f;
+            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
+            public AnimationCurve horizontalCurve;
             //Vertical offsets:
-            public float VerticalRaise = 0f;
-            public AnimationCurve VerticalCurve;
+            [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
+            public float verticalRaise = 0f;
+            [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
+            public AnimationCurve verticalCurve;
             //Vertical cutoff:
             public float VerticalCutoff = 0f;
             [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff")]
@@ -633,7 +638,8 @@ namespace RoadArchitect.Splination
             //End objects:
             public string EndCapStartString = "";
             public string EndCapEndString = "";
-            public bool bEndCapCustomMatchStart = true;
+            [UnityEngine.Serialization.FormerlySerializedAs("bEndCapCustomMatchStart")]
+            public bool isEndCapCustomMatchStart = true;
             public Vector3 EndCapCustomOffsetStart = default(Vector3);
             public Vector3 EndCapCustomOffsetEnd = default(Vector3);
             public Vector3 EndCapCustomRotOffsetStart = default(Vector3);
@@ -678,6 +684,7 @@ namespace RoadArchitect.Splination
             public string desc = "";
             [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
             public string displayName = "";
+            #endregion
 
 
             public void Setup(SplinatedMeshMaker _SMM)
@@ -729,11 +736,11 @@ namespace RoadArchitect.Splination
                 isBCFlippedZ = _SMM.isBCFlipZ;
 
                 //Horizontal offsets:
-                HorizontalSep = _SMM.HorizontalSep;
-                HorizontalCurve = _SMM.HorizontalCurve;
+                horizontalSep = _SMM.HorizontalSep;
+                horizontalCurve = _SMM.HorizontalCurve;
                 //Vertical offset:
-                VerticalRaise = _SMM.VerticalRaise;
-                VerticalCurve = _SMM.VerticalCurve;
+                verticalRaise = _SMM.VerticalRaise;
+                verticalCurve = _SMM.VerticalCurve;
                 //Vertical cutoff
                 VerticalCutoff = _SMM.VerticalCutoff;
                 isVerticalCutoff = _SMM.isVerticalCutoff;
@@ -776,7 +783,7 @@ namespace RoadArchitect.Splination
                 {
                     EndCapEndString = _SMM.EndCapEndString;
                 }
-                bEndCapCustomMatchStart = _SMM.bEndCapCustomMatchStart;
+                isEndCapCustomMatchStart = _SMM.bEndCapCustomMatchStart;
                 EndCapCustomOffsetStart = _SMM.EndCapCustomOffsetStart;
                 EndCapCustomOffsetEnd = _SMM.EndCapCustomOffsetEnd;
                 EndCapCustomRotOffsetStart = _SMM.EndCapCustomRotOffsetStart;
@@ -871,11 +878,11 @@ namespace RoadArchitect.Splination
                 _SMM.isBCFlipZ = isBCFlippedZ;
 
                 //Horizontal offsets:
-                _SMM.HorizontalSep = HorizontalSep;
-                _SMM.HorizontalCurve = HorizontalCurve;
+                _SMM.HorizontalSep = horizontalSep;
+                _SMM.HorizontalCurve = horizontalCurve;
                 //Vertical offset:
-                _SMM.VerticalRaise = VerticalRaise;
-                _SMM.VerticalCurve = VerticalCurve;
+                _SMM.VerticalRaise = verticalRaise;
+                _SMM.VerticalCurve = verticalCurve;
                 //Vertical cutoff:
                 _SMM.VerticalCutoff = VerticalCutoff;
                 _SMM.isVerticalCutoff = isVerticalCutoff;
@@ -912,7 +919,7 @@ namespace RoadArchitect.Splination
                 {
                     _SMM.EndCapEnd = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
                 }
-                _SMM.bEndCapCustomMatchStart = bEndCapCustomMatchStart;
+                _SMM.bEndCapCustomMatchStart = isEndCapCustomMatchStart;
                 _SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
                 _SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
                 _SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
@@ -953,6 +960,7 @@ namespace RoadArchitect.Splination
 
         public class SplinatedMeshEditorMaker
         {
+            #region "Vars"
             public GameObject CurrentSplination = null;
             public GameObject CurrentSplinationCap1 = null;
             public GameObject CurrentSplinationCap2 = null;
@@ -1080,6 +1088,7 @@ namespace RoadArchitect.Splination
 
             [UnityEngine.Serialization.FormerlySerializedAs("tName")]
             public string objectName = "ExtrudedObject";
+            #endregion
 
 
             public void Setup(SplinatedMeshMaker _SMM)

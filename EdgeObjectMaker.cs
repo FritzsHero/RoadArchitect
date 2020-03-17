@@ -410,6 +410,7 @@ namespace RoadArchitect.EdgeObjects
         [System.Serializable]
         public class EdgeObjectLibraryMaker
         {
+            #region "Vars"
             [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectString")]
             public string edgeObjectString = "";
             [UnityEngine.Serialization.FormerlySerializedAs("bCombineMesh")]
@@ -482,6 +483,7 @@ namespace RoadArchitect.EdgeObjects
             public string desc = "";
             [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
             public string displayName = "";
+            #endregion
 
 
             public void Setup(EdgeObjectMaker _EOM)
@@ -573,6 +575,7 @@ namespace RoadArchitect.EdgeObjects
 
         public class EdgeObjectEditorMaker
         {
+            #region "Vars"
             [UnityEngine.Serialization.FormerlySerializedAs("EdgeObject")]
             public GameObject edgeObject = null;
 
@@ -659,6 +662,7 @@ namespace RoadArchitect.EdgeObjects
             public bool isStartMatchingRoadDefinition = false;
             [UnityEngine.Serialization.FormerlySerializedAs("StartMatchRoadDef")]
             public float startMatchRoadDef = 0f;
+            #endregion
 
 
             public void Setup(EdgeObjectMaker _EOM)
