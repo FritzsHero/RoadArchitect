@@ -72,33 +72,19 @@ namespace RoadArchitect
             if (isFileExisting)
             {
                 EditorGUILayout.LabelField("File exists already!", EditorStyles.miniLabel);
-                if (windowType == WindowTypeEnum.Edge)
-                {
-                    EditorGUILayout.LabelField(path + "EOM" + fileName + ".gsd", EditorStyles.miniLabel);
-                }
-                else if (windowType == WindowTypeEnum.Extrusion)
-                {
-                    EditorGUILayout.LabelField(path + "ESO" + fileName + ".gsd", EditorStyles.miniLabel);
-                }
-                else
-                {
-                    EditorGUILayout.LabelField(path + "B/" + fileName + ".gsd", EditorStyles.miniLabel);
-                }
+            }
+
+            if (windowType == WindowTypeEnum.Edge)
+            {
+                EditorGUILayout.LabelField(path + "EOM" + fileName + ".rao", EditorStyles.miniLabel);
+            }
+            else if (windowType == WindowTypeEnum.Extrusion)
+            {
+                EditorGUILayout.LabelField(path + "ESO" + fileName + ".rao", EditorStyles.miniLabel);
             }
             else
             {
-                if (windowType == WindowTypeEnum.Edge)
-                {
-                    EditorGUILayout.LabelField(path + "EOM" + fileName + ".gsd", EditorStyles.miniLabel);
-                }
-                else if (windowType == WindowTypeEnum.Extrusion)
-                {
-                    EditorGUILayout.LabelField(path + "ESO" + fileName + ".gsd", EditorStyles.miniLabel);
-                }
-                else
-                {
-                    EditorGUILayout.LabelField(path + "B/" + fileName + ".gsd", EditorStyles.miniLabel);
-                }
+                EditorGUILayout.LabelField(path + "B/" + fileName + ".rao", EditorStyles.miniLabel);
             }
 
             GUILayout.Space(4f);
@@ -189,7 +175,7 @@ namespace RoadArchitect
         {
             if (windowType == WindowTypeEnum.Edge)
             {
-                if (System.IO.File.Exists(path + "EOM" + fileName + ".gsd"))
+                if (System.IO.File.Exists(path + "EOM" + fileName + ".rao"))
                 {
                     isFileExisting = true;
                 }
@@ -200,7 +186,7 @@ namespace RoadArchitect
             }
             else if (windowType == WindowTypeEnum.Extrusion)
             {
-                if (System.IO.File.Exists(path + "ESO" + fileName + ".gsd"))
+                if (System.IO.File.Exists(path + "ESO" + fileName + ".rao"))
                 {
                     isFileExisting = true;
                 }
@@ -211,7 +197,7 @@ namespace RoadArchitect
             }
             else
             {
-                if (System.IO.File.Exists(path + "B/" + fileName + ".gsd"))
+                if (System.IO.File.Exists(path + "B/" + fileName + ".rao"))
                 {
                     isFileExisting = true;
                 }

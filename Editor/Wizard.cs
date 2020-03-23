@@ -344,7 +344,7 @@ namespace RoadArchitect
             //Load user custom ones first:
             GetGroupListing(out names, out paths, thisNode.spline.road.laneAmount, false);
             LoadGroupObjs(ref names, ref paths, _isBridge);
-            //Load GSD ones last:
+            //Load RoadArchitect ones last:
             GetGroupListing(out names, out paths, thisNode.spline.road.laneAmount, true);
             LoadGroupObjs(ref names, ref paths, _isBridge);
         }
@@ -532,7 +532,7 @@ namespace RoadArchitect
             int count = 0;
             foreach (FileInfo tInfo in fileInfo)
             {
-                if (tInfo.Extension.ToLower().Contains("gsd"))
+                if (tInfo.Extension.ToLower().Contains("rao"))
                 {
                     if (!_isDefault)
                     {
@@ -553,11 +553,11 @@ namespace RoadArchitect
             count = 0;
             foreach (FileInfo tInfo in fileInfo)
             {
-                if (tInfo.Extension.ToLower().Contains("gsd"))
+                if (tInfo.Extension.ToLower().Contains("rao"))
                 {
                     if (!_isDefault)
                     {
-                        _names[count] = tInfo.Name.Replace(".gsd", "");
+                        _names[count] = tInfo.Name.Replace(".rao", "");
                         _paths[count] = tInfo.FullName;
                         count += 1;
                     }
@@ -565,7 +565,7 @@ namespace RoadArchitect
                     {
                         if (tInfo.Name.Contains(laneText))
                         {
-                            _names[count] = tInfo.Name.Replace(".gsd", "");
+                            _names[count] = tInfo.Name.Replace(".rao", "");
                             _paths[count] = tInfo.FullName;
                             count += 1;
                         }
@@ -594,7 +594,7 @@ namespace RoadArchitect
             LoadObjs(ref names, ref paths, false);
 
 
-            //Load GSD ones last:
+            //Load RoadArchitect ones last:
             if (tWindowType == WindowTypeEnum.Extrusion)
             {
                 Splination.SplinatedMeshMaker.GetLibraryFiles(out names, out paths, true);

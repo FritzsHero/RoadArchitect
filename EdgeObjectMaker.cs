@@ -253,16 +253,16 @@ namespace RoadArchitect.EdgeObjects
             EOLM.Setup(this);
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "EOM" + objectName + ".gsd";
+            string filePath = basePath + "EOM" + objectName + ".rao";
             if (_fileName.Length > 0)
             {
                 if (_isDefault)
                 {
-                    filePath = basePath + "Q/EOM" + _fileName + ".gsd";
+                    filePath = basePath + "Q/EOM" + _fileName + ".rao";
                 }
                 else
                 {
-                    filePath = basePath + "EOM" + _fileName + ".gsd";
+                    filePath = basePath + "EOM" + _fileName + ".rao";
                 }
             }
             RootUtils.CreateXML<EdgeObjectLibraryMaker>(ref filePath, EOLM);
@@ -273,10 +273,10 @@ namespace RoadArchitect.EdgeObjects
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "EOM" + _fileName + ".gsd";
+            string filePath = basePath + "EOM" + _fileName + ".rao";
             if (_isQuickAdd)
             {
-                filePath = basePath + "Q/EOM" + _fileName + ".gsd";
+                filePath = basePath + "Q/EOM" + _fileName + ".rao";
             }
             EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
@@ -288,7 +288,7 @@ namespace RoadArchitect.EdgeObjects
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "W/" + _fileName + ".gsd";
+            string filePath = basePath + "W/" + _fileName + ".rao";
             EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
             isRequiringUpdate = true;
@@ -350,7 +350,7 @@ namespace RoadArchitect.EdgeObjects
 
             foreach (FileInfo tInfo in fileInfos)
             {
-                if (tInfo.Name.Contains("EOM") && tInfo.Extension.ToLower().Contains("gsd"))
+                if (tInfo.Name.Contains("EOM") && tInfo.Extension.ToLower().Contains("rao"))
                 {
                     count += 1;
                 }
@@ -361,9 +361,9 @@ namespace RoadArchitect.EdgeObjects
             count = 0;
             foreach (FileInfo fileInfo in fileInfos)
             {
-                if (fileInfo.Name.Contains("EOM") && fileInfo.Extension.ToLower().Contains("gsd"))
+                if (fileInfo.Name.Contains("EOM") && fileInfo.Extension.ToLower().Contains("rao"))
                 {
-                    _names[count] = fileInfo.Name.Replace(".gsd", "").Replace("EOM", "");
+                    _names[count] = fileInfo.Name.Replace(".rao", "").Replace("EOM", "");
                     _paths[count] = fileInfo.FullName;
                     count += 1;
                 }

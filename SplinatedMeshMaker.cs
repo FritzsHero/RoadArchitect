@@ -407,16 +407,16 @@ namespace RoadArchitect.Splination
             SLM.Setup(this);
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "ESO" + tName + ".gsd";
+            string filePath = basePath + "ESO" + tName + ".rao";
             if (_name.Length > 0)
             {
                 if (_isDefault)
                 {
-                    filePath = basePath + "Q/ESO" + _name + ".gsd";
+                    filePath = basePath + "Q/ESO" + _name + ".rao";
                 }
                 else
                 {
-                    filePath = basePath + "ESO" + _name + ".gsd";
+                    filePath = basePath + "ESO" + _name + ".rao";
                 }
             }
             RootUtils.CreateXML<SplinatedMeshLibraryMaker>(ref filePath, SLM);
@@ -426,11 +426,11 @@ namespace RoadArchitect.Splination
         public void LoadFromLibrary(string _name, bool _isQuickAdd = false)
         {
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "ESO" + _name + ".gsd";
+            string filePath = basePath + "ESO" + _name + ".rao";
             if (_isQuickAdd)
             {
                 RootUtils.CheckCreateSpecialLibraryDirs();
-                filePath = basePath + "Q/ESO" + _name + ".gsd";
+                filePath = basePath + "Q/ESO" + _name + ".rao";
             }
             SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
@@ -442,7 +442,7 @@ namespace RoadArchitect.Splination
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "W/" + _name + ".gsd";
+            string filePath = basePath + "W/" + _name + ".rao";
             SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
             isRequiringUpdate = true;
@@ -502,7 +502,7 @@ namespace RoadArchitect.Splination
             int esoCount = 0;
             foreach (FileInfo fileInfo in fileInfos)
             {
-                if (fileInfo.Name.Contains("ESO") && fileInfo.Extension.ToLower().Contains("gsd"))
+                if (fileInfo.Name.Contains("ESO") && fileInfo.Extension.ToLower().Contains("rao"))
                 {
                     esoCount += 1;
                 }
@@ -513,9 +513,9 @@ namespace RoadArchitect.Splination
             esoCount = 0;
             foreach (FileInfo fileInfo in fileInfos)
             {
-                if (fileInfo.Name.Contains("ESO") && fileInfo.Extension.ToLower().Contains("gsd"))
+                if (fileInfo.Name.Contains("ESO") && fileInfo.Extension.ToLower().Contains("rao"))
                 {
-                    _names[esoCount] = fileInfo.Name.Replace(".gsd", "").Replace("ESO", "");
+                    _names[esoCount] = fileInfo.Name.Replace(".rao", "").Replace("ESO", "");
                     _paths[esoCount] = fileInfo.FullName;
                     esoCount += 1;
                 }

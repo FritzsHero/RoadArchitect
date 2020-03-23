@@ -162,11 +162,11 @@ namespace RoadArchitect
             string path;
             if (_isExtrusion)
             {
-                path = Application.dataPath + "/RoadArchitect/Library/ESO" + _name + ".gsd";
+                path = Application.dataPath + "/RoadArchitect/Library/ESO" + _name + ".rao";
             }
             else
             {
-                path = Application.dataPath + "/RoadArchitect/Library/EOM" + _name + ".gsd";
+                path = Application.dataPath + "/RoadArchitect/Library/EOM" + _name + ".rao";
             }
             if (File.Exists(path))
             {
