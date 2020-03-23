@@ -114,28 +114,22 @@ namespace RoadArchitect
 #if UNITY_WEBPLAYER
 			return;
 #else
-            string tData = SerializeObject<T>(ref _object);
-            StreamWriter writer;
-            FileInfo t = new FileInfo(_path);
-            if (!t.Exists)
-            {
-                writer = t.CreateText();
-            }
-            else
-            {
-                t.Delete();
-                writer = t.CreateText();
-            }
-            writer.Write(tData);
-            writer.Close();
+            // New function to write better xml style with utf8 encoding
+            FileStream fs = new FileStream(_path, FileMode.Create);
+            XmlSerializer xs = new XmlSerializer(typeof(T));
+            XmlTextWriter xmlTextWriter = new XmlTextWriter(fs, Encoding.UTF8);
+            xmlTextWriter.Formatting = Formatting.Indented;
+            xs.Serialize(xmlTextWriter, _object);
+
+            fs.Close();
 #endif
         }
 
 
         public static string GetString<T>(object _object)
         {
-            string tData = SerializeObject<T>(ref _object);
-            return tData;
+            string data = SerializeObject<T>(ref _object);
+            return data;
         }
 
 
@@ -144,9 +138,9 @@ namespace RoadArchitect
 #if UNITY_WEBPLAYER
 			return null;
 #else
-            StreamReader r = File.OpenText(_path);
-            string _info = r.ReadToEnd();
-            r.Close();
+            StreamReader reader = File.OpenText(_path);
+            string _info = reader.ReadToEnd();
+            reader.Close();
             object tObject = DeserializeObject<T>(_info);
             return tObject;
 #endif
@@ -186,11 +180,15 @@ namespace RoadArchitect
         {
             string XmlizedString = null;
             MemoryStream memoryStream = new MemoryStream();
+
             XmlSerializer xs = new XmlSerializer(typeof(T));
             XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
+            xmlTextWriter.Formatting = Formatting.Indented;
             xs.Serialize(xmlTextWriter, _object);
+
             memoryStream = (MemoryStream) xmlTextWriter.BaseStream;
             XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
+
             return XmlizedString;
         }
 
