@@ -25,18 +25,12 @@ namespace RoadArchitect
         private Texture2D temp2D2 = null;
         private string thumbString = "";
         private string desc = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("tFilename")]
         private string fileName = "DefaultName";
-        [UnityEngine.Serialization.FormerlySerializedAs("tDisplayName")]
         private string displayName = "DefaultName";
-        [UnityEngine.Serialization.FormerlySerializedAs("tDisplayName2")]
         private string displayName2 = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("TitleText")]
         private string titleText = "";
         //	private string tPath = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("bFileExists")]
         private bool isFileExisting = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         private bool isBridge = false;
 
         private Splination.SplinatedMeshMaker[] tSMMs = null;
@@ -71,41 +65,7 @@ namespace RoadArchitect
                 displayName = displayName2;
                 SanitizeFilename();
 
-                if (windowType == WindowTypeEnum.Edge)
-                {
-
-
-                    if (System.IO.File.Exists(path + "EOM" + fileName + ".gsd"))
-                    {
-                        isFileExisting = true;
-                    }
-                    else
-                    {
-                        isFileExisting = false;
-                    }
-                }
-                else if (windowType == WindowTypeEnum.Extrusion)
-                {
-                    if (System.IO.File.Exists(path + "ESO" + fileName + ".gsd"))
-                    {
-                        isFileExisting = true;
-                    }
-                    else
-                    {
-                        isFileExisting = false;
-                    }
-                }
-                else
-                {
-                    if (System.IO.File.Exists(path + "B/" + fileName + ".gsd"))
-                    {
-                        isFileExisting = true;
-                    }
-                    else
-                    {
-                        isFileExisting = false;
-                    }
-                }
+                CheckFileExistence();
             }
 
 
@@ -225,6 +185,44 @@ namespace RoadArchitect
         }
 
 
+        private void CheckFileExistence()
+        {
+            if (windowType == WindowTypeEnum.Edge)
+            {
+                if (System.IO.File.Exists(path + "EOM" + fileName + ".gsd"))
+                {
+                    isFileExisting = true;
+                }
+                else
+                {
+                    isFileExisting = false;
+                }
+            }
+            else if (windowType == WindowTypeEnum.Extrusion)
+            {
+                if (System.IO.File.Exists(path + "ESO" + fileName + ".gsd"))
+                {
+                    isFileExisting = true;
+                }
+                else
+                {
+                    isFileExisting = false;
+                }
+            }
+            else
+            {
+                if (System.IO.File.Exists(path + "B/" + fileName + ".gsd"))
+                {
+                    isFileExisting = true;
+                }
+                else
+                {
+                    isFileExisting = false;
+                }
+            }
+        }
+
+
         #region "Init"
         public void Initialize(ref Rect _rect, WindowTypeEnum _windowType, SplineN _node, Splination.SplinatedMeshMaker _SMM = null, EdgeObjects.EdgeObjectMaker _EOM = null)
         {
@@ -304,39 +302,7 @@ namespace RoadArchitect
                 path = RootUtils.GetDirLibrary();
             }
 
-            if (windowType == WindowTypeEnum.Edge)
-            {
-                if (System.IO.File.Exists(path + "EOM" + fileName + ".gsd"))
-                {
-                    isFileExisting = true;
-                }
-                else
-                {
-                    isFileExisting = false;
-                }
-            }
-            else if (windowType == WindowTypeEnum.Extrusion)
-            {
-                if (System.IO.File.Exists(path + "ESO" + fileName + ".gsd"))
-                {
-                    isFileExisting = true;
-                }
-                else
-                {
-                    isFileExisting = false;
-                }
-            }
-            else
-            {
-                if (System.IO.File.Exists(path + "B/" + fileName + ".gsd"))
-                {
-                    isFileExisting = true;
-                }
-                else
-                {
-                    isFileExisting = false;
-                }
-            }
+            CheckFileExistence();
         }
         #endregion
     }
