@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDRoadConBarrel_Static</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRoadConBarrel.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadConBarrel.png</thumbString>
   <desc>Static road construction barrels.</desc>
   <displayName>Con Barrels Static</displayName>
 </EdgeObjectLibraryMaker>

@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDRoadBarrel_Rigid</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRoadBarrel1.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadBarrel1.png</thumbString>
   <desc>One rigid sand barrel. Best results when placed in front of railings or bridges.</desc>
   <displayName>Sand Barrel Rigid</displayName>
 </EdgeObjectLibraryMaker>

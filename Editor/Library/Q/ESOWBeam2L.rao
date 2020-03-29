@@ -167,7 +167,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>GSDWBeam2L</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDWBeam2.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/WBeam2.png</thumbString>
   <desc>Federal spec metal pole WBeam railing. Best used as outer shoulder railing. Left shoulder.</desc>
   <displayName>WBeam Metal Left</displayName>
 </SplinatedMeshLibraryMaker>

@@ -68,7 +68,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDSign617</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDSign617.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Sign617.png</thumbString>
   <desc>Interchangeable materials, use \"FedSign-617\" as the search term.</desc>
   <displayName>Signs 617</displayName>
 </EdgeObjectLibraryMaker>

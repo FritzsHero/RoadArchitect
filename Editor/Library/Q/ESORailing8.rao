@@ -169,7 +169,7 @@
     <z>-5</z>
   </CollisionTriT>
   <objectName>GSDRailing8</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing8.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing8.png</thumbString>
   <desc>Rock-decorated concrete railing with standard single pole metal railing.</desc>
   <displayName>Railing #8</displayName>
 </SplinatedMeshLibraryMaker>

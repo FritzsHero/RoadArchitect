@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDGroup-KRailLights.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Group-KRailLights.png</thumbString>
   <displayName>GSDGroup-KRailLights-2L</displayName>
   <desc />
   <isDefault>true</isDefault>
@@ -180,7 +180,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>KRail</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDKRail.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/KRail.png</thumbString>
   <desc />
   <displayName>GSDKRail</displayName>
 </SplinatedMeshLibraryMaker>
@@ -255,7 +255,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDStreetLightDouble</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDStreetLightDouble.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StreetLightDouble.png</thumbString>
   <desc />
   <displayName>GSDStreetLightDouble</displayName>
 </EdgeObjectLibraryMaker>

@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDSignSquare</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDSignSquare.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SignSquare.png</thumbString>
   <desc>Interchangeable materials, use \"FedSign-Square\" as the search term.</desc>
   <displayName>Signs square</displayName>
 </EdgeObjectLibraryMaker>

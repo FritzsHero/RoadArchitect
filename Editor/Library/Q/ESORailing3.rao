@@ -169,7 +169,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>GSDRailing3</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing3.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing3.png</thumbString>
   <desc>Standard four-strand metal railing.</desc>
   <displayName>Railing #3</displayName>
 </SplinatedMeshLibraryMaker>

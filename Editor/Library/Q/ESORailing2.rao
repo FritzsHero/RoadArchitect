@@ -169,7 +169,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>GSDRailing2</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing2.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing2.png</thumbString>
   <desc>Standard concrete big block railing.</desc>
   <displayName>Railing #2</displayName>
 </SplinatedMeshLibraryMaker>

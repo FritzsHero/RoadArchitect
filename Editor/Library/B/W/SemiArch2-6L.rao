@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDSemiArch2.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SemiArch2.png</thumbString>
   <displayName>SemiArch2-6L</displayName>
   <desc />
   <isDefault>true</isDefault>

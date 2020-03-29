@@ -169,7 +169,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>GSDRailing4R</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing4.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing4.png</thumbString>
   <desc>Three bar angled pole railing. Right side of road.</desc>
   <displayName>Railing #4 Right</displayName>
 </SplinatedMeshLibraryMaker>

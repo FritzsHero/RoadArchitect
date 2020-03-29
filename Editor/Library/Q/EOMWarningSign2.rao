@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDWarningSign2_Static</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDWarningSign2.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/WarningSign2.png</thumbString>
   <desc>Best results when placed in front of railings or bridges.</desc>
   <displayName>Warning Sign #2</displayName>
 </EdgeObjectLibraryMaker>

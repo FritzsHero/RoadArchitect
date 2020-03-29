@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDArch12m.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Arch12m.png</thumbString>
   <displayName>Arch12m-6L</displayName>
   <desc />
   <isDefault>true</isDefault>

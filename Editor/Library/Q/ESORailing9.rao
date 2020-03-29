@@ -169,7 +169,7 @@
     <z>-5</z>
   </CollisionTriT>
   <objectName>GSDRailing9</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing9.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing9.png</thumbString>
   <desc>Very low poly railing used for mobile.</desc>
   <displayName>Railing #9</displayName>
 </SplinatedMeshLibraryMaker>

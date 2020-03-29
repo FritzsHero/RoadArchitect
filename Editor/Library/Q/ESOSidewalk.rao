@@ -169,7 +169,7 @@
     <z>-5</z>
   </CollisionTriT>
   <objectName>GSDSidewalk</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDSidewalk.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Sidewalk.png</thumbString>
   <desc>Sidewalk</desc>
   <displayName>Sidewalk</displayName>
 </SplinatedMeshLibraryMaker>

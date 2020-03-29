@@ -170,7 +170,7 @@
     <z>-5</z>
   </CollisionTriT>
   <objectName>GSDCableBarrier-Light</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDCableBarrier-Light.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/CableBarrier-Light.png</thumbString>
   <desc>Cable barrier 10m light triangle version. Best used as center divider or as railing barriers.</desc>
   <displayName>Cable barrier 10m</displayName>
 </SplinatedMeshLibraryMaker>

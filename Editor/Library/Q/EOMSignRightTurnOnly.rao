@@ -66,7 +66,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDSignRightTurnOnly</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDSignRightTurnOnly.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SignRightTurnOnly.png</thumbString>
   <desc>Best results when placed near intersection right turn lane.</desc>
   <displayName>Right turn only</displayName>
 </EdgeObjectLibraryMaker>

@@ -168,7 +168,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>GSDRumbleStrip</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRumbleStrip.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RumbleStrip.png</thumbString>
   <desc>State spec rumblestrip. For best results place several cm from road edge into shoulder.</desc>
   <displayName>Rumblestrip</displayName>
 </SplinatedMeshLibraryMaker>

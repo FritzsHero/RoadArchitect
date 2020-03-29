@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDAtten_Static</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDAtten.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Atten.png</thumbString>
   <desc>Standard double WBeam with impact absorption.</desc>
   <displayName>Attenuator</displayName>
 </EdgeObjectLibraryMaker>

@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDStreetLightSingle</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDStreetLightSingle.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StreetLightSingle.png</thumbString>
   <desc>Best used on side of roads.</desc>
   <displayName>Streetlight Singlesided</displayName>
 </EdgeObjectLibraryMaker>

@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDSignStop</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDStopSign.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StopSign.png</thumbString>
   <desc>Standard specification non-interstate stop sign.</desc>
   <displayName>Stop sign</displayName>
 </EdgeObjectLibraryMaker>

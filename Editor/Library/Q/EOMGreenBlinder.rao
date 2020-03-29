@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDGreenBlinder</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDGreenBlinder.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GreenBlinder.png</thumbString>
   <desc>Best results when placed on KRail for KRail blinders.</desc>
   <displayName>KRail Blinder</displayName>
 </EdgeObjectLibraryMaker>

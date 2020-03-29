@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDGroup-Fancy1.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Group-Fancy1.png</thumbString>
   <displayName>GSDGroup-Fancy1-2L</displayName>
   <desc />
   <isDefault>true</isDefault>
@@ -180,7 +180,7 @@
     <z>-5</z>
   </CollisionTriT>
   <objectName>GSDRailing7</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing7.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing7.png</thumbString>
   <desc />
   <displayName>GSDRailing7</displayName>
 </SplinatedMeshLibraryMaker>
@@ -357,7 +357,7 @@
     <z>-5</z>
   </CollisionTriT>
   <objectName>GSDRailing7</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailing7.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing7.png</thumbString>
   <desc />
   <displayName>GSDRailing7</displayName>
 </SplinatedMeshLibraryMaker>
@@ -432,7 +432,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDStreetLightSingle</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDStreetLightSingle.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StreetLightSingle.png</thumbString>
   <desc />
   <displayName>GSDStreetLightSingle</displayName>
 </EdgeObjectLibraryMaker>
@@ -507,7 +507,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDStreetLightSingle</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDStreetLightSingle.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StreetLightSingle.png</thumbString>
   <desc />
   <displayName>GSDStreetLightSingle</displayName>
 </EdgeObjectLibraryMaker>

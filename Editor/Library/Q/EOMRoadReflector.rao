@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDRoadReflector</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRoadReflector.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadReflector.png</thumbString>
   <desc>Placed one center line of road for center line reflection.</desc>
   <displayName>Road reflectors</displayName>
 </EdgeObjectLibraryMaker>

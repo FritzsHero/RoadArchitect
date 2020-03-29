@@ -167,7 +167,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>KRail</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDKRail.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/KRail.png</thumbString>
   <desc>Federal spec cement KRailing (also known as Jersey Barriers). Variant with down ends.</desc>
   <displayName>KRail</displayName>
 </SplinatedMeshLibraryMaker>

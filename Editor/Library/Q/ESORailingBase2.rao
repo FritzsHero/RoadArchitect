@@ -169,7 +169,7 @@
     <z>-2.5</z>
   </CollisionTriT>
   <objectName>GSDRailingBase2</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDRailingBase2.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RailingBase2.png</thumbString>
   <desc>Use as a base on other railings to create more detail.</desc>
   <displayName>Railing base #2</displayName>
 </SplinatedMeshLibraryMaker>

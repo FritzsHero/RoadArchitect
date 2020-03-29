@@ -67,7 +67,7 @@
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
   <objectName>GSDTrafficCone_Static</objectName>
-  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/GSDTrafficCone.png</thumbString>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/TrafficCone.png</thumbString>
   <desc>Static traffic cones.</desc>
   <displayName>Traffic cones Static</displayName>
 </EdgeObjectLibraryMaker>
