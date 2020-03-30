@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/GSDRoadBarrel7_Rigid.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid7.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -66,7 +66,7 @@
   <singlePosition>0.121</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDRoadBarrel7_Rigid</objectName>
+  <objectName>RoadBarrelRigid7</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadBarrel7.png</thumbString>
   <desc>Seven rigid sand barrels in standard formation. Best results when placed in front of railings or bridges.</desc>
   <displayName>Sand Barrel Rigid 7</displayName>

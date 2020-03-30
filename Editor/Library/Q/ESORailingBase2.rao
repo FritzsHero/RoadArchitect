@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailingBase2.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/RailingBase2.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailingBase2-Cap.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailingBase2-Cap.FBX</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
@@ -102,8 +102,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel_Rigid.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -168,7 +168,7 @@
     <y>0.250000119</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDRailingBase2</objectName>
+  <objectName>RailingBase2</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RailingBase2.png</thumbString>
   <desc>Use as a base on other railings to create more detail.</desc>
   <displayName>Railing base #2</displayName>

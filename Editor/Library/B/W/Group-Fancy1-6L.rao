@@ -10,7 +10,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailing7-10m.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
@@ -113,8 +113,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -187,7 +187,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailing7-10m.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
@@ -290,8 +290,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -364,7 +364,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/GSDStreetLightSingle.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/StreetLightSingle.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -431,15 +431,15 @@
   <singlePosition>0.145852223</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDStreetLightSingle</objectName>
+  <objectName>StreetLightSingle</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StreetLightSingle.png</thumbString>
   <desc />
-  <displayName>GSDStreetLightSingle</displayName>
+  <displayName>StreetLightSingle</displayName>
 </EdgeObjectLibraryMaker>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/GSDStreetLightSingle.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/StreetLightSingle.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -506,9 +506,9 @@
   <singlePosition>0.145852223</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDStreetLightSingle</objectName>
+  <objectName>StreetLightSingle</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/StreetLightSingle.png</thumbString>
   <desc />
-  <displayName>GSDStreetLightSingle</displayName>
+  <displayName>StreetLightSingle</displayName>
 </EdgeObjectLibraryMaker>
 !!!! MICROGSD !!!!

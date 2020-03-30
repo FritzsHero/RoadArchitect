@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/GSDRoadConBarrel_Static.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/RoadConBarrelStatic.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -66,7 +66,7 @@
   <singlePosition>0.145852223</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDRoadConBarrel_Static</objectName>
+  <objectName>RoadConBarrelStatic</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadConBarrel.png</thumbString>
   <desc>Static road construction barrels.</desc>
   <displayName>Con Barrels Static</displayName>

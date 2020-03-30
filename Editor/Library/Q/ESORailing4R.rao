@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailing4.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing4.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isGSD>false</isGSD>
@@ -102,8 +102,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -168,7 +168,7 @@
     <y>1.50973058</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDRailing4R</objectName>
+  <objectName>Railing4R</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing4.png</thumbString>
   <desc>Three bar angled pole railing. Right side of road.</desc>
   <displayName>Railing #4 Right</displayName>

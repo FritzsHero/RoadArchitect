@@ -358,7 +358,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailing8.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing8.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>false</isMaterialOverriden>
@@ -459,8 +459,8 @@
   <mMinZ>-3.75</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid7.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid7.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -532,7 +532,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailing8.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing8.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing8-Cap.fbx</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing8-Cap.fbx</CurrentSplinationCap2String>
   <isMaterialOverriden>false</isMaterialOverriden>
@@ -633,8 +633,8 @@
   <mMinZ>-3.75</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel7_Rigid.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid7.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid7.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>

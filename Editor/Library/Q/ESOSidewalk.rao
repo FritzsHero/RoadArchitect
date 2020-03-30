@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/GSDSidewalk.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Sidewalk.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/GSDSidewalk-Cap.fbx</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/GSDSidewalk-Cap.fbx</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
@@ -102,8 +102,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -168,7 +168,7 @@
     <y>1.00724149</y>
     <z>-5</z>
   </CollisionTriT>
-  <objectName>GSDSidewalk</objectName>
+  <objectName>Sidewalk</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Sidewalk.png</thumbString>
   <desc>Sidewalk</desc>
   <displayName>Sidewalk</displayName>

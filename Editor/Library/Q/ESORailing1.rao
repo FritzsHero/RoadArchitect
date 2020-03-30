@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/GSDRailing1.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing1.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isGSD>true</isGSD>
@@ -102,8 +102,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDWarningSign_Static.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDWarningSign_Static.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/WarningSignStatic.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/WarningSignStatic.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -168,7 +168,7 @@
     <y>0.6530953</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDRailing1</objectName>
+  <objectName>Railing1</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing1.png</thumbString>
   <desc>Standard double square pole railing.</desc>
   <displayName>Railing #1</displayName>

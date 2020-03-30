@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/GSDSignRightTurnOnly.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/SignRightTurnOnly.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -65,7 +65,7 @@
   <singlePosition>0.17</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDSignRightTurnOnly</objectName>
+  <objectName>SignRightTurnOnly</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SignRightTurnOnly.png</thumbString>
   <desc>Best results when placed near intersection right turn lane.</desc>
   <displayName>Right turn only</displayName>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/GSDAtten_Static.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/AttenStatic.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -66,7 +66,7 @@
   <singlePosition>0.121</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDAtten_Static</objectName>
+  <objectName>AttenStatic</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Atten.png</thumbString>
   <desc>Standard double WBeam with impact absorption.</desc>
   <displayName>Attenuator</displayName>

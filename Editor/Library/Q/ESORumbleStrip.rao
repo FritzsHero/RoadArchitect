@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/GSDRumbleStrip.prefab</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Prefabs/RumbleStrip.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>false</isMaterialOverriden>
@@ -167,7 +167,7 @@
     <y>1.09278474E-07</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDRumbleStrip</objectName>
+  <objectName>RumbleStrip</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RumbleStrip.png</thumbString>
   <desc>State spec rumblestrip. For best results place several cm from road edge into shoulder.</desc>
   <displayName>Rumblestrip</displayName>

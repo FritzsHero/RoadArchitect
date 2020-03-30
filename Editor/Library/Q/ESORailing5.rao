@@ -102,8 +102,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing5Post.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing5Post.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Railing/Railing5Post.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Railing/Railing5Post.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>

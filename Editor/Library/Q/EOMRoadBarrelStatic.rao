@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/GSDRoadBarrel_Static.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelStatic.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -66,7 +66,7 @@
   <singlePosition>0.121</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDRoadBarrel_Static</objectName>
+  <objectName>RoadBarrelStatic</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadBarrel1.png</thumbString>
   <desc>One static sand barrel. Best results when placed in front of railings or bridges.</desc>
   <displayName>Sand Barrel Static</displayName>

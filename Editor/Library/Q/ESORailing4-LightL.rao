@@ -102,8 +102,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Interactive/GSDRoadBarrel3_Rigid.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelRigid3.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -168,7 +168,7 @@
     <y>1.50973058</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDRailing4-LightL</objectName>
+  <objectName>Railing4LightL</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing4.png</thumbString>
   <desc>Three bar angled pole railing. Left side of road. Light version with fewer triangle count.</desc>
   <displayName>Railing #4 Light Left</displayName>

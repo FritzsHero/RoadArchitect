@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/GSDWarningSign2_Static.prefab</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/WarningSignStatic2.prefab</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -66,7 +66,7 @@
   <singlePosition>0.121</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDWarningSign2_Static</objectName>
+  <objectName>WarningSignStatic2</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/WarningSign2.png</thumbString>
   <desc>Best results when placed in front of railings or bridges.</desc>
   <displayName>Warning Sign #2</displayName>
