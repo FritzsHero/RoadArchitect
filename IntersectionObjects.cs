@@ -49,7 +49,7 @@ namespace RoadArchitect
 
         private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, bool _isRB)
         {
-            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/GSDSignStopAllway.prefab", typeof(GameObject));
+            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab", typeof(GameObject));
 
             RoadIntersection GSDRI = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC tSpline = GSDRI.node1.spline;
@@ -657,7 +657,7 @@ namespace RoadArchitect
 
             if (_isLight)
             {
-                GameObject yObj = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/GSDStreetLight_TrafficLight.prefab", typeof(GameObject));
+                GameObject yObj = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLight.prefab", typeof(GameObject));
                 GameObject kObj = (GameObject)GameObject.Instantiate(yObj);
                 kObj.transform.position = tObj.transform.position;
                 kObj.transform.position += new Vector3(0f, 0f, MaxHeight - 7.6f);
@@ -979,11 +979,11 @@ namespace RoadArchitect
             {
                 if (intersection.isLeftTurnYieldOnGreen)
                 {
-                    prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/GSDTrafficLightLeftYield.prefab", typeof(GameObject));
+                    prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightLeftYield.prefab", typeof(GameObject));
                 }
                 else
                 {
-                    prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/GSDTrafficLightLeft.prefab", typeof(GameObject));
+                    prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightLeft.prefab", typeof(GameObject));
                 }
                 tLeft = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tLeft);
@@ -1008,7 +1008,7 @@ namespace RoadArchitect
 
                 if (intersection.isLeftTurnYieldOnGreen)
                 {
-                    prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/GSDSignYieldOnGreen.prefab", typeof(GameObject));
+                    prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/YieldOnGreenSign.prefab", typeof(GameObject));
                     tLeft_Sign = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                     tLeft_Sign.transform.position = _obj.transform.TransformPoint(tLanePosL_Sign);
                     tLeft_Sign.transform.rotation = Quaternion.LookRotation(_tan) * Quaternion.Euler(-90f, 90f, 0f);
@@ -1022,7 +1022,7 @@ namespace RoadArchitect
             }
             if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
-                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/GSDTrafficLightRight.prefab", typeof(GameObject));
+                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightRight.prefab", typeof(GameObject));
                 tRight = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tRight);
                 tRight.transform.position = _obj.transform.TransformPoint(tLanePosR);
@@ -1046,7 +1046,7 @@ namespace RoadArchitect
             GameObject[] tLanes = new GameObject[LanesHalf];
             for (int index = 0; index < LanesHalf; index++)
             {
-                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/GSDTrafficLightMain.prefab", typeof(GameObject));
+                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightMain.prefab", typeof(GameObject));
                 tLanes[index] = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tLanes[index]);
                 tLanes[index].transform.position = _obj.transform.TransformPoint(tLanePos[index]);

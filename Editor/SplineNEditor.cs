@@ -310,6 +310,7 @@ namespace RoadArchitect
 
         public override void OnInspectorGUI()
         {
+            #region "Event"
             if (Event.current.type == EventType.ValidateCommand)
             {
                 switch (Event.current.commandName)
@@ -333,6 +334,8 @@ namespace RoadArchitect
                 node.isQuitGUI = false;
                 return;
             }
+            #endregion
+
 
             //Graphic null checks:
             if (!isInitialized)
@@ -560,6 +563,7 @@ namespace RoadArchitect
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(4f);
 
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("");
             if (GUILayout.Button("Open Wizard", loadButton, GUILayout.Width(128f)))
@@ -585,6 +589,8 @@ namespace RoadArchitect
                 }
             }
             EditorGUILayout.EndHorizontal();
+            
+            
             GUILayout.Space(4f);
 
             if (isEdgeObjectHelp)
@@ -776,8 +782,8 @@ namespace RoadArchitect
                 }
                 if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    SaveWindow tSave = EditorWindow.GetWindow<SaveWindow>();
-                    tSave.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.Extrusion, node, SMM);
+                    SaveWindow saveDialog = EditorWindow.GetWindow<SaveWindow>();
+                    saveDialog.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.Extrusion, node, SMM);
                 }
                 if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
@@ -1451,7 +1457,6 @@ namespace RoadArchitect
                     {
                         EOM.isEdgeSignLabel = true;
                         EOM.edgeSignLabel = "GSDFedSign-diamond";
-
                     }
                     else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignSquare-Small") == 0)
                     {
@@ -2481,39 +2486,39 @@ namespace RoadArchitect
             string path = "";
             if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)
             {
-                path = basePath + "/Prefabs/Interactive/GSDWarningSign_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/WarningSignStatic.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign2_Static)
             {
-                path = basePath + "/Prefabs/Interactive/GSDWarningSign2_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/WarningSignStatic2.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Atten_Static)
             {
-                path = basePath + "/Prefabs/Interactive/GSDAtten_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/AttenStatic.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Static)
             {
-                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/RoadBarrelStatic.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel1_Rigid)
             {
-                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel_Rigid.prefab";
+                path = basePath + "/Prefabs/Interactive/RoadBarrelRigid.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Static)
             {
-                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel3_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/RoadBarrelStatic3.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel3_Rigid)
             {
-                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel3_Rigid.prefab";
+                path = basePath + "/Prefabs/Interactive/RoadBarrelRigid3.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Static)
             {
-                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel7_Static.prefab";
+                path = basePath + "/Prefabs/Interactive/RoadBarrelStatic7.prefab";
             }
             else if (endObjectAdd == EndObjectsDefaultsEnum.Barrel7_Rigid)
             {
-                path = basePath + "/Prefabs/Interactive/GSDRoadBarrel7_Rigid.prefab";
+                path = basePath + "/Prefabs/Interactive/RoadBarrelRigid7.prefab";
             }
             else
             {
