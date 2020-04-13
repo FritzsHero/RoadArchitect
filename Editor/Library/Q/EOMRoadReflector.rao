@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Mesh/RoadObj/Signs/GSDRoadReflector.FBX</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Mesh/Signs/RoadReflector.FBX</edgeObjectString>
   <isCombinedMesh>true</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>

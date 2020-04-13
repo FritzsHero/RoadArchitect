@@ -10,7 +10,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/BridgeBase4-38w-5l-5d.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase4-38w-5l-5d.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -880,7 +880,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/BridgePillar4-6L.FBX</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Mesh/Bridges/BridgePillar4On6Lanes.FBX</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>

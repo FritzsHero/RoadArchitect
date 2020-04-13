@@ -10,7 +10,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/BridgeBase-28w-5l-1d.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase-28w-5l-1d.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -184,7 +184,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/BridgeBase8-4L-40M.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase8On4Lanes40M.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -359,8 +359,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap2String>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />
@@ -459,8 +459,8 @@
   <mMinZ>-3.75</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.FBX</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.FBX</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Mesh/Railing/Railing7Pole10m.FBX</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Mesh/Railing/Railing7Pole10m.FBX</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -533,8 +533,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap2String>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />
@@ -633,8 +633,8 @@
   <mMinZ>-3.75</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.FBX</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Pole.FBX</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Mesh/Railing/Railing7Pole10m.FBX</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Mesh/Railing/Railing7Pole10m.FBX</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>

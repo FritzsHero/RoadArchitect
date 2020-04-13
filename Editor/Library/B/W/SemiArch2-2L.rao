@@ -10,7 +10,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/BridgeBase-18w-5l-1d.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase-18w-5l-1d.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -184,7 +184,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/BridgeBase6-2L.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase6On2Lanes.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -533,8 +533,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing8.prefab</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing8-Cap.fbx</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing8-Cap.fbx</CurrentSplinationCap2String>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing8Cap.fbx</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing8Cap.fbx</CurrentSplinationCap2String>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/GSDCableBarrier-Light.fbx</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/CableBarrierLight.fbx</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isGSD>false</isGSD>
@@ -103,8 +103,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/GSDCableBarrier-Pole.fbx</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/GSDCableBarrier-Pole.fbx</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Mesh/CableBarrierPole.fbx</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Mesh/CableBarrierPole.fbx</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>

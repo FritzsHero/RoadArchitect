@@ -10,7 +10,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspBridgeGrid-2L.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeGrid2Lanes.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -184,9 +184,9 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspBridgeBase-2L-40M.FBX</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspBridgeBase-2L-40M-Cap.FBX</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspBridgeBase-2L-40M-Cap.FBX</CurrentSplinationCap2String>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeBase2Lanes40M.FBX</CurrentSplinationString>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeBase2Lanes40MCap.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeBase2Lanes40MCap.FBX</CurrentSplinationCap2String>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDConcrete2.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
@@ -706,7 +706,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing4-Light1-20m.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Railing/Railing4Light1Length20m.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -880,7 +880,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing4-Light1-20m.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Railing/Railing4Light1Length20m.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -1054,7 +1054,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspBridgeCable1.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeCable1.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -1249,7 +1249,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspBridgeCable1.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeCable1.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
@@ -1588,7 +1588,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspCableHolder.fbx</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Mesh/Bridges/SuspCableHolder.fbx</edgeObjectString>
   <isCombinedMesh>true</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>
@@ -1661,7 +1661,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Mesh/RoadObj/Bridges/SuspCableHolder.fbx</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Mesh/Bridges/SuspCableHolder.fbx</edgeObjectString>
   <isCombinedMesh>true</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>

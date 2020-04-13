@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing5.fbx</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing5Cap.fbx</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing5Cap.fbx</CurrentSplinationCap2String>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Railing/Railing5.fbx</CurrentSplinationString>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing5Cap.fbx</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing5Cap.fbx</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDConcrete2.mat</SplinatedMaterial1String>

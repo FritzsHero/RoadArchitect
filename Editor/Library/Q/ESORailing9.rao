@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing9.fbx</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Railing/Railing9.fbx</CurrentSplinationString>
   <CurrentSplinationCap1String></CurrentSplinationCap1String>
   <CurrentSplinationCap2String></CurrentSplinationCap2String>
   <isGSD>true</isGSD>

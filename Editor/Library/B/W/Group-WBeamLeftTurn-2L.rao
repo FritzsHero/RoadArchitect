@@ -10,7 +10,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/GSDWBeam2.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/WBeam2.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isGSD>true</isGSD>
@@ -187,7 +187,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <edgeObjectString>Assets/RoadArchitect/Mesh/RoadObj/Signs/FedSigns/GSDSign396.FBX</edgeObjectString>
+  <edgeObjectString>Assets/RoadArchitect/Mesh/Signs/FedSigns/Sign396.FBX</edgeObjectString>
   <isCombinedMesh>false</isCombinedMesh>
   <isCombinedMeshCollider>false</isCombinedMeshCollider>
   <subType>Right</subType>

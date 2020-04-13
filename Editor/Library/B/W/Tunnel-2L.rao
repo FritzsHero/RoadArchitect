@@ -10,9 +10,9 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Tunnel/GSDTunnel-2L.FBX</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Tunnel/GSDTunnel-2L-Cap.FBX</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Tunnel/GSDTunnel-2L-Cap.FBX</CurrentSplinationCap2String>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Tunnel/Tunnel2Lanes.FBX</CurrentSplinationString>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Tunnel/TunnelCap2Lanes.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Tunnel/TunnelCap2Lanes.FBX</CurrentSplinationCap2String>
   <isGSD>false</isGSD>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDTunnel.mat</SplinatedMaterial1String>
@@ -187,7 +187,7 @@
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentSplinationString>Assets/RoadArchitect/Mesh/RoadObj/Tunnel/GSDTunnel-2L-Lights.FBX</CurrentSplinationString>
+  <CurrentSplinationString>Assets/RoadArchitect/Mesh/Tunnel/TunnelLights2Lanes.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isGSD>false</isGSD>

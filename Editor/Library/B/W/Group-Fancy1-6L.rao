@@ -11,8 +11,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap2String>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
@@ -113,8 +113,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Railings/Railing7Pole10m.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Railings/Railing7Pole10m.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>
@@ -188,8 +188,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/Railing/GSDRailing7-10m-Cap.FBX</CurrentSplinationCap2String>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
@@ -290,8 +290,8 @@
   <mMinZ>-1</mMinZ>
   <RepeatUVType>0</RepeatUVType>
   <isNotCenterMode>true</isNotCenterMode>
-  <EndCapStartString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapStartString>
-  <EndCapEndString>Assets/RoadArchitect/Mesh/RoadObj/Railing/Railing7Pole10m.prefab</EndCapEndString>
+  <EndCapStartString>Assets/RoadArchitect/Prefabs/Railings/Railing7Pole10m.prefab</EndCapStartString>
+  <EndCapEndString>Assets/RoadArchitect/Prefabs/Railings/Railing7Pole10m.prefab</EndCapEndString>
   <isEndCapCustomMatchStart>true</isEndCapCustomMatchStart>
   <EndCapCustomOffsetStart>
     <x>0</x>

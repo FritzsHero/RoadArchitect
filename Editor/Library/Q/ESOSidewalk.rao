@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Sidewalk.prefab</CurrentSplinationString>
-  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/RoadObj/GSDSidewalk-Cap.fbx</CurrentSplinationCap1String>
-  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/RoadObj/GSDSidewalk-Cap.fbx</CurrentSplinationCap2String>
+  <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/SidewalkCap.FBX</CurrentSplinationCap1String>
+  <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/SidewalkCap.FBX</CurrentSplinationCap2String>
   <isGSD>true</isGSD>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRoad1.mat</SplinatedMaterial1String>
