@@ -532,9 +532,9 @@ namespace RoadArchitect
             //Round up to nearest whole F
             _distanceX = Mathf.Ceil(_distanceX);
             _distance = Mathf.Ceil(_distance);
-            //string assetName = "GSDInterTLB" + tTrafficLightNumber + "_" + tDistance.ToString("F0") + "_" + xDistance.ToString("F0") + ".prefab";
-            string assetNameAsset = "GSDInterTLB" + tTrafficLightNumber + "_" + _distance.ToString("F0") + "_" + _distanceX.ToString("F0") + ".asset";
-            string BackupFBX = "GSDInterTLB" + tTrafficLightNumber + ".FBX";
+            //string assetName = "InterTLB" + tTrafficLightNumber + "_" + tDistance.ToString("F0") + "_" + xDistance.ToString("F0") + ".prefab";
+            string assetNameAsset = "InterTLB" + tTrafficLightNumber + "_" + _distance.ToString("F0") + "_" + _distanceX.ToString("F0") + ".asset";
+            string BackupFBX = "InterTLB" + tTrafficLightNumber + ".FBX";
             float tMod = _distance / 5f;
             float hMod = (_distance / 10f) * 0.7f;
             float xMod = ((_distanceX / 20f) + 2f) * 0.3334f;
@@ -550,10 +550,10 @@ namespace RoadArchitect
 
             string basePath = RoadEditorUtility.GetBasePath();
 
-            Mesh xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/RoadObj/Signs/TrafficLightBases/" + assetNameAsset, typeof(Mesh));
+            Mesh xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/Signs/TrafficLightBases/" + assetNameAsset, typeof(Mesh));
             if (xMesh == null)
             {
-                xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/RoadObj/Signs/TrafficLightBases/" + BackupFBX, typeof(Mesh));
+                xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/Signs/TrafficLightBases/" + BackupFBX, typeof(Mesh));
                 bDoCustom = true;
             }
 
@@ -636,7 +636,7 @@ namespace RoadArchitect
                 //Save:
                 if (_isSavingAsset)
                 {
-                    UnityEditor.AssetDatabase.CreateAsset(tMesh, basePath + "/Mesh/RoadObj/Signs/TrafficLightBases/" + assetNameAsset);
+                    UnityEditor.AssetDatabase.CreateAsset(tMesh, basePath + "/Mesh/Signs/TrafficLightBases/" + assetNameAsset);
                 }
             }
 

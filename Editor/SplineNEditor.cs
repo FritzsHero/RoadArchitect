@@ -1845,22 +1845,22 @@ namespace RoadArchitect
             {
                 if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-19w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-19w-5l-1d.fbx";
                     tName = "BridgeTop1M-1M";
                 }
                 else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-20w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-20w-5l-1d.fbx";
                     tName = "BridgeTop2M-1M";
                 }
                 else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-18w-5l-3d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-18w-5l-3d.fbx";
                     tName = "BridgeTop0M-3M";
                 }
                 else
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-18w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-18w-5l-1d.fbx";
                     tName = "BridgeTop0M-1M";
                 }
             }
@@ -1868,22 +1868,22 @@ namespace RoadArchitect
             {
                 if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-29w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-29w-5l-1d.fbx";
                     tName = "BridgeTop1M-1M";
                 }
                 else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-30w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-30w-5l-1d.fbx";
                     tName = "BridgeTop2M-1M";
                 }
                 else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-28w-5l-3d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-28w-5l-3d.fbx";
                     tName = "BridgeTop0M-3M";
                 }
                 else
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-28w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-28w-5l-1d.fbx";
                     tName = "BridgeTop0M-1M";
                 }
             }
@@ -1891,22 +1891,22 @@ namespace RoadArchitect
             {
                 if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base1MOver)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-39w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-39w-5l-1d.fbx";
                     tName = "BridgeTop1M-1M";
                 }
                 else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base2MOver)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-40w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-40w-5l-1d.fbx";
                     tName = "BridgeTop2M-1M";
                 }
                 else if (BridgeTopBaseQuickAdd == BridgeTopBaseDefaultsEnum.Base3MDeep)
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-38w-5l-3d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-38w-5l-3d.fbx";
                     tName = "BridgeTop0M-3M";
                 }
                 else
                 {
-                    tBridgeTopBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase-38w-5l-1d.fbx";
+                    tBridgeTopBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase-38w-5l-1d.fbx";
                     tName = "BridgeTop0M-1M";
                 }
             }
@@ -1951,47 +1951,47 @@ namespace RoadArchitect
             {
                 if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase2-18w-5l-3d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase2-18w-5l-3d.fbx";
                     tName = "BridgeBase2";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase3-18w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase3-18w-5l-5d.fbx";
                     tName = "BridgeBase3";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase4-18w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase4-18w-5l-5d.fbx";
                     tName = "BridgeBase4";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase5-18w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase5-18w-5l-5d.fbx";
                     tName = "BridgeBase5";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase6-2L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase6On2Lanes.fbx";
                     tName = "BridgeArchBeam80";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase7-2L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase7On2Lanes.fbx";
                     tName = "BridgeArchSolid80";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase8-2L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase8On2Lanes.fbx";
                     tName = "BridgeArchSolid180";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBaseGrid-18w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBaseGrid-18w-5l-5d.fbx";
                     tName = "BridgeGrid";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBaseSteelBeam-18w-20l-3d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBaseSteelBeam-18w-20l-3d.fbx";
                     tName = "BridgeSteelBeams";
                 }
             }
@@ -1999,47 +1999,47 @@ namespace RoadArchitect
             {
                 if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase2-28w-5l-3d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase2-28w-5l-3d.fbx";
                     tName = "BridgeBase2";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase3-28w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase3-28w-5l-5d.fbx";
                     tName = "BridgeBase3";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase4-28w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase4-28w-5l-5d.fbx";
                     tName = "BridgeBase4";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase5-28w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase5-28w-5l-5d.fbx";
                     tName = "BridgeBase5";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase6-4L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase6On4Lanes.fbx";
                     tName = "BridgeArchBeam80";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase7-4L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase7On4Lanes.fbx";
                     tName = "BridgeArchSolid80";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase8-4L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase8On4Lanes.fbx";
                     tName = "BridgeArchSolid180";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBaseGrid-28w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBaseGrid-28w-5l-5d.fbx";
                     tName = "BridgeGrid";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBaseSteelBeam-28w-20l-3d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBaseSteelBeam-28w-20l-3d.fbx";
                     tName = "BridgeSteelBeams";
                 }
             }
@@ -2047,47 +2047,47 @@ namespace RoadArchitect
             {
                 if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase2-38w-5l-3d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase2-38w-5l-3d.fbx";
                     tName = "BridgeBase2";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase3)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase3-38w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase3-38w-5l-5d.fbx";
                     tName = "BridgeBase3";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase4)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase4-38w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase4-38w-5l-5d.fbx";
                     tName = "BridgeBase4";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase5)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase5-38w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase5-38w-5l-5d.fbx";
                     tName = "BridgeBase5";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase6)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase6-6L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase6On6Lanes.fbx";
                     tName = "BridgeArchBeam80";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase7)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase7-6L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase7On6Lanes.fbx";
                     tName = "BridgeArchSolid80";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase8)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBase8-6L.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBase8On6Lanes.fbx";
                     tName = "BridgeArchSolid180";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBaseGrid-38w-5l-5d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBaseGrid-38w-5l-5d.fbx";
                     tName = "BridgeGrid";
                 }
                 else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
                 {
-                    tBridgeBottomBaseToAdd = basePath + "/Mesh/RoadObj/Bridges/BridgeBaseSteelBeam-38w-20l-3d.fbx";
+                    tBridgeBottomBaseToAdd = basePath + "/Mesh/Bridges/BridgeBaseSteelBeam-38w-20l-3d.fbx";
                     tName = "BridgeBeams";
                 }
             }
