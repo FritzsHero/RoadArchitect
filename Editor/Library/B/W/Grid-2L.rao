@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Grid.png</thumbString>
-  <displayName>Grid-2L</displayName>
-  <desc />
+  <displayName>Grid Steel</displayName>
+  <desc>Grid based steel bridge. Good for any length depending on triangle counts.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>Grid-2L</fileName>

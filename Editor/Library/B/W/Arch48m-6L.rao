@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Arch48m.png</thumbString>
-  <displayName>Arch48m-6L</displayName>
-  <desc />
+  <displayName>Arch 48m Beams</displayName>
+  <desc>Full deck arch bridge with 48m beams. Good for any length and large width roads.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>Arch48m-6L</fileName>

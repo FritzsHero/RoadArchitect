@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SemiArch2.png</thumbString>
-  <displayName>SemiArch2-6L</displayName>
-  <desc />
+  <displayName>SemiArch 80 Girder</displayName>
+  <desc>80 Degree arch with girder style. For lengths under 300m and small heights.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>SemiArch2-6L</fileName>

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Causeway1.png</thumbString>
-  <displayName>Causeway1-4L</displayName>
-  <desc />
+  <displayName>Causeway Federal</displayName>
+  <desc>Standard federal highway bridge style. Good for any length depending on triangle counts.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>Causeway1-4L</fileName>

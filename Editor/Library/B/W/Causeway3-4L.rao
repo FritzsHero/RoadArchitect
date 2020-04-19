@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Causeway3.png</thumbString>
-  <displayName>Causeway3-4L</displayName>
-  <desc />
+  <displayName>Causeway Classic</displayName>
+  <desc>Classic causeway style. Good for any length depending on triangle counts.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>Causeway3-4L</fileName>

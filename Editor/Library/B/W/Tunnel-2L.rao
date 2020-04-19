@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Tunnel.png</thumbString>
-  <displayName>GSDTunnel-2L</displayName>
-  <desc />
+  <displayName>Tunnel</displayName>
+  <desc>Designed after the Eisenhower tunnel.</desc>
   <isDefault>true</isDefault>
   <isBridge>false</isBridge>
-  <fileName>GSDTunnel-2L</fileName>
+  <fileName>Tunnel-2L</fileName>
 </WizardObjectLibrary>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
@@ -179,7 +179,7 @@
     <y>6.000001</y>
     <z>-10</z>
   </CollisionTriT>
-  <objectName>GSDTunnel-2L</objectName>
+  <objectName>Tunnel-2L</objectName>
   <thumbString />
   <desc />
   <displayName />

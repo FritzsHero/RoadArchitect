@@ -379,118 +379,61 @@ namespace RoadArchitect
 
                 if (tO.isDefault && _isBridge)
                 {
-                    if (tO.displayName.Contains("SuspL") || tO.displayName.Contains("Large Suspension"))
+                    if (tO.displayName.Contains("Large Suspension"))
                     {
-                        tO.displayName = "Large Suspension";
-                        tO.desc = "Designed after the Golden Gate bridge. For lengths over 850m. Best results over 1300m.";
                         tO.sortID = 11;
                     }
-                    else if (tO.displayName.Contains("SuspS") || tO.displayName.Contains("Small Suspension"))
+                    else if (tO.displayName.Contains("Small Suspension"))
                     {
-                        tO.displayName = "Small Suspension";
-                        tO.desc = "Similar style as the large with smaller pillars. For lengths under 725m.";
                         tO.sortID = 10;
                     }
-                    else if (tO.displayName.Contains("SemiArch1"))
+                    else if (tO.displayName.Contains("SemiArch 80 Degree"))
                     {
-                        tO.displayName = "SemiArch 80 Degree";
-                        tO.desc = "80 Degree arch. For lengths under 300m and small heights.";
                         tO.sortID = 40;
                     }
-                    else if (tO.displayName.Contains("SemiArch2"))
+                    else if (tO.displayName.Contains("SemiArch 80 Girder"))
                     {
-                        tO.displayName = "SemiArch 80 Girder";
-                        tO.desc = "80 Degree arch with girder style. For lengths under 300m and small heights.";
                         tO.sortID = 41;
                     }
-                    else if (tO.displayName.Contains("SemiArch3"))
+                    else if (tO.displayName.Contains("SemiArch 180 Degree"))
                     {
-                        tO.displayName = "SemiArch 180 Degree";
-                        tO.desc = "180 Degree arch. For lengths under 300m and small heights.";
                         tO.sortID = 42;
                     }
-                    else if (tO.displayName.Contains("Arch12m"))
+                    else if (tO.displayName.Contains("Arch 12m Beams"))
                     {
-                        tO.displayName = "Arch 12m Beams";
-                        tO.desc = "Full deck arch bridge with 12m beams. Good for any length.";
                         tO.sortID = 0;
                     }
-                    else if (tO.displayName.Contains("Arch24m"))
+                    else if (tO.displayName.Contains("Arch 24m Beams"))
                     {
-                        tO.displayName = "Arch 24m Beams";
-                        tO.desc = "Full deck arch bridge with 24m beams. Good for any length and non-small width roads.";
                         tO.sortID = 1;
                     }
-                    else if (tO.displayName.Contains("Arch48m"))
+                    else if (tO.displayName.Contains("Arch 48m Beams"))
                     {
-                        tO.displayName = "Arch 48m Beams";
-                        tO.desc = "Full deck arch bridge with 48m beams. Good for any length and large width roads.";
                         tO.sortID = 3;
                     }
-                    else if (tO.displayName.Contains("Grid"))
+                    else if (tO.displayName.Contains("Grid Steel"))
                     {
-                        tO.displayName = "Grid Steel";
-                        tO.desc = "Grid based steel bridge. Good for any length depending on triangle counts.";
                         tO.sortID = 30;
                     }
-                    else if (tO.displayName.Contains("Steel"))
+                    else if (tO.displayName.Contains("Steel Beam"))
                     {
-                        tO.displayName = "Steel Beam";
-                        tO.desc = "Standard steel beam bridge. Good for any length depending on triangle counts.";
                         tO.sortID = 4;
                     }
-                    else if (tO.displayName.Contains("Causeway1"))
+                    else if (tO.displayName.Contains("Causeway Federal"))
                     {
-                        tO.displayName = "Causeway Federal";
-                        tO.desc = "Standard federal highway bridge style. Good for any length depending on triangle counts.";
                         tO.sortID = 5;
                     }
-                    else if (tO.displayName.Contains("Causeway2"))
+                    else if (tO.displayName.Contains("Causeway Overpass"))
                     {
-                        tO.displayName = "Causeway Overpass";
-                        tO.desc = "Overpass style. Good for any length depending on triangle counts.";
                         tO.sortID = 8;
                     }
-                    else if (tO.displayName.Contains("Causeway3"))
+                    else if (tO.displayName.Contains("Causeway Classic"))
                     {
-                        tO.displayName = "Causeway Classic";
-                        tO.desc = "Classic causeway style. Good for any length depending on triangle counts.";
                         tO.sortID = 7;
                     }
-                    else if (tO.displayName.Contains("Causeway4"))
+                    else if (tO.displayName.Contains("Causeway Highway"))
                     {
-                        tO.displayName = "Causeway Highway";
-                        tO.desc = "State highway style. Good for any length depending on triangle counts.";
                         tO.sortID = 6;
-                    }
-                }
-
-                if (tO.isDefault && !_isBridge)
-                {
-                    if (tO.displayName.Contains("GSDTunnel"))
-                    {
-                        tO.displayName = "Tunnel";
-                        tO.desc = "Designed after the Eisenhower tunnel.";
-                    }
-                    else if (tO.displayName.Contains("GSDGroup-WBeamLeftTurn"))
-                    {
-                        tO.displayName = "Left turn wbeams";
-                        tO.desc = "Contains wbeam and signs on right side of road for left turn.";
-                    }
-                    else if (tO.displayName.Contains("GSDGroup-KRailLights"))
-                    {
-                        tO.displayName = "K-rail with lights";
-                        tO.desc = "Center divider k-rail with double sided lights. Best used on mostly straight highway type roads.";
-                    }
-                    else if (tO.displayName.Contains("GSDGroup-Rumblestrips"))
-                    {
-                        tO.displayName = "Rumblestrips x2";
-                        tO.desc = "Rumble strips on both sides of the road.";
-                    }
-                    else if (tO.displayName.Contains("GSDGroup-Fancy1"))
-                    {
-                        tO.displayName = "Fancy railing x2";
-                        tO.desc = "Luxurious railing with lighting on both sides of the road.";
                     }
                 }
 

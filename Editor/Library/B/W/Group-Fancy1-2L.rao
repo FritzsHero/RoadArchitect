@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Group-Fancy1.png</thumbString>
-  <displayName>GSDGroup-Fancy1-2L</displayName>
-  <desc />
+  <displayName>Fancy railing x2</displayName>
+  <desc>Luxurious railing with lighting on both sides of the road.</desc>
   <isDefault>true</isDefault>
   <isBridge>false</isBridge>
-  <fileName>GSDGroup-Fancy1-2L</fileName>
+  <fileName>Group-Fancy1-2L</fileName>
 </WizardObjectLibrary>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>

@@ -2,7 +2,7 @@
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SuspL.png</thumbString>
   <displayName>Large Suspension</displayName>
-  <desc>Best used for lengths over 850 meters.</desc>
+  <desc>Designed after the Golden Gate bridge. For lengths over 850m. Best results over 1300m.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>SuspL-6L</fileName>

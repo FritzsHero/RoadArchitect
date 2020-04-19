@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Group-WBeamLeftTurn.png</thumbString>
-  <displayName>GSDGroup-WBeamLeftTurn</displayName>
-  <desc />
+  <displayName>Left turn wbeams</displayName>
+  <desc>Contains wbeam and signs on right side of road for left turn.</desc>
   <isDefault>true</isDefault>
   <isBridge>false</isBridge>
-  <fileName>GSDGroup-WBeamLeftTurn</fileName>
+  <fileName>Group-WBeamLeftTurn</fileName>
 </WizardObjectLibrary>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>

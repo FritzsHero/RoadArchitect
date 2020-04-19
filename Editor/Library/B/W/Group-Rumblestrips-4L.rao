@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RumbleStrip.png</thumbString>
-  <displayName>GSDGroup-Rumblestrips-2L</displayName>
-  <desc />
+  <displayName>Rumblestrips x2</displayName>
+  <desc>Rumble strips on both sides of the road.</desc>
   <isDefault>true</isDefault>
   <isBridge>false</isBridge>
-  <fileName>GSDGroup-Rumblestrips-2L</fileName>
+  <fileName>Group-Rumblestrips-2L</fileName>
 </WizardObjectLibrary>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>

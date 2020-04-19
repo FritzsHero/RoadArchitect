@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Group-KRailLights.png</thumbString>
-  <displayName>GSDGroup-KRailLights-2L</displayName>
-  <desc />
+  <displayName>K rail with lights</displayName>
+  <desc>Center divider k-rail with double sided lights. Best used on mostly straight highway type roads.</desc>
   <isDefault>true</isDefault>
   <isBridge>false</isBridge>
-  <fileName>GSDGroup-KRailLights-2L</fileName>
+  <fileName>Group-KRailLights-2L</fileName>
 </WizardObjectLibrary>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>

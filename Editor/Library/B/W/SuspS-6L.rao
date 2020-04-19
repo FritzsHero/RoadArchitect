@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
   <WizardObjectLibrary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/SuspS.png</thumbString>
-  <displayName>SuspS-6L</displayName>
-  <desc>Best used for lengths under ~725 meters.</desc>
+  <displayName>Small Suspension</displayName>
+  <desc>Similar style as the large with smaller pillars. For lengths under 725m.</desc>
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
-  <fileName>Small Suspension</fileName>
+  <fileName>SuspS-6L</fileName>
 </WizardObjectLibrary>
 !!!! MICROGSD !!!!
 ﻿<?xml version="1.0" encoding="utf-8"?>
