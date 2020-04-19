@@ -7,7 +7,7 @@
   <isBridge>false</isBridge>
   <fileName>Group-WBeamLeftTurn</fileName>
 </WizardObjectLibrary>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/WBeam2.FBX</CurrentSplinationString>
@@ -184,7 +184,7 @@
   <desc />
   <displayName>GSDWBeam1R</displayName>
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <edgeObjectString>Assets/RoadArchitect/Mesh/Signs/FedSigns/Sign396.FBX</edgeObjectString>
@@ -260,4 +260,4 @@
   <desc />
   <displayName>GSDSign396</displayName>
 </EdgeObjectLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####

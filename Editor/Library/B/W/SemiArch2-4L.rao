@@ -7,7 +7,7 @@
   <isBridge>true</isBridge>
   <fileName>SemiArch2-4L</fileName>
 </WizardObjectLibrary>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase-28w-5l-1d.FBX</CurrentSplinationString>
@@ -181,7 +181,7 @@
   <desc />
   <displayName />
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/Bridges/BridgeBase6On4Lanes.FBX</CurrentSplinationString>
@@ -355,7 +355,7 @@
   <desc />
   <displayName />
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing8.prefab</CurrentSplinationString>
@@ -529,7 +529,7 @@
   <desc />
   <displayName />
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing8.prefab</CurrentSplinationString>
@@ -703,4 +703,4 @@
   <desc />
   <displayName />
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####

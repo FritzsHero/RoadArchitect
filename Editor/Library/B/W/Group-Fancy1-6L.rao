@@ -7,7 +7,7 @@
   <isBridge>false</isBridge>
   <fileName>Group-Fancy1-2L</fileName>
 </WizardObjectLibrary>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
@@ -184,7 +184,7 @@
   <desc />
   <displayName>GSDRailing7</displayName>
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
@@ -361,7 +361,7 @@
   <desc />
   <displayName>GSDRailing7</displayName>
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/StreetLightSingle.prefab</edgeObjectString>
@@ -436,7 +436,7 @@
   <desc />
   <displayName>StreetLightSingle</displayName>
 </EdgeObjectLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <edgeObjectString>Assets/RoadArchitect/Prefabs/Signs/StreetLightSingle.prefab</edgeObjectString>
@@ -511,4 +511,4 @@
   <desc />
   <displayName>StreetLightSingle</displayName>
 </EdgeObjectLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####

@@ -23,8 +23,9 @@ namespace RoadArchitect
 #if UNITY_EDITOR
     public static class RoadUtility
     {
-        private const string FileSepString = "\n!!!! MICROGSD !!!!\n";
-        private const string FileSepStringCRLF = "\r\n!!!! MICROGSD !!!!\r\n";
+        private const string FileSepString = "\n#### RoadArchitect ####\n";
+        private const string FileSepStringCRLF = "\r\n#### RoadArchitect ####\r\n";
+        // old: !!!! MICROGSD !!!!
 
 
         public static Terrain GetTerrain(Vector3 _vect)

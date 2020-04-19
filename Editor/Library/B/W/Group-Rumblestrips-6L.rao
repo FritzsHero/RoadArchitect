@@ -7,7 +7,7 @@
   <isBridge>false</isBridge>
   <fileName>Group-Rumblestrips-2L</fileName>
 </WizardObjectLibrary>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/RumbleStrip.prefab</CurrentSplinationString>
@@ -184,7 +184,7 @@
   <desc />
   <displayName>RumbleStrip</displayName>
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SplinatedMeshLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/RumbleStrip.prefab</CurrentSplinationString>
@@ -361,4 +361,4 @@
   <desc />
   <displayName>RumbleStrip</displayName>
 </SplinatedMeshLibraryMaker>
-!!!! MICROGSD !!!!
+#### RoadArchitect ####
