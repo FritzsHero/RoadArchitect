@@ -24,7 +24,7 @@ namespace RoadArchitect.Splination
         [UnityEngine.Serialization.FormerlySerializedAs("bNeedsUpdate")]
         public bool isRequiringUpdate = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
-        public bool isGSD = false;
+        public bool isDefault = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
         public bool isMaterialOverriden = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bExactSplination")]
@@ -239,7 +239,7 @@ namespace RoadArchitect.Splination
             SplinatedMeshMaker SMM = new SplinatedMeshMaker();
             SMM.Init(spline, node, masterObjTrans);
             SMM.masterObjTrans = masterObjTrans;
-            SMM.isGSD = isGSD;
+            SMM.isDefault = isDefault;
 
             SMM.currentSplination = currentSplination;
             SMM.currentSplinationString = currentSplinationString;
@@ -549,7 +549,7 @@ namespace RoadArchitect.Splination
             public string CurrentSplinationCap1String = "";
             public string CurrentSplinationCap2String = "";
             [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
-            public bool isGSD = false;
+            public bool isDefault = false;
 
             [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
             public bool isMaterialOverriden = false;
@@ -707,7 +707,7 @@ namespace RoadArchitect.Splination
                 {
                     CurrentSplinationCap2String = _SMM.currentSplinationCap2String;
                 }
-                isGSD = _SMM.isGSD;
+                isDefault = _SMM.isDefault;
 
                 CapHeightOffset1 = _SMM.capHeightOffset1;
                 CapHeightOffset2 = _SMM.capHeightOffset2;
@@ -856,7 +856,7 @@ namespace RoadArchitect.Splination
                     }
                 }
 
-                _SMM.isGSD = isGSD;
+                _SMM.isDefault = isDefault;
                 _SMM.isExactSplination = isExactSplination;
                 _SMM.isMatchingRoadDefinition = isMatchingRoadDefinition;
                 _SMM.isMatchingRoadIncrements = isMatchingRoadIncrements;

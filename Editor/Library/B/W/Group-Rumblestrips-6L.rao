@@ -13,7 +13,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/RumbleStrip.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />
@@ -190,7 +190,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/RumbleStrip.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />

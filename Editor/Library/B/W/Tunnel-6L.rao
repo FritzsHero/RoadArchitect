@@ -13,7 +13,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/Tunnel/Tunnel6Lanes.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Tunnel/TunnelCap6Lanes.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Tunnel/TunnelCap6Lanes.FBX</CurrentSplinationCap2String>
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDTunnel.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
@@ -190,7 +190,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/Tunnel/TunnelLights6Lanes.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDTunnelLights.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
@@ -371,7 +371,7 @@
   <meterSep>40</meterSep>
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <horizontalSep>5</horizontalSep>
   <horizontalCurve>

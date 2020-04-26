@@ -3,7 +3,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing4.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />

@@ -3,7 +3,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/Railing/Railing4Light1.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing4.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />

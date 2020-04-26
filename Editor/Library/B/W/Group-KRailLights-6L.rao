@@ -13,7 +13,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/BarrierKRail.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/BarrierKRailCap.fbx</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/BarrierKRailCap.fbx</CurrentSplinationCap2String>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String />
   <SplinatedMaterial2String />
@@ -194,7 +194,7 @@
   <meterSep>40</meterSep>
   <isToggled>true</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDRoadReflector.mat</edgeMaterial1String>
   <horizontalSep>0</horizontalSep>

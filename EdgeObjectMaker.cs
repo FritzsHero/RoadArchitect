@@ -20,7 +20,7 @@ namespace RoadArchitect.EdgeObjects
         [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
         public SplineN node = null;
         [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
-        public bool isGSD = false;
+        public bool isDefault = false;
         [UnityEngine.Serialization.FormerlySerializedAs("EdgeObject")]
         public GameObject edgeObject = null;
         [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectString")]
@@ -175,7 +175,7 @@ namespace RoadArchitect.EdgeObjects
 #if UNITY_EDITOR
             EOM.edgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
 #endif
-            EOM.isGSD = isGSD;
+            EOM.isDefault = isDefault;
 
             EOM.isCombinedMesh = isCombinedMesh;
             EOM.isCombinedMeshCollider = isCombinedMeshCollider;
@@ -430,7 +430,7 @@ namespace RoadArchitect.EdgeObjects
             [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
             public bool isBridge = false;
             [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
-            public bool isGSD = false;
+            public bool isDefault = false;
             [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
             public bool isOncomingRotation = true;
             [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
@@ -491,10 +491,10 @@ namespace RoadArchitect.EdgeObjects
                 edgeObjectString = _EOM.edgeObjectString;
                 isCombinedMesh = _EOM.isCombinedMesh;
                 isCombinedMeshCollider = _EOM.isCombinedMeshCollider;
-                //GSD.Roads.SignPlacementSubTypeEnum SubType = EOM.SubType;
+                //SignPlacementSubTypeEnum SubType = _EOM.SubType;
                 meterSep = _EOM.meterSep;
                 isToggled = _EOM.isToggled;
-                isGSD = _EOM.isGSD;
+                isDefault = _EOM.isDefault;
 
                 isMaterialOverriden = _EOM.isMaterialOverriden;
                 edgeMaterial1String = _EOM.edgeMaterial1String;
@@ -545,7 +545,7 @@ namespace RoadArchitect.EdgeObjects
                 _EOM.subType = subType;
                 _EOM.meterSep = meterSep;
                 _EOM.isToggled = isToggled;
-                _EOM.isGSD = isGSD;
+                _EOM.isDefault = isDefault;
 
                 _EOM.horizontalSep = horizontalSep;
                 _EOM.horizontalCurve = horizontalCurve;
@@ -600,17 +600,15 @@ namespace RoadArchitect.EdgeObjects
             [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
             public float meterSep = 5f;
 
-            // A Toggle for? for What?
+            // A Toggle for?
             [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
             public bool isToggled = false;
 
-            // Is it Bridge? I think?
             [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
             public bool isBridge = false;
 
-            // ??
             [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
-            public bool isGSD = false;
+            public bool isDefault = false;
 
             // Materials of EdgeObject
             [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
@@ -1211,13 +1209,13 @@ namespace RoadArchitect.EdgeObjects
             {
                 return;
             }
-            //fTimeMax = tNode.GSDSpline.mNodes[tNode.idOnSpline+1].tTime;
+            //fTimeMax = tNode.spline.mNodes[tNode.idOnSpline+1].tTime;
             //float tStep = -1f;
             Vector3 tVect = default(Vector3);
             Vector3 POS = default(Vector3);
 
 
-            //tStep = MeterSep/tNode.GSDSpline.distance;
+            //tStep = MeterSep / tNode.spline.distance;
             //Destroy old objects:
             ClearEOM();
             //Make sure old locs and rots are fresh:

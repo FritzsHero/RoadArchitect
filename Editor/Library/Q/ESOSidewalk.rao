@@ -3,7 +3,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Sidewalk.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/SidewalkCap.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/SidewalkCap.FBX</CurrentSplinationCap2String>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRoad1.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String>Assets/RoadArchitect/Materials/GSDRoadDetailOverlay1.mat</SplinatedMaterial2String>

@@ -3,7 +3,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />

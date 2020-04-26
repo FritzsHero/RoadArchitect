@@ -13,7 +13,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
@@ -190,7 +190,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Prefabs/Railings/Railing7With10m.prefab</CurrentSplinationString>
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
@@ -371,7 +371,7 @@
   <meterSep>40</meterSep>
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDRoadReflector.mat</edgeMaterial1String>
   <horizontalSep>18</horizontalSep>
@@ -446,7 +446,7 @@
   <meterSep>40</meterSep>
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
   <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDRoadReflector.mat</edgeMaterial1String>
   <horizontalSep>-18</horizontalSep>

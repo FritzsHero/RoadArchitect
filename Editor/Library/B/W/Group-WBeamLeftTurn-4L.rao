@@ -13,7 +13,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/WBeam2.FBX</CurrentSplinationString>
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDWBeam.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
@@ -194,7 +194,7 @@
   <meterSep>10</meterSep>
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/396/GSDFedSign-396-UpcomingLeft.mat</edgeMaterial1String>
   <edgeMaterial2String />

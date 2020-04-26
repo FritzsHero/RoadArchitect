@@ -204,7 +204,7 @@ namespace RoadArchitect
                         Splination.SplinatedMeshMaker SMM = thisNode.AddSplinatedObject();
                         SMM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
                         SMM.LoadFromLibrary(objectList[i].fileName, objectList[i].isDefault);
-                        SMM.isGSD = objectList[i].isDefault;
+                        SMM.isDefault = objectList[i].isDefault;
                         SMM.Setup(true);
                     }
                     else if (tWindowType == WindowTypeEnum.Edge)
@@ -212,7 +212,7 @@ namespace RoadArchitect
                         EdgeObjects.EdgeObjectMaker EOM = thisNode.AddEdgeObject();
                         EOM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
                         EOM.LoadFromLibrary(objectList[i].fileName, objectList[i].isDefault);
-                        EOM.isGSD = objectList[i].isDefault;
+                        EOM.isDefault = objectList[i].isDefault;
                         EOM.Setup();
                     }
                     else if (tWindowType == WindowTypeEnum.Groups)

@@ -3,7 +3,7 @@
   <CurrentSplinationString>Assets/RoadArchitect/Mesh/Railing/Railing9.fbx</CurrentSplinationString>
   <CurrentSplinationCap1String></CurrentSplinationCap1String>
   <CurrentSplinationCap2String></CurrentSplinationCap2String>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDGalv1.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />

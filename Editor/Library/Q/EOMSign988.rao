@@ -7,7 +7,7 @@
   <meterSep>5</meterSep>
   <isToggled>true</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/988/GSDFedSign-988-CustomSpeed.mat</edgeMaterial1String>
   <edgeMaterial2String />

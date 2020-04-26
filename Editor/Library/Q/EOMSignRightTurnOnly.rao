@@ -7,7 +7,7 @@
   <meterSep>5</meterSep>
   <isToggled>true</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>false</isGSD>
+  <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <horizontalSep>5</horizontalSep>
   <horizontalCurve>

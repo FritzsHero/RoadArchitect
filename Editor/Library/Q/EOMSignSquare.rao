@@ -7,7 +7,7 @@
   <meterSep>5</meterSep>
   <isToggled>true</isToggled>
   <isBridge>false</isBridge>
-  <isGSD>true</isGSD>
+  <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
   <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/Square/GSDFedSign-Square-DoNotEnter.mat</edgeMaterial1String>
   <horizontalSep>0</horizontalSep>
