@@ -465,11 +465,11 @@ namespace RoadArchitect
             if (_isDefault)
             {
                 // W folder is now the Default folder
-                info = new DirectoryInfo(path + "B/Default/");
+                info = new DirectoryInfo(path + "Groups/Default/");
             }
             else
             {
-                info = new DirectoryInfo(path + "B/");
+                info = new DirectoryInfo(path + "Groups/");
             }
 
             FileInfo[] fileInfo = info.GetFiles();

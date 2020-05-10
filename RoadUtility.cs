@@ -1001,10 +1001,10 @@ namespace RoadArchitect
             Splination.SplinatedMeshMaker SMM = null;
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string tPath = basePath + "B/" + _wizardObj.fileName + ".rao";
+            string tPath = basePath + "Groups/" + _wizardObj.fileName + ".rao";
             if (_wizardObj.isDefault)
             {
-                tPath = basePath + "B/Default/" + _wizardObj.fileName + ".rao";
+                tPath = basePath + "Groups/Default/" + _wizardObj.fileName + ".rao";
             }
             StringBuilder builder = new StringBuilder(32768);
 
@@ -1046,11 +1046,11 @@ namespace RoadArchitect
             string libraryPath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
-                filePath = libraryPath + "B/Default/" + _fileName + ".rao";
+                filePath = libraryPath + "Groups/Default/" + _fileName + ".rao";
             }
             else
             {
-                filePath = libraryPath + "B/" + _fileName + ".rao";
+                filePath = libraryPath + "Groups/" + _fileName + ".rao";
             }
 
             string fileData = System.IO.File.ReadAllText(filePath);

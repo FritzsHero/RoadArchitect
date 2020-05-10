@@ -352,12 +352,12 @@ namespace RoadArchitect
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            directoryPath = basePath + "B/";
+            directoryPath = basePath + "Groups/";
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            directoryPath = basePath + "B/Default/";
+            directoryPath = basePath + "Groups/Default/";
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
