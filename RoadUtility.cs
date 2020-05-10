@@ -1000,11 +1000,11 @@ namespace RoadArchitect
             //Splinated objects first:
             Splination.SplinatedMeshMaker SMM = null;
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string xPath = RootUtils.GetDirLibrary();
-            string tPath = xPath + "B/" + _wizardObj.fileName + ".rao";
+            string basePath = RootUtils.GetDirLibrary();
+            string tPath = basePath + "B/" + _wizardObj.fileName + ".rao";
             if (_wizardObj.isDefault)
             {
-                tPath = xPath + "B/W/" + _wizardObj.fileName + ".rao";
+                tPath = basePath + "B/Default/" + _wizardObj.fileName + ".rao";
             }
             StringBuilder builder = new StringBuilder(32768);
 
@@ -1041,23 +1041,23 @@ namespace RoadArchitect
 			return;
 #else
 
-            string tPath = "";
+            string filePath = "";
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string xPath = RootUtils.GetDirLibrary();
+            string libraryPath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
-                tPath = xPath + "B/W/" + _fileName + ".rao";
+                filePath = libraryPath + "B/Default/" + _fileName + ".rao";
             }
             else
             {
-                tPath = xPath + "B/" + _fileName + ".rao";
+                filePath = libraryPath + "B/" + _fileName + ".rao";
             }
 
-            string tData = System.IO.File.ReadAllText(tPath);
+            string fileData = System.IO.File.ReadAllText(filePath);
             string[] tSep = new string[2];
             tSep[0] = FileSepString;
             tSep[1] = FileSepStringCRLF;
-            string[] tSplit = tData.Split(tSep, System.StringSplitOptions.RemoveEmptyEntries);
+            string[] tSplit = fileData.Split(tSep, System.StringSplitOptions.RemoveEmptyEntries);
 
             Splination.SplinatedMeshMaker SMM = null;
             Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;

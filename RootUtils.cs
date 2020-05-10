@@ -352,7 +352,7 @@ namespace RoadArchitect
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            directoryPath = basePath + "B/W/";
+            directoryPath = basePath + "B/Default/";
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);

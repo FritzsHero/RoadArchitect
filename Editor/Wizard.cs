@@ -464,7 +464,8 @@ namespace RoadArchitect
             DirectoryInfo info;
             if (_isDefault)
             {
-                info = new DirectoryInfo(path + "B/W/");
+                // W folder is now the Default folder
+                info = new DirectoryInfo(path + "B/Default/");
             }
             else
             {
