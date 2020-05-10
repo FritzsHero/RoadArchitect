@@ -80,7 +80,7 @@ public class RoadSystemEditorMenu : ScriptableObject
 
     /// <summary> Show the help screen. </summary>
     [MenuItem("Window/Road Architect/Help")]
-    public static void GSDRoadsHelp()
+    public static void ShowHelpWindow()
     {
         HelpWindow helpWindow = EditorWindow.GetWindow<HelpWindow>();
         helpWindow.Initialize();
