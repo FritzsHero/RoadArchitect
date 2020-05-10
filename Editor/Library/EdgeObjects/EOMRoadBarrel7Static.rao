@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EdgeObjectLibraryMaker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <edgeObjectString>Assets/RoadArchitect/Prefabs/Interactive/RoadBarrelStatic7.prefab</edgeObjectString>
+  <isCombinedMesh>false</isCombinedMesh>
+  <isCombinedMeshCollider>false</isCombinedMeshCollider>
+  <subType>Right</subType>
+  <meterSep>5</meterSep>
+  <isToggled>true</isToggled>
+  <isBridge>false</isBridge>
+  <isMaterialOverriden>false</isMaterialOverriden>
+  <edgeMaterial1String />
+  <edgeMaterial2String />
+  <horizontalSep>0</horizontalSep>
+  <horizontalCurve>
+    <keys>
+      <Keyframe>
+        <time>0</time>
+        <value>1</value>
+        <inTangent>0</inTangent>
+        <outTangent>0</outTangent>
+        <tangentMode>0</tangentMode>
+      </Keyframe>
+      <Keyframe>
+        <time>1</time>
+        <value>1</value>
+        <inTangent>0</inTangent>
+        <outTangent>0</outTangent>
+        <tangentMode>0</tangentMode>
+      </Keyframe>
+    </keys>
+    <preWrapMode>ClampForever</preWrapMode>
+    <postWrapMode>ClampForever</postWrapMode>
+  </horizontalCurve>
+  <verticalRaise>0</verticalRaise>
+  <verticalCurve>
+    <keys>
+      <Keyframe>
+        <time>0</time>
+        <value>1</value>
+        <inTangent>0</inTangent>
+        <outTangent>0</outTangent>
+        <tangentMode>0</tangentMode>
+      </Keyframe>
+      <Keyframe>
+        <time>1</time>
+        <value>1</value>
+        <inTangent>0</inTangent>
+        <outTangent>0</outTangent>
+        <tangentMode>0</tangentMode>
+      </Keyframe>
+    </keys>
+    <preWrapMode>ClampForever</preWrapMode>
+    <postWrapMode>ClampForever</postWrapMode>
+  </verticalCurve>
+  <customRotation>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </customRotation>
+  <isOncomingRotation>true</isOncomingRotation>
+  <isStatic>true</isStatic>
+  <startTime>0</startTime>
+  <endTime>1</endTime>
+  <singleOnlyBridgePercent>0</singleOnlyBridgePercent>
+  <isSingle>true</isSingle>
+  <singlePosition>0.121</singlePosition>
+  <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
+  <startMatchRoadDef>0</startMatchRoadDef>
+  <objectName>RoadBarrelStatic7</objectName>
+  <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/RoadBarrel7.png</thumbString>
+  <desc>Seven static sand barrels in standard formation. Best results when placed in front of railings or bridges.</desc>
+  <displayName>Sand Barrels Static 7</displayName>
+</EdgeObjectLibraryMaker>

@@ -337,7 +337,12 @@ namespace RoadArchitect
         public static void CheckCreateSpecialLibraryDirs()
         {
             string basePath = GetDirLibraryBase();
-            string directoryPath = basePath + "Q/";
+            string directoryPath = basePath + "EdgeObjects/";
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            directoryPath = basePath + "ExtrudedObjects/";
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);

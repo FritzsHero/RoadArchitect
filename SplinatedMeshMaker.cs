@@ -412,7 +412,8 @@ namespace RoadArchitect.Splination
             {
                 if (_isDefault)
                 {
-                    filePath = basePath + "Q/ESO" + _name + ".rao";
+                    // Q Folder is now ExtrudedObjects
+                    filePath = basePath + "ExtrudedObjects/ESO" + _name + ".rao";
                 }
                 else
                 {
@@ -425,12 +426,13 @@ namespace RoadArchitect.Splination
 
         public void LoadFromLibrary(string _name, bool _isQuickAdd = false)
         {
+            // Q Folder is now ExtrudedObjects
             string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "ESO" + _name + ".rao";
             if (_isQuickAdd)
             {
                 RootUtils.CheckCreateSpecialLibraryDirs();
-                filePath = basePath + "Q/ESO" + _name + ".rao";
+                filePath = basePath + "ExtrudedObjects/ESO" + _name + ".rao";
             }
             SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
@@ -492,7 +494,7 @@ namespace RoadArchitect.Splination
             string basePath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
-                info = new DirectoryInfo(basePath + "Q/");
+                info = new DirectoryInfo(basePath + "ExtrudedObjects/");
             }
             else
             {
