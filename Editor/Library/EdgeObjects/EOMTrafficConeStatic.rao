@@ -8,7 +8,7 @@
   <isToggled>true</isToggled>
   <isBridge>false</isBridge>
   <isMaterialOverriden>false</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDRoadReflector.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/RoadReflector.mat</edgeMaterial1String>
   <edgeMaterial2String />
   <horizontalSep>0</horizontalSep>
   <horizontalCurve>

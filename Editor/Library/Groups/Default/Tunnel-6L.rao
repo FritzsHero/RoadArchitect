@@ -15,7 +15,7 @@
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Tunnel/TunnelCap6Lanes.FBX</CurrentSplinationCap2String>
   <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDTunnel.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Tunnel.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -192,7 +192,7 @@
   <CurrentSplinationCap2String />
   <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDTunnelLights.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/TunnelLights.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>

@@ -9,7 +9,7 @@
   <isBridge>false</isBridge>
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/Diamond/General/GSDFedSign-diamond-CenterMedian.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/Diamond/General/CenterMedian.mat</edgeMaterial1String>
   <horizontalSep>0</horizontalSep>
   <horizontalCurve>
     <keys>

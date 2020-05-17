@@ -14,7 +14,7 @@
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDSteel7.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Steel7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -188,7 +188,7 @@
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDSteel7.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Steel7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -362,7 +362,7 @@
   <CurrentSplinationCap1String>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeBase4Lanes40MCap.FBX</CurrentSplinationCap1String>
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Bridges/SuspBridgeBase4Lanes40MCap.FBX</CurrentSplinationCap2String>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDConcrete2.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Concrete2.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -884,7 +884,7 @@
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing4.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Railing4.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -1058,7 +1058,7 @@
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing4.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Railing4.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -1232,7 +1232,7 @@
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDInterTLB1.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Signs/InterTLB1.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -1427,7 +1427,7 @@
   <CurrentSplinationCap1String />
   <CurrentSplinationCap2String />
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDInterTLB1.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Signs/InterTLB1.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -1626,7 +1626,7 @@
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/GSDSteel7.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/Steel7.mat</edgeMaterial1String>
   <horizontalSep>0</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -1771,7 +1771,7 @@
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/GSDConcrete2.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/Concrete2.mat</edgeMaterial1String>
   <horizontalSep>22</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -1844,7 +1844,7 @@
   <isToggled>false</isToggled>
   <isBridge>false</isBridge>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/GSDConcrete2.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/Concrete2.mat</edgeMaterial1String>
   <horizontalSep>-22</horizontalSep>
   <horizontalCurve>
     <keys>

@@ -15,7 +15,7 @@
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Railing7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -192,7 +192,7 @@
   <CurrentSplinationCap2String>Assets/RoadArchitect/Mesh/Railing/Railing7Cap10m.FBX</CurrentSplinationCap2String>
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing7.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Railing7.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -373,7 +373,7 @@
   <isBridge>false</isBridge>
   <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDRoadReflector.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/RoadReflector.mat</edgeMaterial1String>
   <horizontalSep>13</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -448,7 +448,7 @@
   <isBridge>false</isBridge>
   <isDefault>true</isDefault>
   <isMaterialOverriden>false</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/GSDRoadReflector.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/Signs/RoadReflector.mat</edgeMaterial1String>
   <horizontalSep>-13</horizontalSep>
   <horizontalCurve>
     <keys>

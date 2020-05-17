@@ -5,7 +5,7 @@
   <CurrentSplinationCap2String />
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDRailing4.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/Railing4.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>

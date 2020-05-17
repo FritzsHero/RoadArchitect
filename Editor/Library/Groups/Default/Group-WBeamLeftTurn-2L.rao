@@ -15,7 +15,7 @@
   <CurrentSplinationCap2String />
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/GSDWBeam.mat</SplinatedMaterial1String>
+  <SplinatedMaterial1String>Assets/RoadArchitect/Materials/WBeam.mat</SplinatedMaterial1String>
   <SplinatedMaterial2String />
   <CapHeightOffset1>0</CapHeightOffset1>
   <CapHeightOffset2>0</CapHeightOffset2>
@@ -196,7 +196,7 @@
   <isBridge>false</isBridge>
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/396/GSDFedSign-396-UpcomingLeft.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/396/UpcomingLeft.mat</edgeMaterial1String>
   <edgeMaterial2String />
   <horizontalSep>8.4</horizontalSep>
   <horizontalCurve>

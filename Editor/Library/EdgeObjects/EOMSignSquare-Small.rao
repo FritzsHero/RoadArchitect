@@ -9,7 +9,7 @@
   <isBridge>false</isBridge>
   <isDefault>true</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/Square/GSDFedSign-Square-NoUTurn.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/Square/NoUTurn.mat</edgeMaterial1String>
   <horizontalSep>0</horizontalSep>
   <horizontalCurve>
     <keys>

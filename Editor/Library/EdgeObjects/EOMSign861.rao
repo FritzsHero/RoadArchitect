@@ -9,7 +9,7 @@
   <isBridge>false</isBridge>
   <isDefault>false</isDefault>
   <isMaterialOverriden>true</isMaterialOverriden>
-  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/861/GSDFedSign-861-WeighStationNextRight.mat</edgeMaterial1String>
+  <edgeMaterial1String>Assets/RoadArchitect/Materials/FedSigns/861/WeighStationNextRight.mat</edgeMaterial1String>
   <edgeMaterial2String />
   <horizontalSep>0</horizontalSep>
   <horizontalCurve>
