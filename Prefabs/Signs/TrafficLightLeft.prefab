@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400008}
   m_Layer: 0
-  m_Name: GSDTrafficLightLeft
+  m_Name: TrafficLightLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

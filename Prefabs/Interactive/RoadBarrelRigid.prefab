@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6500000}
   - component: {fileID: 5400000}
   m_Layer: 0
-  m_Name: GSDRoadBarrel_Rigid
+  m_Name: RoadBarrelRigid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 65751558033613452}
   m_Layer: 0
-  m_Name: GSDSignStopAllway
+  m_Name: StopSignAllway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

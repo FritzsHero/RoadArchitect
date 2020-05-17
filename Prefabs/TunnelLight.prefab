@@ -10,7 +10,7 @@ GameObject:
   - component: {fileID: 400000}
   - component: {fileID: 10800000}
   m_Layer: 0
-  m_Name: GSDTunnelLight
+  m_Name: TunnelLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

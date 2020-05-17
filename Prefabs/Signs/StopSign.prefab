@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 6500002}
   m_Layer: 0
-  m_Name: GSDSignStop
+  m_Name: StopSign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

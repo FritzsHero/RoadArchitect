@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400000}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 6500000}
   - component: {fileID: 5400000}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 6500002}
   - component: {fileID: 5400002}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 6500004}
   - component: {fileID: 5400004}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 6500006}
   - component: {fileID: 5400006}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 6500008}
   - component: {fileID: 5400008}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 6500010}
   - component: {fileID: 5400010}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 6500012}
   - component: {fileID: 5400012}
   m_Layer: 0
-  m_Name: GSDRoadBarrel7_Rigid
+  m_Name: RoadBarrelRigid7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
