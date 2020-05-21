@@ -1305,18 +1305,18 @@ namespace RoadArchitect
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 2f))
                         {
-                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-4L.mat", MR);
+                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/RoadConn-4L.mat", MR);
                         }
                         else if (fDist == Mathf.Round(road.RoadWidth() * 3f))
                         {
-                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-2L.mat", MR);
+                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/RoadConn-6L-2L.mat", MR);
                         }
                     }
                     else if (road.laneAmount == 4)
                     {
                         if (fDist == Mathf.Round(road.RoadWidth() * 1.5f))
                         {
-                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/GSDRoadConn-6L-4L.mat", MR);
+                            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Markers/RoadConn-6L-4L.mat", MR);
                         }
                     }
                     MF.sharedMesh = tMesh_RoadConnections[index];
@@ -1342,7 +1342,7 @@ namespace RoadArchitect
                     MeshCollider MC = tObj.AddComponent<MeshCollider>();
                     MF.sharedMesh = vMesh;
                     MC.sharedMesh = MF.sharedMesh;
-                    RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/GSDRoad1.mat", MR);
+                    RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Road1.mat", MR);
                     tObj.transform.parent = road.MeshRoad.transform;
 
                     SaveMesh(SaveMeshTypeEnum.RoadConn, vMesh, road, "RoadConn" + index.ToString());
@@ -1491,7 +1491,7 @@ namespace RoadArchitect
                 tUV = iBLane0s_uv[index];
                 tTangents = iBLane0s_tangents[index];
                 xMesh = tMesh_iBLanes0[index];
-                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes0, "Lane0B", basePath + "/Materials/Markers/GSDInterWhiteLYellowR.mat");
+                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes0, "Lane0B", basePath + "/Materials/Markers/InterWhiteLYellowR.mat");
                 if (!tCombineDict_Lane0.ContainsKey(iBLane0s_tID[index]))
                 {
                     tCombineDict_Lane0.Add(iBLane0s_tID[index], new List<MeshFilter>());
@@ -1507,7 +1507,7 @@ namespace RoadArchitect
                     tUV = iBLane1s_uv[index];
                     tTangents = iBLane1s_tangents[index];
                     xMesh = tMesh_iBLanes1[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneD1B", basePath + "/Materials/Markers/GSDInterLaneDisabled.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneD1B", basePath + "/Materials/Markers/InterLaneDisabled.mat");
                     if (!tCombineDict_Lane1_Disabled.ContainsKey(iBLane1s_tID[index]))
                     {
                         tCombineDict_Lane1_Disabled.Add(iBLane1s_tID[index], new List<MeshFilter>());
@@ -1519,7 +1519,7 @@ namespace RoadArchitect
                     tUV = iBLane1s_uv[index];
                     tTangents = iBLane1s_tangents[index];
                     xMesh = tMesh_iBLanes1[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneDA1B", basePath + "/Materials/Markers/GSDInterLaneDisabledOuter.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneDA1B", basePath + "/Materials/Markers/InterLaneDisabledOuter.mat");
                     if (!tCombineDict_Lane1_DisabledActive.ContainsKey(iBLane1s_tID[index]))
                     {
                         tCombineDict_Lane1_DisabledActive.Add(iBLane1s_tID[index], new List<MeshFilter>());
@@ -1531,7 +1531,7 @@ namespace RoadArchitect
                     tUV = iBLane1s_uv[index];
                     tTangents = iBLane1s_tangents[index];
                     xMesh = tMesh_iBLanes1[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "Lane1B", basePath + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "Lane1B", basePath + "/Materials/Markers/InterYellowLWhiteR.mat");
                     if (!tCombineDict_Lane1.ContainsKey(iBLane1s_tID[index]))
                     {
                         tCombineDict_Lane1.Add(iBLane1s_tID[index], new List<MeshFilter>());
@@ -1548,7 +1548,7 @@ namespace RoadArchitect
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
                     xMesh = tMesh_iBLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDA2B", basePath + "/Materials/Markers/GSDInterLaneDisabledOuter.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDA2B", basePath + "/Materials/Markers/InterLaneDisabledOuter.mat");
                     if (!tCombineDict_Lane2_DisabledActive.ContainsKey(iBLane2s_tID[index]))
                     {
                         tCombineDict_Lane2_DisabledActive.Add(iBLane2s_tID[index], new List<MeshFilter>());
@@ -1560,7 +1560,7 @@ namespace RoadArchitect
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
                     xMesh = tMesh_iBLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDA2B", basePath + "/Materials/Markers/GSDInterLaneDisabledOuterR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDA2B", basePath + "/Materials/Markers/InterLaneDisabledOuterR.mat");
                     if (!tCombineDict_Lane2_DisabledActiveR.ContainsKey(iBLane2s_tID[index]))
                     {
                         tCombineDict_Lane2_DisabledActiveR.Add(iBLane2s_tID[index], new List<MeshFilter>());
@@ -1572,7 +1572,7 @@ namespace RoadArchitect
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
                     xMesh = tMesh_iBLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneD2B", basePath + "/Materials/Markers/GSDInterLaneDisabled.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneD2B", basePath + "/Materials/Markers/InterLaneDisabled.mat");
                     if (!tCombineDict_Lane2_Disabled.ContainsKey(iBLane2s_tID[index]))
                     {
                         tCombineDict_Lane2_Disabled.Add(iBLane2s_tID[index], new List<MeshFilter>());
@@ -1584,7 +1584,7 @@ namespace RoadArchitect
                     tUV = iBLane2s_uv[index];
                     tTangents = iBLane2s_tangents[index];
                     xMesh = tMesh_iBLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "Lane2B", basePath + "/Materials/Markers/GSDInterWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "Lane2B", basePath + "/Materials/Markers/InterWhiteR.mat");
                     if (!tCombineDict_Lane2.ContainsKey(iBLane2s_tID[index]))
                     {
                         tCombineDict_Lane2.Add(iBLane2s_tID[index], new List<MeshFilter>());
@@ -1601,7 +1601,7 @@ namespace RoadArchitect
                     tUV = iBLane3s_uv[index];
                     tTangents = iBLane3s_tangents[index];
                     xMesh = tMesh_iBLanes3[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "LaneD3B", basePath + "/Materials/Markers/GSDInterLaneDisabled.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "LaneD3B", basePath + "/Materials/Markers/InterLaneDisabled.mat");
                     if (!tCombineDict_Lane3_Disabled.ContainsKey(iBLane3s_tID[index]))
                     {
                         tCombineDict_Lane3_Disabled.Add(iBLane3s_tID[index], new List<MeshFilter>());
@@ -1613,7 +1613,7 @@ namespace RoadArchitect
                     tUV = iBLane3s_uv[index];
                     tTangents = iBLane3s_tangents[index];
                     xMesh = tMesh_iBLanes3[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "Lane3B", basePath + "/Materials/Markers/GSDInterWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "Lane3B", basePath + "/Materials/Markers/InterWhiteR.mat");
                     if (!tCombineDict_Lane3.ContainsKey(iBLane3s_tID[index]))
                     {
                         tCombineDict_Lane3.Add(iBLane3s_tID[index], new List<MeshFilter>());
@@ -1629,7 +1629,7 @@ namespace RoadArchitect
                 tUV = iFLane0s_uv[index];
                 tTangents = iFLane0s_tangents[index];
                 xMesh = tMesh_iFLanes0[index];
-                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes0, "Lane0F", basePath + "/Materials/Markers/GSDInterWhiteLYellowR.mat");
+                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes0, "Lane0F", basePath + "/Materials/Markers/InterWhiteLYellowR.mat");
                 if (!tCombineDict_Lane0.ContainsKey(iFLane0s_tID[index]))
                 {
                     tCombineDict_Lane0.Add(iFLane0s_tID[index], new List<MeshFilter>());
@@ -1645,7 +1645,7 @@ namespace RoadArchitect
                     tUV = iFLane1s_uv[index];
                     tTangents = iFLane1s_tangents[index];
                     xMesh = tMesh_iFLanes1[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneD1F", basePath + "/Materials/Markers/GSDInterLaneDisabled.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneD1F", basePath + "/Materials/Markers/InterLaneDisabled.mat");
                     if (!tCombineDict_Lane1_Disabled.ContainsKey(iFLane1s_tID[index]))
                     {
                         tCombineDict_Lane1_Disabled.Add(iFLane1s_tID[index], new List<MeshFilter>());
@@ -1657,7 +1657,7 @@ namespace RoadArchitect
                     tUV = iFLane1s_uv[index];
                     tTangents = iFLane1s_tangents[index];
                     xMesh = tMesh_iFLanes1[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneDAR1F", basePath + "/Materials/Markers/GSDInterLaneDisabledOuterR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "LaneDAR1F", basePath + "/Materials/Markers/InterLaneDisabledOuterR.mat");
                     if (!tCombineDict_Lane1_DisabledActive.ContainsKey(iFLane1s_tID[index]))
                     {
                         tCombineDict_Lane1_DisabledActive.Add(iFLane1s_tID[index], new List<MeshFilter>());
@@ -1669,7 +1669,7 @@ namespace RoadArchitect
                     tUV = iFLane1s_uv[index];
                     tTangents = iFLane1s_tangents[index];
                     xMesh = tMesh_iFLanes1[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "Lane1F", basePath + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes1, "Lane1F", basePath + "/Materials/Markers/InterYellowLWhiteR.mat");
                     if (!tCombineDict_Lane1.ContainsKey(iFLane1s_tID[index]))
                     {
                         tCombineDict_Lane1.Add(iFLane1s_tID[index], new List<MeshFilter>());
@@ -1686,7 +1686,7 @@ namespace RoadArchitect
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
                     xMesh = tMesh_iFLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDA2F", basePath + "/Materials/Markers/GSDInterLaneDisabledOuter.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDA2F", basePath + "/Materials/Markers/InterLaneDisabledOuter.mat");
                     if (!tCombineDict_Lane2_DisabledActive.ContainsKey(iFLane2s_tID[index]))
                     {
                         tCombineDict_Lane2_DisabledActive.Add(iFLane2s_tID[index], new List<MeshFilter>());
@@ -1698,7 +1698,7 @@ namespace RoadArchitect
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
                     xMesh = tMesh_iFLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDAR2F", basePath + "/Materials/Markers/GSDInterLaneDisabledOuterR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneDAR2F", basePath + "/Materials/Markers/InterLaneDisabledOuterR.mat");
                     if (!tCombineDict_Lane2_DisabledActiveR.ContainsKey(iFLane2s_tID[index]))
                     {
                         tCombineDict_Lane2_DisabledActiveR.Add(iFLane2s_tID[index], new List<MeshFilter>());
@@ -1710,7 +1710,7 @@ namespace RoadArchitect
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
                     xMesh = tMesh_iFLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneD2F", basePath + "/Materials/Markers/GSDInterLaneDisabled.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "LaneD2F", basePath + "/Materials/Markers/InterLaneDisabled.mat");
                     if (!tCombineDict_Lane2_Disabled.ContainsKey(iFLane2s_tID[index]))
                     {
                         tCombineDict_Lane2_Disabled.Add(iFLane2s_tID[index], new List<MeshFilter>());
@@ -1722,7 +1722,7 @@ namespace RoadArchitect
                     tUV = iFLane2s_uv[index];
                     tTangents = iFLane2s_tangents[index];
                     xMesh = tMesh_iFLanes2[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "Lane2F", basePath + "/Materials/Markers/GSDInterWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes2, "Lane2F", basePath + "/Materials/Markers/InterWhiteR.mat");
                     if (!tCombineDict_Lane2.ContainsKey(iFLane2s_tID[index]))
                     {
                         tCombineDict_Lane2.Add(iFLane2s_tID[index], new List<MeshFilter>());
@@ -1739,7 +1739,7 @@ namespace RoadArchitect
                     tUV = iFLane3s_uv[index];
                     tTangents = iFLane3s_tangents[index];
                     xMesh = tMesh_iFLanes3[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "LaneD3F", basePath + "/Materials/Markers/GSDInterWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "LaneD3F", basePath + "/Materials/Markers/InterWhiteR.mat");
                     if (!tCombineDict_Lane3_Disabled.ContainsKey(iFLane3s_tID[index]))
                     {
                         tCombineDict_Lane3_Disabled.Add(iFLane3s_tID[index], new List<MeshFilter>());
@@ -1751,7 +1751,7 @@ namespace RoadArchitect
                     tUV = iFLane3s_uv[index];
                     tTangents = iFLane3s_tangents[index];
                     xMesh = tMesh_iFLanes3[index];
-                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "Lane3F", basePath + "/Materials/Markers/GSDInterWhiteR.mat");
+                    MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiLanes3, "Lane3F", basePath + "/Materials/Markers/InterWhiteR.mat");
                     if (!tCombineDict_Lane3.ContainsKey(iFLane3s_tID[index]))
                     {
                         tCombineDict_Lane3.Add(iFLane3s_tID[index], new List<MeshFilter>());
@@ -1767,7 +1767,7 @@ namespace RoadArchitect
                 tUV = iBMainPlates_uv[index];
                 tTangents = iBMainPlates_tangents[index];
                 xMesh = tMesh_iBMainPlates[index];
-                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateB", basePath + "/Materials/GSDRoad1.mat", false);
+                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateB", basePath + "/Materials/Road1.mat", false);
                 if (!tCombineDict_MainPlate.ContainsKey(iBMainPlates_tID[index]))
                 {
                     tCombineDict_MainPlate.Add(iBMainPlates_tID[index], new List<MeshFilter>());
@@ -1780,7 +1780,7 @@ namespace RoadArchitect
                 fMesh.normals = iBMainPlates_normals[index];
                 tUV = iBMainPlates_uv2[index];
                 tTangents = iBMainPlates_tangents2[index];
-                MF = MeshSetup2IntersectionHelper(ref fMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateBM", basePath + "/Materials/GSDInterMainPlate1.mat");
+                MF = MeshSetup2IntersectionHelper(ref fMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateBM", basePath + "/Materials/InterMainPlate1.mat");
                 if (!tCombineDict_MainPlateM.ContainsKey(iBMainPlates_tID[index]))
                 {
                     tCombineDict_MainPlateM.Add(iBMainPlates_tID[index], new List<MeshFilter>());
@@ -1793,7 +1793,7 @@ namespace RoadArchitect
                 tUV = iFMainPlates_uv[index];
                 tTangents = iFMainPlates_tangents[index];
                 xMesh = tMesh_iFMainPlates[index];
-                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateFM", basePath + "/Materials/GSDRoad1.mat", false);
+                MF = MeshSetup2IntersectionHelper(ref xMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateFM", basePath + "/Materials/Road1.mat", false);
 
                 if (!tCombineDict_MainPlate.ContainsKey(iFMainPlates_tID[index]))
                 {
@@ -1807,7 +1807,7 @@ namespace RoadArchitect
                 tMesh.normals = iFMainPlates_normals[index];
                 tUV = iFMainPlates_uv2[index];
                 tTangents = iFMainPlates_tangents2[index];
-                MF = MeshSetup2IntersectionHelper(ref tMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateFM", basePath + "/Materials/GSDInterMainPlate1.mat");
+                MF = MeshSetup2IntersectionHelper(ref tMesh, ref tUV, ref tTangents, ref road.MeshiMainPlates, "MainPlateFM", basePath + "/Materials/InterMainPlate1.mat");
                 if (!tCombineDict_MainPlateM.ContainsKey(iFMainPlates_tID[index]))
                 {
                     tCombineDict_MainPlateM.Add(iFMainPlates_tID[index], new List<MeshFilter>());

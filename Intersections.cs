@@ -887,7 +887,7 @@ namespace RoadArchitect
             }
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             MR.receiveShadows = true;
-            RoadEditorUtility.SetRoadMaterial(RoadEditorUtility.GetBasePath() + "/Materials/GSDRoadIntersection.mat", MR);
+            RoadEditorUtility.SetRoadMaterial(RoadEditorUtility.GetBasePath() + "/Materials/RoadIntersection.mat", MR);
         }
 
 
@@ -1028,7 +1028,7 @@ namespace RoadArchitect
             }
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             MR.receiveShadows = true;
-            RoadEditorUtility.SetRoadMaterial(RoadEditorUtility.GetBasePath() + "/Materials/GSDInterText.mat", MR);
+            RoadEditorUtility.SetRoadMaterial(RoadEditorUtility.GetBasePath() + "/Materials/InterText.mat", MR);
         }
 
 

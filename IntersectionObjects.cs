@@ -568,7 +568,7 @@ namespace RoadArchitect
             {
                 MR = tObj.AddComponent<MeshRenderer>();
             }
-            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Signs/GSDInterTLB" + tTrafficLightNumber + ".mat", MR);
+            RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Signs/InterTLB" + tTrafficLightNumber + ".mat", MR);
 
             if (!bDoCustom)
             {

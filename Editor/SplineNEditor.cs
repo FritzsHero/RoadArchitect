@@ -1836,7 +1836,7 @@ namespace RoadArchitect
 
             if (_mat == "")
             {
-                _mat = basePath + "/Materials/GSDConcrete2.mat";
+                _mat = basePath + "/Materials/Concrete2.mat";
             }
             SMM = node.AddSplinatedObject();
             string tBridgeTopBaseToAdd = "";
@@ -1942,7 +1942,7 @@ namespace RoadArchitect
 
             if (_mat == "")
             {
-                _mat = basePath + "/Materials/GSDConcrete2.mat";
+                _mat = basePath + "/Materials/Concrete2.mat";
             }
             SMM = node.AddSplinatedObject();
             string tBridgeBottomBaseToAdd = "";
@@ -2133,11 +2133,11 @@ namespace RoadArchitect
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBaseGrid)
             {
-                SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
+                SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Steel7.mat");
             }
             else if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeSteel)
             {
-                SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDSteel7.mat");
+                SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Steel7.mat");
             }
 
             SMM.Axis = Splination.AxisTypeEnum.Z;

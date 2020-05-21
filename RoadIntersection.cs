@@ -665,19 +665,19 @@ namespace RoadArchitect
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
-                markerCenter1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterCenter-Both" + lanesNumber + ".mat");
+                markerCenter1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterCenter-Both" + lanesNumber + ".mat");
                 markerCenter2 = null;
                 markerCenter3 = null;
             }
             else if (roadType == RoadTypeEnum.TurnLane)
             {
-                markerCenter1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterCenter-Left" + lanesNumber + ".mat");
+                markerCenter1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterCenter-Left" + lanesNumber + ".mat");
                 markerCenter2 = null;
                 markerCenter3 = null;
             }
             else if (roadType == RoadTypeEnum.NoTurnLane)
             {
-                markerCenter1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterCenter-None" + lanesNumber + ".mat");
+                markerCenter1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterCenter-None" + lanesNumber + ".mat");
                 markerCenter2 = null;
                 markerCenter3 = null;
             }
@@ -705,19 +705,19 @@ namespace RoadArchitect
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
-                markerExtStretch1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterStretch-Both" + lanesNumber + ".mat");
+                markerExtStretch1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterStretch-Both" + lanesNumber + ".mat");
                 markerExtStretch2 = null;
                 markerExtStretch3 = null;
             }
             else if (roadType == RoadTypeEnum.TurnLane)
             {
-                markerExtStretch1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterStretch-Left" + lanesNumber + ".mat");
+                markerExtStretch1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterStretch-Left" + lanesNumber + ".mat");
                 markerExtStretch2 = null;
                 markerExtStretch3 = null;
             }
             else if (roadType == RoadTypeEnum.NoTurnLane)
             {
-                markerExtStretch1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterStretch-None" + lanesNumber + ".mat");
+                markerExtStretch1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterStretch-None" + lanesNumber + ".mat");
                 markerExtStretch2 = null;
                 markerExtStretch3 = null;
             }
@@ -734,20 +734,20 @@ namespace RoadArchitect
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
-                markerExtTiled1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
-                markerExtTiled2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                markerExtTiled1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Road1.mat");
+                markerExtTiled2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/RoadDetailOverlay1.mat");
                 markerExtTiled3 = null;
             }
             else if (roadType == RoadTypeEnum.TurnLane)
             {
-                markerExtTiled1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
-                markerExtTiled2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                markerExtTiled1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Road1.mat");
+                markerExtTiled2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/RoadDetailOverlay1.mat");
                 markerExtTiled3 = null;
             }
             else if (roadType == RoadTypeEnum.NoTurnLane)
             {
-                markerExtTiled1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/GSDRoad1.mat");
-                markerExtTiled2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDRoadDetailOverlay1.mat");
+                markerExtTiled1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Road1.mat");
+                markerExtTiled2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/RoadDetailOverlay1.mat");
                 markerExtTiled3 = null;
             }
             if (_isUpdate)
@@ -774,13 +774,13 @@ namespace RoadArchitect
 
             if (intersectionType == IntersectionTypeEnum.ThreeWay)
             {
-                lane1Mat1Disabled = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterLaneDisabled.mat");
+                lane1Mat1Disabled = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterLaneDisabled.mat");
                 lane1Mat2Disabled = null;
                 if (roadType == RoadTypeEnum.BothTurnLanes)
                 {
-                    lane1Mat1DisabledActive = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterLaneDisabledOuterRR.mat");
+                    lane1Mat1DisabledActive = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterLaneDisabledOuterRR.mat");
                     lane1Mat2DisabledActive = null;
-                    lane2Mat1Disabled = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterLaneDisabledR.mat");
+                    lane2Mat1Disabled = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterLaneDisabledR.mat");
                     lane2Mat2Disabled = null;
                 }
                 else
@@ -790,13 +790,13 @@ namespace RoadArchitect
                     lane2Mat1DisabledActive = null;
                     lane2Mat2DisabledActive = null;
                 }
-                lane2Mat1DisabledActive = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterLaneDisabledOuter" + lanesNumber + ".mat");
+                lane2Mat1DisabledActive = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterLaneDisabledOuter" + lanesNumber + ".mat");
                 lane2Mat2DisabledActive = null;
                 if (roadType == RoadTypeEnum.BothTurnLanes)
                 {
-                    lane2Mat1DisabledActiveR = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterLaneDisabledOuterR.mat");
+                    lane2Mat1DisabledActiveR = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterLaneDisabledOuterR.mat");
                     lane2Mat2DisabledActiveR = null;
-                    lane3Mat1Disabled = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterLaneDisabledR.mat");
+                    lane3Mat1Disabled = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterLaneDisabledR.mat");
                     lane3Mat2Disabled = null;
                 }
                 else
@@ -823,31 +823,31 @@ namespace RoadArchitect
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
-                lane0Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterWhiteLYellowR" + lanesNumber + ".mat");
+                lane0Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterWhiteLYellowR" + lanesNumber + ".mat");
                 lane0Mat2 = null;
-                lane1Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
+                lane1Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterYellowLWhiteR.mat");
                 lane1Mat2 = null;
-                lane2Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterWhiteR" + lanesNumber + ".mat");
+                lane2Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterWhiteR" + lanesNumber + ".mat");
                 lane2Mat2 = null;
-                lane3Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterWhiteR.mat");
+                lane3Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterWhiteR.mat");
                 lane3Mat2 = null;
             }
             else if (roadType == RoadTypeEnum.TurnLane)
             {
-                lane0Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterWhiteLYellowR" + lanesNumber + ".mat");
+                lane0Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterWhiteLYellowR" + lanesNumber + ".mat");
                 lane0Mat2 = null;
-                lane1Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterYellowLWhiteR.mat");
+                lane1Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterYellowLWhiteR.mat");
                 lane1Mat2 = null;
-                lane2Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterWhiteR" + lanesNumber + ".mat");
+                lane2Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterWhiteR" + lanesNumber + ".mat");
                 lane2Mat2 = null;
                 lane3Mat1 = null;
                 lane3Mat2 = null;
             }
             else if (roadType == RoadTypeEnum.NoTurnLane)
             {
-                lane0Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterWhiteLYellowR" + lanesNumber + ".mat");
+                lane0Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterWhiteLYellowR" + lanesNumber + ".mat");
                 lane0Mat2 = null;
-                lane1Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/GSDInterYellowLWhiteR" + lanesNumber + ".mat");
+                lane1Mat1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/InterYellowLWhiteR" + lanesNumber + ".mat");
                 lane1Mat2 = null;
                 lane2Mat1 = null;
                 lane2Mat2 = null;
@@ -1370,11 +1370,11 @@ namespace RoadArchitect
             Material trafficLightMaterial = null;
             if (isTrafficLightGray)
             {
-                trafficLightMaterial = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Signs/GSDInterTLB2.mat");
+                trafficLightMaterial = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Signs/InterTLB2.mat");
             }
             else
             {
-                trafficLightMaterial = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Signs/GSDInterTLB1.mat");
+                trafficLightMaterial = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Signs/InterTLB1.mat");
             }
             int childCount = transform.childCount;
             string transformName = "";
