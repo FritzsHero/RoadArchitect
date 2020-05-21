@@ -51,15 +51,15 @@ namespace RoadArchitect
         {
             Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab", typeof(GameObject));
 
-            RoadIntersection GSDRI = _masterGameObj.GetComponent<RoadIntersection>();
-            SplineC tSpline = GSDRI.node1.spline;
+            RoadIntersection roadIntersection = _masterGameObj.GetComponent<RoadIntersection>();
+            SplineC spline = roadIntersection.node1.spline;
 
             GameObject tObj = null;
             //			Vector3 xDir = default(Vector3);
             Vector3 tDir = default(Vector3);
-            //			float RoadWidth = tSpline.tRoad.RoadWidth();
-            //			float LaneWidth = tSpline.tRoad.opt_LaneWidth;
-            float ShoulderWidth = tSpline.road.shoulderWidth;
+            //float roadWidth = spline.road.RoadWidth();
+            //float laneWidth = spline.road.laneWidth;
+            float ShoulderWidth = spline.road.shoulderWidth;
 
             //Cleanup:
             CleanupIntersectionObjects(_masterGameObj);
@@ -72,13 +72,13 @@ namespace RoadArchitect
             Vector3 tPosRL = default(Vector3);
             Vector3 tPosLR = default(Vector3);
             Vector3 tPosLL = default(Vector3);
-            GetFourPoints(GSDRI, out tPosRR, out tPosRL, out tPosLL, out tPosLR, DistFromCorner);
+            GetFourPoints(roadIntersection, out tPosRR, out tPosRL, out tPosLL, out tPosLR, DistFromCorner);
 
             //RR:
-            tSpline = GSDRI.node1.spline;
+            spline = roadIntersection.node1.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (GSDRI.CornerRR - GSDRI.transform.position).normalized;
-            tDir = StopSignGetRotRR(GSDRI, tSpline);
+            //			xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
+            tDir = StopSignGetRotRR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             if (_isRB)
             {
@@ -90,16 +90,16 @@ namespace RoadArchitect
             tObj.transform.position = tPosRR;
             tObj.name = "StopSignRR";
             TFixSigns(tObj);
-            if (GSDRI.ignoreCorner == 0)
+            if (roadIntersection.ignoreCorner == 0)
             {
                 Object.DestroyImmediate(tObj);
             }
 
             //LL:
-            tSpline = GSDRI.node1.spline;
+            spline = roadIntersection.node1.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (GSDRI.CornerLL - GSDRI.transform.position).normalized;
-            tDir = StopSignGetRotLL(GSDRI, tSpline);
+            //			xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
+            tDir = StopSignGetRotLL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             if (_isRB)
             {
@@ -111,16 +111,16 @@ namespace RoadArchitect
             tObj.transform.position = tPosLL;
             tObj.name = "StopSignLL";
             TFixSigns(tObj);
-            if (GSDRI.ignoreCorner == 2)
+            if (roadIntersection.ignoreCorner == 2)
             {
                 Object.DestroyImmediate(tObj);
             }
 
             //RL:
-            tSpline = GSDRI.node2.spline;
+            spline = roadIntersection.node2.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (GSDRI.CornerRL - GSDRI.transform.position).normalized;
-            tDir = StopSignGetRotRL(GSDRI, tSpline);
+            //			xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
+            tDir = StopSignGetRotRL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             if (_isRB)
             {
@@ -132,16 +132,16 @@ namespace RoadArchitect
             tObj.transform.position = tPosRL;
             tObj.name = "StopSignRL";
             TFixSigns(tObj);
-            if (GSDRI.ignoreCorner == 1)
+            if (roadIntersection.ignoreCorner == 1)
             {
                 Object.DestroyImmediate(tObj);
             }
 
             //LR:
-            tSpline = GSDRI.node2.spline;
+            spline = roadIntersection.node2.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (GSDRI.CornerLR - GSDRI.transform.position).normalized;
-            tDir = StopSignGetRotLR(GSDRI, tSpline);
+            //			xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
+            tDir = StopSignGetRotLR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             if (_isRB)
             {
@@ -153,7 +153,7 @@ namespace RoadArchitect
             tObj.transform.position = tPosLR;
             tObj.name = "StopSignLR";
             TFixSigns(tObj);
-            if (GSDRI.ignoreCorner == 3)
+            if (roadIntersection.ignoreCorner == 3)
             {
                 Object.DestroyImmediate(tObj);
             }
@@ -242,7 +242,7 @@ namespace RoadArchitect
             SplineC spline = intersection.node1.spline;
             bool isRB = true;
 
-            //float RoadWidth = tSpline.tRoad.RoadWidth();
+            //float RoadWidth = spline.road.RoadWidth();
             float LaneWidth = spline.road.laneWidth;
             float ShoulderWidth = spline.road.shoulderWidth;
 
@@ -301,7 +301,7 @@ namespace RoadArchitect
             //Node1:
             //RL:
             tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-            //			xDir = (GSDRI.CornerRL - GSDRI.transform.position).normalized;
+            //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
             {
@@ -330,7 +330,7 @@ namespace RoadArchitect
                     Object.DestroyImmediate(tObjRL);
                 }
                 tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-                //				xDir = (GSDRI.CornerRL - GSDRI.transform.position).normalized;
+                //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
                 {
@@ -353,7 +353,7 @@ namespace RoadArchitect
             tObjRL.transform.name = "TrafficLightRL";
             //LR:
             tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-            //xDir = (GSDRI.CornerLR - GSDRI.transform.position).normalized;
+            //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
             {
@@ -382,7 +382,7 @@ namespace RoadArchitect
                     Object.DestroyImmediate(tObjLR);
                 }
                 tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-                //				xDir = (GSDRI.CornerLR - GSDRI.transform.position).normalized;
+                //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
                 {
@@ -406,7 +406,7 @@ namespace RoadArchitect
             //Node2:
             //RR:
             tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-            //			xDir = (GSDRI.CornerRR - GSDRI.transform.position).normalized;
+            //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
             {
@@ -431,9 +431,11 @@ namespace RoadArchitect
             {
                 intersection.isRegularPoleAlignment = true;
                 if (tObjRR != null)
-                { Object.DestroyImmediate(tObjRR); }
+                {
+                    Object.DestroyImmediate(tObjRR);
+                }
                 tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-                //				xDir = (GSDRI.CornerRR - GSDRI.transform.position).normalized;
+                //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
                 {
@@ -457,7 +459,7 @@ namespace RoadArchitect
 
             //LL:
             tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-            //			xDir = (GSDRI.CornerLL - GSDRI.transform.position).normalized;
+            //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
             {
@@ -486,7 +488,7 @@ namespace RoadArchitect
                     Object.DestroyImmediate(tObjLL);
                 }
                 tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.GSDRS.isSavingMeshes);
-                //				xDir = (GSDRI.CornerLL - GSDRI.transform.position).normalized;
+                //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
                 {
@@ -683,7 +685,7 @@ namespace RoadArchitect
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
-                //float tDist = ((Vector3.Distance(GSDRI.CornerRR,GSDRI.CornerRL) / 2f) + DistFromCorner) / tSpline.distance;;
+                //float dist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerRL) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node1.time, 0f, 1f);
                 POS = _spline.GetSplineValue(p, true);
                 POS = Vector3.Cross(POS, Vector3.up);
@@ -702,7 +704,7 @@ namespace RoadArchitect
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
-                //				float tDist = ((Vector3.Distance(GSDRI.CornerLR,GSDRI.CornerLL) / 2f) + DistFromCorner) / tSpline.distance;;
+                //float dist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node1.time, 0f, 1f);
                 POS = _spline.GetSplineValue(p, true);
                 POS = Vector3.Cross(POS, Vector3.up);
@@ -721,7 +723,7 @@ namespace RoadArchitect
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
-                //				float tDist = ((Vector3.Distance(GSDRI.CornerRR,GSDRI.CornerLR) / 2f) + DistFromCorner) / tSpline.distance;;
+                //float dist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerLR) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node2.time, 0f, 1f);
                 POS = _spline.GetSplineValue(p, true);
                 POS = Vector3.Cross(POS, Vector3.up);
@@ -743,7 +745,7 @@ namespace RoadArchitect
             Vector3 POS = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
-                //				float tDist = ((Vector3.Distance(GSDRI.CornerLL,GSDRI.CornerRL) / 2f) + DistFromCorner) / tSpline.distance;;
+                //float dist = ((Vector3.Distance(_intersection.cornerLL, _intersection.cornerRL) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node2.time, 0f, 1f);
                 POS = _spline.GetSplineValue(p, true);
                 POS = Vector3.Cross(POS, Vector3.up);
@@ -764,26 +766,26 @@ namespace RoadArchitect
         #region "Traffic light mains"
         private static void CreateTrafficLightMains(GameObject _masterGameObj, GameObject _RR, GameObject _RL, GameObject _LL, GameObject _LR)
         {
-            RoadIntersection GSDRI = _masterGameObj.GetComponent<RoadIntersection>();
-            SplineC tSpline = GSDRI.node1.spline;
+            RoadIntersection roadIntersection = _masterGameObj.GetComponent<RoadIntersection>();
+            SplineC tSpline = roadIntersection.node1.spline;
 
-            float tDist = (Vector3.Distance(GSDRI.cornerRL, GSDRI.cornerRR) / 2f) / tSpline.distance;
-            Vector3 tan = tSpline.GetSplineValue(GSDRI.node1.time + tDist, true);
-            ProcessPole(_masterGameObj, _RL, tan * -1, 1, Vector3.Distance(GSDRI.cornerRL, GSDRI.cornerRR));
-            tDist = (Vector3.Distance(GSDRI.cornerLR, GSDRI.cornerLL) / 2f) / tSpline.distance;
-            tan = tSpline.GetSplineValue(GSDRI.node1.time - tDist, true);
-            ProcessPole(_masterGameObj, _LR, tan, 3, Vector3.Distance(GSDRI.cornerLR, GSDRI.cornerLL));
+            float tDist = (Vector3.Distance(roadIntersection.cornerRL, roadIntersection.cornerRR) / 2f) / tSpline.distance;
+            Vector3 tan = tSpline.GetSplineValue(roadIntersection.node1.time + tDist, true);
+            ProcessPole(_masterGameObj, _RL, tan * -1, 1, Vector3.Distance(roadIntersection.cornerRL, roadIntersection.cornerRR));
+            tDist = (Vector3.Distance(roadIntersection.cornerLR, roadIntersection.cornerLL) / 2f) / tSpline.distance;
+            tan = tSpline.GetSplineValue(roadIntersection.node1.time - tDist, true);
+            ProcessPole(_masterGameObj, _LR, tan, 3, Vector3.Distance(roadIntersection.cornerLR, roadIntersection.cornerLL));
 
 
-            float InterDist = Vector3.Distance(GSDRI.cornerRL, GSDRI.cornerLL);
+            float InterDist = Vector3.Distance(roadIntersection.cornerRL, roadIntersection.cornerLL);
             tDist = (InterDist / 2f) / tSpline.distance;
-            tan = tSpline.GetSplineValue(GSDRI.node1.time + tDist, true);
+            tan = tSpline.GetSplineValue(roadIntersection.node1.time + tDist, true);
 
-            float fTime1 = GSDRI.node2.time + tDist;
-            float fTime2neg = GSDRI.node2.time - tDist;
+            float fTime1 = roadIntersection.node2.time + tDist;
+            float fTime2neg = roadIntersection.node2.time - tDist;
 
-            tSpline = GSDRI.node2.spline;
-            if (GSDRI.isFlipped)
+            tSpline = roadIntersection.node2.spline;
+            if (roadIntersection.isFlipped)
             {
                 tan = tSpline.GetSplineValue(fTime1, true);
                 ProcessPole(_masterGameObj, _RR, tan, 0, InterDist);
@@ -798,28 +800,28 @@ namespace RoadArchitect
                 ProcessPole(_masterGameObj, _LL, tan, 2, InterDist);
             }
 
-            if (GSDRI.ignoreCorner == 0)
+            if (roadIntersection.ignoreCorner == 0)
             {
                 if (_RR != null)
                 {
                     Object.DestroyImmediate(_RR);
                 }
             }
-            else if (GSDRI.ignoreCorner == 1)
+            else if (roadIntersection.ignoreCorner == 1)
             {
                 if (_RL != null)
                 {
                     Object.DestroyImmediate(_RL);
                 }
             }
-            else if (GSDRI.ignoreCorner == 2)
+            else if (roadIntersection.ignoreCorner == 2)
             {
                 if (_LL != null)
                 {
                     Object.DestroyImmediate(_LL);
                 }
             }
-            else if (GSDRI.ignoreCorner == 3)
+            else if (roadIntersection.ignoreCorner == 3)
             {
                 if (_LR != null)
                 {
@@ -849,7 +851,7 @@ namespace RoadArchitect
             SplineC spline = intersection.node1.spline;
             //			bool bIsRB = true;
 
-            //			float RoadWidth = tSpline.tRoad.RoadWidth();
+            //			float RoadWidth = tSpline.road.RoadWidth();
             float LaneWidth = spline.road.laneWidth;
             float ShoulderWidth = spline.road.shoulderWidth;
 
@@ -1235,7 +1237,7 @@ namespace RoadArchitect
 
 
         /*
-        //		public static void GetOrigFour(GSDRoadIntersection GSDRI, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
+        //		public static void GetOrigFour(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
         //			//Get four points:
         //			float tPos1 = 0f;
         //			float tPos2 = 0f;
@@ -1251,113 +1253,113 @@ namespace RoadArchitect
         //			float tAngleRL = 85f;
         //			float tAngleLL = 85f;
         //			float tAngleLR = 85f;
-        //			float ShoulderWidth1 = GSDRI.Node1.GSDSpline.tRoad.opt_ShoulderWidth;
-        //			float ShoulderWidth2 = GSDRI.Node2.GSDSpline.tRoad.opt_ShoulderWidth;
+        //			float ShoulderWidth1 = roadIntersection.Node1.spline.road.opt_ShoulderWidth;
+        //			float ShoulderWidth2 = roadIntersection.Node2.spline.road.opt_ShoulderWidth;
         //			Vector3 xPos1 = default(Vector3);
         //			Vector3 xPos2 = default(Vector3);
         //			
-        //			if(!GSDRI.bFlipped){
+        //			if(!roadIntersection.bFlipped){
         //				//RR:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerRR,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerRR,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime - Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = GSDRI.Node2.tTime + Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true);
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
         //				tDirRR = (tTan1.normalized + tTan2.normalized).normalized;
         //				//tAngleRR = Vector3.Angle(tTan1,tTan2);
-        //				tAngleRR = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				tAngleRR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //				//RL:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerRL,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerRL,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime + Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true);
-        //				tPos2 = GSDRI.Node2.tTime + Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true);
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
         //				tDirRL = (tTan1.normalized + tTan2.normalized).normalized;
         //				//tAngleRL = Vector3.Angle(tTan1,tTan2);
-        //				tAngleRL = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				tAngleRL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //				//LL:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerLL,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerLL,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime + Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true);
-        //				tPos2 = GSDRI.Node2.tTime - Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true) * -1f;
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
         //				tDirLL = (tTan1.normalized + tTan2.normalized).normalized;
         //				//tAngleLL = Vector3.Angle(tTan1,tTan2);
-        //				tAngleLL = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				tAngleLL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //				//LR:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerLR,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerLR,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime - Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = GSDRI.Node2.tTime - Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true) * -1f;
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
         //				tDirLR = (tTan1.normalized + tTan2.normalized).normalized;
         //				//tAngleLR = Vector3.Angle(tTan1,tTan2);
-        //				tAngleLR = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				tAngleLR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //			}else{
         //				//RR:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerRR,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerRR,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime - Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = GSDRI.Node2.tTime - Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true) * -1f;
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
         //				tDirRR = (tTan1.normalized + tTan2.normalized).normalized;
         ////				tAngleRR = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
-        //				tAngleRR = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+        //				tAngleRR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //				//RL:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerRL,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerRL,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime + Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true);
-        //				tPos2 = GSDRI.Node2.tTime - Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true) * -1f;
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
         //				tDirRL = (tTan1.normalized + tTan2.normalized).normalized;
         ////				tAngleRL = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
-        //				tAngleRL = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+        //				tAngleRL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //				//LL:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerLL,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerLL,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime + Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true);
-        //				tPos2 = GSDRI.Node2.tTime + Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true);
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
         //				tDirLL = (tTan1.normalized + tTan2.normalized).normalized;
         ////				tAngleLL = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
-        //				tAngleLL = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+        //				tAngleLL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //				//LR:
-        //				Node1Width = (Vector3.Distance(GSDRI.CornerLR,GSDRI.Node1.pos) + ShoulderWidth1)/GSDRI.Node1.GSDSpline.distance;
-        //				Node2Width = (Vector3.Distance(GSDRI.CornerLR,GSDRI.Node2.pos) + ShoulderWidth2)/GSDRI.Node2.GSDSpline.distance;
-        //				tPos1 = GSDRI.Node1.tTime - Node1Width;
-        //				tTan1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = GSDRI.Node2.tTime + Node2Width;
-        //				tTan2 = GSDRI.Node2.GSDSpline.GetSplineValue(tPos2,true);
+        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
+        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
+        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
         //				tDirLR = (tTan1.normalized + tTan2.normalized).normalized;
         //				//tAngleLR = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos1);
-        //				xPos2 = GSDRI.Node1.GSDSpline.GetSplineValue(tPos2);
-        //				tAngleLR = Vector3.Angle(xPos1 - GSDRI.Node1.pos,xPos2 - GSDRI.Node1.pos);
+        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+        //				tAngleLR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
         //			}	
         //			
         //			//D = B*cos(angle/2)
-        //			float tWidth = GSDRI.Node1.GSDSpline.tRoad.opt_RoadWidth * 0.5f;
+        //			float tWidth = roadIntersection.Node1.spline.road.opt_RoadWidth * 0.5f;
         //			float tAngleRR_Opp = 180f - tAngleRR;
         //			float tAngleRL_Opp = 180f - tAngleRL;
         //			float tAngleLL_Opp = 180f - tAngleLL;
@@ -1373,7 +1375,7 @@ namespace RoadArchitect
         //			float tOffSetLL_opp = tWidth*(Mathf.Cos((tAngleLL_Opp*0.5f)*Mathf.Deg2Rad));
         //			float tOffSetLR_opp = tWidth*(Mathf.Cos((tAngleLR_Opp*0.5f)*Mathf.Deg2Rad));
         //			
-        //			Vector3 tPos = GSDRI.Node1.pos;
+        //			Vector3 tPos = roadIntersection.Node1.pos;
         //			
         ////			tOffSetRR *=2f;
         ////			tOffSetRL *=2f;
@@ -1411,13 +1413,13 @@ namespace RoadArchitect
         //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
         //		}
         //	
-        //		public static void GetCornerVectors_Test(GSDRoadIntersection GSDRI, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
-        //			GSDSplineN tNode = null;
-        //			GSDSplineC tSpline = null;
+        //		public static void GetCornerVectors_Test(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
+        //			SplineN tNode = null;
+        //			SplineC tSpline = null;
         //
-        //			tNode = GSDRI.Node1;
-        //			tSpline = tNode.GSDSpline;
-        //			float tOffset = tSpline.tRoad.opt_RoadWidth * 0.5f;
+        //			tNode = roadIntersection.Node1;
+        //			tSpline = tNode.spline;
+        //			float tOffset = tSpline.road.opt_RoadWidth * 0.5f;
         //			float tPos1 = tNode.tTime - (tOffset/tSpline.distance);
         //			float tPos2 = tNode.tTime + (tOffset/tSpline.distance);
         //			Vector3 tVect1 = tSpline.GetSplineValue(tPos1);	
@@ -1429,9 +1431,9 @@ namespace RoadArchitect
         //			tPosRL = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
         //			tPosLL = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
         //			
-        //			tNode = GSDRI.Node2;
-        //			tSpline = tNode.GSDSpline;
-        //			tOffset = tSpline.tRoad.opt_RoadWidth * 0.5f;
+        //			tNode = roadIntersection.Node2;
+        //			tSpline = tNode.spline;
+        //			tOffset = tSpline.road.opt_RoadWidth * 0.5f;
         //			tPos1 = tNode.tTime - (tOffset/tSpline.distance);
         //			tPos2 = tNode.tTime + (tOffset/tSpline.distance);
         //			tVect1 = tSpline.GetSplineValue(tPos1);	
@@ -1443,7 +1445,7 @@ namespace RoadArchitect
         //			Vector3 tPosRL2 = default(Vector3);
         //			Vector3 tPosLL2 = default(Vector3);
         //			
-        //			if(GSDRI.bFlipped){
+        //			if(roadIntersection.bFlipped){
         //				tPosRL2 = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
         //				tPosRR2 = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
         //				tPosLL2 = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
