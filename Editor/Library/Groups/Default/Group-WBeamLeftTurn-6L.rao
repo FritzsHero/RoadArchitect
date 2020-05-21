@@ -179,10 +179,10 @@
     <y>0.7</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDWBeam1R</objectName>
+  <objectName>WBeam1R</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/WBeam1.png</thumbString>
   <desc />
-  <displayName>GSDWBeam1R</displayName>
+  <displayName>WBeam1R</displayName>
 </SplinatedMeshLibraryMaker>
 #### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
@@ -255,9 +255,9 @@
   <singlePosition>0.194753185</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDSign396</objectName>
+  <objectName>Sign396</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Sign396.png</thumbString>
   <desc />
-  <displayName>GSDSign396</displayName>
+  <displayName>Sign396</displayName>
 </EdgeObjectLibraryMaker>
 #### RoadArchitect ####

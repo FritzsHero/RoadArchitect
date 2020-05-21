@@ -67,7 +67,7 @@
   <singlePosition>0.145852223</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDSign861</objectName>
+  <objectName>Sign861</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Sign861.png</thumbString>
   <desc>Interchangeable materials, use \"FedSign-861\" as the search term.</desc>
   <displayName>Sign type 861</displayName>

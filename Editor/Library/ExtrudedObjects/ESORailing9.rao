@@ -168,7 +168,7 @@
     <y>1.00724149</y>
     <z>-5</z>
   </CollisionTriT>
-  <objectName>GSDRailing9</objectName>
+  <objectName>Railing9</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing9.png</thumbString>
   <desc>Very low poly railing used for mobile.</desc>
   <displayName>Railing #9</displayName>

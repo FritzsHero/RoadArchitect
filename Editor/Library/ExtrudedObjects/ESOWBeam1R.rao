@@ -166,7 +166,7 @@
     <y>0.7</y>
     <z>-2.5</z>
   </CollisionTriT>
-  <objectName>GSDWBeam1R</objectName>
+  <objectName>WBeam1R</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/WBeam1.png</thumbString>
   <desc>Federal spec wooden pole WBeam railing. Best used as outer shoulder railing. Right shoulder.</desc>
   <displayName>WBeam Wood Right</displayName>

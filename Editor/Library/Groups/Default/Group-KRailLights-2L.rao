@@ -182,7 +182,7 @@
   <objectName>KRail</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/KRail.png</thumbString>
   <desc />
-  <displayName>GSDKRail</displayName>
+  <displayName>KRail</displayName>
 </SplinatedMeshLibraryMaker>
 #### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>

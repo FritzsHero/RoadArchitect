@@ -168,7 +168,7 @@
     <y>1.2</y>
     <z>-5</z>
   </CollisionTriT>
-  <objectName>GSDRailing5</objectName>
+  <objectName>Railing5</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing5.png</thumbString>
   <desc>Basic concrete railing with pylons.</desc>
   <displayName>Railing #5</displayName>

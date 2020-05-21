@@ -168,7 +168,7 @@
     <y>1.261283</y>
     <z>-5</z>
   </CollisionTriT>
-  <objectName>GSDRailing7</objectName>
+  <objectName>Railing7</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing7.png</thumbString>
   <desc>Rock-decorated concrete railing with pylons and double strand rusted look metal railing.</desc>
   <displayName>Railing #7</displayName>

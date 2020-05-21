@@ -67,7 +67,7 @@
   <singlePosition>0.145852223</singlePosition>
   <isStartMatchingRoadDefinition>false</isStartMatchingRoadDefinition>
   <startMatchRoadDef>0</startMatchRoadDef>
-  <objectName>GSDSign396</objectName>
+  <objectName>Sign396</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Sign396.png</thumbString>
   <desc>Interchangeable materials, use \"FedSign-396\" as the search term.</desc>
   <displayName>Signs 396</displayName>

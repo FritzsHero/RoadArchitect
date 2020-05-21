@@ -179,10 +179,10 @@
     <y>1.261283</y>
     <z>-5</z>
   </CollisionTriT>
-  <objectName>GSDRailing7</objectName>
+  <objectName>Railing7</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing7.png</thumbString>
   <desc />
-  <displayName>GSDRailing7</displayName>
+  <displayName>Railing7</displayName>
 </SplinatedMeshLibraryMaker>
 #### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
@@ -356,10 +356,10 @@
     <y>1.261283</y>
     <z>-5</z>
   </CollisionTriT>
-  <objectName>GSDRailing7</objectName>
+  <objectName>Railing7</objectName>
   <thumbString>Assets/RoadArchitect/Editor/Library/Thumbs/Railing7.png</thumbString>
   <desc />
-  <displayName>GSDRailing7</displayName>
+  <displayName>Railing7</displayName>
 </SplinatedMeshLibraryMaker>
 #### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>
