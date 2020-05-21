@@ -1057,9 +1057,9 @@ namespace RoadArchitect
 
             //		if (Event.current.type == EventType.MouseDrag && Event.current.button == 0){
             //			//Update relevant splines:
-            //			tInter.Node1.GSDSpline.Setup();
+            //			tInter.Node1.spline.Setup();
             //			if(!tInter.bSameSpline){
-            //				tInter.Node2.GSDSpline.Setup();
+            //				tInter.Node2.spline.Setup();
             //			}
             //			bMouseDragHasProcessed = false;
             //		}

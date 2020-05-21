@@ -891,7 +891,7 @@ namespace RoadArchitect.Threading
                                 xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
                                 isf3LAdded = true;
                                 xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(leftVector, tIntHeight));
-                                //if(bIsNextInter && GSDRI.iType == GSDRoadIntersection.IntersectionTypeEnum.FourWay){
+                                //if(bIsNextInter && GSDRI.iType == RoadIntersection.IntersectionTypeEnum.FourWay){
                                 if (isf2LAdded)
                                 {
                                     xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
@@ -1251,16 +1251,16 @@ namespace RoadArchitect.Threading
                     ShoulderR_rVect.y = tIntHeight;
                     ShoulderL_lVect.y = tIntHeight;
 
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref ShoulderL_rVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
+                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_rVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
                     //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderL_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_rVect.y); }
                     //					
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref ShoulderR_lVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
+                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_lVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
                     //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderR_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_lVect.y); }
                     //					
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
+                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
                     //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y); }
                     //					
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
+                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref GSDRI,ref bIsPastInter,ref i, ref xNode);
                     //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y); }
                 }
                 else if (tIntStrength > 0f)
@@ -4336,7 +4336,8 @@ namespace RoadArchitect.Threading
             for (int index = _startI; index < _shoulderList.Count; index++)
             {
                 t2D = ConvertVect3ToVect2(_shoulderList[index]);
-                //				if(t2D.x > 745f && t2D.x < 755f && t2D.y > 1240f && t2D.y < 1250f){
+                //				if(t2D.x > 745f && t2D.x < 755f && t2D.y > 1240f && t2D.y < 1250f)
+                //              {
                 //					int agfsdajgsd = 1;	
                 //				}
                 if (t2D == t2D_Start)
@@ -4899,7 +4900,7 @@ namespace RoadArchitect.Threading
                 iCon.iFLane0R[0] = ((iCon.iFMainPlateR[0] - iCon.iFMainPlateL[0]) * 0.5f + iCon.iFMainPlateL[0]);
             }
 
-            //			if(tNode.GSDRI.rType != GSDRoadIntersection.RoadTypeEnum.NoTurnLane){ 
+            //			if(tNode.GSDRI.rType != RoadIntersection.RoadTypeEnum.NoTurnLane){ 
             if (!bSkipB)
             {
                 iCon.iBLane1L[0] = iCon.iBLane0R[0];
@@ -6868,7 +6869,7 @@ namespace RoadArchitect.Threading
 
                         uv[i] = new Vector2((LaneWidth * 0.5f) / iWidth, 0f);
                         uv[i + 2] = new Vector2(1f - (((LaneWidth * 0.5f) + LaneWidth) / iWidth), 0f);
-                        //Debug.Log (GSDRI.tName + " " + uv[i+2].x);
+                        //Debug.Log (GSDRI.name + " " + uv[i+2].x);
                         uv[i + 4] = new Vector2(0f, 0.125f);
                         uv[i + 6] = new Vector2(1f, 0.125f);
                     }

@@ -2838,13 +2838,13 @@ namespace RoadArchitect.Splination
             List<float> tOrigHeights = new List<float>();
 
             //			List<Terrain> xTerrains = null;
-            //			List<GSD.Roads.RoadUtility.Construction2DRect> tTerrainRects = null;
+            //			List<RoadUtility.Construction2DRect> tTerrainRects = null;
             //			int TerrainCount = 0;
             //			if(bMatchTerrain){
-            //				tTerrainRects = new List<GSD.Roads.RoadUtility.Construction2DRect>();
+            //				tTerrainRects = new List<RoadUtility.Construction2DRect>();
             //				xTerrains = new List<Terrain>();
             //				Object[] tTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
-            //				GSD.Roads.RoadUtility.Construction2DRect tTerrainRect = null;
+            //				RoadUtility.Construction2DRect tTerrainRect = null;
             //				Vector2 tPos2D = default(Vector2);
             //				Vector2 P1,P2,P3,P4;
             //				foreach(Terrain xTerrain in tTerrains){
@@ -2853,7 +2853,7 @@ namespace RoadArchitect.Splination
             //					P2 = new Vector2(0f,xTerrain.terrainData.size.y) + tPos2D;
             //					P3 = new Vector2(xTerrain.terrainData.size.x,xTerrain.terrainData.size.y) + tPos2D;
             //					P4 = new Vector2(xTerrain.terrainData.size.x,0f) + tPos2D;
-            //					tTerrainRect = new GSD.Roads.RoadUtility.Construction2DRect(P1,P2,P3,P4,xTerrain.transform.position.y);
+            //					tTerrainRect = new RoadUtility.Construction2DRect(P1,P2,P3,P4,xTerrain.transform.position.y);
             //					tTerrainRects.Add(tTerrainRect);
             //					xTerrains.Add(xTerrain);
             //					TerrainCount+=1;
@@ -2972,8 +2972,8 @@ namespace RoadArchitect.Splination
                 bSimpleCollisionOn = true;
             }
 
-            //			List<GSD.Roads.RoadUtility.Construction3DTri> tTriList = null;
-            //			GSD.Roads.RoadUtility.Construction3DTri VertOppCutTri = null;
+            //			List<RoadUtility.Construction3DTri> tTriList = null;
+            //			RoadUtility.Construction3DTri VertOppCutTri = null;
             //			int VertCutBufferIndex1 = -1;
             //			int VertCutBufferIndex2 = -1;
             Vector3 VertCutBuffer1 = default(Vector3);
@@ -2981,7 +2981,7 @@ namespace RoadArchitect.Splination
             Vector3 VertCutBuffer3 = default(Vector3);
             float tOrigHeightBuffer_Orig = 0f;
             //			if(bVerticalMeshCutoff_OppositeDir){
-            //				tTriList = new List<GSD.Roads.RoadUtility.Construction3DTri>();
+            //				tTriList = new List<RoadUtility.Construction3DTri>();
             //			}
 
             if (isStretch)

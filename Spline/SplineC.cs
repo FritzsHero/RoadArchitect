@@ -1695,7 +1695,7 @@ namespace RoadArchitect
         {
             //		int mCount = GetNodeCount();
             //		bool bIsPast;
-            //		GSDSplineN tNode = null;
+            //		SplineN tNode = null;
             //		for(int i=0;i<mCount;i++){
             //			tNode = mNodes[i];
             //			if(tNode.bIsIntersection){

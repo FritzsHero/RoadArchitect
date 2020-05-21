@@ -20,7 +20,7 @@ namespace RoadArchitect.Threading
         private static Vector3 ProcessLineHeights_PrevVect = new Vector3(0f, 0f, 0f);
 
 
-        public static float ProcessLineHeights(GSDSplineC tSpline, ref Vector3 tVect, ref Vector3 POS, float tDistance, GSDTerraforming.TempTerrainData TTD, float PrevDesiredHeight)
+        public static float ProcessLineHeights(SplineC tSpline, ref Vector3 tVect, ref Vector3 POS, float tDistance, GSDTerraforming.TempTerrainData TTD, float PrevDesiredHeight)
         {
             Vector3 ShoulderR_rVect = new Vector3(0f, 0f, 0f);
             Vector3 ShoulderL_lVect = new Vector3(0f, 0f, 0f);

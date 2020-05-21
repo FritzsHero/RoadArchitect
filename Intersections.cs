@@ -486,10 +486,10 @@ namespace RoadArchitect
             GSDRI.ResetMaterialsAll();
 
             //			if(GSDRI.bSameSpline){
-            //				GSDRI.Node1.GSDSpline.tRoad.UpdateRoad();
+            //				GSDRI.Node1.spline.tRoad.UpdateRoad();
             //			}else{
-            //				GSDRI.Node1.GSDSpline.tRoad.UpdateRoad();
-            //				GSDRI.Node2.GSDSpline.tRoad.UpdateRoad();
+            //				GSDRI.Node1.spline.tRoad.UpdateRoad();
+            //				GSDRI.Node2.spline.tRoad.UpdateRoad();
             //			}
 
             tNode1.ToggleHideFlags(true);
@@ -505,7 +505,7 @@ namespace RoadArchitect
                     GSDRI.node1.spline.road.PiggyBacks[1] = GSDRI.node1.spline;
                     GSDRI.node1.spline.road.PiggyBacks[2] = GSDRI.node2.spline;
                     GSDRI.node1.spline.road.PiggyBacks[3] = GSDRI.node1.spline;
-                    //					GSDRI.Node1.GSDSpline.tRoad.PiggyBacks[4] = GSDRI.Node2.GSDSpline;
+                    //					GSDRI.Node1.spline.tRoad.PiggyBacks[4] = GSDRI.Node2.spline;
                 }
                 GSDRI.node1.spline.road.isUpdateRequired = true;
             }
@@ -870,7 +870,7 @@ namespace RoadArchitect
                 MF = _obj.AddComponent<MeshFilter>();
             }
             MF.sharedMesh = tMesh;
-            //MeshToFile(MF,GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Intersections/" + tName +".obj");
+            //MeshToFile(MF, RoadEditorUtility.GetBasePath() + "/Mesh/Intersections/" + name +".obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
             if (MC)
@@ -1011,7 +1011,7 @@ namespace RoadArchitect
             }
             MF.sharedMesh = tMesh;
 
-            //MeshToFile(MF,GSDRoadUtilityEditor.GetBasePath() + "/Mesh/Intersections/" + tName +"-overlay.obj");
+            //MeshToFile(MF, RoadEditorUtility.GetBasePath() + "/Mesh/Intersections/" + name +"-overlay.obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
             if (MC)

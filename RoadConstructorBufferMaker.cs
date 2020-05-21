@@ -1397,16 +1397,16 @@ namespace RoadArchitect
 
         #region "MeshSetup2 - Intersections"
         //		private void MeshSetup2_Intersections_FixNormals(){
-        //			int mCount = tRoad.GSDSpline.GetNodeCount();
-        //			GSDSplineN tNode = null;
-        //			GSDRoadIntersection GSDRI = null;
+        //			int mCount = tRoad.spline.GetNodeCount();
+        //			SplineN tNode = null;
+        //			RoadIntersection GSDRI = null;
         //			float MaxDist = 0f;
         //			float[] tDists = new float[2];
         //			Collider[] tColliders = null;
         //			List<GameObject> tCuts = null;
         //
         //			for(int h=0;h<mCount;h++){
-        //				tNode=tRoad.GSDSpline.mNodes[h];
+        //				tNode=tRoad.spline.mNodes[h];
         //				if(tNode.bIsIntersection){
         //					GSDRI = tNode.GSDRI;
         //					

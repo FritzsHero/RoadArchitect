@@ -280,7 +280,7 @@ namespace RoadArchitect
         }
 
 
-        //		private static void TerrainHistorySerialize(ref GSDRoad tRoad) {
+        //		private static void TerrainHistorySerialize(ref Road tRoad) {
         //			MemoryStream ms = new MemoryStream();
         //	        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
         //			formatter.Serialize(ms,tRoad.TerrainHistory);
@@ -289,10 +289,10 @@ namespace RoadArchitect
         //	        ms = null;
         //	    }
         //		
-        //		private static void TerrainHistoryDeserialize(ref GSDRoad tRoad) {
+        //		private static void TerrainHistoryDeserialize(ref Road tRoad) {
         //			MemoryStream ms = new MemoryStream(tRoad.TerrainHistoryRaw);
         //	        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        //			tRoad.TerrainHistory = (List<GSDTerrainHistoryMaker>)formatter.Deserialize(ms);
+        //			tRoad.TerrainHistory = (List<TerrainHistoryMaker>)formatter.Deserialize(ms);
         //			ms.Close();
         //	        ms = null;
         //	    }

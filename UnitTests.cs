@@ -189,7 +189,7 @@ namespace RoadArchitect.Tests
                 nodeLocations.Add(new Vector3(StartLocX, tHeight, StartLocY + (index * StartLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
-            //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.NoTurnLane);
+            //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Get road system, create road #2:
             nodeLocations.Clear();
@@ -198,7 +198,7 @@ namespace RoadArchitect.Tests
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 2f), tHeight, StartLocY + (index * StartLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
-            //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
+            //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.TurnLane);
 
             //Get road system, create road #3:
             nodeLocations.Clear();
@@ -207,7 +207,7 @@ namespace RoadArchitect.Tests
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 4f), tHeight, StartLocY + (index * StartLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
-            //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.BothTurnLanes);
+            //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.BothTurnLanes);
 
             //Get road system, create road #4:
             nodeLocations.Clear();
@@ -216,7 +216,7 @@ namespace RoadArchitect.Tests
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 6f), tHeight, StartLocY + (index * StartLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
-            //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
+            //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.TurnLane);
 
             //Get road system, create road #4:
             nodeLocations.Clear();
@@ -225,7 +225,7 @@ namespace RoadArchitect.Tests
                 nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 8f), tHeight, StartLocY + (index * StartLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
-            //UnitTest_IntersectionHelper(bRoad, tRoad, GSDRoadIntersection.iStopTypeEnum.TrafficLight1, GSDRoadIntersection.RoadTypeEnum.TurnLane);
+            //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.TurnLane);
 
             RoadAutomation.CreateIntersectionsProgrammaticallyForRoad(road1, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
 

@@ -23,9 +23,9 @@ namespace RoadArchitect
         private bool isUpdateGlobalSaveMesh = false;
 
         //	//Editor only camera variables:
-        //	private GSDRoadIntersection[] tInters = null;
+        //	private RoadIntersection[] tInters = null;
         //	private int tInterIndex = 0;
-        //	private GSDSplineN[] tBridges = null;
+        //	private SplineN[] tBridges = null;
         //	private int tBridgesIndex = 0;
         //	private bool bHasBridgeInit = false;
         //	private bool bHasInterInit = false;
@@ -192,7 +192,7 @@ namespace RoadArchitect
             if (!bHasInterInit)
             {
                 bHasInterInit = true;
-                tInters = (GSDRoadIntersection[])GameObject.FindObjectsOfType(typeof(GSDRoadIntersection));
+                tInters = (RoadIntersection[])GameObject.FindObjectsOfType(typeof(RoadIntersection));
                 if (tInters == null || tInters.Length < 1)
                 {
                     tInterIndex = -1;
@@ -233,9 +233,9 @@ namespace RoadArchitect
             if (!bHasBridgeInit)
             {
                 bHasBridgeInit = true;
-                GSDSplineN[] tSplineN = (GSDSplineN[])GameObject.FindObjectsOfType(typeof(GSDSplineN));
-                List<GSDSplineN> tSplineNList = new List<GSDSplineN>();
-                foreach (GSDSplineN tNode in tSplineN)
+                SplineN[] tSplineN = (SplineN[])GameObject.FindObjectsOfType(typeof(SplineN));
+                List<SplineN> tSplineNList = new List<SplineN>();
+                foreach (SplineN tNode in tSplineN)
                 {
                     if (tNode.bIsBridgeStart && tNode.bIsBridgeMatched)
                     {

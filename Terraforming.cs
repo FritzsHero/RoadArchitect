@@ -123,7 +123,7 @@ namespace RoadArchitect
         private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref Road _road, bool _isMultithreaded)
         {
             RootUtils.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
-            //First lets make sure all terrains have GSDTerrain shit on them:
+            //First lets make sure all terrains have a RoadTerrain script:
             CheckAllTerrains();
 
             //Reset the terrain:
@@ -153,7 +153,7 @@ namespace RoadArchitect
                 }
                 tRect = GetTerrainBounds(terrain);
                 isContaining = false;
-                //Debug.Log(tTerrain.transform.name + " bounds: " + tRect.ToStringGSD());
+                //Debug.Log(tTerrain.transform.name + " bounds: " + tRect.ToStringRA());
                 //Debug.Log("  Road bounds: " + tSpline.RoadV0 + "," + tSpline.RoadV1 + "," + tSpline.RoadV2 + "," + tSpline.RoadV3);
 
                 if (isContaining != true && tRect.Contains(ref _spline.RoadV0))

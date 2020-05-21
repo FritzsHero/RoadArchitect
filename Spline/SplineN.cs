@@ -506,7 +506,7 @@ namespace RoadArchitect
 
         #region "Gizmos"
         //	private void TerrainDebugging(){
-        //			GSD.Roads.RoadUtility.Construction3DTri tTri = null;
+        //			RoadUtility.Construction3DTri tTri = null;
         //			Vector3 tHeightVec = new Vector3(0f,10f,0f);
         //			if(tTriList != null){
         //				
@@ -614,7 +614,7 @@ namespace RoadArchitect
         ////			Gizmos.DrawCube(P3,new Vector3(1f,1f,1f));
         ////			Gizmos.DrawCube(P4,new Vector3(1f,1f,1f));
         ////			
-        ////			tRect = new GSD.Roads.RoadUtility.Construction3DRect(P1,P2,P3,P4);
+        ////			tRect = new RoadUtility.Construction3DRect(P1,P2,P3,P4);
         ////
         ////			Gizmos.color = new Color(0f,0f,1f,1f);
         ////			Gizmos.DrawCube(tRect.pMiddle,new Vector3(0.1f,0.1f,0.1f));

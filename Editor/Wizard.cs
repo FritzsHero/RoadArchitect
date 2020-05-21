@@ -354,7 +354,7 @@ namespace RoadArchitect
         {
             int nameCount = _names.Length;
             string path = "";
-            //string ThumbString = "";
+            //string thumbString = "";
             for (int index = 0; index < nameCount; index++)
             {
                 RoadUtility.WizardObject tO = RoadUtility.WizardObject.LoadFromLibrary(_paths[index]);

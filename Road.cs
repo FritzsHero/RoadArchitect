@@ -451,8 +451,8 @@ namespace RoadArchitect
             }
 
             //EditorCameraPos_Full+=EditorCameraIncrementDistance_Full;
-            //if(EditorCameraPos_Full > GSDSpline.distance){ EditorCameraPos = EditorCameraStartPos; bEditorCameraMoving = false; bEditorCameraSetup = false; EditorCameraPos_Full = 0f; return; }
-            //EditorCameraPos = GSDSpline.TranslateDistBasedToParam(EditorCameraPos_Full);
+            //if(EditorCameraPos_Full > spline.distance){ EditorCameraPos = EditorCameraStartPos; bEditorCameraMoving = false; bEditorCameraSetup = false; EditorCameraPos_Full = 0f; return; }
+            //EditorCameraPos = spline.TranslateDistBasedToParam(EditorCameraPos_Full);
 
             EditorCameraPos += EditorCameraIncrementDistance;
             if (EditorCameraPos > EditorCameraEndPos)
