@@ -13,7 +13,7 @@ namespace RoadArchitect.Tests
         private static RoadSystem roadSystem;
 
 
-        /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. MicroGSD LLC is not responsbile for data loss if this function is called by user. </summary>
+        /// <summary> WARNING: You should only call this on an empty scene. The RoadArchitect team is not responsbile for loss of data or work if this function is called by user. </summary>
         public static void RoadArchitectUnitTests()
         {
             CleanupTests();
@@ -81,9 +81,9 @@ namespace RoadArchitect.Tests
         {
             Debug.Log("Cleaning up tests");
             //Get the existing road system, if it exists:
-            GameObject GSDRS = (GameObject) GameObject.Find("RoadArchitectSystem1");
-            DestroyTerrainHistory(GSDRS);
-            Object.DestroyImmediate(GSDRS);
+            GameObject roadSystem = (GameObject) GameObject.Find("RoadArchitectSystem1");
+            DestroyTerrainHistory(roadSystem);
+            Object.DestroyImmediate(roadSystem);
             FlattenTerrains();
         }
 
@@ -93,7 +93,7 @@ namespace RoadArchitect.Tests
             //Destroy the terrain histories:
             if (_roadSystem != null)
             {
-                Object[] roads = _roadSystem.GetComponents<Road>();
+                Road[] roads = _roadSystem.GetComponents<Road>();
                 foreach (Road road in roads)
                 {
                     Terraforming.TerrainsReset(road);
@@ -105,7 +105,7 @@ namespace RoadArchitect.Tests
         private static void FlattenTerrains()
         {
             //Reset all terrains to 0,0
-            Object[] allTerrains = Object.FindObjectsOfType<Terrain>();
+            Terrain[] allTerrains = Object.FindObjectsOfType<Terrain>();
             foreach (Terrain terrain in allTerrains)
             {
                 terrain.terrainData.SetHeights(0, 0, new float[513, 513]);
@@ -127,39 +127,39 @@ namespace RoadArchitect.Tests
             }
 
             //Get road system create road:
-            Road tRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
+            Road testRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Bridge0: (Arch)
-            tRoad.spline.nodes[4].isBridgeStart = true;
-            tRoad.spline.nodes[4].isBridgeMatched = true;
-            tRoad.spline.nodes[7].isBridgeEnd = true;
-            tRoad.spline.nodes[7].isBridgeMatched = true;
-            tRoad.spline.nodes[4].bridgeCounterpartNode = tRoad.spline.nodes[7];
-            tRoad.spline.nodes[4].LoadWizardObjectsFromLibrary("Arch12m-2L", true, true);
+            testRoad.spline.nodes[4].isBridgeStart = true;
+            testRoad.spline.nodes[4].isBridgeMatched = true;
+            testRoad.spline.nodes[7].isBridgeEnd = true;
+            testRoad.spline.nodes[7].isBridgeMatched = true;
+            testRoad.spline.nodes[4].bridgeCounterpartNode = testRoad.spline.nodes[7];
+            testRoad.spline.nodes[4].LoadWizardObjectsFromLibrary("Arch12m-2L", true, true);
 
             //Bridge1: (Federal causeway)
-            tRoad.spline.nodes[8].isBridgeStart = true;
-            tRoad.spline.nodes[8].isBridgeMatched = true;
-            tRoad.spline.nodes[8].bridgeCounterpartNode = tRoad.spline.nodes[10];
-            tRoad.spline.nodes[8].LoadWizardObjectsFromLibrary("Causeway1-2L", true, true);
-            tRoad.spline.nodes[10].isBridgeEnd = true;
-            tRoad.spline.nodes[10].isBridgeMatched = true;
+            testRoad.spline.nodes[8].isBridgeStart = true;
+            testRoad.spline.nodes[8].isBridgeMatched = true;
+            testRoad.spline.nodes[8].bridgeCounterpartNode = testRoad.spline.nodes[10];
+            testRoad.spline.nodes[8].LoadWizardObjectsFromLibrary("Causeway1-2L", true, true);
+            testRoad.spline.nodes[10].isBridgeEnd = true;
+            testRoad.spline.nodes[10].isBridgeMatched = true;
 
             //Bridge2: (Steel)
-            tRoad.spline.nodes[11].isBridgeStart = true;
-            tRoad.spline.nodes[11].isBridgeMatched = true;
-            tRoad.spline.nodes[11].bridgeCounterpartNode = tRoad.spline.nodes[13];
-            tRoad.spline.nodes[11].LoadWizardObjectsFromLibrary("Steel-2L", true, true);
-            tRoad.spline.nodes[13].isBridgeEnd = true;
-            tRoad.spline.nodes[13].isBridgeMatched = true;
+            testRoad.spline.nodes[11].isBridgeStart = true;
+            testRoad.spline.nodes[11].isBridgeMatched = true;
+            testRoad.spline.nodes[11].bridgeCounterpartNode = testRoad.spline.nodes[13];
+            testRoad.spline.nodes[11].LoadWizardObjectsFromLibrary("Steel-2L", true, true);
+            testRoad.spline.nodes[13].isBridgeEnd = true;
+            testRoad.spline.nodes[13].isBridgeMatched = true;
 
             //Bridge3: (Causeway)
-            tRoad.spline.nodes[14].isBridgeStart = true;
-            tRoad.spline.nodes[14].isBridgeMatched = true;
-            tRoad.spline.nodes[16].isBridgeEnd = true;
-            tRoad.spline.nodes[16].isBridgeMatched = true;
-            tRoad.spline.nodes[14].bridgeCounterpartNode = tRoad.spline.nodes[16];
-            tRoad.spline.nodes[14].LoadWizardObjectsFromLibrary("Causeway4-2L", true, true);
+            testRoad.spline.nodes[14].isBridgeStart = true;
+            testRoad.spline.nodes[14].isBridgeMatched = true;
+            testRoad.spline.nodes[16].isBridgeEnd = true;
+            testRoad.spline.nodes[16].isBridgeMatched = true;
+            testRoad.spline.nodes[14].bridgeCounterpartNode = testRoad.spline.nodes[16];
+            testRoad.spline.nodes[14].LoadWizardObjectsFromLibrary("Causeway4-2L", true, true);
         }
 
 
@@ -167,10 +167,10 @@ namespace RoadArchitect.Tests
         private static void RoadArchitectUnitTest2()
         {
             //Create node locations:
-            float StartLocX = 800f;
-            float StartLocY = 200f;
-            float StartLocYSep = 200f;
-            float tHeight = 20f;
+            float startLocX = 800f;
+            float startLocY = 200f;
+            float startLocYSep = 200f;
+            float height = 20f;
             Road road1 = null;
             Road road2 = null;
 
@@ -178,7 +178,7 @@ namespace RoadArchitect.Tests
             List<Vector3> nodeLocations = new List<Vector3>();
             for (int index = 0; index < 9; index++)
             {
-                nodeLocations.Add(new Vector3(StartLocX + (index * 200f), tHeight, 600f));
+                nodeLocations.Add(new Vector3(startLocX + (index * 200f), height, 600f));
             }
             road1 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
@@ -186,7 +186,7 @@ namespace RoadArchitect.Tests
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
             {
-                nodeLocations.Add(new Vector3(StartLocX, tHeight, StartLocY + (index * StartLocYSep)));
+                nodeLocations.Add(new Vector3(startLocX, height, startLocY + (index * startLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
@@ -195,7 +195,7 @@ namespace RoadArchitect.Tests
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
             {
-                nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 2f), tHeight, StartLocY + (index * StartLocYSep)));
+                nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 2f), height, startLocY + (index * startLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.TurnLane);
@@ -204,7 +204,7 @@ namespace RoadArchitect.Tests
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
             {
-                nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 4f), tHeight, StartLocY + (index * StartLocYSep)));
+                nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 4f), height, startLocY + (index * startLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.BothTurnLanes);
@@ -213,7 +213,7 @@ namespace RoadArchitect.Tests
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
             {
-                nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 6f), tHeight, StartLocY + (index * StartLocYSep)));
+                nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 6f), height, startLocY + (index * startLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.TurnLane);
@@ -222,7 +222,7 @@ namespace RoadArchitect.Tests
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
             {
-                nodeLocations.Add(new Vector3(StartLocX + (StartLocYSep * 8f), tHeight, StartLocY + (index * StartLocYSep)));
+                nodeLocations.Add(new Vector3(startLocX + (startLocYSep * 8f), height, startLocY + (index * startLocYSep)));
             }
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             //UnitTest_IntersectionHelper(bRoad, tRoad, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.TurnLane);
@@ -230,17 +230,18 @@ namespace RoadArchitect.Tests
             RoadAutomation.CreateIntersectionsProgrammaticallyForRoad(road1, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
             //Now count road intersections, if not 5 throw error
-            int iCount = 0;
-            foreach (SplineN tNode in road1.spline.nodes)
+            int intersctionsCount = 0;
+            foreach (SplineN node in road1.spline.nodes)
             {
-                if (tNode.isIntersection)
+                if (node.isIntersection)
                 {
-                    iCount += 1;
+                    intersctionsCount += 1;
                 }
             }
-            if (iCount != 5)
+
+            if (intersctionsCount != 5)
             {
-                Debug.LogError("Unit Test #2 failed: " + iCount.ToString() + " intersections instead of 5.");
+                Debug.LogError("Unit Test #2 failed: " + intersctionsCount.ToString() + " intersections instead of 5.");
             }
         }
 
@@ -252,23 +253,24 @@ namespace RoadArchitect.Tests
             SplineN nodeInter2 = null;
             foreach (SplineN node in _road1.spline.nodes)
             {
-                foreach (SplineN xNode in _road2.spline.nodes)
+                foreach (SplineN node2 in _road2.spline.nodes)
                 {
-                    if (RootUtils.IsApproximately(Vector3.Distance(node.transform.position, xNode.transform.position), 0f, 0.05f))
+                    if (RootUtils.IsApproximately(Vector3.Distance(node.transform.position, node2.transform.position), 0f, 0.05f))
                     {
                         nodeInter1 = node;
-                        nodeInter2 = xNode;
+                        nodeInter2 = node2;
                         break;
                     }
                 }
             }
 
+
             if (nodeInter1 != null && nodeInter2 != null)
             {
-                GameObject tInter = Intersections.CreateIntersection(nodeInter1, nodeInter2);
-                RoadIntersection GSDRI = tInter.GetComponent<RoadIntersection>();
-                GSDRI.intersectionStopType = _iStopType;
-                GSDRI.roadType = _roadType;
+                GameObject IntersectionsObject = Intersections.CreateIntersection(nodeInter1, nodeInter2);
+                RoadIntersection roadIntersction = IntersectionsObject.GetComponent<RoadIntersection>();
+                roadIntersction.intersectionStopType = _iStopType;
+                roadIntersction.roadType = _roadType;
             }
         }
 
@@ -304,6 +306,7 @@ namespace RoadArchitect.Tests
             road2.laneAmount = 4;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
+
             //Get road system, create road #2:
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
@@ -313,6 +316,7 @@ namespace RoadArchitect.Tests
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
+
 
             //Get road system, create road #3:
             nodeLocations.Clear();
@@ -324,6 +328,7 @@ namespace RoadArchitect.Tests
             road2.laneAmount = 4;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
+
             //Get road system, create road #4:
             nodeLocations.Clear();
             for (int index = 0; index < 5; index++)
@@ -333,6 +338,7 @@ namespace RoadArchitect.Tests
             road2 = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
             road2.laneAmount = 4;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
+
 
             //Get road system, create road #5:
             nodeLocations.Clear();
@@ -344,18 +350,19 @@ namespace RoadArchitect.Tests
             road2.laneAmount = 4;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.TrafficLight1, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
+
             //Now count road intersections, if not 5 throw error
-            int iCount = 0;
+            int intersectionsCount = 0;
             foreach (SplineN node in road1.spline.nodes)
             {
                 if (node.isIntersection)
                 {
-                    iCount += 1;
+                    intersectionsCount += 1;
                 }
             }
-            if (iCount != 5)
+            if (intersectionsCount != 5)
             {
-                Debug.LogError("Unit Test #3 failed: " + iCount.ToString() + " intersections instead of 5.");
+                Debug.LogError("Unit Test #3 failed: " + intersectionsCount.ToString() + " intersections instead of 5.");
             }
         }
 
@@ -369,15 +376,16 @@ namespace RoadArchitect.Tests
             {
                 nodeLocations.Add(new Vector3(3500f, 90f, 200f + (800f * index)));
             }
-            Road tRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
+
+            Road testRoad = RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
 
             //Suspension bridge:
-            tRoad.spline.nodes[1].isBridgeStart = true;
-            tRoad.spline.nodes[1].isBridgeMatched = true;
-            tRoad.spline.nodes[3].isBridgeEnd = true;
-            tRoad.spline.nodes[3].isBridgeMatched = true;
-            tRoad.spline.nodes[1].bridgeCounterpartNode = tRoad.spline.nodes[3];
-            tRoad.spline.nodes[1].LoadWizardObjectsFromLibrary("SuspL-2L", true, true);
+            testRoad.spline.nodes[1].isBridgeStart = true;
+            testRoad.spline.nodes[1].isBridgeMatched = true;
+            testRoad.spline.nodes[3].isBridgeEnd = true;
+            testRoad.spline.nodes[3].isBridgeMatched = true;
+            testRoad.spline.nodes[1].bridgeCounterpartNode = testRoad.spline.nodes[3];
+            testRoad.spline.nodes[1].LoadWizardObjectsFromLibrary("SuspL-2L", true, true);
         }
 
 
