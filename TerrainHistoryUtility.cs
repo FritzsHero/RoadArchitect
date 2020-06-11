@@ -137,11 +137,9 @@ namespace RoadArchitect
         public static string CheckNonAssetDirTH()
         {
             CheckRoadArchitectDirectory();
+
+
             string path = GetTHDir();
-            if (!System.IO.Directory.Exists(path))
-            {
-                System.IO.Directory.CreateDirectory(path);
-            }
             if (System.IO.Directory.Exists(path))
             {
                 return path;
@@ -156,14 +154,12 @@ namespace RoadArchitect
         public static string CheckNonAssetDirLibrary()
         {
             CheckRoadArchitectDirectory();
-            string xPath = RootUtils.GetDirLibrary();
-            if (!System.IO.Directory.Exists(xPath))
+
+
+            string path = RootUtils.GetDirLibrary();
+            if (System.IO.Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(xPath);
-            }
-            if (System.IO.Directory.Exists(xPath))
-            {
-                return xPath;
+                return path;
             }
             else
             {

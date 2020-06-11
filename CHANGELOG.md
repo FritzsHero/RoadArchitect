@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed TestCodeCount to support more folders
 - Fixed additional issues with physic material names
 - Changed terrains to use heightmapResolution
+- Removed redundant directory queries
 
 
 ## [Version: 1.9_FH] - 2019.04.22
