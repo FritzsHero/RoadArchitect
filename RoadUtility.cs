@@ -936,8 +936,8 @@ namespace RoadArchitect
                 tInfo = new Threading.RoadCreationT.RoadTerrainInfo();
                 tInfo.uID = tTerrain.transform.gameObject.GetComponent<RoadTerrain>().UID;
                 tInfo.bounds = new Rect(tTerrain.transform.position.x, tTerrain.transform.position.z, tTerrain.terrainData.size.x, tTerrain.terrainData.size.z);
-                tInfo.hmWidth = tTerrain.terrainData.heightmapWidth;
-                tInfo.hmHeight = tTerrain.terrainData.heightmapHeight;
+                tInfo.hmWidth = tTerrain.terrainData.heightmapResolution;
+                tInfo.hmHeight = tTerrain.terrainData.heightmapResolution;
                 tInfo.pos = tTerrain.transform.position;
                 tInfo.size = tTerrain.terrainData.size;
                 tInfo.heights = tTerrain.terrainData.GetHeights(0, 0, tInfo.hmWidth, tInfo.hmHeight);

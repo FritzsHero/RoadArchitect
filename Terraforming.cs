@@ -211,8 +211,8 @@ namespace RoadArchitect
                 {
                     TTD = new TempTerrainData();
                     TTD.HM = terrain.terrainData.heightmapResolution;
-                    TTD.HMHeight = terrain.terrainData.heightmapHeight;
-                    TTD.heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight);
+                    TTD.HMHeight = terrain.terrainData.heightmapResolution;
+                    TTD.heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
                     TTD.HMRatio = TTD.HM / terrain.terrainData.size.x;
                     TTD.MetersPerHM = terrain.terrainData.size.x / terrain.terrainData.heightmapResolution;
                     float DetailRatio = terrain.terrainData.detailResolution / terrain.terrainData.size.x;
@@ -234,7 +234,7 @@ namespace RoadArchitect
                         TTD.TerrainMaxIndex = terrain.terrainData.heightmapResolution;
                         TTD.TerrainSize = terrain.terrainData.size;
                         TTD.TerrainPos = terrain.transform.position;
-                        TTD.tHeights = new bool[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
+                        TTD.tHeights = new bool[terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution];
                         TID = terrain.transform.gameObject.GetComponent<RoadTerrain>();
                         if (TID != null)
                         {
@@ -552,7 +552,7 @@ namespace RoadArchitect
                 //Heights:
                 if (TH.x1 != null)
                 {
-                    heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight);
+                    heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
                     ArrayCount = TH.cI;
                     for (int index = 0; index < ArrayCount; index++)
                     {
