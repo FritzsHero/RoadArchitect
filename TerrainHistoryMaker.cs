@@ -8,25 +8,34 @@ namespace RoadArchitect
     public class TerrainHistoryMaker
     {
         #region "Vars"
-        public int TID;
+        [UnityEngine.Serialization.FormerlySerializedAs("TID")]
+        public int terrainID;
         //Heights:
         public int[] x1;
         public int[] y1;
-        public float[] h;
+        [UnityEngine.Serialization.FormerlySerializedAs("h")]
+        public float[] height;
         public int cI;
-        public bool bHeightHistoryEnabled;
+        [UnityEngine.Serialization.FormerlySerializedAs("bHeightHistoryEnabled")]
+        public bool isHeightHistoryEnabled;
         //Details:
-        public int DetailLayersCount;
+        [UnityEngine.Serialization.FormerlySerializedAs("DetailLayersCount")]
+        public int detailLayersCount;
 
-        public int[] DetailsX;
-        public int[] DetailsY;
-        public int[] DetailsOldValue;
-        public int[] DetailsI;
+        [UnityEngine.Serialization.FormerlySerializedAs("DetailsX")]
+        public int[] detailsX;
+        [UnityEngine.Serialization.FormerlySerializedAs("DetailsY")]
+        public int[] detailsY;
+        [UnityEngine.Serialization.FormerlySerializedAs("DetailsOldValue")]
+        public int[] detailsOldValue;
+        [UnityEngine.Serialization.FormerlySerializedAs("DetailsI")]
+        public int[] detailsI;
 
         [UnityEngine.Serialization.FormerlySerializedAs("bDetailHistoryEnabled")]
         public bool isDetailHistoryEnabled;
         //Trees:
-        public TerrainTreeInstance[] TreesOld;
+        [UnityEngine.Serialization.FormerlySerializedAs("TreesOld")]
+        public TerrainTreeInstance[] oldTrees;
         public int TreesI;
         [UnityEngine.Serialization.FormerlySerializedAs("bTreeHistoryEnabled")]
         public bool isTreeHistoryEnabled;
@@ -40,13 +49,13 @@ namespace RoadArchitect
             //Heights:
             x1 = null;
             y1 = null;
-            h = null;
-            DetailsX = null;
-            DetailsY = null;
-            DetailsOldValue = null;
-            DetailsI = null;
+            height = null;
+            detailsX = null;
+            detailsY = null;
+            detailsOldValue = null;
+            detailsI = null;
             //Trees:
-            TreesOld = null;
+            oldTrees = null;
         }
 
 
@@ -75,7 +84,7 @@ namespace RoadArchitect
         public void MakeRATrees(ref List<TreeInstance> _trees)
         {
             int tSize = _trees.Count;
-            TreesOld = new TerrainTreeInstance[tSize];
+            oldTrees = new TerrainTreeInstance[tSize];
             TerrainTreeInstance tTree = null;
             TreeInstance xTree;
             for (int index = 0; index < tSize; index++)
@@ -96,24 +105,24 @@ namespace RoadArchitect
                 tTree.positionZ = xTree.position.z;
                 tTree.prototypeIndex = xTree.prototypeIndex;
                 tTree.widthScale = xTree.widthScale;
-                TreesOld[index] = tTree;
+                oldTrees[index] = tTree;
             }
         }
 
 
         public TreeInstance[] MakeTrees()
         {
-            if (TreesOld == null || TreesOld.Length < 1)
+            if (oldTrees == null || oldTrees.Length < 1)
             {
                 return null;
             }
-            int tSize = TreesOld.Length;
+            int tSize = oldTrees.Length;
             TreeInstance[] tTrees = new TreeInstance[tSize];
             TerrainTreeInstance tTree = null;
             TreeInstance xTree;
             for (int index = 0; index < tSize; index++)
             {
-                tTree = TreesOld[index];
+                tTree = oldTrees[index];
                 xTree = new TreeInstance();
                 xTree.color = new Color(tTree.colorR, tTree.colorG, tTree.colorB, tTree.colorA);
                 xTree.heightScale = tTree.heightScale;
@@ -140,40 +149,40 @@ namespace RoadArchitect
                 tSize += (y1.Length * 4);
                 tSize += 20;
             }
-            if (h != null)
+            if (height != null)
             {
-                tSize += (h.Length * 4);
+                tSize += (height.Length * 4);
                 tSize += 20;
             }
             tSize += 4;
             tSize += 1;
             //Details:
             tSize += 4;
-            if (DetailsX != null)
+            if (detailsX != null)
             {
-                tSize += (DetailsX.Length * 4);
+                tSize += (detailsX.Length * 4);
                 tSize += 20;
             }
-            if (DetailsY != null)
+            if (detailsY != null)
             {
-                tSize += (DetailsY.Length * 4);
+                tSize += (detailsY.Length * 4);
                 tSize += 20;
             }
-            if (DetailsOldValue != null)
+            if (detailsOldValue != null)
             {
-                tSize += (DetailsOldValue.Length * 4);
+                tSize += (detailsOldValue.Length * 4);
                 tSize += 20;
             }
-            if (DetailsI != null)
+            if (detailsI != null)
             {
-                tSize += (DetailsI.Length * 4);
+                tSize += (detailsI.Length * 4);
                 tSize += 20;
             }
             tSize += 1;
             //Trees:
-            if (TreesOld != null)
+            if (oldTrees != null)
             {
-                tSize += (TreesOld.Length * 56);
+                tSize += (oldTrees.Length * 56);
                 tSize += 20;
             }
             tSize += 4;
