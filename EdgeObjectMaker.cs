@@ -73,22 +73,6 @@ namespace RoadArchitect.EdgeObjects
         public float horizontalSep = 5f;
         [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
         public AnimationCurve horizontalCurve;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker1")]
-        public float horizCurveTempChecker1 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker2")]
-        public float horizCurveTempChecker2 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker3")]
-        public float horizCurveTempChecker3 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker4")]
-        public float horizCurveTempChecker4 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker5")]
-        public float horizCurveTempChecker5 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker6")]
-        public float horizCurveTempChecker6 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker7")]
-        public float horizCurveTempChecker7 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizCurve_tempchecker8")]
-        public float horizCurveTempChecker8 = 0f;
         #endregion
 
 
@@ -97,22 +81,6 @@ namespace RoadArchitect.EdgeObjects
         public float verticalRaise = 0f;
         [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
         public AnimationCurve verticalCurve;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker1")]
-        public float verticalCurveTempChecker1 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker2")]
-        public float verticalCurveTempChecker2 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker3")]
-        public float verticalCurveTempChecker3 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker4")]
-        public float verticalCurveTempChecker4 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker5")]
-        public float verticalCurveTempChecker5 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker6")]
-        public float verticalCurveTempChecker6 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker7")]
-        public float verticalCurveTempChecker7 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve_tempchecker8")]
-        public float verticalCurveTempChecker8 = 0f;
         #endregion
 
 
