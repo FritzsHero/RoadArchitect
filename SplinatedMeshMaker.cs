@@ -101,28 +101,12 @@ namespace RoadArchitect.Splination
         #region "Horizontal offsets"
         public AnimationCurve HorizontalCurve;
         public float HorizontalSep = 0f;
-        public float HorizCurve_tempchecker1 = 0f;
-        public float HorizCurve_tempchecker2 = 0f;
-        public float HorizCurve_tempchecker3 = 0f;
-        public float HorizCurve_tempchecker4 = 0f;
-        public float HorizCurve_tempchecker5 = 0f;
-        public float HorizCurve_tempchecker6 = 0f;
-        public float HorizCurve_tempchecker7 = 0f;
-        public float HorizCurve_tempchecker8 = 0f;
         #endregion
 
 
         #region "Vertical offsets"
         public AnimationCurve VerticalCurve;
         public float VerticalRaise = 0f;
-        public float VerticalCurve_tempchecker1 = 0f;
-        public float VerticalCurve_tempchecker2 = 0f;
-        public float VerticalCurve_tempchecker3 = 0f;
-        public float VerticalCurve_tempchecker4 = 0f;
-        public float VerticalCurve_tempchecker5 = 0f;
-        public float VerticalCurve_tempchecker6 = 0f;
-        public float VerticalCurve_tempchecker7 = 0f;
-        public float VerticalCurve_tempchecker8 = 0f;
         #endregion
 
 
