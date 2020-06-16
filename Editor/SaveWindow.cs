@@ -119,9 +119,9 @@ namespace RoadArchitect
             {
                 SanitizeFilename();
                 tSMMs[0].isBridge = isBridge;
-                tSMMs[0].ThumbString = thumbString;
-                tSMMs[0].Desc = desc;
-                tSMMs[0].DisplayName = displayName;
+                tSMMs[0].thumbString = thumbString;
+                tSMMs[0].desc = desc;
+                tSMMs[0].displayName = displayName;
                 tSMMs[0].SaveToLibrary(fileName, false);
                 Close();
             }
@@ -258,7 +258,7 @@ namespace RoadArchitect
                 tSMMs[0] = _SMM;
                 if (_SMM != null)
                 {
-                    fileName = _SMM.tName;
+                    fileName = _SMM.objectName;
                     displayName = fileName;
                 }
             }

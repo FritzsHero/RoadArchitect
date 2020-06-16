@@ -44,15 +44,15 @@ namespace RoadArchitect.Splination
         [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         public bool isBridge = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bIsStretch")]
-        public bool isStretch = false;
+        public bool isStretched = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bStretchLocOffset")]
-        public bool isStretchLocOffset = false;
+        public bool isStretchedOffset = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
-        public bool isStretchSize = false;
+        public bool isStretchedSize = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
-        public bool isBCFlipX = false;
+        public bool isBoxColliderFlippedOnX = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
-        public bool isBCFlipZ = false;
+        public bool isBoxColliderFlippedOnZ = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
         public bool isStraightLineMatchStartEnd = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bFlipRotation")]
@@ -88,25 +88,32 @@ namespace RoadArchitect.Splination
         public float stretchUVThreshold = 0.05f;
 
         public GameObject Output = null;
-        public Mesh tMesh = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("tMesh")]
+        public Mesh mesh = null;
         public Material SplinatedMaterial1 = null;
         public Material SplinatedMaterial2 = null;
         public string SplinatedMaterial1String = "";
         public string SplinatedMaterial2String = "";
 
-        public Vector3 StretchBC_LocOffset = default(Vector3);
-        public Vector3 StretchBC_Size = default(Vector3);
+        [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_LocOffset")]
+        public Vector3 boxColliderOffset = default(Vector3);
+        [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_Size")]
+        public Vector3 boxColliderSize = default(Vector3);
 
 
         #region "Horizontal offsets"
-        public AnimationCurve HorizontalCurve;
-        public float HorizontalSep = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
+        public AnimationCurve horizontalCurve;
+        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
+        public float horizontalSep = 0f;
         #endregion
 
 
         #region "Vertical offsets"
-        public AnimationCurve VerticalCurve;
-        public float VerticalRaise = 0f;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
+        public AnimationCurve verticalCurve;
+        [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
+        public float verticalRaise = 0f;
         #endregion
 
 
@@ -153,8 +160,10 @@ namespace RoadArchitect.Splination
         public GameObject EndCapEndOutput = null;
         public string EndCapStartString = "";
         public string EndCapEndString = "";
-        public bool bEndCapCustomMatchStart = true;
-        public bool bEndObjectsMatchGround = false;
+        [UnityEngine.Serialization.FormerlySerializedAs("bEndCapCustomMatchStart")]
+        public bool isEndCapCustomMatchStart = true;
+        [UnityEngine.Serialization.FormerlySerializedAs("bEndObjectsMatchGround")]
+        public bool isEndObjectsMatchingGround = false;
         public Vector3 EndCapCustomOffsetStart = default(Vector3);
         public Vector3 EndCapCustomOffsetEnd = default(Vector3);
         public Vector3 EndCapCustomRotOffsetStart = default(Vector3);
@@ -189,9 +198,13 @@ namespace RoadArchitect.Splination
         [UnityEngine.Serialization.FormerlySerializedAs("bCollisionTrigger")]
         public bool isCollisionTrigger = false;
 
+        // Bottom Left
         public Vector3 CollisionBoxBL = default(Vector3);
+        // Bottom Right
         public Vector3 CollisionBoxBR = default(Vector3);
+        // Top Left
         public Vector3 CollisionBoxTL = default(Vector3);
+        // Top Right
         public Vector3 CollisionBoxTR = default(Vector3);
 
         public Vector3 CollisionTriBL = default(Vector3);
@@ -200,12 +213,17 @@ namespace RoadArchitect.Splination
         #endregion
 
 
-        public string tName = "ExtrudedObject";
-        public string ThumbString = "";
-        public string Desc = "";
-        public string DisplayName = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
+        public string objectName = "ExtrudedObject";
+        [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
+        public string thumbString = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
+        public string desc = "";
+        [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
+        public string displayName = "";
 
-        public SplinatedMeshEditorMaker EM = null;
+        [UnityEngine.Serialization.FormerlySerializedAs("EM")]
+        public SplinatedMeshEditorMaker splinatedMeshEditorMaker = null;
         #endregion
 
 
@@ -236,7 +254,7 @@ namespace RoadArchitect.Splination
             SMM.capHeightOffset1 = capHeightOffset2;
 
             SMM.Output = Output;
-            SMM.tMesh = tMesh;
+            SMM.mesh = mesh;
             SMM.isMaterialOverriden = isMaterialOverriden;
             SMM.SplinatedMaterial1 = SplinatedMaterial1;
             SMM.SplinatedMaterial2 = SplinatedMaterial2;
@@ -251,34 +269,34 @@ namespace RoadArchitect.Splination
             SMM.minMaxMod = minMaxMod;
             SMM.vertexMatchingPrecision = vertexMatchingPrecision;
 
-            SMM.isStretch = isStretch;
-            SMM.isStretchLocOffset = isStretchLocOffset;
-            SMM.isStretchSize = isStretchSize;
-            SMM.StretchBC_LocOffset = StretchBC_LocOffset;
-            SMM.StretchBC_Size = StretchBC_Size;
+            SMM.isStretched = isStretched;
+            SMM.isStretchedOffset = isStretchedOffset;
+            SMM.isStretchedSize = isStretchedSize;
+            SMM.boxColliderOffset = boxColliderOffset;
+            SMM.boxColliderSize = boxColliderSize;
             SMM.stretchUVThreshold = stretchUVThreshold;
             SMM.isStraightLineMatchStartEnd = isStraightLineMatchStartEnd;
-            SMM.isBCFlipX = isBCFlipX;
-            SMM.isBCFlipZ = isBCFlipZ;
+            SMM.isBoxColliderFlippedOnX = isBoxColliderFlippedOnX;
+            SMM.isBoxColliderFlippedOnZ = isBoxColliderFlippedOnZ;
 
             //Horizontal offsets:
-            SMM.HorizontalSep = HorizontalSep;
-            SMM.HorizontalCurve = new AnimationCurve();
-            if (HorizontalCurve != null && HorizontalCurve.keys.Length > 0)
+            SMM.horizontalSep = horizontalSep;
+            SMM.horizontalCurve = new AnimationCurve();
+            if (horizontalCurve != null && horizontalCurve.keys.Length > 0)
             {
-                for (int i = 0; i < HorizontalCurve.keys.Length; i++)
+                for (int i = 0; i < horizontalCurve.keys.Length; i++)
                 {
-                    SMM.HorizontalCurve.AddKey(HorizontalCurve.keys[i]);
+                    SMM.horizontalCurve.AddKey(horizontalCurve.keys[i]);
                 }
             }
             //Vertical offset:
-            SMM.VerticalRaise = VerticalRaise;
-            SMM.VerticalCurve = new AnimationCurve();
-            if (VerticalCurve != null && VerticalCurve.keys.Length > 0)
+            SMM.verticalRaise = verticalRaise;
+            SMM.verticalCurve = new AnimationCurve();
+            if (verticalCurve != null && verticalCurve.keys.Length > 0)
             {
-                for (int i = 0; i < VerticalCurve.keys.Length; i++)
+                for (int i = 0; i < verticalCurve.keys.Length; i++)
                 {
-                    SMM.VerticalCurve.AddKey(VerticalCurve.keys[i]);
+                    SMM.verticalCurve.AddKey(verticalCurve.keys[i]);
                 }
             }
 
@@ -314,12 +332,12 @@ namespace RoadArchitect.Splination
             SMM.EndCapStartString = EndCapStartString;
             SMM.EndCapEnd = EndCapEnd;
             SMM.EndCapEndString = EndCapEndString;
-            SMM.bEndCapCustomMatchStart = bEndCapCustomMatchStart;
+            SMM.isEndCapCustomMatchStart = isEndCapCustomMatchStart;
             SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
             SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
             SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
             SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
-            SMM.bEndObjectsMatchGround = bEndObjectsMatchGround;
+            SMM.isEndObjectsMatchingGround = isEndObjectsMatchingGround;
             SMM.isBridge = isBridge;
             //End down:
             SMM.isStartDown = isStartDown;
@@ -344,10 +362,10 @@ namespace RoadArchitect.Splination
             SMM.CollisionTriBR = CollisionTriBR;
             SMM.CollisionTriT = CollisionTriT;
 
-            SMM.tName = tName;
-            SMM.ThumbString = ThumbString;
-            SMM.Desc = Desc;
-            SMM.DisplayName = DisplayName;
+            SMM.objectName = objectName;
+            SMM.thumbString = thumbString;
+            SMM.desc = desc;
+            SMM.displayName = displayName;
 
             RootUtils.SetupUniqueIdentifier(ref SMM.uID);
 
@@ -391,7 +409,7 @@ namespace RoadArchitect.Splination
             SLM.Setup(this);
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "ESO" + tName + ".rao";
+            string filePath = basePath + "ESO" + objectName + ".rao";
             if (_name.Length > 0)
             {
                 if (_isDefault)
@@ -711,22 +729,22 @@ namespace RoadArchitect.Splination
                 isBridge = _SMM.isBridge;
                 VertexMatchingPrecision = _SMM.vertexMatchingPrecision;
 
-                isStretched = _SMM.isStretch;
-                isStretchedLocOffset = _SMM.isStretchLocOffset;
-                isStretchedSize = _SMM.isStretchSize;
-                StretchBC_LocOffset = _SMM.StretchBC_LocOffset;
-                StretchBC_Size = _SMM.StretchBC_Size;
+                isStretched = _SMM.isStretched;
+                isStretchedLocOffset = _SMM.isStretchedOffset;
+                isStretchedSize = _SMM.isStretchedSize;
+                StretchBC_LocOffset = _SMM.boxColliderOffset;
+                StretchBC_Size = _SMM.boxColliderSize;
                 Stretch_UVThreshold = _SMM.stretchUVThreshold;
                 isStraightLineMatchingStartEnd = _SMM.isStraightLineMatchStartEnd;
-                isBCFlippedX = _SMM.isBCFlipX;
-                isBCFlippedZ = _SMM.isBCFlipZ;
+                isBCFlippedX = _SMM.isBoxColliderFlippedOnX;
+                isBCFlippedZ = _SMM.isBoxColliderFlippedOnZ;
 
                 //Horizontal offsets:
-                horizontalSep = _SMM.HorizontalSep;
-                horizontalCurve = _SMM.HorizontalCurve;
+                horizontalSep = _SMM.horizontalSep;
+                horizontalCurve = _SMM.horizontalCurve;
                 //Vertical offset:
-                verticalRaise = _SMM.VerticalRaise;
-                verticalCurve = _SMM.VerticalCurve;
+                verticalRaise = _SMM.verticalRaise;
+                verticalCurve = _SMM.verticalCurve;
                 //Vertical cutoff
                 VerticalCutoff = _SMM.VerticalCutoff;
                 isVerticalCutoff = _SMM.isVerticalCutoff;
@@ -769,12 +787,12 @@ namespace RoadArchitect.Splination
                 {
                     EndCapEndString = _SMM.EndCapEndString;
                 }
-                isEndCapCustomMatchStart = _SMM.bEndCapCustomMatchStart;
+                isEndCapCustomMatchStart = _SMM.isEndCapCustomMatchStart;
                 EndCapCustomOffsetStart = _SMM.EndCapCustomOffsetStart;
                 EndCapCustomOffsetEnd = _SMM.EndCapCustomOffsetEnd;
                 EndCapCustomRotOffsetStart = _SMM.EndCapCustomRotOffsetStart;
                 EndCapCustomRotOffsetEnd = _SMM.EndCapCustomRotOffsetEnd;
-                isEndObjectsMatchingGround = _SMM.bEndObjectsMatchGround;
+                isEndObjectsMatchingGround = _SMM.isEndObjectsMatchingGround;
                 //Endings down:
                 isStartDown = _SMM.isStartDown;
                 isStartTypeDownOverriden = _SMM.isStartTypeDownOverriden;
@@ -798,10 +816,10 @@ namespace RoadArchitect.Splination
                 CollisionTriBR = _SMM.CollisionTriBR;
                 CollisionTriT = _SMM.CollisionTriT;
 
-                objectName = _SMM.tName;
-                thumbString = _SMM.ThumbString;
-                desc = _SMM.Desc;
-                displayName = _SMM.DisplayName;
+                objectName = _SMM.objectName;
+                thumbString = _SMM.thumbString;
+                desc = _SMM.desc;
+                displayName = _SMM.displayName;
             }
 
 
@@ -853,22 +871,22 @@ namespace RoadArchitect.Splination
                 _SMM.isBridge = isBridge;
                 _SMM.vertexMatchingPrecision = VertexMatchingPrecision;
 
-                _SMM.isStretch = isStretched;
-                _SMM.isStretchLocOffset = isStretchedLocOffset;
-                _SMM.isStretchSize = isStretchedSize;
-                _SMM.StretchBC_LocOffset = StretchBC_LocOffset;
-                _SMM.StretchBC_Size = StretchBC_Size;
+                _SMM.isStretched = isStretched;
+                _SMM.isStretchedOffset = isStretchedLocOffset;
+                _SMM.isStretchedSize = isStretchedSize;
+                _SMM.boxColliderOffset = StretchBC_LocOffset;
+                _SMM.boxColliderSize = StretchBC_Size;
                 _SMM.stretchUVThreshold = Stretch_UVThreshold;
                 _SMM.isStraightLineMatchStartEnd = isStraightLineMatchingStartEnd;
-                _SMM.isBCFlipX = isBCFlippedX;
-                _SMM.isBCFlipZ = isBCFlippedZ;
+                _SMM.isBoxColliderFlippedOnX = isBCFlippedX;
+                _SMM.isBoxColliderFlippedOnZ = isBCFlippedZ;
 
                 //Horizontal offsets:
-                _SMM.HorizontalSep = horizontalSep;
-                _SMM.HorizontalCurve = horizontalCurve;
+                _SMM.horizontalSep = horizontalSep;
+                _SMM.horizontalCurve = horizontalCurve;
                 //Vertical offset:
-                _SMM.VerticalRaise = verticalRaise;
-                _SMM.VerticalCurve = verticalCurve;
+                _SMM.verticalRaise = verticalRaise;
+                _SMM.verticalCurve = verticalCurve;
                 //Vertical cutoff:
                 _SMM.VerticalCutoff = VerticalCutoff;
                 _SMM.isVerticalCutoff = isVerticalCutoff;
@@ -905,12 +923,12 @@ namespace RoadArchitect.Splination
                 {
                     _SMM.EndCapEnd = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
                 }
-                _SMM.bEndCapCustomMatchStart = isEndCapCustomMatchStart;
+                _SMM.isEndCapCustomMatchStart = isEndCapCustomMatchStart;
                 _SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
                 _SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
                 _SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
                 _SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
-                _SMM.bEndObjectsMatchGround = isEndObjectsMatchingGround;
+                _SMM.isEndObjectsMatchingGround = isEndObjectsMatchingGround;
 
                 //Endings down:
                 _SMM.isStartDown = isStartDown;
@@ -935,10 +953,10 @@ namespace RoadArchitect.Splination
                 _SMM.CollisionTriBR = CollisionTriBR;
                 _SMM.CollisionTriT = CollisionTriT;
 
-                _SMM.tName = objectName;
-                _SMM.ThumbString = thumbString;
-                _SMM.Desc = desc;
-                _SMM.DisplayName = displayName;
+                _SMM.objectName = objectName;
+                _SMM.thumbString = thumbString;
+                _SMM.desc = desc;
+                _SMM.displayName = displayName;
 #endif
             }
         }
@@ -1099,22 +1117,22 @@ namespace RoadArchitect.Splination
                 isBridge = _SMM.isBridge;
                 VertexMatchingPrecision = _SMM.vertexMatchingPrecision;
 
-                isStretched = _SMM.isStretch;
-                isStretchedLocOffset = _SMM.isStretchLocOffset;
-                isStretchedSize = _SMM.isStretchSize;
-                stretchedBCLocOffset = _SMM.StretchBC_LocOffset;
-                stretchedBCSize = _SMM.StretchBC_Size;
+                isStretched = _SMM.isStretched;
+                isStretchedLocOffset = _SMM.isStretchedOffset;
+                isStretchedSize = _SMM.isStretchedSize;
+                stretchedBCLocOffset = _SMM.boxColliderOffset;
+                stretchedBCSize = _SMM.boxColliderSize;
                 stretchedUVThreshold = _SMM.stretchUVThreshold;
                 isStraightLineMatchingStartEnd = _SMM.isStraightLineMatchStartEnd;
-                isBCFlippedX = _SMM.isBCFlipX;
-                isBCFlippedZ = _SMM.isBCFlipZ;
+                isBCFlippedX = _SMM.isBoxColliderFlippedOnX;
+                isBCFlippedZ = _SMM.isBoxColliderFlippedOnZ;
 
                 //Horizontal offsets:
-                HorizontalSep = _SMM.HorizontalSep;
-                HorizontalCurve = _SMM.HorizontalCurve;
+                HorizontalSep = _SMM.horizontalSep;
+                HorizontalCurve = _SMM.horizontalCurve;
                 //Vertical offset:
-                VerticalRaise = _SMM.VerticalRaise;
-                VerticalCurve = _SMM.VerticalCurve;
+                VerticalRaise = _SMM.verticalRaise;
+                VerticalCurve = _SMM.verticalCurve;
                 //Vertical cutoff
                 VerticalCutoff = _SMM.VerticalCutoff;
                 isVerticalCutoff = _SMM.isVerticalCutoff;
@@ -1137,12 +1155,12 @@ namespace RoadArchitect.Splination
                 EndCapStart = _SMM.EndCapStart;
                 EndCapEnd = _SMM.EndCapEnd;
 
-                isEndCapCustomMatchingStart = _SMM.bEndCapCustomMatchStart;
+                isEndCapCustomMatchingStart = _SMM.isEndCapCustomMatchStart;
                 EndCapCustomOffsetStart = _SMM.EndCapCustomOffsetStart;
                 EndCapCustomOffsetEnd = _SMM.EndCapCustomOffsetEnd;
                 EndCapCustomRotOffsetStart = _SMM.EndCapCustomRotOffsetStart;
                 EndCapCustomRotOffsetEnd = _SMM.EndCapCustomRotOffsetEnd;
-                isEndObjectsMatchingGround = _SMM.bEndObjectsMatchGround;
+                isEndObjectsMatchingGround = _SMM.isEndObjectsMatchingGround;
                 //Endings down:
                 isStartDown = _SMM.isStartDown;
                 isStartTypeDownOverriden = _SMM.isStartTypeDownOverriden;
@@ -1166,7 +1184,7 @@ namespace RoadArchitect.Splination
                 CollisionTriBR = _SMM.CollisionTriBR;
                 CollisionTriT = _SMM.CollisionTriT;
 
-                objectName = _SMM.tName;
+                objectName = _SMM.objectName;
             }
 
 
@@ -1198,22 +1216,22 @@ namespace RoadArchitect.Splination
                 _SMM.isBridge = isBridge;
                 _SMM.vertexMatchingPrecision = VertexMatchingPrecision;
 
-                _SMM.isStretch = isStretched;
-                _SMM.isStretchLocOffset = isStretchedLocOffset;
-                _SMM.isStretchSize = isStretchedSize;
-                _SMM.StretchBC_LocOffset = stretchedBCLocOffset;
-                _SMM.StretchBC_Size = stretchedBCSize;
+                _SMM.isStretched = isStretched;
+                _SMM.isStretchedOffset = isStretchedLocOffset;
+                _SMM.isStretchedSize = isStretchedSize;
+                _SMM.boxColliderOffset = stretchedBCLocOffset;
+                _SMM.boxColliderSize = stretchedBCSize;
                 _SMM.stretchUVThreshold = stretchedUVThreshold;
                 _SMM.isStraightLineMatchStartEnd = isStraightLineMatchingStartEnd;
-                _SMM.isBCFlipX = isBCFlippedX;
-                _SMM.isBCFlipZ = isBCFlippedZ;
+                _SMM.isBoxColliderFlippedOnX = isBCFlippedX;
+                _SMM.isBoxColliderFlippedOnZ = isBCFlippedZ;
 
                 //Horizontal offsets:
-                _SMM.HorizontalSep = HorizontalSep;
-                _SMM.HorizontalCurve = HorizontalCurve;
+                _SMM.horizontalSep = HorizontalSep;
+                _SMM.horizontalCurve = HorizontalCurve;
                 //Vertical offset:
-                _SMM.VerticalRaise = VerticalRaise;
-                _SMM.VerticalCurve = VerticalCurve;
+                _SMM.verticalRaise = VerticalRaise;
+                _SMM.verticalCurve = VerticalCurve;
                 //Vertical cutoff:
                 _SMM.VerticalCutoff = VerticalCutoff;
                 _SMM.isVerticalCutoff = isVerticalCutoff;
@@ -1236,12 +1254,12 @@ namespace RoadArchitect.Splination
                 _SMM.EndCapStart = EndCapStart;
                 _SMM.EndCapEnd = EndCapEnd;
 
-                _SMM.bEndCapCustomMatchStart = isEndCapCustomMatchingStart;
+                _SMM.isEndCapCustomMatchStart = isEndCapCustomMatchingStart;
                 _SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
                 _SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
                 _SMM.EndCapCustomRotOffsetStart = EndCapCustomRotOffsetStart;
                 _SMM.EndCapCustomRotOffsetEnd = EndCapCustomRotOffsetEnd;
-                _SMM.bEndObjectsMatchGround = isEndObjectsMatchingGround;
+                _SMM.isEndObjectsMatchingGround = isEndObjectsMatchingGround;
 
                 //Endings down:
                 _SMM.isStartDown = isStartDown;
@@ -1266,7 +1284,7 @@ namespace RoadArchitect.Splination
                 _SMM.CollisionTriBR = CollisionTriBR;
                 _SMM.CollisionTriT = CollisionTriT;
 
-                _SMM.tName = objectName;
+                _SMM.objectName = objectName;
 #endif
             }
 
@@ -1346,23 +1364,23 @@ namespace RoadArchitect.Splination
                     return false;
                 }
 
-                if (_SMM.isStretch != isStretched)
+                if (_SMM.isStretched != isStretched)
                 {
                     return false;
                 }
-                if (_SMM.isStretchLocOffset != isStretchedLocOffset)
+                if (_SMM.isStretchedOffset != isStretchedLocOffset)
                 {
                     return false;
                 }
-                if (_SMM.isStretchSize != isStretchedSize)
+                if (_SMM.isStretchedSize != isStretchedSize)
                 {
                     return false;
                 }
-                if (_SMM.StretchBC_LocOffset != stretchedBCLocOffset)
+                if (_SMM.boxColliderOffset != stretchedBCLocOffset)
                 {
                     return false;
                 }
-                if (_SMM.StretchBC_Size != stretchedBCSize)
+                if (_SMM.boxColliderSize != stretchedBCSize)
                 {
                     return false;
                 }
@@ -1374,30 +1392,30 @@ namespace RoadArchitect.Splination
                 {
                     return false;
                 }
-                if (_SMM.isBCFlipX != isBCFlippedX)
+                if (_SMM.isBoxColliderFlippedOnX != isBCFlippedX)
                 {
                     return false;
                 }
-                if (_SMM.isBCFlipZ != isBCFlippedZ)
+                if (_SMM.isBoxColliderFlippedOnZ != isBCFlippedZ)
                 {
                     return false;
                 }
 
                 //Horizontal offsets:
-                if (!RootUtils.IsApproximately(_SMM.HorizontalSep, HorizontalSep, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.horizontalSep, HorizontalSep, 0.0001f))
                 {
                     return false;
                 }
-                if (_SMM.HorizontalCurve != HorizontalCurve)
+                if (_SMM.horizontalCurve != HorizontalCurve)
                 {
                     return false;
                 }
                 //Vertical offset:
-                if (!RootUtils.IsApproximately(_SMM.VerticalRaise, VerticalRaise, 0.0001f))
+                if (!RootUtils.IsApproximately(_SMM.verticalRaise, VerticalRaise, 0.0001f))
                 {
                     return false;
                 }
-                if (_SMM.VerticalCurve != VerticalCurve)
+                if (_SMM.verticalCurve != VerticalCurve)
                 {
                     return false;
                 }
@@ -1471,7 +1489,7 @@ namespace RoadArchitect.Splination
                     return false;
                 }
 
-                if (_SMM.bEndCapCustomMatchStart != isEndCapCustomMatchingStart)
+                if (_SMM.isEndCapCustomMatchStart != isEndCapCustomMatchingStart)
                 {
                     return false;
                 }
@@ -1491,7 +1509,7 @@ namespace RoadArchitect.Splination
                 {
                     return false;
                 }
-                if (_SMM.bEndObjectsMatchGround != isEndObjectsMatchingGround)
+                if (_SMM.isEndObjectsMatchingGround != isEndObjectsMatchingGround)
                 {
                     return false;
                 }
@@ -1570,7 +1588,7 @@ namespace RoadArchitect.Splination
                     return false;
                 }
 
-                if (string.CompareOrdinal(_SMM.tName, objectName) != 0)
+                if (string.CompareOrdinal(_SMM.objectName, objectName) != 0)
                 {
                     return false;
                 }
@@ -1992,17 +2010,17 @@ namespace RoadArchitect.Splination
             }
 
             Kill();
-            if (HorizontalCurve == null)
+            if (horizontalCurve == null)
             {
-                HorizontalCurve = new AnimationCurve();
-                HorizontalCurve.AddKey(0f, 1f);
-                HorizontalCurve.AddKey(1f, 1f);
+                horizontalCurve = new AnimationCurve();
+                horizontalCurve.AddKey(0f, 1f);
+                horizontalCurve.AddKey(1f, 1f);
             }
-            if (VerticalCurve == null)
+            if (verticalCurve == null)
             {
-                VerticalCurve = new AnimationCurve();
-                VerticalCurve.AddKey(0f, 1f);
-                VerticalCurve.AddKey(1f, 1f);
+                verticalCurve = new AnimationCurve();
+                verticalCurve.AddKey(0f, 1f);
+                verticalCurve.AddKey(1f, 1f);
             }
 
             //			bool bIsLeft = false;
@@ -2106,7 +2124,7 @@ namespace RoadArchitect.Splination
             }
 
             MF = tObj.GetComponent<MeshFilter>();
-            tMesh = MF.sharedMesh;
+            mesh = MF.sharedMesh;
 
             //			Quaternion OrigRot = tObj.transform.rotation;
             if (isFlippingRotation)
@@ -2132,7 +2150,7 @@ namespace RoadArchitect.Splination
                 Cap2.transform.Rotate(CustomRotation, Space.World);
             }
 
-            if (tMesh == null)
+            if (mesh == null)
             {
                 GameObject.DestroyImmediate(tObj);
                 Debug.LogError("Mesh was null");
@@ -2154,11 +2172,11 @@ namespace RoadArchitect.Splination
                 CapOrigMVL2 = CapOrigVerts2.Length;
             }
 
-            Vector3[] OrigVerts = tMesh.vertices;
+            Vector3[] OrigVerts = mesh.vertices;
             int OrigMVL = OrigVerts.Length;
 
             //Transform vertices:
-            Vector3[] OrigNormals = tMesh.normals;
+            Vector3[] OrigNormals = mesh.normals;
             bool bCheckingNormal = true;
             for (int index = 0; index < OrigMVL; index++)
             {
@@ -2174,8 +2192,8 @@ namespace RoadArchitect.Splination
             //If no normals on base mesh, recalc them
             if (bCheckingNormal)
             {
-                tMesh.RecalculateNormals();
-                OrigNormals = tMesh.normals;
+                mesh.RecalculateNormals();
+                OrigNormals = mesh.normals;
             }
             //Cap mesh:
             Vector3[] CapOrigNormals1 = null;
@@ -2281,9 +2299,9 @@ namespace RoadArchitect.Splination
                 CapOrigNormals2 = CapMesh2.normals;
             }
 
-            int[] OrigTris = tMesh.triangles;
+            int[] OrigTris = mesh.triangles;
             int OrigTriCount = OrigTris.Length;
-            Vector2[] OrigUV = tMesh.uv;
+            Vector2[] OrigUV = mesh.uv;
             float[] tMinMax = new float[OrigMVL];
             float[] tMinMaxX = new float[OrigMVL];
             float[] tMinMaxY = new float[OrigMVL];
@@ -2727,8 +2745,8 @@ namespace RoadArchitect.Splination
             while (cTime < EndTime && SpamGuardCounter < SpamGuard)
             {
                 spline.GetSplineValueBoth(cTime, out tVect1, out tDir);
-                fHeight = HorizontalCurve.Evaluate((cTime - StartTime) / pDiffTime);
-                CurrentH = fHeight * HorizontalSep;
+                fHeight = horizontalCurve.Evaluate((cTime - StartTime) / pDiffTime);
+                CurrentH = fHeight * horizontalSep;
 
                 if (CurrentH < 0f)
                 {
@@ -2787,7 +2805,7 @@ namespace RoadArchitect.Splination
                 //				cDiff = cDiff / tDiffTime;
 
                 //Vertical curve:
-                if (VerticalCurve.keys == null || VerticalCurve.length < 1)
+                if (verticalCurve.keys == null || verticalCurve.length < 1)
                 {
                     fHeight = 1f;
                 }
@@ -2795,18 +2813,18 @@ namespace RoadArchitect.Splination
                 {
                     jDistance = spline.TranslateParamToDist(tTimes[i]);
                     jCurrTime = (jDistance - jStartDistance) / jDistanceDiff;
-                    fHeight = VerticalCurve.Evaluate(jCurrTime);
+                    fHeight = verticalCurve.Evaluate(jCurrTime);
                 }
                 DynamicVerticalRaise.Add(fHeight);
 
                 //Horizontal curve:
-                if (HorizontalCurve.keys == null || HorizontalCurve.length < 1)
+                if (horizontalCurve.keys == null || horizontalCurve.length < 1)
                 {
                     fHeight = 1f;
                 }
                 else
                 {
-                    fHeight = HorizontalCurve.Evaluate(jCurrTime);
+                    fHeight = horizontalCurve.Evaluate(jCurrTime);
                 }
                 DynamicHoriz.Add(fHeight);
             }
@@ -2855,7 +2873,7 @@ namespace RoadArchitect.Splination
                 tOrigHeights.Add(tVect1.y);
 
                 //Horizontal offset:
-                CurrentH = DynamicHoriz[i] * HorizontalSep;
+                CurrentH = DynamicHoriz[i] * horizontalSep;
 
                 if (CurrentH < 0f)
                 {
@@ -2903,7 +2921,7 @@ namespace RoadArchitect.Splination
                     }
                 }
 
-                tVect1.y += (DynamicVerticalRaise[i] * VerticalRaise);
+                tVect1.y += (DynamicVerticalRaise[i] * verticalRaise);
 
                 VectorSeries[i] = tVect1;
                 VectorSeriesTangents[i] = tVect2;
@@ -2968,7 +2986,7 @@ namespace RoadArchitect.Splination
             //				tTriList = new List<RoadUtility.Construction3DTri>();
             //			}
 
-            if (isStretch)
+            if (isStretched)
             {
                 DoStretch(ref OrigVerts, ref OrigUV, ref OrigTris, ref MaxVectorIndices, ref MinVectorIndices, mMaxDiff, out tVerts, out tUV, out tNormals, out tTris);
                 goto StretchSkip;
@@ -2982,7 +3000,7 @@ namespace RoadArchitect.Splination
                 vManuver = j * OrigMVL;
                 vManuver_Prev = (j - 1) * OrigMVL;
 
-                if (!isStretch)
+                if (!isStretched)
                 {
                     tVect1 = VectorSeries[j];
                     tVect2 = VectorSeries[j + 1];
@@ -3341,7 +3359,7 @@ namespace RoadArchitect.Splination
                 //Ending objects:
                 if (j == 0 && EndCapStartObj != null)
                 {
-                    if (bEndCapCustomMatchStart && MinVectorIndices.Count > 0)
+                    if (isEndCapCustomMatchStart && MinVectorIndices.Count > 0)
                     {
                         Vector3[] bVerts = new Vector3[MinVectorIndices.Count];
                         for (int g = 0; g < MinVectorIndices.Count; g++)
@@ -3358,7 +3376,7 @@ namespace RoadArchitect.Splination
                         EndCapStartObj.transform.position = tVect1;
                     }
 
-                    if (bEndObjectsMatchGround)
+                    if (isEndObjectsMatchingGround)
                     {
                         tRay = default(Ray);
                         tRayHit = null;
@@ -3397,7 +3415,7 @@ namespace RoadArchitect.Splination
                 }
                 else if (j == (MeshCount - 1) && EndCapEndObj != null)
                 {
-                    if (bEndCapCustomMatchStart && MaxVectorIndices.Count > 0)
+                    if (isEndCapCustomMatchStart && MaxVectorIndices.Count > 0)
                     {
                         Vector3[] bVerts = new Vector3[MaxVectorIndices.Count];
                         for (int g = 0; g < MaxVectorIndices.Count; g++)
@@ -3417,7 +3435,7 @@ namespace RoadArchitect.Splination
                         EndCapEndObj.transform.position = tVect2;
                     }
 
-                    if (bEndObjectsMatchGround)
+                    if (isEndObjectsMatchingGround)
                     {
                         tRay = default(Ray);
                         tRayHit = null;
@@ -3457,13 +3475,13 @@ namespace RoadArchitect.Splination
             }
 
             StretchSkip:
-            if (isStretch)
+            if (isStretched)
             {
                 vManuver = 0;
             }
 
             //End/Start for stretch:
-            if (isStretch)
+            if (isStretched)
             {
                 //Ending objects:
                 if (EndCapStartObj != null)
@@ -3492,7 +3510,7 @@ namespace RoadArchitect.Splination
                 }
             }
 
-            if (bSimpleCollisionOn && !isStretch)
+            if (bSimpleCollisionOn && !isStretched)
             {
                 if (CollisionType == CollisionTypeEnum.SimpleMeshTriangle)
                 {
@@ -3678,7 +3696,7 @@ namespace RoadArchitect.Splination
             tNormals = xMesh.normals;
             Vector3 tAvgNormal = default(Vector3);
             tIntBuffer1 = 0;
-            if (!isStretch)
+            if (!isStretched)
             {
                 for (int j = 1; j < MeshCount; j++)
                 {
@@ -3699,12 +3717,12 @@ namespace RoadArchitect.Splination
             }
             xMesh.tangents = RootUtils.ProcessTangents(tTris, tNormals, tUV, tVerts);
 
-            if (tName == null || tName.Length < 1)
+            if (objectName == null || objectName.Length < 1)
             {
-                tName = "ExtrudedMesh";
+                objectName = "ExtrudedMesh";
             }
 
-            Output = new GameObject(tName);
+            Output = new GameObject(objectName);
             Output.transform.position = node.pos;
 
             MF = Output.AddComponent<MeshFilter>();
@@ -3799,11 +3817,11 @@ namespace RoadArchitect.Splination
                 Vector3 POS = default(Vector3);
                 spline.GetSplineValueBoth(StartTime, out tVect1, out POS);
                 //Goes right if not neg:
-                tVect1 = (tVect1 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
+                tVect1 = (tVect1 + new Vector3(horizontalSep * POS.normalized.z, 0, horizontalSep * -POS.normalized.x));
                 spline.GetSplineValueBoth(EndTime, out tVect2, out POS);
-                tVect2 = (tVect2 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
-                tVect1.y += VerticalRaise;
-                tVect2.y += VerticalRaise;
+                tVect2 = (tVect2 + new Vector3(horizontalSep * POS.normalized.z, 0, horizontalSep * -POS.normalized.x));
+                tVect1.y += verticalRaise;
+                tVect2.y += verticalRaise;
                 BCCenter = ((tVect1 - tVect2) * 0.5f) + tVect2;
                 BCCenter.y += ((mMinY + mMaxY) * 0.5f);
                 //				}
@@ -3811,11 +3829,11 @@ namespace RoadArchitect.Splination
                 BCCenter -= node.pos;
                 BCCenter.z *= -1f;
 
-                if (isBCFlipX)
+                if (isBoxColliderFlippedOnX)
                 {
                     BCCenter.z *= -1f;
                 }
-                if (isBCFlipZ)
+                if (isBoxColliderFlippedOnZ)
                 {
                     BCCenter.x *= -1f;
                 }
@@ -3825,16 +3843,16 @@ namespace RoadArchitect.Splination
                 Vector3 BCCenter2 = new Vector3(BCCenter.z, BCCenter.y, BCCenter.x);
 
 
-                BCCenter2 += StretchBC_LocOffset;
+                BCCenter2 += boxColliderOffset;
 
 
                 BC.center = BCCenter2;
 
                 tFloat1 = Vector3.Distance(node.pos, node.bridgeCounterpartNode.pos);
 
-                if (isStretchSize)
+                if (isStretchedSize)
                 {
-                    BC.size = StretchBC_Size;
+                    BC.size = boxColliderSize;
                 }
                 else
                 {
@@ -3846,7 +3864,7 @@ namespace RoadArchitect.Splination
                     {
                         BC.size = new Vector3((mMaxX - mMinX), mMaxHeight, tFloat1);
                     }
-                    StretchBC_Size = BC.size;
+                    boxColliderSize = BC.size;
                 }
                 BC_Obj.transform.parent = Output.transform;
             }
@@ -3916,7 +3934,7 @@ namespace RoadArchitect.Splination
             Material[] fMats = MR.sharedMaterials;
 
             //Set the new object with the specified vertical raise:
-            Output.transform.name = tName;
+            Output.transform.name = objectName;
             Output.transform.parent = masterObjTrans;
             if (EndCapStartObj != null)
             {
@@ -3969,10 +3987,10 @@ namespace RoadArchitect.Splination
             sceneName = sceneName.Replace(".", "");
             string folderName = RoadEditorUtility.GetBasePath() + "/Mesh/Generated/Extrusions/";
             string roadName = node.spline.road.transform.name;
-            string finalName = folderName + sceneName + "-" + roadName + "-" + tName + ".asset";
+            string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
             if (_isCollider)
             {
-                finalName = folderName + sceneName + "-" + roadName + "-" + tName + "-collider.asset";
+                finalName = folderName + sceneName + "-" + roadName + "-" + objectName + "-collider.asset";
             }
 
             string savingPath = Application.dataPath.Replace("/Assets", "/" + folderName);
@@ -4011,13 +4029,13 @@ namespace RoadArchitect.Splination
             //if(!bStraightLineMatchStartEnd){
             spline.GetSplineValueBoth(StartTime, out tVect1, out POS);
             //Goes right if not neg:
-            tVect1 = (tVect1 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
+            tVect1 = (tVect1 + new Vector3(horizontalSep * POS.normalized.z, 0, horizontalSep * -POS.normalized.x));
 
             spline.GetSplineValueBoth(EndTime, out tVect2, out POS);
-            tVect2 = (tVect2 + new Vector3(HorizontalSep * POS.normalized.z, 0, HorizontalSep * -POS.normalized.x));
+            tVect2 = (tVect2 + new Vector3(horizontalSep * POS.normalized.z, 0, horizontalSep * -POS.normalized.x));
 
-            tVect1.y += VerticalRaise;
-            tVect2.y += VerticalRaise;
+            tVect1.y += verticalRaise;
+            tVect2.y += verticalRaise;
 
             tDir = spline.GetSplineValue(StartTime, true);
             //			}

@@ -751,11 +751,11 @@ namespace RoadArchitect
             {
                 currentCount += 1;
                 SMM = node.SplinatedObjects[index];
-                if (SMM.EM == null)
+                if (SMM.splinatedMeshEditorMaker == null)
                 {
-                    SMM.EM = new Splination.SplinatedMeshMaker.SplinatedMeshEditorMaker();
+                    SMM.splinatedMeshEditorMaker = new Splination.SplinatedMeshMaker.SplinatedMeshEditorMaker();
                 }
-                SMM.EM.Setup(SMM);
+                SMM.splinatedMeshEditorMaker.Setup(SMM);
 
                 //GSD.Roads.Splination.AxisTypeEnum tAxisTypeSpline = GSD.Roads.Splination.AxisTypeEnum.Z;
 
@@ -769,7 +769,7 @@ namespace RoadArchitect
 
                 EditorGUILayout.BeginHorizontal();
 
-                SMM.isToggled = EditorGUILayout.Foldout(SMM.isToggled, "#" + currentCount.ToString() + ": " + SMM.tName);
+                SMM.isToggled = EditorGUILayout.Foldout(SMM.isToggled, "#" + currentCount.ToString() + ": " + SMM.objectName);
 
                 if (GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f)))
                 {
@@ -809,37 +809,37 @@ namespace RoadArchitect
 
                 EditorGUILayout.BeginVertical("box");
                 //Name:
-                SMM.EM.objectName = EditorGUILayout.TextField("Name:", SMM.tName);
+                SMM.splinatedMeshEditorMaker.objectName = EditorGUILayout.TextField("Name:", SMM.objectName);
 
                 //Game object (prefab):
-                SMM.EM.CurrentSplination = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.currentSplination, typeof(GameObject), false);
+                SMM.splinatedMeshEditorMaker.CurrentSplination = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.currentSplination, typeof(GameObject), false);
 
                 //Game object (prefab start cap):
-                SMM.EM.CurrentSplinationCap1 = (GameObject)EditorGUILayout.ObjectField("Prefab start cap:", SMM.currentSplinationCap1, typeof(GameObject), false);
+                SMM.splinatedMeshEditorMaker.CurrentSplinationCap1 = (GameObject)EditorGUILayout.ObjectField("Prefab start cap:", SMM.currentSplinationCap1, typeof(GameObject), false);
                 //Prefab start cap height offset:
                 if (SMM.currentSplinationCap1 != null)
                 {
-                    SMM.EM.CapHeightOffset1 = EditorGUILayout.FloatField("  Height offset:", SMM.capHeightOffset1);
+                    SMM.splinatedMeshEditorMaker.CapHeightOffset1 = EditorGUILayout.FloatField("  Height offset:", SMM.capHeightOffset1);
                 }
 
                 //Game object (prefab end cap):
-                SMM.EM.CurrentSplinationCap2 = (GameObject)EditorGUILayout.ObjectField("Prefab end cap:", SMM.currentSplinationCap2, typeof(GameObject), false);
+                SMM.splinatedMeshEditorMaker.CurrentSplinationCap2 = (GameObject)EditorGUILayout.ObjectField("Prefab end cap:", SMM.currentSplinationCap2, typeof(GameObject), false);
                 //Prefab end cap height offset:
                 if (SMM.currentSplinationCap2 != null)
                 {
-                    SMM.EM.CapHeightOffset2 = EditorGUILayout.FloatField("  Height offset:", SMM.capHeightOffset2);
+                    SMM.splinatedMeshEditorMaker.CapHeightOffset2 = EditorGUILayout.FloatField("  Height offset:", SMM.capHeightOffset2);
                 }
 
                 //Material overrides:
-                SMM.EM.isMaterialOverriden = EditorGUILayout.Toggle("Material override: ", SMM.isMaterialOverriden);
+                SMM.splinatedMeshEditorMaker.isMaterialOverriden = EditorGUILayout.Toggle("Material override: ", SMM.isMaterialOverriden);
                 if (SMM.isMaterialOverriden)
                 {
-                    SMM.EM.SplinatedMaterial1 = (Material)EditorGUILayout.ObjectField("Override mat #1: ", SMM.SplinatedMaterial1, typeof(Material), false);
-                    SMM.EM.SplinatedMaterial2 = (Material)EditorGUILayout.ObjectField("Override mat #2: ", SMM.SplinatedMaterial2, typeof(Material), false);
+                    SMM.splinatedMeshEditorMaker.SplinatedMaterial1 = (Material)EditorGUILayout.ObjectField("Override mat #1: ", SMM.SplinatedMaterial1, typeof(Material), false);
+                    SMM.splinatedMeshEditorMaker.SplinatedMaterial2 = (Material)EditorGUILayout.ObjectField("Override mat #2: ", SMM.SplinatedMaterial2, typeof(Material), false);
                 }
 
                 //Axis:
-                SMM.EM.Axis = (Splination.AxisTypeEnum)EditorGUILayout.Popup("Extrusion axis: ", (int)SMM.Axis, TheAxisDescriptionsSpline, GUILayout.Width(250f));
+                SMM.splinatedMeshEditorMaker.Axis = (Splination.AxisTypeEnum)EditorGUILayout.Popup("Extrusion axis: ", (int)SMM.Axis, TheAxisDescriptionsSpline, GUILayout.Width(250f));
 
                 //Start time:
                 if (SMM.StartTime < node.minSplination)
@@ -852,28 +852,28 @@ namespace RoadArchitect
                 }
                 EditorGUILayout.BeginHorizontal();
 
-                SMM.EM.StartTime = EditorGUILayout.Slider("Start param: ", SMM.StartTime, node.minSplination, node.maxSplination - 0.01f);
+                SMM.splinatedMeshEditorMaker.StartTime = EditorGUILayout.Slider("Start param: ", SMM.StartTime, node.minSplination, node.maxSplination - 0.01f);
                 if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
-                    SMM.EM.StartTime = node.time;
+                    SMM.splinatedMeshEditorMaker.StartTime = node.time;
                 }
-                if (SMM.EM.StartTime >= SMM.EM.EndTime)
+                if (SMM.splinatedMeshEditorMaker.StartTime >= SMM.splinatedMeshEditorMaker.EndTime)
                 {
-                    SMM.EM.EndTime = (SMM.EM.StartTime + 0.01f);
+                    SMM.splinatedMeshEditorMaker.EndTime = (SMM.splinatedMeshEditorMaker.StartTime + 0.01f);
                 }
                 EditorGUILayout.EndHorizontal();
 
 
                 //End time:
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.EndTime = EditorGUILayout.Slider("End param: ", SMM.EndTime, SMM.StartTime, node.maxSplination);
+                SMM.splinatedMeshEditorMaker.EndTime = EditorGUILayout.Slider("End param: ", SMM.EndTime, SMM.StartTime, node.maxSplination);
                 if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
                 {
-                    SMM.EM.EndTime = node.nextTime;
+                    SMM.splinatedMeshEditorMaker.EndTime = node.nextTime;
                 }
-                if (SMM.EM.StartTime >= SMM.EM.EndTime)
+                if (SMM.splinatedMeshEditorMaker.StartTime >= SMM.splinatedMeshEditorMaker.EndTime)
                 {
-                    SMM.EM.EndTime = (SMM.EM.StartTime + 0.01f);
+                    SMM.splinatedMeshEditorMaker.EndTime = (SMM.splinatedMeshEditorMaker.StartTime + 0.01f);
                 }
                 EditorGUILayout.EndHorizontal();
 
@@ -881,75 +881,75 @@ namespace RoadArchitect
                 //Straight line options:
                 if (node.IsStraight())
                 {
-                    if (!SMM.isStretch)
+                    if (!SMM.isStretched)
                     {
-                        SMM.EM.isStretched = EditorGUILayout.Toggle("Straight line stretch:", SMM.isStretch);
+                        SMM.splinatedMeshEditorMaker.isStretched = EditorGUILayout.Toggle("Straight line stretch:", SMM.isStretched);
                     }
                     else
                     {
                         EditorGUILayout.BeginVertical("box");
-                        SMM.EM.isStretched = EditorGUILayout.Toggle("Straight line stretch:", SMM.isStretch);
+                        SMM.splinatedMeshEditorMaker.isStretched = EditorGUILayout.Toggle("Straight line stretch:", SMM.isStretched);
 
                         //Stretch_UVThreshold:
-                        SMM.EM.stretchedUVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.stretchUVThreshold, 0.01f, 0.5f);
+                        SMM.splinatedMeshEditorMaker.stretchedUVThreshold = EditorGUILayout.Slider("UV stretch threshold:", SMM.stretchUVThreshold, 0.01f, 0.5f);
 
                         //UV repeats:
-                        SMM.EM.repeatUVType = (Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV stretch axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
+                        SMM.splinatedMeshEditorMaker.repeatUVType = (Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV stretch axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
                         EditorGUILayout.EndVertical();
                     }
                 }
                 else
                 {
-                    SMM.EM.isStretched = false;
+                    SMM.splinatedMeshEditorMaker.isStretched = false;
                 }
 
 
 
-                SMM.EM.isTrimStart = EditorGUILayout.Toggle("Trim start:", SMM.isTrimStart);
-                SMM.EM.isTrimEnd = EditorGUILayout.Toggle("Trim end:", SMM.isTrimEnd);
+                SMM.splinatedMeshEditorMaker.isTrimStart = EditorGUILayout.Toggle("Trim start:", SMM.isTrimStart);
+                SMM.splinatedMeshEditorMaker.isTrimEnd = EditorGUILayout.Toggle("Trim end:", SMM.isTrimEnd);
 
 
 
                 //Static option:
-                SMM.EM.isStatic = EditorGUILayout.Toggle("Static: ", SMM.isStatic);
+                SMM.splinatedMeshEditorMaker.isStatic = EditorGUILayout.Toggle("Static: ", SMM.isStatic);
 
 
                 //Splination method
                 //			SMM.EM.bMatchRoadIncrements = EditorGUILayout.Toggle("Match road increments: ",SMM.bMatchRoadIncrements); 
-                SMM.EM.isMatchingTerrain = EditorGUILayout.Toggle("Match ground: ", SMM.isMatchingTerrain);
+                SMM.splinatedMeshEditorMaker.isMatchingTerrain = EditorGUILayout.Toggle("Match ground: ", SMM.isMatchingTerrain);
 
                 //Vector min/max threshold: 
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.MinMaxMod = EditorGUILayout.Slider("Vertex min/max threshold: ", SMM.minMaxMod, 0.01f, 0.2f);
+                SMM.splinatedMeshEditorMaker.MinMaxMod = EditorGUILayout.Slider("Vertex min/max threshold: ", SMM.minMaxMod, 0.01f, 0.2f);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.MinMaxMod = 0.05f;
+                    SMM.splinatedMeshEditorMaker.MinMaxMod = 0.05f;
                 }
                 EditorGUILayout.EndHorizontal();
 
                 //Vertex matching precision:
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.VertexMatchingPrecision = EditorGUILayout.Slider("Vertex matching precision: ", SMM.vertexMatchingPrecision, 0f, 0.01f);
+                SMM.splinatedMeshEditorMaker.VertexMatchingPrecision = EditorGUILayout.Slider("Vertex matching precision: ", SMM.vertexMatchingPrecision, 0f, 0.01f);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.VertexMatchingPrecision = 0.005f;
+                    SMM.splinatedMeshEditorMaker.VertexMatchingPrecision = 0.005f;
                 }
                 EditorGUILayout.EndHorizontal();
 
                 //UV repeats:
-                if (!SMM.isStretch)
+                if (!SMM.isStretched)
                 {
-                    SMM.EM.repeatUVType = (Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV repeat axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
+                    SMM.splinatedMeshEditorMaker.repeatUVType = (Splination.RepeatUVTypeEnum)EditorGUILayout.Popup("UV repeat axis: ", (int)SMM.RepeatUVType, RepeatUVTypeDescriptionsSpline, GUILayout.Width(250f));
                 }
 
                 if (SMM.isMatchingRoadDefinition)
                 {
                     EditorGUILayout.BeginVertical("TextArea");
                     EditorGUILayout.BeginHorizontal();
-                    SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
+                    SMM.splinatedMeshEditorMaker.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
                     if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                     {
-                        SMM.EM.isMatchingRoadDefinition = false;
+                        SMM.splinatedMeshEditorMaker.isMatchingRoadDefinition = false;
                     }
                     EditorGUILayout.EndHorizontal();
                     if (SMM.isMatchingRoadDefinition)
@@ -959,16 +959,16 @@ namespace RoadArchitect
                         EditorGUILayout.LabelField("  If the material fails to scale properly, try flipping the Y rotation.", EditorStyles.miniLabel);
                     }
                     //Flip rotation option:
-                    SMM.EM.isFlippedRotation = EditorGUILayout.Toggle("  Flip Y rotation: ", SMM.isFlippingRotation);
+                    SMM.splinatedMeshEditorMaker.isFlippedRotation = EditorGUILayout.Toggle("  Flip Y rotation: ", SMM.isFlippingRotation);
                     EditorGUILayout.EndVertical();
                 }
                 else
                 {
                     EditorGUILayout.BeginHorizontal();
-                    SMM.EM.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
+                    SMM.splinatedMeshEditorMaker.isMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", SMM.isMatchingRoadDefinition);
                     if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                     {
-                        SMM.EM.isMatchingRoadDefinition = false;
+                        SMM.splinatedMeshEditorMaker.isMatchingRoadDefinition = false;
                     }
                     EditorGUILayout.EndHorizontal();
                 }
@@ -979,25 +979,25 @@ namespace RoadArchitect
                 EditorGUILayout.LabelField("Vertical options:");
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.VerticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", SMM.VerticalRaise, -512f, 512f);
+                SMM.splinatedMeshEditorMaker.VerticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", SMM.verticalRaise, -512f, 512f);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.VerticalRaise = 0f;
+                    SMM.splinatedMeshEditorMaker.VerticalRaise = 0f;
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
 
 
                 #region "Vertical curve"
-                if (SMM.VerticalCurve == null || SMM.VerticalCurve.keys.Length < 2)
+                if (SMM.verticalCurve == null || SMM.verticalCurve.keys.Length < 2)
                 {
-                    EnforceCurve(ref SMM.VerticalCurve);
+                    EnforceCurve(ref SMM.verticalCurve);
                 }
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.VerticalCurve = EditorGUILayout.CurveField("Curve: ", SMM.VerticalCurve);
+                SMM.splinatedMeshEditorMaker.VerticalCurve = EditorGUILayout.CurveField("Curve: ", SMM.verticalCurve);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    ResetCurve(ref SMM.EM.VerticalCurve);
+                    ResetCurve(ref SMM.splinatedMeshEditorMaker.VerticalCurve);
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
@@ -1005,7 +1005,7 @@ namespace RoadArchitect
 
 
                 #region "Horizontal offsets"
-                SMM.EM.HorizontalSep = SMM.HorizontalSep;
+                SMM.splinatedMeshEditorMaker.HorizontalSep = SMM.horizontalSep;
                 EditorGUILayout.LabelField("Horizontal offset options:");
                 EditorGUILayout.BeginVertical("box");
                 horizMatching = HorizMatchingDefaultsEnum.None;
@@ -1014,47 +1014,47 @@ namespace RoadArchitect
                 {
                     if (horizMatching == HorizMatchingDefaultsEnum.MatchCenter)
                     {
-                        SMM.EM.HorizontalSep = 0f;
+                        SMM.splinatedMeshEditorMaker.HorizontalSep = 0f;
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
                     {
-                        SMM.EM.HorizontalSep = (node.spline.road.RoadWidth() / 2) * -1;
+                        SMM.splinatedMeshEditorMaker.HorizontalSep = (node.spline.road.RoadWidth() / 2) * -1;
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                     {
-                        SMM.EM.HorizontalSep = ((node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth) * -1;
+                        SMM.splinatedMeshEditorMaker.HorizontalSep = ((node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth) * -1;
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
                     {
-                        SMM.EM.HorizontalSep = (node.spline.road.RoadWidth() / 2);
+                        SMM.splinatedMeshEditorMaker.HorizontalSep = (node.spline.road.RoadWidth() / 2);
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                     {
-                        SMM.EM.HorizontalSep = (node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth;
+                        SMM.splinatedMeshEditorMaker.HorizontalSep = (node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth;
                     }
                     horizMatching = HorizMatchingDefaultsEnum.None;
                 }
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.HorizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", SMM.EM.HorizontalSep, (-1f * horizRoadMax), horizRoadMax);
+                SMM.splinatedMeshEditorMaker.HorizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", SMM.splinatedMeshEditorMaker.HorizontalSep, (-1f * horizRoadMax), horizRoadMax);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.HorizontalSep = 0f;
+                    SMM.splinatedMeshEditorMaker.HorizontalSep = 0f;
                 }
                 EditorGUILayout.EndHorizontal();
                 #endregion
 
 
                 //Horizontal curve:
-                if (SMM.HorizontalCurve == null || SMM.HorizontalCurve.keys.Length < 2)
+                if (SMM.horizontalCurve == null || SMM.horizontalCurve.keys.Length < 2)
                 {
-                    EnforceCurve(ref SMM.HorizontalCurve);
+                    EnforceCurve(ref SMM.horizontalCurve);
                 }
 
                 EditorGUILayout.BeginHorizontal();
-                SMM.EM.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", SMM.HorizontalCurve);
+                SMM.splinatedMeshEditorMaker.HorizontalCurve = EditorGUILayout.CurveField("Curve: ", SMM.horizontalCurve);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    ResetCurve(ref SMM.EM.HorizontalCurve);
+                    ResetCurve(ref SMM.splinatedMeshEditorMaker.HorizontalCurve);
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
@@ -1062,36 +1062,36 @@ namespace RoadArchitect
                 //Vertical cutoff:
                 EditorGUILayout.LabelField("Vertical cutoff:");
                 EditorGUILayout.BeginVertical("box");
-                SMM.EM.isVerticalCutoff = EditorGUILayout.Toggle("Height cutoff enabled:", SMM.isVerticalCutoff);
+                SMM.splinatedMeshEditorMaker.isVerticalCutoff = EditorGUILayout.Toggle("Height cutoff enabled:", SMM.isVerticalCutoff);
                 if (SMM.isVerticalCutoff)
                 {
-                    SMM.EM.isVerticalCutoffMatchingZero = EditorGUILayout.Toggle("Match spline height:", SMM.isVerticalCutoffMatchingZero);
-                    SMM.EM.isVerticalCutoffDownwards = EditorGUILayout.Toggle("Cut direction toggle:", SMM.isVerticalCutoffDownwards);
-                    SMM.EM.VerticalCutoff = EditorGUILayout.Slider("Height cut offset: ", SMM.VerticalCutoff, -50f, 50f);
-                    SMM.EM.isVerticalMeshCutoffOppositeDir = EditorGUILayout.Toggle("Opposite dir mesh cut:", SMM.isVerticalMeshCutoffOppositeDir);
-                    SMM.EM.VerticalMeshCutoffOffset = EditorGUILayout.Slider("Mesh cut offset: ", SMM.VerticalMeshCutoffOffset, -5f, 5f);
+                    SMM.splinatedMeshEditorMaker.isVerticalCutoffMatchingZero = EditorGUILayout.Toggle("Match spline height:", SMM.isVerticalCutoffMatchingZero);
+                    SMM.splinatedMeshEditorMaker.isVerticalCutoffDownwards = EditorGUILayout.Toggle("Cut direction toggle:", SMM.isVerticalCutoffDownwards);
+                    SMM.splinatedMeshEditorMaker.VerticalCutoff = EditorGUILayout.Slider("Height cut offset: ", SMM.VerticalCutoff, -50f, 50f);
+                    SMM.splinatedMeshEditorMaker.isVerticalMeshCutoffOppositeDir = EditorGUILayout.Toggle("Opposite dir mesh cut:", SMM.isVerticalMeshCutoffOppositeDir);
+                    SMM.splinatedMeshEditorMaker.VerticalMeshCutoffOffset = EditorGUILayout.Slider("Mesh cut offset: ", SMM.VerticalMeshCutoffOffset, -5f, 5f);
                 }
                 EditorGUILayout.EndVertical();
 
                 //End type:
                 EditorGUILayout.LabelField("Extrusion ending options:");
                 EditorGUILayout.BeginVertical("box");
-                SMM.EM.isStartDown = EditorGUILayout.Toggle("Push start down:", SMM.isStartDown);
-                SMM.EM.isEndDown = EditorGUILayout.Toggle("Push end down:", SMM.isEndDown);
+                SMM.splinatedMeshEditorMaker.isStartDown = EditorGUILayout.Toggle("Push start down:", SMM.isStartDown);
+                SMM.splinatedMeshEditorMaker.isEndDown = EditorGUILayout.Toggle("Push end down:", SMM.isEndDown);
                 if (SMM.isStartDown)
                 {
-                    SMM.EM.isStartTypeDownOverriden = EditorGUILayout.Toggle("Override start down value: ", SMM.isStartTypeDownOverriden);
+                    SMM.splinatedMeshEditorMaker.isStartTypeDownOverriden = EditorGUILayout.Toggle("Override start down value: ", SMM.isStartTypeDownOverriden);
                     if (SMM.isStartTypeDownOverriden)
                     {
-                        SMM.EM.startTypeDownOverriden = EditorGUILayout.Slider("Downward movement: ", SMM.startTypeDownOverride, -10f, 10f);
+                        SMM.splinatedMeshEditorMaker.startTypeDownOverriden = EditorGUILayout.Slider("Downward movement: ", SMM.startTypeDownOverride, -10f, 10f);
                     }
                 }
                 if (SMM.isEndDown)
                 {
-                    SMM.EM.isEndTypeDownOverriden = EditorGUILayout.Toggle("Override end down value: ", SMM.isEndTypeDownOverriden);
+                    SMM.splinatedMeshEditorMaker.isEndTypeDownOverriden = EditorGUILayout.Toggle("Override end down value: ", SMM.isEndTypeDownOverriden);
                     if (SMM.isEndTypeDownOverriden)
                     {
-                        SMM.EM.endTypeDownOverriden = EditorGUILayout.Slider("Downward movement: ", SMM.endTypeDownOverride, -10f, 10f);
+                        SMM.splinatedMeshEditorMaker.endTypeDownOverriden = EditorGUILayout.Slider("Downward movement: ", SMM.endTypeDownOverride, -10f, 10f);
                     }
                 }
                 EditorGUILayout.EndVertical();
@@ -1100,10 +1100,10 @@ namespace RoadArchitect
                 EditorGUILayout.LabelField("Start & end objects:");
                 EditorGUILayout.BeginVertical("box");
                 //End cap custom match start:
-                SMM.EM.isEndCapCustomMatchingStart = EditorGUILayout.Toggle("Match objects to ends:", SMM.bEndCapCustomMatchStart);
+                SMM.splinatedMeshEditorMaker.isEndCapCustomMatchingStart = EditorGUILayout.Toggle("Match objects to ends:", SMM.isEndCapCustomMatchStart);
 
                 //End objects match ground:
-                SMM.EM.isEndObjectsMatchingGround = EditorGUILayout.Toggle("Force origins to ground:", SMM.bEndObjectsMatchGround);
+                SMM.splinatedMeshEditorMaker.isEndObjectsMatchingGround = EditorGUILayout.Toggle("Force origins to ground:", SMM.isEndObjectsMatchingGround);
 
                 //Start cap:
                 EditorGUILayout.BeginVertical("box");
@@ -1112,17 +1112,17 @@ namespace RoadArchitect
                 endObjectAdd = (EndObjectsDefaultsEnum)EditorGUILayout.Popup((int)endObjectAdd, EndObjectsDefaultsEnumDesc);
                 if (endObjectAdd != EndObjectsDefaultsEnum.None)
                 {
-                    SMM.EM.EndCapStart = GetEndObjectQuickAdd();
+                    SMM.splinatedMeshEditorMaker.EndCapStart = GetEndObjectQuickAdd();
                     endObjectAdd = EndObjectsDefaultsEnum.None;
                 }
                 EditorGUILayout.EndHorizontal();
 
 
-                SMM.EM.EndCapStart = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.EndCapStart, typeof(GameObject), false);
+                SMM.splinatedMeshEditorMaker.EndCapStart = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.EndCapStart, typeof(GameObject), false);
                 if (SMM.EndCapStart != null)
                 {
-                    SMM.EM.EndCapCustomOffsetStart = EditorGUILayout.Vector3Field("Position offset:", SMM.EndCapCustomOffsetStart);
-                    SMM.EM.EndCapCustomRotOffsetStart = EditorGUILayout.Vector3Field("Rotation offset:", SMM.EndCapCustomRotOffsetStart);
+                    SMM.splinatedMeshEditorMaker.EndCapCustomOffsetStart = EditorGUILayout.Vector3Field("Position offset:", SMM.EndCapCustomOffsetStart);
+                    SMM.splinatedMeshEditorMaker.EndCapCustomRotOffsetStart = EditorGUILayout.Vector3Field("Rotation offset:", SMM.EndCapCustomRotOffsetStart);
                 }
                 EditorGUILayout.EndVertical();
 
@@ -1133,18 +1133,18 @@ namespace RoadArchitect
                 endObjectAdd = (EndObjectsDefaultsEnum)EditorGUILayout.Popup((int)endObjectAdd, EndObjectsDefaultsEnumDesc);
                 if (endObjectAdd != EndObjectsDefaultsEnum.None)
                 {
-                    SMM.EM.EndCapEnd = GetEndObjectQuickAdd();
-                    SMM.EM.EndCapCustomRotOffsetEnd = new Vector3(0f, 180f, 0f);
+                    SMM.splinatedMeshEditorMaker.EndCapEnd = GetEndObjectQuickAdd();
+                    SMM.splinatedMeshEditorMaker.EndCapCustomRotOffsetEnd = new Vector3(0f, 180f, 0f);
                     endObjectAdd = EndObjectsDefaultsEnum.None;
                 }
                 EditorGUILayout.EndHorizontal();
 
 
-                SMM.EM.EndCapEnd = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.EndCapEnd, typeof(GameObject), false);
+                SMM.splinatedMeshEditorMaker.EndCapEnd = (GameObject)EditorGUILayout.ObjectField("Prefab:", SMM.EndCapEnd, typeof(GameObject), false);
                 if (SMM.EndCapEnd != null)
                 {
-                    SMM.EM.EndCapCustomOffsetEnd = EditorGUILayout.Vector3Field("Position offset:", SMM.EndCapCustomOffsetEnd);
-                    SMM.EM.EndCapCustomRotOffsetEnd = EditorGUILayout.Vector3Field("Rotation offset:", SMM.EndCapCustomRotOffsetEnd);
+                    SMM.splinatedMeshEditorMaker.EndCapCustomOffsetEnd = EditorGUILayout.Vector3Field("Position offset:", SMM.EndCapCustomOffsetEnd);
+                    SMM.splinatedMeshEditorMaker.EndCapCustomRotOffsetEnd = EditorGUILayout.Vector3Field("Rotation offset:", SMM.EndCapCustomRotOffsetEnd);
                 }
                 EditorGUILayout.EndVertical();
 
@@ -1153,67 +1153,67 @@ namespace RoadArchitect
                 //Collision:
                 EditorGUILayout.LabelField("Collision options:");
                 EditorGUILayout.BeginVertical("box");
-                SMM.EM.collisionType = (Splination.CollisionTypeEnum)EditorGUILayout.Popup("Collision type: ", (int)SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
+                SMM.splinatedMeshEditorMaker.collisionType = (Splination.CollisionTypeEnum)EditorGUILayout.Popup("Collision type: ", (int)SMM.CollisionType, TheCollisionTypeEnumDescSpline, GUILayout.Width(320f));
                 //Mesh collison convex option
                 if (SMM.CollisionType != Splination.CollisionTypeEnum.None && SMM.CollisionType != Splination.CollisionTypeEnum.BoxCollision)
                 {
-                    SMM.EM.isCollisionConvex = EditorGUILayout.Toggle(" Convex: ", SMM.isCollisionConvex);
-                    SMM.EM.isCollisionTriggered = EditorGUILayout.Toggle(" Trigger: ", SMM.isCollisionTrigger);
+                    SMM.splinatedMeshEditorMaker.isCollisionConvex = EditorGUILayout.Toggle(" Convex: ", SMM.isCollisionConvex);
+                    SMM.splinatedMeshEditorMaker.isCollisionTriggered = EditorGUILayout.Toggle(" Trigger: ", SMM.isCollisionTrigger);
                 }
 
                 if (SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTriangle || SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
                 {
-                    SMM.EM.isSimpleCollisionAutomatic = EditorGUILayout.Toggle(" Automatic simple collision: ", SMM.isSimpleCollisionAutomatic);
+                    SMM.splinatedMeshEditorMaker.isSimpleCollisionAutomatic = EditorGUILayout.Toggle(" Automatic simple collision: ", SMM.isSimpleCollisionAutomatic);
                 }
                 //If not automatic simple collisions:
                 if (!SMM.isSimpleCollisionAutomatic)
                 {
                     if (SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTriangle)
                     {
-                        SMM.EM.CollisionTriBL = SMM.CollisionTriBL;
-                        SMM.EM.CollisionTriBR = SMM.CollisionTriBR;
-                        SMM.EM.CollisionTriT = SMM.CollisionTriT;
+                        SMM.splinatedMeshEditorMaker.CollisionTriBL = SMM.CollisionTriBL;
+                        SMM.splinatedMeshEditorMaker.CollisionTriBR = SMM.CollisionTriBR;
+                        SMM.splinatedMeshEditorMaker.CollisionTriT = SMM.CollisionTriT;
 
                         EditorGUILayout.LabelField("Bottom left:");
-                        SMM.EM.CollisionTriBL.x = EditorGUILayout.Slider(" x-axis: ", SMM.CollisionTriBL.x, SMM.mMinX - 5f, SMM.mMaxX + 5f);
-                        SMM.EM.CollisionTriBL.y = EditorGUILayout.Slider(" y-axis: ", SMM.CollisionTriBL.y, SMM.mMinY - 5f, SMM.mMaxY + 5f);
-                        SMM.EM.CollisionTriBL.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriBL.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriBL.x = EditorGUILayout.Slider(" x-axis: ", SMM.CollisionTriBL.x, SMM.mMinX - 5f, SMM.mMaxX + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriBL.y = EditorGUILayout.Slider(" y-axis: ", SMM.CollisionTriBL.y, SMM.mMinY - 5f, SMM.mMaxY + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriBL.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriBL.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
 
                         EditorGUILayout.LabelField("Bottom right:");
-                        SMM.EM.CollisionTriBR.x = EditorGUILayout.Slider(" x-axis: ", SMM.CollisionTriBR.x, SMM.mMinX - 5f, SMM.mMaxX + 5f);
-                        SMM.EM.CollisionTriBR.y = EditorGUILayout.Slider(" y-axis: ", SMM.CollisionTriBR.y, SMM.mMinY - 5f, SMM.mMaxY + 5f);
-                        SMM.EM.CollisionTriBR.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriBR.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriBR.x = EditorGUILayout.Slider(" x-axis: ", SMM.CollisionTriBR.x, SMM.mMinX - 5f, SMM.mMaxX + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriBR.y = EditorGUILayout.Slider(" y-axis: ", SMM.CollisionTriBR.y, SMM.mMinY - 5f, SMM.mMaxY + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriBR.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriBR.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
 
                         EditorGUILayout.LabelField("Top:");
-                        SMM.EM.CollisionTriT.x = EditorGUILayout.Slider(" x-axis: ", SMM.CollisionTriT.x, SMM.mMinX - 5f, SMM.mMaxX + 5f);
-                        SMM.EM.CollisionTriT.y = EditorGUILayout.Slider(" y-axis: ", SMM.CollisionTriT.y, SMM.mMinY - 5f, SMM.mMaxY + 5f);
-                        SMM.EM.CollisionTriT.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriT.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriT.x = EditorGUILayout.Slider(" x-axis: ", SMM.CollisionTriT.x, SMM.mMinX - 5f, SMM.mMaxX + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriT.y = EditorGUILayout.Slider(" y-axis: ", SMM.CollisionTriT.y, SMM.mMinY - 5f, SMM.mMaxY + 5f);
+                        SMM.splinatedMeshEditorMaker.CollisionTriT.z = EditorGUILayout.Slider(" z-axis: ", SMM.CollisionTriT.z, SMM.mMinZ - 5f, SMM.mMaxZ + 5f);
 
                     }
                     else if (SMM.CollisionType == Splination.CollisionTypeEnum.SimpleMeshTrapezoid)
                     {
-                        SMM.EM.CollisionBoxBL = EditorGUILayout.Vector3Field(" Bottom left:", SMM.CollisionBoxBL);
-                        SMM.EM.CollisionBoxBR = EditorGUILayout.Vector3Field(" Bottom right:", SMM.CollisionBoxBR);
-                        SMM.EM.CollisionBoxTL = EditorGUILayout.Vector3Field(" Top left:", SMM.CollisionBoxTL);
-                        SMM.EM.CollisionBoxTR = EditorGUILayout.Vector3Field(" Top right:", SMM.CollisionBoxTR);
+                        SMM.splinatedMeshEditorMaker.CollisionBoxBL = EditorGUILayout.Vector3Field(" Bottom left:", SMM.CollisionBoxBL);
+                        SMM.splinatedMeshEditorMaker.CollisionBoxBR = EditorGUILayout.Vector3Field(" Bottom right:", SMM.CollisionBoxBR);
+                        SMM.splinatedMeshEditorMaker.CollisionBoxTL = EditorGUILayout.Vector3Field(" Top left:", SMM.CollisionBoxTL);
+                        SMM.splinatedMeshEditorMaker.CollisionBoxTR = EditorGUILayout.Vector3Field(" Top right:", SMM.CollisionBoxTR);
                     }
                 }
 
                 if (SMM.CollisionType == Splination.CollisionTypeEnum.BoxCollision)
                 {
-                    SMM.EM.stretchedBCLocOffset = EditorGUILayout.Vector3Field("Box collider center offset:", SMM.StretchBC_LocOffset);
-                    SMM.EM.isBCFlippedX = EditorGUILayout.Toggle("Flip center X:", SMM.isBCFlipX);
-                    SMM.EM.isBCFlippedZ = EditorGUILayout.Toggle("Flip center Z:", SMM.isBCFlipZ);
+                    SMM.splinatedMeshEditorMaker.stretchedBCLocOffset = EditorGUILayout.Vector3Field("Box collider center offset:", SMM.boxColliderOffset);
+                    SMM.splinatedMeshEditorMaker.isBCFlippedX = EditorGUILayout.Toggle("Flip center X:", SMM.isBoxColliderFlippedOnX);
+                    SMM.splinatedMeshEditorMaker.isBCFlippedZ = EditorGUILayout.Toggle("Flip center Z:", SMM.isBoxColliderFlippedOnZ);
 
 
-                    SMM.EM.isStretchedSize = EditorGUILayout.Toggle("Box collider size edit:", SMM.isStretchSize);
-                    if (SMM.isStretchSize)
+                    SMM.splinatedMeshEditorMaker.isStretchedSize = EditorGUILayout.Toggle("Box collider size edit:", SMM.isStretchedSize);
+                    if (SMM.isStretchedSize)
                     {
-                        SMM.EM.stretchedBCSize = EditorGUILayout.Vector3Field("Size:", SMM.StretchBC_Size);
+                        SMM.splinatedMeshEditorMaker.stretchedBCSize = EditorGUILayout.Vector3Field("Size:", SMM.boxColliderSize);
                     }
                     else
                     {
-                        EditorGUILayout.LabelField("Size:", SMM.StretchBC_Size.ToString());
+                        EditorGUILayout.LabelField("Size:", SMM.boxColliderSize.ToString());
                     }
                 }
                 EditorGUILayout.EndVertical();
@@ -1223,17 +1223,17 @@ namespace RoadArchitect
                 EditorGUILayout.BeginVertical("box");
 
                 //Custom rotation:
-                SMM.EM.CustomRotation = SMM.CustomRotation;
+                SMM.splinatedMeshEditorMaker.CustomRotation = SMM.CustomRotation;
                 //EOM.CustomRotation = EditorGUILayout.Vector3Field("Custom rotation: ",EOM.CustomRotation);
                 EditorGUILayout.BeginHorizontal();
                 //Flip rotation option:
-                if (SMM.EM.isFlippedRotation != SMM.isFlippingRotation)
+                if (SMM.splinatedMeshEditorMaker.isFlippedRotation != SMM.isFlippingRotation)
                 {
-                    SMM.EM.isFlippedRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.EM.isFlippedRotation);
+                    SMM.splinatedMeshEditorMaker.isFlippedRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.splinatedMeshEditorMaker.isFlippedRotation);
                 }
                 else
                 {
-                    SMM.EM.isFlippedRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.isFlippingRotation);
+                    SMM.splinatedMeshEditorMaker.isFlippedRotation = EditorGUILayout.Toggle("Flip Y rotation: ", SMM.isFlippingRotation);
                 }
 
 
@@ -1242,7 +1242,7 @@ namespace RoadArchitect
                 //			}
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    SMM.EM.CustomRotation = new Vector3(0f, 0f, 0f);
+                    SMM.splinatedMeshEditorMaker.CustomRotation = new Vector3(0f, 0f, 0f);
                 }
                 EditorGUILayout.EndHorizontal();
                 //			SMM.EM.CustomRotation = EditorGUILayout.Vector3Field("",SMM.CustomRotation);
@@ -1255,7 +1255,7 @@ namespace RoadArchitect
 
                 EditorGUILayout.LabelField("Deprecated options:");
                 EditorGUILayout.BeginVertical("box");
-                SMM.EM.isExactSplination = EditorGUILayout.Toggle("Directional extrusion: ", SMM.isExactSplination);
+                SMM.splinatedMeshEditorMaker.isExactSplination = EditorGUILayout.Toggle("Directional extrusion: ", SMM.isExactSplination);
 
                 EditorGUILayout.EndVertical();
                 // Big Lines
@@ -1279,16 +1279,16 @@ namespace RoadArchitect
             for (int index = 0; index < count; index++)
             {
                 SMM = node.SplinatedObjects[index];
-                if (SMM.EM != null)
+                if (SMM.splinatedMeshEditorMaker != null)
                 {
-                    if (!SMM.EM.IsEqualToSMM(SMM))
+                    if (!SMM.splinatedMeshEditorMaker.IsEqualToSMM(SMM))
                     {
-                        SMM.EM.LoadToSMM(SMM);
+                        SMM.splinatedMeshEditorMaker.LoadToSMM(SMM);
 
                         SMM.UpdatePositions();
-                        if (SMM.EM.isStretched != SMM.isStretch)
+                        if (SMM.splinatedMeshEditorMaker.isStretched != SMM.isStretched)
                         {
-                            if (SMM.isStretch)
+                            if (SMM.isStretched)
                             {
                                 SMM.CollisionType = Splination.CollisionTypeEnum.BoxCollision;
                                 SMM.isMatchingRoadDefinition = false;
@@ -1334,7 +1334,7 @@ namespace RoadArchitect
                 SMM = node.SplinatedObjects[index];
                 SMM.UpdatePositions();
                 //if(SMM.bIsStretch != SMM.bIsStretch){ 
-                if (SMM.isStretch)
+                if (SMM.isStretched)
                 {
                     SMM.CollisionType = Splination.CollisionTypeEnum.BoxCollision;
                     SMM.isMatchingRoadDefinition = false;
@@ -1916,10 +1916,10 @@ namespace RoadArchitect
                 tBridgeTopBaseToAdd = _overridePrefab;
             }
 
-            SMM.tName = tName;
+            SMM.objectName = tName;
             SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
-            SMM.HorizontalSep = _horizSep;
-            SMM.VerticalRaise = _vertRaise;
+            SMM.horizontalSep = _horizSep;
+            SMM.verticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
             SMM.SplinatedMaterial1 = RoadEditorUtility.LoadMaterial(_mat);
             SMM.Axis = Splination.AxisTypeEnum.Z;
@@ -2098,10 +2098,10 @@ namespace RoadArchitect
             }
 
             SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
-            SMM.HorizontalSep = _horizSep;
-            SMM.VerticalRaise = _vertRaise;
+            SMM.horizontalSep = _horizSep;
+            SMM.verticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
-            SMM.tName = tName;
+            SMM.objectName = tName;
 
             if (BridgeBottomBaseQuickAdd == BridgeBottomBaseDefaultsEnum.BridgeBase2)
             {
@@ -2184,22 +2184,22 @@ namespace RoadArchitect
 
             if (_isHorizOverriden)
             {
-                SMM.HorizontalSep = _horizSep;
+                SMM.horizontalSep = _horizSep;
             }
             else
             {
-                SMM.HorizontalSep = ((node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth) * -1f;
+                SMM.horizontalSep = ((node.spline.road.RoadWidth() / 2) + node.spline.road.shoulderWidth) * -1f;
             }
 
             if (_isVertOverriden)
             {
-                SMM.VerticalRaise = _vertRaise;
+                SMM.verticalRaise = _vertRaise;
             }
             else
             {
                 if (node.isBridgeStart)
                 {
-                    SMM.VerticalRaise = -0.01f;
+                    SMM.verticalRaise = -0.01f;
                 }
             }
 
@@ -2213,7 +2213,7 @@ namespace RoadArchitect
             {
                 SMM.EndTime = node.maxSplination;
             }
-            SMM.tName = _name;
+            SMM.objectName = _name;
         }
         #endregion
 
