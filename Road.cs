@@ -1605,11 +1605,11 @@ namespace RoadArchitect
 
             if (isShouldersEnabled && !RoadPhysicMaterial)
             {
-                RoadPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDPavement.physicMaterial");
+                RoadPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/Pavement.physicMaterial");
             }
             if (isShouldersEnabled && !ShoulderPhysicMaterial)
             {
-                ShoulderPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDDirt.physicMaterial");
+                ShoulderPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/Dirt.physicMaterial");
             }
         }
 
@@ -1660,8 +1660,8 @@ namespace RoadArchitect
                 ShoulderMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Shoulder1.mat");
                 ShoulderMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/RoadDetailOverlay1.mat");
 
-                RoadPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDPavement.physicMaterial");
-                ShoulderPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/GSDDirt.physicMaterial");
+                RoadPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/Pavement.physicMaterial");
+                ShoulderPhysicMaterial = RoadEditorUtility.LoadPhysicsMaterial(basePath + "/Physics/Dirt.physicMaterial");
             }
             else if (roadMaterialDropdown == RoadMaterialDropdownEnum.Dirt)
             {
