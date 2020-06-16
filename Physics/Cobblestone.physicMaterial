@@ -5,7 +5,7 @@ PhysicMaterial:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: GSDCobblestone
+  m_Name: Cobblestone
   dynamicFriction: 0.4
   staticFriction: 0.4
   bounciness: 0
