@@ -378,20 +378,20 @@ namespace RoadArchitect
             }
 
             //Mesh colliders:
-            if (road.GSDRS != null)
+            if (road.roadSystem != null)
             {
                 isUsingMeshColliders.boolValue = EditorGUILayout.Toggle("Use mesh colliders: ", road.isUsingMeshColliders);
             }
 
             //Option: Multi-threading option: workaround for UAS submission rules:
-            if (road.GSDRS.isMultithreaded != road.isUsingMultithreading)
+            if (road.roadSystem.isMultithreaded != road.isUsingMultithreading)
             {
-                road.GSDRS.isMultithreaded = road.isUsingMultithreading;
-                road.GSDRS.UpdateAllRoadsMultiThreadedOption();
+                road.roadSystem.isMultithreaded = road.isUsingMultithreading;
+                road.roadSystem.UpdateAllRoadsMultiThreadedOption();
             }
-            if (road.GSDRS != null)
+            if (road.roadSystem != null)
             {
-                isUsingMultithreading.boolValue = EditorGUILayout.Toggle("Multithreading: ", road.GSDRS.isMultithreaded);
+                isUsingMultithreading.boolValue = EditorGUILayout.Toggle("Multithreading: ", road.roadSystem.isMultithreaded);
                 //Static:
                 isStatic.boolValue = EditorGUILayout.Toggle("Static: ", road.isStatic);
                 //Used for lightmapping:
@@ -400,16 +400,16 @@ namespace RoadArchitect
             }
 
             //Option: Save meshes as unity assets options:
-            if (road.GSDRS.isSavingMeshes != road.isSavingMeshes)
+            if (road.roadSystem.isSavingMeshes != road.isSavingMeshes)
             {
-                road.GSDRS.isSavingMeshes = road.isSavingMeshes;
-                road.GSDRS.UpdateAllRoadsSavingMeshesOption();
+                road.roadSystem.isSavingMeshes = road.isSavingMeshes;
+                road.roadSystem.UpdateAllRoadsSavingMeshesOption();
             }
-            if (road.GSDRS != null)
+            if (road.roadSystem != null)
             {
-                isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.GSDRS.isSavingMeshes);
+                isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.roadSystem.isSavingMeshes);
             }
-            if (road.GSDRS.isSavingMeshes)
+            if (road.roadSystem.isSavingMeshes)
             {
                 GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", warningLabelStyle);
             }
@@ -1170,16 +1170,16 @@ namespace RoadArchitect
                 }
 
                 //Option pre-handle for multithread and save mesh:
-                if (road.GSDRS != null)
+                if (road.roadSystem != null)
                 {
-                    if (isUsingMultithreading.boolValue != road.GSDRS.isMultithreaded)
+                    if (isUsingMultithreading.boolValue != road.roadSystem.isMultithreaded)
                     {
-                        road.GSDRS.isMultithreaded = isUsingMultithreading.boolValue;
+                        road.roadSystem.isMultithreaded = isUsingMultithreading.boolValue;
                         isMultithreadedChanged = true;
                     }
-                    if (isSavingMeshes.boolValue != road.GSDRS.isSavingMeshes)
+                    if (isSavingMeshes.boolValue != road.roadSystem.isSavingMeshes)
                     {
-                        road.GSDRS.isSavingMeshes = isSavingMeshes.boolValue;
+                        road.roadSystem.isSavingMeshes = isSavingMeshes.boolValue;
                         isSaveMeshChanged = true;
                     }
                 }
@@ -1222,13 +1222,13 @@ namespace RoadArchitect
                 //Option: Multithreading
                 if (isMultithreadedChanged)
                 {
-                    road.GSDRS.UpdateAllRoadsMultiThreadedOption();
+                    road.roadSystem.UpdateAllRoadsMultiThreadedOption();
                 }
 
                 //Option: Save meshes as unity assets options:
                 if (isSaveMeshChanged)
                 {
-                    road.GSDRS.UpdateAllRoadsSavingMeshesOption();
+                    road.roadSystem.UpdateAllRoadsSavingMeshesOption();
                 }
 
                 //Option: terrain history save type:

@@ -2752,7 +2752,7 @@ namespace RoadArchitect
 
         private static void SaveMesh(SaveMeshTypeEnum _saveType, Mesh _mesh, Road _road, string _name)
         {
-            if (!_road.GSDRS.isSavingMeshes)
+            if (!_road.roadSystem.isSavingMeshes)
             {
                 return;
             }

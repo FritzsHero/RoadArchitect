@@ -39,7 +39,7 @@ namespace RoadArchitect
             road.spline.splineRoot = splineObj;
             road.spline.road = road;
             road.GSDSplineObj = splineObj;
-            road.GSDRS = this;
+            road.roadSystem = this;
             RoadArchitect.RootUtils.SetupUniqueIdentifier(ref road.UID);
 
             road.ConstructRoad_ResetTerrainHistory();

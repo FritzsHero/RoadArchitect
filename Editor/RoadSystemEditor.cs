@@ -326,10 +326,10 @@ namespace RoadArchitect
 
         private void ShowIntersection(int i)
         {
-            if (EditorApplication.isPlaying && GSDRS.EditorPlayCamera != null)
+            if (EditorApplication.isPlaying && roadSystem.EditorPlayCamera != null)
             {
-                GSDRS.EditorPlayCamera.transform.position = tInters[i].transform.position + new Vector3(-40f, 20f, -40f);
-                GSDRS.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tInters[i].transform.position - (tInters[i].transform.position + new Vector3(-40f, 20f, -40f)));
+                roadSystem.EditorPlayCamera.transform.position = tInters[i].transform.position + new Vector3(-40f, 20f, -40f);
+                roadSystem.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tInters[i].transform.position - (tInters[i].transform.position + new Vector3(-40f, 20f, -40f)));
             }
             else
             {
@@ -341,7 +341,7 @@ namespace RoadArchitect
 
         private void ShowBridge(int i)
         {
-            if (EditorApplication.isPlaying && GSDRS.EditorPlayCamera != null)
+            if (EditorApplication.isPlaying && roadSystem.EditorPlayCamera != null)
             {
                 Vector3 tBridgePos = ((tBridges[i].pos - tBridges[i].BridgeCounterpartNode.pos) * 0.5f) + tBridges[i].BridgeCounterpartNode.pos;
                 float tBridgeLength = Vector3.Distance(tBridges[i].pos, tBridges[i].BridgeCounterpartNode.pos);
@@ -363,8 +363,8 @@ namespace RoadArchitect
                 //Height offset:
                 tBridgeOffset.y = Mathf.Lerp(20f, 120f, (tBridgeLength * 0.001f)) * CameraZoomFactor * CameraHeightOffset;
 
-                GSDRS.EditorPlayCamera.transform.position = tBridgePos + tBridgeOffset;
-                GSDRS.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tBridgePos - (tBridgePos + tBridgeOffset));
+                roadSystem.EditorPlayCamera.transform.position = tBridgePos + tBridgeOffset;
+                roadSystem.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tBridgePos - (tBridgePos + tBridgeOffset));
             }
             else
             {

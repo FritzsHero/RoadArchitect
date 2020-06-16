@@ -43,7 +43,8 @@ namespace RoadArchitect
 
         public int MostRecentNodeCount = -1;
         public GameObject GSDSplineObj;
-        public RoadSystem GSDRS;
+        [UnityEngine.Serialization.FormerlySerializedAs("GSDRS")]
+        public RoadSystem roadSystem;
         public SplineC[] PiggyBacks = null;
         [UnityEngine.Serialization.FormerlySerializedAs("bEditorProgressBar")]
         public bool isEditorProgressBar = false;
@@ -348,9 +349,9 @@ namespace RoadArchitect
             if (isEditorConstructing)
             {
                 // && !Application.isPlaying && !UnityEditor.EditorApplication.isPlaying){
-                if (GSDRS != null)
+                if (roadSystem != null)
                 {
-                    if (GSDRS.isMultithreaded)
+                    if (roadSystem.isMultithreaded)
                     {
                         editorTimer += 1;
                         if (editorTimer > editorTimerMax)
@@ -581,7 +582,7 @@ namespace RoadArchitect
 
         public void UpdateRoad(RoadUpdateTypeEnum _updateType = RoadUpdateTypeEnum.Full)
         {
-            if (!GSDRS.isAllowingRoadUpdates)
+            if (!roadSystem.isAllowingRoadUpdates)
             {
                 spline.Setup();
                 isEditorConstructing = false;
@@ -614,7 +615,7 @@ namespace RoadArchitect
             EditorUtility.ClearProgressBar();
 
             isProfiling = true;
-            if (GSDRS.isMultithreaded)
+            if (roadSystem.isMultithreaded)
             {
                 isProfiling = false;
             }
@@ -818,12 +819,12 @@ namespace RoadArchitect
             }
 
             spline.HeightHistory = new List<KeyValuePair<float, float>>();
-            if (GSDRS == null)
+            if (roadSystem == null)
             {
-                GSDRS = transform.parent.GetComponent<RoadSystem>();
+                roadSystem = transform.parent.GetComponent<RoadSystem>();
             }
             //Compatibility update.
-            if (GSDRS.isMultithreaded)
+            if (roadSystem.isMultithreaded)
             {
                 isEditorConstructing = true;
             }
@@ -859,7 +860,7 @@ namespace RoadArchitect
             terrain = null;
 
             RootUtils.EndProfiling(this);
-            if (GSDRS.isMultithreaded)
+            if (roadSystem.isMultithreaded)
             {
                 if (RCS.isTerrainOn || TerrainHistory == null)
                 {
@@ -1098,7 +1099,7 @@ namespace RoadArchitect
                 RCS = null;
             }
 
-            if (GSDRS.isSavingMeshes)
+            if (roadSystem.isSavingMeshes)
             {
                 UnityEditor.AssetDatabase.SaveAssets();
             }
@@ -1781,7 +1782,7 @@ namespace RoadArchitect
 
         public void DuplicateRoad()
         {
-            GameObject roadObj = GSDRS.AddRoad();
+            GameObject roadObj = roadSystem.AddRoad();
             UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Duplicate");
 
             Road road = roadObj.GetComponent<Road>();
@@ -1896,7 +1897,7 @@ namespace RoadArchitect
 
 
             //Intersections (all):
-            markerObjs = GSDRS.GetComponentsInChildren<MeshRenderer>();
+            markerObjs = roadSystem.GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer MR in markerObjs)
             {
                 if (MR.transform.name.Contains("CenterMarkers"))

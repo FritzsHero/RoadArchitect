@@ -24,7 +24,7 @@ namespace RoadArchitect.Roads
     public static class RoadAutomation
     {
         /// <summary>
-        /// Use this to create nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates.
+        /// Use this to create nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.roadSystem.isAllowingRoadUpdates.
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="NodeLocation">The location of the newly created node.</param>
@@ -44,7 +44,7 @@ namespace RoadArchitect.Roads
 
 
         /// <summary>
-        /// Use this to create nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates.
+        /// Use this to create nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.roadSystem.isAllowingRoadUpdates.
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="_nodePosition">The location of the newly created node.</param>
@@ -70,7 +70,7 @@ namespace RoadArchitect.Roads
             node.idOnSpline = (splineChildCount + 1);
             node.spline = _road.spline;
 
-            //Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates
+            //Make sure isAllowingRoadUpdates is set to false in RS.roadSystem.isAllowingRoadUpdates
             _road.UpdateRoad();
 
             return node;
@@ -78,7 +78,7 @@ namespace RoadArchitect.Roads
 
 
         /// <summary>
-        /// Use this to insert nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates.
+        /// Use this to insert nodes via coding while in editor mode. Make sure isAllowingRoadUpdates is set to false in RS.roadSystem.isAllowingRoadUpdates.
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
@@ -142,7 +142,7 @@ namespace RoadArchitect.Roads
             newNode.pos = _nodePosition;
             _road.spline.nodes.Insert(start, newNode);
 
-            //Make sure isAllowingRoadUpdates is set to false in RS.GSDRS.isAllowingRoadUpdates
+            //Make sure isAllowingRoadUpdates is set to false in RS.roadSystem.isAllowingRoadUpdates
             _road.UpdateRoad();
 
             return newNode;

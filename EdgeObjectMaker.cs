@@ -343,7 +343,7 @@ namespace RoadArchitect.EdgeObjects
         private void SaveMesh(Mesh _mesh, bool _isCollider)
         {
 #if UNITY_EDITOR
-            if (!node.spline.road.GSDRS.isSavingMeshes)
+            if (!node.spline.road.roadSystem.isSavingMeshes)
             {
                 return;
             }
@@ -1113,7 +1113,7 @@ namespace RoadArchitect.EdgeObjects
                     }
                 }
 
-                if (node.spline.road.GSDRS.isSavingMeshes && MF != null && isCombinedMesh)
+                if (node.spline.road.roadSystem.isSavingMeshes && MF != null && isCombinedMesh)
                 {
                     SaveMesh(MF.sharedMesh, false);
                     if (MC != null)

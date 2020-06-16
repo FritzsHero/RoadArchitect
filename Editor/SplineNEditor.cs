@@ -723,7 +723,7 @@ namespace RoadArchitect
             EditorGUILayout.LabelField("Is bridge start: " + node.isBridgeStart);
             EditorGUILayout.LabelField("Is bridge end: " + node.isBridgeEnd);
             EditorGUILayout.LabelField("Road: " + node.spline.road.transform.name);
-            EditorGUILayout.LabelField("System: " + node.spline.road.GSDRS.transform.name);
+            EditorGUILayout.LabelField("System: " + node.spline.road.roadSystem.transform.name);
             EditorGUILayout.SelectableLabel("UID: " + node.uID);
         }
 

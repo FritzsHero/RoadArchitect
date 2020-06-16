@@ -3728,7 +3728,7 @@ namespace RoadArchitect.Splination
             MF = Output.AddComponent<MeshFilter>();
             MF.sharedMesh = xMesh;
 
-            if (node.spline.road.GSDRS.isSavingMeshes)
+            if (node.spline.road.roadSystem.isSavingMeshes)
             {
                 SaveMesh(ref xMesh, false);
             }
@@ -3750,7 +3750,7 @@ namespace RoadArchitect.Splination
                 {
                     MC.convex = isCollisionConvex;
                     MC.isTrigger = isCollisionTrigger;
-                    if (node.spline.road.GSDRS.isSavingMeshes)
+                    if (node.spline.road.roadSystem.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
                         cMesh.tangents = RootUtils.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
@@ -3773,7 +3773,7 @@ namespace RoadArchitect.Splination
                 {
                     MC.convex = isCollisionConvex;
                     MC.isTrigger = isCollisionTrigger;
-                    if (node.spline.road.GSDRS.isSavingMeshes)
+                    if (node.spline.road.roadSystem.isSavingMeshes)
                     {
                         cMesh.uv = new Vector2[cVerts.Length];
                         cMesh.tangents = RootUtils.ProcessTangents(cTris, cMesh.normals, cMesh.uv, cVerts);
@@ -3977,7 +3977,7 @@ namespace RoadArchitect.Splination
         private void SaveMesh(ref Mesh _mesh, bool _isCollider)
         {
 #if UNITY_EDITOR
-            if (!node.spline.road.GSDRS.isSavingMeshes)
+            if (!node.spline.road.roadSystem.isSavingMeshes)
             {
                 return;
             }

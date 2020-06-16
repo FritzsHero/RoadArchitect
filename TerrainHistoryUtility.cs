@@ -91,7 +91,7 @@ namespace RoadArchitect
             string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string roadName = _road.GSDRS.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;
+            string roadName = _road.roadSystem.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;
             return sceneName + "-" + roadName + ".th";
         }
 
