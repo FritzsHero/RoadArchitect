@@ -839,7 +839,7 @@ namespace RoadArchitect
             {
                 if (light.type == LightType.Point)
                 {
-                    light.flare = UnityEditor.AssetDatabase.LoadAssetAtPath<Flare>(basePath + "/Flares/GSDSodiumBulb.flare");
+                    light.flare = UnityEditor.AssetDatabase.LoadAssetAtPath<Flare>(basePath + "/Flares/SodiumBulb.flare");
                 }
             }
         }
