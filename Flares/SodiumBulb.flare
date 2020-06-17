@@ -5,7 +5,7 @@ Flare:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: GSDSodiumBulb
+  m_Name: SodiumBulb
   m_FlareTexture: {fileID: 2800000, guid: 385cf45e91e07d54fbda4ba829365038, type: 3}
   m_TextureLayout: 2
   m_Elements:
