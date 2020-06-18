@@ -1,5 +1,5 @@
 //Courtesy of http://answers.unity3d.com/questions/306921/add-specular-map-to-shader.html
-Shader "GSD/DX11/Road Shader Low Quality" {
+Shader "RoadArchitect/DX11/Road Shader Low Quality" {
     Properties {
     	_Color ("Main Color", Color) = (1,1,1,1)
     	_MainTex ("Base (RGB) Gloss (A)", 2D) = "white" {}

@@ -1,5 +1,5 @@
 //Courtesy of http://answers.unity3d.com/questions/306921/add-specular-map-to-shader.html
-Shader "GSD/DX11/Road Shoulder Shader" {
+Shader "RoadArchitect/DX11/Road Shoulder Shader" {
     Properties {
     	_Color ("Main Color", Color) = (1,1,1,1)
     	//_SpecColor ("Specular Color", Color) = (0.5, 0.5, 0.5, 1)

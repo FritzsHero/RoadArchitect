@@ -1,4 +1,4 @@
-Shader "GSD/CutoutMarker"
+Shader "RoadArchitect/CutoutMarker"
 {
 	Properties
 	{

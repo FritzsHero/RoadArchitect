@@ -1,4 +1,4 @@
-Shader "GSD/Standard-Tiling"
+Shader "RoadArchitect/Standard-Tiling"
 {
 	Properties
 	{
