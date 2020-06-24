@@ -38,7 +38,7 @@ namespace RoadArchitect
             road.spline = splineObj.AddComponent<SplineC>();
             road.spline.splineRoot = splineObj;
             road.spline.road = road;
-            road.GSDSplineObj = splineObj;
+            road.splineObject = splineObj;
             road.roadSystem = this;
             RoadArchitect.RootUtils.SetupUniqueIdentifier(ref road.UID);
 

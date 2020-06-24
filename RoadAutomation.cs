@@ -64,7 +64,7 @@ namespace RoadArchitect.Roads
             nodeObj.transform.position = _nodePosition;
 
             //Set the node's parent:
-            nodeObj.transform.parent = _road.GSDSplineObj.transform;
+            nodeObj.transform.parent = _road.splineObject.transform;
 
             //Set the idOnSpline:
             node.idOnSpline = (splineChildCount + 1);
@@ -97,7 +97,7 @@ namespace RoadArchitect.Roads
             nodeObj.transform.position = _nodePosition;
 
             //Set the node's parent:
-            nodeObj.transform.parent = _road.GSDSplineObj.transform;
+            nodeObj.transform.parent = _road.splineObject.transform;
 
             int nodesCount = _road.spline.nodes.Count;
 

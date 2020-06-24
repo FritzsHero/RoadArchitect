@@ -42,7 +42,8 @@ namespace RoadArchitect
         public SplineC spline;
 
         public int MostRecentNodeCount = -1;
-        public GameObject GSDSplineObj;
+        [UnityEngine.Serialization.FormerlySerializedAs("GSDSplineObj")]
+        public GameObject splineObject;
         [UnityEngine.Serialization.FormerlySerializedAs("GSDRS")]
         public RoadSystem roadSystem;
         public SplineC[] PiggyBacks = null;

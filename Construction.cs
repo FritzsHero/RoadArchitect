@@ -42,7 +42,7 @@ namespace RoadArchitect
             }
             nodeObj.transform.position = xVect;
 
-            nodeObj.transform.parent = _road.GSDSplineObj.transform;
+            nodeObj.transform.parent = _road.splineObject.transform;
             node.idOnSpline = _road.spline.GetNodeCount() + 1;
             node.spline = _road.spline;
 
@@ -112,7 +112,7 @@ namespace RoadArchitect
                 xVect.y = 0.03f;
             }
             nodeObj.transform.position = xVect;
-            nodeObj.transform.parent = _road.GSDSplineObj.transform;
+            nodeObj.transform.parent = _road.splineObject.transform;
 
             int childCount = _road.spline.nodes.Count;
             //float mDistance = 50000f;
