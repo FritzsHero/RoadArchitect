@@ -19,7 +19,7 @@ public class SplineRepair : MonoBehaviour
 
 
 [CustomEditor(typeof(SplineRepair))]
-public class GSDSplineRepairEditor : Editor
+public class SplineRepairEditor : Editor
 {
     public override void OnInspectorGUI()
     {
