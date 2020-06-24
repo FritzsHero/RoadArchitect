@@ -584,15 +584,18 @@ namespace RoadArchitect.Splination
             public bool isStretchedLocOffset = false;
             [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
             public bool isStretchedSize = false;
-            public Vector3 StretchBC_LocOffset = default(Vector3);
-            public Vector3 StretchBC_Size = default(Vector3);
-            public float Stretch_UVThreshold = 0.05f;
+            [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_LocOffset")]
+            public Vector3 boxColliderOffset = default(Vector3);
+            [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_Size")]
+            public Vector3 boxColliderSize = default(Vector3);
+            [UnityEngine.Serialization.FormerlySerializedAs("Stretch_UVThreshold")]
+            public float stretchUVThreshold = 0.05f;
             [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
             public bool isStraightLineMatchingStartEnd = false;
             [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
-            public bool isBCFlippedX = false;
+            public bool isBoxColliderFlippedOnX = false;
             [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
-            public bool isBCFlippedZ = false;
+            public bool isBoxColliderFlippedOnZ = false;
 
             //Horizontal offsets:
             [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
@@ -732,12 +735,12 @@ namespace RoadArchitect.Splination
                 isStretched = _SMM.isStretched;
                 isStretchedLocOffset = _SMM.isStretchedOffset;
                 isStretchedSize = _SMM.isStretchedSize;
-                StretchBC_LocOffset = _SMM.boxColliderOffset;
-                StretchBC_Size = _SMM.boxColliderSize;
-                Stretch_UVThreshold = _SMM.stretchUVThreshold;
+                boxColliderOffset = _SMM.boxColliderOffset;
+                boxColliderSize = _SMM.boxColliderSize;
+                stretchUVThreshold = _SMM.stretchUVThreshold;
                 isStraightLineMatchingStartEnd = _SMM.isStraightLineMatchStartEnd;
-                isBCFlippedX = _SMM.isBoxColliderFlippedOnX;
-                isBCFlippedZ = _SMM.isBoxColliderFlippedOnZ;
+                isBoxColliderFlippedOnX = _SMM.isBoxColliderFlippedOnX;
+                isBoxColliderFlippedOnZ = _SMM.isBoxColliderFlippedOnZ;
 
                 //Horizontal offsets:
                 horizontalSep = _SMM.horizontalSep;
@@ -874,12 +877,12 @@ namespace RoadArchitect.Splination
                 _SMM.isStretched = isStretched;
                 _SMM.isStretchedOffset = isStretchedLocOffset;
                 _SMM.isStretchedSize = isStretchedSize;
-                _SMM.boxColliderOffset = StretchBC_LocOffset;
-                _SMM.boxColliderSize = StretchBC_Size;
-                _SMM.stretchUVThreshold = Stretch_UVThreshold;
+                _SMM.boxColliderOffset = boxColliderOffset;
+                _SMM.boxColliderSize = boxColliderSize;
+                _SMM.stretchUVThreshold = stretchUVThreshold;
                 _SMM.isStraightLineMatchStartEnd = isStraightLineMatchingStartEnd;
-                _SMM.isBoxColliderFlippedOnX = isBCFlippedX;
-                _SMM.isBoxColliderFlippedOnZ = isBCFlippedZ;
+                _SMM.isBoxColliderFlippedOnX = isBoxColliderFlippedOnX;
+                _SMM.isBoxColliderFlippedOnZ = isBoxColliderFlippedOnZ;
 
                 //Horizontal offsets:
                 _SMM.horizontalSep = horizontalSep;
