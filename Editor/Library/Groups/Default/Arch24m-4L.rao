@@ -29,20 +29,20 @@
   <isStretched>false</isStretched>
   <isStretchedLocOffset>false</isStretchedLocOffset>
   <isStretchedSize>false</isStretchedSize>
-  <StretchBC_LocOffset>
+  <boxColliderOffset>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_LocOffset>
-  <StretchBC_Size>
+  </boxColliderOffset>
+  <boxColliderSize>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_Size>
-  <Stretch_UVThreshold>0.05</Stretch_UVThreshold>
+  </boxColliderSize>
+  <stretchUVThreshold>0.05</stretchUVThreshold>
   <isStraightLineMatchingStartEnd>false</isStraightLineMatchingStartEnd>
-  <isBCFlippedX>false</isBCFlippedX>
-  <isBCFlippedZ>false</isBCFlippedZ>
+  <isBoxColliderFlippedOnX>false</isBoxColliderFlippedOnX>
+  <isBoxColliderFlippedOnZ>false</isBoxColliderFlippedOnZ>
   <horizontalSep>0</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -203,20 +203,20 @@
   <isStretched>false</isStretched>
   <isStretchedLocOffset>false</isStretchedLocOffset>
   <isStretchedSize>false</isStretchedSize>
-  <StretchBC_LocOffset>
+  <boxColliderOffset>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_LocOffset>
-  <StretchBC_Size>
+  </boxColliderOffset>
+  <boxColliderSize>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_Size>
-  <Stretch_UVThreshold>0.05</Stretch_UVThreshold>
+  </boxColliderSize>
+  <stretchUVThreshold>0.05</stretchUVThreshold>
   <isStraightLineMatchingStartEnd>false</isStraightLineMatchingStartEnd>
-  <isBCFlippedX>false</isBCFlippedX>
-  <isBCFlippedZ>false</isBCFlippedZ>
+  <isBoxColliderFlippedOnX>false</isBoxColliderFlippedOnX>
+  <isBoxColliderFlippedOnZ>false</isBoxColliderFlippedOnZ>
   <horizontalSep>-13.5</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -377,20 +377,20 @@
   <isStretched>false</isStretched>
   <isStretchedLocOffset>false</isStretchedLocOffset>
   <isStretchedSize>false</isStretchedSize>
-  <StretchBC_LocOffset>
+  <boxColliderOffset>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_LocOffset>
-  <StretchBC_Size>
+  </boxColliderOffset>
+  <boxColliderSize>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_Size>
-  <Stretch_UVThreshold>0.05</Stretch_UVThreshold>
+  </boxColliderSize>
+  <stretchUVThreshold>0.05</stretchUVThreshold>
   <isStraightLineMatchingStartEnd>false</isStraightLineMatchingStartEnd>
-  <isBCFlippedX>false</isBCFlippedX>
-  <isBCFlippedZ>false</isBCFlippedZ>
+  <isBoxColliderFlippedOnX>false</isBoxColliderFlippedOnX>
+  <isBoxColliderFlippedOnZ>false</isBoxColliderFlippedOnZ>
   <horizontalSep>13.5</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -551,20 +551,20 @@
   <isStretched>false</isStretched>
   <isStretchedLocOffset>false</isStretchedLocOffset>
   <isStretchedSize>false</isStretchedSize>
-  <StretchBC_LocOffset>
+  <boxColliderOffset>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_LocOffset>
-  <StretchBC_Size>
+  </boxColliderOffset>
+  <boxColliderSize>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_Size>
-  <Stretch_UVThreshold>0.05</Stretch_UVThreshold>
+  </boxColliderSize>
+  <stretchUVThreshold>0.05</stretchUVThreshold>
   <isStraightLineMatchingStartEnd>false</isStraightLineMatchingStartEnd>
-  <isBCFlippedX>false</isBCFlippedX>
-  <isBCFlippedZ>false</isBCFlippedZ>
+  <isBoxColliderFlippedOnX>false</isBoxColliderFlippedOnX>
+  <isBoxColliderFlippedOnZ>false</isBoxColliderFlippedOnZ>
   <horizontalSep>11.5</horizontalSep>
   <horizontalCurve>
     <keys>
@@ -732,20 +732,20 @@
   <isStretched>false</isStretched>
   <isStretchedLocOffset>false</isStretchedLocOffset>
   <isStretchedSize>false</isStretchedSize>
-  <StretchBC_LocOffset>
+  <boxColliderOffset>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_LocOffset>
-  <StretchBC_Size>
+  </boxColliderOffset>
+  <boxColliderSize>
     <x>0</x>
     <y>0</y>
     <z>0</z>
-  </StretchBC_Size>
-  <Stretch_UVThreshold>0.05</Stretch_UVThreshold>
+  </boxColliderSize>
+  <stretchUVThreshold>0.05</stretchUVThreshold>
   <isStraightLineMatchingStartEnd>false</isStraightLineMatchingStartEnd>
-  <isBCFlippedX>false</isBCFlippedX>
-  <isBCFlippedZ>false</isBCFlippedZ>
+  <isBoxColliderFlippedOnX>false</isBoxColliderFlippedOnX>
+  <isBoxColliderFlippedOnZ>false</isBoxColliderFlippedOnZ>
   <horizontalSep>-11.5</horizontalSep>
   <horizontalCurve>
     <keys>
