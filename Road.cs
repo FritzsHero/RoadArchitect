@@ -1004,11 +1004,8 @@ namespace RoadArchitect
                 //Store history:
                 Terraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
                 ConstructRoad_StoreTerrainHistory();
-                int editorTTDListCount = EditorTTDList.Count;
-                for (int i = 0; i < editorTTDListCount; i++)
-                {
-                    EditorTTDList[i] = null;
-                }
+
+                EditorTTDList.Clear();
                 EditorTTDList = null;
                 System.GC.Collect();
             }
