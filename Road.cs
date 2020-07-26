@@ -1627,36 +1627,24 @@ namespace RoadArchitect
                 if (laneAmount == 2)
                 {
                     RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
+                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks.mat");
                 }
                 else if (laneAmount == 4)
                 {
                     RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-4L.mat");
-                }
-                else if (laneAmount == 6)
-                {
-                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-6L.mat");
-                }
-                else
-                {
-                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
-                }
-
-                if (laneAmount == 2)
-                {
-                    RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks.mat");
-                }
-                else if (laneAmount == 4)
-                {
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks-4L.mat");
                 }
                 else if (laneAmount == 6)
                 {
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-6L.mat");
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks-6L.mat");
                 }
                 else
                 {
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks.mat");
                 }
+
 
                 ShoulderMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Shoulder1.mat");
                 ShoulderMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/RoadDetailOverlay1.mat");
@@ -1697,6 +1685,8 @@ namespace RoadArchitect
                 RoadMaterialMarker3 = null;
                 RoadMaterialMarker4 = null;
             }
+
+
             if (roadMaterialDropdown == RoadMaterialDropdownEnum.Brick
             || roadMaterialDropdown == RoadMaterialDropdownEnum.Cobblestone
             || roadMaterialDropdown == RoadMaterialDropdownEnum.Dirt)
@@ -1707,6 +1697,7 @@ namespace RoadArchitect
                     RoadMaterialMarker1.mainTextureScale *= new Vector2(laneAmount / 2, 1f);
                 }
             }
+
 
             int nodeCount = spline.GetNodeCount();
             for (int i = 0; i < nodeCount; i++)
