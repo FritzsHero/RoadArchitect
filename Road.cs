@@ -1562,39 +1562,27 @@ namespace RoadArchitect
                 RoadMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Road1.mat");
                 RoadMaterial2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/RoadDetailOverlay1.mat");
             }
+
             if (!RoadMaterialMarker1)
             {
                 if (laneAmount == 2)
                 {
                     RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
-                }
-                else if (laneAmount == 4)
-                {
-                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-4L.mat");
-                }
-                else if (laneAmount == 6)
-                {
-                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-6L.mat");
-                }
-                else
-                {
-                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
-                }
-
-                if (laneAmount == 2)
-                {
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks.mat");
                 }
                 else if (laneAmount == 4)
                 {
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-4L.mat");
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks-4L.mat");
                 }
                 else if (laneAmount == 6)
                 {
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble-6L.mat");
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks-6L.mat");
                 }
                 else
                 {
+                    RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks.mat");
                 }
             }
