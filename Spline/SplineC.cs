@@ -1693,32 +1693,51 @@ namespace RoadArchitect
 
         public bool IntersectionIsPast(ref float _p, ref SplineN _node)
         {
-            //		int mCount = GetNodeCount();
-            //		bool bIsPast;
-            //		SplineN tNode = null;
-            //		for(int i=0;i<mCount;i++){
-            //			tNode = mNodes[i];
-            //			if(tNode.bIsIntersection){
-            //				float P1 = tNode.GSDRI.Node1.tTime - p; if(P1 < 0f){ P1 *= -1f; }
-            //				float P2 = tNode.GSDRI.Node2.tTime - p; if(P2 < 0f){ P2 *= -1f; }
+            //int mCount = GetNodeCount();
+            //bool bIsPast;
+            //SplineN tNode = null;
+            //for(int i=0;i<mCount;i++)
+            //{
+            //	tNode = mNodes[i];
+            //	if(tNode.bIsIntersection)
+            //{
+            //		float P1 = tNode.roadIntersection.Node1.tTime - p;
+            //      if(P1 < 0f)
+            //      {
+            //          P1 *= -1f;
+            //      }
+            //	    float P2 = tNode.roadIntersection.Node2.tTime - p;
+            //      if(P2 < 0f)
+            //      {
+            //          P2 *= -1f;
+            //      }
             //				
-            //				if(P1 > P2){
-            //					if(p > tNode.GSDRI.Node2.tTime){
-            //						bIsPast = true;	
-            //					}else{
-            //						bIsPast = false;	
-            //					}
-            //				}else{
-            //					if(p > tNode.GSDRI.Node1.tTime){
-            //						bIsPast = true;	
-            //					}else{
-            //						bIsPast = false;	
-            //					}
-            //				}
-            //				return bIsPast;
+            //		if(P1 > P2)
+            //      {
+            //			if(p > tNode.roadIntersection.Node2.tTime)
+            //          {
+            //				bIsPast = true;	
+            //			}
+            //          else
+            //          {
+            //				bIsPast = false;	
             //			}
             //		}
-            //		return false;
+            //      else
+            //      {
+            //			if(p > tNode.roadIntersection.Node1.tTime)
+            //          {
+            //				bIsPast = true;	
+            //			}
+            //          else
+            //          {
+            //				bIsPast = false;	
+            //			}
+            //		}
+            //		return bIsPast;
+            //	}
+            //}
+            //return false;
 
 
             if (_p < _node.time)

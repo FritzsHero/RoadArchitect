@@ -8,6 +8,7 @@ namespace RoadArchitect
     {
         public class iConstructionMaker
         {
+            #region "Vars"
             //Lanes:
             public List<Vector3> iBLane0L, iBLane0R;
             public List<Vector3> iBLane1L, iBLane1R;
@@ -153,6 +154,7 @@ namespace RoadArchitect
             public int shoulderFLStartIndex = -1;
             [UnityEngine.Serialization.FormerlySerializedAs("ShoulderFR_StartIndex")]
             public int shoulderFRStartIndex = -1;
+            #endregion
 
 
             public void Nullify()
@@ -292,17 +294,20 @@ namespace RoadArchitect
             }
             cCount = InterMaster.transform.childCount;
 
-            GameObject tObj = new GameObject("Inter" + (cCount + 1).ToString());
-            tObj.transform.parent = InterMaster.transform;
-            RoadIntersection GSDRI = tObj.AddComponent<RoadIntersection>();
-            GSDRI.ignoreSide = -1;
-            GSDRI.isFirstSpecialFirst = false;
-            GSDRI.isFirstSpecialLast = false;
-            GSDRI.isSecondSpecialFirst = false;
-            GSDRI.isSecondSpecialLast = false;
+            GameObject intersectionObject = new GameObject("Inter" + (cCount + 1).ToString());
+            intersectionObject.transform.parent = InterMaster.transform;
+            RoadIntersection roadIntersection = intersectionObject.AddComponent<RoadIntersection>();
+            roadIntersection.ignoreSide = -1;
+            roadIntersection.isFirstSpecialFirst = false;
+            roadIntersection.isFirstSpecialLast = false;
+            roadIntersection.isSecondSpecialFirst = false;
+            roadIntersection.isSecondSpecialLast = false;
 
             SplineN tNode1 = null;
             SplineN tNode2 = null;
+
+
+            // same spline
             if (_node1.spline == _node2.spline)
             {
                 if (_node1.idOnSpline < _node2.idOnSpline)
@@ -318,9 +323,12 @@ namespace RoadArchitect
             }
             else
             {
+                // different spline
                 tNode1 = _node1;
                 tNode2 = _node2;
             }
+
+
 
             //If 3way, always add the single node as primary:
             if (_node1.isEndPoint)
@@ -339,7 +347,7 @@ namespace RoadArchitect
 
             if (tNode1.isEndPoint || tNode2.isEndPoint)
             {
-                GSDRI.intersectionType = RoadIntersection.IntersectionTypeEnum.ThreeWay;
+                roadIntersection.intersectionType = RoadIntersection.IntersectionTypeEnum.ThreeWay;
             }
 
             SplineN zNode = null;
@@ -401,12 +409,12 @@ namespace RoadArchitect
                 if (isFirstNode)
                 {
                     tNode1.spline.isSpecialStartControlNode = true;
-                    GSDRI.isFirstSpecialFirst = true;
+                    roadIntersection.isFirstSpecialFirst = true;
                 }
                 else
                 {
                     tNode1.spline.isSpecialEndControlNode = true;
-                    GSDRI.isFirstSpecialLast = true;
+                    roadIntersection.isFirstSpecialLast = true;
                 }
 
             }
@@ -468,49 +476,52 @@ namespace RoadArchitect
                 if (isFirstNode)
                 {
                     tNode2.spline.isSpecialStartControlNode = true;
-                    GSDRI.isSecondSpecialFirst = true;
+                    roadIntersection.isSecondSpecialFirst = true;
                 }
                 else
                 {
                     tNode2.spline.isSpecialEndControlNode = true;
-                    GSDRI.isSecondSpecialLast = true;
+                    roadIntersection.isSecondSpecialLast = true;
                 }
             }
 
             //Undo crap:
-            UnityEditor.Undo.RegisterCreatedObjectUndo(tObj, "Created intersection");
+            UnityEditor.Undo.RegisterCreatedObjectUndo(intersectionObject, "Created intersection");
 
-            GSDRI.Setup(tNode1, tNode2);
-            tObj.transform.position = _node1.transform.position;
+            roadIntersection.Setup(tNode1, tNode2);
+            intersectionObject.transform.position = _node1.transform.position;
 
-            GSDRI.ResetMaterialsAll();
+            roadIntersection.ResetMaterialsAll();
 
-            //			if(GSDRI.bSameSpline){
-            //				GSDRI.Node1.spline.tRoad.UpdateRoad();
-            //			}else{
-            //				GSDRI.Node1.spline.tRoad.UpdateRoad();
-            //				GSDRI.Node2.spline.tRoad.UpdateRoad();
-            //			}
+            //if(roadIntersection.isSameSpline)
+            //{
+            //	roadIntersection.node1.spline.road.UpdateRoad();
+            //}
+            //else
+            //{
+            //  roadIntersection.node1.spline.road.UpdateRoad();
+            //	roadIntersection.node2.spline.road.UpdateRoad();
+            //}
 
             tNode1.ToggleHideFlags(true);
             tNode2.ToggleHideFlags(true);
 
-            if (GSDRI != null && GSDRI.node1 != null && GSDRI.node2 != null)
+            if (roadIntersection != null && roadIntersection.node1 != null && roadIntersection.node2 != null)
             {
-                if (!GSDRI.isSameSpline)
+                if (!roadIntersection.isSameSpline)
                 {
-                    GSDRI.node1.spline.road.PiggyBacks = new SplineC[4];
-                    GSDRI.node1.spline.road.PiggyBacks[0] = GSDRI.node2.spline;
+                    roadIntersection.node1.spline.road.PiggyBacks = new SplineC[4];
+                    roadIntersection.node1.spline.road.PiggyBacks[0] = roadIntersection.node2.spline;
 
-                    GSDRI.node1.spline.road.PiggyBacks[1] = GSDRI.node1.spline;
-                    GSDRI.node1.spline.road.PiggyBacks[2] = GSDRI.node2.spline;
-                    GSDRI.node1.spline.road.PiggyBacks[3] = GSDRI.node1.spline;
-                    //					GSDRI.Node1.spline.tRoad.PiggyBacks[4] = GSDRI.Node2.spline;
+                    roadIntersection.node1.spline.road.PiggyBacks[1] = roadIntersection.node1.spline;
+                    roadIntersection.node1.spline.road.PiggyBacks[2] = roadIntersection.node2.spline;
+                    roadIntersection.node1.spline.road.PiggyBacks[3] = roadIntersection.node1.spline;
+                    //roadIntersection.node1.spline.road.PiggyBacks[4] = roadIntersection.node2.spline;
                 }
-                GSDRI.node1.spline.road.isUpdateRequired = true;
+                roadIntersection.node1.spline.road.isUpdateRequired = true;
             }
 
-            return tObj;
+            return intersectionObject;
         }
 
 
@@ -1041,11 +1052,11 @@ namespace RoadArchitect
             }
             else
             {
-                Object[] iObjects = GameObject.FindObjectsOfType(typeof(RoadIntersection));
+                Object[] allIntersections = GameObject.FindObjectsOfType(typeof(RoadIntersection));
                 //Add intersection components, if necessary:
-                foreach (RoadIntersection GSDRI in iObjects)
+                foreach (RoadIntersection roadIntersection in allIntersections)
                 {
-                    InitializeIntersectionObjectsInternal(GSDRI);
+                    InitializeIntersectionObjectsInternal(roadIntersection);
                 }
             }
         }
@@ -1070,7 +1081,7 @@ namespace RoadArchitect
             SplineN tNode;
             for (int index = 0; index < cCount; index++)
             {
-                //tNode = GetNodeByID(GSDRI.Node1.id_connected[i]);
+                //tNode = GetNodeByID(_roadIntersection.node1.connectedID[index]);
                 tNode = _roadIntersection.node1.connectedNode[index];
                 if (!tList.Contains(tNode))
                 {
@@ -1081,7 +1092,7 @@ namespace RoadArchitect
             cCount = _roadIntersection.node2.connectedID.Count;
             for (int index = 0; index < cCount; index++)
             {
-                //tNode = GetNodeByID(GSDRI.Node2.id_connected[i]);
+                //tNode = GetNodeByID(_roadIntersection.node2.connectedID[index]);
                 tNode = _roadIntersection.node2.connectedNode[index];
                 if (!tList.Contains(tNode))
                 {

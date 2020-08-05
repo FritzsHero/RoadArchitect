@@ -215,7 +215,7 @@ namespace RoadArchitect.Threading
             SplineN xNode = null;
             float tIntHeight = 0f;
             float tIntHeight2 = 0f;
-            RoadIntersection GSDRI = null;
+            RoadIntersection roadIntersection = null;
             float T1SUB = 0f;
             float T2SUB = 0f;
             bool bIntStr1_Full = false;
@@ -261,7 +261,7 @@ namespace RoadArchitect.Threading
                     //Determine if intersection:
                     bIsPastInter = false;
                     //If past intersection
-                    tIntStrength = _spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref index, ref xNode);
+                    tIntStrength = _spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref roadIntersection, ref bIsPastInter, ref index, ref xNode);
                     //if(IsApproximately(tIntStrength,1f,0.001f) || tIntStrength > 1f)
                     //{
                     //	bMaxIntersection = true;
@@ -271,7 +271,7 @@ namespace RoadArchitect.Threading
                     //	bMaxIntersection = false;	
                     //}
 
-                    tIntStrength2 = _spline.IntersectionStrength(ref tVect2, ref tIntHeight2, ref GSDRI, ref bIsPastInter, ref index, ref xNode);
+                    tIntStrength2 = _spline.IntersectionStrength(ref tVect2, ref tIntHeight2, ref roadIntersection, ref bIsPastInter, ref index, ref xNode);
                     if (tIntStrength2 > 1f)
                     {
                         tIntStrength2 = 1f;
@@ -312,11 +312,11 @@ namespace RoadArchitect.Threading
                             tGrade = _spline.GetCurrentNode(index).gradeToPrevValue;
                             if (tGrade < 0f)
                             {
-                                T1SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, (tGrade / 20f) * -1f);
+                                T1SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, (tGrade / 20f) * -1f);
                             }
                             else
                             {
-                                T1SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
+                                T1SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, tGrade / 20f);
                             }
 
                             //if(tGrade < 0f)
@@ -329,11 +329,11 @@ namespace RoadArchitect.Threading
                             tGrade = _spline.GetCurrentNode(index).gradeToNextValue;
                             if (tGrade < 0f)
                             {
-                                T1SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, (tGrade / 20f) * -1f);
+                                T1SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, (tGrade / 20f) * -1f);
                             }
                             else
                             {
-                                T1SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
+                                T1SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, tGrade / 20f);
                             }
                             //if(tGrade < 0f)
                             //{
@@ -373,11 +373,11 @@ namespace RoadArchitect.Threading
                             tGrade = _spline.GetCurrentNode(index).gradeToPrevValue;
                             if (tGrade < 0f)
                             {
-                                T2SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, (tGrade / 20f) * -1f);
+                                T2SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, (tGrade / 20f) * -1f);
                             }
                             else
                             {
-                                T2SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
+                                T2SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, tGrade / 20f);
                             }
                             //T2SUB -= tIntHeight2 - tVect2.y;
                         }
@@ -386,11 +386,11 @@ namespace RoadArchitect.Threading
                             tGrade = _spline.GetCurrentNode(index).gradeToNextValue;
                             if (tGrade < 0f)
                             {
-                                T2SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, (tGrade / 20f) * -1f);
+                                T2SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, (tGrade / 20f) * -1f);
                             }
                             else
                             {
-                                T2SUB -= Mathf.Lerp(0.02f, GSDRI.gradeMod, tGrade / 20f);
+                                T2SUB -= Mathf.Lerp(0.02f, roadIntersection.gradeMod, tGrade / 20f);
                             }
                             //if(tGrade < 0f)
                             //{
@@ -403,7 +403,7 @@ namespace RoadArchitect.Threading
                             if (tNext + tStep < 1f)
                             {
                                 tVect3 = _spline.GetSplineValue(tNext + tStep, false);
-                                tIntStrength2 = _spline.IntersectionStrength(ref tVect3, ref tIntHeight2, ref GSDRI, ref bIsPastInter, ref index, ref xNode);
+                                tIntStrength2 = _spline.IntersectionStrength(ref tVect3, ref tIntHeight2, ref roadIntersection, ref bIsPastInter, ref index, ref xNode);
                             }
                             else
                             {

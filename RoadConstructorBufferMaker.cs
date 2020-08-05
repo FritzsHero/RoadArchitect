@@ -814,35 +814,35 @@ namespace RoadArchitect
         private void MeshSetup1IntersectionObjectsSetup()
         {
             int nodeCount = road.spline.GetNodeCount();
-            List<RoadIntersection> tGSDRIs = new List<RoadIntersection>();
+            List<RoadIntersection> roadIntersections = new List<RoadIntersection>();
             for (int index = 0; index < nodeCount; index++)
             {
                 if (road.spline.nodes[index].isIntersection)
                 {
-                    if (!tGSDRIs.Contains(road.spline.nodes[index].intersection))
+                    if (!roadIntersections.Contains(road.spline.nodes[index].intersection))
                     {
-                        tGSDRIs.Add(road.spline.nodes[index].intersection);
+                        roadIntersections.Add(road.spline.nodes[index].intersection);
                     }
                 }
             }
 
             //Cleanups:
-            foreach (RoadIntersection GSDRI in tGSDRIs)
+            foreach (RoadIntersection intersection in roadIntersections)
             {
-                IntersectionObjects.CleanupIntersectionObjects(GSDRI.transform.gameObject);
-                if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.StopSign_AllWay)
+                IntersectionObjects.CleanupIntersectionObjects(intersection.transform.gameObject);
+                if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.StopSign_AllWay)
                 {
-                    IntersectionObjects.CreateStopSignsAllWay(GSDRI.transform.gameObject, true);
+                    IntersectionObjects.CreateStopSignsAllWay(intersection.transform.gameObject, true);
                 }
-                else if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1)
+                else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1)
                 {
-                    IntersectionObjects.CreateTrafficLightBases(GSDRI.transform.gameObject, true);
+                    IntersectionObjects.CreateTrafficLightBases(intersection.transform.gameObject, true);
                 }
-                else if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
+                else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
                 {
 
                 }
-                else if (GSDRI.intersectionStopType == RoadIntersection.iStopTypeEnum.None)
+                else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.None)
                 {
                     //Do nothing.
                 }
@@ -1396,53 +1396,60 @@ namespace RoadArchitect
 
 
         #region "MeshSetup2 - Intersections"
-        //		private void MeshSetup2_Intersections_FixNormals(){
-        //			int mCount = tRoad.spline.GetNodeCount();
-        //			SplineN tNode = null;
-        //			RoadIntersection GSDRI = null;
-        //			float MaxDist = 0f;
-        //			float[] tDists = new float[2];
-        //			Collider[] tColliders = null;
-        //			List<GameObject> tCuts = null;
+        //private void MeshSetup2_Intersections_FixNormals()
+        //{
+        //  int mCount = tRoad.spline.GetNodeCount();
+        //	SplineN tNode = null;
+        //	RoadIntersection roadIntersection = null;
+        //	float MaxDist = 0f;
+        //	float[] tDists = new float[2];
+        //	Collider[] tColliders = null;
+        //	List<GameObject> tCuts = null;
         //
-        //			for(int h=0;h<mCount;h++){
-        //				tNode=tRoad.spline.mNodes[h];
-        //				if(tNode.bIsIntersection){
-        //					GSDRI = tNode.GSDRI;
-        //					
-        //					
-        //					
+        //	for(int h=0; h<mCount; h++)
+        //  {
+        //		tNode=tRoad.spline.mNodes[h];
+        //		if(tNode.bIsIntersection)
+        //      {
+        //			roadIntersection = tNode.roadIntersection;
         //
-        //					tColliders = Physics.OverlapSphere(GSDRI.CornerRR_Outer,tRoad.opt_ShoulderWidth*1.25f);
-        //					tCuts = new List<GameObject>();
-        //					foreach(Collider tCollider in tColliders){
-        //						if(tCollider.transform.name.Contains("cut")){
-        //							tCuts.Add(tCollider.transform.gameObject);
-        //						}
-        //					}
-        //					
-        //					
-        //					
-        //					foreach(GameObject tObj in tCuts){
-        //						MeshFilter MF1 = tCuts[0].GetComponent<MeshFilter>();
-        //						if(MF1 == null){ continue; }
-        //						Mesh zMesh1 = MF1.sharedMesh;
-        //						Vector3[] tVerts1 = zMesh1.vertices;
-        //						Vector3[] tNormals1 = zMesh1.normals;
-        //						int MVL1 = tVerts1.Length;
-        //						for(int i=0;i<MVL1;i++){
-        //							if(tVerts1[i] == GSDRI.CornerRR){
-        //								tNormals1[i] = Vector3.up;
-        //							}else if(tVerts1[i] == GSDRI.CornerRR_Outer){
-        //								tNormals1[i] = Vector3.up;
-        //							}
-        //						}
-        //					}
-        //
-        //					
+        //			tColliders = Physics.OverlapSphere(roadIntersection.CornerRR_Outer,tRoad.opt_ShoulderWidth*1.25f);
+        //			tCuts = new List<GameObject>();
+        //			foreach(Collider tCollider in tColliders)
+        //          {
+        //				if(tCollider.transform.name.Contains("cut"))
+        //              {
+        //					tCuts.Add(tCollider.transform.gameObject);
         //				}
         //			}
+        //					
+        //							
+        //			foreach(GameObject tObj in tCuts)
+        //          {
+        //				MeshFilter MF1 = tCuts[0].GetComponent<MeshFilter>();
+        //				if(MF1 == null)
+        //              {
+        //                  continue;
+        //              }
+        //				Mesh zMesh1 = MF1.sharedMesh;
+        //				Vector3[] tVerts1 = zMesh1.vertices;
+        //				Vector3[] tNormals1 = zMesh1.normals;
+        //				int MVL1 = tVerts1.Length;
+        //				for(int i=0; i<MVL1; i++)
+        //              {
+        //					if(tVerts1[i] == roadIntersection.CornerRR)
+        //                  {
+        //						tNormals1[i] = Vector3.up;
+        //					}
+        //                  else if(tVerts1[i] == roadIntersection.CornerRR_Outer)
+        //                  {
+        //						tNormals1[i] = Vector3.up;
+        //					}
+        //				}
+        //			}			
         //		}
+        //	}
+        //}
 
 
         private void MeshSetup2Intersections()
@@ -1474,7 +1481,7 @@ namespace RoadArchitect
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane3 = new Dictionary<RoadIntersection, List<MeshFilter>>();
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_MainPlate = new Dictionary<RoadIntersection, List<MeshFilter>>();
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_MainPlateM = new Dictionary<RoadIntersection, List<MeshFilter>>();
-            HashSet<RoadIntersection> UniqueGSDRI = new HashSet<RoadIntersection>();
+            HashSet<RoadIntersection> uniqueRoadIntersection = new HashSet<RoadIntersection>();
 
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane1_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane2_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
@@ -1917,9 +1924,10 @@ namespace RoadArchitect
                     MF.sharedMesh = mMesh;
                     MeshRenderer MR = tMarker.AddComponent<MeshRenderer>();
                     MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                    //					if(tNode.GSDRI.MarkerCenter != null){
-                    ////						MR.material = tNode.GSDRI.MarkerCenter;
-                    //					}
+                    //if(tNode.roadIntersection.MarkerCenter != null)
+                    //{
+                    ////	MR.material = tNode.roadIntersection.MarkerCenter;
+                    //}
                     tMarker.transform.parent = tNode.intersection.transform;
                     if (road.isLightmapped)
                     {
@@ -1966,106 +1974,105 @@ namespace RoadArchitect
 
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane0)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane0");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane1");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane2");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane3)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "Lane3");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_MainPlate)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "TiledExt", true);
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_MainPlateM)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "StretchExt");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1_Disabled)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneD1");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane3_Disabled)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneD3");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_DisabledActive)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneDA2");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_DisabledActiveR)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneDAR2");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane2_Disabled)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneD2");
             }
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane1_DisabledActive)
             {
-                if (!UniqueGSDRI.Contains(KVP.Key))
+                if (!uniqueRoadIntersection.Contains(KVP.Key))
                 {
-                    UniqueGSDRI.Add(KVP.Key);
+                    uniqueRoadIntersection.Add(KVP.Key);
                 }
                 MeshSetup2CombineIntersections(KVP, KVP.Key.transform.name + "-" + "LaneDA1");
             }
 
-            foreach (RoadIntersection GSDRI in UniqueGSDRI)
+            foreach (RoadIntersection roadIntersection in uniqueRoadIntersection)
             {
-                GSDRI.UpdateMaterials();
+                roadIntersection.UpdateMaterials();
             }
-
         }
 
 

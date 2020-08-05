@@ -237,9 +237,9 @@ namespace RoadArchitect.Roads
             {
                 //Now create the fucking intersection:
                 GameObject tInter = Intersections.CreateIntersection(KVP.Key, KVP.Value);
-                RoadIntersection GSDRI_JustCreated = tInter.GetComponent<RoadIntersection>();
-                GSDRI_JustCreated.intersectionStopType = _iStopType;
-                GSDRI_JustCreated.roadType = _roadType;
+                RoadIntersection roadIntersection = tInter.GetComponent<RoadIntersection>();
+                roadIntersection.intersectionStopType = _iStopType;
+                roadIntersection.roadType = _roadType;
             }
 
             //Main algorithm: 2m increments to find actual intersection point:
