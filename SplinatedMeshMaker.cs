@@ -2837,7 +2837,7 @@ namespace RoadArchitect.Splination
             //			bool bIsCenter = RootUtils.IsApproximately(HorizontalSep,0f,0.02f);
             float tIntStrength = 0f;
             float tIntHeight = 0f;
-            RoadIntersection GSDRI = null;
+            RoadIntersection roadIntersection = null;
             bool bIsPastInter = false;
             SplineN xNode = null;
             List<float> tOrigHeights = new List<float>();
@@ -2888,7 +2888,7 @@ namespace RoadArchitect.Splination
                     tVect1 = (tVect1 + new Vector3(CurrentH * tVect2.normalized.z, 0, CurrentH * -tVect2.normalized.x));
                 }
 
-                tIntStrength = spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref GSDRI, ref bIsPastInter, ref cTime, ref xNode);
+                tIntStrength = spline.IntersectionStrength(ref tVect1, ref tIntHeight, ref roadIntersection, ref bIsPastInter, ref cTime, ref xNode);
 
                 if (RootUtils.IsApproximately(tIntStrength, 1f, 0.0001f))
                 {
