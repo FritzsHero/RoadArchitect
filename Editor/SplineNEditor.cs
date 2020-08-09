@@ -65,12 +65,11 @@ namespace RoadArchitect
         private SMMDefaultsEnum SMMQuickAdd = SMMDefaultsEnum.None;
         private BridgeTopBaseDefaultsEnum BridgeTopBaseQuickAdd = BridgeTopBaseDefaultsEnum.None;
         private BridgeBottomBaseDefaultsEnum BridgeBottomBaseQuickAdd = BridgeBottomBaseDefaultsEnum.None;
-        //	BridgeWizardDefaultsEnum tBridgeWizardQuickAdd = BridgeWizardDefaultsEnum.None;
         private HorizMatchingDefaultsEnum horizMatching = HorizMatchingDefaultsEnum.None;
 
-
-        //GSD.Roads.Splination.CollisionTypeEnum tCollisionTypeSpline = GSD.Roads.Splination.CollisionTypeEnum.SimpleMeshTriangle;
-        //GSD.Roads.Splination.RepeatUVTypeEnum tRepeatUVType = GSD.Roads.Splination.RepeatUVTypeEnum.None;
+        //BridgeWizardDefaultsEnum bridgeWizardQuickAdd = BridgeWizardDefaultsEnum.None;
+        //RoadArchitect.Splination.CollisionTypeEnum collisionType = RoadArchitect.Splination.CollisionTypeEnum.SimpleMeshTriangle;
+        //RoadArchitect.Splination.RepeatUVTypeEnum repeatUVType = RoadArchitect.Splination.RepeatUVTypeEnum.None;
         private EdgeObjects.EdgeObjectMaker EOM = null;
         private GUIStyle imageButton = null;
         private GUIStyle loadButton = null;
@@ -757,7 +756,7 @@ namespace RoadArchitect
                 }
                 SMM.splinatedMeshEditorMaker.Setup(SMM);
 
-                //GSD.Roads.Splination.AxisTypeEnum tAxisTypeSpline = GSD.Roads.Splination.AxisTypeEnum.Z;
+                //RoadArchitect.Splination.AxisTypeEnum tAxisTypeSpline = RoadArchitect.Splination.AxisTypeEnum.Z;
 
                 EditorGUILayout.BeginVertical("TextArea");
 
@@ -1550,7 +1549,7 @@ namespace RoadArchitect
                 if (EOM.edgeMaker.isSingle != EOM.isSingle)
                 {
                     EOM.edgeMaker.endTime = node.nextTime;
-                    //				EOM.EM.EndPos = tNode.GSDSpline.GetSplineValue(EOM.EM.EndTime,false);
+                    //EOM.edgeMaker.EndPos = node.spline.GetSplineValue(EOM.edgeMaker.endTime, false);
                     EOM.edgeMaker.singlePosition = node.time + 0.025f;
                     if (EOM.edgeMaker.isSingle)
                     {

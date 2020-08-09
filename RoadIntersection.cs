@@ -322,6 +322,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Deletes Meshes based on road name and the centermarker if _node is intersections node1 </summary>
         public void DeleteRelevantChildren(SplineN _node, string _string)
         {
             int childCount = transform.childCount;

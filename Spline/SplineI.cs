@@ -511,7 +511,7 @@ namespace RoadArchitect
 #if UNITY_EDITOR
             //Do nothing.
 #else
-			this.enabled = false;
+            this.enabled = false;
 #endif
         }
         #endregion

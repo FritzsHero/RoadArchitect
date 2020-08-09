@@ -1251,17 +1251,29 @@ namespace RoadArchitect.Threading
                     ShoulderR_rVect.y = tIntHeight;
                     ShoulderL_lVect.y = tIntHeight;
 
-                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderL_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_rVect.y); }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  ShoulderL_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_rVect.y);
+                    //}
                     //					
-                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderR_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_lVect.y); }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  ShoulderR_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_lVect.y);
+                    //}
                     //					
-                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y); }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y);
+                    //}
                     //					
-                    //					tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y); }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y);
+                    //}
                 }
                 else if (tIntStrength > 0f)
                 {
@@ -1273,18 +1285,36 @@ namespace RoadArchitect.Threading
                     ShoulderR_rVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * ShoulderR_rVect.y);
                     ShoulderL_lVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * ShoulderL_lVect.y);
 
-                    //					if(!Mathf.Approximately(tIntStrength,0f)){ tVect.y = (tIntStrength*tIntHeight) + ((1-tIntStrength)*tVect.y); }
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*rVect.y); ShoulderR_lVect = rVect; }
+                    //if(!Mathf.Approximately(tIntStrength,0f))
+                    //{
+                    //  tVect.y = (tIntStrength*tIntHeight) + ((1-tIntStrength)*tVect.y);
+                    //}
+                    //
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*rVect.y);
+                    //  ShoulderR_lVect = rVect;
+                    //}
                     //					
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*lVect.y); ShoulderL_rVect = lVect; }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*lVect.y);
+                    //  ShoulderL_rVect = lVect;
+                    //}
                     //					
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y); }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //  ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y);
+                    //}
                     //					
-                    //					tIntStrength_temp = tRoad.GSDSpline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //					if(!Mathf.Approximately(tIntStrength_temp,0f)){ ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y); }
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //{
+                    //ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y);
+                    //}
                 }
 
                 #region "Ramp:"
@@ -4336,10 +4366,10 @@ namespace RoadArchitect.Threading
             for (int index = _startI; index < _shoulderList.Count; index++)
             {
                 t2D = ConvertVect3ToVect2(_shoulderList[index]);
-                //				if(t2D.x > 745f && t2D.x < 755f && t2D.y > 1240f && t2D.y < 1250f)
-                //              {
-                //					int agfsdajgsd = 1;	
-                //				}
+                //if(t2D.x > 745f && t2D.x < 755f && t2D.y > 1240f && t2D.y < 1250f)
+                //{
+                //	int testInteger = 1;	
+                //}
                 if (t2D == t2D_Start)
                 {
                     //if(tShoulderList[i] == StartVec){
@@ -7230,12 +7260,18 @@ namespace RoadArchitect.Threading
                 //	    if(tSpline.IsInBridgeTerrain(i))
                 //      {
                 //		    float tFloat = tSpline.GetBridgeEnd(i);
-                //		    if(IsApproximately(tFloat,1f,0.00001f) || tFloat > 1f){ continue; }
-                //		    if(tFloat < 0f){ continue; }
+                //		    if(IsApproximately(tFloat,1f,0.00001f) || tFloat > 1f)
+                //          {
+                //            continue;
+                //          }
+                //		    if(tFloat < 0f)
+                //          {
+                //            continue;
+                //          }
                 //		    i = tFloat;
                 //	    }
                 //	    tSpline.GetSplineValue_Both(i,out tVect,out POS);
-                //	    PrevHeight = GSDTerraformingT.ProcessLineHeights(tSpline,ref tVect,ref POS,tDistance,TTD,PrevHeight);
+                //	    PrevHeight = TerraformingThreaded.ProcessLineHeights(tSpline,ref tVect,ref POS,tDistance,TTD,PrevHeight);
                 //	    tSpline.HeightHistory.Add(new KeyValuePair<float,float>(i,PrevHeight*TTD.TerrainSize.y));
                 //  }	
                 //					
@@ -7312,7 +7348,7 @@ namespace RoadArchitect.Threading
                 //			i = tFloat;
                 //		}
                 //		tSpline.GetSplineValue_Both(i,out tVect,out POS);
-                //		PrevHeight = GSDTerraformingT.ProcessLineHeights(tSpline,ref tVect,ref POS,tDistance,TTD,PrevHeight);
+                //		PrevHeight = TerraformingThreaded.ProcessLineHeights(tSpline,ref tVect,ref POS,tDistance,TTD,PrevHeight);
                 //		tSpline.HeightHistory.Add(new KeyValuePair<float,float>(i,PrevHeight*TTD.TerrainSize.y));
                 //	}	
                 //					

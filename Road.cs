@@ -581,6 +581,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Updates the road </summary>
         public void UpdateRoad(RoadUpdateTypeEnum _updateType = RoadUpdateTypeEnum.Full)
         {
             if (!roadSystem.isAllowingRoadUpdates)
@@ -646,6 +647,7 @@ namespace RoadArchitect
                 isEditorConstructing = false;
             }
 
+
             //if(Application.isPlaying || !Application.isEditor){ return; }
             //if(Application.isEditor && UnityEditor.EditorApplication.isPlaying){ return; }
             //if(Application.isEditor && UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode){ return; }
@@ -666,6 +668,7 @@ namespace RoadArchitect
 
             if (nodeCount > 1)
             {
+                // Iterate over every node
                 for (int i = 0; i < nodeCount; i++)
                 {
                     //try
@@ -686,6 +689,8 @@ namespace RoadArchitect
                         node.intersectionOtherNodeID = -1;
                         node.intersectionOtherNode = null;
                     }
+
+
                     //If node is intersection, re-setup:
                     if (node.isIntersection && node.intersection != null)
                     {
@@ -693,6 +698,7 @@ namespace RoadArchitect
                         node2 = node.intersection.node2;
                         node.intersection.Setup(node1, node2);
                         node.intersection.DeleteRelevantChildren(node, node.spline.road.transform.name);
+
                         //If primary node on intersection, do more re-setup:
                         if (node.intersection.node1 == node)
                         {
@@ -704,12 +710,14 @@ namespace RoadArchitect
                         node.intersection.node2.intersectionConstruction = new Intersections.iConstructionMaker();
                     }
 
+
                     //Store materials and physical materials for road and or shoulder cuts on each node, if necessary:
                     node.StoreCuts();
                 }
             }
-            name = transform.name;
 
+
+            name = transform.name;
 
             spline.RoadWidth = RoadWidth();
             //RootUtils.StartProfiling(this, "SplineSetup");
@@ -818,6 +826,7 @@ namespace RoadArchitect
                 RootUtils.EndProfiling(this);
                 return;
             }
+
 
             spline.HeightHistory = new List<KeyValuePair<float, float>>();
             if (roadSystem == null)
@@ -929,6 +938,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Loads terrain history from disk </summary>
         public void ConstructRoad_LoadTerrainHistory(bool _isForced = false)
         {
             if (isSavingTerrainHistoryOnDisk || _isForced)
@@ -1583,6 +1593,8 @@ namespace RoadArchitect
                     RoadMaterialMarker2 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/TireMarks.mat");
                 }
             }
+
+            // Can be simplified
             if (isShouldersEnabled && !ShoulderMaterial1)
             {
                 ShoulderMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Shoulder1.mat");

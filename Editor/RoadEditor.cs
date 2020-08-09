@@ -1395,12 +1395,13 @@ namespace RoadArchitect
                     {
                         if (road.isEditorMouseHittingTerrain)
                         {
-                            //						if((EditorApplication.timeSinceStartup - RS.GSDSpline.EditorOnly_LastNode_TimeSinceStartup) > 0.05){
-                            //							RS.GSDSpline.EditorOnly_LastNode_TimeSinceStartup = EditorApplication.timeSinceStartup;
+                            //if((EditorApplication.timeSinceStartup - RS.spline.EditorOnly_LastNode_TimeSinceStartup) > 0.05)
+                            //{
+                            //	RS.spline.EditorOnly_LastNode_TimeSinceStartup = EditorApplication.timeSinceStartup;
                             Event.current.Use();
                             Construction.CreateNode(road);
                             isUsed = true;
-                            //						}
+                            //}
                         }
                         else
                         {

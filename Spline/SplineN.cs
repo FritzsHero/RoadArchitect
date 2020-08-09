@@ -1901,6 +1901,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Hide or unhide this node in hierarchy </summary>
         public void ToggleHideFlags(bool _isHidden)
         {
             if (_isHidden)

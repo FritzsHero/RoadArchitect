@@ -101,7 +101,7 @@ namespace RoadArchitect
         "Traffic lights",
         "None"
 //		"Traffic lights #2"
-	};
+    };
 
 
         private static string[] iTrafficLightSequenceTypeDesc = new string[]{
@@ -757,29 +757,108 @@ namespace RoadArchitect
             }
             EditorUtilities.DrawLine();
 
-            //		if(bDebug){
-            //			Line();
-            //			EditorGUILayout.LabelField("Debug");
-            //			if(tInter.Node1 != null){ EditorGUILayout.LabelField("  Node1: " + tInter.Node1.transform.name); } else { EditorGUILayout.LabelField("  Node1: null"); }
-            //			if(tInter.Node2 != null){ EditorGUILayout.LabelField("  Node2: " + tInter.Node2.transform.name); } else { EditorGUILayout.LabelField("  Node2: null"); }
-            //			if(tInter.Node1 != null){ EditorGUILayout.LabelField("  UID1: " + tInter.Node1.UID); } else { EditorGUILayout.LabelField("  UID1: null"); }
-            //			if(tInter.Node2 != null){ EditorGUILayout.LabelField("  UID2: " + tInter.Node2.UID); } else { EditorGUILayout.LabelField("  UID2: null"); }
-            //			EditorGUILayout.LabelField("  Same spline: " + tInter.bSameSpline);
-            //			EditorGUILayout.LabelField("  bFlipped: " + tInter.bFlipped);
-            //			EditorGUILayout.LabelField("  IgnoreSide: " + tInter.IgnoreSide);
-            //			EditorGUILayout.LabelField("  IgnoreCorner: " + tInter.IgnoreCorner);
+            //if(isDebug)
+            //{
+            //	Line();
+            //	EditorGUILayout.LabelField("Debug");
+            //	if(tInter.Node1 != null)
+            //  {
+            //      EditorGUILayout.LabelField("  Node1: " + tInter.Node1.transform.name);
+            //  }
+            //  else
+            //  {
+            //      EditorGUILayout.LabelField("  Node1: null");
+            //  }
+            //	if(tInter.Node2 != null)
+            //  {
+            //      EditorGUILayout.LabelField("  Node2: " + tInter.Node2.transform.name);
+            //  }
+            //  else
+            //  {
+            //      EditorGUILayout.LabelField("  Node2: null");
+            //  }
+            //	if(tInter.Node1 != null)
+            //  {
+            //      EditorGUILayout.LabelField("  UID1: " + tInter.Node1.UID);
+            //  }
+            //  else
+            //  {
+            //      EditorGUILayout.LabelField("  UID1: null");
+            //  }
+            //	if(tInter.Node2 != null)
+            //  {
+            //      EditorGUILayout.LabelField("  UID2: " + tInter.Node2.UID);
+            //  }
+            //  else
+            //  {
+            //      EditorGUILayout.LabelField("  UID2: null");
+            //  }
+            //	EditorGUILayout.LabelField("  Same spline: " + tInter.bSameSpline);
+            //	EditorGUILayout.LabelField("  bFlipped: " + tInter.bFlipped);
+            //	EditorGUILayout.LabelField("  IgnoreSide: " + tInter.IgnoreSide);
+            //	EditorGUILayout.LabelField("  IgnoreCorner: " + tInter.IgnoreCorner);
             //			
-            //			if(tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight1 || tInter.iStopType == GSDRoadIntersection.iStopTypeEnum.TrafficLight2){
-            //				if(tInter.LightsRR != null){ EditorGUILayout.LabelField("  LightsRR: " + tInter.LightsRR); } else { EditorGUILayout.LabelField("  LightsRR: null"); }
-            //				if(tInter.LightsRR != null || tInter.LightsRR.MR_Main != null){ EditorGUILayout.LabelField("   MR_Main: " + tInter.LightsRR.MR_Main); } else { EditorGUILayout.LabelField("  LightsRR.MR_Main: null"); }
-            //				if(tInter.LightsRR != null || tInter.LightsRR.MR_Left != null){ EditorGUILayout.LabelField("   MR_Left: " + tInter.LightsRR.MR_Left); } else { EditorGUILayout.LabelField("  LightsRR.MR_Left: null"); }
-            //				if(tInter.LightsRR != null || tInter.LightsRR.MR_Right != null){ EditorGUILayout.LabelField("   MR_Right: " + tInter.LightsRR.MR_Right); } else { EditorGUILayout.LabelField("  LightsRR.MR_Right: null"); }
-            //				if(tInter.LightsRL != null){ EditorGUILayout.LabelField("  LightsRL: " + tInter.LightsRL); } else { EditorGUILayout.LabelField("  LightsRL: null"); }
-            //				if(tInter.LightsLL != null){ EditorGUILayout.LabelField("  LightsLL: " + tInter.LightsLL); } else { EditorGUILayout.LabelField("  LightsLL: null"); }
-            //				if(tInter.LightsLR != null){ EditorGUILayout.LabelField("  LightsLR: " + tInter.LightsLR); } else { EditorGUILayout.LabelField("  LightsLR: null"); }
-            //			}
-            //			Line();
-            //		}
+            //	if(tInter.iStopType == RoadIntersection.iStopTypeEnum.TrafficLight1 || tInter.iStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
+            //  {
+            //		if(tInter.LightsRR != null)
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRR: " + tInter.LightsRR);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRR: null");
+            //      }
+            //		if(tInter.LightsRR != null || tInter.LightsRR.MR_Main != null)
+            //      {
+            //          EditorGUILayout.LabelField("   MR_Main: " + tInter.LightsRR.MR_Main);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRR.MR_Main: null");
+            //      }
+            //	    if(tInter.LightsRR != null || tInter.LightsRR.MR_Left != null)
+            //      {
+            //          EditorGUILayout.LabelField("   MR_Left: " + tInter.LightsRR.MR_Left);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRR.MR_Left: null");
+            //      }
+            //	    if(tInter.LightsRR != null || tInter.LightsRR.MR_Right != null)
+            //      {
+            //          EditorGUILayout.LabelField("   MR_Right: " + tInter.LightsRR.MR_Right);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRR.MR_Right: null");
+            //      }
+            //	    if(tInter.LightsRL != null)
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRL: " + tInter.LightsRL);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsRL: null");
+            //      }
+            //		if(tInter.LightsLL != null)
+            //      {
+            //          EditorGUILayout.LabelField("  LightsLL: " + tInter.LightsLL);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsLL: null");
+            //      }
+            //		if(tInter.LightsLR != null)
+            //      {
+            //          EditorGUILayout.LabelField("  LightsLR: " + tInter.LightsLR);
+            //      }
+            //      else
+            //      {
+            //          EditorGUILayout.LabelField("  LightsLR: null");
+            //      }
+            //	}
+            //  Line();
+            //}
 
 
             //Set change bools:

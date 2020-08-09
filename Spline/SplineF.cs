@@ -55,7 +55,7 @@ namespace RoadArchitect
 
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
-        public int count = 0;
+        public int nodesCount = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
         public List<GSDSplineFN> nodes = new List<GSDSplineFN>();
         [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
@@ -154,6 +154,7 @@ namespace RoadArchitect
 
 
         #region "Setup"
+        /// <summary> Setup relevant data for preview spline </summary>
         public void Setup(ref Vector3[] _vects)
         {
             //Create spline nodes:
@@ -165,10 +166,11 @@ namespace RoadArchitect
                 SetupSplineLength();
             }
 
-            count = nodes.Count;
+            nodesCount = nodes.Count;
         }
 
 
+        /// <summary> Setup preview spline and preview nodes </summary>
         private void SetupNodes(ref Vector3[] _vects)
         {
             //Process nodes:
@@ -179,6 +181,7 @@ namespace RoadArchitect
                 nodes = null;
             }
 
+            // Setup preview nodes positions
             nodes = new List<GSDSplineFN>();
             GSDSplineFN tNode;
             for (index = 0; index < _vects.Length; index++)
@@ -188,6 +191,8 @@ namespace RoadArchitect
                 nodes.Add(tNode);
             }
 
+
+            // Setup preview nodes rotations
             float step;
             Quaternion rot;
             step = (isClosed) ? 1f / nodes.Count : 1f / (nodes.Count - 1);
@@ -196,8 +201,11 @@ namespace RoadArchitect
                 tNode = nodes[index];
 
                 rot = Quaternion.identity;
+
+                // if not last node
                 if (index != nodes.Count - 1)
                 {
+                    // Only rotate the node if the next node is on a different position
                     if (nodes[index + 1].pos - tNode.pos == Vector3.zero)
                     {
                         rot = Quaternion.identity;
@@ -220,6 +228,8 @@ namespace RoadArchitect
 
                 tNode.Setup(tNode.pos, rot, new Vector2(0, 1), step * index, "pNode");
             }
+
+
             tNode = null;
             _vects = null;
         }
@@ -499,7 +509,7 @@ namespace RoadArchitect
 #if UNITY_EDITOR
             //Do nothing.
 #else
-			this.enabled = false;
+            this.enabled = false;
 #endif
         }
         #endregion
