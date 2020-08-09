@@ -9,55 +9,11 @@ namespace RoadArchitect
     public class SplineF : MonoBehaviour
     {
 #if UNITY_EDITOR
-
-        public class GSDSplineFN
-        {
-            #region "Vars"
-            public Vector3 pos;
-            public Quaternion rot;
-            public Vector3 tangent;
-            [UnityEngine.Serialization.FormerlySerializedAs("EaseIO")]
-            public Vector2 easeIO;
-            [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
-            public float time = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("OldTime")]
-            public float oldTime = 0f;
-
-            public string name = "Node-1";
-
-            [UnityEngine.Serialization.FormerlySerializedAs("tempTime")]
-            public bool isTempTime = false;
-
-            public float tempSegmentTime = 0f;
-            public float tempMinDistance = 5000f;
-            public float tempMinTime = 0f;
-
-            public int idOnSpline;
-            [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
-            public SplineC spline;
-            [UnityEngine.Serialization.FormerlySerializedAs("bDestroyed")]
-            public bool isDestroyed = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bPreviewNode")]
-            public bool isPreviewNode = false;
-            #endregion
-
-
-            public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _tTime, string _name)
-            {
-                pos = _p;
-                rot = _q;
-                easeIO = _io;
-                time = _tTime;
-                name = _name;
-            }
-        }
-
-
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
         public int nodesCount = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
-        public List<GSDSplineFN> nodes = new List<GSDSplineFN>();
+        public List<SplinePreviewNode> nodes = new List<SplinePreviewNode>();
         [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
         public bool isClosed = false;
         public float distance = -1f;
@@ -182,13 +138,13 @@ namespace RoadArchitect
             }
 
             // Setup preview nodes positions
-            nodes = new List<GSDSplineFN>();
-            GSDSplineFN tNode;
+            nodes = new List<SplinePreviewNode>();
+            SplinePreviewNode previewNode;
             for (index = 0; index < _vects.Length; index++)
             {
-                tNode = new GSDSplineFN();
-                tNode.pos = _vects[index];
-                nodes.Add(tNode);
+                previewNode = new SplinePreviewNode();
+                previewNode.pos = _vects[index];
+                nodes.Add(previewNode);
             }
 
 
@@ -198,7 +154,7 @@ namespace RoadArchitect
             step = (isClosed) ? 1f / nodes.Count : 1f / (nodes.Count - 1);
             for (index = 0; index < nodes.Count; index++)
             {
-                tNode = nodes[index];
+                previewNode = nodes[index];
 
                 rot = Quaternion.identity;
 
@@ -206,31 +162,31 @@ namespace RoadArchitect
                 if (index != nodes.Count - 1)
                 {
                     // Only rotate the node if the next node is on a different position
-                    if (nodes[index + 1].pos - tNode.pos == Vector3.zero)
+                    if (nodes[index + 1].pos - previewNode.pos == Vector3.zero)
                     {
                         rot = Quaternion.identity;
                     }
                     else
                     {
-                        rot = Quaternion.LookRotation(nodes[index + 1].pos - tNode.pos, transform.up);
+                        rot = Quaternion.LookRotation(nodes[index + 1].pos - previewNode.pos, transform.up);
                     }
 
-                    //rot = Quaternion.LookRotation(mNodes[i+1].pos - tNode.pos, transform.up);
+                    //rot = Quaternion.LookRotation(mNodes[i+1].pos - previewNode.pos, transform.up);
                 }
                 else if (isClosed)
                 {
-                    rot = Quaternion.LookRotation(nodes[0].pos - tNode.pos, transform.up);
+                    rot = Quaternion.LookRotation(nodes[0].pos - previewNode.pos, transform.up);
                 }
                 else
                 {
                     rot = Quaternion.identity;
                 }
 
-                tNode.Setup(tNode.pos, rot, new Vector2(0, 1), step * index, "pNode");
+                previewNode.Setup(previewNode.pos, rot, new Vector2(0, 1), step * index, "pNode");
             }
 
 
-            tNode = null;
+            previewNode = null;
             _vects = null;
         }
 

@@ -9,54 +9,11 @@ namespace RoadArchitect
     public class SplineI : MonoBehaviour
     {
 #if UNITY_EDITOR
-        public class GSDSplineIN
-        {
-            #region "Vars"
-            public Vector3 pos;
-            public Quaternion rot;
-            public Vector3 tangent;
-            [UnityEngine.Serialization.FormerlySerializedAs("EaseIO")]
-            public Vector2 easeIO;
-            [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
-            public float time = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("OldTime")]
-            public float oldTime = 0f;
-
-            public string name = "Node-1";
-
-            [UnityEngine.Serialization.FormerlySerializedAs("tempTime")]
-            public bool isTempTime = false;
-
-            public float tempSegmentTime = 0f;
-            public float tempMinDistance = 5000f;
-            public float tempMinTime = 0f;
-
-            public int idOnSpline;
-            [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
-            public SplineC spline;
-            [UnityEngine.Serialization.FormerlySerializedAs("bDestroyed")]
-            public bool isDestroyed = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bPreviewNode")]
-            public bool isPreviewNode = false;
-            #endregion
-
-
-            public void Setup(Vector3 _p, Quaternion _q, Vector2 _io, float _time, string _name)
-            {
-                pos = _p;
-                rot = _q;
-                easeIO = _io;
-                time = _time;
-                name = _name;
-            }
-        }
-
-
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
         public int count = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
-        public List<GSDSplineIN> nodes = new List<GSDSplineIN>();
+        public List<SplinePreviewNode> nodes = new List<SplinePreviewNode>();
         [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
         public bool isClosed = false;
         public float distance = -1f;
@@ -65,7 +22,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
         public SplineC spline;
         [UnityEngine.Serialization.FormerlySerializedAs("ActionNode")]
-        public GSDSplineIN actionNode;
+        public SplinePreviewNode actionNode;
         // Gizmos
         [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDraw")]
         public bool isDrawingGizmos = false;
@@ -81,7 +38,7 @@ namespace RoadArchitect
             {
                 return;
             }
-            GSDSplineIN tNode;
+            SplinePreviewNode previewNode;
             SplineN xNode;
             nodes.Clear();
             float tParam = spline.GetClosestParam(mousePos, false, true);
@@ -101,18 +58,18 @@ namespace RoadArchitect
             for (int index = 0; index < nodesCount; index++)
             {
                 xNode = spline.nodes[index];
-                tNode = new GSDSplineIN();
-                tNode.pos = xNode.pos;
-                tNode.idOnSpline = xNode.idOnSpline;
-                tNode.time = xNode.time;
+                previewNode = new SplinePreviewNode();
+                previewNode.pos = xNode.pos;
+                previewNode.idOnSpline = xNode.idOnSpline;
+                previewNode.time = xNode.time;
                 if (!bZeroInsert && !bEndInsert)
                 {
-                    if (tParam > tNode.time)
+                    if (tParam > previewNode.time)
                     {
-                        iStart = tNode.idOnSpline + 1;
+                        iStart = previewNode.idOnSpline + 1;
                     }
                 }
-                nodes.Add(tNode);
+                nodes.Add(previewNode);
             }
 
             nodes.Sort(CompareListByName);
@@ -128,25 +85,25 @@ namespace RoadArchitect
                     nodes[index].idOnSpline += 1;
                 }
             }
-            tNode = new GSDSplineIN();
-            tNode.pos = mousePos;
-            tNode.idOnSpline = iStart;
-            tNode.time = tParam;
-            tNode.isPreviewNode = true;
+            previewNode = new SplinePreviewNode();
+            previewNode.pos = mousePos;
+            previewNode.idOnSpline = iStart;
+            previewNode.time = tParam;
+            previewNode.isPreviewNode = true;
             if (bEndInsert)
             {
-                nodes.Add(tNode);
+                nodes.Add(previewNode);
             }
             else
             {
-                nodes.Insert(iStart, tNode);
+                nodes.Insert(iStart, previewNode);
             }
             SetupSplineLength();
-            actionNode = tNode;
+            actionNode = previewNode;
         }
 
 
-        private int CompareListByName(GSDSplineIN _i1, GSDSplineIN _i2)
+        private int CompareListByName(SplinePreviewNode _i1, SplinePreviewNode _i2)
         {
             return _i1.idOnSpline.CompareTo(_i2.idOnSpline);
         }
