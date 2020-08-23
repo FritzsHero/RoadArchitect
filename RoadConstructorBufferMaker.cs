@@ -2156,18 +2156,22 @@ namespace RoadArchitect
             MF.sharedMesh.RecalculateBounds();
             MF.sharedMesh.RecalculateNormals();
             MF.sharedMesh.tangents = RootUtils.ProcessTangents(MF.sharedMesh.triangles, MF.sharedMesh.normals, MF.sharedMesh.uv, MF.sharedMesh.vertices);
+
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
                 UnityEditor.Unwrapping.GenerateSecondaryUVSet(MF.sharedMesh);
-            }
-            if (road.isLightmapped)
-            {
-#if UNITY_2019_2_OR_NEWER
+
+                #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(tObj, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                #else
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(tObj, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                #endif
             }
+            #endif
+
+
             if (road.isStatic)
             {
                 tObj.isStatic = true;
