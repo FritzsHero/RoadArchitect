@@ -390,7 +390,9 @@ namespace RoadArchitect
 
 
         #region "Profiling"
-#if UNITY_EDITOR
+        #if UNITY_2018_1_OR_NEWER
+        [Unity.Burst.BurstDiscard]
+        #endif
         public static void StartProfiling(Road _road, string _profileName)
         {
             if (_road.isProfiling)
@@ -400,6 +402,9 @@ namespace RoadArchitect
         }
 
 
+        #if UNITY_2018_1_OR_NEWER
+        [Unity.Burst.BurstDiscard]
+        #endif
         public static void EndProfiling(Road _road)
         {
             if (_road.isProfiling)
@@ -409,6 +414,9 @@ namespace RoadArchitect
         }
 
 
+        #if UNITY_2018_1_OR_NEWER
+        [Unity.Burst.BurstDiscard]
+        #endif
         public static void EndStartProfiling(Road _road, string _profileName)
         {
             if (_road.isProfiling)
@@ -417,7 +425,6 @@ namespace RoadArchitect
                 UnityEngine.Profiling.Profiler.BeginSample(_profileName);
             }
         }
-#endif
         #endregion
     }
 }
