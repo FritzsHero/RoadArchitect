@@ -8,7 +8,6 @@ namespace RoadArchitect
 {
     public class SplineF : MonoBehaviour
     {
-#if UNITY_EDITOR
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
         public int nodesCount = 0;
@@ -457,16 +456,14 @@ namespace RoadArchitect
         }
 
 
-#endif
-
         #region "Start"
         private void Start()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             //Do nothing.
-#else
+            #else
             this.enabled = false;
-#endif
+            #endif
         }
         #endregion
     }

@@ -274,7 +274,6 @@ namespace RoadArchitect
         }
 
 
-#if UNITY_EDITOR
         [UnityEngine.Serialization.FormerlySerializedAs("BoundsRect")]
         private RoadUtility.Construction2DRect boundsRect;
 
@@ -347,7 +346,6 @@ namespace RoadArchitect
         #region "Utility"
         public void UpdateRoads()
         {
-#if UNITY_EDITOR
             if (!isSameSpline)
             {
                 SplineC[] piggys = new SplineC[1];
@@ -359,7 +357,6 @@ namespace RoadArchitect
             {
                 node1.spline.TriggerSetup();
             }
-#endif
         }
 
 
@@ -472,7 +469,6 @@ namespace RoadArchitect
             Gizmos.DrawCube(transform.position + new Vector3(0f, 5f, 0f), new Vector3(2f, 11f, 2f));
         }
         #endregion
-#endif
 
 
         #region "Traffic light controlling"
@@ -625,7 +621,6 @@ namespace RoadArchitect
         #endregion
 
 
-#if UNITY_EDITOR
         #region "Materials"
         public void ResetMaterialsAll()
         {
@@ -1438,6 +1433,5 @@ namespace RoadArchitect
             TogglePointLights(isLightsEnabled);
         }
         #endregion
-#endif
     }
 }

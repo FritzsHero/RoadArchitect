@@ -2,9 +2,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using RoadArchitect;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 #endregion
 
 
@@ -51,11 +48,9 @@ namespace RoadArchitect
         public bool isEditorProgressBar = false;
         //Unique ID
         public string UID;
-#if UNITY_EDITOR
         [SerializeField]
         public List<TerrainHistoryMaker> TerrainHistory;
         public string TerrainHistoryByteSize = "";
-#endif
         [System.NonSerialized]
         public bool isUpdatingSpline = false;
 
@@ -156,7 +151,7 @@ namespace RoadArchitect
         public PhysicMaterial ShoulderPhysicMaterial;
         #endregion
 
-#if UNITY_EDITOR
+
         #region "Road Construction"
         #region "Vars"
         [System.NonSerialized]
@@ -264,6 +259,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
+            #if UNITY_EDITOR
             if (!Application.isEditor)
             {
                 return;
@@ -274,14 +270,14 @@ namespace RoadArchitect
             {
                 EditorUpdate();
             };
-#if UNITY_2018_1_OR_NEWER
+            #if UNITY_2018_1_OR_NEWER
             UnityEditor.EditorApplication.hierarchyChanged += delegate
             {
                 hWindowChanged();
             };
-#else
-        UnityEditor.EditorApplication.hierarchyWindowChanged += delegate { hWindowChanged(); };
-#endif
+            #else
+            UnityEditor.EditorApplication.hierarchyWindowChanged += delegate { hWindowChanged(); };
+            #endif
             //}
             if (spline == null || spline.nodes == null)
             {
@@ -293,6 +289,7 @@ namespace RoadArchitect
             }
             tRoadMaterialDropdownOLD = roadMaterialDropdown;
             CheckMats();
+            #endif
         }
 
 
@@ -311,6 +308,7 @@ namespace RoadArchitect
 
         private void EditorUpdate()
         {
+            #if UNITY_EDITOR
             if (!Application.isEditor)
             {
                 UnityEditor.EditorApplication.update -= delegate
@@ -326,9 +324,10 @@ namespace RoadArchitect
                     EditorUpdate();
                 };
                 isEditorConstructing = false;
-                EditorUtility.ClearProgressBar();
+                UnityEditor.EditorUtility.ClearProgressBar();
                 return;
             }
+            #endif
 
             //Custom garbage collection demands for editor:
             if (isTriggeringGC)
@@ -360,7 +359,11 @@ namespace RoadArchitect
                             if ((Time.realtimeSinceStartup - EditorConstructionStartTime) > 180f)
                             {
                                 isEditorConstructing = false;
-                                EditorUtility.ClearProgressBar();
+
+                                #if UNITY_EDITOR
+                                UnityEditor.EditorUtility.ClearProgressBar();
+                                #endif
+
                                 Debug.Log("Update shouldn't take longer than 180 seconds. Aborting update.");
                             }
 
@@ -368,7 +371,11 @@ namespace RoadArchitect
                             if (isEditorError)
                             {
                                 isEditorConstructing = false;
-                                EditorUtility.ClearProgressBar();
+                                
+                                #if UNITY_EDITOR
+                                UnityEditor.EditorUtility.ClearProgressBar();
+                                #endif
+
                                 isEditorError = false;
                                 if (exceptionError != null)
                                 {
@@ -407,6 +414,8 @@ namespace RoadArchitect
                 RoadUpdateProgressBar();
             }
 
+
+            #if UNITY_EDITOR
             if (!Application.isPlaying && isUpdatingSpline && !UnityEditor.EditorApplication.isPlaying)
             {
                 editorTimerSpline += 1;
@@ -419,11 +428,13 @@ namespace RoadArchitect
                 }
             }
 
-            if (isEditorCameraMoving && EditorCameraNextMove < EditorApplication.timeSinceStartup)
+
+            if (isEditorCameraMoving && EditorCameraNextMove < UnityEditor.EditorApplication.timeSinceStartup)
             {
-                EditorCameraNextMove = (float)EditorApplication.timeSinceStartup + EditorCameraTimeUpdateInterval;
+                EditorCameraNextMove = (float)UnityEditor.EditorApplication.timeSinceStartup + EditorCameraTimeUpdateInterval;
                 DoEditorCameraLoop();
             }
+            #endif
         }
 
 
@@ -446,11 +457,13 @@ namespace RoadArchitect
                 ChangeEditorCameraMetersPerSec();
             }
 
-            if (!Selection.Contains(this.transform.gameObject))
+            #if UNITY_EDITOR
+            if (!UnityEditor.Selection.Contains(this.transform.gameObject))
             {
                 QuitEditorCamera();
                 return;
             }
+            #endif
 
             //EditorCameraPos_Full+=EditorCameraIncrementDistance_Full;
             //if(EditorCameraPos_Full > spline.distance){ EditorCameraPos = EditorCameraStartPos; bEditorCameraMoving = false; bEditorCameraSetup = false; EditorCameraPos_Full = 0f; return; }
@@ -469,7 +482,9 @@ namespace RoadArchitect
 
             spline.GetSplineValueBoth(EditorCameraPos, out EditorCameraV1, out EditorCameraV2);
 
-            if (EditorApplication.isPlaying)
+
+            #if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isPlaying)
             {
                 if (editorPlayCamera != null)
                 {
@@ -486,17 +501,18 @@ namespace RoadArchitect
             }
             else
             {
-                SceneView.lastActiveSceneView.pivot = EditorCameraV1;
+                UnityEditor.SceneView.lastActiveSceneView.pivot = EditorCameraV1;
                 if (isEditorCameraRotated)
                 {
-                    SceneView.lastActiveSceneView.pivot += editorCameraOffset;
+                    UnityEditor.SceneView.lastActiveSceneView.pivot += editorCameraOffset;
                     if (EditorCameraV2 != editorCameraBadVec)
                     {
-                        SceneView.lastActiveSceneView.rotation = Quaternion.LookRotation(EditorCameraV2);
+                        UnityEditor.SceneView.lastActiveSceneView.rotation = Quaternion.LookRotation(EditorCameraV2);
                     }
                 }
-                SceneView.lastActiveSceneView.Repaint();
+                UnityEditor.SceneView.lastActiveSceneView.Repaint();
             }
+            #endif
         }
 
 
@@ -531,25 +547,34 @@ namespace RoadArchitect
 
         private void hWindowChanged()
         {
+            #if UNITY_EDITOR
             if (!Application.isEditor)
             {
-#if UNITY_2018_1_OR_NEWER
+                #if UNITY_2018_1_OR_NEWER
                 UnityEditor.EditorApplication.hierarchyChanged -= delegate { hWindowChanged(); };
-#else
-            UnityEditor.EditorApplication.hierarchyWindowChanged -= delegate { hWindowChanged(); };
-#endif
+                #else
+                UnityEditor.EditorApplication.hierarchyWindowChanged -= delegate { hWindowChanged(); };
+                #endif
             }
+            #endif
+
             if (Application.isPlaying || !Application.isEditor)
             {
                 return;
             }
-            if (Application.isEditor && UnityEditor.EditorApplication.isPlaying)
+            if (Application.isEditor)
             {
-                return;
-            }
-            if (Application.isEditor && UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
-            {
-                return;
+                #if UNITY_EDITOR
+                if(UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+                {
+                    return;
+                }
+
+                if(UnityEditor.EditorApplication.isPlaying)
+                {
+                    return;
+                }
+                #endif
             }
 
             int count = 0;
@@ -566,9 +591,10 @@ namespace RoadArchitect
 
         private void RoadUpdateProgressBar()
         {
+            #if UNITY_EDITOR
             if (isEditorConstructing)
             {
-                EditorUtility.DisplayProgressBar(
+                UnityEditor.EditorUtility.DisplayProgressBar(
                     "RoadArchitect: Road Update",
                     editorTitleString,
                     ((float)editorProgress / 100f));
@@ -576,8 +602,9 @@ namespace RoadArchitect
             else if (isEditorProgressBar)
             {
                 isEditorProgressBar = false;
-                EditorUtility.ClearProgressBar();
+                UnityEditor.EditorUtility.ClearProgressBar();
             }
+            #endif
         }
 
 
@@ -614,7 +641,9 @@ namespace RoadArchitect
 
             CheckMats();
 
-            EditorUtility.ClearProgressBar();
+            #if UNITY_EDITOR
+            UnityEditor.EditorUtility.ClearProgressBar();
+            #endif
 
             isProfiling = true;
             if (roadSystem.isMultithreaded)
@@ -1107,12 +1136,20 @@ namespace RoadArchitect
                 RCS = null;
             }
 
+
+            #if UNITY_EDITOR
             if (roadSystem.isSavingMeshes)
             {
                 UnityEditor.AssetDatabase.SaveAssets();
             }
+            #endif
+
             isEditorProgressBar = false;
-            EditorUtility.ClearProgressBar();
+
+            #if UNITY_EDITOR
+            UnityEditor.EditorUtility.ClearProgressBar();
+            #endif
+
             //Make sure terrain history out of memory if necessary (redudant but keep):
             if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
             {
@@ -1183,7 +1220,6 @@ namespace RoadArchitect
             }
         }
         #endregion
-#endif
 
 
         public float RoadWidth()
@@ -1192,7 +1228,7 @@ namespace RoadArchitect
         }
 
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         public float EditorCameraTimer = 0f;
 
 
@@ -1208,6 +1244,7 @@ namespace RoadArchitect
                 }
             }
         }
+        #endif
 
 
         #region "Default materials retrieval"
@@ -1723,31 +1760,30 @@ namespace RoadArchitect
 
         private void WireframesToggleHelp(ref MeshRenderer[] _MRs)
         {
+            #if UNITY_EDITOR
             int meshRenderersCount = _MRs.Length;
             for (int i = 0; i < meshRenderersCount; i++)
             {
-                //EditorUtility.SetSelectedWireframeHidden(tMRs[i], !opt_GizmosEnabled);
-                EditorUtility.SetSelectedRenderState(_MRs[i], isGizmosEnabled ? EditorSelectedRenderState.Wireframe : EditorSelectedRenderState.Hidden);
+                //UnityEditor.EditorUtility.SetSelectedWireframeHidden(tMRs[i], !opt_GizmosEnabled);
+                UnityEditor.EditorUtility.SetSelectedRenderState(_MRs[i], isGizmosEnabled ? UnityEditor.EditorSelectedRenderState.Wireframe : UnityEditor.EditorSelectedRenderState.Hidden);
             }
+            #endif
         }
-
-#endif
 
 
         private void Start()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             if (Application.isPlaying)
             {
                 CleanRunTime();
             }
-#else
-        this.enabled = false;
-#endif
+            #else
+            this.enabled = false;
+            #endif
         }
 
 
-#if UNITY_EDITOR
         //For compliance on submission rules:
         public void UpdateGizmoOptions()
         {
@@ -1772,7 +1808,10 @@ namespace RoadArchitect
         public void DuplicateRoad()
         {
             GameObject roadObj = roadSystem.AddRoad();
+
+            #if UNITY_EDITOR
             UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Duplicate");
+            #endif
 
             Road road = roadObj.GetComponent<Road>();
             if (road == null)
@@ -1840,7 +1879,10 @@ namespace RoadArchitect
 
             road.spline.TriggerSetup();
 
-            Selection.activeGameObject = road.transform.gameObject;
+
+            #if UNITY_EDITOR
+            UnityEditor.Selection.activeGameObject = road.transform.gameObject;
+            #endif
         }
 
 
@@ -1944,6 +1986,5 @@ namespace RoadArchitect
                 }
             }
         }
-#endif
     }
 }

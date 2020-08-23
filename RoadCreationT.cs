@@ -8,7 +8,6 @@ using RoadArchitect.Threading;
 
 namespace RoadArchitect.Threading
 {
-#if UNITY_EDITOR
     public static class RoadCreationT
     {
         #region "Road Prelim"
@@ -7471,5 +7470,4 @@ namespace RoadArchitect.Threading
             RoadCreationT.RoadJob2(ref _RCS);
         }
     }
-#endif
 }

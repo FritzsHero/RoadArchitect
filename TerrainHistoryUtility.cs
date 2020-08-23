@@ -87,8 +87,9 @@ namespace RoadArchitect
         /// <summary> Generates the Terrain History file name </summary>
         private static string GetRoadTHFilename(ref Road _road)
         {
-            //string sceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+            string sceneName;
+            
+            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
             string roadName = _road.roadSystem.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;

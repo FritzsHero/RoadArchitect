@@ -96,11 +96,9 @@ namespace RoadArchitect
         #endregion
 
 
-#if UNITY_EDITOR
         #region "Setup"
         public void TriggerSetup()
         {
-#if UNITY_EDITOR
             if (!road)
             {
                 if (splineRoot != null)
@@ -112,16 +110,16 @@ namespace RoadArchitect
             {
                 road.UpdateRoad();
             }
-#endif
         }
 
 
         /// <summary> Setup Spline values </summary>
         public void Setup()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             //Don't setup if playing:
             //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
+            #endif
 
             //Setup unique ID:
             RootUtils.SetupUniqueIdentifier(ref uID);
@@ -341,7 +339,6 @@ namespace RoadArchitect
             RoadV1 = new Vector3(maxX, minZ);
             RoadV2 = new Vector3(maxX, maxZ);
             RoadV3 = new Vector3(minX, maxZ);
-#endif
         }
 
 
@@ -575,7 +572,6 @@ namespace RoadArchitect
             RoadDefCalcs();
         }
         #endregion
-#endif
 
 
         #region "Road definition cache and translation"
@@ -2045,7 +2041,6 @@ namespace RoadArchitect
         #endregion
 
 
-#if UNITY_EDITOR
         #region "Road connections"
         public void ActivateEndNodeConnection(SplineN _node1, SplineN _node2)
         {
@@ -2061,9 +2056,10 @@ namespace RoadArchitect
             //Don't allow connection with less than 3 nodes:
             if (mCount < 3 || nodeCount < 3)
             {
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 UnityEditor.EditorUtility.DisplayDialog("Cannot connect roads", "Roads must have at least 3 nodes to be connected.", "ok");
-#endif
+                #endif
+
                 return;
             }
 
@@ -2276,10 +2272,12 @@ namespace RoadArchitect
             }
             previewSpline.isDrawingGizmos = false;
             spline.previewSpline.isDrawingGizmos = false;
+
+            #if UNITY_EDITOR
             UnityEditor.SceneView.RepaintAll();
+            #endif
         }
         #endregion
-#endif
 
 
         #region "General Util"
@@ -2435,7 +2433,6 @@ namespace RoadArchitect
         }
 
 
-#if UNITY_EDITOR
         public void ClearAllRoadCuts()
         {
             int nodeCount = GetNodeCount();
@@ -2444,7 +2441,6 @@ namespace RoadArchitect
                 nodes[index].ClearCuts();
             }
         }
-#endif
 
 
         public void ResetNavigationData()
@@ -2459,11 +2455,11 @@ namespace RoadArchitect
         #region "Start"
         private void Start()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             //CachedPoints = null;
-#else
-			this.enabled = false;
-#endif
+            #else
+            this.enabled = false;
+            #endif
         }
         #endregion
     }

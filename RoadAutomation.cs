@@ -7,7 +7,6 @@ using RoadArchitect;
 
 namespace RoadArchitect.Roads
 {
-#if UNITY_EDITOR
     /* Proper automation flow:
      * 1. Make sure isAllowingRoadUpdates in the scene's RoadSystem is set to FALSE.
      * 2. Create your roads programmatically via CreateRoadProgrammatically (pass it the road, and then the points in a list)
@@ -372,5 +371,4 @@ namespace RoadArchitect.Roads
             }
         }
     }
-#endif
 }

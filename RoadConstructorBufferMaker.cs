@@ -1865,10 +1865,15 @@ namespace RoadArchitect
                     vMesh.RecalculateBounds();
                     vMesh.RecalculateNormals();
                     vMesh.tangents = RootUtils.ProcessTangents(xTris, vMesh.normals, xUV, xVerts);
+
+
+                    #if UNITY_EDITOR
                     if (road.isLightmapped)
                     {
                         //UnityEditor.Unwrapping.GenerateSecondaryUVSet(vMesh);
                     }
+                    #endif
+
 
                     int cCount = tNode.intersection.transform.childCount;
                     List<GameObject> GOToDelete = new List<GameObject>();
@@ -1892,14 +1897,20 @@ namespace RoadArchitect
                     MF = tCenter.AddComponent<MeshFilter>();
                     MF.sharedMesh = vMesh;
                     tCenter.transform.parent = tNode.intersection.transform;
+
+
+                    #if UNITY_EDITOR
                     if (road.isLightmapped)
                     {
-#if UNITY_2019_2_OR_NEWER
+                        #if UNITY_2019_2_OR_NEWER
                         UnityEditor.GameObjectUtility.SetStaticEditorFlags(tCenter, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                        #else
                         UnityEditor.GameObjectUtility.SetStaticEditorFlags(tCenter, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                        #endif
                     }
+                    #endif
+
+
                     if (road.isStatic)
                     {
                         tCenter.isStatic = true;
@@ -1929,14 +1940,20 @@ namespace RoadArchitect
                     ////	MR.material = tNode.roadIntersection.MarkerCenter;
                     //}
                     tMarker.transform.parent = tNode.intersection.transform;
+
+
+                    #if UNITY_EDITOR
                     if (road.isLightmapped)
                     {
-#if UNITY_2019_2_OR_NEWER
+                        #if UNITY_2019_2_OR_NEWER
                         UnityEditor.GameObjectUtility.SetStaticEditorFlags(tMarker, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                        #else
                         UnityEditor.GameObjectUtility.SetStaticEditorFlags(tMarker, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                        #endif
                     }
+                    #endif
+
+
                     if (road.isStatic)
                     {
                         tMarker.isStatic = true;
@@ -1962,10 +1979,16 @@ namespace RoadArchitect
                     MR.transform.position = tNode.intersection.transform.position;
 
                     mMesh.RecalculateBounds();
+
+
+                    #if UNITY_EDITOR
                     if (road.isLightmapped)
                     {
                         //UnityEditor.Unwrapping.GenerateSecondaryUVSet(mMesh);
                     }
+                    #endif
+
+
                     SaveMesh(SaveMeshTypeEnum.Intersection, MF.sharedMesh, road, tNode.intersection.transform.name + "-" + "CenterMarkers");
                 }
             }
@@ -2204,10 +2227,13 @@ namespace RoadArchitect
             }
             _mesh.uv = _uv;
             _mesh.tangents = _tangents;
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
                 UnityEditor.Unwrapping.GenerateSecondaryUVSet(_mesh);
             }
+            #endif
 
             GameObject tObj = new GameObject(_name);
             tObj.transform.parent = _masterObj.transform;
@@ -2225,14 +2251,19 @@ namespace RoadArchitect
             MeshRenderer MR = tObj.AddComponent<MeshRenderer>();
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             RoadEditorUtility.SetRoadMaterial(_mat, MR);
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
-#if UNITY_2019_2_OR_NEWER
+                #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(tObj, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                #else
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(tObj, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                #endif
             }
+            #endif
+
+
             if (road.isStatic)
             {
                 tObj.isStatic = true;
@@ -2247,10 +2278,14 @@ namespace RoadArchitect
         {
             _mesh.uv = _uv;
             _mesh.tangents = _tangents;
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
                 UnityEditor.Unwrapping.GenerateSecondaryUVSet(_mesh);
             }
+            #endif
+
             MeshFilter MF = _obj.AddComponent<MeshFilter>();
             MF.sharedMesh = _mesh;
             MeshCollider MC = null;
@@ -2395,14 +2430,17 @@ namespace RoadArchitect
                 }
             }
 
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
-#if UNITY_2019_2_OR_NEWER
+                #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(_obj, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                #else
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(tObj, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                #endif
             }
+            #endif
+
             if (road.isStatic)
             {
                 _obj.isStatic = true;
@@ -2433,10 +2471,14 @@ namespace RoadArchitect
             _createdObj.transform.position = cut_RoadVectorsHome[_i];
             _mesh.uv = _uv;
             _mesh.tangents = _tangents;
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
                 UnityEditor.Unwrapping.GenerateSecondaryUVSet(_mesh);
             }
+            #endif
+
             MeshFilter MF = _createdObj.AddComponent<MeshFilter>();
             MF.sharedMesh = _mesh;
 
@@ -2550,14 +2592,18 @@ namespace RoadArchitect
             {
                 MC.sharedMaterial = road.RoadPhysicMaterial;
             }
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
-#if UNITY_2019_2_OR_NEWER
+                #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(_createdObj, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                #else
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(CreatedObj, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                #endif
             }
+            #endif
+
             if (road.isStatic)
             {
                 _createdObj.isStatic = true;
@@ -2629,10 +2675,14 @@ namespace RoadArchitect
 
             _mesh.uv = _uv;
             _mesh.tangents = _tangents;
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
                 UnityEditor.Unwrapping.GenerateSecondaryUVSet(_mesh);
             }
+            #endif
+
             MeshFilter MF = _createdObj.AddComponent<MeshFilter>();
             MF.sharedMesh = _mesh;
 
@@ -2740,14 +2790,18 @@ namespace RoadArchitect
                 MC.sharedMaterial = road.ShoulderPhysicMaterial;
             }
             _createdObj.transform.parent = _masterObj.transform;
+
+            #if UNITY_EDITOR
             if (road.isLightmapped)
             {
-#if UNITY_2019_2_OR_NEWER
+                #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(_createdObj, UnityEditor.StaticEditorFlags.ContributeGI);
-#else
+                #else
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(CreatedObj, UnityEditor.StaticEditorFlags.LightmapStatic);
-#endif
+                #endif
             }
+            #endif
+
             if (road.isStatic)
             {
                 _createdObj.isStatic = true;
@@ -2771,12 +2825,7 @@ namespace RoadArchitect
 
             string tSceneName;
 
-
-            #if UNITY_EDITOR
-            //tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            #endif
             tSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-
 
             tSceneName = tSceneName.Replace("/", "");
             tSceneName = tSceneName.Replace(".", "");
@@ -2830,7 +2879,9 @@ namespace RoadArchitect
                 FinalName = tFolderName + tSceneName + "-" + _name + ".asset";
             }
 
+            #if UNITY_EDITOR
             UnityEditor.AssetDatabase.CreateAsset(_mesh, FinalName);
+            #endif
         }
     }
 }

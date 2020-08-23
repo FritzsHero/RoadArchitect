@@ -9,10 +9,15 @@ namespace RoadArchitect
         {
             Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
             GameObject nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
+
+            #if UNITY_EDITOR
             if (!_isInterNode)
             {
                 UnityEditor.Undo.RegisterCreatedObjectUndo(nodeObj, "Created node");
             }
+            #endif
+
+
             SplineN node = nodeObj.AddComponent<SplineN>();
 
             if (_isSpecialEndNode)
@@ -81,10 +86,15 @@ namespace RoadArchitect
             {
                 nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
             }
+
+
+            #if UNITY_EDITOR
             if (!_isInterNode)
             {
                 UnityEditor.Undo.RegisterCreatedObjectUndo(nodeObj, "Inserted node");
             }
+            #endif
+
 
             if (!_isForcedLoc)
             {

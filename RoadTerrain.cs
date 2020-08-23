@@ -9,7 +9,6 @@ namespace RoadArchitect
     [ExecuteInEditMode]
     public class RoadTerrain : MonoBehaviour
     {
-#if UNITY_EDITOR
         #region "Vars"
         [SerializeField]
         [HideInInspector]
@@ -106,21 +105,20 @@ namespace RoadArchitect
 
             return -1;
         }
-#endif
 
 
         private void Start()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             this.enabled = true;
             CheckID();
             if (!terrain)
             {
                 terrain = transform.gameObject.GetComponent<Terrain>();
             }
-#else
-		this.enabled = false;
-#endif
+            #else
+		    this.enabled = false;
+            #endif
         }
     }
 }

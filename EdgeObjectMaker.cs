@@ -8,8 +8,6 @@ using RoadArchitect;
 
 namespace RoadArchitect.EdgeObjects
 {
-#if UNITY_EDITOR
-
     [System.Serializable]
     public class EdgeObjectMaker
     {
@@ -140,9 +138,11 @@ namespace RoadArchitect.EdgeObjects
             EdgeObjectMaker EOM = new EdgeObjectMaker();
 
             EOM.edgeObjectString = edgeObjectString;
-#if UNITY_EDITOR
-            EOM.edgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
-#endif
+            
+            #if UNITY_EDITOR
+            EOM.edgeObject = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
+            #endif
+
             EOM.isDefault = isDefault;
 
             EOM.isCombinedMesh = isCombinedMesh;
@@ -342,14 +342,13 @@ namespace RoadArchitect.EdgeObjects
 
         private void SaveMesh(Mesh _mesh, bool _isCollider)
         {
-#if UNITY_EDITOR
             if (!node.spline.road.roadSystem.isSavingMeshes)
             {
                 return;
             }
 
-            //string tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+            string sceneName;
+            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
 
             sceneName = sceneName.Replace("/", "");
@@ -368,9 +367,11 @@ namespace RoadArchitect.EdgeObjects
                 System.IO.Directory.CreateDirectory(path);
             }
 
+
+            #if UNITY_EDITOR
             UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             UnityEditor.AssetDatabase.SaveAssets();
-#endif
+            #endif
         }
 
 
@@ -493,11 +494,9 @@ namespace RoadArchitect.EdgeObjects
             public void LoadTo(EdgeObjectMaker _EOM)
             {
                 _EOM.edgeObjectString = edgeObjectString;
-#if UNITY_EDITOR
-                _EOM.edgeObject = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
-#endif
-                _EOM.isMaterialOverriden = isMaterialOverriden;
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
+                _EOM.edgeObject = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
+
                 if (edgeMaterial1String.Length > 0)
                 {
                     _EOM.edgeMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeMaterial1String, typeof(Material));
@@ -506,7 +505,9 @@ namespace RoadArchitect.EdgeObjects
                 {
                     _EOM.edgeMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeMaterial2String, typeof(Material));
                 }
-#endif
+                #endif
+
+                _EOM.isMaterialOverriden = isMaterialOverriden;
 
                 _EOM.isCombinedMesh = isCombinedMesh;
                 _EOM.isCombinedMeshCollider = isCombinedMeshCollider;
@@ -884,6 +885,8 @@ namespace RoadArchitect.EdgeObjects
             SetupLocations();
 
             edgeObjectString = RootUtils.GetPrefabString(edgeObject);
+
+            #if UNITY_EDITOR
             if (edgeMaterial1 != null)
             {
                 edgeMaterial1String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial1);
@@ -892,6 +895,8 @@ namespace RoadArchitect.EdgeObjects
             {
                 edgeMaterial2String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial2);
             }
+            #endif
+
             edgeObjects = new List<GameObject>();
 
             Quaternion xRot = default(Quaternion);
@@ -916,19 +921,25 @@ namespace RoadArchitect.EdgeObjects
                 {
                     if (edgeObjectRotations[j] == default(Vector3))
                     {
-                        // Line to instantiate the object instead of an prefab
-                        //tObj = GameObject.Instantiate(edgeObject);
+                        #if UNITY_EDITOR
                         // Instantiate prefab instead of object
-                        tObj = (GameObject) UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
+                        tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
+                        #else
+                        // Line to instantiate the object instead of an prefab
+                        tObj = GameObject.Instantiate(edgeObject);
+                        #endif
                         _errorObjs.Add(tObj);
                         tObj.transform.position = edgeObjectLocations[j];
                     }
                     else
                     {
-                        // Line to instantiate the object instead of an prefab
-                        //tObj = GameObject.Instantiate(edgeObject, edgeObjectLocations[j], Quaternion.LookRotation(edgeObjectRotations[j]));
+                        #if UNITY_EDITOR
                         // Instantiate prefab instead of object
                         tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
+                        #else
+                        // Line to instantiate the object instead of an prefab
+                        tObj = GameObject.Instantiate(edgeObject);
+                        #endif
                         tObj.transform.position = edgeObjectLocations[j];
                         tObj.transform.rotation = Quaternion.LookRotation(edgeObjectRotations[j]);
                         _errorObjs.Add(tObj);
@@ -1450,5 +1461,4 @@ namespace RoadArchitect.EdgeObjects
             }
         }
     }
-#endif
 }

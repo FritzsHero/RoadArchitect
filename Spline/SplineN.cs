@@ -80,10 +80,10 @@ namespace RoadArchitect
         public string uID;
         [UnityEngine.Serialization.FormerlySerializedAs("Intersection_OtherNode")]
         public SplineN intersectionOtherNode;
-#if UNITY_EDITOR
-        //Editor only:
+        #if UNITY_EDITOR
         [UnityEngine.Serialization.FormerlySerializedAs("bEditorSelected")]
         public bool isEditorSelected = false;
+        #endif
         [UnityEngine.Serialization.FormerlySerializedAs("GradeToNext")]
         public string gradeToNext;
         [UnityEngine.Serialization.FormerlySerializedAs("GradeToPrev")]
@@ -94,7 +94,6 @@ namespace RoadArchitect
         public float gradeToPrevValue;
         [UnityEngine.Serialization.FormerlySerializedAs("bInitialRoadHeight")]
         public float initialRoadHeight = -1f;
-#endif
         //Navigation:
         [UnityEngine.Serialization.FormerlySerializedAs("bNeverIntersect")]
         public bool isNeverIntersect = false;
@@ -154,7 +153,6 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
         public RoadIntersection intersection = null;
         #endregion
-#if UNITY_EDITOR
         [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
         public Intersections.iConstructionMaker intersectionConstruction;
 
@@ -1844,7 +1842,6 @@ namespace RoadArchitect
             }
         }
         #endregion
-#endif
 
 
         #region "Non-editor util"
@@ -1893,11 +1890,11 @@ namespace RoadArchitect
 
         private void Start()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             //Do nothing.
-#else
+            #else
 			this.enabled = false;
-#endif
+            #endif
         }
 
 

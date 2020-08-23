@@ -20,7 +20,6 @@ namespace RoadArchitect
     public enum AxisTypeEnum { X, Y, Z };
 
 
-#if UNITY_EDITOR
     public static class RoadUtility
     {
         private const string FileSepString = "\n#### RoadArchitect ####\n";
@@ -1426,5 +1425,4 @@ namespace RoadArchitect
         }
         #endregion
     }
-#endif
 }

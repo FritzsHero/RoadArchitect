@@ -7,7 +7,6 @@ namespace RoadArchitect
 {
     public class RoadSystem : MonoBehaviour
     {
-#if UNITY_EDITOR
         #region "Vars"
         [UnityEngine.Serialization.FormerlySerializedAs("opt_bMultithreading")]
         public bool isMultithreaded = true;
@@ -28,7 +27,11 @@ namespace RoadArchitect
 
             //Road:
             GameObject roadObj = new GameObject("Road" + newRoadNumber.ToString());
+
+            #if UNITY_EDITOR
             UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Created road");
+            #endif
+
             roadObj.transform.parent = transform;
             Road road = roadObj.AddComponent<Road>();
 
@@ -44,10 +47,12 @@ namespace RoadArchitect
 
             road.ConstructRoad_ResetTerrainHistory();
 
+            #if UNITY_EDITOR
             if (_isForceSelected)
             {
                 UnityEditor.Selection.activeGameObject = roadObj;
             }
+            #endif
 
             return roadObj;
         }
@@ -123,6 +128,5 @@ namespace RoadArchitect
                 }
             }
         }
-#endif
     }
 }

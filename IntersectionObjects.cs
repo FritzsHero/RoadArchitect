@@ -49,7 +49,14 @@ namespace RoadArchitect
 
         private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, bool _isRB)
         {
-            Object prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab", typeof(GameObject));
+            Object prefab;
+
+            #if UNITY_EDITOR
+            prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab", typeof(GameObject));
+            #else
+            // Get your prefab in your runtime build
+            prefab = null;
+            #endif
 
             RoadIntersection roadIntersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = roadIntersection.node1.spline;
@@ -552,12 +559,19 @@ namespace RoadArchitect
 
             string basePath = RoadEditorUtility.GetBasePath();
 
-            Mesh xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/Signs/TrafficLightBases/" + assetNameAsset, typeof(Mesh));
+            Mesh xMesh;
+
+            #if UNITY_EDITOR
+            xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/Signs/TrafficLightBases/" + assetNameAsset, typeof(Mesh));
             if (xMesh == null)
             {
                 xMesh = (Mesh)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Mesh/Signs/TrafficLightBases/" + BackupFBX, typeof(Mesh));
                 bDoCustom = true;
             }
+            #else
+            // You can load your own mesh here at runtime
+            xMesh = null;
+            #endif
 
             tObj = new GameObject("TempTrafficLight");
             MeshFilter MF = tObj.GetComponent<MeshFilter>();
@@ -635,11 +649,13 @@ namespace RoadArchitect
                 tMesh.RecalculateNormals();
                 tMesh.RecalculateBounds();
 
+                #if UNITY_EDITOR
                 //Save:
                 if (_isSavingAsset)
                 {
                     UnityEditor.AssetDatabase.CreateAsset(tMesh, basePath + "/Mesh/Signs/TrafficLightBases/" + assetNameAsset);
                 }
+                #endif
             }
 
             BoxCollider BC = tObj.AddComponent<BoxCollider>();
@@ -659,7 +675,15 @@ namespace RoadArchitect
 
             if (_isLight)
             {
-                GameObject yObj = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLight.prefab", typeof(GameObject));
+                GameObject yObj;
+
+                #if UNITY_EDITOR
+                yObj = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLight.prefab", typeof(GameObject));
+                #else
+                // Load your GameObject in another runtime way
+                yObj = null;
+                #endif
+
                 GameObject kObj = (GameObject)GameObject.Instantiate(yObj);
                 kObj.transform.position = tObj.transform.position;
                 kObj.transform.position += new Vector3(0f, 0f, MaxHeight - 7.6f);
@@ -839,7 +863,9 @@ namespace RoadArchitect
             {
                 if (light.type == LightType.Point)
                 {
+                    #if UNITY_EDITOR
                     light.flare = UnityEditor.AssetDatabase.LoadAssetAtPath<Flare>(basePath + "/Flares/SodiumBulb.flare");
+                    #endif
                 }
             }
         }
@@ -979,6 +1005,7 @@ namespace RoadArchitect
 
             if (intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
             {
+                #if UNITY_EDITOR
                 if (intersection.isLeftTurnYieldOnGreen)
                 {
                     prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightLeftYield.prefab", typeof(GameObject));
@@ -987,6 +1014,9 @@ namespace RoadArchitect
                 {
                     prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightLeft.prefab", typeof(GameObject));
                 }
+                #endif
+
+
                 tLeft = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tLeft);
                 tLeft.transform.position = _obj.transform.TransformPoint(tLanePosL);
@@ -1010,7 +1040,10 @@ namespace RoadArchitect
 
                 if (intersection.isLeftTurnYieldOnGreen)
                 {
+                    #if UNITY_EDITOR
                     prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/YieldOnGreenSign.prefab", typeof(GameObject));
+                    #endif
+
                     tLeft_Sign = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                     tLeft_Sign.transform.position = _obj.transform.TransformPoint(tLanePosL_Sign);
                     tLeft_Sign.transform.rotation = Quaternion.LookRotation(_tan) * Quaternion.Euler(-90f, 90f, 0f);
@@ -1024,7 +1057,10 @@ namespace RoadArchitect
             }
             if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
+                #if UNITY_EDITOR
                 prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightRight.prefab", typeof(GameObject));
+                #endif
+
                 tRight = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tRight);
                 tRight.transform.position = _obj.transform.TransformPoint(tLanePosR);
@@ -1048,7 +1084,10 @@ namespace RoadArchitect
             GameObject[] tLanes = new GameObject[LanesHalf];
             for (int index = 0; index < LanesHalf; index++)
             {
+                #if UNITY_EDITOR
                 prefab = UnityEditor.AssetDatabase.LoadAssetAtPath(basePath + "/Prefabs/Signs/TrafficLightMain.prefab", typeof(GameObject));
+                #endif
+
                 tLanes[index] = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tLanes[index]);
                 tLanes[index].transform.position = _obj.transform.TransformPoint(tLanePos[index]);

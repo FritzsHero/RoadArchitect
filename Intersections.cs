@@ -485,8 +485,10 @@ namespace RoadArchitect
                 }
             }
 
+            #if UNITY_EDITOR
             //Undo crap:
             UnityEditor.Undo.RegisterCreatedObjectUndo(intersectionObject, "Created intersection");
+            #endif
 
             roadIntersection.Setup(tNode1, tNode2);
             intersectionObject.transform.position = _node1.transform.position;

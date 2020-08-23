@@ -13,7 +13,6 @@ namespace RoadArchitect.Splination
     public enum RepeatUVTypeEnum { None, X, Y };
 
 
-#if UNITY_EDITOR
     [System.Serializable]
     public class SplinatedMeshMaker
     {
@@ -828,21 +827,10 @@ namespace RoadArchitect.Splination
 
             public void LoadToSMM(SplinatedMeshMaker _SMM)
             {
-#if UNITY_EDITOR
                 _SMM.currentSplinationString = CurrentSplinationString;
-                _SMM.currentSplination = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString, typeof(GameObject));
-
                 _SMM.currentSplinationCap1String = CurrentSplinationCap1String;
-                if (CurrentSplinationCap1String != null && CurrentSplinationCap1String.Length > 1)
-                {
-                    _SMM.currentSplinationCap1 = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String, typeof(GameObject));
-                }
-
                 _SMM.currentSplinationCap2String = CurrentSplinationCap2String;
-                if (CurrentSplinationCap2String != null && CurrentSplinationCap2String.Length > 1)
-                {
-                    _SMM.currentSplinationCap2 = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String, typeof(GameObject));
-                }
+
 
                 _SMM.capHeightOffset1 = CapHeightOffset1;
                 _SMM.capHeightOffset2 = CapHeightOffset2;
@@ -851,6 +839,18 @@ namespace RoadArchitect.Splination
                 _SMM.SplinatedMaterial1String = SplinatedMaterial1String;
                 _SMM.SplinatedMaterial2String = SplinatedMaterial2String;
 
+
+
+                #if UNITY_EDITOR
+                _SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString, typeof(GameObject));
+                if (CurrentSplinationCap1String != null && CurrentSplinationCap1String.Length > 1)
+                {
+                    _SMM.currentSplinationCap1 = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String, typeof(GameObject));
+                }
+                if (CurrentSplinationCap2String != null && CurrentSplinationCap2String.Length > 1)
+                {
+                    _SMM.currentSplinationCap2 = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String, typeof(GameObject));
+                }
                 if (isMaterialOverriden)
                 {
                     if (SplinatedMaterial1String != null && SplinatedMaterial1String.Length > 0)
@@ -862,6 +862,8 @@ namespace RoadArchitect.Splination
                         _SMM.SplinatedMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial2String, typeof(Material));
                     }
                 }
+                #endif
+
 
                 _SMM.isDefault = isDefault;
                 _SMM.isExactSplination = isExactSplination;
@@ -918,14 +920,18 @@ namespace RoadArchitect.Splination
                 //Ending objects:
                 _SMM.EndCapStartString = EndCapStartString;
                 _SMM.EndCapEndString = EndCapEndString;
+
+                #if UNITY_EDITOR
                 if (EndCapStartString != null && EndCapStartString.Length > 0)
                 {
-                    _SMM.EndCapStart = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapStartString, typeof(GameObject));
+                    _SMM.EndCapStart = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapStartString, typeof(GameObject));
                 }
                 if (EndCapEndString != null && EndCapEndString.Length > 0)
                 {
-                    _SMM.EndCapEnd = (GameObject) UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
+                    _SMM.EndCapEnd = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
                 }
+                #endif
+
                 _SMM.isEndCapCustomMatchStart = isEndCapCustomMatchStart;
                 _SMM.EndCapCustomOffsetStart = EndCapCustomOffsetStart;
                 _SMM.EndCapCustomOffsetEnd = EndCapCustomOffsetEnd;
@@ -960,7 +966,6 @@ namespace RoadArchitect.Splination
                 _SMM.thumbString = thumbString;
                 _SMM.desc = desc;
                 _SMM.displayName = displayName;
-#endif
             }
         }
 
@@ -1193,13 +1198,15 @@ namespace RoadArchitect.Splination
 
             public void LoadToSMM(SplinatedMeshMaker _SMM)
             {
-#if UNITY_EDITOR
-                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString,typeof(GameObject));
                 _SMM.currentSplination = CurrentSplination;
-                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String,typeof(GameObject));
                 _SMM.currentSplinationCap1 = CurrentSplinationCap1;
-                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String,typeof(GameObject));
                 _SMM.currentSplinationCap2 = CurrentSplinationCap2;
+
+                //#if UNITY_EDITOR
+                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString,typeof(GameObject));
+                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String,typeof(GameObject));
+                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String,typeof(GameObject));
+                //#endif
 
                 _SMM.capHeightOffset1 = CapHeightOffset1;
                 _SMM.capHeightOffset2 = CapHeightOffset2;
@@ -1288,7 +1295,6 @@ namespace RoadArchitect.Splination
                 _SMM.CollisionTriT = CollisionTriT;
 
                 _SMM.objectName = objectName;
-#endif
             }
 
 
@@ -1956,7 +1962,6 @@ namespace RoadArchitect.Splination
 
         public void Setup(bool _isGettingStrings = false, bool _isCollecting = true)
         {
-#if UNITY_EDITOR
             GameObject[] objects = new GameObject[5];
             try
             {
@@ -1976,13 +1981,11 @@ namespace RoadArchitect.Splination
                 }
                 throw exception;
             }
-#endif
         }
 
 
         private void SplinateMeshDo(bool _isGettingStrings, ref GameObject[] _errorObj, bool _isCollecting)
         {
-#if UNITY_EDITOR
             isRequiringUpdate = false;
             RootUtils.SetupUniqueIdentifier(ref uID);
 
@@ -2051,6 +2054,8 @@ namespace RoadArchitect.Splination
                 {
                     EndCapEndString = RootUtils.GetPrefabString(EndCapEnd);
                 }
+
+                #if UNITY_EDITOR
                 if (SplinatedMaterial1 != null)
                 {
                     SplinatedMaterial1String = UnityEditor.AssetDatabase.GetAssetPath(SplinatedMaterial1);
@@ -2059,6 +2064,7 @@ namespace RoadArchitect.Splination
                 {
                     SplinatedMaterial2String = UnityEditor.AssetDatabase.GetAssetPath(SplinatedMaterial2);
                 }
+                #endif
             }
 
             if (currentSplination == null)
@@ -2934,16 +2940,17 @@ namespace RoadArchitect.Splination
             //			float yDiff = 0f;
             //			float tDistance = 0f;
             int MVL = MeshCount * OrigMVL;
-#if UNITY_2017_3_OR_NEWER
+            #if UNITY_2017_3_OR_NEWER
             if (MVL > 4000000)
             {
                 throw new System.Exception("Over 4000000 vertices detected, exiting extrusion. Try switching splination axis and make sure your imported FBX file has proper import scale. Make sure the mesh isn't too small and make sure the distance isn't too large.");
             }
-#else
-			if(MVL > 64900){
+            #else
+			if(MVL > 64900)
+            {
 				throw new System.Exception("Over 65000 vertices detected, exiting extrusion. Try switching splination axis and make sure your imported FBX file has proper import scale. Make sure the mesh isn't too small and make sure the distance isn't too large.");
 			}
-#endif
+            #endif
             int MaxCount = MaxVectorIndices.Count;
             int MinCount = MinVectorIndices.Count;
             int TriCount = MeshCount * OrigTriCount;
@@ -3973,19 +3980,17 @@ namespace RoadArchitect.Splination
             {
                 node.spline.road.isTriggeringGC = true;
             }
-#endif
         }
 
 
         private void SaveMesh(ref Mesh _mesh, bool _isCollider)
         {
-#if UNITY_EDITOR
             if (!node.spline.road.roadSystem.isSavingMeshes)
             {
                 return;
             }
-            //string tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string sceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+            
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
             string folderName = RoadEditorUtility.GetBasePath() + "/Mesh/Generated/Extrusions/";
@@ -4003,9 +4008,10 @@ namespace RoadArchitect.Splination
             }
 
 
+            #if UNITY_EDITOR
             UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             UnityEditor.AssetDatabase.SaveAssets();
-#endif
+            #endif
         }
 
 
@@ -4152,5 +4158,4 @@ namespace RoadArchitect.Splination
             return hitNormal;
         }
     }
-#endif
 }

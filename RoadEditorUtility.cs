@@ -23,7 +23,7 @@ namespace RoadArchitect
 
         public static string GetBasePath()
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             foreach (string folder in validFolders)
             {
                 if (Directory.Exists(Environment.CurrentDirectory + "/" + folder))
@@ -32,31 +32,33 @@ namespace RoadArchitect
                 }
             }
             throw new System.Exception("RoadArchitect must be placed in one of the valid folders, read the top of this script");
-#else
+            #else
             return "";
-#endif
+            #endif
         }
 
 
-#if UNITY_EDITOR
         public static void SetRoadMaterial(string _assetPath, MeshRenderer _MR, string _assetPath2 = "")
         {
+            Material material;
             Material material2;
-
             Material[] tMats;
-            Material material = (Material) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(Material));
+
+            material = LoadMaterial(_assetPath);
+            
             if (_assetPath2.Length > 0)
             {
-                material2 = (Material) AssetDatabase.LoadAssetAtPath(_assetPath2, typeof(Material));
+                material2 = LoadMaterial(_assetPath2);
+
                 tMats = new Material[2];
-                tMats[0] = material;
                 tMats[1] = material2;
             }
             else
             {
                 tMats = new Material[1];
-                tMats[0] = material;
             }
+
+            tMats[0] = material;
 
             _MR.sharedMaterials = tMats;
         }
@@ -64,14 +66,23 @@ namespace RoadArchitect
 
         public static Material LoadMaterial(string _assetPath)
         {
+            #if UNITY_EDITOR
             return (Material) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(Material));
+            #else
+            // Here you can return your material loaded at runtime
+            return null;
+            #endif
         }
 
 
         public static PhysicMaterial LoadPhysicsMaterial(string _assetPath)
         {
+            #if UNITY_EDITOR
             return (PhysicMaterial) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(PhysicMaterial));
+            #else
+            // Here you can return your physics material loaded at runtime
+            return null;
+            #endif
         }
-#endif
     }
 }
