@@ -2768,8 +2768,16 @@ namespace RoadArchitect
                 return;
             }
 
-            //string tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
-            string tSceneName = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
+
+            string tSceneName;
+
+
+            #if UNITY_EDITOR
+            //tSceneName = System.IO.Path.GetFileName(UnityEditor.EditorApplication.currentScene).ToLower().Replace(".unity","");
+            #endif
+            tSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+
             tSceneName = tSceneName.Replace("/", "");
             tSceneName = tSceneName.Replace(".", "");
             string tFolderName = "";
