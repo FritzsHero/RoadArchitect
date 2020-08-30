@@ -1313,7 +1313,6 @@ namespace RoadArchitect
 
         public void SetAllCutsToCurrentMaterials()
         {
-            string lowerName = "";
             if (!MeshRoad)
             {
                 return;
@@ -1322,69 +1321,42 @@ namespace RoadArchitect
             MeshRenderer[] MRs = MeshRoad.GetComponentsInChildren<MeshRenderer>();
             Material[] roadWorldMats = GetRoadWorldMaterials();
             Material[] roadMarkerMats = GetRoadMarkerMaterials();
-            foreach (MeshRenderer MR in MRs)
-            {
-                lowerName = MR.transform.name.ToLower();
-                if (lowerName.Contains("marker"))
-                {
-                    if (roadMarkerMats != null)
-                    {
-                        MR.sharedMaterials = roadMarkerMats;
-                    }
-                }
-                else if (lowerName.Contains("cut"))
-                {
-                    if (roadWorldMats != null)
-                    {
-                        MR.sharedMaterials = roadWorldMats;
-                    }
-                }
-            }
+            SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
 
             if (isShouldersEnabled && MeshShoL != null)
             {
                 MRs = MeshShoL.GetComponentsInChildren<MeshRenderer>();
                 roadWorldMats = GetShoulderWorldMaterials();
                 roadMarkerMats = GetShoulderMarkerMaterials();
-                foreach (MeshRenderer MR in MRs)
-                {
-                    lowerName = MR.transform.name.ToLower();
-                    if (lowerName.Contains("marker"))
-                    {
-                        if (roadMarkerMats != null)
-                        {
-                            MR.sharedMaterials = roadMarkerMats;
-                        }
-                    }
-                    else if (lowerName.Contains("cut"))
-                    {
-                        if (roadWorldMats != null)
-                        {
-                            MR.sharedMaterials = roadWorldMats;
-                        }
-                    }
-                }
+                SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
             }
 
             if (isShouldersEnabled && MeshShoR != null)
             {
                 MRs = MeshShoR.GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer MR in MRs)
+                SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
+            }
+        }
+
+
+        private void SetCutMaterials(MeshRenderer[] _MRs, Material[] _roadWorldMats, Material[] _roadMarkerMats)
+        {
+            string lowerName;
+            foreach (MeshRenderer MR in _MRs)
+            {
+                lowerName = MR.transform.name.ToLower();
+                if (lowerName.Contains("marker"))
                 {
-                    lowerName = MR.transform.name.ToLower();
-                    if (lowerName.Contains("marker"))
+                    if (_roadMarkerMats != null)
                     {
-                        if (roadMarkerMats != null)
-                        {
-                            MR.sharedMaterials = roadMarkerMats;
-                        }
+                        MR.sharedMaterials = _roadMarkerMats;
                     }
-                    else if (lowerName.Contains("cut"))
+                }
+                else if (lowerName.Contains("cut"))
+                {
+                    if (_roadWorldMats != null)
                     {
-                        if (roadWorldMats != null)
-                        {
-                            MR.sharedMaterials = roadWorldMats;
-                        }
+                        MR.sharedMaterials = _roadWorldMats;
                     }
                 }
             }
