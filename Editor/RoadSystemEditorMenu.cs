@@ -98,6 +98,26 @@ public class RoadSystemEditorMenu : ScriptableObject
     }
 
 
+    [MenuItem("Window/Road Architect/Testing/Run unit test 7 (caution)")]
+    public static void Test7()
+    {
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your seventh RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.RoadArchitectUnitTest7();
+        }
+    }
+
+
+    [MenuItem("Window/Road Architect/Testing/Run unit test 8 (caution)")]
+    public static void Test8()
+    {
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your eigth RoadSystem and will create a test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.RoadArchitectUnitTest8();
+        }
+    }
+
+
     /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. We are not responsbile for data loss if this function is called by the user. </summary>
     [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
     public static void TestCleanup()
