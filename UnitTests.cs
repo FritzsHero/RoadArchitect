@@ -16,7 +16,7 @@ namespace RoadArchitect.Tests
         /// <summary> WARNING: You should only call this on an empty scene. The RoadArchitect team is not responsbile for loss of data or work if this function is called by user. </summary>
         public static void RoadArchitectUnitTests()
         {
-            CleanupTests();
+            CleanupAllTests();
 
             //Create new road system and turn off updates:
             GameObject roadSystemObject = new GameObject("RoadArchitectSystem1");
@@ -70,6 +70,14 @@ namespace RoadArchitect.Tests
                     //Very Long road:
                     RoadArchitectUnitTest6();
                     break;
+                case 7:
+                    // Double intersection:
+                    RoadArchitectUnitTest6();
+                    break;
+                case 8:
+                    // Road loop:
+                    RoadArchitectUnitTest6();
+                    break;
             }
             stopwatch.Stop();
             long testTime = stopwatch.ElapsedMilliseconds;
@@ -77,11 +85,21 @@ namespace RoadArchitect.Tests
         }
 
 
-        public static void CleanupTests()
+        public static void CleanupAllTests()
         {
             Debug.Log("Cleaning up tests");
+            CleanupTest(1);
+
+            // Remove test 7 and 8
+            CleanupTest(7);
+            CleanupTest(8);
+        }
+
+
+        public static void CleanupTest(int _index)
+        {
             //Get the existing road system, if it exists:
-            GameObject roadSystem = (GameObject) GameObject.Find("RoadArchitectSystem1");
+            GameObject roadSystem = (GameObject)GameObject.Find("RoadArchitectSystem" + _index);
             DestroyTerrainHistory(roadSystem);
             Object.DestroyImmediate(roadSystem);
             FlattenTerrains();
@@ -123,7 +141,7 @@ namespace RoadArchitect.Tests
             for (int index = 0; index < maxCount; index++)
             {
                 //tLocs.Add(xVect + new Vector3(tMod * Mathf.Pow((float)i / ((float)MaxCount * 0.15f), 2f), 1f*((float)i*1.25f), tMod * i));
-                nodeLocations.Add(vector + new Vector3(mod * Mathf.Pow((float) index / ((float) 25 * 0.15f), 2f), 0f, mod * index));
+                nodeLocations.Add(vector + new Vector3(mod * Mathf.Pow((float)index / ((float)25 * 0.15f), 2f), 0f, mod * index));
             }
 
             //Get road system create road:

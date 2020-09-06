@@ -124,7 +124,7 @@ public class RoadSystemEditorMenu : ScriptableObject
     {
         if(UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your first RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
         {
-            RoadArchitect.Tests.UnitTests.CleanupTests();
+            RoadArchitect.Tests.UnitTests.CleanupAllTests();
         }
     }
 
