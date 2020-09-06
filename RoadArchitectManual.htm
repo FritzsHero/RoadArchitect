@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head><title>
-	Road Architect Manual - MicroGSD
+	Road Architect Manual
 </title>
 
     <style type="text/css">
@@ -446,10 +446,10 @@
 Road Architect's primary game objects:
 <ul style="margin-left:-20px;">
     <li><span class="b">"Road Architect System"</span> <span class="i s">(RoadArchitectSystem.cs)</span> - this script component is treated as the master GameObject for organization purposes. Located at the root level of the hierarchy.</li>
-    <li><span class="b">"Road Object"</span> <span class="i s">(GSDRoad.cs)</span> - this script component is attached to each road created. Contains 42+ options including road width, lane count and terrain options. Located as a child of a Road Architect System GameObject.</li>
-    <li><span class="b">"Road Node"</span> <span class="i s">(GSDSplineN.cs)</span> - this script component is attached to each road node on a road. Contains 100+ options and is the primary place in which bridges, edge objects and more are created. Located as a child of a Spline GameObject, which is a child of a Road GameObject.</li>
-    <li><span class="b">"Intersection Object"</span> <span class="i s">(GSDRoadIntersection.cs)</span> - this script component is attached to each intersection object. Contains dozens of intersection options. Located as a child of the "Intersections" GameObject, which is a child of a Road Architect System GameObject.</li>
-    <li><span class="b">"Splatmap Creator"</span> <span class="i s">(GSDTerrain.cs)</span> - this script component is attached to each terrain in the scene. Contains 8 options for creating and exporting splat maps. Located on each Terrain GameObject.</li>
+    <li><span class="b">"Road Object"</span> <span class="i s">(Road.cs)</span> - this script component is attached to each road created. Contains 42+ options including road width, lane count and terrain options. Located as a child of a Road Architect System GameObject.</li>
+    <li><span class="b">"Road Node"</span> <span class="i s">(SplineN.cs)</span> - this script component is attached to each road node on a road. Contains 100+ options and is the primary place in which bridges, edge objects and more are created. Located as a child of a Spline GameObject, which is a child of a Road GameObject.</li>
+    <li><span class="b">"Intersection Object"</span> <span class="i s">(RoadIntersection.cs)</span> - this script component is attached to each intersection object. Contains dozens of intersection options. Located as a child of the "Intersections" GameObject, which is a child of a Road Architect System GameObject.</li>
+    <li><span class="b">"Splatmap Creator"</span> <span class="i s">(RoadTerrain.cs)</span> - this script component is attached to each terrain in the scene. Contains 8 options for creating and exporting splat maps. Located on each Terrain GameObject.</li>
 </ul>
 </div>
 </div>
@@ -1088,7 +1088,7 @@ Road Architect's primary game objects:
     <div class="footer">
         <div class="blackline"></div>
         <div class="footercontent">
-            &copy; 2009-2014 MicroGSD LLC, All rights reserved 
+            &copy; 2009-2020 RoadArchitect team
             <span style="float:right"><img src="ManualImages/MicroGSD12.png" alt="" /></span>
         </div>
     </div>
