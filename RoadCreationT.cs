@@ -5993,11 +5993,9 @@ namespace RoadArchitect.Threading
 
             int cCount = _RCS.cut_RoadVectors.Count;
             float distance = 0f;
-            float distanceLeft = 0f;
-            float distanceRight = 0f;
-            float distanceLeftSum = 0f;
-            float distanceRightSum = 0f;
             float distanceSum = 0f;
+
+
             for (int j = 0; j < cCount; j++)
             {
                 Vector3[] tVerts = _RCS.cut_RoadVectors[j].ToArray();
@@ -6006,6 +6004,8 @@ namespace RoadArchitect.Threading
                 Vector2[] uv_world = new Vector2[MVL];
                 int i = 0;
                 bool isOddToggle = true;
+
+
                 while (i + 6 < MVL)
                 {
                     distance = Vector3.Distance(tVerts[i], tVerts[i + 4]);
@@ -6041,8 +6041,7 @@ namespace RoadArchitect.Threading
                         i += 3;
                     }
 
-                    distanceLeftSum += distanceLeft;
-                    distanceRightSum += distanceRight;
+
                     distanceSum += distance;
                     isOddToggle = !isOddToggle;
                 }
