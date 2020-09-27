@@ -420,87 +420,9 @@ namespace RoadArchitect
             }
 
 
-            isShowingRoadHelp = EditorGUILayout.Foldout(isShowingRoadHelp, status);
-            if (isShowingRoadHelp)
-            {
-                EditorGUILayout.BeginVertical("box");
-                EditorGUILayout.LabelField("Road options quick help:", EditorStyles.boldLabel);
-                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
-                {
-                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
-                }
-                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Gizmos:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Enable or disable most gizmos for this road. Disable mesh collider gizmos via the unity menu if necessary or desired.", EditorStyles.miniLabel);
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Lanes:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Select the number of lanes for this road.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Lane width:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Modify the width per lane, in meters.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Road width:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Displays the road width without considering shoulders, in meters.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Shoulders enabled:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Enables or disables shoulders.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Shoulders width:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Modify the width of shoulders, in meters.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Road definition: ", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The meter spacing between mesh triangles on the road and shoulder.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Use default materials: ", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("When enabled will use default materials for the road system, allowing certain aspects of generation to automatically determine the correct materials to utilize.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Max grade enforced: ", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("When enabled enforces a maximum grade on a per node basis.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Max road grade: ", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The maximum road grade allowed on a per node basis.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Multithreading:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("When enabled allows for multi-threaded road generation.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
+            RenderRoadHelpDialog();
 
-                EditorGUILayout.BeginVertical();
-                EditorGUILayout.LabelField("Save mesh assets:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("When enabled saves all generated meshes as .asset files.");
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                {
 
-                }
-                EditorGUILayout.LabelField(" = Resets settings to default.");
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
-            }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.LabelField("Terrain options:");
@@ -596,63 +518,10 @@ namespace RoadArchitect
 
             EditorGUILayout.LabelField("Terrain history size: " + road.TerrainHistoryByteSize);
 
-            isShowingTerrainHelp = EditorGUILayout.Foldout(isShowingTerrainHelp, status);
-            if (isShowingTerrainHelp)
-            {
-                EditorGUILayout.BeginVertical("box");
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Terrain options quick help:", EditorStyles.boldLabel);
-                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
-                {
-                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
-                EditorGUILayout.LabelField("Terrain subtraction: ", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("This value, in meters, will be subtracted from the terrain match height to prevent z-fighting.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Spline magnitude limit: ", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Limits the magnitude of the spline nodes. Lower limit is better for typical roads with node seperation of around 100 to 300 meters. Higher limits will allow for less tension when using very spread out nodes.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Height Modification:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Enables or disables height matching for the terrain.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Active detail removal:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Enables or disables active detail removal. Memory intensive on large terrains with large amounts of details. Recommended to not use this option and instead remove details and trees via splat maps with other addons.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Active tree removal:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Enables or disables active tree removal. Memory intensive on large terrains with large amounts of trees. Recommended to not use this option and instead remove details and trees via splat maps with other addons.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Heights match width:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The distance to the left and right of the road in which terrain heights will be matched to the road.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Details clear width:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The distance between the road and detail, width wise, in which details will be removed.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Details clear height:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The distance between the road and detail, height wise, in which details will be removed.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Tree clear width:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The distance between the road and tree, width wise, in which trees will be removed.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Tree clear height:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("The distance between the road and tree, height wise, in which trees will be removed.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Store terrain history separate from scene:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("If enabled, stores the terrain history immediately on disk after use, saving memory while in editor.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Terrain history size:", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Shows the size, in kilobytes, of the terrain history in memory or on disk.");
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                {
 
-                }
-                EditorGUILayout.LabelField(" = Resets settings to default.");
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
-            }
+            RenderTerrainHelpDialog();
+
+ 
             EditorGUILayout.EndVertical();
 
 
@@ -696,68 +565,9 @@ namespace RoadArchitect
             isDynamicCutsEnabled.boolValue = EditorGUILayout.Toggle("Manual splitting: ", road.isDynamicCutsEnabled);
 
 
-            isShowingCutsHelp = EditorGUILayout.Foldout(isShowingCutsHelp, status);
-            if (isShowingCutsHelp)
-            {
-                EditorGUILayout.BeginVertical("box");
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Road splitting quick help:", EditorStyles.boldLabel);
-                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
-                {
-                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
+            RenderCutsHelpDialog();
 
-                EditorGUILayout.LabelField("Typically auto-split will be the best choice for performance and other reasons.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Choosing split options will split the road/shoulder up into pieces mirroring the locations of nodes.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Splitting allows for more detailed and flexible road texturing options such as passing sections, other different road lines per section, road debris and more.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Choosing split options may also speed up mesh collider collision calculations if bounds calculations are involved.");
-                GUILayout.Space(4f);
-
-                EditorGUILayout.LabelField("Which splitting option to choose?", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Choose no splitting if you desire a single material set for this entire road and your game experiences no collison processing slowdowns from one large mesh collider. This option will create less game objects than automatic and manual splitting.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Choose automatic road and shoulder splitting if you desire multiple materials (such as yellow double lines for certain sections and white dotted for others) for this road and or your game experiences collision processing slowdowns from one large mesh collider.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Choose manual road and shoulder splitting if you desire the same as automatic splitting and desire more freedom over the process. This option will result in less gameobjects and larger mesh colliders when compared to automatic splitting.");
-                GUILayout.Space(4f);
-
-
-                EditorUtilities.DrawLine();
-                EditorGUILayout.LabelField("Manual splitting information: ");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Choosing manual splitting will force the user to select individual nodes to cut instead of the cuts being performed automatically. This option is recommended if bigger mesh colliders do not cause a slowdown in performance, as it lowers the overall gameobject count.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Manual splitting will not split up the mesh colliders like automatic cuts, so the colliders may get large & complex and cost more CPU to process collisions. If this option is chosen, please verify your game's collision processing speed and if you run into long collision processing times split more road sections");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Example usages of manual splitting");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Example hill: Goal is to have double yellow no passing lines on a two lane road but only while the road is near or on the hill. " +
-                    "Pick nodes on either sides of the hill and mark both as road cut. Everything between these two nodes will be its own section, " +
-                    "allowing you to apply double yellow no passing lines for just the hill.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Example mountains: In the mountains, the road is curvy and the grade is high. " +
-                    "There's a flat straight spot that you want to allow passing in, by marking the road with white dotted passing lines. " +
-                    "At the beginning of the flat straight section, mark the node as road cut. Now at the end of the flat straight section, mark this node as road cut. " +
-                    "This will create a road section between the two nodes, allowing you to apply white dotted passing lines for just the flat straight section.");
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                {
-
-                }
-                EditorGUILayout.LabelField(" = Resets settings to default.");
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
-            }
-            else
-            {
-                GUILayout.Space(4f);
-            }
+ 
             EditorGUILayout.EndVertical();
 
 
@@ -813,243 +623,24 @@ namespace RoadArchitect
             }
             EditorGUILayout.EndHorizontal();
 
-            GUILayout.Space(4);
-            isShowingCameraHelp = EditorGUILayout.Foldout(isShowingCameraHelp, status);
-            if (isShowingCameraHelp)
-            {
-                EditorGUILayout.BeginVertical("box");
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Editor camera quick help:", EditorStyles.boldLabel);
-                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
-                {
-                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
-                }
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
-                EditorGUILayout.LabelField("Use this section to travel along the road while in the editor sceneview.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Camera meters/sec is the speed at which the camera moves along the road.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Auto rotate will automatically rotate the camera to look forward at the current road's tangent. Note: You can still zoom in and out with the camera with this option selected.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Note: Materials act differently in the editor scene view compared to actual gameplay. Try the game camera if the materials are z fighting and having other issues.");
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                {
 
-                }
-                EditorGUILayout.LabelField(" = Resets settings to default.");
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
-            }
+            RenderCameraHelpDialog();
+
+
             EditorGUILayout.EndVertical();
 
             GUILayout.Label("Materials:");
             EditorGUILayout.BeginVertical("box");
             //Road material defaults:
 
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Road base material(s) defaults:");
-            //Option: Set mats to defaults:
-            isUsingDefaultMats = false;
-            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-            {
-                isUsingDefaultMats = true;
-            }
-            EditorGUILayout.EndHorizontal();
-            //		EditorGUILayout.PropertyField (t_RoadMaterial1, new GUIContent ("  Mat #1: "));
-            //		if(RS.RoadMaterial1 != null){ EditorGUILayout.PropertyField (t_RoadMaterial2, new GUIContent ("  Mat #2: ")); }
-            //		if(RS.RoadMaterial2 != null){EditorGUILayout.PropertyField (t_RoadMaterial3, new GUIContent ("  Mat #3: ")); }
-            //		if(RS.RoadMaterial3 != null){EditorGUILayout.PropertyField (t_RoadMaterial4, new GUIContent ("  Mat #4: ")); }
 
+            RenderRoadMaterials();
 
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(roadMaterial1, new GUIContent("  Mat #1: "));
-            if (road.RoadMaterial1 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-            {
-                road.RoadMaterial1 = null;
-            }
-            EditorGUILayout.EndHorizontal();
-            if (road.RoadMaterial1 != null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(roadMaterial2, new GUIContent("  Mat #2: "));
-                if (road.RoadMaterial2 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.RoadMaterial2 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            if (road.RoadMaterial1 != null && road.RoadMaterial2 != null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(roadMaterial3, new GUIContent("  Mat #3: "));
-                if (road.RoadMaterial3 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.RoadMaterial3 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            if (road.RoadMaterial1 != null && road.RoadMaterial2 != null && road.RoadMaterial3 != null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(roadMaterial4, new GUIContent("  Mat #4: "));
-                if (road.RoadMaterial4 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.RoadMaterial4 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
+            RenderRoadMarkerMaterials();
 
+            RenderShoulderMaterials();
 
-
-
-            //		//Road marker material defaults:
-            GUILayout.Label("Road marker material(s) defaults:");
-            //		EditorGUILayout.PropertyField (t_RoadMaterialMarker1, new GUIContent ("  Mat #1: "));
-            //		if(RS.RoadMaterialMarker1 != null){EditorGUILayout.PropertyField (t_RoadMaterialMarker2, new GUIContent ("  Mat #2: ")); }
-            //		if(RS.RoadMaterialMarker2 != null){EditorGUILayout.PropertyField (t_RoadMaterialMarker3, new GUIContent ("  Mat #3: ")); }
-            //		if(RS.RoadMaterialMarker3 != null){EditorGUILayout.PropertyField (t_RoadMaterialMarker4, new GUIContent ("  Mat #4: ")); }
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(roadMaterialMarker1, new GUIContent("  Mat #1: "));
-            if (road.RoadMaterialMarker1 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-            {
-                road.RoadMaterialMarker1 = null;
-            }
-            EditorGUILayout.EndHorizontal();
-            if (road.RoadMaterialMarker1 != null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(roadMaterialMarker2, new GUIContent("  Mat #2: "));
-                if (road.RoadMaterialMarker2 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.RoadMaterialMarker2 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            if (road.RoadMaterialMarker1 != null && road.RoadMaterialMarker2 != null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(roadMaterialMarker3, new GUIContent("  Mat #3: "));
-                if (road.RoadMaterialMarker3 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.RoadMaterialMarker3 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            if (road.RoadMaterialMarker1 != null && road.RoadMaterialMarker2 != null && road.RoadMaterialMarker3 != null)
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(roadMaterialMarker4, new GUIContent("  Mat #4: "));
-                if (road.RoadMaterialMarker4 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.RoadMaterialMarker4 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-
-
-
-
-            //		//Shoulder material defaults:
-            if (road.isShouldersEnabled)
-            {
-                GUILayout.Label("Shoulder base material(s) defaults:");
-                //			EditorGUILayout.PropertyField (t_ShoulderMaterial1, new GUIContent ("  Mat #1: "));
-                //			if(RS.ShoulderMaterial1 != null){EditorGUILayout.PropertyField (t_ShoulderMaterial2, new GUIContent ("  Mat #2: ")); }
-                //			if(RS.ShoulderMaterial2 != null){EditorGUILayout.PropertyField (t_ShoulderMaterial3, new GUIContent ("  Mat #3: ")); }
-                //			if(RS.ShoulderMaterial3 != null){EditorGUILayout.PropertyField (t_ShoulderMaterial4, new GUIContent ("  Mat #4: ")); }
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(shoulderMaterial1, new GUIContent("  Mat #1: "));
-                if (road.ShoulderMaterial1 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.ShoulderMaterial1 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-                if (road.ShoulderMaterial1 != null)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(shoulderMaterial2, new GUIContent("  Mat #2: "));
-                    if (road.ShoulderMaterial2 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                    { road.ShoulderMaterial2 = null; }
-                    EditorGUILayout.EndHorizontal();
-                }
-                if (road.ShoulderMaterial1 != null && road.ShoulderMaterial2 != null)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(shoulderMaterial3, new GUIContent("  Mat #3: "));
-                    if (road.ShoulderMaterial3 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                    {
-                        road.ShoulderMaterial3 = null;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-                if (road.ShoulderMaterial1 != null && road.ShoulderMaterial2 != null && road.ShoulderMaterial3 != null)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(shoulderMaterial4, new GUIContent("  Mat #4: "));
-                    if (road.ShoulderMaterial4 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                    {
-                        road.ShoulderMaterial4 = null;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-            }
-
-
-
-
-            //		//Shoulder marker material defaults:
-            if (road.isShouldersEnabled)
-            {
-                GUILayout.Label("Shoulder marker material(s) defaults:");
-                //		EditorGUILayout.PropertyField (t_ShoulderMaterialMarker1, new GUIContent ("  Mat #1: "));
-                //		if(RS.ShoulderMaterialMarker1 != null){EditorGUILayout.PropertyField (t_ShoulderMaterialMarker2, new GUIContent ("  Mat #2: ")); }
-                //		if(RS.ShoulderMaterialMarker2 != null){EditorGUILayout.PropertyField (t_ShoulderMaterialMarker3, new GUIContent ("  Mat #3: ")); }
-                //		if(RS.ShoulderMaterialMarker3 != null){EditorGUILayout.PropertyField (t_ShoulderMaterialMarker4, new GUIContent ("  Mat #4: ")); }
-
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(shoulderMaterialMarker1, new GUIContent("  Mat #1: "));
-                if (road.ShoulderMaterialMarker1 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                {
-                    road.ShoulderMaterialMarker1 = null;
-                }
-                EditorGUILayout.EndHorizontal();
-                if (road.ShoulderMaterialMarker1 != null)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(shoulderMaterialMarker2, new GUIContent("  Mat #2: "));
-                    if (road.ShoulderMaterialMarker2 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                    {
-                        road.ShoulderMaterialMarker2 = null;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-                if (road.ShoulderMaterialMarker1 != null && road.ShoulderMaterialMarker2 != null)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(shoulderMaterialMarker3, new GUIContent("  Mat #3: "));
-                    if (road.ShoulderMaterialMarker3 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                    {
-                        road.ShoulderMaterialMarker3 = null;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-                if (road.ShoulderMaterialMarker1 != null && road.ShoulderMaterialMarker2 != null && road.ShoulderMaterialMarker3 != null)
-                {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(shoulderMaterialMarker4, new GUIContent("  Mat #4: "));
-                    if (road.ShoulderMaterialMarker4 != null && GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
-                    {
-                        road.ShoulderMaterialMarker4 = null;
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-            }
-
+            RenderShoulderMarkerMaterials();
 
 
             //Physics materials:
@@ -1079,35 +670,8 @@ namespace RoadArchitect
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.LabelField("Applying will overwrite any saved cuts' material(s).");
 
-            //Help toggle for materials
-            GUILayout.Space(4);
-            isShowingMaterialsHelp = EditorGUILayout.Foldout(isShowingMaterialsHelp, status);
-            if (isShowingMaterialsHelp)
-            {
-                EditorGUILayout.BeginVertical("box");
-                EditorGUILayout.LabelField("These default materials will be applied by default to their respective generated meshes. If using split roads and or shoulders, you can specific specific materials to use on them (on the mesh renderers of the cuts) and they will be used instead of the default materials listed above.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Road base material is UV mapped on a world vector basis for seamless tiles.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Road marker material is UV mapped to fit roads. Use these materials to place road lines and other road texture details. Note: if using road cuts, these are the materials which will be placed by default at the initial generation.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Shoulder base material is UV mapped on a world vector basis for seamless tiles.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Shoulder marker material is UV mapped on a world vector basis for seamless tiles. For intended use with transparent shadow receiving shaders. Marker materials are applied, optionally, on shoulder cuts.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("The physical material for road will be used on all road colliders. The physical material for shoulder will be used on all shoulder colliders. If using road and or shoulder cuts, you can specficy unique physics materials which will be used instead of the default physics materials.");
-                GUILayout.Space(4f);
-                EditorGUILayout.LabelField("Apply above materials button will clear all saved materials on the roads and all road and shoulder meshes will use the materials listed above.");
-                GUILayout.Space(4f);
-                EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                {
+            RenderMaterialsHelpDialog();
 
-                }
-                EditorGUILayout.LabelField(" = Resets settings to default.");
-                EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical();
-            }
             EditorGUILayout.EndVertical();
 
             //Reset terrain history:
@@ -1272,6 +836,492 @@ namespace RoadArchitect
                 }
 
                 EditorUtility.SetDirty(target);
+            }
+        }
+
+
+        private void RenderRoadMaterials()
+        {
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("Road base material(s) defaults:");
+            //Option: Set mats to defaults:
+            isUsingDefaultMats = false;
+            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
+            {
+                isUsingDefaultMats = true;
+            }
+            EditorGUILayout.EndHorizontal();
+
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(roadMaterial1, new GUIContent("  Mat #1: "));
+            if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+            {
+                road.RoadMaterial1 = null;
+            }
+            EditorGUILayout.EndHorizontal();
+
+
+            if (road.RoadMaterial1 != null)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PropertyField(roadMaterial2, new GUIContent("  Mat #2: "));
+                if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                {
+                    road.RoadMaterial2 = null;
+                }
+                EditorGUILayout.EndHorizontal();
+
+
+                if (road.RoadMaterial2 != null)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(roadMaterial3, new GUIContent("  Mat #3: "));
+                    if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                    {
+                        road.RoadMaterial3 = null;
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+
+                    if (road.RoadMaterial3 != null)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(roadMaterial4, new GUIContent("  Mat #4: "));
+                        if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                        {
+                            road.RoadMaterial4 = null;
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+            }
+        }
+
+
+        private void RenderRoadMarkerMaterials()
+        {
+            //		//Road marker material defaults:
+            GUILayout.Label("Road marker material(s) defaults:");
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(roadMaterialMarker1, new GUIContent("  Mat #1: "));
+            if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+            {
+                road.RoadMaterialMarker1 = null;
+            }
+            EditorGUILayout.EndHorizontal();
+
+            if (road.RoadMaterialMarker1 != null)
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PropertyField(roadMaterialMarker2, new GUIContent("  Mat #2: "));
+                if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                {
+                    road.RoadMaterialMarker2 = null;
+                }
+                EditorGUILayout.EndHorizontal();
+
+
+                if (road.RoadMaterialMarker2 != null)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(roadMaterialMarker3, new GUIContent("  Mat #3: "));
+                    if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                    {
+                        road.RoadMaterialMarker3 = null;
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+
+                    if (road.RoadMaterialMarker3 != null)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(roadMaterialMarker4, new GUIContent("  Mat #4: "));
+                        if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                        {
+                            road.RoadMaterialMarker4 = null;
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+            }
+        }
+
+
+        private void RenderShoulderMaterials()
+        {
+            //		//Shoulder material defaults:
+            if (road.isShouldersEnabled)
+            {
+                GUILayout.Label("Shoulder base material(s) defaults:");
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PropertyField(shoulderMaterial1, new GUIContent("  Mat #1: "));
+                if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                {
+                    road.ShoulderMaterial1 = null;
+                }
+                EditorGUILayout.EndHorizontal();
+
+
+                if (road.ShoulderMaterial1 != null)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(shoulderMaterial2, new GUIContent("  Mat #2: "));
+                    if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                    {
+                        road.ShoulderMaterial2 = null;
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+
+                    if (road.ShoulderMaterial2 != null)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(shoulderMaterial3, new GUIContent("  Mat #3: "));
+                        if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                        {
+                            road.ShoulderMaterial3 = null;
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+
+                        if (road.ShoulderMaterial3 != null)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.PropertyField(shoulderMaterial4, new GUIContent("  Mat #4: "));
+                            if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                            {
+                                road.ShoulderMaterial4 = null;
+                            }
+                            EditorGUILayout.EndHorizontal();
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void RenderShoulderMarkerMaterials()
+        {
+            ////Shoulder marker material defaults:
+            if (road.isShouldersEnabled)
+            {
+                GUILayout.Label("Shoulder marker material(s) defaults:");
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PropertyField(shoulderMaterialMarker1, new GUIContent("  Mat #1: "));
+                if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                {
+                    road.ShoulderMaterialMarker1 = null;
+                }
+                EditorGUILayout.EndHorizontal();
+
+
+                if (road.ShoulderMaterialMarker1 != null)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(shoulderMaterialMarker2, new GUIContent("  Mat #2: "));
+                    if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                    {
+                        road.ShoulderMaterialMarker2 = null;
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+
+                    if (road.ShoulderMaterialMarker2 != null)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(shoulderMaterialMarker3, new GUIContent("  Mat #3: "));
+                        if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                        {
+                            road.ShoulderMaterialMarker3 = null;
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+
+                        if (road.ShoulderMaterialMarker3 != null)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.PropertyField(shoulderMaterialMarker4, new GUIContent("  Mat #4: "));
+                            if (GUILayout.Button(deleteButtonText, imageButton, GUILayout.Width(16f)))
+                            {
+                                road.ShoulderMaterialMarker4 = null;
+                            }
+                            EditorGUILayout.EndHorizontal();
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void RenderMaterialsHelpDialog()
+        {
+            //Help toggle for materials
+            GUILayout.Space(4);
+            isShowingMaterialsHelp = EditorGUILayout.Foldout(isShowingMaterialsHelp, status);
+            if (isShowingMaterialsHelp)
+            {
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.LabelField("These default materials will be applied by default to their respective generated meshes. If using split roads and or shoulders, you can specific specific materials to use on them (on the mesh renderers of the cuts) and they will be used instead of the default materials listed above.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Road base material is UV mapped on a world vector basis for seamless tiles.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Road marker material is UV mapped to fit roads. Use these materials to place road lines and other road texture details. Note: if using road cuts, these are the materials which will be placed by default at the initial generation.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Shoulder base material is UV mapped on a world vector basis for seamless tiles.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Shoulder marker material is UV mapped on a world vector basis for seamless tiles. For intended use with transparent shadow receiving shaders. Marker materials are applied, optionally, on shoulder cuts.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("The physical material for road will be used on all road colliders. The physical material for shoulder will be used on all shoulder colliders. If using road and or shoulder cuts, you can specficy unique physics materials which will be used instead of the default physics materials.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Apply above materials button will clear all saved materials on the roads and all road and shoulder meshes will use the materials listed above.");
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
+                EditorGUILayout.LabelField(" = Resets settings to default.");
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+            }
+        }
+
+
+        private void RenderCameraHelpDialog()
+        {
+            GUILayout.Space(4);
+            isShowingCameraHelp = EditorGUILayout.Foldout(isShowingCameraHelp, status);
+            if (isShowingCameraHelp)
+            {
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Editor camera quick help:", EditorStyles.boldLabel);
+                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
+                {
+                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
+                EditorGUILayout.LabelField("Use this section to travel along the road while in the editor sceneview.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Camera meters/sec is the speed at which the camera moves along the road.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Auto rotate will automatically rotate the camera to look forward at the current road's tangent. Note: You can still zoom in and out with the camera with this option selected.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Note: Materials act differently in the editor scene view compared to actual gameplay. Try the game camera if the materials are z fighting and having other issues.");
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
+                EditorGUILayout.LabelField(" = Resets settings to default.");
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+            }
+        }
+
+
+        private void RenderCutsHelpDialog()
+        {
+            isShowingCutsHelp = EditorGUILayout.Foldout(isShowingCutsHelp, status);
+            if (isShowingCutsHelp)
+            {
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Road splitting quick help:", EditorStyles.boldLabel);
+                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
+                {
+                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
+
+                EditorGUILayout.LabelField("Typically auto-split will be the best choice for performance and other reasons.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Choosing split options will split the road/shoulder up into pieces mirroring the locations of nodes.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Splitting allows for more detailed and flexible road texturing options such as passing sections, other different road lines per section, road debris and more.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Choosing split options may also speed up mesh collider collision calculations if bounds calculations are involved.");
+                GUILayout.Space(4f);
+
+                EditorGUILayout.LabelField("Which splitting option to choose?", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Choose no splitting if you desire a single material set for this entire road and your game experiences no collison processing slowdowns from one large mesh collider. This option will create less game objects than automatic and manual splitting.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Choose automatic road and shoulder splitting if you desire multiple materials (such as yellow double lines for certain sections and white dotted for others) for this road and or your game experiences collision processing slowdowns from one large mesh collider.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Choose manual road and shoulder splitting if you desire the same as automatic splitting and desire more freedom over the process. This option will result in less gameobjects and larger mesh colliders when compared to automatic splitting.");
+                GUILayout.Space(4f);
+
+
+                EditorUtilities.DrawLine();
+                EditorGUILayout.LabelField("Manual splitting information: ");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Choosing manual splitting will force the user to select individual nodes to cut instead of the cuts being performed automatically. This option is recommended if bigger mesh colliders do not cause a slowdown in performance, as it lowers the overall gameobject count.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Manual splitting will not split up the mesh colliders like automatic cuts, so the colliders may get large & complex and cost more CPU to process collisions. If this option is chosen, please verify your game's collision processing speed and if you run into long collision processing times split more road sections");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Example usages of manual splitting");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Example hill: Goal is to have double yellow no passing lines on a two lane road but only while the road is near or on the hill. " +
+                    "Pick nodes on either sides of the hill and mark both as road cut. Everything between these two nodes will be its own section, " +
+                    "allowing you to apply double yellow no passing lines for just the hill.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Example mountains: In the mountains, the road is curvy and the grade is high. " +
+                    "There's a flat straight spot that you want to allow passing in, by marking the road with white dotted passing lines. " +
+                    "At the beginning of the flat straight section, mark the node as road cut. Now at the end of the flat straight section, mark this node as road cut. " +
+                    "This will create a road section between the two nodes, allowing you to apply white dotted passing lines for just the flat straight section.");
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
+                EditorGUILayout.LabelField(" = Resets settings to default.");
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+            }
+            else
+            {
+                GUILayout.Space(4f);
+            }
+        }
+
+
+        private void RenderTerrainHelpDialog()
+        {
+            isShowingTerrainHelp = EditorGUILayout.Foldout(isShowingTerrainHelp, status);
+            if (isShowingTerrainHelp)
+            {
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Terrain options quick help:", EditorStyles.boldLabel);
+                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
+                {
+                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
+                EditorGUILayout.LabelField("Terrain subtraction: ", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("This value, in meters, will be subtracted from the terrain match height to prevent z-fighting.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Spline magnitude limit: ", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Limits the magnitude of the spline nodes. Lower limit is better for typical roads with node seperation of around 100 to 300 meters. Higher limits will allow for less tension when using very spread out nodes.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Height Modification:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Enables or disables height matching for the terrain.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Active detail removal:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Enables or disables active detail removal. Memory intensive on large terrains with large amounts of details. Recommended to not use this option and instead remove details and trees via splat maps with other addons.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Active tree removal:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Enables or disables active tree removal. Memory intensive on large terrains with large amounts of trees. Recommended to not use this option and instead remove details and trees via splat maps with other addons.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Heights match width:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The distance to the left and right of the road in which terrain heights will be matched to the road.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Details clear width:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The distance between the road and detail, width wise, in which details will be removed.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Details clear height:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The distance between the road and detail, height wise, in which details will be removed.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Tree clear width:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The distance between the road and tree, width wise, in which trees will be removed.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Tree clear height:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The distance between the road and tree, height wise, in which trees will be removed.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Store terrain history separate from scene:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("If enabled, stores the terrain history immediately on disk after use, saving memory while in editor.");
+                GUILayout.Space(4f);
+                EditorGUILayout.LabelField("Terrain history size:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Shows the size, in kilobytes, of the terrain history in memory or on disk.");
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
+                EditorGUILayout.LabelField(" = Resets settings to default.");
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+            }
+        }
+
+
+        private void RenderRoadHelpDialog()
+        {
+            isShowingRoadHelp = EditorGUILayout.Foldout(isShowingRoadHelp, status);
+            if (isShowingRoadHelp)
+            {
+                EditorGUILayout.BeginVertical("box");
+                EditorGUILayout.LabelField("Road options quick help:", EditorStyles.boldLabel);
+                if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(120f)))
+                {
+                    Application.OpenURL("https://github.com/MicroGSD/RoadArchitect/wiki");
+                }
+                EditorGUILayout.HelpBox(onlineHelpDesc, MessageType.Info);
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Gizmos:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Enable or disable most gizmos for this road. Disable mesh collider gizmos via the unity menu if necessary or desired.", EditorStyles.miniLabel);
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Lanes:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Select the number of lanes for this road.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Lane width:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Modify the width per lane, in meters.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Road width:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Displays the road width without considering shoulders, in meters.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Shoulders enabled:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Enables or disables shoulders.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Shoulders width:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Modify the width of shoulders, in meters.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Road definition: ", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The meter spacing between mesh triangles on the road and shoulder.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Use default materials: ", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("When enabled will use default materials for the road system, allowing certain aspects of generation to automatically determine the correct materials to utilize.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Max grade enforced: ", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("When enabled enforces a maximum grade on a per node basis.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Max road grade: ", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("The maximum road grade allowed on a per node basis.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Multithreading:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("When enabled allows for multi-threaded road generation.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Save mesh assets:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("When enabled saves all generated meshes as .asset files.");
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4f);
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
+                EditorGUILayout.LabelField(" = Resets settings to default.");
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
             }
         }
 
