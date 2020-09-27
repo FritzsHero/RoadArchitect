@@ -486,7 +486,7 @@ namespace RoadArchitect
             else
             {
                 //Do your custom stuff
-                //In GSD Traffic addon, this will include sensor mode.
+                //A Traffic addon could include sensor mode.
             }
         }
 
