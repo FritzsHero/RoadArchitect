@@ -994,12 +994,100 @@ namespace RoadArchitect
 
             if (isRoadOn)
             {
+                #region "Material assignment"
+                // Materials batched and extracted from inner for loops of mesh creation
+                // Shoulder materials
+                List<Material> shoulderMaterial = new List<Material>();
+                if (road.ShoulderMaterial1 != null)
+                {
+                    shoulderMaterial.Add(road.ShoulderMaterial1);
+                    if (road.ShoulderMaterial2 != null)
+                    {
+                        shoulderMaterial.Add(road.ShoulderMaterial2);
+                        if (road.ShoulderMaterial3 != null)
+                        {
+                            shoulderMaterial.Add(road.ShoulderMaterial3);
+                            if (road.ShoulderMaterial4 != null)
+                            {
+                                shoulderMaterial.Add(road.ShoulderMaterial4);
+                            }
+                        }
+                    }
+                }
+
+                // Marker materials
+                List<Material> markerMaterials = new List<Material>();
+                if (road.RoadMaterialMarker1 != null)
+                {
+                    markerMaterials.Add(road.RoadMaterialMarker1);
+                    if (road.RoadMaterialMarker2 != null)
+                    {
+                        markerMaterials.Add(road.RoadMaterialMarker2);
+                        if (road.RoadMaterialMarker3 != null)
+                        {
+                            markerMaterials.Add(road.RoadMaterialMarker3);
+                            if (road.RoadMaterialMarker4 != null)
+                            {
+                                markerMaterials.Add(road.RoadMaterialMarker4);
+                            }
+                        }
+                    }
+                }
+
+                // Road materials
+                List<Material> roadMaterials = new List<Material>();
+                //Get the mat count:
+                if (road.RoadMaterial1 != null)
+                {
+                    roadMaterials.Add(road.RoadMaterial1);
+                    if (road.RoadMaterial2 != null)
+                    {
+                        roadMaterials.Add(road.RoadMaterial2);
+                        if (road.RoadMaterial3 != null)
+                        {
+                            roadMaterials.Add(road.RoadMaterial3);
+                            if (road.RoadMaterial4 != null)
+                            {
+                                roadMaterials.Add(road.RoadMaterial4);
+                            }
+                        }
+                    }
+                }
+
+                // Shoulder markers
+                List<Material> shoulderMarkersMaterial = new List<Material>();
+                if (road.ShoulderMaterialMarker1 != null)
+                {
+                    shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker1);
+                    if (road.ShoulderMaterialMarker2 != null)
+                    {
+                        shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker2);
+                        if (road.ShoulderMaterialMarker3 != null)
+                        {
+                            shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker3);
+                            if (road.ShoulderMaterialMarker4 != null)
+                            {
+                                shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker4);
+                            }
+                        }
+                    }
+                }
+
+                // Create arrays to only pass references into functions
+                Material[] shoulderMaterialsField = shoulderMaterial.ToArray();
+                Material[] markerMaterialsField = markerMaterials.ToArray();
+                Material[] roadMaterialsField = roadMaterials.ToArray();
+                Material[] shoulderMarkerMaterialsField = shoulderMarkersMaterial.ToArray();
+                #endregion
+
+
+
                 //If road cuts is off, full size UVs:
                 if ((!road.isRoadCutsEnabled && !road.isDynamicCutsEnabled) || (RoadCuts == null || RoadCuts.Count <= 0))
                 {
                     if (tMesh != null)
                     {
-                        tMesh = MeshSetup2Helper(ref tMesh, uv, tangents, ref road.MeshRoad, true);
+                        tMesh = MeshSetup2Helper(ref tMesh, uv, tangents, ref road.MeshRoad, shoulderMaterialsField, markerMaterialsField, roadMaterialsField, true);
                         SaveMesh(SaveMeshTypeEnum.Road, tMesh, road, road.MeshRoad.transform.name);
 
                         Vector3[] ooVerts = new Vector3[tMesh.vertexCount];
@@ -1022,8 +1110,9 @@ namespace RoadArchitect
                         pMesh.tangents = ooTangents;
 
                         GameObject gObj = new GameObject("Pavement");
-                        pMesh = MeshSetup2Helper(ref pMesh, uv2, tangents2, ref gObj, false);
-                        gObj.transform.parent = road.MeshRoad.transform;   //Road markers stored on parent "MeshRoad" game object, with a "Pavement" child game object storing the asphalt.
+                        pMesh = MeshSetup2Helper(ref pMesh, uv2, tangents2, ref gObj, shoulderMaterialsField, markerMaterialsField, roadMaterialsField, false);
+                        //Road markers stored on parent "MeshRoad" game object, with a "Pavement" child game object storing the asphalt.
+                        gObj.transform.parent = road.MeshRoad.transform;
                         SaveMesh(SaveMeshTypeEnum.Road, pMesh, road, gObj.transform.name);
                     }
                 }
@@ -1040,7 +1129,7 @@ namespace RoadArchitect
                         MeshMainBuffer = tMesh_RoadCuts_world[i];
                         if (MeshMainBuffer != null)
                         {
-                            MeshSetup2HelperRoadCuts(i, ref MeshMainBuffer, cut_uv_world[i], cut_tangents_world[i], ref road.MeshRoad, false, out CreatedMainObj);
+                            MeshSetup2HelperRoadCuts(i, ref MeshMainBuffer, cut_uv_world[i], cut_tangents_world[i], ref road.MeshRoad, false, out CreatedMainObj, markerMaterialsField, roadMaterialsField);
                             SaveMesh(SaveMeshTypeEnum.RoadCut, MeshMainBuffer, road, "RoadCut" + i.ToString());
                         }
 
@@ -1049,7 +1138,7 @@ namespace RoadArchitect
                         bool bHasMats = false;
                         if (MeshMarkerBuffer != null)
                         {
-                            bHasMats = MeshSetup2HelperRoadCuts(i, ref MeshMarkerBuffer, cut_uv[i], cut_tangents[i], ref CreatedMainObj, true, out CreatedMarkerObj);
+                            bHasMats = MeshSetup2HelperRoadCuts(i, ref MeshMarkerBuffer, cut_uv[i], cut_tangents[i], ref CreatedMainObj, true, out CreatedMarkerObj, markerMaterialsField, roadMaterialsField);
                             if (bHasMats)
                             {
                                 SaveMesh(SaveMeshTypeEnum.RoadCut, MeshMarkerBuffer, road, "RoadCutMarker" + i.ToString());
@@ -1091,14 +1180,14 @@ namespace RoadArchitect
                         //Right road shoulder:
                         if (tMesh_SR != null)
                         {
-                            tMesh_SR = MeshSetup2Helper(ref tMesh_SR, uv_SR, tangents_SR, ref road.MeshShoR, false, true);
+                            tMesh_SR = MeshSetup2Helper(ref tMesh_SR, uv_SR, tangents_SR, ref road.MeshShoR, shoulderMaterialsField, markerMaterialsField, roadMaterialsField, false, true);
                             SaveMesh(SaveMeshTypeEnum.Shoulder, tMesh_SR, road, road.MeshShoR.transform.name);
                         }
 
                         //Left road shoulder:
                         if (tMesh_SL != null)
                         {
-                            tMesh_SL = MeshSetup2Helper(ref tMesh_SL, uv_SL, tangents_SL, ref road.MeshShoL, false, true);
+                            tMesh_SL = MeshSetup2Helper(ref tMesh_SL, uv_SL, tangents_SL, ref road.MeshShoL, shoulderMaterialsField, markerMaterialsField, roadMaterialsField, false, true);
                             SaveMesh(SaveMeshTypeEnum.Shoulder, tMesh_SL, road, road.MeshShoL.transform.name);
                         }
                     }
@@ -1114,7 +1203,7 @@ namespace RoadArchitect
                             MeshMainBuffer = tMesh_SRCuts_world[index];
                             if (MeshMainBuffer != null)
                             {
-                                MeshSetup2HelperCutsShoulder(index, ref MeshMainBuffer, cut_uv_SR_world[index], cut_tangents_SR_world[index], ref road.MeshShoR, false, false, out CreatedMainObj);
+                                MeshSetup2HelperCutsShoulder(index, ref MeshMainBuffer, cut_uv_SR_world[index], cut_tangents_SR_world[index], ref road.MeshShoR, false, false, out CreatedMainObj, shoulderMarkerMaterialsField, shoulderMaterialsField);
                                 SaveMesh(SaveMeshTypeEnum.SCut, MeshMainBuffer, road, "SCutR" + index.ToString());
                             }
 
@@ -1122,7 +1211,7 @@ namespace RoadArchitect
                             MeshMarkerBuffer = tMesh_SRCuts[index];
                             if (MeshMarkerBuffer != null)
                             {
-                                bHasMats = MeshSetup2HelperCutsShoulder(index, ref MeshMarkerBuffer, cut_uv_SR[index], cut_tangents_SR[index], ref CreatedMainObj, false, true, out CreatedMarkerObj);
+                                bHasMats = MeshSetup2HelperCutsShoulder(index, ref MeshMarkerBuffer, cut_uv_SR[index], cut_tangents_SR[index], ref CreatedMainObj, false, true, out CreatedMarkerObj, shoulderMarkerMaterialsField, shoulderMaterialsField);
                                 if (bHasMats)
                                 {
                                     SaveMesh(SaveMeshTypeEnum.SCut, MeshMarkerBuffer, road, "SCutRMarker" + index.ToString());
@@ -1144,7 +1233,7 @@ namespace RoadArchitect
                             MeshMainBuffer = tMesh_SLCuts_world[index];
                             if (MeshMainBuffer != null)
                             {
-                                MeshSetup2HelperCutsShoulder(index, ref MeshMainBuffer, cut_uv_SL_world[index], cut_tangents_SL_world[index], ref road.MeshShoL, true, false, out CreatedMainObj);
+                                MeshSetup2HelperCutsShoulder(index, ref MeshMainBuffer, cut_uv_SL_world[index], cut_tangents_SL_world[index], ref road.MeshShoL, true, false, out CreatedMainObj, shoulderMarkerMaterialsField, shoulderMaterialsField);
                                 SaveMesh(SaveMeshTypeEnum.SCut, MeshMainBuffer, road, "SCutL" + index.ToString());
                             }
 
@@ -1153,7 +1242,7 @@ namespace RoadArchitect
                             MeshMarkerBuffer = tMesh_SLCuts[index];
                             if (MeshMarkerBuffer != null)
                             {
-                                bHasMats = MeshSetup2HelperCutsShoulder(index, ref MeshMarkerBuffer, cut_uv_SL[index], cut_tangents_SL[index], ref CreatedMainObj, true, true, out CreatedMarkerObj);
+                                bHasMats = MeshSetup2HelperCutsShoulder(index, ref MeshMarkerBuffer, cut_uv_SL[index], cut_tangents_SL[index], ref CreatedMainObj, true, true, out CreatedMarkerObj, shoulderMarkerMaterialsField, shoulderMaterialsField);
                                 if (bHasMats)
                                 {
                                     SaveMesh(SaveMeshTypeEnum.SCut, MeshMarkerBuffer, road, "SCutLMarker" + index.ToString());
@@ -2274,7 +2363,7 @@ namespace RoadArchitect
         #endregion
 
 
-        private Mesh MeshSetup2Helper(ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _obj, bool _isMarker, bool _isShoulder = false, bool _isBridge = false)
+        private Mesh MeshSetup2Helper(ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _obj, Material[] _shoulderMaterials, Material[] _markerMaterials, Material[] _roadMaterials, bool _isMarker, bool _isShoulder = false, bool _isBridge = false)
         {
             _mesh.uv = _uv;
             _mesh.tangents = _tangents;
@@ -2298,113 +2387,26 @@ namespace RoadArchitect
 
             if (_isShoulder)
             {
-                List<Material> shoulderMaterial = new List<Material>();
-
-                int mCounter = 0;
-                if (road.ShoulderMaterial1 != null)
+                if (_shoulderMaterials.Length > 0)
                 {
-                    shoulderMaterial.Add(road.ShoulderMaterial1);
-
-                    mCounter += 1;
-                    if (road.ShoulderMaterial2 != null)
-                    {
-                        shoulderMaterial.Add(road.ShoulderMaterial2);
-
-                        mCounter += 1;
-                        if (road.ShoulderMaterial3 != null)
-                        {
-                            shoulderMaterial.Add(road.ShoulderMaterial3);
-
-                            mCounter += 1;
-                            if (road.ShoulderMaterial4 != null)
-                            {
-                                shoulderMaterial.Add(road.ShoulderMaterial4);
-
-                                mCounter += 1;
-                            }
-                        }
-                    }
-                }
-
-                if (mCounter > 0)
-                {
-                    MR.materials = shoulderMaterial.ToArray();
+                    MR.materials = _shoulderMaterials;
                 }
             }
             else
             {
                 if (_isMarker)
                 {
-                    List<Material> markerMaterials = new List<Material>();
-
-
-                    int mCounter = 0;
-                    if (road.RoadMaterialMarker1 != null)
-                    {
-                        markerMaterials.Add(road.RoadMaterialMarker1);
-
-                        mCounter += 1;
-                        if (road.RoadMaterialMarker2 != null)
-                        {
-                            markerMaterials.Add(road.RoadMaterialMarker2);
-
-                            mCounter += 1;
-                            if (road.RoadMaterialMarker3 != null)
-                            {
-                                markerMaterials.Add(road.RoadMaterialMarker3);
-
-                                mCounter += 1;
-                                if (road.RoadMaterialMarker4 != null)
-                                {
-                                    markerMaterials.Add(road.RoadMaterialMarker4);
-
-
-                                    mCounter += 1;
-                                }
-                            }
-                        }
-                    }
-
-
                     // It should not be necessary to check this, but I let it until I'm sure this does not break anything.
-                    if (mCounter > 0)
+                    if (_markerMaterials.Length > 0)
                     {
-                        MR.materials = markerMaterials.ToArray();
+                        MR.materials = _markerMaterials;
                     }
                 }
                 else
                 {
-                    List<Material> roadMaterials = new List<Material>();
-
-
-                    int mCounter = 0;
-                    if (road.RoadMaterial1 != null)
+                    if (_roadMaterials.Length > 0)
                     {
-                        roadMaterials.Add(road.RoadMaterial1);
-
-                        mCounter += 1;
-                        if (road.RoadMaterial2 != null)
-                        {
-                            roadMaterials.Add(road.RoadMaterial2);
-
-                            mCounter += 1;
-                            if (road.RoadMaterial3 != null)
-                            {
-                                roadMaterials.Add(road.RoadMaterial3);
-
-                                mCounter += 1;
-                                if (road.RoadMaterial4 != null)
-                                {
-                                    roadMaterials.Add(road.RoadMaterial4);
-
-                                    mCounter += 1;
-                                }
-                            }
-                        }
-                    }
-                    if (mCounter > 0)
-                    {
-                        MR.materials = roadMaterials.ToArray();
+                        MR.materials = _roadMaterials;
                     }
 
                     if (MC)
@@ -2434,7 +2436,7 @@ namespace RoadArchitect
         }
 
 
-        private bool MeshSetup2HelperRoadCuts(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isMarkers, out GameObject _createdObj)
+        private bool MeshSetup2HelperRoadCuts(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isMarkers, out GameObject _createdObj, Material[] _markerMaterials, Material[] _roadMaterials)
         {
             string tName = "RoadCut" + _i.ToString();
             if (_isMarkers)
@@ -2484,74 +2486,19 @@ namespace RoadArchitect
 
             if (_isMarkers)
             {
-                List<Material> markerMaterials = new List<Material>();
-
-
-                //Get the mat count:
-                if (road.RoadMaterialMarker1 != null)
-                {
-                    markerMaterials.Add(road.RoadMaterialMarker1);
-
-                    mCounter += 1;
-                    if (road.RoadMaterialMarker2 != null)
-                    {
-                        markerMaterials.Add(road.RoadMaterialMarker2);
-
-                        mCounter += 1;
-                        if (road.RoadMaterialMarker3 != null)
-                        {
-                            markerMaterials.Add(road.RoadMaterialMarker3);
-
-                            mCounter += 1;
-                            if (road.RoadMaterialMarker4 != null)
-                            {
-                                markerMaterials.Add(road.RoadMaterialMarker4);
-
-                                mCounter += 1;
-                            }
-                        }
-                    }
-                }
                 //Apply mats:
-                if (mCounter > 0)
+                if (_markerMaterials.Length > 0)
                 {
-                    MR.materials = markerMaterials.ToArray();
+                    MR.materials = _markerMaterials;
                     isUsingMaterials = true;
                 }
             }
             else
             {
-                List<Material> roadMaterials = new List<Material>();
-
-                //Get the mat count:
-                if (road.RoadMaterial1 != null)
-                {
-                    roadMaterials.Add(road.RoadMaterial1);
-
-                    mCounter += 1;
-                    if (road.RoadMaterial2 != null)
-                    {
-                        roadMaterials.Add(road.RoadMaterial2);
-
-                        mCounter += 1;
-                        if (road.RoadMaterial3 != null)
-                        {
-                            roadMaterials.Add(road.RoadMaterial3);
-
-                            mCounter += 1;
-                            if (road.RoadMaterial4 != null)
-                            {
-                                roadMaterials.Add(road.RoadMaterial4);
-
-                                mCounter += 1;
-                            }
-                        }
-                    }
-                }
                 //Apply mats:
-                if (mCounter > 0)
+                if (_roadMaterials.Length > 0)
                 {
-                    MR.materials = roadMaterials.ToArray();
+                    MR.materials = _roadMaterials;
                     isUsingMaterials = true;
                 }
             }
@@ -2582,7 +2529,7 @@ namespace RoadArchitect
         }
 
 
-        private bool MeshSetup2HelperCutsShoulder(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isLeft, bool _isMarkers, out GameObject _createdObj)
+        private bool MeshSetup2HelperCutsShoulder(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isLeft, bool _isMarkers, out GameObject _createdObj, Material[] _shoulderMarkerMaterials, Material[] _shoulderMaterials)
         {
 
             string tName = "";
@@ -2671,69 +2618,17 @@ namespace RoadArchitect
 
             if (_isMarkers)
             {
-                List<Material> shoulderMarkersMaterial = new List<Material>();
-
-                if (road.ShoulderMaterialMarker1 != null)
+                if (_shoulderMarkerMaterials.Length > 0)
                 {
-                    shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker1);
-
-                    mCounter += 1;
-                    if (road.ShoulderMaterialMarker2 != null)
-                    {
-                        shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker2);
-
-                        mCounter += 1;
-                        if (road.ShoulderMaterialMarker3 != null)
-                        {
-                            shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker3);
-
-                            mCounter += 1;
-                            if (road.ShoulderMaterialMarker4 != null)
-                            {
-                                shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker4);
-
-                                mCounter += 1;
-                            }
-                        }
-                    }
-                }
-                if (mCounter > 0)
-                {
-                    MR.materials = shoulderMarkersMaterial.ToArray();
+                    MR.materials = _shoulderMarkerMaterials;
                     bHasMats = true;
                 }
             }
             else
             {
-                List<Material> shoulderMaterial = new List<Material>();
-
-                if (road.ShoulderMaterial1 != null)
+                if (_shoulderMaterials.Length > 0)
                 {
-                    shoulderMaterial.Add(road.ShoulderMaterial1);
-
-                    mCounter += 1;
-                    if (road.ShoulderMaterial2 != null)
-                    {
-                        shoulderMaterial.Add(road.ShoulderMaterial2);
-
-                        mCounter += 1;
-                        if (road.ShoulderMaterial3 != null)
-                        {
-                            shoulderMaterial.Add(road.ShoulderMaterial3);
-
-                            mCounter += 1;
-                            if (road.ShoulderMaterial4 != null)
-                            {
-                                shoulderMaterial.Add(road.ShoulderMaterial4);
-
-                                mCounter += 1;
-                            }
-                        }
-                    }
-                }
-                if (mCounter > 0)
-                {
-                    MR.materials = shoulderMaterial.ToArray();
+                    MR.materials = _shoulderMaterials;
                     MR = null;
                     bHasMats = true;
                 }
