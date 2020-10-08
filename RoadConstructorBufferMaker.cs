@@ -994,92 +994,12 @@ namespace RoadArchitect
 
             if (isRoadOn)
             {
-                #region "Material assignment"
                 // Materials batched and extracted from inner for loops of mesh creation
-                // Shoulder materials
-                List<Material> shoulderMaterial = new List<Material>();
-                if (road.ShoulderMaterial1 != null)
-                {
-                    shoulderMaterial.Add(road.ShoulderMaterial1);
-                    if (road.ShoulderMaterial2 != null)
-                    {
-                        shoulderMaterial.Add(road.ShoulderMaterial2);
-                        if (road.ShoulderMaterial3 != null)
-                        {
-                            shoulderMaterial.Add(road.ShoulderMaterial3);
-                            if (road.ShoulderMaterial4 != null)
-                            {
-                                shoulderMaterial.Add(road.ShoulderMaterial4);
-                            }
-                        }
-                    }
-                }
-
-                // Marker materials
-                List<Material> markerMaterials = new List<Material>();
-                if (road.RoadMaterialMarker1 != null)
-                {
-                    markerMaterials.Add(road.RoadMaterialMarker1);
-                    if (road.RoadMaterialMarker2 != null)
-                    {
-                        markerMaterials.Add(road.RoadMaterialMarker2);
-                        if (road.RoadMaterialMarker3 != null)
-                        {
-                            markerMaterials.Add(road.RoadMaterialMarker3);
-                            if (road.RoadMaterialMarker4 != null)
-                            {
-                                markerMaterials.Add(road.RoadMaterialMarker4);
-                            }
-                        }
-                    }
-                }
-
-                // Road materials
-                List<Material> roadMaterials = new List<Material>();
-                //Get the mat count:
-                if (road.RoadMaterial1 != null)
-                {
-                    roadMaterials.Add(road.RoadMaterial1);
-                    if (road.RoadMaterial2 != null)
-                    {
-                        roadMaterials.Add(road.RoadMaterial2);
-                        if (road.RoadMaterial3 != null)
-                        {
-                            roadMaterials.Add(road.RoadMaterial3);
-                            if (road.RoadMaterial4 != null)
-                            {
-                                roadMaterials.Add(road.RoadMaterial4);
-                            }
-                        }
-                    }
-                }
-
-                // Shoulder markers
-                List<Material> shoulderMarkersMaterial = new List<Material>();
-                if (road.ShoulderMaterialMarker1 != null)
-                {
-                    shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker1);
-                    if (road.ShoulderMaterialMarker2 != null)
-                    {
-                        shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker2);
-                        if (road.ShoulderMaterialMarker3 != null)
-                        {
-                            shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker3);
-                            if (road.ShoulderMaterialMarker4 != null)
-                            {
-                                shoulderMarkersMaterial.Add(road.ShoulderMaterialMarker4);
-                            }
-                        }
-                    }
-                }
-
-                // Create arrays to only pass references into functions
-                Material[] shoulderMaterialsField = shoulderMaterial.ToArray();
-                Material[] markerMaterialsField = markerMaterials.ToArray();
-                Material[] roadMaterialsField = roadMaterials.ToArray();
-                Material[] shoulderMarkerMaterialsField = shoulderMarkersMaterial.ToArray();
-                #endregion
-
+                Material[] markerMaterialsField = road.GetRoadMarkerMaterials();
+                Material[] roadMaterialsField = road.GetRoadWorldMaterials();
+                // shoulder fields only contain data when isShouldersEnabled
+                Material[] shoulderMaterialsField = road.GetShoulderWorldMaterials();
+                Material[] shoulderMarkerMaterialsField = road.GetShoulderMarkerMaterials();
 
 
                 //If road cuts is off, full size UVs:
@@ -2481,7 +2401,6 @@ namespace RoadArchitect
 
             //Disable shadows for road cuts and markers:
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            int mCounter = 0;
             bool isUsingMaterials = false;
 
             if (_isMarkers)
@@ -2531,7 +2450,6 @@ namespace RoadArchitect
 
         private bool MeshSetup2HelperCutsShoulder(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isLeft, bool _isMarkers, out GameObject _createdObj, Material[] _shoulderMarkerMaterials, Material[] _shoulderMaterials)
         {
-
             string tName = "";
             if (_isMarkers)
             {
@@ -2609,7 +2527,6 @@ namespace RoadArchitect
                     MC.sharedMesh = MF.sharedMesh;
                 }
             }
-            int mCounter = 0;
             bool bHasMats = false;
 
             //Disable shadows for road cuts and markers:
