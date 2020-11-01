@@ -1181,82 +1181,14 @@ namespace RoadArchitect
                             //						MeshSetup2_Intersections_FixNormals();	
                         }
 
-                        //Remove main mesh stuff if necessary:
-                        if (tMesh_SR != null)
-                        {
-                            Object.DestroyImmediate(tMesh_SR);
-                        }
-                        if (tMesh_SL != null)
-                        {
-                            Object.DestroyImmediate(tMesh_SL);
-                        }
 
-                        if (road.MeshShoR != null)
-                        {
-                            MeshCollider tMC = road.MeshShoR.GetComponent<MeshCollider>();
-                            MeshRenderer tMR = road.MeshShoR.GetComponent<MeshRenderer>();
-                            if (tMC != null)
-                            {
-                                Object.DestroyImmediate(tMC);
-                            }
-                            if (tMR != null)
-                            {
-                                Object.DestroyImmediate(tMR);
-                            }
-                        }
-                        if (road.MeshShoL != null)
-                        {
-                            MeshCollider tMC = road.MeshShoL.GetComponent<MeshCollider>();
-                            MeshRenderer tMR = road.MeshShoL.GetComponent<MeshRenderer>();
-                            if (tMC != null)
-                            {
-                                Object.DestroyImmediate(tMC);
-                            }
-                            if (tMR != null)
-                            {
-                                Object.DestroyImmediate(tMR);
-                            }
-                        }
+                        RemoveMainMeshes();
                     }
                 }
                 else
                 {
-                    //Remove main mesh stuff if necessary:
-                    if (tMesh_SR != null)
-                    {
-                        Object.DestroyImmediate(tMesh_SR);
-                    }
-                    if (tMesh_SL != null)
-                    {
-                        Object.DestroyImmediate(tMesh_SL);
-                    }
+                    RemoveMainMeshes();
 
-                    if (road.MeshShoR != null)
-                    {
-                        MeshCollider tMC = road.MeshShoR.GetComponent<MeshCollider>();
-                        MeshRenderer tMR = road.MeshShoR.GetComponent<MeshRenderer>();
-                        if (tMC != null)
-                        {
-                            Object.DestroyImmediate(tMC);
-                        }
-                        if (tMR != null)
-                        {
-                            Object.DestroyImmediate(tMR);
-                        }
-                    }
-                    if (road.MeshShoL != null)
-                    {
-                        MeshCollider tMC = road.MeshShoL.GetComponent<MeshCollider>();
-                        MeshRenderer tMR = road.MeshShoL.GetComponent<MeshRenderer>();
-                        if (tMC != null)
-                        {
-                            Object.DestroyImmediate(tMC);
-                        }
-                        if (tMR != null)
-                        {
-                            Object.DestroyImmediate(tMR);
-                        }
-                    }
 
                     Mesh tBuffer = null;
                     int xCount = tMesh_SRCuts_world.Count;
@@ -1399,6 +1331,47 @@ namespace RoadArchitect
                 for (int index = 0; index < mCount; index++)
                 {
                     road.spline.nodes[index].UpdateCuts();
+                }
+            }
+        }
+
+
+        private void RemoveMainMeshes()
+        {
+            //Remove main mesh stuff if necessary:
+            if (tMesh_SR != null)
+            {
+                Object.DestroyImmediate(tMesh_SR);
+            }
+            if (tMesh_SL != null)
+            {
+                Object.DestroyImmediate(tMesh_SL);
+            }
+
+            if (road.MeshShoR != null)
+            {
+                MeshCollider tMC = road.MeshShoR.GetComponent<MeshCollider>();
+                MeshRenderer tMR = road.MeshShoR.GetComponent<MeshRenderer>();
+                if (tMC != null)
+                {
+                    Object.DestroyImmediate(tMC);
+                }
+                if (tMR != null)
+                {
+                    Object.DestroyImmediate(tMR);
+                }
+            }
+            if (road.MeshShoL != null)
+            {
+                MeshCollider tMC = road.MeshShoL.GetComponent<MeshCollider>();
+                MeshRenderer tMR = road.MeshShoL.GetComponent<MeshRenderer>();
+                if (tMC != null)
+                {
+                    Object.DestroyImmediate(tMC);
+                }
+                if (tMR != null)
+                {
+                    Object.DestroyImmediate(tMR);
                 }
             }
         }
@@ -2358,19 +2331,14 @@ namespace RoadArchitect
 
         private bool MeshSetup2HelperRoadCuts(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isMarkers, out GameObject _createdObj, Material[] _markerMaterials, Material[] _roadMaterials)
         {
-            string tName = "RoadCut" + _i.ToString();
-            if (_isMarkers)
-            {
-                tName = "Markers" + _i.ToString();
-            }
-            _createdObj = new GameObject(tName);
-
             if (!_isMarkers)
             {
+                _createdObj = new GameObject("RoadCut" + _i.ToString());
                 RoadCutNodes[_i].roadCutWorld = _createdObj;
             }
             else
             {
+                _createdObj = new GameObject("Markers" + _i.ToString());
                 RoadCutNodes[_i].roadCutMarker = _createdObj;
             }
 
@@ -2403,9 +2371,9 @@ namespace RoadArchitect
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             bool isUsingMaterials = false;
 
+            //Apply Materials:
             if (_isMarkers)
             {
-                //Apply mats:
                 if (_markerMaterials.Length > 0)
                 {
                     MR.materials = _markerMaterials;
@@ -2414,7 +2382,6 @@ namespace RoadArchitect
             }
             else
             {
-                //Apply mats:
                 if (_roadMaterials.Length > 0)
                 {
                     MR.materials = _roadMaterials;
@@ -2450,56 +2417,37 @@ namespace RoadArchitect
 
         private bool MeshSetup2HelperCutsShoulder(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isLeft, bool _isMarkers, out GameObject _createdObj, Material[] _shoulderMarkerMaterials, Material[] _shoulderMaterials)
         {
-            string tName = "";
             if (_isMarkers)
             {
+                _createdObj = new GameObject("Markers" + _i.ToString());
+
                 if (_isLeft)
                 {
-                    tName = "Markers" + _i.ToString();
+                    _createdObj.transform.position = cut_ShoulderL_VectorsHome[_i];
+                    ShoulderCutsLNodes[_i].shoulderCutLMarker = _createdObj;
                 }
                 else
                 {
-                    tName = "Markers" + _i.ToString();
+                    _createdObj.transform.position = cut_ShoulderR_VectorsHome[_i];
+                    ShoulderCutsRNodes[_i].shoulderCutRMarker = _createdObj;
                 }
             }
             else
             {
                 if (_isLeft)
                 {
-                    tName = "SCutL" + _i.ToString();
-                }
-                else
-                {
-                    tName = "SCutR" + _i.ToString();
-                }
-            }
-
-            _createdObj = new GameObject(tName);
-            if (_isLeft)
-            {
-                _createdObj.transform.position = cut_ShoulderL_VectorsHome[_i];
-                if (!_isMarkers)
-                {
+                    _createdObj = new GameObject("SCutL" + _i.ToString());
+                    _createdObj.transform.position = cut_ShoulderL_VectorsHome[_i];
                     ShoulderCutsLNodes[_i].shoulderCutLWorld = _createdObj;
                 }
                 else
                 {
-                    ShoulderCutsLNodes[_i].shoulderCutLMarker = _createdObj;
-                }
-
-            }
-            else
-            {
-                _createdObj.transform.position = cut_ShoulderR_VectorsHome[_i];
-                if (!_isMarkers)
-                {
+                    _createdObj = new GameObject("SCutR" + _i.ToString());
+                    _createdObj.transform.position = cut_ShoulderR_VectorsHome[_i];
                     ShoulderCutsRNodes[_i].shoulderCutRWorld = _createdObj;
                 }
-                else
-                {
-                    ShoulderCutsRNodes[_i].shoulderCutRMarker = _createdObj;
-                }
             }
+
 
             MeshCollider MC = null;
             if (road.isUsingMeshColliders)
