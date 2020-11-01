@@ -342,86 +342,66 @@ namespace RoadArchitect
 
         private void MRChange(ref MeshRenderer _MR, iLightSubStatusEnum _lightSub)
         {
+            Material meshMaterial; 
+
             if (isUsingSharedMaterial)
             {
-                if (_lightSub == iLightSubStatusEnum.Green)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
-                }
-                else if (_lightSub == iLightSubStatusEnum.Yellow)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
-                }
-                else if (_lightSub == iLightSubStatusEnum.Red)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0f, 0f);
-                }
+                meshMaterial = _MR.sharedMaterial;
             }
             else
             {
-                if (_lightSub == iLightSubStatusEnum.Green)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0.667f, 0f);
-                }
-                else if (_lightSub == iLightSubStatusEnum.Yellow)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0.334f, 0f);
-                }
-                else if (_lightSub == iLightSubStatusEnum.Red)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0f, 0f);
-                }
+                meshMaterial = _MR.material;
+            }
+
+
+            if (_lightSub == iLightSubStatusEnum.Green)
+            {
+                meshMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
+            }
+            else if (_lightSub == iLightSubStatusEnum.Yellow)
+            {
+                meshMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
+            }
+            else if (_lightSub == iLightSubStatusEnum.Red)
+            {
+                meshMaterial.mainTextureOffset = new Vector2(0f, 0f);
             }
         }
 
 
         private void MRChangeLeftYield(ref MeshRenderer _MR, iLightYieldSubStatusEnum _lightYieldSub)
         {
+            Material meshMaterial;
+
             if (isUsingSharedMaterial)
             {
-                if (_lightYieldSub == iLightYieldSubStatusEnum.Green)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0.667f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.Yellow)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0.334f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.Red)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.YellowTurn)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0.6f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.GreenTurn)
-                {
-                    _MR.sharedMaterial.mainTextureOffset = new Vector2(0.8f, 0f);
-                }
+                meshMaterial = _MR.sharedMaterial;
             }
             else
             {
-                if (_lightYieldSub == iLightYieldSubStatusEnum.Green)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0.4f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.Yellow)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0.2f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.Red)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.YellowTurn)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0.6f, 0f);
-                }
-                else if (_lightYieldSub == iLightYieldSubStatusEnum.GreenTurn)
-                {
-                    _MR.material.mainTextureOffset = new Vector2(0.8f, 0f);
-                }
+                meshMaterial = _MR.material;
+            }
+
+
+            if (_lightYieldSub == iLightYieldSubStatusEnum.Green)
+            {
+                meshMaterial.mainTextureOffset = isUsingSharedMaterial ? new Vector2(0.667f, 0f) : new Vector2(0.4f, 0f);
+            }
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.Yellow)
+            {
+                meshMaterial.mainTextureOffset = isUsingSharedMaterial ? new Vector2(0.334f, 0f) : new Vector2(0.2f, 0f);
+            }
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.Red)
+            {
+                meshMaterial.mainTextureOffset = new Vector2(0f, 0f);
+            }
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.YellowTurn)
+            {
+                meshMaterial.mainTextureOffset = new Vector2(0.6f, 0f);
+            }
+            else if (_lightYieldSub == iLightYieldSubStatusEnum.GreenTurn)
+            {
+                meshMaterial.mainTextureOffset = new Vector2(0.8f, 0f);
             }
         }
 
