@@ -1323,18 +1323,20 @@ namespace RoadArchitect
             Material[] roadMarkerMats = GetRoadMarkerMaterials();
             SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
 
-            if (isShouldersEnabled && MeshShoL != null)
+            if (isShouldersEnabled)
             {
-                MRs = MeshShoL.GetComponentsInChildren<MeshRenderer>();
                 roadWorldMats = GetShoulderWorldMaterials();
                 roadMarkerMats = GetShoulderMarkerMaterials();
-                SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
-            }
-
-            if (isShouldersEnabled && MeshShoR != null)
-            {
-                MRs = MeshShoR.GetComponentsInChildren<MeshRenderer>();
-                SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
+                if (MeshShoL != null)
+                {
+                    MRs = MeshShoL.GetComponentsInChildren<MeshRenderer>();
+                    SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
+                }
+                if (MeshShoR != null)
+                {
+                    MRs = MeshShoR.GetComponentsInChildren<MeshRenderer>();
+                    SetCutMaterials(MRs, roadWorldMats, roadMarkerMats);
+                }
             }
         }
 
