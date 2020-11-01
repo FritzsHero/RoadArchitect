@@ -2906,22 +2906,9 @@ namespace RoadArchitect.Threading
                         preInterDistance = (iNode.spline.RoadWidth * PreInter_RoadWidthMod) / iNode.spline.distance;
                         iNode.intersectionConstruction.tempconstruction_InterStart = iNode.time - preInterDistance;
                         iNode.intersectionConstruction.tempconstruction_InterEnd = iNode.time + preInterDistance;
-                        if (iNode.intersectionConstruction.tempconstruction_InterStart > 1f)
-                        {
-                            iNode.intersectionConstruction.tempconstruction_InterStart = 1f;
-                        }
-                        if (iNode.intersectionConstruction.tempconstruction_InterStart < 0f)
-                        {
-                            iNode.intersectionConstruction.tempconstruction_InterStart = 0f;
-                        }
-                        if (iNode.intersectionConstruction.tempconstruction_InterEnd > 1f)
-                        {
-                            iNode.intersectionConstruction.tempconstruction_InterEnd = 1f;
-                        }
-                        if (iNode.intersectionConstruction.tempconstruction_InterEnd < 0f)
-                        {
-                            iNode.intersectionConstruction.tempconstruction_InterEnd = 0f;
-                        }
+                       
+                        iNode.intersectionConstruction.ClampConstructionValues();
+
                         iNode.intersectionConstruction.isTempConstructionProcessedInter1 = true;
                     }
 
@@ -2942,22 +2929,9 @@ namespace RoadArchitect.Threading
                             preInterDistance = (iNode.spline.RoadWidth * PreInter_RoadWidthMod) / iNode.spline.distance;
                             iNode.intersectionConstruction.tempconstruction_InterStart = iNode.time - preInterDistance;
                             iNode.intersectionConstruction.tempconstruction_InterEnd = iNode.time + preInterDistance;
-                            if (iNode.intersectionConstruction.tempconstruction_InterStart > 1f)
-                            {
-                                iNode.intersectionConstruction.tempconstruction_InterStart = 1f;
-                            }
-                            if (iNode.intersectionConstruction.tempconstruction_InterStart < 0f)
-                            {
-                                iNode.intersectionConstruction.tempconstruction_InterStart = 0f;
-                            }
-                            if (iNode.intersectionConstruction.tempconstruction_InterEnd > 1f)
-                            {
-                                iNode.intersectionConstruction.tempconstruction_InterEnd = 1f;
-                            }
-                            if (iNode.intersectionConstruction.tempconstruction_InterEnd < 0f)
-                            {
-                                iNode.intersectionConstruction.tempconstruction_InterEnd = 0f;
-                            }
+                            
+                            iNode.intersectionConstruction.ClampConstructionValues();
+
                             iNode.intersectionConstruction.isTempConstructionProcessedInter1 = true;
                         }
                     }
@@ -3857,6 +3831,7 @@ namespace RoadArchitect.Threading
 
         private static void AddIntersectionBounds(ref Road _road, ref RoadConstructorBufferMaker _RCS)
         {
+            #region "Vars"
 #pragma warning disable CS0219
             bool isBridge = false;
             bool isTempBridge = false;
@@ -3921,6 +3896,7 @@ namespace RoadArchitect.Threading
             SplineN xNode = null;
             float tInterSubtract = 4f;
             float tLastInterHeight = -4f;
+            #endregion
 
             //GameObject xObj = null;
             //xObj = GameObject.Find("temp22");

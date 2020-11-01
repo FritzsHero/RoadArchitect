@@ -207,6 +207,27 @@ namespace RoadArchitect
             }
 
 
+            public void ClampConstructionValues()
+            {
+                if (tempconstruction_InterStart > 1f)
+                {
+                    tempconstruction_InterStart = 1f;
+                }
+                if (tempconstruction_InterStart < 0f)
+                {
+                    tempconstruction_InterStart = 0f;
+                }
+                if (tempconstruction_InterEnd > 1f)
+                {
+                    tempconstruction_InterEnd = 1f;
+                }
+                if (tempconstruction_InterEnd < 0f)
+                {
+                    tempconstruction_InterEnd = 0f;
+                }
+            }
+
+
             public iConstructionMaker()
             {
                 Nullify();
