@@ -486,10 +486,6 @@ namespace RoadArchitect
 
         public void Setup(Vector3 _pos, Quaternion _rot, Vector2 _io, float _time, string _name)
         {
-            if (!Application.isEditor)
-            {
-                return;
-            }
             pos = _pos;
             rot = _rot;
             easeIO = _io;
