@@ -116,11 +116,6 @@ namespace RoadArchitect
         /// <summary> Setup Spline values </summary>
         public void Setup()
         {
-            #if UNITY_EDITOR
-            //Don't setup if playing:
-            //if(!Application.isEditor || (Application.isEditor && UnityEditor.EditorApplication.isPlaying)){ return; }
-            #endif
-
             //Setup unique ID:
             RootUtils.SetupUniqueIdentifier(ref uID);
 

@@ -27,27 +27,17 @@ namespace RoadArchitect
         public Vector3 nextTan = default(Vector3);
         [UnityEngine.Serialization.FormerlySerializedAs("OldTime")]
         public float oldTime = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SegmentDist")]
-        public float segmentDist = 0f;
         [UnityEngine.Serialization.FormerlySerializedAs("EditorDisplayString")]
         public string editorDisplayString = "";
 
-        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
-        public string nodeName = "Node-1";
-
-        [UnityEngine.Serialization.FormerlySerializedAs("tempTime")]
-        public bool isTempTime = false;
         public float tempSegmentTime = 0f;
-        public float tempMinDistance = 5000f;
-        public float tempMinTime = 0f;
         [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode")]
         public bool isSpecialEndNode = false;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart")]
         public SplineN specialNodeCounterpart = null;
         [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart_Master")]
         public SplineN specialNodeCounterpartMaster = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart_Old")]
-        public SplineN specialNodeCounterpartOld = null;
+        /// <summary> Connected nodes array </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("OriginalConnectionNodes")]
         public SplineN[] originalConnectionNodes = null;
 
@@ -59,8 +49,6 @@ namespace RoadArchitect
         public bool isSpecialIntersection = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bSpecialRoadConnPrimary")]
         public bool isSpecialRoadConnPrimary = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialRoadConnPrimary_Old")]
-        public bool isSpecialRoadConnPrimaryOld = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bRoadCut")]
         public bool isRoadCut = false;
         [UnityEngine.Serialization.FormerlySerializedAs("MinSplination")]
@@ -97,27 +85,21 @@ namespace RoadArchitect
         //Navigation:
         [UnityEngine.Serialization.FormerlySerializedAs("bNeverIntersect")]
         public bool isNeverIntersect = false;
+        /// <summary> Is this node used by an intersection </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("bIsIntersection")]
         public bool isIntersection = false;
+        /// <summary> Defines end of road, if special end or start it is the second node/second last node </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("bIsEndPoint")]
         public bool isEndPoint = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsMainPoint")]
-        public bool isMainPoint = false;
         public int id = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("id_intersection_othernode")]
         public int intersectionOtherNodeID = 0;
+        /// <summary> Contains previous and next node ids </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("id_connected")]
         public List<int> connectedID;
+        /// <summary> Contains previous and next node </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("node_connected")]
         public List<SplineN> connectedNode;
-        [UnityEngine.Serialization.FormerlySerializedAs("bDeleteMe")]
-        public bool isDeleteMe = false;
-        public float tempDistance = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("ExtraFCost")]
-        public int extraFCost = 0;
-        public int gValue;
-        public int hValue;
-        public int fValue;
         [UnityEngine.Serialization.FormerlySerializedAs("bIgnore")]
         public bool isIgnore = false;
         [UnityEngine.Serialization.FormerlySerializedAs("opt_GizmosEnabled")]
@@ -1294,7 +1276,7 @@ namespace RoadArchitect
         }
 
 
-        /// <summary> Clears the cut materials. Called when user hits button on road editor inspector gui. </summary>
+        /// <summary> Clears the cut materials </summary>
         public void ClearCuts()
         {
             roadCutWorldMats = null;
@@ -1777,6 +1759,7 @@ namespace RoadArchitect
 
 
         #region "Is straight line to next node"
+        /// <summary> Returns true if two of 3 pos Vectors to previous and next 2 nodes approx. match </summary>
         public bool IsStraight()
         {
             int id1 = idOnSpline - 1;
@@ -1812,6 +1795,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns <see langword="true"/> if exactly 2 values are approximately the same </summary>
         private static bool IsApproxTwoThirds(ref Vector3 _v1, Vector3 _v2)
         {
             int cCount = 0;
@@ -1841,6 +1825,7 @@ namespace RoadArchitect
 
 
         #region "Non-editor util"
+        /// <summary> Returns false when isSpecialEndNode </summary>
         public bool CanSplinate()
         {
             if (isSpecialEndNode)
@@ -1855,6 +1840,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns false when isIntersection or isSpecialEndNode </summary>
         public bool IsLegitimate()
         {
             if (isIntersection || isSpecialEndNode)
@@ -1869,6 +1855,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns false when isSpecialEndNode </summary>
         public bool IsLegitimateGrade()
         {
             if (isSpecialEndNode)

@@ -676,11 +676,6 @@ namespace RoadArchitect
                 isEditorConstructing = false;
             }
 
-
-            //if(Application.isPlaying || !Application.isEditor){ return; }
-            //if(Application.isEditor && UnityEditor.EditorApplication.isPlaying){ return; }
-            //if(Application.isEditor && UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode){ return; }
-
             //In here for intersection patching purposes:
             int nodeCount = spline.GetNodeCount();
             SplineN node = null;
