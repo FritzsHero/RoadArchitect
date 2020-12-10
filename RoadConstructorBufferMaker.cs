@@ -7,7 +7,6 @@ namespace RoadArchitect
     public class RoadConstructorBufferMaker
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         public Road road;
 
         public List<Vector3> RoadVectors;
@@ -2329,6 +2328,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Creates a GameObject and adds mesh collider / renderer and configures mesh to be static etc. </summary>
         private bool MeshSetup2HelperRoadCuts(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isMarkers, out GameObject _createdObj, Material[] _markerMaterials, Material[] _roadMaterials)
         {
             if (!_isMarkers)

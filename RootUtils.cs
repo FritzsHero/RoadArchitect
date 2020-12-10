@@ -239,6 +239,8 @@ namespace RoadArchitect
             float x1, x2, y1, y2, z1, z2, s1, s2, t1, t2, r;
             Vector3 sdir, tdir;
             float div = 0f;
+
+
             for (int a = 0; a < triangleCount; a += 3)
             {
                 i1 = _tris[a + 0];
@@ -280,6 +282,8 @@ namespace RoadArchitect
                 tan2[i2] += tdir;
                 tan2[i3] += tdir;
             }
+
+
 
             Vector3 n;
             Vector3 t;

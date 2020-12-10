@@ -18,7 +18,6 @@ namespace RoadArchitect
         public float distance = -1f;
         [UnityEngine.Serialization.FormerlySerializedAs("CachedPoints")]
         public Vector3[] cachedPoints;
-        [UnityEngine.Serialization.FormerlySerializedAs("CachedPointsSeperation")]
         private const float cachedPointsSeperation = 1f;
 
         //Editor preview splines for add and insert:
@@ -48,19 +47,12 @@ namespace RoadArchitect
 
 
         #region "Vars for intersections"
-        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_NoTurnLane")]
         private const float metersToCheckNoTurnLane = 75f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_NoTurnLaneSQ")]
         private const float metersToCheckNoTurnLaneSQ = 5625f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_TurnLane")]
         private const float metersToCheckTurnLane = 125f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_TurnLaneSQ")]
         private const float metersToCheckTurnLaneSQ = 15625f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_BothTurnLane")]
         private const float metersToCheckBothTurnLane = 125f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MetersToCheck_BothTurnLaneSQ")]
         private const float metersToCheckBothTurnLaneSQ = 15625f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bUseSQ")]
         private const bool isUsingSQ = true;
         #endregion
 
@@ -367,10 +359,7 @@ namespace RoadArchitect
             int rawNodesLength = _rawNodes.Length;
             for (i = 0; i < rawNodesLength; i++)
             {
-                if (!_rawNodes[i].isDestroyed)
-                {
-                    nodes.Add(_rawNodes[i]);
-                }
+                nodes.Add(_rawNodes[i]);
             }
 
             this.nodes.Clear();
@@ -420,6 +409,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Calculates distance between node for accuracy </summary>
         private void SetupSplineLength()
         {
             int nodeCount = nodes.Count;
@@ -813,7 +803,6 @@ namespace RoadArchitect
         /// <summary> Gets the spline value. </summary>
         /// <param name='_value'> The relevant param (0-1) of the spline. </param>
         /// <param name='_isTangent'> True for is tangent, false (default) for vector3 position. </param>
-        /// float _value, formerly f; Renamed boolb to reflect its use according to the summary of this function
         public Vector3 GetSplineValue(float _value, bool _isTangent = false)
         {
             int index;
@@ -829,8 +818,8 @@ namespace RoadArchitect
                 return nodes[0].pos;
             }
 
-            // FH / This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
-            // This Fixes the Bug with 1f -> -0.0001f as descripted by embeddedt/RoadArchitect/issues/4 
+            // This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
+            // This Fixes the Bug descripted by embeddedt/RoadArchitect/issues/4 
             if (RootUtils.IsApproximately(_value, 0f, 0.00001f))
             {
                 if (_isTangent)
@@ -842,8 +831,7 @@ namespace RoadArchitect
                     return nodes[0].pos;
                 }
             }
-            else
-            if (RootUtils.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
+            else if (RootUtils.IsApproximately(_value, 1f, 0.00001f) || _value > 1f)
             {
                 if (_isTangent)
                 {
@@ -857,7 +845,6 @@ namespace RoadArchitect
             else
             {
                 RootUtils.IsApproximately(_value, 1f, 0.00001f);
-                // FH 03.02.19 // End of the former outcommented Code
 
                 for (index = 0; index < nodes.Count; index++)
                 {
@@ -876,7 +863,7 @@ namespace RoadArchitect
                 {
                     idx = 0;
                 }
-            }   // // FH / also former outcommented Code, see above
+            }
 
             float param = (_value - nodes[idx].time) / (nodes[idx + 1].time - nodes[idx].time);
             param = RootUtils.Ease(param, nodes[idx].easeIO.x, nodes[idx].easeIO.y);
@@ -884,7 +871,7 @@ namespace RoadArchitect
         }
 
 
-        // former VarNames: f = _value
+        /// <summary> Return position and tangent in Vector3 of spline progress </summary>
         public void GetSplineValueBoth(float _value, out Vector3 _vect1, out Vector3 _vect2)
         {
             int index;
@@ -924,9 +911,9 @@ namespace RoadArchitect
             }
 
 
-            // FH 03.02.19 // This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
+            // This Code was outcommented, but it takes care about values above and below 0f and 1f and clamping them.
             // This code needs to be reevealuated if this isn't taken care of by the function above this one. GetSplineValue() 
-            // Right now, I would say that it is not really a part of embeddedt/RoadArchitect/issues/4
+            // part of embeddedt/RoadArchitect/issues/4 ?
             if (RootUtils.IsApproximately(_value, 1f, 0.0001f))
             {
                 _vect1 = nodes[nodes.Count - 1].pos;
@@ -939,8 +926,8 @@ namespace RoadArchitect
                 _vect2 = nodes[0].tangent;
                 return;
             }
-            // FH 10.02.19 // Do Note: This does prevent EdgeObjects from being placed before or after 0f/1f on the Spline, but also causes the EdgeObject to be placed at the same Position at the End of the Spline.
-            // FH 03.02.19 // End of the former outcommented Code
+            // Do Note: This does prevent EdgeObjects from being placed before or after
+            // 0f/1f on the Spline, but also causes the EdgeObject to be placed at the same Position at the End of the Spline.
 
             for (index = 1; index < nodeCount; index++)
             {
@@ -1245,7 +1232,8 @@ namespace RoadArchitect
                 t2 = _t * _t;
                 _t = _t * 2.0;
                 t2 = t2 * 3.0;
-                t3 = 0; //Necessary for compiler error.
+                //Prevent compiler error.
+                t3 = 0;
             }
 
             //Vectors:
@@ -1256,8 +1244,6 @@ namespace RoadArchitect
 
             //Tension:
             tension = 0.5f;
-
-
 
             //Tangents:
             Vector3 xVect1 = (P1 - P2) * tension;
@@ -1341,13 +1327,13 @@ namespace RoadArchitect
 
 
         #region "Gizmos"
-        //	private const bool bGizmoDraw = true;
+        //private const bool isDrawingGizmos = true;
         private float GizmoDrawMeters = 1f;
 
 
         private void OnDrawGizmosSelected()
         {
-            //		if(!bGizmoDraw){ return; }
+            //		if(!isDrawingGizmos){ return; }
             if (nodes == null || nodes.Count < 2)
             {
                 return;
@@ -2037,6 +2023,7 @@ namespace RoadArchitect
 
 
         #region "Road connections"
+        /// <summary> Creates a conncetion between first and last node </summary>
         public void ActivateEndNodeConnection(SplineN _node1, SplineN _node2)
         {
             ActivateEndNodeConnectionDo(_node1, _node2);
@@ -2256,6 +2243,7 @@ namespace RoadArchitect
             //			tNode2.GSDSpline.Setup_Trigger();
             //		}
 
+            // Schedule update
             if (_node1 != null && _node2 != null)
             {
                 if (_node1.spline != _node2.spline)
@@ -2428,6 +2416,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Removes materials on all nodes </summary>
         public void ClearAllRoadCuts()
         {
             int nodeCount = GetNodeCount();
@@ -2444,7 +2433,6 @@ namespace RoadArchitect
             connectedIDs = new List<int>();
         }
         #endregion
-        //#endif
 
 
         #region "Start"

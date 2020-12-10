@@ -9,8 +9,6 @@ namespace RoadArchitect
     public class SplineI : MonoBehaviour
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
-        public int count = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
         public List<SplinePreviewNode> nodes = new List<SplinePreviewNode>();
         [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
@@ -250,7 +248,6 @@ namespace RoadArchitect
         /// <summary> Gets the spline value. </summary>
         /// <param name='f'> The relevant param (0-1) of the spline. </param>
         /// <param name='isTangent'> True for is tangent, false (default) for vector3 position. </param>
-        /// FH / formerly varNames: f = _value; b = _isTangent
         public Vector3 GetSplineValue(float _value, bool _isTangent = false)
         {
             int index;
@@ -322,7 +319,6 @@ namespace RoadArchitect
         }
 
 
-        // FH / former VarNames: f = _value; b = _isTangent
         public Vector3 GetSplineValueSkipOpt(float _value, bool _isTangent = false)
         {
             int index;

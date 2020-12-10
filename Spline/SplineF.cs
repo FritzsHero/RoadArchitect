@@ -9,8 +9,6 @@ namespace RoadArchitect
     public class SplineF : MonoBehaviour
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("tCount")]
-        public int nodesCount = 0;
         [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
         public List<SplinePreviewNode> nodes = new List<SplinePreviewNode>();
         [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
@@ -120,8 +118,6 @@ namespace RoadArchitect
             {
                 SetupSplineLength();
             }
-
-            nodesCount = nodes.Count;
         }
 
 
@@ -234,7 +230,6 @@ namespace RoadArchitect
         /// <summary> Gets the spline value. </summary>
         /// <param name='_value'> The relevant param (0-1) of the spline. </param>
         /// <param name='_isTangent'> True for is tangent, false (default) for vector3 position. </param>
-        /// FH / f is now _value // _isTangent is now_isTangent
         public Vector3 GetSplineValue(float _value, bool _isTangent = false)
         {
             int index;
@@ -304,7 +299,6 @@ namespace RoadArchitect
         }
 
 
-        /// FH / f is now _value // _isTangent is now_isTangent
         public Vector3 GetSplineValueSkipOpt(float _value, bool _isTangent = false)
         {
             int i;
@@ -389,7 +383,8 @@ namespace RoadArchitect
                 t2 = _t * _t;
                 _t = _t * 2.0;
                 t2 = t2 * 3.0;
-                t3 = 0; //Necessary for compiler error.
+                //Prevent compiler error.
+                t3 = 0;
             }
 
             //Vectors:
@@ -399,7 +394,8 @@ namespace RoadArchitect
             Vector3 P3 = nodes[NGI(_i, NI[3])].pos;
 
             //Tension:
-            tension = 0.5f; // 0.5 equivale a catmull-rom
+            // 0.5 equivale a catmull-rom
+            tension = 0.5f;
 
             //Tangents:
             P2 = (P1 - P2) * tension;

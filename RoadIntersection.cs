@@ -453,7 +453,8 @@ namespace RoadArchitect
             {
                 return true;
             }
-            return false; // No collision
+            // No collision
+            return false;
         }
         #endregion
 

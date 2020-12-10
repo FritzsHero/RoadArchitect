@@ -61,8 +61,6 @@ namespace RoadArchitect
         public int idOnSpline = -1;
         [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
         public SplineC spline;
-        [UnityEngine.Serialization.FormerlySerializedAs("bDestroyed")]
-        public bool isDestroyed = false;
         //Unique ID
         [UnityEngine.Serialization.FormerlySerializedAs("UID")]
         public string uID;
@@ -134,9 +132,10 @@ namespace RoadArchitect
 
         [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
         public RoadIntersection intersection = null;
-        #endregion
         [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
         public Intersections.iConstructionMaker intersectionConstruction;
+        #endregion
+
 
 
         #region "Edge Objects"
@@ -1876,7 +1875,7 @@ namespace RoadArchitect
             #if UNITY_EDITOR
             //Do nothing.
             #else
-			this.enabled = false;
+            this.enabled = false;
             #endif
         }
 

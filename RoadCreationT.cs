@@ -228,11 +228,13 @@ namespace RoadArchitect.Threading
             float FinalMax = 1f;
             float StartMin = 0f;
             if (spline.isSpecialEndControlNode)
-            {   //If control node, start after the control node:
+            {
+                //If control node, start after the control node:
                 FinalMax = spline.nodes[spline.GetNodeCount() - 2].time;
             }
             if (spline.isSpecialStartControlNode)
-            {   //If ends in control node, end construction before the control node:
+            {
+                //If ends in control node, end construction before the control node:
                 StartMin = spline.nodes[1].time;
             }
             bool isFinalEnd = false;
@@ -374,11 +376,9 @@ namespace RoadArchitect.Threading
                             //If option shoulder cuts is on.
                             //Add the vector index to cut later.
                             _road.RCS.ShoulderCutsL.Add(_road.RCS.ShoulderL_Vectors.Count);
-                            //Store the node which was at the beginning of this cut.
-                            _road.RCS.ShoulderCutsLNodes.Add(currentNode);
-                            //Add the vector index to cut later.
                             _road.RCS.ShoulderCutsR.Add(_road.RCS.ShoulderR_Vectors.Count);
                             //Store the node which was at the beginning of this cut.
+                            _road.RCS.ShoulderCutsLNodes.Add(currentNode);
                             _road.RCS.ShoulderCutsRNodes.Add(currentNode);
                         }
                     }
@@ -2318,7 +2318,6 @@ namespace RoadArchitect.Threading
 
 
 
-
                 //Right shoulder:
                 if (!isShoulderSkipR)
                 {
@@ -2953,6 +2952,7 @@ namespace RoadArchitect.Threading
             Vector3 PreInterVectL = default(Vector3);
             Vector3 PreInterVectL_RightTurn = default(Vector3);
             RoadIntersection roadIntersection = null;
+
 
             for (int j = 0; j < nodeCount; j++)
             {
@@ -5202,6 +5202,8 @@ namespace RoadArchitect.Threading
             if (_RCS.road.isRoadCutsEnabled || _RCS.road.isDynamicCutsEnabled)
             {
                 ProcessRoadUVsRoadCuts(ref _RCS);
+
+
                 int cCount = _RCS.cut_RoadVectors.Count;
                 for (int index = 0; index < cCount; index++)
                 {
@@ -5211,6 +5213,7 @@ namespace RoadArchitect.Threading
             }
             if (_RCS.road.isShoulderCutsEnabled || _RCS.road.isDynamicCutsEnabled)
             {
+                // Add shoulders for right side
                 int rCount = _RCS.cut_ShoulderR_Vectors.Count;
                 for (int index = 0; index < rCount; index++)
                 {
@@ -5218,6 +5221,8 @@ namespace RoadArchitect.Threading
                     _RCS.cut_tangents_SR.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderR[index], _RCS.cut_normals_ShoulderR[index], _RCS.cut_uv_SR[index], _RCS.cut_ShoulderR_Vectors[index].ToArray()));
                     _RCS.cut_tangents_SR_world.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderR[index], _RCS.cut_normals_ShoulderR[index], _RCS.cut_uv_SR_world[index], _RCS.cut_ShoulderR_Vectors[index].ToArray()));
                 }
+
+                // Add shoulders for left side
                 int lCount = _RCS.cut_ShoulderL_Vectors.Count;
                 for (int index = 0; index < lCount; index++)
                 {
@@ -5226,6 +5231,8 @@ namespace RoadArchitect.Threading
                     _RCS.cut_tangents_SL_world.Add(RootUtils.ProcessTangents(_RCS.cut_tris_ShoulderL[index], _RCS.cut_normals_ShoulderL[index], _RCS.cut_uv_SL_world[index], _RCS.cut_ShoulderL_Vectors[index].ToArray()));
                 }
             }
+
+            // Update type full or intersection
             if (_RCS.isInterseOn)
             {
                 ProcessRoadUVsIntersections(ref _RCS);
@@ -5233,6 +5240,7 @@ namespace RoadArchitect.Threading
 
             //throw new System.Exception("FFFFFFFF");
 
+            // Update type full, intersection or bridge
             if (_RCS.isRoadOn)
             {
                 if (!_RCS.tMeshSkip)
@@ -6021,10 +6029,13 @@ namespace RoadArchitect.Threading
                     distanceSum += distance;
                     isOddToggle = !isOddToggle;
                 }
+
+
                 for (i = 0; i < MVL; i++)
                 {
                     uv_world[i] = new Vector2(tVerts[i].x * 0.2f, tVerts[i].z * 0.2f);
                 }
+
                 _RCS.cut_uv_world.Add(uv_world);
                 _RCS.cut_uv.Add(uv);
             }
@@ -6183,6 +6194,8 @@ namespace RoadArchitect.Threading
             {
                 uv_world[i] = new Vector2(tVerts[i].x * 0.2f, tVerts[i].z * 0.2f);
             }
+
+
             if (_isLeft)
             {
                 _RCS.cut_uv_SL_world.Add(uv_world);
