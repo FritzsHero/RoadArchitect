@@ -136,7 +136,7 @@ namespace RoadArchitect
 
 
             nodeList.Sort(CompareListByID);
-            //tList.Sort(delegate(GSDSplin i1, Item i2) { return i1.name.CompareTo(i2.name); });
+            //tList.Sort(delegate(SplineC i1, Item i2) { return i1.name.CompareTo(i2.name); });
             rawNodes = nodeList.ToArray();
             nodeList = null;
             SetupNodes(ref rawNodes);
@@ -144,9 +144,9 @@ namespace RoadArchitect
             //Setup spline length, if more than 1 node:
             if (GetNodeCount() > 1)
             {
-                //RootUtils.StartProfiling(tRoad, "SplineSetupLength");
+                //RootUtils.StartProfiling(road, "SplineSetupLength");
                 SetupSplineLength();
-                //RootUtils.EndProfiling(tRoad);
+                //RootUtils.EndProfiling(road);
             }
             else if (GetNodeCount() == 1)
             {
@@ -2045,50 +2045,51 @@ namespace RoadArchitect
                 return;
             }
 
-            Vector3 tNode1_ExtraPos = default(Vector3);
-            Vector3 tNode2_ExtraPos = default(Vector3);
+            Vector3 node1ExtraPos = default(Vector3);
+            Vector3 node2ExtraPos = default(Vector3);
 
-            bool bFirstNode_Start = false;
-            //		bool bFirstNode_End = false;
+            bool isNode1Start = false;
+            //bool isNode1End = false;
             if (_node1.idOnSpline == 0)
             {
-                bFirstNode_Start = true;
-                tNode2_ExtraPos = nodes[1].transform.position;
+                isNode1Start = true;
+                node2ExtraPos = nodes[1].transform.position;
             }
             else
             {
-                //			bFirstNode_End = true;
-                tNode2_ExtraPos = nodes[mCount - 2].transform.position;
+                //isNode1End = true;
+                node2ExtraPos = nodes[mCount - 2].transform.position;
             }
 
-            bool bSecondNode_Start = false;
-            //		bool bSecondNode_End = false;
+
+            bool isNode2Start = false;
+            //bool isNode2End = false;
             if (_node2.idOnSpline == 0)
             {
-                bSecondNode_Start = true;
-                tNode1_ExtraPos = spline.nodes[1].transform.position;
+                isNode2Start = true;
+                node1ExtraPos = spline.nodes[1].transform.position;
             }
             else
             {
-                //			bSecondNode_End = true;
-                tNode1_ExtraPos = spline.nodes[nodeCount - 2].transform.position;
+                //isNode2End = true;
+                node1ExtraPos = spline.nodes[nodeCount - 2].transform.position;
             }
 
             SplineN NodeCreated1 = null;
             SplineN NodeCreated2 = null;
 
-            if (bFirstNode_Start)
+            if (isNode1Start)
             {
                 isSpecialStartControlNode = true;
                 if (nodes[0].isSpecialEndNode)
                 {
-                    nodes[0].transform.position = tNode1_ExtraPos;
-                    nodes[0].pos = tNode1_ExtraPos;
+                    nodes[0].transform.position = node1ExtraPos;
+                    nodes[0].pos = node1ExtraPos;
                     NodeCreated1 = nodes[0];
                 }
                 else
                 {
-                    NodeCreated1 = Construction.InsertNode(road, true, tNode1_ExtraPos, false, 0, true);
+                    NodeCreated1 = Construction.InsertNode(road, true, node1ExtraPos, false, 0, true);
                 }
             }
             else
@@ -2097,29 +2098,29 @@ namespace RoadArchitect
                 SplineN zNode1 = spline.GetLastNodeAll();
                 if (zNode1 != null && zNode1.isSpecialEndNode)
                 {
-                    zNode1.transform.position = tNode1_ExtraPos;
-                    zNode1.pos = tNode1_ExtraPos;
+                    zNode1.transform.position = node1ExtraPos;
+                    zNode1.pos = node1ExtraPos;
                     NodeCreated1 = GetLastNodeAll();
                 }
                 else
                 {
-                    NodeCreated1 = Construction.CreateNode(road, true, tNode1_ExtraPos);
+                    NodeCreated1 = Construction.CreateNode(road, true, node1ExtraPos);
                 }
 
             }
 
-            if (bSecondNode_Start)
+            if (isNode2Start)
             {
                 spline.isSpecialStartControlNode = true;
                 if (spline.nodes[0].isSpecialEndNode)
                 {
-                    spline.nodes[0].transform.position = tNode2_ExtraPos;
-                    spline.nodes[0].pos = tNode2_ExtraPos;
+                    spline.nodes[0].transform.position = node2ExtraPos;
+                    spline.nodes[0].pos = node2ExtraPos;
                     NodeCreated2 = spline.nodes[0];
                 }
                 else
                 {
-                    NodeCreated2 = Construction.InsertNode(spline.road, true, tNode2_ExtraPos, false, 0, true);
+                    NodeCreated2 = Construction.InsertNode(spline.road, true, node2ExtraPos, false, 0, true);
                 }
 
             }
@@ -2129,21 +2130,21 @@ namespace RoadArchitect
                 SplineN zNode2 = spline.GetLastNodeAll();
                 if (zNode2 != null && zNode2.isSpecialEndNode)
                 {
-                    zNode2.transform.position = tNode2_ExtraPos;
-                    zNode2.pos = tNode2_ExtraPos;
+                    zNode2.transform.position = node2ExtraPos;
+                    zNode2.pos = node2ExtraPos;
                     NodeCreated2 = spline.GetLastNodeAll();
                 }
                 else
                 {
-                    NodeCreated2 = Construction.CreateNode(spline.road, true, tNode2_ExtraPos);
+                    NodeCreated2 = Construction.CreateNode(spline.road, true, node2ExtraPos);
                 }
 
             }
 
-            NodeCreated1.isSpecialEndNodeIsStart = bFirstNode_Start;
-            NodeCreated2.isSpecialEndNodeIsStart = bSecondNode_Start;
-            NodeCreated1.isSpecialEndNodeIsEnd = !bFirstNode_Start;
-            NodeCreated2.isSpecialEndNodeIsEnd = !bSecondNode_Start;
+            NodeCreated1.isSpecialEndNodeIsStart = isNode1Start;
+            NodeCreated2.isSpecialEndNodeIsStart = isNode2Start;
+            NodeCreated1.isSpecialEndNodeIsEnd = !isNode1Start;
+            NodeCreated2.isSpecialEndNodeIsEnd = !isNode2Start;
             NodeCreated1.specialNodeCounterpart = NodeCreated2;
             NodeCreated2.specialNodeCounterpart = NodeCreated1;
 
@@ -2152,6 +2153,7 @@ namespace RoadArchitect
             float xWidth = Mathf.Max(lWidth1, lWidth2);
 
             float tDelay = 0f;
+            // Handle different amount of lanes
             if (_node1.spline.road.laneAmount > _node2.spline.road.laneAmount)
             {
                 _node2.isSpecialRoadConnPrimary = true;
@@ -2165,7 +2167,7 @@ namespace RoadArchitect
                 {
                     tDelay = 10f;
                 }
-                if (bSecondNode_Start)
+                if (isNode2Start)
                 {
                     _node2.spline.isSpecialEndNodeIsStartDelay = true;
                     _node2.spline.specialEndNodeDelayStart = tDelay;
@@ -2191,7 +2193,7 @@ namespace RoadArchitect
                 {
                     tDelay = 10f;
                 }
-                if (bFirstNode_Start)
+                if (isNode1Start)
                 {
                     _node1.spline.isSpecialEndNodeIsStartDelay = true;
                     _node1.spline.specialEndNodeDelayStart = tDelay;
@@ -2238,10 +2240,12 @@ namespace RoadArchitect
             _node1.originalConnectionNodes = OrigNodes;
             _node2.originalConnectionNodes = OrigNodes;
 
-            //		tNode1.GSDSpline.Setup_Trigger();
-            //		if(tNode1.GSDSpline != tNode2.GSDSpline){
-            //			tNode2.GSDSpline.Setup_Trigger();
-            //		}
+            //tNode1.spline.Setup_Trigger();
+            //if(tNode1.spline != tNode2.spline)
+            //{
+            //  tNode2.spline.Setup_Trigger();
+            //}
+
 
             // Schedule update
             if (_node1 != null && _node2 != null)
