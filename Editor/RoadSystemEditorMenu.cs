@@ -118,6 +118,16 @@ public class RoadSystemEditorMenu : ScriptableObject
     }
 
 
+    [MenuItem("Window/Road Architect/Testing/Run unit test 9 (caution)")]
+    public static void Test9()
+    {
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your RoadArchitectSystem9 and will create test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.RoadArchitectUnitTest9();
+        }
+    }
+
+
     /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. We are not responsbile for data loss if this function is called by the user. </summary>
     [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
     public static void TestCleanup()
