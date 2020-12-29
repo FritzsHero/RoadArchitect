@@ -37,7 +37,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed TestCodeCount to support more folders
 - Fixed additional issues with physic material names
 - Changed terrains to use heightmapResolution
+- Moved all scripts into RoadArchitect namespace
+- Added code summaries for many methods
+- Renamed scripts
+- Separated some scripts into new files
+- Refactored Intersections Nullify
+- Reorganized folder hierarchy
+- Changed extension of library files to .rao
 - Removed redundant directory queries
+- Reworked building behavior of RoadArchitect
+- Updated runtime usage of RoadArchitect
+- Added unit test 7 and 8
+- Refactored material assignments
+- Extracted material assignments from inner loops
+- Removed Editor limitation for node setup
+- Removed unused variables
+- Added unit test 9
+- Refactored stop sign rigidbody creation
 
 
 ## [Version: 1.9_FH] - 2019.04.22

@@ -6,6 +6,7 @@ namespace RoadArchitect
 {
     public static class IntersectionObjects
     {
+        /// <summary> Destroy all intersection objects </summary>
         public static void CleanupIntersectionObjects(GameObject _masterGameObj)
         {
             int childCount = _masterGameObj.transform.childCount;
@@ -39,14 +40,21 @@ namespace RoadArchitect
         }
 
 
-        private static void TFixSigns(GameObject _obj)
+        /// <summary> Adds a rigidbody to the stop signs </summary>
+        private static void AddRigidbodyToSign(GameObject _obj, bool _isRB)
         {
-            Rigidbody rigidbody = _obj.GetComponent<Rigidbody>();
-            rigidbody.useGravity = false;
-            rigidbody.isKinematic = true;
+            if (_isRB)
+            {
+                Rigidbody RB = _obj.AddComponent<Rigidbody>();
+                RB.mass = 100f;
+                RB.centerOfMass = new Vector3(0f, -10f, 0f);
+                RB.useGravity = false;
+                RB.isKinematic = true;
+            }
         }
 
 
+        /// <summary> Creates the stop signs on a cross or T intersection </summary>
         private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, bool _isRB)
         {
             Object prefab;
@@ -71,8 +79,6 @@ namespace RoadArchitect
             //Cleanup:
             CleanupIntersectionObjects(_masterGameObj);
 
-            float Mass = 100f;
-
             //Get four points:
             float DistFromCorner = (ShoulderWidth * 0.45f);
             Vector3 tPosRR = default(Vector3);
@@ -87,16 +93,11 @@ namespace RoadArchitect
             //			xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            if (_isRB)
-            {
-                Rigidbody RB = tObj.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = new Vector3(0f, -10f, 0f);
-            }
+            AddRigidbodyToSign(tObj, _isRB);
+
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosRR;
             tObj.name = "StopSignRR";
-            TFixSigns(tObj);
             if (roadIntersection.ignoreCorner == 0)
             {
                 Object.DestroyImmediate(tObj);
@@ -108,16 +109,11 @@ namespace RoadArchitect
             //			xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            if (_isRB)
-            {
-                Rigidbody RB = tObj.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = new Vector3(0f, -10f, 0f);
-            }
+            AddRigidbodyToSign(tObj, _isRB);
+
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosLL;
             tObj.name = "StopSignLL";
-            TFixSigns(tObj);
             if (roadIntersection.ignoreCorner == 2)
             {
                 Object.DestroyImmediate(tObj);
@@ -129,16 +125,11 @@ namespace RoadArchitect
             //			xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            if (_isRB)
-            {
-                Rigidbody RB = tObj.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = new Vector3(0f, -10f, 0f);
-            }
+            AddRigidbodyToSign(tObj, _isRB);
+
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosRL;
             tObj.name = "StopSignRL";
-            TFixSigns(tObj);
             if (roadIntersection.ignoreCorner == 1)
             {
                 Object.DestroyImmediate(tObj);
@@ -150,16 +141,11 @@ namespace RoadArchitect
             //			xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            if (_isRB)
-            {
-                Rigidbody RB = tObj.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = new Vector3(0f, -10f, 0f);
-            }
+            AddRigidbodyToSign(tObj, _isRB);
+
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosLR;
             tObj.name = "StopSignLR";
-            TFixSigns(tObj);
             if (roadIntersection.ignoreCorner == 3)
             {
                 Object.DestroyImmediate(tObj);
@@ -167,6 +153,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns rotation for stop sign right right </summary>
         private static Vector3 StopSignGetRotRR(RoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRL, _intersection.cornerRR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
@@ -176,6 +163,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns rotation for stop sign left left </summary>
         private static Vector3 StopSignGetRotLL(RoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
@@ -185,6 +173,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns rotation for stop sign right left </summary>
         private static Vector3 StopSignGetRotRL(RoadIntersection _intersetion, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersetion.cornerLL, _intersetion.cornerRL) / 2f) + (0.025f * Vector3.Distance(_intersetion.cornerLR, _intersetion.cornerRL))) / _spline.distance;
@@ -210,6 +199,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns rotation for stop sign left right </summary>
         private static Vector3 StopSignGetRotLR(RoadIntersection _intersection, SplineC _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerLR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLR, _intersection.cornerRL))) / _spline.distance;
@@ -319,7 +309,8 @@ namespace RoadArchitect
             StartVec = tPosRL;
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
-            { //Convert to regular alignment if necessary
+            {
+                //Convert to regular alignment if necessary
                 tObjRL.transform.parent = null;
                 tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner, true);
                 if (tDir == zeroVect)
@@ -371,7 +362,8 @@ namespace RoadArchitect
             StartVec = tPosLR;
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
-            { //Convert to regular alignment if necessary
+            {
+                //Convert to regular alignment if necessary
                 tObjLR.transform.parent = null;
                 tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner, true);
                 if (tDir == zeroVect)
@@ -424,7 +416,8 @@ namespace RoadArchitect
             StartVec = tPosRR;
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
-            { //Convert to regular alignment if necessary
+            {
+                //Convert to regular alignment if necessary
                 tObjRR.transform.parent = null;
                 tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner, true);
                 if (tDir == zeroVect)
@@ -477,7 +470,8 @@ namespace RoadArchitect
             StartVec = tPosLL;
             EndVec = (tDir.normalized * TLDistance) + StartVec;
             if (!intersection.isRegularPoleAlignment && intersection.ContainsLine(StartVec, EndVec))
-            { //Convert to regular alignment if necessary
+            {
+                //Convert to regular alignment if necessary
                 tObjLL.transform.parent = null;
                 tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner, true);
                 if (tDir == zeroVect)
@@ -610,14 +604,11 @@ namespace RoadArchitect
                     xValue = (tempMaxHeight - 1f) - 6f;
                 }
 
-                //				float tValue = 0f;
-                //				float hValue = 0f;
                 bool bIgnoreMe = false;
-
 
                 int mCount = tVerts.Length;
                 Vector2[] uv = tMesh.uv;
-                //				List<int> tUVInts = new List<int>();
+                //List<int> tUVInts = new List<int>();
                 for (int index = 0; index < mCount; index++)
                 {
                     bIgnoreMe = false;
@@ -689,7 +680,7 @@ namespace RoadArchitect
                 kObj.transform.position += new Vector3(0f, 0f, MaxHeight - 7.6f);
                 kObj.transform.parent = tObj.transform;
                 kObj.transform.rotation = Quaternion.identity;
-                //				kObj.name = "StreetLight";
+                //kObj.name = "StreetLight";
             }
 
 
@@ -1251,6 +1242,9 @@ namespace RoadArchitect
                 tDir = (tTan1.normalized + tTan2.normalized).normalized;
                 _posLR = tVectLR + (tDir * _distFromCorner);
             }
+
+
+            // Prevent corners of intersections to have different heights
             _posRR.y = _roadIntersection.signHeight;
             _posRL.y = _roadIntersection.signHeight;
             _posLL.y = _roadIntersection.signHeight;
