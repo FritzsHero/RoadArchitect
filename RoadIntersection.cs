@@ -71,7 +71,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("CornerLL2")]
         public bool isCornerLL2Enabled = false;
 
-        //Markers:
+        #region "Marker materials"
         [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter1")]
         public Material markerCenter1 = null;
         [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter2")]
@@ -90,7 +90,9 @@ namespace RoadArchitect
         public Material markerExtTiled2 = null;
         [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled3")]
         public Material markerExtTiled3 = null;
+        #endregion
 
+        #region "Lane materials"
         [UnityEngine.Serialization.FormerlySerializedAs("Lane0Mat1")]
         public Material lane0Mat1 = null;
         [UnityEngine.Serialization.FormerlySerializedAs("Lane0Mat2")]
@@ -132,10 +134,13 @@ namespace RoadArchitect
         public Material lane3Mat1Disabled = null;
         [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat2_Disabled")]
         public Material lane3Mat2Disabled = null;
+        #endregion
 
         //Width of the largest of road connected
+        /// <summary> 10 * 1.25f = intersectionWidth; Never written, only read </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("IntersectionWidth")]
         public int intersectionWidth = 10;
+        /// <summary> Amount of lanes from road of node1 </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("Lanes")]
         public int lanesAmount;
         [UnityEngine.Serialization.FormerlySerializedAs("IgnoreSide")]
@@ -152,6 +157,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("lType")]
         public LightTypeEnum lightType = LightTypeEnum.Timed;
 
+        #region "CalculationData"
         [UnityEngine.Serialization.FormerlySerializedAs("CornerPoints")]
         public CornerPositionMaker[] cornerPoints;
 
@@ -197,6 +203,7 @@ namespace RoadArchitect
         public Vector3[] cornerLLCornerLR;
         [UnityEngine.Serialization.FormerlySerializedAs("fCornerRL_CornerRR")]
         public Vector3[] cornerRLCornerRR;
+        #endregion
 
         [UnityEngine.Serialization.FormerlySerializedAs("GradeMod")]
         public float gradeMod = 0.375f;
@@ -344,6 +351,7 @@ namespace RoadArchitect
 
 
         #region "Utility"
+        /// <summary> Attach other spline to PiggyBacks if not same spline and setup </summary>
         public void UpdateRoads()
         {
             if (!isSameSpline)
@@ -409,6 +417,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns true when the Vectors or the line between them are inside the intersection </summary>
         public bool ContainsLine(Vector3 _vector1, Vector3 _vector2)
         {
             Vector2 tVectStart = new Vector2(_vector1.x, _vector1.z);
@@ -882,75 +891,77 @@ namespace RoadArchitect
             List<MeshRenderer> laneD2MR = new List<MeshRenderer>();
             List<MeshRenderer> laneDA1MR = new List<MeshRenderer>();
 
+            MeshRenderer childMesh;
             string transformName = "";
             for (int i = 0; i < childCount; i++)
             {
-                transformName = transform.GetChild(i).name.ToLower();
+                childMesh = transform.GetChild(i).GetComponent<MeshRenderer>();
+                transformName = childMesh.transform.name.ToLower();
                 if (transformName.Contains("-stretchext"))
                 {
-                    extStretchMR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    extStretchMR.Add(childMesh);
                     continue;
                 }
                 if (transformName.Contains("-tiledext"))
                 {
-                    extTiledMR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    extTiledMR.Add(childMesh);
                     continue;
                 }
                 if (transformName.Contains("centermarkers"))
                 {
-                    centerMR = transform.GetChild(i).GetComponent<MeshRenderer>();
+                    centerMR = childMesh;
                     continue;
                 }
                 if (transformName.Contains("lane0"))
                 {
-                    lane0MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    lane0MR.Add(childMesh);
                     continue;
                 }
                 if (transformName.Contains("lane1"))
                 {
-                    lane1MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    lane1MR.Add(childMesh);
                     continue;
                 }
                 if (transformName.Contains("lane2"))
                 {
-                    lane2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    lane2MR.Add(childMesh);
                     continue;
                 }
                 if (transformName.Contains("lane3"))
                 {
-                    lane3MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                    lane3MR.Add(childMesh);
                     continue;
                 }
                 if (intersectionType == IntersectionTypeEnum.ThreeWay)
                 {
                     if (transformName.Contains("laned1"))
                     {
-                        laneD1MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                        laneD1MR.Add(childMesh);
                         continue;
                     }
                     if (transformName.Contains("laned3"))
                     {
-                        laneD3MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                        laneD3MR.Add(childMesh);
                         continue;
                     }
                     if (transformName.Contains("laneda2"))
                     {
-                        laneDA2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                        laneDA2MR.Add(childMesh);
                         continue;
                     }
                     if (transformName.Contains("lanedar2"))
                     {
-                        laneDAR2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                        laneDAR2MR.Add(childMesh);
                         continue;
                     }
                     if (transformName.Contains("laned2"))
                     {
-                        laneD2MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                        laneD2MR.Add(childMesh);
                         continue;
                     }
                     if (transformName.Contains("laneda1"))
                     {
-                        laneDA1MR.Add(transform.GetChild(i).GetComponent<MeshRenderer>());
+                        laneDA1MR.Add(childMesh);
                         continue;
                     }
                 }
@@ -958,401 +969,271 @@ namespace RoadArchitect
 
             if (extStretchMR != null && extStretchMR.Count > 0)
             {
-                int MarkerExtStretchCounter = 0;
+                List<Material> MarkerExtStretchMats = new List<Material>();
+
                 if (markerExtStretch1 != null)
                 {
-                    MarkerExtStretchCounter += 1;
+                    MarkerExtStretchMats.Add(markerExtStretch1);
                     if (markerExtStretch2 != null)
                     {
-                        MarkerExtStretchCounter += 1;
+                        MarkerExtStretchMats.Add(markerExtStretch2);
                         if (markerExtStretch3 != null)
                         {
-                            MarkerExtStretchCounter += 1;
+                            MarkerExtStretchMats.Add(markerExtStretch3);
                         }
                     }
                 }
-                Material[] MarkerExtStretchMats = new Material[MarkerExtStretchCounter];
-                for (int i = 0; i < MarkerExtStretchCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        MarkerExtStretchMats[i] = markerExtStretch1;
-                    }
-                    else if (i == 1)
-                    {
-                        MarkerExtStretchMats[i] = markerExtStretch2;
-                    }
-                    else if (i == 2)
-                    {
-                        MarkerExtStretchMats[i] = markerExtStretch3;
-                    }
-                }
+
+                Material[] meshMaterials = MarkerExtStretchMats.ToArray();
                 for (int i = 0; i < extStretchMR.Count; i++)
                 {
-                    extStretchMR[i].materials = MarkerExtStretchMats;
+                    extStretchMR[i].materials = meshMaterials;
                 }
             }
 
             if (extTiledMR != null && extTiledMR.Count > 0)
             {
-                int extTiledMarkerCounter = 0;
+                List<Material> extTiledMarkerMats = new List<Material>();
+
                 if (markerExtTiled1 != null)
                 {
-                    extTiledMarkerCounter += 1;
+                    extTiledMarkerMats.Add(markerExtTiled1);
                     if (markerExtTiled2 != null)
                     {
-                        extTiledMarkerCounter += 1;
+                        extTiledMarkerMats.Add(markerExtTiled2);
                         if (markerExtTiled3 != null)
                         {
-                            extTiledMarkerCounter += 1;
+                            extTiledMarkerMats.Add(markerExtTiled3);
                         }
                     }
                 }
-                Material[] extTiledMarkerMats = new Material[extTiledMarkerCounter];
-                for (int i = 0; i < extTiledMarkerCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        extTiledMarkerMats[i] = markerExtTiled1;
-                    }
-                    else if (i == 1)
-                    {
-                        extTiledMarkerMats[i] = markerExtTiled2;
-                    }
-                    else if (i == 2)
-                    {
-                        extTiledMarkerMats[i] = markerExtTiled3;
-                    }
-                }
+
+                Material[] meshMaterial = extTiledMarkerMats.ToArray();
                 for (int i = 0; i < extTiledMR.Count; i++)
                 {
-                    extTiledMR[i].materials = extTiledMarkerMats;
+                    extTiledMR[i].materials = meshMaterial;
                 }
             }
 
             if (centerMR != null)
             {
-                int CenterCounter = 0;
+                List<Material> centerMats = new List<Material>();
+
                 if (markerCenter1 != null)
                 {
-                    CenterCounter += 1;
+                    centerMats.Add(markerCenter1);
                     if (markerCenter2 != null)
                     {
-                        CenterCounter += 1;
+                        centerMats.Add(markerCenter2);
                         if (markerCenter3 != null)
                         {
-                            CenterCounter += 1;
+                            centerMats.Add(markerCenter3);
                         }
                     }
                 }
-                Material[] centerMats = new Material[CenterCounter];
-                for (int i = 0; i < CenterCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        centerMats[i] = markerCenter1;
-                    }
-                    else if (i == 1)
-                    {
-                        centerMats[i] = markerCenter2;
-                    }
-                    else if (i == 2)
-                    {
-                        centerMats[i] = markerCenter3;
-                    }
-                }
-                centerMR.materials = centerMats;
+                
+                centerMR.materials = centerMats.ToArray();
             }
 
-            int laneCounter = 0;
+
             if (lane0MR != null && lane0MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane0Mats = new List<Material>();
+
                 if (lane0Mat1 != null)
                 {
-                    laneCounter += 1;
+                    lane0Mats.Add(lane0Mat1);
                     if (lane0Mat2 != null)
                     {
-                        laneCounter += 1;
+                        lane0Mats.Add(lane0Mat2);
                     }
                 }
-                Material[] lane0Mats = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane0Mats[i] = lane0Mat1;
-                    }
-                    else if (i == 1)
-                    {
-                        lane0Mats[i] = lane0Mat2;
-                    }
-                }
+
+                Material[] meshMaterials = lane0Mats.ToArray();
                 for (int i = 0; i < lane0MR.Count; i++)
                 {
-                    lane0MR[i].materials = lane0Mats;
+                    lane0MR[i].materials = meshMaterials;
                 }
             }
 
             if (lane1MR != null && lane1MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane1Mats = new List<Material>();
+
                 if (lane1Mat1 != null)
                 {
-                    laneCounter += 1;
+                    lane1Mats.Add(lane1Mat1);
                     if (lane1Mat2 != null)
                     {
-                        laneCounter += 1;
+                        lane1Mats.Add(lane1Mat2);
                     }
                 }
-                Material[] lane1Mats = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane1Mats[i] = lane1Mat1;
-                    }
-                    else if (i == 1)
-                    {
-                        lane1Mats[i] = lane1Mat2;
-                    }
-                }
+
+                Material[] meshMaterials = lane1Mats.ToArray();
                 for (int i = 0; i < lane1MR.Count; i++)
                 {
-                    lane1MR[i].materials = lane1Mats;
+                    lane1MR[i].materials = meshMaterials;
                 }
             }
 
             if (lane2MR != null && lane2MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane2Mats = new List<Material>();
+
                 if (lane2Mat1 != null)
                 {
-                    laneCounter += 1;
+                    lane2Mats.Add(lane2Mat1);
                     if (lane2Mat2 != null)
                     {
-                        laneCounter += 1;
+                        lane2Mats.Add(lane2Mat2);
                     }
                 }
-                Material[] lane2Mats = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane2Mats[i] = lane2Mat1;
-                    }
-                    else if (i == 1)
-                    {
-                        lane2Mats[i] = lane2Mat2;
-                    }
-                }
+
+                Material[] meshMaterials = lane2Mats.ToArray();
                 for (int i = 0; i < lane2MR.Count; i++)
                 {
-                    lane2MR[i].materials = lane2Mats;
+                    lane2MR[i].materials = meshMaterials;
                 }
             }
 
             if (lane3MR != null && lane3MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane3Mats = new List<Material>();
+
                 if (lane3Mat1 != null)
                 {
-                    laneCounter += 1;
+                    lane3Mats.Add(lane3Mat1);
                     if (lane3Mat2 != null)
                     {
-                        laneCounter += 1;
+                        lane3Mats.Add(lane3Mat2);
                     }
                 }
-                Material[] lane3Mats = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane3Mats[i] = lane3Mat1;
-                    }
-                    else if (i == 1)
-                    {
-                        lane3Mats[i] = lane3Mat2;
-                    }
-                }
+
+                Material[] meshMaterials = lane3Mats.ToArray();
                 for (int i = 0; i < lane3MR.Count; i++)
                 {
-                    lane3MR[i].materials = lane3Mats;
+                    lane3MR[i].materials = meshMaterials;
                 }
             }
 
             if (laneD1MR != null && laneD1MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane1MatsDisabled = new List<Material>();
+
                 if (lane1Mat1Disabled != null)
                 {
-                    laneCounter += 1;
+                    lane1MatsDisabled.Add(lane1Mat1Disabled);
                     if (lane1Mat2Disabled != null)
                     {
-                        laneCounter += 1;
+                        lane1MatsDisabled.Add(lane1Mat2Disabled);
                     }
                 }
-                Material[] lane1MatsDisabled = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane1MatsDisabled[i] = lane1Mat1Disabled;
-                    }
-                    else if (i == 1)
-                    {
-                        lane1MatsDisabled[i] = lane1Mat2Disabled;
-                    }
-                }
+
+                Material[] meshMaterials = lane1MatsDisabled.ToArray();
                 for (int i = 0; i < laneD1MR.Count; i++)
                 {
-                    laneD1MR[i].materials = lane1MatsDisabled;
+                    laneD1MR[i].materials = meshMaterials;
                 }
             }
 
             if (laneD3MR != null && laneD3MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane3MatsDisabled = new List<Material>();
+
                 if (lane3Mat1Disabled != null)
                 {
-                    laneCounter += 1;
+                    lane3MatsDisabled.Add(lane3Mat1Disabled);
                     if (lane3Mat2Disabled != null)
                     {
-                        laneCounter += 1;
+                        lane3MatsDisabled.Add(lane3Mat2Disabled);
                     }
                 }
-                Material[] lane3MatsDisabled = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane3MatsDisabled[i] = lane3Mat1Disabled;
-                    }
-                    else if (i == 1)
-                    {
-                        lane3MatsDisabled[i] = lane3Mat2Disabled;
-                    }
-                }
+
+                Material[] meshMaterials = lane3MatsDisabled.ToArray();
                 for (int i = 0; i < laneD3MR.Count; i++)
                 {
-                    laneD3MR[i].materials = lane3MatsDisabled;
+                    laneD3MR[i].materials = meshMaterials;
                 }
             }
 
             if (laneDA2MR != null && laneDA2MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane2MatsDisabledActive = new List<Material>();
+
                 if (lane2Mat1DisabledActive != null)
                 {
-                    laneCounter += 1;
+                    lane2MatsDisabledActive.Add(lane2Mat1DisabledActive);
                     if (lane2Mat2DisabledActive != null)
                     {
-                        laneCounter += 1;
+                        lane2MatsDisabledActive.Add(lane2Mat2DisabledActive);
                     }
                 }
-                Material[] lane2MatsDisabledActive = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane2MatsDisabledActive[i] = lane2Mat1DisabledActive;
-                    }
-                    else if (i == 1)
-                    {
-                        lane2MatsDisabledActive[i] = lane2Mat2DisabledActive;
-                    }
-                }
+
+                Material[] meshMaterials = lane2MatsDisabledActive.ToArray();
                 for (int i = 0; i < laneDA2MR.Count; i++)
                 {
-                    laneDA2MR[i].materials = lane2MatsDisabledActive;
+                    laneDA2MR[i].materials = meshMaterials;
                 }
             }
 
             if (laneDAR2MR != null && laneDAR2MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane2MatsDisabledActiveR = new List<Material>();
+
                 if (lane2Mat1DisabledActiveR != null)
                 {
-                    laneCounter += 1;
+                    lane2MatsDisabledActiveR.Add(lane2Mat1DisabledActiveR);
                     if (lane2Mat2DisabledActiveR != null)
                     {
-                        laneCounter += 1;
+                        lane2MatsDisabledActiveR.Add(lane2Mat2DisabledActiveR);
                     }
                 }
-                Material[] lane2MatsDisabledActiveR = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane2MatsDisabledActiveR[i] = lane2Mat1DisabledActiveR;
-                    }
-                    else if (i == 1)
-                    {
-                        lane2MatsDisabledActiveR[i] = lane2Mat2DisabledActiveR;
-                    }
-                }
+
+                Material[] meshMaterials = lane2MatsDisabledActiveR.ToArray();
                 for (int i = 0; i < laneDAR2MR.Count; i++)
                 {
-                    laneDAR2MR[i].materials = lane2MatsDisabledActiveR;
+                    laneDAR2MR[i].materials = meshMaterials;
                 }
             }
 
             if (laneD2MR != null && laneD2MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane2MatsDisabled = new List<Material>();
+
                 if (lane2Mat1Disabled != null)
                 {
-                    laneCounter += 1;
+                    lane2MatsDisabled.Add(lane2Mat1Disabled);
                     if (lane2Mat2Disabled != null)
                     {
-                        laneCounter += 1;
+                        lane2MatsDisabled.Add(lane2Mat2Disabled);
                     }
                 }
-                Material[] lane2MatsDisabled = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane2MatsDisabled[i] = lane2Mat1Disabled;
-                    }
-                    else if (i == 1)
-                    {
-                        lane2MatsDisabled[i] = lane2Mat2Disabled;
-                    }
-                }
+
+                Material[] meshMaterials = lane2MatsDisabled.ToArray();
                 for (int i = 0; i < laneD2MR.Count; i++)
                 {
-                    laneD2MR[i].materials = lane2MatsDisabled;
+                    laneD2MR[i].materials = meshMaterials;
                 }
             }
 
 
             if (laneDA1MR != null && laneDA1MR.Count > 0)
             {
-                laneCounter = 0;
+                List<Material> lane1MatsDisabledActive = new List<Material>();
+
                 if (lane1Mat1DisabledActive != null)
                 {
-                    laneCounter += 1;
+                    lane1MatsDisabledActive.Add(lane1Mat1DisabledActive);
                     if (lane1Mat2DisabledActive != null)
                     {
-                        laneCounter += 1;
+                        lane1MatsDisabledActive.Add(lane1Mat2DisabledActive);
                     }
                 }
-                Material[] lane1MatsDisabledActive = new Material[laneCounter];
-                for (int i = 0; i < laneCounter; i++)
-                {
-                    if (i == 0)
-                    {
-                        lane1MatsDisabledActive[i] = lane1Mat1DisabledActive;
-                    }
-                    else if (i == 1)
-                    {
-                        lane1MatsDisabledActive[i] = lane1Mat2DisabledActive;
-                    }
-                }
+
+                Material[] meshMaterials = lane1MatsDisabledActive.ToArray();
                 for (int i = 0; i < laneDA1MR.Count; i++)
                 {
-                    laneDA1MR[i].materials = lane1MatsDisabledActive;
+                    laneDA1MR[i].materials = meshMaterials;
                 }
             }
         }
