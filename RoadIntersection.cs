@@ -331,18 +331,20 @@ namespace RoadArchitect
         /// <summary> Deletes Meshes based on road name and the centermarker if _node is intersections node1 </summary>
         public void DeleteRelevantChildren(SplineN _node, string _string)
         {
+            Transform transformChild;
             int childCount = transform.childCount;
             for (int index = childCount - 1; index >= 0; index--)
             {
-                if (transform.GetChild(index).name.ToLower().Contains(_string.ToLower()))
+                transformChild = transform.GetChild(index);
+                if (transformChild.name.ToLower().Contains(_string.ToLower()))
                 {
-                    Object.DestroyImmediate(transform.GetChild(index).gameObject);
+                    Object.DestroyImmediate(transformChild.gameObject);
                 }
                 else if (_node == node1)
                 {
-                    if (transform.GetChild(index).name.ToLower().Contains("centermarkers"))
+                    if (transformChild.name.ToLower().Contains("centermarkers"))
                     {
-                        Object.DestroyImmediate(transform.GetChild(index).gameObject);
+                        Object.DestroyImmediate(transformChild.gameObject);
                     }
                 }
             }
