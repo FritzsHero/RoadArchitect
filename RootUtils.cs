@@ -112,9 +112,6 @@ namespace RoadArchitect
         #region "XML"
         public static void CreateXML<T>(ref string _path, object _object)
         {
-#if UNITY_WEBPLAYER
-			return;
-#else
             // New function to write better xml style with utf8 encoding
             FileStream fs = new FileStream(_path, FileMode.Create);
             XmlSerializer xs = new XmlSerializer(typeof(T));
@@ -123,7 +120,6 @@ namespace RoadArchitect
             xs.Serialize(xmlTextWriter, _object);
 
             fs.Close();
-#endif
         }
 
 
@@ -136,15 +132,11 @@ namespace RoadArchitect
 
         public static object LoadXML<T>(ref string _path)
         {
-#if UNITY_WEBPLAYER
-			return null;
-#else
             StreamReader reader = File.OpenText(_path);
             string _info = reader.ReadToEnd();
             reader.Close();
             object tObject = DeserializeObject<T>(_info);
             return tObject;
-#endif
         }
 
 
@@ -157,9 +149,6 @@ namespace RoadArchitect
 
         public static void DeleteLibraryXML(string _name, bool _isExtrusion)
         {
-#if UNITY_WEBPLAYER
-			return;
-#else
             string path;
             if (_isExtrusion)
             {
@@ -173,7 +162,6 @@ namespace RoadArchitect
             {
                 File.Delete(path);
             }
-#endif
         }
 
 

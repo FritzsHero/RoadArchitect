@@ -1026,20 +1026,12 @@ namespace RoadArchitect
                 builder.Append(FileSepString);
             }
 
-#if UNITY_WEBPLAYER
-            
-#else
             System.IO.File.WriteAllText(tPath, builder.ToString());
-#endif
         }
 
 
         public static void LoadNodeObjects(string _fileName, SplineN _node, bool _isDefault = false, bool _isBridge = false)
         {
-#if UNITY_WEBPLAYER
-            return;
-#else
-
             string filePath = "";
             RootUtils.CheckCreateSpecialLibraryDirs();
             string libraryPath = RootUtils.GetDirLibrary();
@@ -1110,8 +1102,6 @@ namespace RoadArchitect
 
             _node.SetupSplinatedMeshes();
             _node.SetupEdgeObjects();
-
-#endif
         }
 
 
@@ -1356,9 +1346,6 @@ namespace RoadArchitect
 
             public static WizardObject LoadFromLibrary(string _path)
             {
-#if UNITY_WEBPLAYER
-                return null;
-#else
                 string tData = System.IO.File.ReadAllText(_path);
                 string[] tSep = new string[2];
                 tSep[0] = FileSepString;
@@ -1377,7 +1364,6 @@ namespace RoadArchitect
                     }
                 }
                 return null;
-#endif
             }
 
 

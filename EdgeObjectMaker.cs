@@ -293,12 +293,6 @@ namespace RoadArchitect.EdgeObjects
 
         public static void GetLibraryFiles(out string[] _names, out string[] _paths, bool _isDefault = false)
         {
-#if UNITY_WEBPLAYER
-			tNames = null;
-			tPaths = null;
-			return;
-#else
-
             _names = null;
             _paths = null;
             DirectoryInfo info;
@@ -336,7 +330,6 @@ namespace RoadArchitect.EdgeObjects
                     count += 1;
                 }
             }
-#endif
         }
 
 
