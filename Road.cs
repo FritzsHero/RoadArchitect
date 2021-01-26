@@ -658,21 +658,8 @@ namespace RoadArchitect
             isEditorProgressBar = true;
             if (isEditorConstructing)
             {
-                if (TerrainCalcsJob != null)
-                {
-                    TerrainCalcsJob.Abort();
-                    TerrainCalcsJob = null;
-                }
-                if (RoadCalcsJob1 != null)
-                {
-                    RoadCalcsJob1.Abort();
-                    RoadCalcsJob1 = null;
-                }
-                if (RoadCalcsJob2 != null)
-                {
-                    RoadCalcsJob2.Abort();
-                    RoadCalcsJob2 = null;
-                }
+                AbortJobs();
+
                 isEditorConstructing = false;
             }
 
@@ -1083,10 +1070,8 @@ namespace RoadArchitect
         #endregion
 
 
-        private void ConstructionCleanup()
+        private void AbortJobs()
         {
-            FixZ();
-
             if (TerrainCalcsJob != null)
             {
                 TerrainCalcsJob.Abort();
@@ -1102,6 +1087,14 @@ namespace RoadArchitect
                 RoadCalcsJob2.Abort();
                 RoadCalcsJob2 = null;
             }
+        }
+
+
+        private void ConstructionCleanup()
+        {
+            FixZ();
+            AbortJobs();
+
             isEditorConstructing = false;
             int nodeCount = spline.GetNodeCount();
             SplineN node;
