@@ -427,9 +427,7 @@ namespace RoadArchitect
 
             if (node.isSpecialRoadConnPrimary)
             {
-                EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Road connection:", EditorStyles.boldLabel);
-                EditorGUILayout.EndHorizontal();
                 EditorGUILayout.BeginVertical();
                 if (GUILayout.Button("Update road connection"))
                 {
@@ -1353,6 +1351,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Renders the EdgeObject items in the Editor </summary>
         public void DoEdgeObjects()
         {
             if (!node.CanSplinate())
@@ -2318,21 +2317,6 @@ namespace RoadArchitect
                     }
                 }
 
-
-                Object[] connectorObjects = GameObject.FindObjectsOfType(typeof(RoadConnector));
-                foreach (RoadConnector connector in connectorObjects)
-                {
-                    if (Vector3.Distance(connector.transform.position, node.transform.position) < 2f)
-                    {
-                        if (connector.connectedNode != null)
-                        {
-                            continue;
-                        }
-                        connector.ConnectToNode(node);
-                        break;
-                    }
-                }
-
                 if (!isMouseDragProcessed)
                 {
                     //Enforce maximum road grade:
@@ -2425,7 +2409,7 @@ namespace RoadArchitect
         }
 
 
-        #region "Triggers Interesctions; Connections; Update"
+        #region "Triggers Intersections; Connections; Update"
         private void TriggerRoadConnection(SplineN _node1, SplineN _node2)
         {
             node.spline.ActivateEndNodeConnection(_node1, _node2);
