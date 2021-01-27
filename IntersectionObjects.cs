@@ -267,15 +267,12 @@ namespace RoadArchitect
             GameObject tObjLR = null;
             //			Vector3 xDir = default(Vector3);
             Vector3 tDir = default(Vector3);
-            float Mass = 12500f;
-            Vector3 COM = new Vector3(0f, 0f, 4f);
             Vector3 zeroVect = new Vector3(0f, 0f, 0f);
             Vector3 StartVec = default(Vector3);
             Vector3 EndVec = default(Vector3);
             //			bool bContains = false;
             //			MeshFilter MF = null;
             //			Vector3[] tVerts = null;
-            Rigidbody RB = null;
 
             //Get four points:
             Vector3 tPosRR = default(Vector3);
@@ -340,15 +337,9 @@ namespace RoadArchitect
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            if (isRB)
-            {
-                RB = tObjRL.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = COM;
-                tObjRL.AddComponent<RoadArchitect.RigidBody>();
-            }
             tObjRL.transform.position = tPosRL;
             tObjRL.transform.name = "TrafficLightRL";
+            AddRigidbodyToTrafficLight(tObjRL, isRB);
             //LR:
             tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
             //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
@@ -393,15 +384,9 @@ namespace RoadArchitect
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            if (isRB)
-            {
-                RB = tObjLR.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = COM;
-                tObjLR.AddComponent<RoadArchitect.RigidBody>();
-            }
             tObjLR.transform.position = tPosLR;
             tObjLR.transform.name = "TrafficLightLR";
+            AddRigidbodyToTrafficLight(tObjLR, isRB);
             //Node2:
             //RR:
             tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
@@ -447,15 +432,9 @@ namespace RoadArchitect
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            if (isRB)
-            {
-                RB = tObjRR.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = COM;
-                tObjRR.AddComponent<RoadArchitect.RigidBody>();
-            }
             tObjRR.transform.position = tPosRR;
             tObjRR.transform.name = "TrafficLightRR";
+            AddRigidbodyToTrafficLight(tObjRR, isRB);
 
             //LL:
             tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
@@ -501,18 +480,25 @@ namespace RoadArchitect
                 EndVec = (tDir.normalized * TLDistance) + StartVec;
                 intersection.isRegularPoleAlignment = OrigPoleAlignment;
             }
-            if (isRB)
-            {
-                RB = tObjLL.AddComponent<Rigidbody>();
-                RB.mass = Mass;
-                RB.centerOfMass = COM;
-                tObjLL.AddComponent<RoadArchitect.RigidBody>();
-            }
             tObjLL.transform.position = tPosLL;
             tObjLL.transform.name = "TrafficLightLL";
+            AddRigidbodyToTrafficLight(tObjLL, isRB);
 
             //Create the actual lights:
             CreateTrafficLightMains(_masterGameObj, tObjRR, tObjRL, tObjLL, tObjLR);
+        }
+
+
+        /// <summary> Adds a rigidbody to the traffic lights </summary>
+        private static void AddRigidbodyToTrafficLight(GameObject _obj, bool _isRB)
+        {
+            if (_isRB)
+            {
+                Rigidbody RB = _obj.AddComponent<Rigidbody>();
+                RB.mass = 12500f;
+                RB.centerOfMass = new Vector3(0f, 0f, 4f);
+                _obj.AddComponent<RoadArchitect.RigidBody>();
+            }
         }
 
 
