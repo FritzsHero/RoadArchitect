@@ -98,7 +98,7 @@ namespace RoadArchitect
 
         private static void ConstructRoadStoreTerrainHistoryDo(ref Road _road)
         {
-            Object[] TIDs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
+            Object[] TIDs = GameObject.FindObjectsOfType<RoadTerrain>();
 
             HashSet<int> tTIDS = new HashSet<int>();
             foreach (RoadTerrain TID in TIDs)
@@ -927,7 +927,7 @@ namespace RoadArchitect
 
         public static Threading.RoadCreationT.RoadTerrainInfo[] GetRoadTerrainInfos()
         {
-            Object[] tTerrainsObj = GameObject.FindObjectsOfType(typeof(Terrain));
+            Object[] tTerrainsObj = GameObject.FindObjectsOfType<Terrain>();
             Threading.RoadCreationT.RoadTerrainInfo tInfo;
             List<Threading.RoadCreationT.RoadTerrainInfo> tInfos = new List<Threading.RoadCreationT.RoadTerrainInfo>();
             foreach (Terrain tTerrain in tTerrainsObj)
@@ -1130,7 +1130,7 @@ namespace RoadArchitect
             if (_roadUID != "")
             {
                 tRoads = new Object[1];
-                Object[] roads = GameObject.FindObjectsOfType(typeof(Road));
+                Object[] roads = GameObject.FindObjectsOfType<Road>();
                 foreach (Road road in roads)
                 {
                     if (string.CompareOrdinal(road.UID, _roadUID) == 0)
@@ -1142,7 +1142,7 @@ namespace RoadArchitect
             }
             else
             {
-                tRoads = GameObject.FindObjectsOfType(typeof(Road));
+                tRoads = GameObject.FindObjectsOfType<Road>();
             }
             Vector3 tPos = _terrain.transform.position;
             Vector3 tSize = _terrain.terrainData.size;

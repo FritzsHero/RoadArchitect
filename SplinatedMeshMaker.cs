@@ -835,24 +835,24 @@ namespace RoadArchitect.Splination
 
 
                 #if UNITY_EDITOR
-                _SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString, typeof(GameObject));
+                _SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(CurrentSplinationString);
                 if (CurrentSplinationCap1String != null && CurrentSplinationCap1String.Length > 1)
                 {
-                    _SMM.currentSplinationCap1 = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String, typeof(GameObject));
+                    _SMM.currentSplinationCap1 = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(CurrentSplinationCap1String);
                 }
                 if (CurrentSplinationCap2String != null && CurrentSplinationCap2String.Length > 1)
                 {
-                    _SMM.currentSplinationCap2 = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String, typeof(GameObject));
+                    _SMM.currentSplinationCap2 = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(CurrentSplinationCap2String);
                 }
                 if (isMaterialOverriden)
                 {
                     if (SplinatedMaterial1String != null && SplinatedMaterial1String.Length > 0)
                     {
-                        _SMM.SplinatedMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial1String, typeof(Material));
+                        _SMM.SplinatedMaterial1 = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(SplinatedMaterial1String);
                     }
                     if (SplinatedMaterial2String != null && SplinatedMaterial2String.Length > 0)
                     {
-                        _SMM.SplinatedMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(SplinatedMaterial2String, typeof(Material));
+                        _SMM.SplinatedMaterial2 = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(SplinatedMaterial2String);
                     }
                 }
                 #endif
@@ -917,11 +917,11 @@ namespace RoadArchitect.Splination
                 #if UNITY_EDITOR
                 if (EndCapStartString != null && EndCapStartString.Length > 0)
                 {
-                    _SMM.EndCapStart = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapStartString, typeof(GameObject));
+                    _SMM.EndCapStart = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(EndCapStartString);
                 }
                 if (EndCapEndString != null && EndCapEndString.Length > 0)
                 {
-                    _SMM.EndCapEnd = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(EndCapEndString, typeof(GameObject));
+                    _SMM.EndCapEnd = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(EndCapEndString);
                 }
                 #endif
 
@@ -1196,9 +1196,9 @@ namespace RoadArchitect.Splination
                 _SMM.currentSplinationCap2 = CurrentSplinationCap2;
 
                 //#if UNITY_EDITOR
-                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationString,typeof(GameObject));
-                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap1String,typeof(GameObject));
-                // (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(CurrentSplinationCap2String,typeof(GameObject));
+                // UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(CurrentSplinationString);
+                // UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(CurrentSplinationCap1String);
+                // UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(CurrentSplinationCap2String);
                 //#endif
 
                 _SMM.capHeightOffset1 = CapHeightOffset1;
@@ -2847,7 +2847,7 @@ namespace RoadArchitect.Splination
             //			if(bMatchTerrain){
             //				tTerrainRects = new List<RoadUtility.Construction2DRect>();
             //				xTerrains = new List<Terrain>();
-            //				Object[] tTerrains = GameObject.FindObjectsOfType(typeof(Terrain));
+            //				Object[] tTerrains = GameObject.FindObjectsOfType<Terrain>();
             //				RoadUtility.Construction2DRect tTerrainRect = null;
             //				Vector2 tPos2D = default(Vector2);
             //				Vector2 P1,P2,P3,P4;

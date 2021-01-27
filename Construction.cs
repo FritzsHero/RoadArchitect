@@ -7,7 +7,7 @@ namespace RoadArchitect
     {
         public static SplineN CreateNode(Road _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
         {
-            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
+            Object[] worldNodeCount = GameObject.FindObjectsOfType<SplineN>();
             GameObject nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             #if UNITY_EDITOR
@@ -73,7 +73,7 @@ namespace RoadArchitect
         public static SplineN InsertNode(Road _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
+            Object[] worldNodeCount = GameObject.FindObjectsOfType<SplineN>();
             if (!_isForcedLoc)
             {
                 nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());

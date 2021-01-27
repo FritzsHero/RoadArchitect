@@ -368,7 +368,7 @@ namespace RoadArchitect
                 }
                 try
                 {
-                    tO.thumb = (Texture2D)AssetDatabase.LoadAssetAtPath(tO.thumbString, typeof(Texture2D)) as Texture2D;
+                    tO.thumb = AssetDatabase.LoadAssetAtPath<Texture2D>(tO.thumbString);
                 }
                 catch
                 {
@@ -603,7 +603,7 @@ namespace RoadArchitect
                 RoadUtility.WizardObject tO = new RoadUtility.WizardObject();
                 try
                 {
-                    tO.thumb = (Texture2D)AssetDatabase.LoadAssetAtPath(thumbString, typeof(Texture2D)) as Texture2D;
+                    tO.thumb = AssetDatabase.LoadAssetAtPath<Texture2D>(thumbString);
                 }
                 catch
                 {
@@ -615,7 +615,7 @@ namespace RoadArchitect
                 {
                     try
                     {
-                        GameObject xObj = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(stringPath, typeof(GameObject)) as GameObject;
+                        GameObject xObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(stringPath);
                         tO.thumb = AssetPreview.GetAssetPreview(xObj);
                     }
                     catch

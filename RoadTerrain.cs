@@ -73,7 +73,7 @@ namespace RoadArchitect
 
         private int GetNewID()
         {
-            Object[] allTerrainObjs = GameObject.FindObjectsOfType(typeof(RoadTerrain));
+            Object[] allTerrainObjs = GameObject.FindObjectsOfType<RoadTerrain>();
             List<int> allIDS = new List<int>();
             foreach (RoadTerrain Terrain in allTerrainObjs)
             {

@@ -140,7 +140,7 @@ namespace RoadArchitect.EdgeObjects
             EOM.edgeObjectString = edgeObjectString;
             
             #if UNITY_EDITOR
-            EOM.edgeObject = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
+            EOM.edgeObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(edgeObjectString);
             #endif
 
             EOM.isDefault = isDefault;
@@ -488,15 +488,15 @@ namespace RoadArchitect.EdgeObjects
             {
                 _EOM.edgeObjectString = edgeObjectString;
                 #if UNITY_EDITOR
-                _EOM.edgeObject = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(edgeObjectString, typeof(GameObject));
+                _EOM.edgeObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(edgeObjectString);
 
                 if (edgeMaterial1String.Length > 0)
                 {
-                    _EOM.edgeMaterial1 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeMaterial1String, typeof(Material));
+                    _EOM.edgeMaterial1 = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(edgeMaterial1String);
                 }
                 if (edgeMaterial2String.Length > 0)
                 {
-                    _EOM.edgeMaterial2 = (Material) UnityEditor.AssetDatabase.LoadAssetAtPath(edgeMaterial2String, typeof(Material));
+                    _EOM.edgeMaterial2 = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(edgeMaterial2String);
                 }
                 #endif
 

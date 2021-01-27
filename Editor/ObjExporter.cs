@@ -263,7 +263,7 @@ namespace RoadArchitect
 
             for (int index = 0; index < selection.Length; index++)
             {
-                Component[] meshfilter = selection[index].GetComponentsInChildren(typeof(MeshFilter));
+                Component[] meshfilter = selection[index].GetComponentsInChildren<MeshFilter>();
 
                 for (int m = 0; m < meshfilter.Length; m++)
                 {
@@ -306,7 +306,7 @@ namespace RoadArchitect
 
             for (int index = 0; index < selection.Length; index++)
             {
-                Component[] meshfilter = selection[index].GetComponentsInChildren(typeof(MeshFilter));
+                Component[] meshfilter = selection[index].GetComponentsInChildren<MeshFilter>();
 
                 for (int m = 0; m < meshfilter.Length; m++)
                 {
@@ -367,7 +367,7 @@ namespace RoadArchitect
 
             for (int index = 0; index < selection.Length; index++)
             {
-                Component[] meshfilter = selection[index].GetComponentsInChildren(typeof(MeshFilter));
+                Component[] meshfilter = selection[index].GetComponentsInChildren<MeshFilter>();
 
                 MeshFilter[] mf = new MeshFilter[meshfilter.Length];
 

@@ -1075,7 +1075,7 @@ namespace RoadArchitect
             }
             else
             {
-                Object[] allIntersections = GameObject.FindObjectsOfType(typeof(RoadIntersection));
+                Object[] allIntersections = GameObject.FindObjectsOfType<RoadIntersection>();
                 //Add intersection components, if necessary:
                 foreach (RoadIntersection roadIntersection in allIntersections)
                 {
@@ -1204,7 +1204,7 @@ namespace RoadArchitect
 
         private static SplineN GetNodeByID(int _ID)
         {
-            Object[] SplineNodeObjects = GameObject.FindObjectsOfType(typeof(SplineN));
+            Object[] SplineNodeObjects = GameObject.FindObjectsOfType<SplineN>();
             foreach (SplineN tNode in SplineNodeObjects)
             {
                 if (tNode.id == _ID)

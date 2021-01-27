@@ -192,7 +192,7 @@ namespace RoadArchitect
             if (!bHasInterInit)
             {
                 bHasInterInit = true;
-                tInters = (RoadIntersection[])GameObject.FindObjectsOfType(typeof(RoadIntersection));
+                tInters = GameObject.FindObjectsOfType<RoadIntersection>();
                 if (tInters == null || tInters.Length < 1)
                 {
                     tInterIndex = -1;
@@ -233,7 +233,7 @@ namespace RoadArchitect
             if (!bHasBridgeInit)
             {
                 bHasBridgeInit = true;
-                SplineN[] tSplineN = (SplineN[])GameObject.FindObjectsOfType(typeof(SplineN));
+                SplineN[] tSplineN = GameObject.FindObjectsOfType<SplineN>();
                 List<SplineN> tSplineNList = new List<SplineN>();
                 foreach (SplineN tNode in tSplineN)
                 {

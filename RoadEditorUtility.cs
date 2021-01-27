@@ -67,7 +67,7 @@ namespace RoadArchitect
         public static Material LoadMaterial(string _assetPath)
         {
             #if UNITY_EDITOR
-            return (Material) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(Material));
+            return AssetDatabase.LoadAssetAtPath<Material>(_assetPath);
             #else
             // Here you can return your material loaded at runtime
             return null;
@@ -78,7 +78,7 @@ namespace RoadArchitect
         public static PhysicMaterial LoadPhysicsMaterial(string _assetPath)
         {
             #if UNITY_EDITOR
-            return (PhysicMaterial) AssetDatabase.LoadAssetAtPath(_assetPath, typeof(PhysicMaterial));
+            return AssetDatabase.LoadAssetAtPath<PhysicMaterial>(_assetPath);
             #else
             // Here you can return your physics material loaded at runtime
             return null;

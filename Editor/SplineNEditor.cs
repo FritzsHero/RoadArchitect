@@ -1915,7 +1915,7 @@ namespace RoadArchitect
             }
 
             SMM.objectName = tName;
-            SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeTopBaseToAdd, typeof(GameObject));
+            SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(tBridgeTopBaseToAdd);
             SMM.horizontalSep = _horizSep;
             SMM.verticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
@@ -2095,7 +2095,7 @@ namespace RoadArchitect
                 tBridgeBottomBaseToAdd = _overridePrefab;
             }
 
-            SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(tBridgeBottomBaseToAdd, typeof(GameObject));
+            SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(tBridgeBottomBaseToAdd);
             SMM.horizontalSep = _horizSep;
             SMM.verticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
@@ -2178,7 +2178,7 @@ namespace RoadArchitect
         private void ExtrudeHelper(string _path, string _name, float DefaultHoriz, Splination.AxisTypeEnum _axisType = Splination.AxisTypeEnum.Z, bool _isHorizOverriden = false, float _horizSep = 0f, bool _isVertOverriden = false, float _vertRaise = 0f, bool _isFlippingRot = false)
         {
             SMM = node.AddSplinatedObject();
-            SMM.currentSplination = (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(_path, typeof(GameObject));
+            SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(_path);
 
             if (_isHorizOverriden)
             {
@@ -2264,7 +2264,7 @@ namespace RoadArchitect
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
             {
-                Object[] nodeObjects = GameObject.FindObjectsOfType(typeof(SplineN));
+                Object[] nodeObjects = GameObject.FindObjectsOfType<SplineN>();
                 foreach (SplineN xNode in nodeObjects)
                 {
                     if (Vector3.Distance(xNode.transform.position, node.transform.position) < 2f)
@@ -2508,7 +2508,7 @@ namespace RoadArchitect
                 return null;
             }
 
-            return (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
         }
     }
 #endif

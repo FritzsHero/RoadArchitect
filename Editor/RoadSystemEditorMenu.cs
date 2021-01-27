@@ -13,7 +13,7 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Create road system")]
     public static void CreateRoadSystem()
     {
-        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType(typeof(RoadSystem));
+        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType<RoadSystem>();
         int nextCount = (allRoadSystemObjects.Length + 1);
         allRoadSystemObjects = null;
 
@@ -31,7 +31,7 @@ public class RoadSystemEditorMenu : ScriptableObject
 	[MenuItem("Window/Road Architect/Add road")]
     public static void AddRoad()
     {
-        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType(typeof(RoadSystem));
+        Object[] allRoadSystemObjects = GameObject.FindObjectsOfType<RoadSystem>();
         if (allRoadSystemObjects != null && allRoadSystemObjects.Length == 0)
         {
             CreateRoadSystem();
@@ -49,7 +49,7 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Update All Roads")]
     public static void UpdateAllRoads()
     {
-        Road[] allRoadObjects = (Road[]) GameObject.FindObjectsOfType(typeof(Road));
+        Road[] allRoadObjects = GameObject.FindObjectsOfType<Road>();
 
         int roadCount = allRoadObjects.Length;
 

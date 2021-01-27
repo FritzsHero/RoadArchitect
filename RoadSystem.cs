@@ -63,7 +63,7 @@ namespace RoadArchitect
         {
             if (editorPlayCamera == null)
             {
-                Camera[] editorCams = (Camera[])GameObject.FindObjectsOfType(typeof(Camera));
+                Camera[] editorCams = GameObject.FindObjectsOfType<Camera>();
                 if (editorCams != null && editorCams.Length == 1)
                 {
                     editorPlayCamera = editorCams[0];

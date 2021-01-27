@@ -84,7 +84,7 @@ namespace RoadArchitect.Roads
 		public static SplineN InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = GameObject.FindObjectsOfType(typeof(SplineN));
+            Object[] worldNodeCount = GameObject.FindObjectsOfType<SplineN>();
             nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             //Set node location:

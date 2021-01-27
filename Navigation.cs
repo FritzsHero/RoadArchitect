@@ -9,7 +9,7 @@ namespace RoadArchitect
         {
             InitResetNavigationData();
 
-            Object[] allSplines = GameObject.FindObjectsOfType(typeof(SplineC));
+            Object[] allSplines = GameObject.FindObjectsOfType<SplineC>();
 
             //Store connected spline nodes on each other:
             SplineN node;
@@ -38,7 +38,7 @@ namespace RoadArchitect
 
         public static void InitResetNavigationData()
         {
-            Object[] allSplines = GameObject.FindObjectsOfType(typeof(SplineC));
+            Object[] allSplines = GameObject.FindObjectsOfType<SplineC>();
             int splineCount = 0;
             int nodeCount = 0;
             foreach (SplineC spline in allSplines)

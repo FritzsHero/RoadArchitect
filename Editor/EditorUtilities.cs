@@ -19,7 +19,7 @@ namespace RoadArchitect
         {
             if (_texture == null)
             {
-                _texture = (T)UnityEditor.AssetDatabase.LoadAssetAtPath(_path, typeof(T)) as T;
+                _texture = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(_path);
             }
         }
 
