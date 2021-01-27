@@ -24,7 +24,34 @@ namespace RoadArchitect.Tests
             roadSystem = roadSystemObject.AddComponent<RoadSystem>();
             roadSystem.isAllowingRoadUpdates = false;
 
-            int numTests = 6;
+            int numTests = 9;
+            double totalTestTime = 0f;
+            for (int index = 1; index <= numTests; index++)
+            {
+                UnityEngine.Debug.Log("Running test " + index);
+                double testTime = RunTest(index);
+                totalTestTime += testTime;
+                UnityEngine.Debug.Log("Test " + index + " complete.  Test time: " + testTime + "ms");
+            }
+            UnityEngine.Debug.Log("All tests completed.  Total test time: " + totalTestTime + "ms");
+
+            //Turn updates back on and update road:
+            roadSystem.isAllowingRoadUpdates = true;
+            roadSystem.UpdateAllRoads();
+        }
+
+
+        public static void RoadArchitectUnitTest1To5()
+        {
+            CleanupTest(1);
+
+            //Create new road system and turn off updates:
+            GameObject roadSystemObject = new GameObject("RoadArchitectSystem1");
+            //Add road system component.
+            roadSystem = roadSystemObject.AddComponent<RoadSystem>();
+            roadSystem.isAllowingRoadUpdates = false;
+
+            int numTests = 5;
             double totalTestTime = 0f;
             for (int index = 1; index <= numTests; index++)
             {
@@ -72,11 +99,15 @@ namespace RoadArchitect.Tests
                     break;
                 case 7:
                     // Double intersection:
-                    RoadArchitectUnitTest6();
+                    RoadArchitectUnitTest7();
                     break;
                 case 8:
                     // Road loop:
-                    RoadArchitectUnitTest6();
+                    RoadArchitectUnitTest8();
+                    break;
+                case 9:
+                    // 3 Intersections with end nodes
+                    RoadArchitectUnitTest9();
                     break;
             }
             stopwatch.Stop();
@@ -90,9 +121,10 @@ namespace RoadArchitect.Tests
             Debug.Log("Cleaning up tests");
             CleanupTest(1);
 
-            // Remove test 7 and 8
+            CleanupTest(6);
             CleanupTest(7);
             CleanupTest(8);
+            CleanupTest(9);
         }
 
 
@@ -432,8 +464,14 @@ namespace RoadArchitect.Tests
 
 
         /// <summary> Very long road </summary>
-        private static void RoadArchitectUnitTest6()
+        public static void RoadArchitectUnitTest6()
         {
+            CleanupTest(6);
+
+            GameObject unitSystem6Object = new GameObject("RoadArchitectSystem6");
+            RoadSystem unitSystem6 = unitSystem6Object.AddComponent<RoadSystem>();
+            unitSystem6.isAllowingRoadUpdates = false;
+
             //Create base road:
             List<Vector3> nodeLocations = new List<Vector3>();
             for (int index = 0; index < 50; index++)
@@ -444,11 +482,21 @@ namespace RoadArchitect.Tests
             {
                 nodeLocations.Add(new Vector3(5900f - (79f * index), 30f, 5950f));
             }
-            for (int index = 0; index < 200; index++)
+            for (int index = 0; index < 50; index++)
             {
                 nodeLocations.Add(new Vector3(-200f, 30f, 5950f - (79f * index)));
             }
-            RoadAutomation.CreateRoadProgrammatically(roadSystem, ref nodeLocations);
+            for (int index = 0; index < 50; index++)
+            {
+                nodeLocations.Add(new Vector3(-200f + (79f * index), 30f, 10f));
+            }
+            nodeLocations.Add(new Vector3(5995f, 40f, 10f));
+            RoadAutomation.CreateRoadProgrammatically(unitSystem6, ref nodeLocations);
+
+
+            //Turn updates back on and update road:
+            unitSystem6.isAllowingRoadUpdates = true;
+            unitSystem6.UpdateAllRoads();
         }
 
 

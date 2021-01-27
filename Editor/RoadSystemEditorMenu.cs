@@ -91,9 +91,29 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Run all unit tests (caution)")]
     public static void TestProgram()
     {
-        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your first RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your RoadSystem 1, 6, 7, 8 and 9 and will create a lot of test roads.", "OK", "Cancel"))
         {
             RoadArchitect.Tests.UnitTests.RoadArchitectUnitTests();
+        }
+    }
+
+
+    [MenuItem("Window/Road Architect/Testing/Run unit test 1-5 (caution)")]
+    public static void Test1To5()
+    {
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your first RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.RoadArchitectUnitTest1To5();
+        }
+    }
+
+
+    [MenuItem("Window/Road Architect/Testing/Run unit test 6 (caution)")]
+    public static void Test6()
+    {
+        if (UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your sixth RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        {
+            RoadArchitect.Tests.UnitTests.RoadArchitectUnitTest6();
         }
     }
 
@@ -132,7 +152,7 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
     public static void TestCleanup()
     {
-        if(UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your first RoadSystem and will create a lot of test roads.", "OK", "Cancel"))
+        if(UnityEditor.EditorUtility.DisplayDialog("Warning !", "This will delete your RoadSystem 1, 6, 7, 8 and 9 and will create a lot of test roads.", "OK", "Cancel"))
         {
             RoadArchitect.Tests.UnitTests.CleanupAllTests();
         }
