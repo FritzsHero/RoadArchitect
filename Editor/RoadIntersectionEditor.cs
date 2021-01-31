@@ -1293,5 +1293,5 @@ namespace RoadArchitect
             EditorGUILayout.EndHorizontal();
         }
     }
-#endif
 }
+#endif

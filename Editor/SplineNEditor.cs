@@ -2511,5 +2511,5 @@ namespace RoadArchitect
             return UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
         }
     }
-#endif
 }
+#endif

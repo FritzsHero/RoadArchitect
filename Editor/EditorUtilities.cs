@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 
 
 namespace RoadArchitect
 {
     public class EditorUtilities
     {
-
-
         /// <summary> Opens the loacally stored manual </summary>
         public static void OpenOfflineManual()
         {
@@ -33,3 +32,4 @@ namespace RoadArchitect
         }
     }
 }
+#endif

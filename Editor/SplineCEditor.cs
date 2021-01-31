@@ -37,5 +37,5 @@ namespace RoadArchitect
             #endregion
         }
     }
-#endif
 }
+#endif

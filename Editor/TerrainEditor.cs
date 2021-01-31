@@ -295,5 +295,5 @@ namespace RoadArchitect
             }
         }
     }
-#endif
 }
+#endif

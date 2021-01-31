@@ -23,5 +23,5 @@ namespace RoadArchitect
             //Intentionally left empty.
         }
     }
-#endif
 }
+#endif
