@@ -53,7 +53,7 @@ namespace RoadArchitect
         private GUIStyle thumbStyle;
         private Vector2 scrollPos = new Vector2(0f, 25f);
         private SplineN thisNode = null;
-        private List<RoadUtility.WizardObject> objectList = null;
+        private List<WizardObject> objectList = null;
         private bool isUsingNoGUI = false;
         public Rect rect;
         #endregion
@@ -298,7 +298,7 @@ namespace RoadArchitect
                 objectList.Clear();
                 objectList = null;
             }
-            objectList = new List<RoadUtility.WizardObject>();
+            objectList = new List<WizardObject>();
             if (tWindowType == WindowTypeEnum.Extrusion)
             {
                 titleContent.text = "Extrusion";
@@ -357,7 +357,7 @@ namespace RoadArchitect
             //string thumbString = "";
             for (int index = 0; index < nameCount; index++)
             {
-                RoadUtility.WizardObject tO = RoadUtility.WizardObject.LoadFromLibrary(_paths[index]);
+                WizardObject tO = WizardObject.LoadFromLibrary(_paths[index]);
                 if (tO == null)
                 {
                     continue;
@@ -600,7 +600,7 @@ namespace RoadArchitect
                 }
 
                 #region "Thumbs"
-                RoadUtility.WizardObject tO = new RoadUtility.WizardObject();
+                WizardObject tO = new WizardObject();
                 try
                 {
                     tO.thumb = AssetDatabase.LoadAssetAtPath<Texture2D>(thumbString);
@@ -741,7 +741,7 @@ namespace RoadArchitect
 
         private void oListSort()
         {
-            objectList.Sort((RoadUtility.WizardObject object1, RoadUtility.WizardObject object2) =>
+            objectList.Sort((WizardObject object1, WizardObject object2) =>
             {
                 if (object1.isDefault != object2.isDefault)
                 {

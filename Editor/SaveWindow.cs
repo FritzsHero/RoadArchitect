@@ -148,7 +148,7 @@ namespace RoadArchitect
             if (GUILayout.Button("Save group"))
             {
                 SanitizeFilename();
-                RoadUtility.WizardObject WO = new RoadUtility.WizardObject();
+                WizardObject WO = new WizardObject();
                 WO.thumbString = thumbString;
                 WO.desc = desc;
                 WO.displayName = displayName;
