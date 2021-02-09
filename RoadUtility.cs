@@ -297,13 +297,8 @@ namespace RoadArchitect
         //	    }
 
 
-        public static void ConstructRoadResetTerrainHistory(ref Road _road)
-        {
-            ConstructRoadResetTerrainHistoryDo(ref _road);
-        }
-
-
-        private static void ConstructRoadResetTerrainHistoryDo(ref Road _road)
+        /// <summary> Clears the terrain history of _road </summary>
+        public static void ResetTerrainHistory(ref Road _road)
         {
             if (_road.TerrainHistory != null)
             {

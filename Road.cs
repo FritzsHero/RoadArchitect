@@ -944,7 +944,7 @@ namespace RoadArchitect
             }
             else
             {
-                RoadUtility.ConstructRoadResetTerrainHistory(ref tRoad);
+                RoadUtility.ResetTerrainHistory(ref tRoad);
             }
         }
 
