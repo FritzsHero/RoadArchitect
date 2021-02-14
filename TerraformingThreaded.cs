@@ -8,7 +8,7 @@ namespace RoadArchitect.Threading
     {
         public class TerrainBoundsMaker
         {
-            public List<RoadUtility.Construction3DTri> triList;
+            public List<Construction3DTri> triList;
             [UnityEngine.Serialization.FormerlySerializedAs("tRect")]
             public Construction2DRect constructRect;
             public float MinI = 0f;
@@ -641,10 +641,10 @@ namespace RoadArchitect.Threading
             rVect2.y = _T2SUB;
 
             TerrainBoundsMaker TBM = new TerrainBoundsMaker();
-            TBM.triList = new List<RoadUtility.Construction3DTri>();
+            TBM.triList = new List<Construction3DTri>();
 
-            TBM.triList.Add(new RoadUtility.Construction3DTri(lVect1, rVect1, lVect2, _i, _i2));
-            TBM.triList.Add(new RoadUtility.Construction3DTri(lVect2, rVect1, rVect2, _i, _i2));
+            TBM.triList.Add(new Construction3DTri(lVect1, rVect1, lVect2, _i, _i2));
+            TBM.triList.Add(new Construction3DTri(lVect2, rVect1, rVect2, _i, _i2));
 
             Vector3 lVect1far = (_vect1 + new Vector3(_heightSep * -_POS1.normalized.z, 0, _heightSep * _POS1.normalized.x));
             Vector3 rVect1far = (_vect1 + new Vector3(_heightSep * _POS1.normalized.z, 0, _heightSep * -_POS1.normalized.x));
@@ -656,10 +656,10 @@ namespace RoadArchitect.Threading
             rVect1far.y = rVect1.y;
             rVect2far.y = rVect2.y;
 
-            TBM.triList.Add(new RoadUtility.Construction3DTri(lVect1far, lVect1, lVect2far, _i, _i2));
-            TBM.triList.Add(new RoadUtility.Construction3DTri(lVect2far, lVect1, lVect2, _i, _i2));
-            TBM.triList.Add(new RoadUtility.Construction3DTri(rVect1, rVect1far, rVect2, _i, _i2));
-            TBM.triList.Add(new RoadUtility.Construction3DTri(rVect2, rVect1far, rVect2far, _i, _i2));
+            TBM.triList.Add(new Construction3DTri(lVect1far, lVect1, lVect2far, _i, _i2));
+            TBM.triList.Add(new Construction3DTri(lVect2far, lVect1, lVect2, _i, _i2));
+            TBM.triList.Add(new Construction3DTri(rVect1, rVect1far, rVect2, _i, _i2));
+            TBM.triList.Add(new Construction3DTri(rVect2, rVect1far, rVect2far, _i, _i2));
 
             TBM.constructRect = new Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
             //tRect.MinI = i;
@@ -1126,7 +1126,7 @@ namespace RoadArchitect.Threading
             float OrigHeight = _vect.y;
             int mCount = _terrainList.Count;
             int tCount = 0;
-            RoadUtility.Construction3DTri tTri;
+            Construction3DTri tTri;
             TerrainBoundsMaker TBM;
             _isAdjusted = false;
             _height = 0f;

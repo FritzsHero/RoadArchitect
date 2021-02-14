@@ -617,7 +617,7 @@ namespace RoadArchitect
         //	}
         //	
 
-        public List<RoadUtility.Construction3DTri> tTriList;
+        public List<Construction3DTri> tTriList;
         public List<Vector3> tHMList;
         [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDrawIntersectionHighlight")]
         public bool isDrawingIntersectionHighlightGizmos = false;
