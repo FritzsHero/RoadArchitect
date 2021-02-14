@@ -282,7 +282,7 @@ namespace RoadArchitect
 
 
         [UnityEngine.Serialization.FormerlySerializedAs("BoundsRect")]
-        private RoadUtility.Construction2DRect boundsRect;
+        private Construction2DRect boundsRect;
 
 
         #region "Setup"
@@ -373,7 +373,7 @@ namespace RoadArchitect
         public void ConstructBoundsRect()
         {
             boundsRect = null;
-            boundsRect = new RoadUtility.Construction2DRect(new Vector2(cornerRR.x, cornerRR.z), new Vector2(cornerRL.x, cornerRL.z), new Vector2(cornerLR.x, cornerLR.z), new Vector2(cornerLL.x, cornerLL.z));
+            boundsRect = new Construction2DRect(new Vector2(cornerRR.x, cornerRR.z), new Vector2(cornerRL.x, cornerRL.z), new Vector2(cornerLR.x, cornerLR.z), new Vector2(cornerLL.x, cornerLL.z));
         }
 
 

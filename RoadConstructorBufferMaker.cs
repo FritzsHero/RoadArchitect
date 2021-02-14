@@ -193,7 +193,7 @@ namespace RoadArchitect
 
         public Terrain tTerrain;
 
-        public List<RoadUtility.Construction2DRect> tIntersectionBounds;
+        public List<Construction2DRect> tIntersectionBounds;
         public HashSet<Vector3> ImmuneVects;
 
         public Mesh tMesh;
@@ -457,7 +457,7 @@ namespace RoadArchitect
             tMesh_iFMainPlates = new List<Mesh>();
             tMesh_iBMarkerPlates = new List<Mesh>();
             tMesh_iFMarkerPlates = new List<Mesh>();
-            tIntersectionBounds = new List<RoadUtility.Construction2DRect>();
+            tIntersectionBounds = new List<Construction2DRect>();
             ImmuneVects = new HashSet<Vector3>();
             //}
 

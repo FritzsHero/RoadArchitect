@@ -143,8 +143,10 @@ namespace RoadArchitect
             int dSize = 0;
             TempTerrainData TTD;
             bool isContaining = false;
-            RoadUtility.Construction2DRect tRect = null;
-            //RoadUtility.Construction2DRect rRect = null;
+            Construction2DRect tRect = null;
+            //Construction2DRect rRect = null;
+
+
             foreach (Terrain terrain in allTerrains)
             {
                 if (terrain.terrainData == null)
@@ -384,7 +386,7 @@ namespace RoadArchitect
         }
 
 
-        public static RoadUtility.Construction2DRect GetTerrainBounds(Terrain _terrain)
+        public static Construction2DRect GetTerrainBounds(Terrain _terrain)
         {
             float terrainWidth = _terrain.terrainData.size.x;
             float terrainLength = _terrain.terrainData.size.z;
@@ -417,7 +419,7 @@ namespace RoadArchitect
             //P2 = tTerrain.transform.TransformPoint(P2);
             //P3 = tTerrain.transform.TransformPoint(P3);
 
-            return new RoadUtility.Construction2DRect(P0, P1, P2, P3, _terrain.transform.position.y);
+            return new Construction2DRect(P0, P1, P2, P3, _terrain.transform.position.y);
         }
 
 

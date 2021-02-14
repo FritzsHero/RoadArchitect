@@ -10,7 +10,7 @@ namespace RoadArchitect.Threading
         {
             public List<RoadUtility.Construction3DTri> triList;
             [UnityEngine.Serialization.FormerlySerializedAs("tRect")]
-            public RoadUtility.Construction2DRect constructRect;
+            public Construction2DRect constructRect;
             public float MinI = 0f;
             public float MaxI = 1f;
         }
@@ -158,7 +158,7 @@ namespace RoadArchitect.Threading
             float HeightSep = Sep + (_spline.road.matchHeightsDistance * 0.5f);
             List<TerrainBoundsMaker> TBMList = new List<TerrainBoundsMaker>();
             //List<RoadUtility.Construction3DTri> triList = new List<RoadUtility.Construction3DTri>();
-            List<RoadUtility.Construction2DRect> TreerectList = new List<RoadUtility.Construction2DRect>();
+            List<Construction2DRect> TreerectList = new List<Construction2DRect>();
             float tStep = _spline.road.roadDefinition / _spline.distance;
             //tStep *= 0.5f;
 
@@ -231,7 +231,7 @@ namespace RoadArchitect.Threading
             {
                 TreeClearDist = _spline.road.RoadWidth();
             }
-            RoadUtility.Construction2DRect tRect = null;
+            Construction2DRect tRect = null;
             float tGrade = 0f;
             for (float index = StartMin; index < FinalMax; index += tStep)
             {
@@ -661,7 +661,7 @@ namespace RoadArchitect.Threading
             TBM.triList.Add(new RoadUtility.Construction3DTri(rVect1, rVect1far, rVect2, _i, _i2));
             TBM.triList.Add(new RoadUtility.Construction3DTri(rVect2, rVect1far, rVect2far, _i, _i2));
 
-            TBM.constructRect = new RoadUtility.Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
+            TBM.constructRect = new Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
             //tRect.MinI = i;
             //tRect.MaxI = i2;
 
@@ -700,7 +700,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static RoadUtility.Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref Terraforming.TempTerrainData _TTD, ref SplineC _spline)
+        private static Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref Terraforming.TempTerrainData _TTD, ref SplineC _spline)
         {
             Vector3 lVect1far = default(Vector3);
             Vector3 rVect1far = default(Vector3);
@@ -766,7 +766,7 @@ namespace RoadArchitect.Threading
 
 
 
-            RoadUtility.Construction2DRect tRect = null;
+            Construction2DRect tRect = null;
             if (_spline.road.isTreeModificationEnabled)
             {
                 bool isQuit = false;
@@ -837,7 +837,7 @@ namespace RoadArchitect.Threading
                     rVect1far = (_vect1 + new Vector3(_treeSep * _POS1.normalized.z, 0, _treeSep * -_POS1.normalized.x));
                     lVect2far = (_vect2 + new Vector3(_treeSep * -POS2.normalized.z, 0, _treeSep * POS2.normalized.x));
                     rVect2far = (_vect2 + new Vector3(_treeSep * POS2.normalized.z, 0, _treeSep * -POS2.normalized.x));
-                    tRect = new RoadUtility.Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
+                    tRect = new Construction2DRect(new Vector2(lVect1far.x, lVect1far.z), new Vector2(rVect1far.x, rVect1far.z), new Vector2(rVect2far.x, rVect2far.z), new Vector2(lVect2far.x, lVect2far.z), 0f);
                 }
             }
 
