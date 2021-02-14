@@ -481,7 +481,7 @@ namespace RoadArchitect
 
         #region "Gizmos"
         //	private void TerrainDebugging(){
-        //			RoadUtility.Construction3DTri tTri = null;
+        //			Construction3DTri tTri = null;
         //			Vector3 tHeightVec = new Vector3(0f,10f,0f);
         //			if(tTriList != null){
         //				
@@ -589,7 +589,7 @@ namespace RoadArchitect
         ////			Gizmos.DrawCube(P3,new Vector3(1f,1f,1f));
         ////			Gizmos.DrawCube(P4,new Vector3(1f,1f,1f));
         ////			
-        ////			tRect = new RoadUtility.Construction3DRect(P1,P2,P3,P4);
+        ////			tRect = new Construction3DRect(P1,P2,P3,P4);
         ////
         ////			Gizmos.color = new Color(0f,0f,1f,1f);
         ////			Gizmos.DrawCube(tRect.pMiddle,new Vector3(0.1f,0.1f,0.1f));
@@ -625,6 +625,18 @@ namespace RoadArchitect
 
         private void OnDrawGizmos()
         {
+            DrawGizmos(false);
+        }
+
+
+        private void OnDrawGizmosSelected()
+        {
+            DrawGizmos(true);
+        }
+
+
+        private void DrawGizmos(bool _isSelected)
+        {
             if (spline == null)
             {
                 return;
@@ -653,6 +665,21 @@ namespace RoadArchitect
             {
                 return;
             }
+
+
+            if (_isSelected)
+            {
+                if (isDrawingIntersectionHighlightGizmos && !isSpecialEndNode && isIntersection)
+                {
+                    Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
+                    Gizmos.DrawCube(transform.position + new Vector3(0f, 2f, 0f), new Vector3(32f, 4f, 32f));
+                }
+                Gizmos.color = spline.road.selectedColor;
+                Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
+                return;
+            }
+
+            // Not Selected
             if (isDrawingIntersectionHighlightGizmos && !isSpecialEndNode && isIntersection)
             {
                 Gizmos.color = spline.road.Color_NodeInter;
@@ -669,38 +696,6 @@ namespace RoadArchitect
                 Gizmos.color = spline.road.defaultNodeColor;
                 Gizmos.DrawCube(transform.position + new Vector3(0f, 6f, 0f), new Vector3(2f, 11f, 2f));
             }
-        }
-
-
-        private void OnDrawGizmosSelected()
-        {
-            if (!spline.road.isGizmosEnabled)
-            {
-                return;
-            }
-            if (isIgnore)
-            {
-                return;
-            }
-            if (isIntersection)
-            {
-                return;
-            }
-            if (isSpecialEndNode)
-            {
-                return;
-            }
-            if (isSpecialEndNodeIsEnd || isSpecialEndNodeIsStart)
-            {
-                return;
-            }
-            if (isDrawingIntersectionHighlightGizmos && !isSpecialEndNode && isIntersection)
-            {
-                Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
-                Gizmos.DrawCube(transform.position + new Vector3(0f, 2f, 0f), new Vector3(32f, 4f, 32f));
-            }
-            Gizmos.color = spline.road.selectedColor;
-            Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
         }
         #endregion
 
