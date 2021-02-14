@@ -135,14 +135,14 @@ namespace RoadArchitect
             StreamReader reader = File.OpenText(_path);
             string _info = reader.ReadToEnd();
             reader.Close();
-            T loadedObject = (T)DeserializeObject<T>(_info);
+            T loadedObject = DeserializeObject<T>(_info);
             return loadedObject;
         }
 
 
         public static T LoadData<T>(ref string _info)
         {
-            T loadedObject = (T)DeserializeObject<T>(_info);
+            T loadedObject = DeserializeObject<T>(_info);
             return loadedObject;
         }
 
@@ -182,11 +182,11 @@ namespace RoadArchitect
         }
 
 
-        private static object DeserializeObject<T>(string _xmlString)
+        private static T DeserializeObject<T>(string _xmlString)
         {
             XmlSerializer xs = new XmlSerializer(typeof(T));
             MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(_xmlString));
-            return xs.Deserialize(memoryStream);
+            return (T)xs.Deserialize(memoryStream);
         }
 
 
