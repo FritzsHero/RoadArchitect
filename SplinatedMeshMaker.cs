@@ -463,7 +463,7 @@ namespace RoadArchitect.Splination
         {
             try
             {
-                SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadData<SplinatedMeshLibraryMaker>(ref _data);
+                SplinatedMeshLibraryMaker SLM = RootUtils.LoadData<SplinatedMeshLibraryMaker>(ref _data);
                 return SLM;
             }
             catch

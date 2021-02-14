@@ -98,7 +98,7 @@ namespace RoadArchitect
             {
                 try
                 {
-                    WizardObjectLibrary WOL = (WizardObjectLibrary)RootUtils.LoadData<WizardObjectLibrary>(ref _data);
+                    WizardObjectLibrary WOL = RootUtils.LoadData<WizardObjectLibrary>(ref _data);
                     return WOL;
                 }
                 catch

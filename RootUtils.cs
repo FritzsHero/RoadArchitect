@@ -140,10 +140,10 @@ namespace RoadArchitect
         }
 
 
-        public static object LoadData<T>(ref string _info)
+        public static T LoadData<T>(ref string _info)
         {
-            object tObject = DeserializeObject<T>(_info);
-            return tObject;
+            T loadedObject = (T)DeserializeObject<T>(_info);
+            return loadedObject;
         }
 
 

@@ -281,7 +281,7 @@ namespace RoadArchitect.EdgeObjects
         {
             try
             {
-                EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadData<EdgeObjectLibraryMaker>(ref _data);
+                EdgeObjectLibraryMaker ELM = RootUtils.LoadData<EdgeObjectLibraryMaker>(ref _data);
                 return ELM;
             }
             catch
