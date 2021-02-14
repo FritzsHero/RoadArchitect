@@ -435,7 +435,7 @@ namespace RoadArchitect.Splination
                 RootUtils.CheckCreateSpecialLibraryDirs();
                 filePath = basePath + "ExtrudedObjects/ESO" + _name + ".rao";
             }
-            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
+            SplinatedMeshLibraryMaker SLM = RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
             isRequiringUpdate = true;
         }
@@ -446,7 +446,7 @@ namespace RoadArchitect.Splination
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "W/" + _name + ".rao";
-            SplinatedMeshLibraryMaker SLM = (SplinatedMeshLibraryMaker) RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
+            SplinatedMeshLibraryMaker SLM = RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
             isRequiringUpdate = true;
         }

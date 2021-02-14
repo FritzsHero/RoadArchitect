@@ -130,13 +130,13 @@ namespace RoadArchitect
         }
 
 
-        public static object LoadXML<T>(ref string _path)
+        public static T LoadXML<T>(ref string _path)
         {
             StreamReader reader = File.OpenText(_path);
             string _info = reader.ReadToEnd();
             reader.Close();
-            object tObject = DeserializeObject<T>(_info);
-            return tObject;
+            T loadedObject = (T)DeserializeObject<T>(_info);
+            return loadedObject;
         }
 
 

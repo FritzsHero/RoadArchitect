@@ -568,7 +568,7 @@ namespace RoadArchitect
 
                 if (tWindowType == WindowTypeEnum.Extrusion)
                 {
-                    Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = (Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker)RootUtils.LoadXML<Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref path);
+                    Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = RootUtils.LoadXML<Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref path);
                     if (SLM == null)
                     {
                         continue;
@@ -581,7 +581,7 @@ namespace RoadArchitect
                 }
                 else if (tWindowType == WindowTypeEnum.Edge)
                 {
-                    EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = (EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker)RootUtils.LoadXML<EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker>(ref path);
+                    EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker>(ref path);
                     if (ELM == null)
                     {
                         continue;

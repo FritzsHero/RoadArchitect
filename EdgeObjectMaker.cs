@@ -246,7 +246,7 @@ namespace RoadArchitect.EdgeObjects
             {
                 filePath = basePath + "EdgeObjects/EOM" + _fileName + ".rao";
             }
-            EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
+            EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
             isRequiringUpdate = true;
         }
@@ -257,7 +257,7 @@ namespace RoadArchitect.EdgeObjects
             RootUtils.CheckCreateSpecialLibraryDirs();
             string basePath = RootUtils.GetDirLibrary();
             string filePath = basePath + "W/" + _fileName + ".rao";
-            EdgeObjectLibraryMaker ELM = (EdgeObjectLibraryMaker) RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
+            EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
             isRequiringUpdate = true;
         }
