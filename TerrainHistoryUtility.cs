@@ -53,9 +53,9 @@ namespace RoadArchitect
         public static void DeleteTerrainHistory(Road _road)
         {
             string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
-            if (System.IO.File.Exists(path))
+            if (File.Exists(path))
             {
-                System.IO.File.Delete(path);
+                File.Delete(path);
             }
         }
 
@@ -77,7 +77,7 @@ namespace RoadArchitect
             BinaryFormatter bFormatter = new BinaryFormatter();
             bFormatter.Binder = new VersionDeserializationBinder();
 
-            result = (List<TerrainHistoryMaker>)bFormatter.Deserialize(stream) as List<TerrainHistoryMaker>;
+            result = (List<TerrainHistoryMaker>)bFormatter.Deserialize(stream);
 
             stream.Close();
             return result;
@@ -120,11 +120,11 @@ namespace RoadArchitect
         public static string CheckRoadArchitectDirectory()
         {
             string path = GetDirBase();
-            if (!System.IO.Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
             }
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
                 return path + "/";
             }
@@ -135,13 +135,13 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns RoadArchitect/TerrainHistory path or empty </summary>
         public static string CheckNonAssetDirTH()
         {
             CheckRoadArchitectDirectory();
 
-
             string path = GetTHDir();
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
                 return path;
             }
@@ -149,31 +149,6 @@ namespace RoadArchitect
             {
                 return "";
             }
-        }
-
-
-        public static string CheckNonAssetDirLibrary()
-        {
-            CheckRoadArchitectDirectory();
-
-
-            string path = RootUtils.GetDirLibrary();
-            if (System.IO.Directory.Exists(path))
-            {
-                return path;
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-
-        public static void CheckNonAssetDirs()
-        {
-            CheckRoadArchitectDirectory();
-            CheckNonAssetDirTH();
-            CheckNonAssetDirLibrary();
         }
     }
 }

@@ -8,38 +8,26 @@ namespace RoadArchitect
     public class TerrainHistoryMaker
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("TID")]
         public int terrainID;
         //Heights:
         public int[] x1;
         public int[] y1;
-        [UnityEngine.Serialization.FormerlySerializedAs("h")]
         public float[] height;
         public int cI;
-        [UnityEngine.Serialization.FormerlySerializedAs("bHeightHistoryEnabled")]
         public bool isHeightHistoryEnabled;
         //Details:
-        [UnityEngine.Serialization.FormerlySerializedAs("DetailLayersCount")]
         public int detailLayersCount;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("DetailsX")]
         public int[] detailsX;
-        [UnityEngine.Serialization.FormerlySerializedAs("DetailsY")]
         public int[] detailsY;
-        [UnityEngine.Serialization.FormerlySerializedAs("DetailsOldValue")]
         public int[] detailsOldValue;
-        [UnityEngine.Serialization.FormerlySerializedAs("DetailsI")]
         public int[] detailsI;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bDetailHistoryEnabled")]
         public bool isDetailHistoryEnabled;
         //Trees:
-        [UnityEngine.Serialization.FormerlySerializedAs("TreesOld")]
         public TerrainTreeInstance[] oldTrees;
         public int TreesI;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTreeHistoryEnabled")]
         public bool isTreeHistoryEnabled;
-        [UnityEngine.Serialization.FormerlySerializedAs("bDestroyMe")]
         public bool isDestroySheduled = false;
         #endregion
 
@@ -81,6 +69,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Stores _trees into oldTrees </summary>
         public void MakeRATrees(ref List<TreeInstance> _trees)
         {
             int tSize = _trees.Count;
@@ -110,6 +99,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns a new tree array copy of oldTrees </summary>
         public TreeInstance[] MakeTrees()
         {
             if (oldTrees == null || oldTrees.Length < 1)
@@ -136,6 +126,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns size of this terrain history </summary>
         public int GetSize()
         {
             int tSize = 4;
