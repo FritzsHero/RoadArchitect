@@ -123,6 +123,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> returns serialization of this object as string </summary>
         public static string GetString<T>(object _object)
         {
             string data = SerializeObject<T>(ref _object);
@@ -130,6 +131,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Loads object from _path as T </summary>
         public static T LoadXML<T>(ref string _path)
         {
             StreamReader reader = File.OpenText(_path);
@@ -140,6 +142,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Deserializes _info into an object of T </summary>
         public static T LoadData<T>(ref string _info)
         {
             T loadedObject = DeserializeObject<T>(_info);
@@ -147,6 +150,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Deletes _name from library folder </summary>
         public static void DeleteLibraryXML(string _name, bool _isExtrusion)
         {
             string path;
@@ -209,6 +213,7 @@ namespace RoadArchitect
 
         #region "Mesh tangents"
         //Thread safe because local scope and by val params
+        /// <summary> returns calculated tangents </summary>
         public static Vector4[] ProcessTangents(int[] _tris, Vector3[] _normals, Vector2[] _uvs, Vector3[] _verts)
         {
             int MVL = _verts.Length;
@@ -272,7 +277,6 @@ namespace RoadArchitect
             }
 
 
-
             Vector3 n;
             Vector3 t;
             for (int index = 0; index < MVL; index++)
@@ -295,6 +299,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Get copies of mesh values and assign calculated tangents to mesh </summary>
         public static void ProcessTangents(ref Mesh _mesh)
         {
             Vector3[] vertices = _mesh.vertices;
@@ -315,6 +320,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns the RoadArchitect/Editor/Library </summary>
         public static string GetDirLibrary()
         {
             string path = GetDirLibraryBase();
@@ -359,16 +365,17 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Force Unity to free memory </summary>
         public static void ForceCollection(bool _isWait = false)
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             System.GC.Collect();
             if (_isWait)
             {
                 System.GC.WaitForPendingFinalizers();
             }
             Resources.UnloadUnusedAssets();
-#endif
+            #endif
         }
 
 
