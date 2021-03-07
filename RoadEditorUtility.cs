@@ -21,6 +21,7 @@ namespace RoadArchitect
         };
 
 
+        /// <summary> Returns the base of the RoadArchitect folder </summary>
         public static string GetBasePath()
         {
             #if UNITY_EDITOR
@@ -31,13 +32,14 @@ namespace RoadArchitect
                     return folder;
                 }
             }
-            throw new System.Exception("RoadArchitect must be placed in one of the valid folders, read the top of this script");
+            throw new Exception("RoadArchitect must be placed in one of the valid folders, read the top of this script");
             #else
             return "";
             #endif
         }
 
 
+        /// <summary> Loads _assetPath materials and applies them to _MR.sharedMaterials </summary>
         public static void SetRoadMaterial(string _assetPath, MeshRenderer _MR, string _assetPath2 = "")
         {
             Material material;
@@ -64,6 +66,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns the Material from _assetPath </summary>
         public static Material LoadMaterial(string _assetPath)
         {
             #if UNITY_EDITOR
@@ -75,6 +78,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns the PhysicsMaterial from _assetPath </summary>
         public static PhysicMaterial LoadPhysicsMaterial(string _assetPath)
         {
             #if UNITY_EDITOR
