@@ -5,6 +5,7 @@ namespace RoadArchitect
 {
     public static class Navigation
     {
+        /// <summary> Resets navigation and then links each node with previous and next node </summary>
         public static void UpdateConnectedNodes()
         {
             InitResetNavigationData();
@@ -36,17 +37,14 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Resets navigation data of all splines and their nodes </summary>
         public static void InitResetNavigationData()
         {
             Object[] allSplines = GameObject.FindObjectsOfType<SplineC>();
-            int splineCount = 0;
-            int nodeCount = 0;
             foreach (SplineC spline in allSplines)
             {
-                splineCount += 1;
                 foreach (SplineN node in spline.nodes)
                 {
-                    nodeCount += 1;
                     node.ResetNavigationData();
                 }
                 spline.ResetNavigationData();
