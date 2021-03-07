@@ -340,6 +340,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Changes _MR mainTextureOffset of the material based on _lightYieldSub </summary>
         private void MRChange(ref MeshRenderer _MR, iLightSubStatusEnum _lightSub)
         {
             Material meshMaterial; 
@@ -369,6 +370,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Changes _MR mainTextureOffset of the material based on _lightYieldSub </summary>
         private void MRChangeLeftYield(ref MeshRenderer _MR, iLightYieldSubStatusEnum _lightYieldSub)
         {
             Material meshMaterial;
@@ -406,6 +408,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Change lights to current light status </summary>
         private void LightChange(int _index, iLightSubStatusEnum _lightSub)
         {
             if (!isLightsEnabled)
@@ -466,6 +469,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Change active light </summary>
         private void LightChangeHelper(ref Light _red, ref Light _yellow, ref Light _green, iLightSubStatusEnum _lightSub)
         {
             if (_lightSub == iLightSubStatusEnum.Green)
@@ -492,8 +496,6 @@ namespace RoadArchitect
         #region "Setup"
         public void Setup(bool _isLeftYield)
         {
-            SetupObject(leftMR);
-            SetupObject(rightMR);
             SetupMainObjects();
             isLeft = (leftMR != null);
             isRight = (rightMR != null);
@@ -513,7 +515,6 @@ namespace RoadArchitect
             {
                 return;
             }
-            SetupObject(mainMR);
             if (meshCount > 1)
             {
                 for (int index = 1; index < meshCount; index++)
@@ -527,19 +528,8 @@ namespace RoadArchitect
                         Material[] materials = new Material[1];
                         materials[0] = mainMR.materials[0];
                         mainMRStorage[index].materials = materials;
-
                     }
-
                 }
-            }
-        }
-
-
-        private void SetupObject(MeshRenderer _MR)
-        {
-            if (_MR != null)
-            {
-                _MR.material = _MR.material;
             }
         }
         #endregion

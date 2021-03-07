@@ -5,6 +5,7 @@ namespace RoadArchitect
 {
     public static class Construction
     {
+        /// <summary> Creates a node and performs validation checks </summary>
         public static SplineN CreateNode(Road _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
         {
             Object[] worldNodeCount = GameObject.FindObjectsOfType<SplineN>();
