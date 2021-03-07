@@ -55,6 +55,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Check for unique id and assign terrain </summary>
         public void CheckID()
         {
             if (Application.isEditor)
@@ -71,6 +72,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Return new id preventing terrain id duplication </summary>
         private int GetNewID()
         {
             Object[] allTerrainObjs = GameObject.FindObjectsOfType<RoadTerrain>();
