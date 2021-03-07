@@ -30,8 +30,6 @@ namespace RoadArchitect
         public bool isSameSpline = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bDrawGizmo")]
         public bool isDrawingGizmo = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSelected")]
-        public bool isSelected = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bFlipped")]
         public bool isFlipped = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bUseDefaultMaterials")]
@@ -377,6 +375,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Creates boundsRect if null and returns true if _vector is inside the rect </summary>
         public bool Contains(ref Vector3 _vector)
         {
             Vector2 vector2D = new Vector2(_vector.x, _vector.z);
@@ -554,6 +553,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Executes the next traffic light sequence and shedules a new increment </summary>
         private void FixedTimeIncrement()
         {
             TrafficLightSequence SequenceMaker = fixedTimeSequenceList[fixedTimeIndex];
@@ -661,11 +661,12 @@ namespace RoadArchitect
                 lanesNumber += "-3";
                 if (node1.idOnSpline < 2 || node2.idOnSpline < 2)
                 {
-                    //if(bFirstSpecial_First || bFirstSpecial_Last)
+                    //if(isFirstSpecialFirst || isFirstSpecialLast)
                     //{
                     //Reverse if from node 0
-                    lanesNumber += "-crev";  //stands for "Center Reversed"	
-                                             //}
+                    //stands for "Center Reversed"
+                    lanesNumber += "-crev";
+                    //}
                 }
             }
 
@@ -899,12 +900,6 @@ namespace RoadArchitect
 
 
         public void UpdateMaterials()
-        {
-            UpdateMaterials_Do();
-        }
-
-
-        private void UpdateMaterials_Do()
         {
             int childCount = transform.childCount;
             List<MeshRenderer> extStretchMR = new List<MeshRenderer>();
