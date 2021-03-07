@@ -22,8 +22,8 @@ namespace RoadArchitect
         /// <summary> Adds a new road to this RoadSystem </summary>
         public GameObject AddRoad(bool _isForceSelected = false)
         {
-            Road[] allRoadObj = GetComponentsInChildren<Road>();
-            int newRoadNumber = (allRoadObj.Length + 1);
+            Road[] roads = GetComponentsInChildren<Road>();
+            int newRoadNumber = (roads.Length + 1);
 
             //Road:
             GameObject roadObj = new GameObject("Road" + newRoadNumber.ToString());
@@ -97,14 +97,15 @@ namespace RoadArchitect
 
 
         //Workaround for submission rules:
+        /// <summary> Writes isMultithreaded into roads of this system </summary>
         public void UpdateAllRoadsMultiThreadedOption()
         {
-            Road[] allRoadObjs = (Road[])GetComponentsInChildren<Road>();
-            int roadCount = allRoadObjs.Length;
+            Road[] roads = GetComponentsInChildren<Road>();
+            int roadsCount = roads.Length;
             Road road = null;
-            for (int i = 0; i < roadCount; i++)
+            for (int i = 0; i < roadsCount; i++)
             {
-                road = allRoadObjs[i];
+                road = roads[i];
                 if (road != null)
                 {
                     road.isUsingMultithreading = isMultithreaded;
@@ -114,14 +115,15 @@ namespace RoadArchitect
 
 
         //Workaround for submission rules:
+        /// <summary> Writes isSavingMeshes into roads of this system </summary>
         public void UpdateAllRoadsSavingMeshesOption()
         {
-            Road[] allRoadObjs = (Road[])GetComponentsInChildren<Road>();
-            int roadsCount = allRoadObjs.Length;
+            Road[] roads = GetComponentsInChildren<Road>();
+            int roadsCount = roads.Length;
             Road road = null;
             for (int i = 0; i < roadsCount; i++)
             {
-                road = allRoadObjs[i];
+                road = roads[i];
                 if (road != null)
                 {
                     road.isSavingMeshes = isSavingMeshes;
