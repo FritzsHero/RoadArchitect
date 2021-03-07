@@ -81,7 +81,7 @@ namespace RoadArchitect.Roads
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
-		public static SplineN InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
+        public static SplineN InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;
             Object[] worldNodeCount = GameObject.FindObjectsOfType<SplineN>();
@@ -234,6 +234,7 @@ namespace RoadArchitect.Roads
             }
             foreach (KeyValuePair<SplineN, SplineN> KVP in keyValuePairs)
             {
+                // Creates fresh intersection
                 //Now create the fucking intersection:
                 GameObject tInter = Intersections.CreateIntersection(KVP.Key, KVP.Value);
                 RoadIntersection roadIntersection = tInter.GetComponent<RoadIntersection>();

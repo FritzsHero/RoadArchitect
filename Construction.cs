@@ -40,6 +40,8 @@ namespace RoadArchitect
                 }
                 //End double click prevention
             }
+
+
             Vector3 xVect = nodeObj.transform.position;
             if (xVect.y < 0.03f)
             {
@@ -181,6 +183,7 @@ namespace RoadArchitect
                 }
             }
 
+            // Create new node
             SplineN node = nodeObj.AddComponent<SplineN>();
             if (_isForcedLoc && !_isSpecialEndNode)
             {
