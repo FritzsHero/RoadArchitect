@@ -114,6 +114,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Stores terrain infos and starts terrain calculations </summary>
         public static void ProcessRoadTerrainHook1(SplineC _spline, Road _road, bool _isMultithreaded = true)
         {
             ProcessRoadTerrainHook1Do(ref _spline, ref _road, _isMultithreaded);
@@ -122,17 +123,17 @@ namespace RoadArchitect
 
         private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref Road _road, bool _isMultithreaded)
         {
-            RootUtils.StartProfiling(_road, "ProcessRoad_Terrain_Hook1_Do");
+            RootUtils.StartProfiling(_road, "ProcessRoadTerrainHook1");
             //First lets make sure all terrains have a RoadTerrain script:
             CheckAllTerrains();
 
             //Reset the terrain:
             RootUtils.StartProfiling(_road, "TerrainsReset");
-            Terraforming.TerrainsReset(_road);
+            TerrainsReset(_road);
             RootUtils.EndProfiling(_road);
 
             float heightDistance = _road.matchHeightsDistance;
-            //float treeDistance = tRoad.opt_ClearTreesDistance;
+            //float treeDistance = _road.clearTreesDistance;
             float detailDistance = _road.clearDetailsDistance;
 
             Dictionary<Terrain, TempTerrainData> TempTerrainDict = new Dictionary<Terrain, TempTerrainData>();
@@ -155,9 +156,10 @@ namespace RoadArchitect
                 }
                 tRect = GetTerrainBounds(terrain);
                 isContaining = false;
-                //Debug.Log(tTerrain.transform.name + " bounds: " + tRect.ToStringRA());
+                //Debug.Log(terrain.transform.name + " bounds: " + tRect.ToStringRA());
                 //Debug.Log("  Road bounds: " + tSpline.RoadV0 + "," + tSpline.RoadV1 + "," + tSpline.RoadV2 + "," + tSpline.RoadV3);
 
+                // Check if the terrain overlaps with a part of the spline
                 if (isContaining != true && tRect.Contains(ref _spline.RoadV0))
                 {
                     isContaining = true;
@@ -249,9 +251,9 @@ namespace RoadArchitect
                     RootUtils.EndStartProfiling(_road, "Details");
                     if (_road.isDetailModificationEnabled)
                     {
-                        //						TTD.DetailValues = new Dictionary<int, int[,]>();
+                        //TTD.DetailValues = new Dictionary<int, int[,]>();
                         TTD.DetailLayersCount = terrain.terrainData.detailPrototypes.Length;
-                        //						TTD.DetailHasProcessed = new Dictionary<int, bool[,]>();
+                        //TTD.DetailHasProcessed = new Dictionary<int, bool[,]>();
                         TTD.DetailHasProcessed = new HashSet<int>();
                         TTD.MainDetailsX = new List<ushort>();
                         TTD.MainDetailsY = new List<ushort>();
@@ -261,37 +263,45 @@ namespace RoadArchitect
                         TTD.DetailLayersSkip = new HashSet<int>();
 
                         // Get all of layer zero.
-                        //						int[] mMinMaxDetailEntryCount = new int[TTD.DetailLayersCount];
-                        //						RootUtils.StartProfiling(tRoad, "DetailValues");
-                        //						Vector3 bVect = default(Vector3);
-                        //						Vector2 bVect2D = default(Vector2);
-                        //						int DetailRes = tTerrain.terrainData.detailResolution;
-                        //						for(int i=0;i<TTD.DetailLayersCount;i++){
-                        //							int[,] tInts = tTerrain.terrainData.GetDetailLayer(0,0,tTerrain.terrainData.detailWidth,tTerrain.terrainData.detailHeight,i);
-                        //							int Length1 = tInts.GetLength(0);
-                        //							int Length2 = tInts.GetLength(1);
-                        //							for (int y=0;y < Length1;y++){
-                        //								for (int x=0;x < Length2;x++){
-                        //									if(tInts[x,y] > 0){
-                        //										bVect = new Vector3(((float)y/(float)DetailRes) * TTD.TerrainSize.x,0f,((float)x/(float)DetailRes) * TTD.TerrainSize.z);
-                        //										bVect = tTerrain.transform.TransformPoint(bVect);
-                        //										bVect2D = new Vector2(bVect.z,bVect.x);
-                        //										if(rRect.Contains(ref bVect2D)){
-                        //											mMinMaxDetailEntryCount[i] += 1;
-                        //										}
-                        //									}
-                        //								}
-                        //							}
+                        //int[] mMinMaxDetailEntryCount = new int[TTD.DetailLayersCount];
+                        //RootUtils.StartProfiling(_road, "DetailValues");
+                        //Vector3 bVect = default(Vector3);
+                        //Vector2 bVect2D = default(Vector2);
+                        //int DetailRes = tTerrain.terrainData.detailResolution;
+                        //for(int i=0;i<TTD.DetailLayersCount;i++)
+                        //{
+                        //	int[,] tInts = tTerrain.terrainData.GetDetailLayer(0,0,tTerrain.terrainData.detailWidth,tTerrain.terrainData.detailHeight,i);
+                        //	int Length1 = tInts.GetLength(0);
+                        //	int Length2 = tInts.GetLength(1);
+                        //	for (int y=0;y < Length1;y++)
+                        //	{
+                        //		for (int x=0;x < Length2;x++)
+                        //		{
+                        //			if(tInts[x,y] > 0)
+                        //			    {
+                        //				bVect = new Vector3(((float)y/(float)DetailRes) * TTD.TerrainSize.x,0f,((float)x/(float)DetailRes) * TTD.TerrainSize.z);
+                        //				bVect = tTerrain.transform.TransformPoint(bVect);
+                        //				bVect2D = new Vector2(bVect.z,bVect.x);
+                        //				if(rRect.Contains(ref bVect2D))
+                        //				{
+                        //					mMinMaxDetailEntryCount[i] += 1;
+                        //				}
+                        //			}
+                        //		}
+                        //	}
 
-                        //							if(mMinMaxDetailEntryCount[i] < 1){
-                        //								TTD.DetailLayersSkip.Add(i);
-                        //								tInts = null;
-                        //							}else{
-                        //								TTD.DetailValues.Add(i,tInts);
-                        //								TTD.DetailHasProcessed.Add(i,new bool[tTerrain.terrainData.detailWidth,tTerrain.terrainData.detailHeight]);
-                        //							}
-                        //						}
-                        //						RootUtils.EndProfiling(tRoad);
+                        //	if(mMinMaxDetailEntryCount[i] < 1)
+                        //	{
+                        //		TTD.DetailLayersSkip.Add(i);
+                        //		tInts = null;
+                        //		}
+                        //		else
+                        //		{
+                        //			TTD.DetailValues.Add(i,tInts);
+                        //			TTD.DetailHasProcessed.Add(i,new bool[tTerrain.terrainData.detailWidth,tTerrain.terrainData.detailHeight]);
+                        //		}
+                        //	}
+                        //RootUtils.EndProfiling(_road);
 
 
                         dSize = (int)_spline.distance * ((int)(detailDistance * 3f * DetailRatio) + 2);
@@ -300,33 +310,41 @@ namespace RoadArchitect
                             dSize = terrain.terrainData.detailResolution * terrain.terrainData.detailResolution;
                         }
 
-                        //						TTD.DetailsX = new List<ushort[]>();
-                        //						TTD.DetailsY = new List<ushort[]>();
-                        //						TTD.OldDetailsValue = new List<ushort[]>();
+                        //TTD.DetailsX = new List<ushort[]>();
+                        //TTD.DetailsY = new List<ushort[]>();
+                        //TTD.OldDetailsValue = new List<ushort[]>();
                         TTD.DetailsX = new List<List<ushort>>();
                         TTD.DetailsY = new List<List<ushort>>();
                         TTD.OldDetailsValue = new List<List<ushort>>();
-                        //						TTD.DetailHasProcessed = new List<List<bool>>();
+                        //TTD.DetailHasProcessed = new List<List<bool>>();
 
                         for (int index = 0; index < TTD.DetailLayersCount; index++)
                         {
-                            //							if(TTD.DetailLayersSkip.Contains(index)){ 
-                            //								TTD.DetailsX.Add(new ushort[0]);
-                            //								TTD.DetailsY.Add(new ushort[0]);
-                            //								TTD.OldDetailsValue.Add(new ushort[0]);
-                            //								continue; 
-                            //							}
-                            //							int detailentrycount = (int)((float)mMinMaxDetailEntryCount[index] * 1.5f);
-                            //							int d_temp_Size = dSize;
-                            //							if(d_temp_Size > detailentrycount){ d_temp_Size = detailentrycount; }
-                            //							if(d_temp_Size < 1){ d_temp_Size = 1; }
-                            //							if(d_temp_Size > (tTerrain.terrainData.detailResolution * tTerrain.terrainData.detailResolution)){
-                            //								d_temp_Size = tTerrain.terrainData.detailResolution * tTerrain.terrainData.detailResolution;	
-                            //							}
+                            //if(TTD.DetailLayersSkip.Contains(index))
+                            //{ 
+                            //	TTD.DetailsX.Add(new ushort[0]);
+                            //	TTD.DetailsY.Add(new ushort[0]);
+                            //	TTD.OldDetailsValue.Add(new ushort[0]);
+                            //	continue; 
+                            //}
+                            //int detailentrycount = (int)((float)mMinMaxDetailEntryCount[index] * 1.5f);
+                            //int d_temp_Size = dSize;
+                            //if(d_temp_Size > detailentrycount)
+                            //{
+                            //  d_temp_Size = detailentrycount;
+                            //}
+                            //if(d_temp_Size < 1)
+                            //{
+                            //  d_temp_Size = 1;
+                            //}
+                            //if(d_temp_Size > (tTerrain.terrainData.detailResolution * tTerrain.terrainData.detailResolution))
+                            //{
+                            //	d_temp_Size = tTerrain.terrainData.detailResolution * tTerrain.terrainData.detailResolution;	
+                            //}
                             //
-                            //							TTD.DetailsX.Add(new ushort[d_temp_Size]);
-                            //							TTD.DetailsY.Add(new ushort[d_temp_Size]);
-                            //							TTD.OldDetailsValue.Add(new ushort[d_temp_Size]);
+                            //TTD.DetailsX.Add(new ushort[d_temp_Size]);
+                            //TTD.DetailsY.Add(new ushort[d_temp_Size]);
+                            //TTD.OldDetailsValue.Add(new ushort[d_temp_Size]);
 
                             TTD.DetailsX.Add(new List<ushort>());
                             TTD.DetailsY.Add(new List<ushort>());
@@ -334,18 +352,15 @@ namespace RoadArchitect
                         }
 
 
-                        //						TTD.DetailsX = new ushort[TTD.DetailLayersCount,dSize];
-                        //						TTD.DetailsY = new ushort[TTD.DetailLayersCount,dSize];
-                        //						TTD.OldDetailsValue = new ushort[TTD.DetailLayersCount,dSize];
-
-
+                        //TTD.DetailsX = new ushort[TTD.DetailLayersCount,dSize];
+                        //TTD.DetailsY = new ushort[TTD.DetailLayersCount,dSize];
+                        //TTD.OldDetailsValue = new ushort[TTD.DetailLayersCount,dSize];
                     }
 
                     //Trees:
                     RootUtils.EndStartProfiling(_road, "Trees");
                     if (_road.isTreeModificationEnabled)
                     {
-                        //						TTD.TreesCurrent = tTerrain.terrainData.treeInstances;
                         TTD.TreesCurrent = new List<TreeInstance>(terrain.terrainData.treeInstances);
                         TTD.TreeSize = TTD.TreesCurrent.Count;
                         TTD.TreesI = 0;
@@ -386,6 +401,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns an 2D rect of the terrain </summary>
         public static Construction2DRect GetTerrainBounds(Terrain _terrain)
         {
             float terrainWidth = _terrain.terrainData.size.x;
@@ -423,9 +439,10 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Assign calculated values to terrains </summary>
         public static void ProcessRoadTerrainHook2(SplineC _spline, ref List<TempTerrainData> _TTDList)
         {
-            RootUtils.StartProfiling(_spline.road, "ProcessRoad_Terrain_Hook2");
+            RootUtils.StartProfiling(_spline.road, "ProcessRoadTerrainHook2");
             ProcessRoadTerrainHook2Do(ref _spline, ref _TTDList);
             RootUtils.EndProfiling(_spline.road);
         }
