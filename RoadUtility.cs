@@ -3,8 +3,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 #endregion
 
 
@@ -24,9 +22,9 @@ namespace RoadArchitect
     {
         public const string FileSepString = "\n#### RoadArchitect ####\n";
         public const string FileSepStringCRLF = "\r\n#### RoadArchitect ####\r\n";
-        // old: !!!! MICROGSD !!!!
 
 
+        /// <summary> Returns closest terrain to _vect </summary>
         public static Terrain GetTerrain(Vector3 _vect)
         {
             return GetTerrainDo(ref _vect);
@@ -92,12 +90,6 @@ namespace RoadArchitect
 
         #region "Terrain history"
         public static void ConstructRoadStoreTerrainHistory(ref Road _road)
-        {
-            ConstructRoadStoreTerrainHistoryDo(ref _road);
-        }
-
-
-        private static void ConstructRoadStoreTerrainHistoryDo(ref Road _road)
         {
             Object[] TIDs = GameObject.FindObjectsOfType<RoadTerrain>();
 
@@ -272,30 +264,7 @@ namespace RoadArchitect
                     TH.TreesI = 0;
                 }
             }
-
-            //			//TerrainHistoryRaw
-            //			RootUtils.StartProfiling(tRoad, "TerrainHistorySerialize");
-            //			TerrainHistorySerialize(ref tRoad);
-            //			RootUtils.EndProfiling(tRoad);
         }
-
-
-        //		private static void TerrainHistorySerialize(ref Road tRoad) {
-        //			MemoryStream ms = new MemoryStream();
-        //	        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        //			formatter.Serialize(ms,tRoad.TerrainHistory);
-        //			ms.Close();
-        //			tRoad.TerrainHistoryRaw = ms.ToArray();
-        //	        ms = null;
-        //	    }
-        //		
-        //		private static void TerrainHistoryDeserialize(ref Road tRoad) {
-        //			MemoryStream ms = new MemoryStream(tRoad.TerrainHistoryRaw);
-        //	        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        //			tRoad.TerrainHistory = (List<TerrainHistoryMaker>)formatter.Deserialize(ms);
-        //			ms.Close();
-        //	        ms = null;
-        //	    }
 
 
         /// <summary> Clears the terrain history of _road </summary>
@@ -452,13 +421,8 @@ namespace RoadArchitect
 
 
         #region "Splat maps"
+        /// <summary> Returns a splat map texture encoded as png </summary>
         public static byte[] MakeSplatMap(Terrain _terrain, Color _BG, Color _FG, int _width, int _height, float _splatWidth, bool _isSkippingBridge, bool _isSkippingTunnel, string _roadUID = "")
-        {
-            return MakeSplatMapDo(_terrain, _BG, _FG, _width, _height, _splatWidth, _isSkippingBridge, _isSkippingTunnel, _roadUID);
-        }
-
-
-        private static byte[] MakeSplatMapDo(Terrain _terrain, Color _BG, Color _FG, int _width, int _height, float _splatWidth, bool _isSkippingBridge, bool _isSkippingTunnel, string _roadUID)
         {
             Texture2D tTexture = new Texture2D(_width, _height, TextureFormat.RGB24, false);
 
@@ -634,6 +598,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Writes _vect location into _x1 and _y1 relative to the terrain on a 2D map </summary>
         private static void TranslateWorldVectToCustom(int _width, int _height, Vector3 _vect, ref Vector3 _pos, ref Vector3 _size, out int _x1, out int _y1)
         {
             //Get the normalized position of this game object relative to the terrain:
