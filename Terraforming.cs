@@ -386,7 +386,7 @@ namespace RoadArchitect
             RootUtils.EndProfiling(_road);
 
             //Start job now, for each relevant TTD:
-            _road.EditorTerrainCalcs(ref EditorTTDList);
+            _road.SetEditorTerrainCalcs(ref EditorTTDList);
             if (_isMultithreaded)
             {
                 Threading.TerrainCalcs terrainJob = new Threading.TerrainCalcs();

@@ -177,13 +177,9 @@ namespace RoadArchitect
         public System.Exception exceptionError = null;
 
 
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorTimer")]
         private int editorTimer = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerMax")]
         private int editorTimerMax = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerSpline")]
         private int editorTimerSpline = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorTimerSplineMax")]
         private const int editorTimerSplineMax = 2;
         [System.NonSerialized]
         public int editorProgress = 0;
@@ -193,9 +189,7 @@ namespace RoadArchitect
         public bool isUpdateRequired = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC")]
         public bool isTriggeringGC = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC_Happening")]
         private bool isTriggeredGCExecuting;
-        [UnityEngine.Serialization.FormerlySerializedAs("TriggerGC_End")]
         private float triggerGCEnd = 0f;
 
         [System.NonSerialized]
@@ -203,10 +197,8 @@ namespace RoadArchitect
         public bool isEditorCameraMoving = false;
         [System.NonSerialized]
         public float EditorCameraPos = 0f;
-        //float EditorCameraPos_Full = 0f;
         private const float EditorCameraTimeUpdateInterval = 0.015f;
         private float EditorCameraNextMove = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraSetup")]
         private bool isEditorCameraSetup = false;
         private float EditorCameraStartPos = 0f;
         private float EditorCameraEndPos = 1f;
@@ -221,7 +213,6 @@ namespace RoadArchitect
         public Vector3 editorCameraOffset = new Vector3(0f, 5f, 0f);
         [System.NonSerialized]
         public Camera editorPlayCamera = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorCameraBadVec")]
         private Vector3 editorCameraBadVec = default(Vector3);
 
         public List<Terraforming.TempTerrainData> EditorTTDList;
@@ -249,9 +240,9 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Make sure unused items are not using memory space in runtime </summary>
         private void CleanRunTime()
         {
-            //Make sure unused items are not using memory space in runtime:
             TerrainHistory = null;
             RCS = null;
         }
@@ -260,11 +251,6 @@ namespace RoadArchitect
         private void OnEnable()
         {
             #if UNITY_EDITOR
-            if (!Application.isEditor)
-            {
-                return;
-            }
-            //if(Application.isEditor && !UnityEditor.EditorApplication.isPlaying){
             isEditorConstructing = false;
             UnityEditor.EditorApplication.update += delegate
             {
@@ -273,12 +259,11 @@ namespace RoadArchitect
             #if UNITY_2018_1_OR_NEWER
             UnityEditor.EditorApplication.hierarchyChanged += delegate
             {
-                hWindowChanged();
+                HierarchyWindowChanged();
             };
             #else
-            UnityEditor.EditorApplication.hierarchyWindowChanged += delegate { hWindowChanged(); };
+            UnityEditor.EditorApplication.hierarchyWindowChanged += delegate { HierarchyWindowChanged(); };
             #endif
-            //}
             if (spline == null || spline.nodes == null)
             {
                 MostRecentNodeCount = 0;
@@ -348,7 +333,6 @@ namespace RoadArchitect
 
             if (isEditorConstructing)
             {
-                // && !Application.isPlaying && !UnityEditor.EditorApplication.isPlaying){
                 if (roadSystem != null)
                 {
                     if (roadSystem.isMultithreaded)
@@ -453,7 +437,6 @@ namespace RoadArchitect
                     //If ends in control node, end construction before the control node:
                     EditorCameraStartPos = spline.nodes[1].time;
                 }
-                //EditorCameraPos_Full = 0f;
                 ChangeEditorCameraMetersPerSec();
             }
 
@@ -466,7 +449,13 @@ namespace RoadArchitect
             #endif
 
             //EditorCameraPos_Full+=EditorCameraIncrementDistance_Full;
-            //if(EditorCameraPos_Full > spline.distance){ EditorCameraPos = EditorCameraStartPos; bEditorCameraMoving = false; bEditorCameraSetup = false; EditorCameraPos_Full = 0f; return; }
+            //if(EditorCameraPos_Full > spline.distance)
+            //{
+            //  EditorCameraPos = EditorCameraStartPos;
+            //  isEditorCameraMoving = false;
+            //  EditorCameraPos_Full = 0f;
+            //  return;
+            //  }
             //EditorCameraPos = spline.TranslateDistBasedToParam(EditorCameraPos_Full);
 
             EditorCameraPos += EditorCameraIncrementDistance;
@@ -520,7 +509,7 @@ namespace RoadArchitect
         {
             if (editorPlayCamera == null)
             {
-                Camera[] editorCameras = (Camera[])GameObject.FindObjectsOfType<Camera>();
+                Camera[] editorCameras = GameObject.FindObjectsOfType<Camera>();
                 if (editorCameras != null && editorCameras.Length == 1)
                 {
                     editorPlayCamera = editorCameras[0];
@@ -534,7 +523,6 @@ namespace RoadArchitect
             EditorCameraPos = EditorCameraStartPos;
             isEditorCameraMoving = false;
             isEditorCameraSetup = false;
-            //EditorCameraPos_Full = 0f;
         }
 
 
@@ -545,15 +533,16 @@ namespace RoadArchitect
         }
 
 
-        private void hWindowChanged()
+        /// <summary> This is called when the hierarchy is changed in the editor </summary>
+        private void HierarchyWindowChanged()
         {
             #if UNITY_EDITOR
             if (!Application.isEditor)
             {
                 #if UNITY_2018_1_OR_NEWER
-                UnityEditor.EditorApplication.hierarchyChanged -= delegate { hWindowChanged(); };
+                UnityEditor.EditorApplication.hierarchyChanged -= delegate { HierarchyWindowChanged(); };
                 #else
-                UnityEditor.EditorApplication.hierarchyWindowChanged -= delegate { hWindowChanged(); };
+                UnityEditor.EditorApplication.hierarchyWindowChanged -= delegate { HierarchyWindowChanged(); };
                 #endif
             }
             #endif
@@ -589,6 +578,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Display the progress of the road update </summary>
         private void RoadUpdateProgressBar()
         {
             #if UNITY_EDITOR
@@ -608,7 +598,7 @@ namespace RoadArchitect
         }
 
 
-        /// <summary> Updates the road </summary>
+        /// <summary> Starts the road update </summary>
         public void UpdateRoad(RoadUpdateTypeEnum _updateType = RoadUpdateTypeEnum.Full)
         {
             if (!roadSystem.isAllowingRoadUpdates)
@@ -636,7 +626,7 @@ namespace RoadArchitect
 
             if (isSavingTerrainHistoryOnDisk)
             {
-                ConstructRoad_LoadTerrainHistory();
+                LoadTerrainHistory();
             }
 
             CheckMats();
@@ -900,7 +890,7 @@ namespace RoadArchitect
 
 
         #region "Terrain history"
-        public void ConstructRoad_StoreTerrainHistory(bool _isDiskOnly = false)
+        public void StoreTerrainHistory(bool _isDiskOnly = false)
         {
             if (!_isDiskOnly)
             {
@@ -935,7 +925,7 @@ namespace RoadArchitect
         }
 
 
-        public void ConstructRoad_ResetTerrainHistory()
+        public void ResetTerrainHistory()
         {
             Road tRoad = this;
             if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
@@ -950,7 +940,7 @@ namespace RoadArchitect
 
 
         /// <summary> Loads terrain history from disk </summary>
-        public void ConstructRoad_LoadTerrainHistory(bool _isForced = false)
+        public void LoadTerrainHistory(bool _isForced = false)
         {
             if (isSavingTerrainHistoryOnDisk || _isForced)
             {
@@ -981,7 +971,7 @@ namespace RoadArchitect
                     Terraforming.ProcessRoadTerrainHook1(spline, this, false);
                     Terraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
                     //Store history.
-                    ConstructRoad_StoreTerrainHistory();
+                    StoreTerrainHistory();
                     int editorTTDListCount = EditorTTDList.Count;
                     for (int i = 0; i < editorTTDListCount; i++)
                     {
@@ -1017,6 +1007,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Stores terrain history and nulls TerrainCalcsJob</summary>
         private void ConstructRoad2()
         {
             editorProgress = 40;
@@ -1024,7 +1015,7 @@ namespace RoadArchitect
             {
                 //Store history:
                 Terraforming.ProcessRoadTerrainHook2(spline, ref EditorTTDList);
-                ConstructRoad_StoreTerrainHistory();
+                StoreTerrainHistory();
 
                 EditorTTDList.Clear();
                 EditorTTDList = null;
@@ -1092,7 +1083,7 @@ namespace RoadArchitect
 
         private void ConstructionCleanup()
         {
-            FixZ();
+            FixDisplay();
             AbortJobs();
 
             isEditorConstructing = false;
@@ -1191,7 +1182,7 @@ namespace RoadArchitect
         }
 
 
-        public void EditorTerrainCalcs(ref List<Terraforming.TempTerrainData> _tddList)
+        public void SetEditorTerrainCalcs(ref List<Terraforming.TempTerrainData> _tddList)
         {
             EditorTTDList = _tddList;
         }
@@ -1210,6 +1201,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Returns width of road </summary>
         public float RoadWidth()
         {
             return (laneWidth * (float)laneAmount);
@@ -1299,6 +1291,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Assigns materials on all mesh renderers </summary>
         public void SetAllCutsToCurrentMaterials()
         {
             if (!MeshRoad)
@@ -1329,6 +1322,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Sets materials of each MR in _MRs </summary>
         private void SetCutMaterials(MeshRenderer[] _MRs, Material[] _roadWorldMats, Material[] _roadMarkerMats)
         {
             string lowerName;
@@ -1615,6 +1609,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Toggles render state of every mesh of this road </summary>
         public void WireframesToggle()
         {
             MeshRenderer[] MRs = transform.GetComponentsInChildren<MeshRenderer>();
@@ -1628,13 +1623,14 @@ namespace RoadArchitect
         }
 
 
+        /// <summary>  Toggles render state of each mesh in _MRs through isGizmosEnabled </summary>
         private void WireframesToggleHelp(ref MeshRenderer[] _MRs)
         {
             #if UNITY_EDITOR
             int meshRenderersCount = _MRs.Length;
             for (int i = 0; i < meshRenderersCount; i++)
             {
-                //UnityEditor.EditorUtility.SetSelectedWireframeHidden(tMRs[i], !opt_GizmosEnabled);
+                //UnityEditor.EditorUtility.SetSelectedWireframeHidden(_MRs[i], !isGizmosEnabled);
                 UnityEditor.EditorUtility.SetSelectedRenderState(_MRs[i], isGizmosEnabled ? UnityEditor.EditorSelectedRenderState.Wireframe : UnityEditor.EditorSelectedRenderState.Hidden);
             }
             #endif
@@ -1655,13 +1651,14 @@ namespace RoadArchitect
 
 
         //For compliance on submission rules:
+        /// <summary> Writes isGizmosEnabled into every node </summary>
         public void UpdateGizmoOptions()
         {
             if (spline == null)
             {
                 return;
             }
-            SplineN node = null;
+            SplineN node;
 
             int nodeCount = spline.GetNodeCount();
             for (int i = 0; i < nodeCount; i++)
@@ -1756,17 +1753,19 @@ namespace RoadArchitect
         }
 
 
-        private void FixZ()
+        /// <summary> Sets localPosition for meshes up to prevent z fighting </summary>
+        private void FixDisplay()
         {
-            FixZ_Mobile();
+            FixDisplayMobile();
         }
 
 
-        private void FixZ_Mobile()
+        /// <summary> Sets localPosition for meshes up to prevent z fighting </summary>
+        private void FixDisplayMobile()
         {
             //This road:
             Object[] markerObjs = transform.GetComponentsInChildren<MeshRenderer>();
-            Vector3 vector = default(Vector3);
+            Vector3 vector;
             foreach (MeshRenderer MR in markerObjs)
             {
                 if (MR.transform.name.Contains("Marker"))
@@ -1825,11 +1824,12 @@ namespace RoadArchitect
         }
 
 
-        private void FixZ_Win()
+        /// <summary> Sets localPosition up by 0.01 </summary>
+        private void FixDisplayWin()
         {
             //This road:
             Object[] markerObjs = transform.GetComponentsInChildren<MeshRenderer>();
-            Vector3 vector = default(Vector3);
+            Vector3 vector;
             foreach (MeshRenderer MR in markerObjs)
             {
                 if (MR.transform.name.Contains("Marker"))
@@ -1841,7 +1841,7 @@ namespace RoadArchitect
 
 
             //Intersections (all):
-            markerObjs = Object.FindObjectsOfType<MeshRenderer>();
+            markerObjs = FindObjectsOfType<MeshRenderer>();
             foreach (MeshRenderer MR in markerObjs)
             {
                 if (MR.transform.name.Contains("-Inter") && MR.transform.name.Contains("-Lane"))

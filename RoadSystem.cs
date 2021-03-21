@@ -45,7 +45,7 @@ namespace RoadArchitect
             road.roadSystem = this;
             RoadArchitect.RootUtils.SetupUniqueIdentifier(ref road.UID);
 
-            road.ConstructRoad_ResetTerrainHistory();
+            road.ResetTerrainHistory();
 
             #if UNITY_EDITOR
             if (_isForceSelected)

@@ -683,7 +683,7 @@ namespace RoadArchitect
             {
                 if (GUILayout.Button("Reset") && isResetingTH)
                 {
-                    road.ConstructRoad_ResetTerrainHistory();
+                    road.ResetTerrainHistory();
                     isResetingTH = false;
                 }
             }
@@ -691,7 +691,7 @@ namespace RoadArchitect
             {
                 if (GUILayout.Button("Check to reset", maybeButton) && isResetingTH)
                 {
-                    road.ConstructRoad_ResetTerrainHistory();
+                    road.ResetTerrainHistory();
                     isResetingTH = false;
                 }
             }
@@ -800,11 +800,11 @@ namespace RoadArchitect
                 {
                     if (road.isSavingTerrainHistoryOnDisk)
                     {
-                        road.ConstructRoad_StoreTerrainHistory(true);
+                        road.StoreTerrainHistory(true);
                     }
                     else
                     {
-                        road.ConstructRoad_LoadTerrainHistory(true);
+                        road.LoadTerrainHistory(true);
                     }
                 }
 
