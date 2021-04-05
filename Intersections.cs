@@ -507,7 +507,6 @@ namespace RoadArchitect
             }
 
             #if UNITY_EDITOR
-            //Undo crap:
             UnityEditor.Undo.RegisterCreatedObjectUndo(intersectionObject, "Created intersection");
             #endif
 
@@ -1216,7 +1215,7 @@ namespace RoadArchitect
         }
 
 
-        static Vector3 GetFourCornerPoint(ref SplineC _spline, ref SplineN _node, RoadIntersection _roadIntersection)
+        private static Vector3 GetFourCornerPoint(ref SplineC _spline, ref SplineN _node, RoadIntersection _roadIntersection)
         {
             SplineN iNode;
             if (_node.connectedNode.Contains(_roadIntersection.node1))
@@ -1290,7 +1289,7 @@ namespace RoadArchitect
         }
 
 
-        static void ProcessFourCorners(ref Vector3 _n1, ref Vector3 _n2, GameObject _intersectionObject, float _splineDistance)
+        private static void ProcessFourCorners(ref Vector3 _n1, ref Vector3 _n2, GameObject _intersectionObject, float _splineDistance)
         {
             float Side1, Side2, Side3;
             Side1 = Vector3.Distance(_n1, _n2);

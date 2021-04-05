@@ -113,6 +113,7 @@ namespace RoadArchitect.Threading
         */
 
 
+        /// <summary> Writes heightmap location of _vector into _x and _y </summary>
         private static void GetTempHeightsCoordinates(ref Vector3 _vector, ref Terraforming.TempTerrainData _TTD, out int _x, out int _y)
         {
             //Get the normalized position of this game object relative to the terrain:
@@ -129,6 +130,7 @@ namespace RoadArchitect.Threading
         }
 
 
+        /// <summary> Writes heightmap location of _vector into _x and _y </summary>
         private static void GetTempDetailsCoordinates(ref Vector3 _vector, ref Terraforming.TempTerrainData _TTD, out int _x, out int _y)
         {
             //Get the normalized position of this game object relative to the terrain:

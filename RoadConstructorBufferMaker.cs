@@ -23,9 +23,13 @@ namespace RoadArchitect
         public List<int> normals_ShoulderR_averageStartIndexes;
         public List<int> normals_ShoulderL_averageStartIndexes;
 
+        /// <summary> Road UVs </summary>
         public Vector2[] uv;
+        /// <summary> Pavement UVs </summary>
         public Vector2[] uv2;
+        /// <summary> Shoulder right UVs </summary>
         public Vector2[] uv_SR;
+        /// <summary> Shoulder left UVs </summary>
         public Vector2[] uv_SL;
 
         public Vector4[] tangents;
@@ -810,6 +814,7 @@ namespace RoadArchitect
 
 
         #region "Intersection for MeshSetup1"
+        /// <summary> Cleanup and create intersection objects </summary>
         private void MeshSetup1IntersectionObjectsSetup()
         {
             int nodeCount = road.spline.GetNodeCount();
@@ -849,6 +854,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Creates intersection meshes if road contains intersections </summary>
         private void MeshSetup1IntersectionParts()
         {
             int mCount = road.spline.GetNodeCount();
@@ -969,6 +975,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Assigns mesh values to _mesh and returns _mesh </summary>
         private Mesh MeshSetup1Helper(ref Mesh _mesh, Vector3[] _verts, ref int[] _tris, ref Vector3[] _normals)
         {
             _mesh.vertices = _verts;
@@ -976,7 +983,7 @@ namespace RoadArchitect
             _mesh.normals = _normals;
             _mesh.RecalculateNormals();
             _normals = _mesh.normals;
-            //			xMesh.hideFlags = HideFlags.DontSave;
+            //_mesh.hideFlags = HideFlags.DontSave;
             return _mesh;
         }
         #endregion
@@ -1015,6 +1022,8 @@ namespace RoadArchitect
                         Vector2[] ooUV = new Vector2[uv2.Length];
                         Vector4[] ooTangents = new Vector4[tangents2.Length];
 
+
+                        // Copy mesh values
                         System.Array.Copy(tMesh.vertices, ooVerts, ooVerts.Length);
                         System.Array.Copy(tMesh.triangles, ooTris, ooTris.Length);
                         System.Array.Copy(tMesh.normals, ooNormals, ooNormals.Length);
@@ -1039,7 +1048,7 @@ namespace RoadArchitect
                 {
                     //If road cuts, change it to one material (pavement) with world mapping
                     int cCount = cut_RoadVectors.Count;
-                    //					Vector2[] tUV;
+                    //Vector2[] tUV;
                     GameObject CreatedMainObj;
                     GameObject CreatedMarkerObj;
                     for (int i = 0; i < cCount; i++)
@@ -1090,6 +1099,7 @@ namespace RoadArchitect
                         Object.DestroyImmediate(tMesh);
                     }
                 }
+
 
                 //Shoulders:
                 if (road.isShouldersEnabled)
@@ -1177,7 +1187,7 @@ namespace RoadArchitect
 
                         if (road.isUsingMeshColliders)
                         {
-                            //						MeshSetup2_Intersections_FixNormals();	
+                            //MeshSetup2IntersectionsFixNormals();	
                         }
 
 
@@ -1323,7 +1333,8 @@ namespace RoadArchitect
                 Object.DestroyImmediate(road.MeshiMarkerPlates);
             }
 
-            //Updates the road and shoulder cut materials if necessary. Note: Cycling through all nodes in case the road cuts and shoulder cut numbers don't match.
+            //Updates the road and shoulder cut materials if necessary.
+            //Note: Cycling through all nodes in case the road cuts and shoulder cut numbers don't match.
             if (road.isRoadCutsEnabled || road.isShoulderCutsEnabled || road.isDynamicCutsEnabled)
             {
                 int mCount = road.spline.GetNodeCount();
@@ -1377,7 +1388,7 @@ namespace RoadArchitect
 
 
         #region "MeshSetup2 - Intersections"
-        //private void MeshSetup2_Intersections_FixNormals()
+        //private void MeshSetup2IntersectionsFixNormals()
         //{
         //  int mCount = tRoad.spline.GetNodeCount();
         //	SplineN tNode = null;
@@ -1433,6 +1444,7 @@ namespace RoadArchitect
         //}
 
 
+        /// <summary> Creates main roads of the intersections if road contains intersections </summary>
         private void MeshSetup2Intersections()
         {
             int mCount = road.spline.GetNodeCount();
@@ -1449,7 +1461,7 @@ namespace RoadArchitect
             {
                 return;
             }
-
+            
 
             int vCount = -1;
             Mesh xMesh = null;
@@ -1897,8 +1909,6 @@ namespace RoadArchitect
                         tCenter.isStatic = true;
                     }
 
-
-
                     Mesh mMesh = new Mesh();
                     Vector3[] bVerts = new Vector3[4];
                     mMesh.vertices = xVerts;
@@ -1954,11 +1964,7 @@ namespace RoadArchitect
                     }
 
                     MF.sharedMesh.vertices = bVerts;
-
-
-
                     MR.transform.position = tNode.intersection.transform.position;
-
                     mMesh.RecalculateBounds();
 
 
@@ -1973,8 +1979,6 @@ namespace RoadArchitect
                     SaveMesh(SaveMeshTypeEnum.Intersection, MF.sharedMesh, road, tNode.intersection.transform.name + "-" + "CenterMarkers");
                 }
             }
-
-            //			List<Mesh> MeshToDelete = new List<Mesh>();
 
             foreach (KeyValuePair<RoadIntersection, List<MeshFilter>> KVP in tCombineDict_Lane0)
             {
@@ -2080,6 +2084,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Combines all intersections in _valuePair into an single mesh </summary>
         private void MeshSetup2CombineIntersections(KeyValuePair<RoadIntersection, List<MeshFilter>> _valuePair, string _name, bool _isMainPlates = false)
         {
             int vCount = _valuePair.Value.Count;
@@ -2148,12 +2153,13 @@ namespace RoadArchitect
             tObj.transform.parent = _valuePair.Key.transform;
             Vector3[] tVerts = MF.sharedMesh.vertices;
             Vector3 tVect = tObj.transform.localPosition;
-            //			float tHeight = 0f;
             for (int index = 0; index < tVerts.Length; index++)
             {
                 tVerts[index] += tVect;
                 if (_name.ToLower().EndsWith("-stretchext"))
-                    tVerts[index] += new Vector3(0f, 0.01f);
+                {
+                    tVerts[index] += new Vector3(0f, 0.01f); 
+                }
             }
             MF.sharedMesh.vertices = tVerts;
             tObj.transform.localPosition = new Vector3(0f, 0f, 0f);
@@ -2199,7 +2205,7 @@ namespace RoadArchitect
         }
 
 
-
+        /// <summary> Assigns values to _mesh and returns the MeshFilter of a new GO </summary>
         private MeshFilter MeshSetup2IntersectionHelper(ref Mesh _mesh, ref Vector2[] _uv, ref Vector4[] _tangents, ref GameObject _masterObj, string _name, string _mat, bool _isCollider = false)
         {
             if (_mesh == null)
@@ -2255,6 +2261,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Assigns values to _mesh </summary>
         private Mesh MeshSetup2Helper(ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _obj, Material[] _shoulderMaterials, Material[] _markerMaterials, Material[] _roadMaterials, bool _isMarker, bool _isShoulder = false, bool _isBridge = false)
         {
             _mesh.uv = _uv;
@@ -2389,6 +2396,7 @@ namespace RoadArchitect
                 }
             }
 
+
             _createdObj.transform.parent = _masterObj.transform;
             if (!_isMarkers && MC != null)
             {
@@ -2415,6 +2423,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Inserts new GO into according shoulder collection at _i; Assigns values to _mesh </summary>
         private bool MeshSetup2HelperCutsShoulder(int _i, ref Mesh _mesh, Vector2[] _uv, Vector4[] _tangents, ref GameObject _masterObj, bool _isLeft, bool _isMarkers, out GameObject _createdObj, Material[] _shoulderMarkerMaterials, Material[] _shoulderMaterials)
         {
             if (_isMarkers)
@@ -2529,6 +2538,7 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Saves Mesh as an asset </summary>
         private static void SaveMesh(SaveMeshTypeEnum _saveType, Mesh _mesh, Road _road, string _name)
         {
             if (!_road.roadSystem.isSavingMeshes)
@@ -2538,7 +2548,6 @@ namespace RoadArchitect
 
 
             string tSceneName;
-
             tSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             tSceneName = tSceneName.Replace("/", "");

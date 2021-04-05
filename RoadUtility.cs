@@ -345,6 +345,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Loads splinated objects for this _node </summary>
         public static void LoadNodeObjects(string _fileName, SplineN _node, bool _isDefault = false, bool _isBridge = false)
         {
             string filePath = "";
