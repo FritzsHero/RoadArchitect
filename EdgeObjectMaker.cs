@@ -828,7 +828,6 @@ namespace RoadArchitect.EdgeObjects
         #region "Setup and processing"
         public void Setup(bool _isCollecting = true)
         {
-#if UNITY_EDITOR
             List<GameObject> errorObjs = new List<GameObject>();
             try
             {
@@ -849,13 +848,11 @@ namespace RoadArchitect.EdgeObjects
                     throw exception;
                 }
             }
-#endif
         }
 
 
         private void Setup_Do(bool _isCollecting, ref List<GameObject> _errorObjs)
         {
-#if UNITY_EDITOR
             if (edgeObjects == null)
             {
                 edgeObjects = new List<GameObject>();
@@ -1148,7 +1145,6 @@ namespace RoadArchitect.EdgeObjects
             {
                 node.spline.road.isTriggeringGC = true;
             }
-#endif
         }
 
 
