@@ -133,7 +133,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
         public RoadIntersection intersection = null;
         [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
-        public Intersections.iConstructionMaker intersectionConstruction;
+        public iConstructionMaker intersectionConstruction;
         #endregion
 
 

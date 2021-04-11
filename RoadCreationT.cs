@@ -2898,7 +2898,7 @@ namespace RoadArchitect.Threading
                     //First node set min / max float:
                     if (iNode.intersectionConstruction == null)
                     {
-                        iNode.intersectionConstruction = new Intersections.iConstructionMaker();
+                        iNode.intersectionConstruction = new iConstructionMaker();
                     }
                     if (!iNode.intersectionConstruction.isTempConstructionProcessedInter1)
                     {
@@ -3049,7 +3049,7 @@ namespace RoadArchitect.Threading
                     //Process second node:
                     if (oNode2.intersectionConstruction == null)
                     {
-                        oNode2.intersectionConstruction = new Intersections.iConstructionMaker();
+                        oNode2.intersectionConstruction = new iConstructionMaker();
                     }
                     if (!oNode2.intersectionConstruction.isTempConstructionProcessedInter2)
                     {
@@ -4423,7 +4423,7 @@ namespace RoadArchitect.Threading
 
         private static void Inter_OrganizeVertices(ref SplineN _node, ref Road _road)
         {
-            Intersections.iConstructionMaker iCon = _node.intersectionConstruction;
+            iConstructionMaker iCon = _node.intersectionConstruction;
             RoadIntersection roadIntersection = _node.intersection;
 
             //Skipping (3 ways):

@@ -87,6 +87,7 @@ namespace RoadArchitect
         [UnityEngine.Serialization.FormerlySerializedAs("opt_bGSDRoadRaise")]
         public bool isRaisingRoad = false;
 
+        /// <summary> Defines the width of height modification in meters </summary>
         [UnityEngine.Serialization.FormerlySerializedAs("opt_MatchHeightsDistance")]
         public float matchHeightsDistance = 50f;
         [UnityEngine.Serialization.FormerlySerializedAs("opt_ClearDetailsDistance")]
@@ -707,8 +708,8 @@ namespace RoadArchitect
                             node.intersection.name = node.intersection.transform.name;
                         }
                         //Setup construction objects:
-                        node.intersection.node1.intersectionConstruction = new Intersections.iConstructionMaker();
-                        node.intersection.node2.intersectionConstruction = new Intersections.iConstructionMaker();
+                        node.intersection.node1.intersectionConstruction = new iConstructionMaker();
+                        node.intersection.node2.intersectionConstruction = new iConstructionMaker();
                     }
 
 
