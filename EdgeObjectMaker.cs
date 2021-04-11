@@ -138,7 +138,7 @@ namespace RoadArchitect.EdgeObjects
             EdgeObjectMaker EOM = new EdgeObjectMaker();
 
             EOM.edgeObjectString = edgeObjectString;
-            
+
             #if UNITY_EDITOR
             EOM.edgeObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(edgeObjectString);
             #endif
@@ -215,6 +215,7 @@ namespace RoadArchitect.EdgeObjects
 
 
         #region "Library"
+        /// <summary> Saves object as xml into Library folder. Auto prefixed with EOM and extension .rao </summary>
         public void SaveToLibrary(string _fileName = "", bool _isDefault = false)
         {
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
@@ -237,6 +238,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
+        /// <summary> Loads _fileName from Library folder. Auto prefixed with EOM and extension .rao </summary>
         public void LoadFromLibrary(string _fileName, bool _isQuickAdd = false)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
@@ -271,6 +273,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
+        /// <summary> Loads _EOLM into this EdgeObjectMaker </summary>
         public void LoadFromLibraryBulk(ref EdgeObjectLibraryMaker _EOLM)
         {
             _EOLM.LoadTo(this);
@@ -291,6 +294,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
+        /// <summary> Stores .rao files which begin with EOM from Library folder into _names and _paths </summary>
         public static void GetLibraryFiles(out string[] _names, out string[] _paths, bool _isDefault = false)
         {
             _names = null;
@@ -333,6 +337,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
+        /// <summary> Saves _mesh as an asset into /Mesh/Generated/CombinedEdgeObj folder beside the /Asset folder </summary>
         private void SaveMesh(Mesh _mesh, bool _isCollider)
         {
             if (!node.spline.road.roadSystem.isSavingMeshes)
@@ -448,6 +453,7 @@ namespace RoadArchitect.EdgeObjects
             #endregion
 
 
+            /// <summary> Setup using _EOM </summary>
             public void Setup(EdgeObjectMaker _EOM)
             {
                 edgeObjectString = _EOM.edgeObjectString;
@@ -484,6 +490,7 @@ namespace RoadArchitect.EdgeObjects
             }
 
 
+            /// <summary> Copy relevant attributes to _EOM </summary>
             public void LoadTo(EdgeObjectMaker _EOM)
             {
                 _EOM.edgeObjectString = edgeObjectString;
@@ -532,7 +539,6 @@ namespace RoadArchitect.EdgeObjects
         }
         #endregion
         #endregion
-
 
 
         public class EdgeObjectEditorMaker
@@ -625,6 +631,7 @@ namespace RoadArchitect.EdgeObjects
             #endregion
 
 
+            /// <summary> Setup using _EOM </summary>
             public void Setup(EdgeObjectMaker _EOM)
             {
                 edgeObject = _EOM.edgeObject;
@@ -658,7 +665,7 @@ namespace RoadArchitect.EdgeObjects
                 isSingle = _EOM.isSingle;
                 singlePosition = _EOM.singlePosition;
 
-                // Name of EdgeObject??
+                // Name of EdgeObject
                 objectName = _EOM.objectName;
 
                 // Start and EndTime of EdgeObject
@@ -671,6 +678,7 @@ namespace RoadArchitect.EdgeObjects
             }
 
 
+            /// <summary> Copy relevant attributes to _EOM </summary>
             public void LoadTo(EdgeObjectMaker _EOM)
             {
                 _EOM.edgeObject = edgeObject;
@@ -746,8 +754,10 @@ namespace RoadArchitect.EdgeObjects
                 {
                     return false;
                 }
-                //				if(EOM.bToggle != bToggle)
-                //              { return false; }
+                //if(EOM.isToggled != isToggled)
+                //{
+                //  return false;
+                //}
 
                 if (!RootUtils.IsApproximately(_EOM.horizontalSep, horizontalSep, 0.001f))
                 {
@@ -831,7 +841,7 @@ namespace RoadArchitect.EdgeObjects
             List<GameObject> errorObjs = new List<GameObject>();
             try
             {
-                Setup_Do(_isCollecting, ref errorObjs);
+                SetupDo(_isCollecting, ref errorObjs);
             }
             catch (System.Exception exception)
             {
@@ -851,7 +861,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
-        private void Setup_Do(bool _isCollecting, ref List<GameObject> _errorObjs)
+        private void SetupDo(bool _isCollecting, ref List<GameObject> _errorObjs)
         {
             if (edgeObjects == null)
             {
@@ -1126,7 +1136,7 @@ namespace RoadArchitect.EdgeObjects
                     }
                 }
 
-                //				tMesh = null;
+                //tMesh = null;
             }
 
             //Zero these out, as they are not needed anymore:
@@ -1148,6 +1158,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
+        /// <summary> Setup objects positions and rotations </summary>
         private void SetupLocations()
         {
             float origHeight = 0f;
@@ -1207,7 +1218,7 @@ namespace RoadArchitect.EdgeObjects
             Ray tRay = default(Ray);
             RaycastHit[] tRayHit = null;
             float[] tRayYs = null;
-            if (isSingle)    
+            if (isSingle)
             {
                 // If the Object is a SingleObject
 
@@ -1279,23 +1290,21 @@ namespace RoadArchitect.EdgeObjects
                     fHeight = horizontalCurve.Evaluate((cTime - fakeStartTime) / pDiffTime);
                     CurrentH = fHeight * horizontalSep;
 
-                    // FH 06.02.19
                     // Hoirzontal1:
                     if (CurrentH < 0f)
                     {
                         // So we get a positiv Number again
                         CurrentH *= -1f;
                         tVect = (tVect + new Vector3(CurrentH * (-POS.normalized.x + (POS.normalized.y / 2)), 0, CurrentH * (POS.normalized.z + +(POS.normalized.y / 2))));
-                        // I implemented the POS.normalized.y value to make sure we get to a value of 1 overall to ensure 50m distance, is this mathematicly correct?? FH 10.02.19
+                        // I implemented the POS.normalized.y value to make sure we get to a value of 1 overall to ensure 50m distance, is this mathematicly correct?
                         // Original: tVect = (tVect + new Vector3(CurrentH * -POS.normalized.z, 0, CurrentH * POS.normalized.x));
                     }
                     else if (CurrentH > 0f)
                     {
                         tVect = (tVect + new Vector3(CurrentH * (-POS.normalized.x + (POS.normalized.y / 2)), 0, CurrentH * (POS.normalized.z + (POS.normalized.y / 2))));
-                        // I implemented the POS.normalized.y value to make sure we get to a value of 1 overall to ensure 50m distance, is this mathematicly correct?? FH 10.02.19
+                        // I implemented the POS.normalized.y value to make sure we get to a value of 1 overall to ensure 50m distance, is this mathematicly correct?
                         //Original: tVect = (tVect + new Vector3(CurrentH * POS.normalized.z, 0, CurrentH * -POS.normalized.x));
                     }
-                    // FH 06.02.19
 
                     xVect = (POS.normalized * meterSep) + tVect;
 
@@ -1324,13 +1333,12 @@ namespace RoadArchitect.EdgeObjects
                     if (CurrentH < 0f)
                     {
                         CurrentH *= -1f;
-                        // FH 03.02.19 // Why has this Code a "wrong" logic, it multiplies z to x and x to z.
+                        // Why has this Code a "wrong" logic, it multiplies z to x and x to z.
                         // Original Code: tVect = (tVect + new Vector3(CurrentH * -POS.normalized.z, 0, CurrentH * POS.normalized.x));
                         tVect = (tVect + new Vector3(CurrentH * (-POS.normalized.z + (POS.normalized.y / 2)), 0, CurrentH * (POS.normalized.x + (POS.normalized.y / 2))));
                     }
                     else if (CurrentH > 0f)
                     {
-                        // FH 03.02.19
                         // Original Code: tVect = (tVect + new Vector3(CurrentH * POS.normalized.z, 0, CurrentH * -POS.normalized.x));
                         // Look at the Bug embeddedt/RoadArchitect/issues/4
                         tVect = (tVect + new Vector3(CurrentH * (POS.normalized.z + (POS.normalized.y / 2)), 0, CurrentH * (-POS.normalized.x + (POS.normalized.y / 2))));
@@ -1365,10 +1373,10 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
-        //ref hVerts,ref hTris, ref hNormals, ref hUV, ref hTangents
-        private Mesh CombineMeshes(ref List<Vector3[]> hVerts, ref List<int[]> hTris, ref List<Vector2[]> hUV, int _origMVL, int _origTriCount)
+        //ref _verts, ref _tris, ref hNormals, ref _uv, ref hTangents
+        private Mesh CombineMeshes(ref List<Vector3[]> _verts, ref List<int[]> _tris, ref List<Vector2[]> _uv, int _origMVL, int _origTriCount)
         {
-            int mCount = hVerts.Count;
+            int mCount = _verts.Count;
             int NewMVL = _origMVL * mCount;
             Vector3[] tVerts = new Vector3[NewMVL];
             int[] tTris = new int[_origTriCount * mCount];
@@ -1386,13 +1394,13 @@ namespace RoadArchitect.EdgeObjects
                 {
                     for (int index = 0; index < _origTriCount; index++)
                     {
-                        hTris[j][index] += CurrentMVLIndex;
+                        _tris[j][index] += CurrentMVLIndex;
                     }
                 }
 
-                System.Array.Copy(hVerts[j], 0, tVerts, CurrentMVLIndex, _origMVL);
-                System.Array.Copy(hTris[j], 0, tTris, CurrentTriIndex, _origTriCount);
-                System.Array.Copy(hUV[j], 0, tUV, CurrentMVLIndex, _origMVL);
+                System.Array.Copy(_verts[j], 0, tVerts, CurrentMVLIndex, _origMVL);
+                System.Array.Copy(_tris[j], 0, tTris, CurrentTriIndex, _origTriCount);
+                System.Array.Copy(_uv[j], 0, tUV, CurrentMVLIndex, _origMVL);
             }
 
             Mesh mesh = new Mesh();
@@ -1407,12 +1415,13 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
+        /// <summary> Destroys edgeObjects and masterObject </summary>
         public void ClearEOM()
         {
             if (edgeObjects != null)
             {
-                int hCount = edgeObjects.Count;
-                for (int h = (hCount - 1); h >= 0; h--)
+                int hCount = edgeObjects.Count - 1;
+                for (int h = hCount; h >= 0; h--)
                 {
                     if (edgeObjects[h] != null)
                     {
