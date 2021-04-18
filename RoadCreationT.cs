@@ -7085,22 +7085,6 @@ namespace RoadArchitect.Threading
             _worldVector.y = cValue;
         }
         #endregion
-
-
-        public class RoadTerrainInfo
-        {
-            [UnityEngine.Serialization.FormerlySerializedAs("tBounds")]
-            public Rect bounds;
-            [UnityEngine.Serialization.FormerlySerializedAs("GSDID")]
-            public int uID;
-            public int hmWidth;
-            public int hmHeight;
-            [UnityEngine.Serialization.FormerlySerializedAs("tPos")]
-            public Vector3 pos;
-            [UnityEngine.Serialization.FormerlySerializedAs("tSize")]
-            public Vector3 size;
-            public float[,] heights;
-        }
     }
 
 

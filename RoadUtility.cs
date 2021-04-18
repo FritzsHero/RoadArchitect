@@ -279,34 +279,6 @@ namespace RoadArchitect
         #endregion
 
 
-        public static Threading.RoadCreationT.RoadTerrainInfo[] GetRoadTerrainInfos()
-        {
-            Object[] tTerrainsObj = GameObject.FindObjectsOfType<Terrain>();
-            Threading.RoadCreationT.RoadTerrainInfo tInfo;
-            List<Threading.RoadCreationT.RoadTerrainInfo> tInfos = new List<Threading.RoadCreationT.RoadTerrainInfo>();
-            foreach (Terrain tTerrain in tTerrainsObj)
-            {
-                tInfo = new Threading.RoadCreationT.RoadTerrainInfo();
-                tInfo.uID = tTerrain.transform.gameObject.GetComponent<RoadTerrain>().UID;
-                tInfo.bounds = new Rect(tTerrain.transform.position.x, tTerrain.transform.position.z, tTerrain.terrainData.size.x, tTerrain.terrainData.size.z);
-                tInfo.hmWidth = tTerrain.terrainData.heightmapResolution;
-                tInfo.hmHeight = tTerrain.terrainData.heightmapResolution;
-                tInfo.pos = tTerrain.transform.position;
-                tInfo.size = tTerrain.terrainData.size;
-                tInfo.heights = tTerrain.terrainData.GetHeights(0, 0, tInfo.hmWidth, tInfo.hmHeight);
-                tInfos.Add(tInfo);
-            }
-            Threading.RoadCreationT.RoadTerrainInfo[] fInfos = new Threading.RoadCreationT.RoadTerrainInfo[tInfos.Count];
-            int fInfosLength = fInfos.Length;
-            for (int index = 0; index < fInfosLength; index++)
-            {
-                fInfos[index] = tInfos[index];
-            }
-            tInfos = null;
-            return fInfos;
-        }
-
-
         public static void SaveNodeObjects(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
         {
             int sCount = _splinatedObjects.Length;
