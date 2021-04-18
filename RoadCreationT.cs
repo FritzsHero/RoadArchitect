@@ -7090,12 +7090,9 @@ namespace RoadArchitect.Threading
 
     public class TerrainCalcs : ThreadedJob
     {
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
         private List<Terraforming.TempTerrainData> TTDList;
-        [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
         private SplineC spline;
-        [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         private Road road;
 
 
@@ -7269,10 +7266,8 @@ namespace RoadArchitect.Threading
 
     public class RoadCalcs1 : ThreadedJob
     {
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
         private RoadConstructorBufferMaker RCS;
-        [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         private Road road;
 
 
@@ -7316,7 +7311,6 @@ namespace RoadArchitect.Threading
 
     public class RoadCalcs2 : ThreadedJob
     {
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDm_Handle")]
         private object handle = new object();
         private RoadConstructorBufferMaker RCS;
 
@@ -7352,21 +7346,6 @@ namespace RoadArchitect.Threading
                 tRCS = RCS;
             }
             return tRCS;
-        }
-    }
-
-
-    public static class RoadCalcsStatic
-    {
-        public static void RunCalc1(ref RoadConstructorBufferMaker _RCS)
-        {
-            RoadCreationT.RoadJob1(ref _RCS);
-        }
-
-
-        public static void RunCalc2(ref RoadConstructorBufferMaker _RCS)
-        {
-            RoadCreationT.RoadJob2(ref _RCS);
         }
     }
 }
