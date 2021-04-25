@@ -11,14 +11,7 @@ namespace RoadArchitect.Threading
     public static class RoadCreationT
     {
         #region "Road Prelim"
-        //Privatized for obfuscate:
         public static void RoadJobPrelim(ref Road _road)
-        {
-            RoadJobPrelimDo(ref _road);
-        }
-
-
-        private static void RoadJobPrelimDo(ref Road _road)
         {
             #region "Vars"
             SplineC spline = _road.spline;
@@ -928,7 +921,7 @@ namespace RoadArchitect.Threading
 
                         if (!isNextInter && !xNode.intersectionConstruction.isFDone)
                         {
-                            //xNode.iConstruction.bFDone = true;
+                            //xNode.intersectionConstruction.bFDone = true;
                             xNode.intersectionConstruction.isFLane0Done = true;
                             xNode.intersectionConstruction.isFLane1Done = true;
                             xNode.intersectionConstruction.isFLane2Done = true;
@@ -974,8 +967,8 @@ namespace RoadArchitect.Threading
                                 }
 
                                 xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(lVect_Next, tIntHeight));
-                                //xNode.iConstruction.iFLane2L.Add(GVC(tVect_Next,tIntHeight));	
-                                //xNode.iConstruction.iFLane2R.Add(GVC(lVect_Next,tIntHeight));
+                                //xNode.intersectionConstruction.iFLane2L.Add(GVC(tVect_Next,tIntHeight));	
+                                //xNode.intersectionConstruction.iFLane2R.Add(GVC(lVect_Next,tIntHeight));
 
                             }
                             else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
@@ -2636,6 +2629,7 @@ namespace RoadArchitect.Threading
 
 
         #region "Road prelim helpers"
+        /// <summary> Returns a new Vector3 with _v1.x, _height, _v1.z </summary>
         private static Vector3 ReplaceHeight(Vector3 _v1, float _height)
         {
             return new Vector3(_v1.x, _height, _v1.z);
@@ -2652,6 +2646,7 @@ namespace RoadArchitect.Threading
         }
 
 
+        /// <summary> Returns a new Vector2 from _vect.x, _vect.z </summary>
         private static Vector2 ConvertVect3ToVect2(Vector3 _vect)
         {
             return new Vector2(_vect.x, _vect.z);
@@ -2854,7 +2849,6 @@ namespace RoadArchitect.Threading
             }
         }
         #endregion
-
         #endregion
 
 
@@ -5967,6 +5961,7 @@ namespace RoadArchitect.Threading
         }
 
 
+        /// <summary> Processes uvs for road cuts </summary>
         private static void ProcessRoadUVsRoadCuts(ref RoadConstructorBufferMaker _RCS)
         {
             //Finally, adding texture coordinates to the mesh will enable it to display a material correctly. 
