@@ -402,6 +402,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Saves object as xml into Library folder. Auto prefixed with ESO and extension .rao </summary>
         public void SaveToLibrary(string _name = "", bool _isDefault = false)
         {
             SplinatedMeshLibraryMaker SLM = new SplinatedMeshLibraryMaker();
@@ -425,6 +426,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Loads _fileName from Library folder. Auto prefixed with ESO and extension .rao </summary>
         public void LoadFromLibrary(string _name, bool _isQuickAdd = false)
         {
             // Q Folder is now ExtrudedObjects
@@ -441,6 +443,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        // Same as also written in EdgeObjectMaker
         public void LoadFromLibraryWizard(string _name)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
@@ -452,6 +455,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Loads _SMLM into this SplinatedMeshMaker </summary>
         public void LoadFromLibraryBulk(ref SplinatedMeshLibraryMaker _SMLM)
         {
             _SMLM.LoadToSMM(this);
@@ -481,6 +485,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Stores .rao files which begin with ESO from Library folder into _names and _paths </summary>
         public static void GetLibraryFiles(out string[] _names, out string[] _paths, bool _isDefault = false)
         {
             _names = null;
@@ -520,6 +525,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Destroys Output, EndCapStartOutput and EndCapEndOutput </summary>
         public void Kill()
         {
             if (Output != null)
@@ -686,6 +692,7 @@ namespace RoadArchitect.Splination
             #endregion
 
 
+            /// <summary> Setup using _SMM </summary>
             public void Setup(SplinatedMeshMaker _SMM)
             {
                 CurrentSplinationString = _SMM.currentSplinationString;
@@ -818,6 +825,7 @@ namespace RoadArchitect.Splination
             }
 
 
+            /// <summary> Copy relevant attributes to _SMM </summary>
             public void LoadToSMM(SplinatedMeshMaker _SMM)
             {
                 _SMM.currentSplinationString = CurrentSplinationString;
@@ -1096,6 +1104,7 @@ namespace RoadArchitect.Splination
             #endregion
 
 
+            /// <summary> Setup using _SMM </summary>
             public void Setup(SplinatedMeshMaker _SMM)
             {
                 CurrentSplination = _SMM.currentSplination;
@@ -1189,6 +1198,7 @@ namespace RoadArchitect.Splination
             }
 
 
+            /// <summary> Copy relevant attributes to _SMM </summary>
             public void LoadToSMM(SplinatedMeshMaker _SMM)
             {
                 _SMM.currentSplination = CurrentSplination;
@@ -1633,6 +1643,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Returns triangles for CollisionType SimpleMeshTriangle </summary>
         private static int[] GetCollisionTrisTri(int _meshCount, int _cTriCount, int _cCount)
         {
             int tCounter = 0;
@@ -1701,6 +1712,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Returns triangles for CollisionType SimpleMeshTrapezoid </summary>
         private static int[] GetCollisionTrisBox(int _meshCount, int _cTriCount, int _cCount)
         {
             int tCounter = 0;
@@ -1796,6 +1808,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Returns true if two coordinates of Vector _v1 and _v2 match </summary>
         private static bool IsApproxTwoThirds(ref Vector3 _v1, Vector3 _v2, float _precision = 0.005f)
         {
             int cCount = 0;
@@ -1872,6 +1885,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Returns true if all coordinates of _v1 are 0f </summary>
         private static bool V3EqualToNone(Vector3 _v1)
         {
             if (!RootUtils.IsApproximately(_v1.x, 0f, 0.0001f))
@@ -1890,6 +1904,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Returns true if coordinates of _v1 and _v2 are equal with 0.01f tolerance </summary>
         private static bool V3EqualNormal(Vector3 _v1, Vector3 _v2)
         {
             if (!RootUtils.IsApproximately(_v1.x, _v2.x, 0.01f))
@@ -1908,6 +1923,7 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Returns true if coordinates of _v1 and _v2 do not match with tolerance 0.02f; _isZAxis checks x coordinate instead of z </summary>
         private static bool IsApproxExtruded(ref Vector3 _v1, ref Vector3 _v2, bool _isZAxis)
         {
             if (!RootUtils.IsApproximately(_v1.y, _v2.y, 0.02f))
@@ -1987,12 +2003,7 @@ namespace RoadArchitect.Splination
             Vector3 tVect2 = default(Vector3);
             Vector3 tDir = default(Vector3);
             Vector3 xVect = default(Vector3);
-            //			Vector3 oVect = default(Vector3);
-            //			Quaternion tRot = default(Quaternion);
             float tFloat1 = default(float);
-            //			float tFloat2 = default(float);
-            //			float tFloat3 = default(float);
-            //			int tCount = -1;
 
             StartTime = spline.GetClosestParam(StartPos);
             EndTime = spline.GetClosestParam(EndPos);
@@ -2022,10 +2033,6 @@ namespace RoadArchitect.Splination
                 verticalCurve.AddKey(1f, 1f);
             }
 
-            //			bool bIsLeft = false;
-            //			if(HorizontalSep < 0f){
-            //				bIsLeft = true;
-            //			}
 
             //Setup strings:
             if (_isGettingStrings)
@@ -2534,14 +2541,8 @@ namespace RoadArchitect.Splination
                 }
                 if (!bDidAdd)
                 {
-                    try
-                    {
-                        Debug.LogWarning("Start cap error (still processing extrusion, ignoring start cap). No matching vertices found for start cap. Most likely the cap mesh is aligned improperly or along the wrong axis relative to the main mesh.");
-                    }
-                    catch
-                    {
+                    Debug.LogWarning("Start cap error (still processing extrusion, ignoring start cap). No matching vertices found for start cap. Most likely the cap mesh is aligned improperly or along the wrong axis relative to the main mesh.");
 
-                    }
                     if (Cap1 != null)
                     {
                         Object.DestroyImmediate(Cap1);
@@ -2570,14 +2571,8 @@ namespace RoadArchitect.Splination
                 }
                 if (!bDidAdd)
                 {
-                    try
-                    {
-                        Debug.LogError("End cap error (still processing extrusion, ignoring end cap). No matching vertices found for end cap. Most likely the cap mesh is aligned improperly or along the wrong axis relative to the main mesh.");
-                    }
-                    catch
-                    {
+                    Debug.LogError("End cap error (still processing extrusion, ignoring end cap). No matching vertices found for end cap. Most likely the cap mesh is aligned improperly or along the wrong axis relative to the main mesh.");
 
-                    }
                     if (Cap2 != null)
                     {
                         Object.DestroyImmediate(Cap2);
@@ -3976,13 +3971,14 @@ namespace RoadArchitect.Splination
         }
 
 
+        /// <summary> Saves _mesh as an asset into /Mesh/Generated/Extrusions folder beside the /Asset folder </summary>
         private void SaveMesh(ref Mesh _mesh, bool _isCollider)
         {
             if (!node.spline.road.roadSystem.isSavingMeshes)
             {
                 return;
             }
-            
+
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
