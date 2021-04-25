@@ -1451,65 +1451,65 @@ namespace RoadArchitect
                 if (!EOM.isEdgeSignLabelInit && EOM.edgeMaker.edgeObject != null)
                 {
                     EOM.isEdgeSignLabel = false;
-                    if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignDiamond") == 0)
+                    if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "SignDiamond") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-diamond";
+                        EOM.edgeSignLabel = "FedSign-diamond";
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignSquare-Small") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "SignSquare-Small") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-Square";
+                        EOM.edgeSignLabel = "FedSign-Square";
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSignSquare") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "SignSquare") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-Square";
+                        EOM.edgeSignLabel = "FedSign-Square";
 
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign988-Small") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign988-Small") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-988";
+                        EOM.edgeSignLabel = "FedSign-988";
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign988") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign988") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-988";
+                        EOM.edgeSignLabel = "FedSign-988";
 
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign861-Small") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign861-Small") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-861";
+                        EOM.edgeSignLabel = "FedSign-861";
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign861") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign861") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-861";
+                        EOM.edgeSignLabel = "FedSign-861";
 
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign617-Small") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign617-Small") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-617";
+                        EOM.edgeSignLabel = "FedSign-617";
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign617") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign617") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-617";
+                        EOM.edgeSignLabel = "FedSign-617";
 
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign396") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign396") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-396";
+                        EOM.edgeSignLabel = "FedSign-396";
 
                     }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "GSDSign330") == 0)
+                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign330") == 0)
                     {
                         EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "GSDFedSign-330";
+                        EOM.edgeSignLabel = "FedSign-330";
                     }
                 }
 
