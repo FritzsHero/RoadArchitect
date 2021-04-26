@@ -70,7 +70,7 @@ namespace RoadArchitect
             SplineC spline = roadIntersection.node1.spline;
 
             GameObject tObj = null;
-            //			Vector3 xDir = default(Vector3);
+            //Vector3 xDir = default(Vector3);
             Vector3 tDir = default(Vector3);
             //float roadWidth = spline.road.RoadWidth();
             //float laneWidth = spline.road.laneWidth;
@@ -90,7 +90,7 @@ namespace RoadArchitect
             //RR:
             spline = roadIntersection.node1.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
+            //xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
@@ -106,7 +106,7 @@ namespace RoadArchitect
             //LL:
             spline = roadIntersection.node1.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
+            //xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
@@ -122,7 +122,7 @@ namespace RoadArchitect
             //RL:
             spline = roadIntersection.node2.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
+            //xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
@@ -138,7 +138,7 @@ namespace RoadArchitect
             //LR:
             spline = roadIntersection.node2.spline;
             tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //			xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
+            //xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
             AddRigidbodyToSign(tObj, _isRB);
@@ -158,8 +158,8 @@ namespace RoadArchitect
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRL, _intersection.cornerRR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time - tDist, 0f, 1f);
-            Vector3 POS = _spline.GetSplineValue(p, true);
-            return (POS * -1);
+            Vector3 rotation = _spline.GetSplineValue(p, true);
+            return (rotation * -1);
         }
 
 
@@ -168,8 +168,8 @@ namespace RoadArchitect
         {
             float tDist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time + tDist, 0f, 1f);
-            Vector3 POS = _spline.GetSplineValue(p, true);
-            return POS;
+            Vector3 rotation = _spline.GetSplineValue(p, true);
+            return rotation;
         }
 
 
@@ -186,15 +186,15 @@ namespace RoadArchitect
             {
                 p = Mathf.Clamp(_intersetion.node2.time + tDist, 0f, 1f);
             }
-            Vector3 POS = _spline.GetSplineValue(p, true);
-            //POS = Vector3.Cross(POS,Vector3.up);
+            Vector3 rotation = _spline.GetSplineValue(p, true);
+            //rotation = Vector3.Cross(rotation, Vector3.up);
             if (_intersetion.isFlipped)
             {
-                return (POS * -1);
+                return (rotation * -1);
             }
             else
             {
-                return POS;
+                return rotation;
             }
         }
 
@@ -212,15 +212,15 @@ namespace RoadArchitect
             {
                 p = Mathf.Clamp(_intersection.node2.time - tDist, 0f, 1f);
             }
-            Vector3 POS = _spline.GetSplineValue(p, true);
-            //POS = Vector3.Cross(POS,Vector3.up);
+            Vector3 rotation = _spline.GetSplineValue(p, true);
+            //rotation = Vector3.Cross(rotation, Vector3.up);
             if (_intersection.isFlipped)
             {
-                return POS;
+                return rotation;
             }
             else
             {
-                return (POS * -1);
+                return (rotation * -1);
             }
         }
         #endregion
@@ -229,11 +229,12 @@ namespace RoadArchitect
         #region "Traffic light bases"
         public static void CreateTrafficLightBases(GameObject _masterGameObj, bool _isTrafficLight1 = true)
         {
-            CreateTrafficLightBases_Do(ref _masterGameObj, _isTrafficLight1);
+            CreateTrafficLightBasesDo(ref _masterGameObj, _isTrafficLight1);
         }
 
 
-        private static void CreateTrafficLightBases_Do(ref GameObject _masterGameObj, bool _isTrafficLight1)
+        /// <summary> Creates and rotates the traffic light bases </summary>
+        private static void CreateTrafficLightBasesDo(ref GameObject _masterGameObj, bool _isTrafficLight1)
         {
             RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = intersection.node1.spline;
@@ -265,14 +266,14 @@ namespace RoadArchitect
             GameObject tObjRL = null;
             GameObject tObjLL = null;
             GameObject tObjLR = null;
-            //			Vector3 xDir = default(Vector3);
+            //Vector3 xDir = default(Vector3);
             Vector3 tDir = default(Vector3);
             Vector3 zeroVect = new Vector3(0f, 0f, 0f);
             Vector3 StartVec = default(Vector3);
             Vector3 EndVec = default(Vector3);
-            //			bool bContains = false;
-            //			MeshFilter MF = null;
-            //			Vector3[] tVerts = null;
+            //bool bContains = false;
+            //MeshFilter MF = null;
+            //Vector3[] tVerts = null;
 
             //Get four points:
             Vector3 tPosRR = default(Vector3);
@@ -502,7 +503,7 @@ namespace RoadArchitect
         }
 
 
-        private static bool CreateTrafficLightBase_IsInIntersection(RoadIntersection _intersection, ref Vector3 _startVec, ref Vector3 _endVec)
+        private static bool IsTrafficLightBaseInIntersection(RoadIntersection _intersection, ref Vector3 _startVec, ref Vector3 _endVec)
         {
             return _intersection.ContainsLine(_startVec, _endVec);
         }
@@ -683,83 +684,83 @@ namespace RoadArchitect
 
         private static Vector3 TrafficLightBaseGetRotRL(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
-            Vector3 POS = default(Vector3);
+            Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
                 //float dist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerRL) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node1.time, 0f, 1f);
-                POS = _spline.GetSplineValue(p, true);
-                POS = Vector3.Cross(POS, Vector3.up);
-                return POS;
+                rotation = _spline.GetSplineValue(p, true);
+                rotation = Vector3.Cross(rotation, Vector3.up);
+                return rotation;
             }
             else
             {
-                POS = _intersection.cornerRL - _intersection.cornerLL;
-                return POS * -1;
+                rotation = _intersection.cornerRL - _intersection.cornerLL;
+                return rotation * -1;
             }
         }
 
 
         private static Vector3 TrafficLightBaseGetRotLR(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
-            Vector3 POS = default(Vector3);
+            Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
                 //float dist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node1.time, 0f, 1f);
-                POS = _spline.GetSplineValue(p, true);
-                POS = Vector3.Cross(POS, Vector3.up);
-                return POS * -1;
+                rotation = _spline.GetSplineValue(p, true);
+                rotation = Vector3.Cross(rotation, Vector3.up);
+                return rotation * -1;
             }
             else
             {
-                POS = _intersection.cornerRR - _intersection.cornerLR;
-                return POS;
+                rotation = _intersection.cornerRR - _intersection.cornerLR;
+                return rotation;
             }
         }
 
 
         private static Vector3 TrafficLightBaseGetRotRR(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
-            Vector3 POS = default(Vector3);
+            Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
                 //float dist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerLR) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node2.time, 0f, 1f);
-                POS = _spline.GetSplineValue(p, true);
-                POS = Vector3.Cross(POS, Vector3.up);
+                rotation = _spline.GetSplineValue(p, true);
+                rotation = Vector3.Cross(rotation, Vector3.up);
                 if (_intersection.isFlipped)
                 {
-                    POS = POS * -1;
+                    rotation = rotation * -1;
                 }
             }
             else
             {
-                POS = _intersection.cornerLL - _intersection.cornerLR;
+                rotation = _intersection.cornerLL - _intersection.cornerLR;
             }
-            return POS;
+            return rotation;
         }
 
 
         private static Vector3 TrafficLightBaseGetRotLL(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
-            Vector3 POS = default(Vector3);
+            Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
             {
                 //float dist = ((Vector3.Distance(_intersection.cornerLL, _intersection.cornerRL) / 2f) + _distFromCorner) / _spline.distance;
                 float p = Mathf.Clamp(_intersection.node2.time, 0f, 1f);
-                POS = _spline.GetSplineValue(p, true);
-                POS = Vector3.Cross(POS, Vector3.up);
+                rotation = _spline.GetSplineValue(p, true);
+                rotation = Vector3.Cross(rotation, Vector3.up);
                 if (_intersection.isFlipped)
                 {
-                    POS = POS * -1;
+                    rotation = rotation * -1;
                 }
             }
             else
             {
-                POS = _intersection.cornerRL - _intersection.cornerRR;
+                rotation = _intersection.cornerRL - _intersection.cornerRR;
             }
-            return POS * -1;
+            return rotation * -1;
         }
         #endregion
 
@@ -801,6 +802,7 @@ namespace RoadArchitect
                 ProcessPole(_masterGameObj, _LL, tan, 2, InterDist);
             }
 
+            // Delete objects on specific corners
             if (roadIntersection.ignoreCorner == 0)
             {
                 if (_RR != null)
@@ -852,9 +854,9 @@ namespace RoadArchitect
         {
             RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = intersection.node1.spline;
-            //			bool bIsRB = true;
+            //bool bIsRB = true;
 
-            //			float RoadWidth = tSpline.road.RoadWidth();
+            //float RoadWidth = tSpline.road.RoadWidth();
             float LaneWidth = spline.road.laneWidth;
             float ShoulderWidth = spline.road.shoulderWidth;
 
@@ -1236,277 +1238,325 @@ namespace RoadArchitect
             _posLL.y = _roadIntersection.signHeight;
             _posLR.y = _roadIntersection.signHeight;
 
-            //			GameObject tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //			tObj.transform.localScale = new Vector3(0.2f,20f,0.2f);
-            //			tObj.transform.name = "temp22_RR";
-            //			tObj.transform.position = tPosRR;
-            //			tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //			tObj.transform.localScale = new Vector3(0.2f,20f,0.2f);
-            //			tObj.transform.name = "temp22_RL";
-            //			tObj.transform.position = tPosRL;
-            //			tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //			tObj.transform.localScale = new Vector3(0.2f,20f,0.2f);
-            //			tObj.transform.name = "temp22_LL";
-            //			tObj.transform.position = tPosLL;
-            //			tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //			tObj.transform.localScale = new Vector3(0.2f,20f,0.2f);
-            //			tObj.transform.name = "temp22_LR";
-            //			tObj.transform.position = tPosLR;
+            //DebugFourPoints(_posRR, _posRL, _posLL, _posLR);
+        }
+
+
+        /// <summary> Creates dummy cubes. Does not work with multi threading </summary>
+        private static void DebugFourPoints(Vector3 _posRR, Vector3 _posRL, Vector3 _posLL, Vector3 _posLR)
+        {
+            GameObject tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tObj.transform.localScale = new Vector3(0.2f, 20f, 0.2f);
+            tObj.transform.name = "temp22_RR";
+            tObj.transform.position = _posRR;
+            tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tObj.transform.localScale = new Vector3(0.2f, 20f, 0.2f);
+            tObj.transform.name = "temp22_RL";
+            tObj.transform.position = _posRL;
+            tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tObj.transform.localScale = new Vector3(0.2f, 20f, 0.2f);
+            tObj.transform.name = "temp22_LL";
+            tObj.transform.position = _posLL;
+            tObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tObj.transform.localScale = new Vector3(0.2f, 20f, 0.2f);
+            tObj.transform.name = "temp22_LR";
+            tObj.transform.position = _posLR;
         }
 
 
         /*
-        //		public static void GetOrigFour(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
-        //			//Get four points:
-        //			float tPos1 = 0f;
-        //			float tPos2 = 0f;
-        //			Vector3 tTan1 = default(Vector3);
-        //			Vector3 tTan2 = default(Vector3);
-        //			float Node1Width = -1f;
-        //			float Node2Width = -1f;
-        //			Vector3 tDirRR = default(Vector3);
-        //			Vector3 tDirRL = default(Vector3);
-        //			Vector3 tDirLL = default(Vector3);
-        //			Vector3 tDirLR = default(Vector3);
-        //			float tAngleRR = 85f;
-        //			float tAngleRL = 85f;
-        //			float tAngleLL = 85f;
-        //			float tAngleLR = 85f;
-        //			float ShoulderWidth1 = roadIntersection.Node1.spline.road.opt_ShoulderWidth;
-        //			float ShoulderWidth2 = roadIntersection.Node2.spline.road.opt_ShoulderWidth;
-        //			Vector3 xPos1 = default(Vector3);
-        //			Vector3 xPos2 = default(Vector3);
-        //			
-        //			if(!roadIntersection.bFlipped){
-        //				//RR:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tDirRR = (tTan1.normalized + tTan2.normalized).normalized;
-        //				//tAngleRR = Vector3.Angle(tTan1,tTan2);
-        //				tAngleRR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //				//RL:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
-        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tDirRL = (tTan1.normalized + tTan2.normalized).normalized;
-        //				//tAngleRL = Vector3.Angle(tTan1,tTan2);
-        //				tAngleRL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //				//LL:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
-        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tDirLL = (tTan1.normalized + tTan2.normalized).normalized;
-        //				//tAngleLL = Vector3.Angle(tTan1,tTan2);
-        //				tAngleLL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //				//LR:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tDirLR = (tTan1.normalized + tTan2.normalized).normalized;
-        //				//tAngleLR = Vector3.Angle(tTan1,tTan2);
-        //				tAngleLR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //			}else{
-        //				//RR:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
-        //				tDirRR = (tTan1.normalized + tTan2.normalized).normalized;
-        ////				tAngleRR = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tAngleRR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //				//RL:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
-        //				tPos2 = roadIntersection.Node2.tTime - Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
-        //				tDirRL = (tTan1.normalized + tTan2.normalized).normalized;
-        ////				tAngleRL = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tAngleRL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //				//LL:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime + Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
-        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
-        //				tDirLL = (tTan1.normalized + tTan2.normalized).normalized;
-        ////				tAngleLL = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tAngleLL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //				//LR:
-        //				Node1Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
-        //				Node2Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
-        //				tPos1 = roadIntersection.Node1.tTime - Node1Width;
-        //				tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
-        //				tPos2 = roadIntersection.Node2.tTime + Node2Width;
-        //				tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
-        //				tDirLR = (tTan1.normalized + tTan2.normalized).normalized;
-        //				//tAngleLR = Vector3.Angle(tTan1,tTan2);
-        //				xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
-        //				xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
-        //				tAngleLR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
-        //			}	
-        //			
-        //			//D = B*cos(angle/2)
-        //			float tWidth = roadIntersection.Node1.spline.road.opt_RoadWidth * 0.5f;
-        //			float tAngleRR_Opp = 180f - tAngleRR;
-        //			float tAngleRL_Opp = 180f - tAngleRL;
-        //			float tAngleLL_Opp = 180f - tAngleLL;
-        //			float tAngleLR_Opp = 180f - tAngleLR;
-        //
-        //			float tOffSetRR = tWidth*(Mathf.Cos((tAngleRR*0.5f)*Mathf.Deg2Rad));
-        //			float tOffSetRL = tWidth*(Mathf.Cos((tAngleRL*0.5f)*Mathf.Deg2Rad));
-        //			float tOffSetLL = tWidth*(Mathf.Cos((tAngleLL*0.5f)*Mathf.Deg2Rad));
-        //			float tOffSetLR = tWidth*(Mathf.Cos((tAngleLR*0.5f)*Mathf.Deg2Rad));
-        //			
-        //			float tOffSetRR_opp = tWidth*(Mathf.Cos((tAngleRR_Opp*0.5f)*Mathf.Deg2Rad));
-        //			float tOffSetRL_opp = tWidth*(Mathf.Cos((tAngleRL_Opp*0.5f)*Mathf.Deg2Rad));
-        //			float tOffSetLL_opp = tWidth*(Mathf.Cos((tAngleLL_Opp*0.5f)*Mathf.Deg2Rad));
-        //			float tOffSetLR_opp = tWidth*(Mathf.Cos((tAngleLR_Opp*0.5f)*Mathf.Deg2Rad));
-        //			
-        //			Vector3 tPos = roadIntersection.Node1.pos;
-        //			
-        ////			tOffSetRR *=2f;
-        ////			tOffSetRL *=2f;
-        ////			tOffSetLL *=2f;
-        ////			tOffSetLR *=2f;
-        //			
-        //			tPosRR = tPos + (tDirRR * (tOffSetRR+tOffSetRR_opp));
-        //			tPosRL = tPos + (tDirRL * (tOffSetRL+tOffSetRL_opp));
-        //			tPosLL = tPos + (tDirLL * (tOffSetLL+tOffSetLL_opp));
-        //			tPosLR = tPos + (tDirLR * (tOffSetLR+tOffSetLR_opp));
-        //			
-        //			GameObject tObj = GameObject.Find("temp22_RR"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			tObj = GameObject.Find("temp22_RL"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			tObj = GameObject.Find("temp22_LL"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			tObj = GameObject.Find("temp22_LR"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			
-        //			GameObject tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosRR;
-        //			tCubeRR.transform.name = "temp22_RR";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //			
-        //			tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosRL;
-        //			tCubeRR.transform.name = "temp22_RL";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //			
-        //			tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosLL;
-        //			tCubeRR.transform.name = "temp22_LL";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //			
-        //			tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosLR;
-        //			tCubeRR.transform.name = "temp22_LR";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //		}
-        //	
-        //		public static void GetCornerVectors_Test(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR){
-        //			SplineN tNode = null;
-        //			SplineC tSpline = null;
-        //
-        //			tNode = roadIntersection.Node1;
-        //			tSpline = tNode.spline;
-        //			float tOffset = tSpline.road.opt_RoadWidth * 0.5f;
-        //			float tPos1 = tNode.tTime - (tOffset/tSpline.distance);
-        //			float tPos2 = tNode.tTime + (tOffset/tSpline.distance);
-        //			Vector3 tVect1 = tSpline.GetSplineValue(tPos1);	
-        //			Vector3 POS1 = tSpline.GetSplineValue(tPos1,true);
-        //			Vector3 tVect2 = tSpline.GetSplineValue(tPos2);	
-        //			Vector3 POS2 = tSpline.GetSplineValue(tPos2,true);
-        //			tPosRR = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
-        //			tPosLR = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
-        //			tPosRL = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
-        //			tPosLL = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
-        //			
-        //			tNode = roadIntersection.Node2;
-        //			tSpline = tNode.spline;
-        //			tOffset = tSpline.road.opt_RoadWidth * 0.5f;
-        //			tPos1 = tNode.tTime - (tOffset/tSpline.distance);
-        //			tPos2 = tNode.tTime + (tOffset/tSpline.distance);
-        //			tVect1 = tSpline.GetSplineValue(tPos1);	
-        //			POS1 = tSpline.GetSplineValue(tPos1,true);
-        //			tVect2 = tSpline.GetSplineValue(tPos2);	
-        //			POS2 = tSpline.GetSplineValue(tPos2,true);
-        //			Vector3 tPosRR2 = default(Vector3);
-        //			Vector3 tPosLR2 = default(Vector3);
-        //			Vector3 tPosRL2 = default(Vector3);
-        //			Vector3 tPosLL2 = default(Vector3);
-        //			
-        //			if(roadIntersection.bFlipped){
-        //				tPosRL2 = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
-        //				tPosRR2 = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
-        //				tPosLL2 = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
-        //				tPosLR2 = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
-        //			}else{
-        //				tPosLR2 = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
-        //				tPosLL2 = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
-        //				tPosRR2 = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
-        //				tPosRL2 = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
-        //			}
-        //			
-        //			tPosRR = ((tPosRR-tPosRR2)*0.5f)+tPosRR;
-        //			tPosLR = ((tPosLR-tPosLR2)*0.5f)+tPosLR;
-        //			tPosRL = ((tPosRL-tPosRL2)*0.5f)+tPosRL;
-        //			tPosLL = ((tPosLL-tPosLL2)*0.5f)+tPosLL;
-        //			
-        //			
-        //						GameObject tObj = GameObject.Find("temp22_RR"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			tObj = GameObject.Find("temp22_RL"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			tObj = GameObject.Find("temp22_LL"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			tObj = GameObject.Find("temp22_LR"); if(tObj != null){ Object.DestroyImmediate(tObj); }
-        //			
-        //			GameObject tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosRR;
-        //			tCubeRR.transform.name = "temp22_RR";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //			
-        //			tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosRL;
-        //			tCubeRR.transform.name = "temp22_RL";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //			
-        //			tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosLL;
-        //			tCubeRR.transform.name = "temp22_LL";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //			
-        //			tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        //			tCubeRR.transform.position = tPosLR;
-        //			tCubeRR.transform.name = "temp22_LR";
-        //			tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
-        //		}
+        public static void GetOrigFour(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR)
+        {
+            //Get four points:
+            float tPos1 = 0f;
+            float tPos2 = 0f;
+            Vector3 tTan1 = default(Vector3);
+            Vector3 tTan2 = default(Vector3);
+            float Node1Width = -1f;
+            float Node2Width = -1f;
+            Vector3 tDirRR = default(Vector3);
+            Vector3 tDirRL = default(Vector3);
+            Vector3 tDirLL = default(Vector3);
+            Vector3 tDirLR = default(Vector3);
+            float tAngleRR = 85f;
+            float tAngleRL = 85f;
+            float tAngleLL = 85f;
+            float tAngleLR = 85f;
+            float ShoulderWidth1 = roadIntersection.Node1.spline.road.opt_ShoulderWidth;
+            float ShoulderWidth2 = roadIntersection.Node2.spline.road.opt_ShoulderWidth;
+            Vector3 xPos1 = default(Vector3);
+            Vector3 xPos2 = default(Vector3);
+
+            if(!roadIntersection.bFlipped)
+            {
+                //RR:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime - Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+                tPos2 = roadIntersection.Node2.tTime + Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tDirRR = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleRR = Vector3.Angle(tTan1,tTan2);
+                tAngleRR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+                //RL:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime + Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+                tPos2 = roadIntersection.Node2.tTime + Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tDirRL = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleRL = Vector3.Angle(tTan1,tTan2);
+                tAngleRL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+                //LL:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime + Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+                tPos2 = roadIntersection.Node2.tTime - Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tDirLL = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleLL = Vector3.Angle(tTan1,tTan2);
+                tAngleLL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+                //LR:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime - Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+                tPos2 = roadIntersection.Node2.tTime - Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tDirLR = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleLR = Vector3.Angle(tTan1,tTan2);
+                tAngleLR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+            }
+            else
+            {
+                //RR:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerRR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime - Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+                tPos2 = roadIntersection.Node2.tTime - Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
+                tDirRR = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleRR = Vector3.Angle(tTan1,tTan2);
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tAngleRR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+                //RL:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerRL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime + Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+                tPos2 = roadIntersection.Node2.tTime - Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true) * -1f;
+                tDirRL = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleRL = Vector3.Angle(tTan1,tTan2);
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tAngleRL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+                //LL:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerLL,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime + Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true);
+                tPos2 = roadIntersection.Node2.tTime + Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
+                tDirLL = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleLL = Vector3.Angle(tTan1,tTan2);
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tAngleLL = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+                //LR:
+                Node1Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node1.pos) + ShoulderWidth1)/roadIntersection.Node1.spline.distance;
+                Node2Width = (Vector3.Distance(roadIntersection.CornerLR,roadIntersection.Node2.pos) + ShoulderWidth2)/roadIntersection.Node2.spline.distance;
+                tPos1 = roadIntersection.Node1.tTime - Node1Width;
+                tTan1 = roadIntersection.Node1.spline.GetSplineValue(tPos1,true) * -1f;
+                tPos2 = roadIntersection.Node2.tTime + Node2Width;
+                tTan2 = roadIntersection.Node2.spline.GetSplineValue(tPos2,true);
+                tDirLR = (tTan1.normalized + tTan2.normalized).normalized;
+                //tAngleLR = Vector3.Angle(tTan1,tTan2);
+                xPos1 = roadIntersection.Node1.spline.GetSplineValue(tPos1);
+                xPos2 = roadIntersection.Node1.spline.GetSplineValue(tPos2);
+                tAngleLR = Vector3.Angle(xPos1 - roadIntersection.Node1.pos,xPos2 - roadIntersection.Node1.pos);
+            }	
+        		
+            //D = B*cos(angle/2)
+            float tWidth = roadIntersection.Node1.spline.road.opt_RoadWidth * 0.5f;
+            float tAngleRR_Opp = 180f - tAngleRR;
+            float tAngleRL_Opp = 180f - tAngleRL;
+            float tAngleLL_Opp = 180f - tAngleLL;
+            float tAngleLR_Opp = 180f - tAngleLR;
+        
+            float tOffSetRR = tWidth*(Mathf.Cos((tAngleRR*0.5f)*Mathf.Deg2Rad));
+            float tOffSetRL = tWidth*(Mathf.Cos((tAngleRL*0.5f)*Mathf.Deg2Rad));
+            float tOffSetLL = tWidth*(Mathf.Cos((tAngleLL*0.5f)*Mathf.Deg2Rad));
+            float tOffSetLR = tWidth*(Mathf.Cos((tAngleLR*0.5f)*Mathf.Deg2Rad));
+        		
+            float tOffSetRR_opp = tWidth*(Mathf.Cos((tAngleRR_Opp*0.5f)*Mathf.Deg2Rad));
+            float tOffSetRL_opp = tWidth*(Mathf.Cos((tAngleRL_Opp*0.5f)*Mathf.Deg2Rad));
+            float tOffSetLL_opp = tWidth*(Mathf.Cos((tAngleLL_Opp*0.5f)*Mathf.Deg2Rad));
+            float tOffSetLR_opp = tWidth*(Mathf.Cos((tAngleLR_Opp*0.5f)*Mathf.Deg2Rad));
+        	
+            Vector3 tPos = roadIntersection.Node1.pos;
+        			
+            //tOffSetRR *=2f;
+            //tOffSetRL *=2f;
+            //tOffSetLL *=2f;
+            //tOffSetLR *=2f;
+        		
+            tPosRR = tPos + (tDirRR * (tOffSetRR+tOffSetRR_opp));
+            tPosRL = tPos + (tDirRL * (tOffSetRL+tOffSetRL_opp));
+            tPosLL = tPos + (tDirLL * (tOffSetLL+tOffSetLL_opp));
+            tPosLR = tPos + (tDirLR * (tOffSetLR+tOffSetLR_opp));
+        			
+            GameObject tObj = GameObject.Find("temp22_RR");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+            tObj = GameObject.Find("temp22_RL");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+            tObj = GameObject.Find("temp22_LL");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+            tObj = GameObject.Find("temp22_LR");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+        		
+            GameObject tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosRR;
+            tCubeRR.transform.name = "temp22_RR";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+    			
+            tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosRL;
+            tCubeRR.transform.name = "temp22_RL";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+   			
+            tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosLL;
+            tCubeRR.transform.name = "temp22_LL";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+       		
+            tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosLR;
+            tCubeRR.transform.name = "temp22_LR";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+        }
+  	    
+
+        public static void GetCornerVectors_Test(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR)
+        {
+            SplineN tNode = null;
+            SplineC tSpline = null;
+      
+            tNode = roadIntersection.Node1;
+            tSpline = tNode.spline;
+            float tOffset = tSpline.road.opt_RoadWidth * 0.5f;
+            float tPos1 = tNode.tTime - (tOffset/tSpline.distance);
+        	float tPos2 = tNode.tTime + (tOffset/tSpline.distance);
+            Vector3 tVect1 = tSpline.GetSplineValue(tPos1);	
+            Vector3 POS1 = tSpline.GetSplineValue(tPos1,true);
+            Vector3 tVect2 = tSpline.GetSplineValue(tPos2);	
+            Vector3 POS2 = tSpline.GetSplineValue(tPos2,true);
+            tPosRR = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
+            tPosLR = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
+            tPosRL = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
+            tPosLL = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
+       		
+            tNode = roadIntersection.Node2;
+            tSpline = tNode.spline;
+            tOffset = tSpline.road.opt_RoadWidth * 0.5f;
+            tPos1 = tNode.tTime - (tOffset/tSpline.distance);
+            tPos2 = tNode.tTime + (tOffset/tSpline.distance);
+            tVect1 = tSpline.GetSplineValue(tPos1);	
+            POS1 = tSpline.GetSplineValue(tPos1,true);
+            tVect2 = tSpline.GetSplineValue(tPos2);	
+            POS2 = tSpline.GetSplineValue(tPos2,true);
+            Vector3 tPosRR2 = default(Vector3);
+            Vector3 tPosLR2 = default(Vector3);
+            Vector3 tPosRL2 = default(Vector3);
+            Vector3 tPosLL2 = default(Vector3);
+       		
+            if(roadIntersection.bFlipped)
+            {
+                tPosRL2 = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
+                tPosRR2 = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
+                tPosLL2 = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
+                tPosLR2 = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
+            }
+            else
+            {
+                tPosLR2 = (tVect1 + new Vector3(5f*POS1.normalized.z,0,5f*-POS1.normalized.x));
+                tPosLL2 = (tVect1 + new Vector3(5f*-POS1.normalized.z,0,5f*POS1.normalized.x));
+                tPosRR2 = (tVect2 + new Vector3(5f*POS2.normalized.z,0,5f*-POS2.normalized.x));
+                tPosRL2 = (tVect2 + new Vector3(5f*-POS2.normalized.z,0,5f*POS2.normalized.x));
+            }
+        			
+            tPosRR = ((tPosRR-tPosRR2)*0.5f)+tPosRR;
+            tPosLR = ((tPosLR-tPosLR2)*0.5f)+tPosLR;
+            tPosRL = ((tPosRL-tPosRL2)*0.5f)+tPosRL;
+            tPosLL = ((tPosLL-tPosLL2)*0.5f)+tPosLL;
+  			
+		
+            GameObject tObj = GameObject.Find("temp22_RR");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+            tObj = GameObject.Find("temp22_RL");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+            tObj = GameObject.Find("temp22_LL");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+            tObj = GameObject.Find("temp22_LR");
+            if(tObj != null)
+            {
+                Object.DestroyImmediate(tObj);
+            }
+        		
+            GameObject tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosRR;
+            tCubeRR.transform.name = "temp22_RR";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+        			
+            tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosRL;
+            tCubeRR.transform.name = "temp22_RL";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+        		
+            tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosLL;
+            tCubeRR.transform.name = "temp22_LL";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+        		
+            tCubeRR = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            tCubeRR.transform.position = tPosLR;
+            tCubeRR.transform.name = "temp22_LR";
+            tCubeRR.transform.localScale = new Vector3(0.2f,20f,0.2f);
+        }
         */
     }
 }
