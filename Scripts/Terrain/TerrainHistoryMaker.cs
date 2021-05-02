@@ -13,7 +13,7 @@ namespace RoadArchitect
         public int[] x1;
         public int[] y1;
         public float[] height;
-        public int cI;
+        public int Count;
         public bool isHeightHistoryEnabled;
         //Details:
         public int detailLayersCount;

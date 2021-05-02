@@ -1049,7 +1049,7 @@ namespace RoadArchitect.Threading
                 {
                     if (_TTD.tHeights[index, k] != true)
                     {
-                        if (_TTD.cX.Length <= _TTD.cI)
+                        if (_TTD.cX.Length <= _TTD.Count)
                         {
                             break;
                         }
@@ -1069,11 +1069,11 @@ namespace RoadArchitect.Threading
 
                             //Set height values:
                             _TTD.tHeights[index, k] = true;
-                            _TTD.cX[_TTD.cI] = (ushort)index;
-                            _TTD.cY[_TTD.cI] = (ushort)k;
-                            _TTD.oldH[_TTD.cI] = _TTD.heights[index, k];
+                            _TTD.cX[_TTD.Count] = (ushort)index;
+                            _TTD.cY[_TTD.Count] = (ushort)k;
+                            _TTD.oldH[_TTD.Count] = _TTD.heights[index, k];
                             _TTD.heights[index, k] = tHeight;
-                            _TTD.cI += 1;
+                            _TTD.Count += 1;
 
                             tReturnFloat = xVect.y;
                         }

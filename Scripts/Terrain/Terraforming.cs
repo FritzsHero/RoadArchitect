@@ -21,7 +21,7 @@ namespace RoadArchitect
             public ushort[] cY;
             public float[] cH;
             public float[] oldH;
-            public int cI = 0;
+            public int Count = 0;
             public int TerrainMaxIndex;
 
             //Details:
@@ -234,7 +234,7 @@ namespace RoadArchitect
                         TTD.cY = new ushort[aSize];
                         TTD.oldH = new float[aSize];
                         TTD.cH = new float[aSize];
-                        TTD.cI = 0;
+                        TTD.Count = 0;
                         TTD.TerrainMaxIndex = terrain.terrainData.heightmapResolution;
                         TTD.TerrainSize = terrain.terrainData.size;
                         TTD.TerrainPos = terrain.transform.position;
@@ -520,7 +520,7 @@ namespace RoadArchitect
                                 terrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
                             }
                             //Heights:
-                            if (_spline.road.isHeightModificationEnabled && TTD.heights != null && TTD.cI > 0)
+                            if (_spline.road.isHeightModificationEnabled && TTD.heights != null && TTD.Count > 0)
                             {
                                 //Do heights last to trigger collisions and stuff properly:
                                 terrain.terrainData.SetHeights(0, 0, TTD.heights);
@@ -572,7 +572,7 @@ namespace RoadArchitect
                 if (TH.x1 != null)
                 {
                     heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
-                    ArrayCount = TH.cI;
+                    ArrayCount = TH.Count;
                     for (int index = 0; index < ArrayCount; index++)
                     {
                         heights[TH.x1[index], TH.y1[index]] = TH.height[index];

@@ -189,13 +189,13 @@ namespace RoadArchitect
                 {
                     if (TTD.cX != null && TTD.cY != null)
                     {
-                        TH.x1 = new int[TTD.cI];
-                        System.Array.Copy(TTD.cX, 0, TH.x1, 0, TTD.cI);
-                        TH.y1 = new int[TTD.cI];
-                        System.Array.Copy(TTD.cY, 0, TH.y1, 0, TTD.cI);
-                        TH.height = new float[TTD.cI];
-                        System.Array.Copy(TTD.oldH, 0, TH.height, 0, TTD.cI);
-                        TH.cI = TTD.cI;
+                        TH.x1 = new int[TTD.Count];
+                        System.Array.Copy(TTD.cX, 0, TH.x1, 0, TTD.Count);
+                        TH.y1 = new int[TTD.Count];
+                        System.Array.Copy(TTD.cY, 0, TH.y1, 0, TTD.Count);
+                        TH.height = new float[TTD.Count];
+                        System.Array.Copy(TTD.oldH, 0, TH.height, 0, TTD.Count);
+                        TH.Count = TTD.Count;
                     }
                 }
                 else
@@ -203,7 +203,7 @@ namespace RoadArchitect
                     TH.x1 = null;
                     TH.y1 = null;
                     TH.height = null;
-                    TH.cI = 0;
+                    TH.Count = 0;
                 }
                 //Details:
                 if (_road.isDetailModificationEnabled)
