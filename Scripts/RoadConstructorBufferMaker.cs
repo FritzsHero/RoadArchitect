@@ -2321,7 +2321,7 @@ namespace RoadArchitect
                 #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(_obj, UnityEditor.StaticEditorFlags.ContributeGI);
                 #else
-                UnityEditor.GameObjectUtility.SetStaticEditorFlags(tObj, UnityEditor.StaticEditorFlags.LightmapStatic);
+                UnityEditor.GameObjectUtility.SetStaticEditorFlags(_obj, UnityEditor.StaticEditorFlags.LightmapStatic);
                 #endif
             }
             #endif
@@ -2409,7 +2409,7 @@ namespace RoadArchitect
                 #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(_createdObj, UnityEditor.StaticEditorFlags.ContributeGI);
                 #else
-                UnityEditor.GameObjectUtility.SetStaticEditorFlags(CreatedObj, UnityEditor.StaticEditorFlags.LightmapStatic);
+                UnityEditor.GameObjectUtility.SetStaticEditorFlags(_createdObj, UnityEditor.StaticEditorFlags.LightmapStatic);
                 #endif
             }
             #endif
@@ -2520,7 +2520,7 @@ namespace RoadArchitect
                 #if UNITY_2019_2_OR_NEWER
                 UnityEditor.GameObjectUtility.SetStaticEditorFlags(_createdObj, UnityEditor.StaticEditorFlags.ContributeGI);
                 #else
-                UnityEditor.GameObjectUtility.SetStaticEditorFlags(CreatedObj, UnityEditor.StaticEditorFlags.LightmapStatic);
+                UnityEditor.GameObjectUtility.SetStaticEditorFlags(_createdObj, UnityEditor.StaticEditorFlags.LightmapStatic);
                 #endif
             }
             #endif
