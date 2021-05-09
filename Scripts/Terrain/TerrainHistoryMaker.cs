@@ -9,26 +9,22 @@ namespace RoadArchitect
     {
         #region "Vars"
         public int terrainID;
+        public int heightmapResolution;
         //Heights:
         public int[] x1;
         public int[] y1;
         public float[] height;
         public int Count;
-        public bool isHeightHistoryEnabled;
         //Details:
         public int detailLayersCount;
-
+        public int[] detailsCount;
         public int[] detailsX;
         public int[] detailsY;
         public int[] detailsOldValue;
-        public int[] detailsI;
 
-        public bool isDetailHistoryEnabled;
         //Trees:
         public TerrainTreeInstance[] oldTrees;
-        public int TreesI;
-        public bool isTreeHistoryEnabled;
-        public bool isDestroySheduled = false;
+        public int treesCount;
         #endregion
 
 
@@ -41,7 +37,7 @@ namespace RoadArchitect
             detailsX = null;
             detailsY = null;
             detailsOldValue = null;
-            detailsI = null;
+            detailsCount = null;
             //Trees:
             oldTrees = null;
         }
@@ -164,9 +160,9 @@ namespace RoadArchitect
                 tSize += (detailsOldValue.Length * 4);
                 tSize += 20;
             }
-            if (detailsI != null)
+            if (detailsCount != null)
             {
-                tSize += (detailsI.Length * 4);
+                tSize += (detailsCount.Length * 4);
                 tSize += 20;
             }
             tSize += 1;

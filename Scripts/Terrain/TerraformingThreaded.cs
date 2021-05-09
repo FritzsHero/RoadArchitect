@@ -508,7 +508,7 @@ namespace RoadArchitect.Threading
                             tTree = _TTD.TreesCurrent[i];
                             tTree.prototypeIndex = -2;
                             _TTD.TreesCurrent[i] = tTree;
-                            _TTD.TreesI += 1;
+                            _TTD.treesCount += 1;
                             break;
                         }
                     }

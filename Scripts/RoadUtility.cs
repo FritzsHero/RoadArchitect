@@ -107,21 +107,7 @@ namespace RoadArchitect
                     if (!tTIDS.Contains(THMaker.terrainID))
                     {
                         THMaker.Nullify();
-                        THMaker.isDestroySheduled = true;
-                    }
-                }
-
-                int hCount = _road.TerrainHistory.Count;
-                for (int index = hCount - 1; index >= 0; index--)
-                {
-                    if (_road.TerrainHistory[index].isDestroySheduled)
-                    {
-                        TerrainHistoryMaker THMaker = _road.TerrainHistory[index];
-                        _road.TerrainHistory.RemoveAt(index);
-                        if (THMaker != null)
-                        {
-                            THMaker = null;
-                        }
+                        _road.TerrainHistory.Remove(THMaker);
                     }
                 }
             }
@@ -196,6 +182,7 @@ namespace RoadArchitect
                         TH.height = new float[TTD.Count];
                         System.Array.Copy(TTD.oldH, 0, TH.height, 0, TTD.Count);
                         TH.Count = TTD.Count;
+                        TH.heightmapResolution = TTD.TerrainMaxIndex;
                     }
                 }
                 else
@@ -211,7 +198,7 @@ namespace RoadArchitect
                     int TotalSize = 0;
                     for (int i = 0; i < TTD.DetailLayersCount; i++)
                     {
-                        TotalSize += TTD.DetailsI[i];
+                        TotalSize += TTD.detailsCount[i];
                     }
 
                     TH.detailsX = new int[TotalSize];
@@ -222,7 +209,7 @@ namespace RoadArchitect
                     int cLength = 0;
                     for (int index = 0; index < TTD.DetailLayersCount; index++)
                     {
-                        cLength = TTD.DetailsI[index];
+                        cLength = TTD.detailsCount[index];
                         if (cLength < 1)
                         {
                             continue;
@@ -230,13 +217,13 @@ namespace RoadArchitect
                         System.Array.Copy(TTD.DetailsX[index].ToArray(), 0, TH.detailsX, RunningIndex, cLength);
                         System.Array.Copy(TTD.DetailsY[index].ToArray(), 0, TH.detailsY, RunningIndex, cLength);
                         System.Array.Copy(TTD.OldDetailsValue[index].ToArray(), 0, TH.detailsOldValue, RunningIndex, cLength);
-                        RunningIndex += TTD.DetailsI[index];
+                        RunningIndex += TTD.detailsCount[index];
                     }
 
                     //TH.detailsX = TTD.detailsX;
                     //TH.detailsY = TTD.detailsY;
                     //TH.detailsOldValue = TTD.OldDetailsValue;
-                    TH.detailsI = TTD.DetailsI;
+                    TH.detailsCount = TTD.detailsCount;
                     TH.detailLayersCount = TTD.DetailLayersCount;
                 }
                 else
@@ -244,7 +231,7 @@ namespace RoadArchitect
                     TH.detailsX = null;
                     TH.detailsY = null;
                     TH.detailsOldValue = null;
-                    TH.detailsI = null;
+                    TH.detailsCount = null;
                     TH.detailLayersCount = 0;
                 }
                 //Trees:
@@ -255,13 +242,13 @@ namespace RoadArchitect
                         TH.MakeRATrees(ref TTD.TreesOld);
                         TTD.TreesOld.Clear();
                         TTD.TreesOld = null;
-                        TH.TreesI = TTD.TreesI;
+                        TH.treesCount = TTD.treesCount;
                     }
                 }
                 else
                 {
                     TH.oldTrees = null;
-                    TH.TreesI = 0;
+                    TH.treesCount = 0;
                 }
             }
         }

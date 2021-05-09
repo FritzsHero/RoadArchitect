@@ -34,7 +34,7 @@ namespace RoadArchitect
             public List<List<ushort>> DetailsY;
             public List<List<ushort>> OldDetailsValue;
             //public Dictionary<int,int[,]> DetailValues;
-            public int[] DetailsI;
+            public int[] detailsCount;
             public float DetailToHeightRatio;
 
 
@@ -50,7 +50,7 @@ namespace RoadArchitect
             //Trees
             public List<TreeInstance> TreesCurrent;
             public List<TreeInstance> TreesOld;
-            public int TreesI;
+            public int treesCount;
             public int TreeSize;
 
             public Vector3 TerrainSize;
@@ -257,7 +257,7 @@ namespace RoadArchitect
                         TTD.DetailHasProcessed = new HashSet<int>();
                         TTD.MainDetailsX = new List<ushort>();
                         TTD.MainDetailsY = new List<ushort>();
-                        TTD.DetailsI = new int[TTD.DetailLayersCount];
+                        TTD.detailsCount = new int[TTD.DetailLayersCount];
                         TTD.DetailToHeightRatio = (float)((float)terrain.terrainData.detailResolution) / ((float)terrain.terrainData.heightmapResolution);
                         TTD.DetailMaxIndex = terrain.terrainData.detailResolution;
                         TTD.DetailLayersSkip = new HashSet<int>();
@@ -363,7 +363,7 @@ namespace RoadArchitect
                     {
                         TTD.TreesCurrent = new List<TreeInstance>(terrain.terrainData.treeInstances);
                         TTD.TreeSize = TTD.TreesCurrent.Count;
-                        TTD.TreesI = 0;
+                        TTD.treesCount = 0;
                         TTD.TreesOld = new List<TreeInstance>();
                     }
                     RootUtils.EndProfiling(_road);
@@ -504,7 +504,7 @@ namespace RoadArchitect
                                             tDetails[IntBufferX, IntBufferY] = 0;
                                         }
                                     }
-                                    TTD.DetailsI[index] = TTD.DetailsX[index].Count;
+                                    TTD.detailsCount[index] = TTD.DetailsX[index].Count;
 
                                     terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
                                     tDetails = null;
@@ -515,7 +515,7 @@ namespace RoadArchitect
                                 System.GC.Collect();
                             }
                             //Trees:
-                            if (_spline.road.isTreeModificationEnabled && TTD.TreesCurrent != null && TTD.TreesI > 0)
+                            if (_spline.road.isTreeModificationEnabled && TTD.TreesCurrent != null && TTD.treesCount > 0)
                             {
                                 terrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
                             }
@@ -533,12 +533,6 @@ namespace RoadArchitect
 
 
         public static void TerrainsReset(Road _road)
-        {
-            TerrainsResetDo(ref _road);
-        }
-
-
-        private static void TerrainsResetDo(ref Road _road)
         {
             if (_road.TerrainHistory == null)
             {
@@ -568,6 +562,12 @@ namespace RoadArchitect
                     continue;
                 }
 
+                if (TH.heightmapResolution != terrain.terrainData.heightmapResolution)
+                {
+                    TH.Nullify();
+                    continue;
+                }
+
                 //Heights:
                 if (TH.x1 != null)
                 {
@@ -580,7 +580,7 @@ namespace RoadArchitect
                     terrain.terrainData.SetHeights(0, 0, heights);
                 }
                 //Details:
-                if (TH.detailsI != null && TH.detailsX != null && TH.detailsY != null && TH.detailsOldValue != null)
+                if (TH.detailsCount != null && TH.detailsX != null && TH.detailsY != null && TH.detailsOldValue != null)
                 {
                     int RealLayerCount = terrain.terrainData.detailPrototypes.Length;
                     int StartIndex = 0;
@@ -599,13 +599,13 @@ namespace RoadArchitect
                         {
                             break;
                         }
-                        if (TH.detailsX == null || TH.detailsY == null || TH.detailsI == null || TH.detailsX.Length < 1)
+                        if (TH.detailsX.Length < 1)
                         {
                             continue;
                         }
 
                         tDetails = terrain.terrainData.GetDetailLayer(0, 0, terrain.terrainData.detailWidth, terrain.terrainData.detailHeight, index);
-                        ArrayCount = TH.detailsI[index];
+                        ArrayCount = TH.detailsCount[index];
                         if (ArrayCount == 0)
                         {
                             continue;
