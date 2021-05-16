@@ -7,7 +7,7 @@ using RoadArchitect;
 
 
 /// <summary> Provides the menu items inside the editor  </summary>
-public class RoadSystemEditorMenu : ScriptableObject
+public class RoadSystemEditorMenu
 {
     /// <summary> Creates the road system. </summary>
     [MenuItem("Window/Road Architect/Create road system")]
@@ -163,7 +163,7 @@ public class RoadSystemEditorMenu : ScriptableObject
     [MenuItem("Window/Road Architect/Testing/Get line count of RA")]
     public static void TestCodeCount()
     {
-        string mainDir = System.Environment.CurrentDirectory + "/" + RoadEditorUtility.GetBasePath();
+        string mainDir = System.IO.Path.Combine(System.Environment.CurrentDirectory, RoadEditorUtility.GetBasePath());
         string[] files = System.IO.Directory.GetFiles(mainDir, "*.cs", System.IO.SearchOption.AllDirectories);
         int lineCount = 0;
         foreach (string file in files)
