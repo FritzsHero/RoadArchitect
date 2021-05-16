@@ -1,14 +1,9 @@
 /*
 Based on ObjExporter.cs, this "wrapper" lets you export to .OBJ directly from the editor menu.
  
-This should be put in your "Editor"-folder. Use by selecting the objects you want to export, and select
-the appropriate menu item from "Custom->Export". Exported models are put in a folder called
-"ExportedObj" in the root of your Unity-project. Textures should also be copied and placed in the
-same folder.
-N.B. there may be a bug so if the custom option doesn't come up refer to this thread 
-http://answers.unity3d.com/questions/317951/how-to-use-editorobjexporter-obj-saving-script-fro.html 
-http://wiki.unity3d.com/index.php?title=ObjExporter
-http://wiki.unity3d.com/index.php/User:KeliHlodversson
+Use by selecting the objects you want to export, and select the appropriate menu item from "Custom->Export".
+Exported models are put in a folder called "ExportedObj" in the root of your project.
+Textures should also be copied and placed in the same folder.
 */
 
 #if UNITY_EDITOR
@@ -142,7 +137,7 @@ namespace RoadArchitect
 
         private static void MaterialsToFile(Dictionary<string, ObjMaterial> _materialList, string _folder, string _fileName)
         {
-            using (StreamWriter streamWriter = new StreamWriter(_folder + "/" + _fileName + ".mtl"))
+            using (StreamWriter streamWriter = new StreamWriter(Path.Combine(_folder, _fileName) + ".mtl"))
             {
                 foreach (KeyValuePair<string, ObjMaterial> kvp in _materialList)
                 {
@@ -159,8 +154,7 @@ namespace RoadArchitect
                     {
                         string destinationFile = kvp.Value.textureName;
 
-                        //FIXME: Should be Path.PathSeparator;
-                        int stripIndex = destinationFile.LastIndexOf('/');
+                        int stripIndex = destinationFile.LastIndexOf(Path.PathSeparator);
 
                         if (stripIndex >= 0)
                         {
@@ -170,7 +164,7 @@ namespace RoadArchitect
 
                         string relativeFile = destinationFile;
 
-                        destinationFile = _folder + "/" + destinationFile;
+                        destinationFile = Path.Combine(_folder, destinationFile);
 
                         //Debug.Log("Copying texture from " + kvp.Value.textureName + " to " + destinationFile);
 
@@ -198,7 +192,7 @@ namespace RoadArchitect
         {
             Dictionary<string, ObjMaterial> materialList = PrepareFileWrite();
 
-            using (StreamWriter streamWriter = new StreamWriter(_folder + "/" + _fileName + ".obj"))
+            using (StreamWriter streamWriter = new StreamWriter(Path.Combine(_folder, _fileName) + ".obj"))
             {
                 streamWriter.Write("mtllib ./" + _fileName + ".mtl\n");
 
@@ -213,7 +207,7 @@ namespace RoadArchitect
         {
             Dictionary<string, ObjMaterial> materialList = PrepareFileWrite();
 
-            using (StreamWriter streamWriter = new StreamWriter(_folder + "/" + _fileName + ".obj"))
+            using (StreamWriter streamWriter = new StreamWriter(Path.Combine(_folder, _fileName) + ".obj"))
             {
                 streamWriter.Write("mtllib ./" + _fileName + ".mtl\n");
 
@@ -329,7 +323,7 @@ namespace RoadArchitect
                 //string filename = EditorApplication.currentScene + "_" + exportedObjects;
                 string filename = sceneName + "_" + exportedObjects;
 
-                int stripIndex = filename.LastIndexOf('/');//FIXME: Should be Path.PathSeparator
+                int stripIndex = filename.LastIndexOf(Path.PathSeparator);
 
                 if (stripIndex >= 0)
                 {
