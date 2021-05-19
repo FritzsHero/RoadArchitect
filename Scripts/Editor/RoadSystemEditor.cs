@@ -21,6 +21,7 @@ namespace RoadArchitect
         //Editor only variables:
         private bool isUpdateGlobalMultithread = false;
         private bool isUpdateGlobalSaveMesh = false;
+        private bool isInitialized;
 
         //	//Editor only camera variables:
         //	private RoadIntersection[] tInters = null;
@@ -61,7 +62,12 @@ namespace RoadArchitect
             isUpdateGlobalMultithread = false;
             isUpdateGlobalSaveMesh = false;
             EditorStyles.label.wordWrap = true;
-            InitChecks();
+            
+            if(!isInitialized)
+            {
+                isInitialized = true;
+                InitChecks();
+            }
 
             //Add road button:
             RoadArchitect.EditorUtilities.DrawLine();
