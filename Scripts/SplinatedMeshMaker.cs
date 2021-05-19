@@ -3982,15 +3982,19 @@ namespace RoadArchitect.Splination
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string folderName = RoadEditorUtility.GetBasePath() + "/Mesh/Generated/Extrusions/";
+            string folderName = Path.Combine(RoadEditorUtility.GetBasePath(),  "Mesh");
+            folderName = Path.Combine(folderName, "Generated");
+            folderName = Path.Combine(folderName ,"Extrusions");
             string roadName = node.spline.road.transform.name;
-            string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
+            string fileName = sceneName + "-" + roadName + "-" + objectName;
+            string finalName = Path.Combine(folderName, fileName + ".asset");
             if (_isCollider)
             {
-                finalName = folderName + sceneName + "-" + roadName + "-" + objectName + "-collider.asset";
+                finalName = Path.Combine(folderName, fileName + "-collider.asset");
             }
 
-            string savingPath = Application.dataPath.Replace("/Assets", "/" + folderName);
+            string savingPath = Path.GetDirectoryName(Application.dataPath);
+            savingPath = Path.Combine(savingPath, folderName);
             if (!System.IO.Directory.Exists(savingPath))
             {
                 System.IO.Directory.CreateDirectory(savingPath);

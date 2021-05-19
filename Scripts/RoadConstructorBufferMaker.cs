@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 
@@ -2547,63 +2548,63 @@ namespace RoadArchitect
             }
 
 
-            string tSceneName;
-            tSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            string sceneName;
+            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            sceneName = sceneName.Replace("/", "");
+            sceneName = sceneName.Replace(".", "");
 
-            tSceneName = tSceneName.Replace("/", "");
-            tSceneName = tSceneName.Replace(".", "");
-            string tFolderName = "";
-
-            string basePath = RoadEditorUtility.GetBasePath();
+            string folderName = Path.Combine(RoadEditorUtility.GetBasePath(), "Mesh");
+            folderName = Path.Combine(folderName, "Generated");
 
             if (_saveType == SaveMeshTypeEnum.Road)
             {
-                tFolderName = basePath + "/Mesh/Generated/Roads/";
+                folderName = Path.Combine(folderName, "Roads");
             }
             else if (_saveType == SaveMeshTypeEnum.Shoulder)
             {
-                tFolderName = basePath + "/Mesh/Generated/Shoulders/";
+                folderName = Path.Combine(folderName, "Shoulders");
             }
             else if (_saveType == SaveMeshTypeEnum.Intersection)
             {
-                tFolderName = basePath + "/Mesh/Generated/Intersections/";
+                folderName = Path.Combine(folderName, "Intersections");
             }
             else if (_saveType == SaveMeshTypeEnum.Railing)
             {
-                tFolderName = basePath + "/Mesh/Generated/Railings/";
+                folderName = Path.Combine(folderName, "Railings");
             }
             else if (_saveType == SaveMeshTypeEnum.Center)
             {
-                tFolderName = basePath + "/Mesh/Generated/CenterDividers/";
+                folderName = Path.Combine(folderName, "CenterDividers");
             }
             else if (_saveType == SaveMeshTypeEnum.RoadCut)
             {
-                tFolderName = basePath + "/Mesh/Generated/Roads/Cuts/";
+                folderName = Path.Combine(Path.Combine(folderName, "Roads"), "Cuts");
             }
             else if (_saveType == SaveMeshTypeEnum.SCut)
             {
-                tFolderName = basePath + "/Mesh/Generated/Shoulders/Cuts/";
+                folderName = Path.Combine(Path.Combine(folderName, "Shoulders"), "Cuts");
             }
             else if (_saveType == SaveMeshTypeEnum.RoadConn)
             {
-                tFolderName = basePath + "/Mesh/Generated/RoadConn/";
+                folderName = Path.Combine(folderName, "RoadConn");
             }
 
-            string xPath = Application.dataPath.Replace("/Assets", "/" + tFolderName);
-            if (!System.IO.Directory.Exists(xPath))
+            string path = Path.GetDirectoryName(Application.dataPath);
+            path = Path.Combine(path, folderName);
+            if (!System.IO.Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(xPath);
+                System.IO.Directory.CreateDirectory(path);
             }
 
-            string tRoadName = _road.transform.name;
-            string FinalName = tFolderName + tSceneName + "-" + tRoadName + "-" + _name + ".asset";
+            string roadName = _road.transform.name;
+            string finalName = Path.Combine(folderName, sceneName + "-" + roadName + "-" + _name + ".asset");
             if (_saveType == SaveMeshTypeEnum.Intersection)
             {
-                FinalName = tFolderName + tSceneName + "-" + _name + ".asset";
+                finalName = Path.Combine(folderName, sceneName + "-" + _name + ".asset");
             }
 
             #if UNITY_EDITOR
-            UnityEditor.AssetDatabase.CreateAsset(_mesh, FinalName);
+            UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             #endif
         }
     }

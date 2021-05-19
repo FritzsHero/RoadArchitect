@@ -347,19 +347,23 @@ namespace RoadArchitect.EdgeObjects
 
             string sceneName;
             sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-
-
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string folderName = RoadEditorUtility.GetBasePath() + "/Mesh/Generated/CombinedEdgeObj/";
+
+            string folderName = Path.Combine(RoadEditorUtility.GetBasePath(), "Mesh");
+            folderName = Path.Combine(folderName, "Generated");
+            folderName = Path.Combine(folderName, "CombinedEdgeObj");
+
             string roadName = node.spline.road.transform.name;
-            string finalName = folderName + sceneName + "-" + roadName + "-" + objectName + ".asset";
+            string fileName = sceneName + "-" + roadName + "-" + objectName;
+            string finalName = Path.Combine(folderName, fileName + ".asset");
             if (_isCollider)
             {
-                finalName = folderName + sceneName + "-" + roadName + "-" + objectName + "-collider.asset";
+                finalName = Path.Combine(folderName, fileName + "-collider.asset");
             }
 
-            string path = Application.dataPath.Replace("/Assets", "/" + folderName);
+            string path = Path.GetDirectoryName(Application.dataPath);
+            path = Path.Combine(path, folderName);
             if (!System.IO.Directory.Exists(path))
             {
                 System.IO.Directory.CreateDirectory(path);
