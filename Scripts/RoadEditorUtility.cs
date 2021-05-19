@@ -15,9 +15,9 @@ namespace RoadArchitect
         private static readonly string[] validFolders =
         {
             "Assets/RoadArchitect",
-            "Assets/RoadArchitect-master",
-            "Assets/Resources/RoadArchitect",
-            "Assets/Resources/RoadArchitect-master"
+            "Assets/Tools/RoadArchitect",
+            "Assets/Plugins/RoadArchitect",
+            "Assets/Resources/RoadArchitect"
         };
 
 
@@ -27,12 +27,12 @@ namespace RoadArchitect
             #if UNITY_EDITOR
             foreach (string folder in validFolders)
             {
-                if (Directory.Exists(Environment.CurrentDirectory + "/" + folder))
+                if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, folder)))
                 {
                     return folder;
                 }
             }
-            throw new Exception("RoadArchitect must be placed in one of the valid folders, read the top of this script");
+            throw new Exception("RoadArchitect must be placed in one of the valid folders. You can change these suppoted folders by modifiying validFolders on top of this script");
             #else
             return "";
             #endif
