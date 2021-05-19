@@ -26,6 +26,7 @@ namespace RoadArchitect
         SerializedProperty roadSingleChoiceUID;
 
         //Editor only variables:
+        private bool isInitialized;
         private string[] roads = null;
         private string[] roadsString = null;
         private Texture refreshButtonText = null;
@@ -82,7 +83,11 @@ namespace RoadArchitect
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            InitNullChecks();
+            if(!isInitialized)
+            {
+                isInitialized = true;
+                InitNullChecks();
+            }
 
             RoadArchitect.EditorUtilities.DrawLine();
             EditorGUILayout.BeginHorizontal();
