@@ -1518,6 +1518,16 @@ namespace RoadArchitect
         {
             string basePath = RoadEditorUtility.GetBasePath();
 
+            // Reset materials
+            RoadMaterial1 = null;
+            RoadMaterial2 = null;
+            RoadMaterial3 = null;
+            RoadMaterial4 = null;
+            RoadMaterialMarker2 = null;
+            RoadMaterialMarker3 = null;
+            RoadMaterialMarker4 = null;
+
+
             if (roadMaterialDropdown == RoadMaterialDropdownEnum.Asphalt)
             {
                 RoadMaterial1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Road1.mat");
@@ -1553,36 +1563,18 @@ namespace RoadArchitect
             }
             else if (roadMaterialDropdown == RoadMaterialDropdownEnum.Dirt)
             {
-                RoadMaterial1 = null;
-                RoadMaterial2 = null;
-                RoadMaterial3 = null;
-                RoadMaterial4 = null;
                 RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/DirtRoad.mat");
-                RoadMaterialMarker2 = null;
-                RoadMaterialMarker3 = null;
-                RoadMaterialMarker4 = null;
+                RoadMaterial1 = RoadMaterialMarker1;
             }
             else if (roadMaterialDropdown == RoadMaterialDropdownEnum.Brick)
             {
-                RoadMaterial1 = null;
-                RoadMaterial2 = null;
-                RoadMaterial3 = null;
-                RoadMaterial4 = null;
                 RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/BrickRoad.mat");
-                RoadMaterialMarker2 = null;
-                RoadMaterialMarker3 = null;
-                RoadMaterialMarker4 = null;
+                RoadMaterial1 = RoadMaterialMarker1;
             }
             else if (roadMaterialDropdown == RoadMaterialDropdownEnum.Cobblestone)
             {
-                RoadMaterial1 = null;
-                RoadMaterial2 = null;
-                RoadMaterial3 = null;
-                RoadMaterial4 = null;
                 RoadMaterialMarker1 = RoadEditorUtility.LoadMaterial(basePath + "/Materials/CobblestoneRoad.mat");
-                RoadMaterialMarker2 = null;
-                RoadMaterialMarker3 = null;
-                RoadMaterialMarker4 = null;
+                RoadMaterial1 = RoadMaterialMarker1;
             }
 
 
