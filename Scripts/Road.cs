@@ -1593,7 +1593,7 @@ namespace RoadArchitect
                 if (laneAmount > 2)
                 {
                     RoadMaterialMarker1 = new Material(RoadMaterialMarker1);
-                    RoadMaterialMarker1.mainTextureScale *= new Vector2(laneAmount / 2, 1f);
+                    RoadMaterialMarker1.mainTextureScale = Vector2.Scale(RoadMaterialMarker1.mainTextureScale, new Vector2(laneAmount / 2, 1f));
                 }
             }
 
