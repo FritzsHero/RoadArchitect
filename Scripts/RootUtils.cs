@@ -316,11 +316,12 @@ namespace RoadArchitect
         /// <summary> Gives the RoadArchitect Library </summary>
         public static string GetDirLibraryBase()
         {
-            return RoadEditorUtility.GetBasePath() + "/Editor/Library/";
+            string libraryPath = Path.Combine(Path.Combine(RoadEditorUtility.GetBasePathForIO(), "Editor"), "Library");
+            return libraryPath;
         }
 
 
-        /// <summary> Returns the RoadArchitect/Editor/Library </summary>
+        /// <summary> Returns relative RoadArchitect/Editor/Library with OS compatible directory separator </summary>
         public static string GetDirLibrary()
         {
             string path = GetDirLibraryBase();
@@ -335,28 +336,24 @@ namespace RoadArchitect
         /// <summary> Checks for the existing Library folders or creates them if not present </summary>
         public static void CheckCreateSpecialLibraryDirs()
         {
-            string basePath = GetDirLibraryBase();
-            string directoryPath = basePath + "EdgeObjects/";
+            string libraryPath = GetDirLibraryBase();
+            string directoryPath = Path.Combine(libraryPath, "EdgeObjects");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            directoryPath = basePath + "ExtrudedObjects/";
+            directoryPath = Path.Combine(libraryPath, "ExtrudedObjects");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            directoryPath = basePath + "W/";
+            directoryPath = Path.Combine(libraryPath, "W");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
-            directoryPath = basePath + "Groups/";
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-            directoryPath = basePath + "Groups/Default/";
+            // Creates Groups folder and Default folder in it if they do not exist
+            directoryPath = Path.Combine(Path.Combine(libraryPath, "Groups"), "Default");
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);

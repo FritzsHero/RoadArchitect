@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Text.RegularExpressions;
+using System.IO;
 #endregion
 
 
@@ -76,15 +77,15 @@ namespace RoadArchitect
 
             if (windowType == WindowTypeEnum.Edge)
             {
-                EditorGUILayout.LabelField(path + "EOM" + fileName + ".rao", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(Path.Combine(path, "EOM" + fileName + ".rao"), EditorStyles.miniLabel);
             }
             else if (windowType == WindowTypeEnum.Extrusion)
             {
-                EditorGUILayout.LabelField(path + "ESO" + fileName + ".rao", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(Path.Combine(path, "ESO" + fileName + ".rao"), EditorStyles.miniLabel);
             }
             else
             {
-                EditorGUILayout.LabelField(path + "Groups/" + fileName + ".rao", EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(Path.Combine(Path.Combine(path + "Groups") + fileName + ".rao"), EditorStyles.miniLabel);
             }
 
             GUILayout.Space(4f);
@@ -175,7 +176,7 @@ namespace RoadArchitect
         {
             if (windowType == WindowTypeEnum.Edge)
             {
-                if (System.IO.File.Exists(path + "EOM" + fileName + ".rao"))
+                if (File.Exists(Path.Combine(path, "EOM" + fileName + ".rao")))
                 {
                     isFileExisting = true;
                 }
@@ -186,7 +187,7 @@ namespace RoadArchitect
             }
             else if (windowType == WindowTypeEnum.Extrusion)
             {
-                if (System.IO.File.Exists(path + "ESO" + fileName + ".rao"))
+                if (File.Exists(Path.Combine(path, "ESO" + fileName + ".rao")))
                 {
                     isFileExisting = true;
                 }
@@ -197,7 +198,7 @@ namespace RoadArchitect
             }
             else
             {
-                if (System.IO.File.Exists(path + "B/" + fileName + ".rao"))
+                if (File.Exists(Path.Combine(Path.Combine(path, "B"), fileName + ".rao")))
                 {
                     isFileExisting = true;
                 }

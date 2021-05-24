@@ -408,18 +408,18 @@ namespace RoadArchitect.Splination
             SplinatedMeshLibraryMaker SLM = new SplinatedMeshLibraryMaker();
             SLM.Setup(this);
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "ESO" + objectName + ".rao";
+            string libraryPath = RootUtils.GetDirLibrary();
+            string filePath = Path.Combine(libraryPath, "ESO" + objectName + ".rao");
             if (_name.Length > 0)
             {
                 if (_isDefault)
                 {
                     // Q Folder is now ExtrudedObjects
-                    filePath = basePath + "ExtrudedObjects/ESO" + _name + ".rao";
+                    filePath = Path.Combine(Path.Combine(libraryPath, "ExtrudedObjects"), "ESO" + _name + ".rao");
                 }
                 else
                 {
-                    filePath = basePath + "ESO" + _name + ".rao";
+                    filePath = Path.Combine(libraryPath, "ESO" + _name + ".rao");
                 }
             }
             RootUtils.CreateXML<SplinatedMeshLibraryMaker>(ref filePath, SLM);
@@ -430,12 +430,13 @@ namespace RoadArchitect.Splination
         public void LoadFromLibrary(string _name, bool _isQuickAdd = false)
         {
             // Q Folder is now ExtrudedObjects
-            string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "ESO" + _name + ".rao";
+            string fileName = "ESO" + _name + ".rao";
+            string libraryPath = RootUtils.GetDirLibrary();
+            string filePath = Path.Combine(libraryPath, fileName);
             if (_isQuickAdd)
             {
                 RootUtils.CheckCreateSpecialLibraryDirs();
-                filePath = basePath + "ExtrudedObjects/ESO" + _name + ".rao";
+                filePath = Path.Combine(Path.Combine(libraryPath, "ExtrudedObjects"), fileName);
             }
             SplinatedMeshLibraryMaker SLM = RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
@@ -447,8 +448,8 @@ namespace RoadArchitect.Splination
         public void LoadFromLibraryWizard(string _name)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "W/" + _name + ".rao";
+            string libraryPath = RootUtils.GetDirLibrary();
+            string filePath = Path.Combine(Path.Combine(libraryPath, "W"), _name + ".rao");
             SplinatedMeshLibraryMaker SLM = RootUtils.LoadXML<SplinatedMeshLibraryMaker>(ref filePath);
             SLM.LoadToSMM(this);
             isRequiringUpdate = true;
@@ -491,14 +492,14 @@ namespace RoadArchitect.Splination
             _names = null;
             _paths = null;
             DirectoryInfo info;
-            string basePath = RootUtils.GetDirLibrary();
+            string libraryPath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
-                info = new DirectoryInfo(basePath + "ExtrudedObjects/");
+                info = new DirectoryInfo(Path.Combine(libraryPath, "ExtrudedObjects"));
             }
             else
             {
-                info = new DirectoryInfo(basePath);
+                info = new DirectoryInfo(libraryPath);
             }
             FileInfo[] fileInfos = info.GetFiles();
             int esoCount = 0;
@@ -4002,6 +4003,10 @@ namespace RoadArchitect.Splination
 
 
             #if UNITY_EDITOR
+            // Unity works with forward slash so we convert
+            // If you want to implement your own Asset creation and saving you should just use finalName
+            finalName = finalName.Replace(Path.DirectorySeparatorChar, '/');
+            finalName = finalName.Replace(Path.AltDirectorySeparatorChar, '/');
             UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             UnityEditor.AssetDatabase.SaveAssets();
             #endif

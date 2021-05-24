@@ -21,21 +21,47 @@ namespace RoadArchitect
         };
 
 
-        /// <summary> Returns the base of the RoadArchitect folder </summary>
+        /// <summary> Returns the relative base of the RoadArchitect folder </summary>
         public static string GetBasePath()
         {
             #if UNITY_EDITOR
-            foreach (string folder in validFolders)
+            if ('/' != Path.DirectorySeparatorChar && '/' != Path.AltDirectorySeparatorChar)
             {
-                if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, folder)))
+                foreach (string folder in validFolders)
                 {
-                    return folder;
+                    if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, folder.Replace('/', Path.DirectorySeparatorChar))))
+                    {
+                        return folder;
+                    }
                 }
             }
+            else
+            {
+                foreach (string folder in validFolders)
+                {
+                    if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, folder)))
+                    {
+                        return folder;
+                    }
+                }
+            }
+
             throw new Exception("RoadArchitect must be placed in one of the valid folders. You can change these suppoted folders by modifiying validFolders on top of this script");
             #else
             return "";
             #endif
+        }
+
+
+        /// <summary> Returns the relative base of the RoadArchitect folder with OS compatible directory separator </summary>
+        public static string GetBasePathForIO()
+        {
+            string basePath = GetBasePath();
+            if('/' != Path.DirectorySeparatorChar && '/' != Path.AltDirectorySeparatorChar)
+            {
+                basePath.Replace('/', Path.DirectorySeparatorChar);
+            }
+            return basePath;
         }
 
 

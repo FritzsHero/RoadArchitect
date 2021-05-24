@@ -2604,6 +2604,10 @@ namespace RoadArchitect
             }
 
             #if UNITY_EDITOR
+            // Unity works with forward slash so we convert
+            // If you want to implement your own Asset creation and saving you should just use finalName
+            finalName = finalName.Replace(Path.DirectorySeparatorChar, '/');
+            finalName = finalName.Replace(Path.AltDirectorySeparatorChar, '/');
             UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             #endif
         }

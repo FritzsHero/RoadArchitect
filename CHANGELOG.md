@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Version: 2.0_FH] - 2019.xx.xx
+## [Version: 2.0.0] - 2021.xx.xx
 ### Improvements
 - Refactor of Editor code
 - Removed "Buffers" from Scripts
@@ -54,6 +54,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed unused variables
 - Added unit test 9
 - Refactored stop sign rigidbody creation
+- Refactored DrawGizmos of SplineN
+- Fixed terrain deformations when heightmapResolution was increased (Bug #21)
+- Fixed update error when heightmapResolution was decreased (Bug #21)
+- Simplified remove of old terrain histories
+- Updated HelpWindow
+- Updated supported folder locations
+- Fixed regression with versions prior to 2018.1
+- Improved cross platform compatibility
 
 
 ## [Version: 1.9_FH] - 2019.04.22

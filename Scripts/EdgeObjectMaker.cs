@@ -221,17 +221,17 @@ namespace RoadArchitect.EdgeObjects
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
             EOLM.Setup(this);
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "EOM" + objectName + ".rao";
+            string libraryPath = RootUtils.GetDirLibrary();
+            string filePath = Path.Combine(libraryPath, "EOM" + objectName + ".rao");
             if (_fileName.Length > 0)
             {
                 if (_isDefault)
                 {
-                    filePath = basePath + "EdgeObjects/EOM" + _fileName + ".rao";
+                    filePath = Path.Combine(Path.Combine(libraryPath, "EdgeObjects"), "EOM" + _fileName + ".rao");
                 }
                 else
                 {
-                    filePath = basePath + "EOM" + _fileName + ".rao";
+                    filePath = Path.Combine(libraryPath, "EOM" + _fileName + ".rao");
                 }
             }
             RootUtils.CreateXML<EdgeObjectLibraryMaker>(ref filePath, EOLM);
@@ -242,11 +242,11 @@ namespace RoadArchitect.EdgeObjects
         public void LoadFromLibrary(string _fileName, bool _isQuickAdd = false)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "EOM" + _fileName + ".rao";
+            string libraryPath = RootUtils.GetDirLibrary();
+            string filePath = Path.Combine(libraryPath, "EOM" + _fileName + ".rao");
             if (_isQuickAdd)
             {
-                filePath = basePath + "EdgeObjects/EOM" + _fileName + ".rao";
+                filePath = Path.Combine(Path.Combine(libraryPath, "EdgeObjects"), "EOM" + _fileName + ".rao");
             }
             EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
@@ -257,8 +257,8 @@ namespace RoadArchitect.EdgeObjects
         public void LoadFromLibraryWizard(string _fileName)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string basePath = RootUtils.GetDirLibrary();
-            string filePath = basePath + "W/" + _fileName + ".rao";
+            string libraryPath = RootUtils.GetDirLibrary();
+            string filePath = Path.Combine(Path.Combine(libraryPath, "W"), _fileName + ".rao");
             EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
             isRequiringUpdate = true;
@@ -300,14 +300,14 @@ namespace RoadArchitect.EdgeObjects
             _names = null;
             _paths = null;
             DirectoryInfo info;
-            string basePath = RootUtils.GetDirLibrary();
+            string libraryPath = RootUtils.GetDirLibrary();
             if (_isDefault)
             {
-                info = new DirectoryInfo(basePath + "EdgeObjects/");
+                info = new DirectoryInfo(Path.Combine(libraryPath, "EdgeObjects"));
             }
             else
             {
-                info = new DirectoryInfo(basePath);
+                info = new DirectoryInfo(libraryPath);
             }
 
             FileInfo[] fileInfos = info.GetFiles();
@@ -364,13 +364,17 @@ namespace RoadArchitect.EdgeObjects
 
             string path = Path.GetDirectoryName(Application.dataPath);
             path = Path.Combine(path, folderName);
-            if (!System.IO.Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
-                System.IO.Directory.CreateDirectory(path);
+                Directory.CreateDirectory(path);
             }
 
 
             #if UNITY_EDITOR
+            // Unity works with forward slash so we convert
+            // If you want to implement your own Asset creation and saving you should just use finalName
+            finalName = finalName.Replace(Path.DirectorySeparatorChar, '/');
+            finalName = finalName.Replace(Path.AltDirectorySeparatorChar, '/');
             UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
             UnityEditor.AssetDatabase.SaveAssets();
             #endif

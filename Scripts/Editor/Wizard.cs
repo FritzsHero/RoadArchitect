@@ -445,7 +445,6 @@ namespace RoadArchitect
 
         public static void GetGroupListing(out string[] _names, out string[] _paths, int _lanes, bool _isDefault = false)
         {
-
             path = RootUtils.GetDirLibrary();
             Debug.Log(path);
 
@@ -465,11 +464,11 @@ namespace RoadArchitect
             if (_isDefault)
             {
                 // W folder is now the Default folder
-                info = new DirectoryInfo(path + "Groups/Default/");
+                info = new DirectoryInfo(Path.Combine(Path.Combine(path, "Groups"), "Default"));
             }
             else
             {
-                info = new DirectoryInfo(path + "Groups/");
+                info = new DirectoryInfo(Path.Combine(path, "Groups"));
             }
 
             FileInfo[] fileInfo = info.GetFiles();
