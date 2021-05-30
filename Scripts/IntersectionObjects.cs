@@ -629,7 +629,7 @@ namespace RoadArchitect
             }
 
             BoxCollider BC = tObj.AddComponent<BoxCollider>();
-            float MaxHeight = MF.sharedMesh.vertices[447].z;
+            float MaxHeight = MF.sharedMesh.bounds.size.z;
             BC.size = new Vector3(0.35f, 0.35f, MaxHeight);
             BC.center = new Vector3(0f, 0f, (MaxHeight / 2f));
 
@@ -659,7 +659,7 @@ namespace RoadArchitect
                 kObj.transform.position += new Vector3(0f, 0f, MaxHeight - 7.6f);
                 kObj.transform.parent = tObj.transform;
                 kObj.transform.rotation = Quaternion.identity;
-                //kObj.name = "StreetLight";
+                kObj.name = "StreetLight";
             }
 
 
@@ -907,19 +907,23 @@ namespace RoadArchitect
 
             Vector3 tPos1 = default(Vector3);
             if (_corner == 0)
-            { //RR
+            {
+                //RR
                 tPos1 = intersection.cornerLR;
             }
             else if (_corner == 1)
-            { //RL
+            {
+                //RL
                 tPos1 = intersection.cornerRR;
             }
             else if (_corner == 2)
-            { //LL
+            {
+                //LL
                 tPos1 = intersection.cornerRL;
             }
             else if (_corner == 3)
-            { //LR
+            {
+                //LR
                 tPos1 = intersection.cornerLL;
             }
 

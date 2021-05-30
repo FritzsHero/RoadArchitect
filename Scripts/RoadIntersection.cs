@@ -1089,7 +1089,6 @@ namespace RoadArchitect
                                     fLights[j].color = streetLightColor;
                                 }
                             }
-                            fLights = null;
                             break;
                         }
                     }
