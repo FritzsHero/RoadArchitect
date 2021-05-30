@@ -375,10 +375,7 @@ namespace RoadArchitect
 
                     GUILayout.Space(4f);
                     EditorGUILayout.BeginHorizontal();
-                    if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                    {
-
-                    }
+                    GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
                     EditorGUILayout.LabelField(" = Resets settings to default.");
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.EndVertical();
@@ -395,23 +392,14 @@ namespace RoadArchitect
                 }
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(4f);
-                EditorGUILayout.BeginHorizontal();
                 isShowingTLSense = EditorGUILayout.Foldout(isShowingTLSense, status);
-                if (GUILayout.Button("Manually update intersection", EditorStyles.miniButton, GUILayout.Width(170f)))
-                {
-                    TriggerRoadUpdate(true);
-                }
-                EditorGUILayout.EndHorizontal();
                 if (isShowingTLSense)
                 {
                     EditorGUILayout.BeginVertical("box");
                     EditorGUILayout.LabelField("Increasing this value will increase the scaling sensitivity relative to the size of the intersection. Higher scaling value = bigger traffic lights at further distances. Default value is 170.");
                     GUILayout.Space(4f);
                     EditorGUILayout.BeginHorizontal();
-                    if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                    {
-
-                    }
+                    GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
                     EditorGUILayout.LabelField(" = Resets settings to default.");
                     EditorGUILayout.EndHorizontal();
                     EditorGUILayout.EndVertical();
@@ -431,13 +419,7 @@ namespace RoadArchitect
                 gradeMod.floatValue = 0.375f;
             }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.BeginHorizontal();
             isGradeCorrect = EditorGUILayout.Foldout(isGradeCorrect, status);
-            if (GUILayout.Button("Manually update intersection", EditorStyles.miniButton, GUILayout.Width(170f)))
-            {
-                intersection.UpdateRoads();
-            }
-            EditorGUILayout.EndHorizontal();
             if (isGradeCorrect)
             {
                 EditorGUILayout.BeginVertical("box");
@@ -448,10 +430,7 @@ namespace RoadArchitect
                 EditorGUILayout.LabelField("Recommended to keep grades and angles small leading up to intersections.");
                 GUILayout.Space(4f);
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                {
-
-                }
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
                 EditorGUILayout.LabelField(" = Resets settings to default.");
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
@@ -1272,10 +1251,7 @@ namespace RoadArchitect
         {
             GUILayout.Space(4f);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-            {
-
-            }
+            GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
             EditorGUILayout.LabelField(" = Resets material(s) to default materials.");
             EditorGUILayout.EndHorizontal();
         }
@@ -1285,10 +1261,7 @@ namespace RoadArchitect
         {
             GUILayout.Space(4f);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
-            {
-
-            }
+            GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f));
             EditorGUILayout.LabelField(" = Removes material(s) from intersection.");
             EditorGUILayout.EndHorizontal();
         }
