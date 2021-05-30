@@ -159,9 +159,9 @@ namespace RoadArchitect
         {
             string basePath = RoadEditorUtility.GetBasePath();
 
-            RoadArchitect.EditorUtilities.CheckLoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
-            RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
-            RoadArchitect.EditorUtilities.CheckLoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/otherbg2.png");
+            RoadArchitect.EditorUtilities.LoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
+            RoadArchitect.EditorUtilities.LoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
+            RoadArchitect.EditorUtilities.LoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/otherbg2.png");
 
             if (loadButton == null)
             {

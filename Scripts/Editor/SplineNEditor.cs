@@ -231,19 +231,19 @@ namespace RoadArchitect
             EditorStyles.miniLabel.wordWrap = true;
             string basePath = RoadEditorUtility.GetBasePath();
 
-            EditorUtilities.CheckLoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
-            EditorUtilities.CheckLoadTexture(ref copyButtonTexture, basePath + "/Editor/Icons/copy.png");
-            EditorUtilities.CheckLoadTexture(ref loadButtonTexture, basePath + "/Editor/Icons/load.png");
-            EditorUtilities.CheckLoadTexture(ref saveButtonTexture, basePath + "/Editor/Icons/save.png");
-            EditorUtilities.CheckLoadTexture(ref extrudeButtonTexture, basePath + "/Editor/Icons/extrude.png");
-            EditorUtilities.CheckLoadTexture(ref edgeButtonTexture, basePath + "/Editor/Icons/edge.png");
-            EditorUtilities.CheckLoadTexture(ref helpButtonTexture, basePath + "/Editor/Icons/help.png");
-            EditorUtilities.CheckLoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh.png");
-            EditorUtilities.CheckLoadTexture(ref defaultButtonTexture, basePath + "/Editor/Icons/refresh2.png");
-            EditorUtilities.CheckLoadTexture(ref textAreaBG, basePath + "/Editor/Icons/popupbg.png");
-            EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/loadbg.png");
-            EditorUtilities.CheckLoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/loadbgglow.png");
-            EditorUtilities.CheckLoadTexture(ref manualBG, basePath + "/Editor/Icons/manualbg.png");
+            EditorUtilities.LoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
+            EditorUtilities.LoadTexture(ref copyButtonTexture, basePath + "/Editor/Icons/copy.png");
+            EditorUtilities.LoadTexture(ref loadButtonTexture, basePath + "/Editor/Icons/load.png");
+            EditorUtilities.LoadTexture(ref saveButtonTexture, basePath + "/Editor/Icons/save.png");
+            EditorUtilities.LoadTexture(ref extrudeButtonTexture, basePath + "/Editor/Icons/extrude.png");
+            EditorUtilities.LoadTexture(ref edgeButtonTexture, basePath + "/Editor/Icons/edge.png");
+            EditorUtilities.LoadTexture(ref helpButtonTexture, basePath + "/Editor/Icons/help.png");
+            EditorUtilities.LoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh.png");
+            EditorUtilities.LoadTexture(ref defaultButtonTexture, basePath + "/Editor/Icons/refresh2.png");
+            EditorUtilities.LoadTexture(ref textAreaBG, basePath + "/Editor/Icons/popupbg.png");
+            EditorUtilities.LoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/loadbg.png");
+            EditorUtilities.LoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/loadbgglow.png");
+            EditorUtilities.LoadTexture(ref manualBG, basePath + "/Editor/Icons/manualbg.png");
 
             if (imageButton == null)
             {

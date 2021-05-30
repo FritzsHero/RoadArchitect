@@ -1239,10 +1239,10 @@ namespace RoadArchitect
             isInitialized = true;
             string basePath = RoadEditorUtility.GetBasePath();
 
-            EditorUtilities.CheckLoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
-            EditorUtilities.CheckLoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
-            EditorUtilities.CheckLoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
-            EditorUtilities.CheckLoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/otherbg2.png");
+            EditorUtilities.LoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
+            EditorUtilities.LoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
+            EditorUtilities.LoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/otherbg.png");
+            EditorUtilities.LoadTexture(ref loadButtonBGGlow, basePath + "/Editor/Icons/otherbg2.png");
 
             if (imageButton == null)
             {

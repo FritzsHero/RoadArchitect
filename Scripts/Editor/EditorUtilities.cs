@@ -14,12 +14,9 @@ namespace RoadArchitect
 
 
         /// <summary> Loads the _texture from _path if necessary </summary>
-        public static void CheckLoadTexture<T>(ref T _texture, string _path) where T : Texture
+        public static void LoadTexture<T>(ref T _texture, string _path) where T : Texture
         {
-            if (_texture == null)
-            {
-                _texture = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(_path);
-            }
+            _texture = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(_path);
         }
 
 

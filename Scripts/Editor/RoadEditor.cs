@@ -178,12 +178,12 @@ namespace RoadArchitect
             EditorStyles.label.wordWrap = true;
             string basePath = RoadEditorUtility.GetBasePath();
 
-            EditorUtilities.CheckLoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
-            EditorUtilities.CheckLoadTexture(ref refreshButtonTextureReal, basePath + "/Editor/Icons/refresh.png");
-            EditorUtilities.CheckLoadTexture(ref deleteButtonText, basePath + "/Editor/Icons/delete.png");
-            EditorUtilities.CheckLoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
-            EditorUtilities.CheckLoadTexture(ref loadBtnBG, basePath + "/Editor/Icons/otherbg.png");
-            EditorUtilities.CheckLoadTexture(ref loadBtnBGGlow, basePath + "/Editor/Icons/otherbg2.png");
+            EditorUtilities.LoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
+            EditorUtilities.LoadTexture(ref refreshButtonTextureReal, basePath + "/Editor/Icons/refresh.png");
+            EditorUtilities.LoadTexture(ref deleteButtonText, basePath + "/Editor/Icons/delete.png");
+            EditorUtilities.LoadTexture(ref warningLabelBG, basePath + "/Editor/Icons/WarningLabelBG.png");
+            EditorUtilities.LoadTexture(ref loadBtnBG, basePath + "/Editor/Icons/otherbg.png");
+            EditorUtilities.LoadTexture(ref loadBtnBGGlow, basePath + "/Editor/Icons/otherbg2.png");
 
             if (warningLabelStyle == null)
             {
