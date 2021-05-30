@@ -85,7 +85,7 @@ namespace RoadArchitect
             }
             else
             {
-                EditorGUILayout.LabelField(Path.Combine(Path.Combine(path + "Groups") + fileName + ".rao"), EditorStyles.miniLabel);
+                EditorGUILayout.LabelField(Path.Combine(Path.Combine(path, "Groups"), fileName + ".rao"), EditorStyles.miniLabel);
             }
 
             GUILayout.Space(4f);
