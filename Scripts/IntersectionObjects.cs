@@ -555,16 +555,8 @@ namespace RoadArchitect
             #endif
 
             tObj = new GameObject("TempTrafficLight");
-            MeshFilter MF = tObj.GetComponent<MeshFilter>();
-            if (MF == null)
-            {
-                MF = tObj.AddComponent<MeshFilter>();
-            }
-            MeshRenderer MR = tObj.GetComponent<MeshRenderer>();
-            if (MR == null)
-            {
-                MR = tObj.AddComponent<MeshRenderer>();
-            }
+            MeshFilter MF = tObj.AddComponent<MeshFilter>();
+            MeshRenderer MR = tObj.AddComponent<MeshRenderer>();
             RoadEditorUtility.SetRoadMaterial(basePath + "/Materials/Signs/InterTLB" + tTrafficLightNumber + ".mat", MR);
 
             if (!bDoCustom)
@@ -1034,6 +1026,7 @@ namespace RoadArchitect
                     }
                 }
             }
+
             if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
                 #if UNITY_EDITOR
@@ -1060,13 +1053,13 @@ namespace RoadArchitect
                     }
                 }
             }
+
             GameObject[] tLanes = new GameObject[LanesHalf];
+            #if UNITY_EDITOR
+            prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(basePath + "/Prefabs/Signs/TrafficLightMain.prefab");
+            #endif
             for (int index = 0; index < LanesHalf; index++)
             {
-                #if UNITY_EDITOR
-                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(basePath + "/Prefabs/Signs/TrafficLightMain.prefab");
-                #endif
-
                 tLanes[index] = (GameObject)GameObject.Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 AdjustLightPrefab(tLanes[index]);
                 tLanes[index].transform.position = _obj.transform.TransformPoint(tLanePos[index]);
