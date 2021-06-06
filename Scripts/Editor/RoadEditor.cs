@@ -341,9 +341,6 @@ namespace RoadArchitect
             }
             EditorGUILayout.EndHorizontal();
 
-            //Option: Use default materials:
-            isUsingDefaultMaterials.boolValue = EditorGUILayout.Toggle("Use default materials:", road.isUsingDefaultMaterials);
-
             //Dropdown:
             if (road.isUsingDefaultMaterials)
             {
@@ -852,6 +849,9 @@ namespace RoadArchitect
             }
             EditorGUILayout.EndHorizontal();
 
+
+            //Option: Use default materials:
+            isUsingDefaultMaterials.boolValue = EditorGUILayout.Toggle("Use default materials:", road.isUsingDefaultMaterials);
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(roadMaterial1, new GUIContent("  Mat #1: "));
