@@ -58,16 +58,13 @@ namespace RoadArchitect
         /// <summary> Check for unique id and assign terrain </summary>
         public void CheckID()
         {
-            if (Application.isEditor)
+            if (uID < 0)
             {
-                if (uID < 0)
-                {
-                    uID = GetNewID();
-                }
-                if (!terrain)
-                {
-                    terrain = transform.gameObject.GetComponent<Terrain>();
-                }
+                uID = GetNewID();
+            }
+            if (!terrain)
+            {
+                terrain = transform.gameObject.GetComponent<Terrain>();
             }
         }
 
@@ -76,7 +73,7 @@ namespace RoadArchitect
         private int GetNewID()
         {
             Object[] allTerrainObjs = GameObject.FindObjectsOfType<RoadTerrain>();
-            List<int> allIDS = new List<int>();
+            List<int> allIDS = new List<int>(allTerrainObjs.Length);
             foreach (RoadTerrain Terrain in allTerrainObjs)
             {
                 if (Terrain.UID > 0)
