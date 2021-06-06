@@ -633,15 +633,19 @@ namespace RoadArchitect
             BC.size = new Vector3(0.35f, 0.35f, MaxHeight);
             BC.center = new Vector3(0f, 0f, (MaxHeight / 2f));
 
+            // Todo: Should be moved where tMesh is getting scaled with lanes
+            /*
             if (_isOptionalCollider)
             {
-                float MaxWidth = MF.sharedMesh.vertices[497].y;
+                float MaxWidth = MF.sharedMesh.bounds.size.y;
                 GameObject tObjCollider = new GameObject("col2");
                 BC = tObjCollider.AddComponent<BoxCollider>();
                 BC.size = new Vector3(0.175f, MaxWidth, 0.175f);
+                // Needs adjustment depending on lanes and turn lanes
                 BC.center = new Vector3(0f, MaxWidth / 2f, 5.808f);
                 tObjCollider.transform.parent = tObj.transform;
             }
+            */
 
             if (_isLight)
             {
