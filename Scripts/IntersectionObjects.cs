@@ -257,7 +257,7 @@ namespace RoadArchitect
             }
             else
             {
-                LanesForInter = LanesHalf - 1 + 1f;
+                LanesForInter = LanesHalf;
             }
             float DistFromCorner = (ShoulderWidth * 0.45f);
             float TLDistance = (LanesForInter * LaneWidth) + DistFromCorner;
@@ -591,6 +591,7 @@ namespace RoadArchitect
                 for (int index = 0; index < mCount; index++)
                 {
                     bIgnoreMe = false;
+                    // Scale width of traffic light
                     if (RootUtils.IsApproximately(tVerts[index].y, 5f, 0.01f))
                     {
                         tVerts[index].y = _distance;
@@ -600,6 +601,7 @@ namespace RoadArchitect
                         }
                         bIgnoreMe = true;
                     }
+                    // Scale height of traffic light
                     if (!bIgnoreMe && tVerts[index].z > 7.5f)
                     {
                         tVerts[index].z *= hMod;
@@ -609,9 +611,10 @@ namespace RoadArchitect
                         }
                     }
 
+                    // Increase overall height of mesh
                     if (bXMod && tVerts[index].z > 4.8f && tVerts[index].z < 6.2f)
                     {
-                        tVerts[index].z += xValue;
+                        //tVerts[index].z += xValue;
                     }
                 }
                 tMesh.vertices = tVerts;
@@ -846,11 +849,11 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Creates traffic lights </summary>
         private static void ProcessPole(GameObject _masterGameObj, GameObject _obj, Vector3 _tan, int _corner, float _interDist)
         {
             RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = intersection.node1.spline;
-            //bool bIsRB = true;
 
             //float RoadWidth = tSpline.road.RoadWidth();
             float LaneWidth = spline.road.laneWidth;
@@ -877,13 +880,12 @@ namespace RoadArchitect
             MeshFilter MF = _obj.GetComponent<MeshFilter>();
             Mesh tMesh = MF.sharedMesh;
             Vector3[] tVerts = tMesh.vertices;
-            Vector3 StartVec = tVerts[520];
-            Vector3 EndVec = tVerts[521];
+            Vector3 StartVec = new Vector3(0f, 0.5f, 5.8f);
+            Vector3 EndVec = new Vector3(0f, tMesh.bounds.extents.y * 2, 5.8f);
+
+
             StartVec = (((EndVec - StartVec) * (DistFromCorner / TLDistance)) + StartVec);
-            Vector3 tempR_Start = tVerts[399];
-            Vector3 tempR_End = tVerts[396];
-            Vector3 tLanePosR = ((tempR_End - tempR_Start) * 0.95f) + tempR_Start;
-            tLanePosR.z -= 1f;
+            Vector3 tLanePosR = StartVec - new Vector3(0f, 1.6f, 0.5f);
 
             float SmallerDist = Vector3.Distance(StartVec, EndVec);
 
@@ -1472,7 +1474,7 @@ namespace RoadArchitect
             tSpline = tNode.spline;
             float tOffset = tSpline.road.opt_RoadWidth * 0.5f;
             float tPos1 = tNode.tTime - (tOffset/tSpline.distance);
-        	float tPos2 = tNode.tTime + (tOffset/tSpline.distance);
+            float tPos2 = tNode.tTime + (tOffset/tSpline.distance);
             Vector3 tVect1 = tSpline.GetSplineValue(tPos1);	
             Vector3 POS1 = tSpline.GetSplineValue(tPos1,true);
             Vector3 tVect2 = tSpline.GetSplineValue(tPos2);	
