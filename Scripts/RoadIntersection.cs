@@ -920,7 +920,11 @@ namespace RoadArchitect
             string transformName = "";
             for (int i = 0; i < childCount; i++)
             {
-                childMesh = transform.GetChild(i).GetComponent<MeshRenderer>();
+                if(!transform.GetChild(i).TryGetComponent<MeshRenderer>(out childMesh))
+                {
+                    continue;
+                }
+                
                 transformName = childMesh.transform.name.ToLower();
                 if (transformName.Contains("-stretchext"))
                 {
