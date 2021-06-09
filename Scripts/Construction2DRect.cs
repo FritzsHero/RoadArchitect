@@ -6,14 +6,20 @@ namespace RoadArchitect
     public class Construction2DRect
     {
         public Vector2 P1, P2, P3, P4;
-        private const float NearDist = 0.15f;
-        private const float NearDistSQ = 0.0225f;
-        private Vector2[] poly;
         public float MaxDistance = 200f;
         public float MaxDistanceSQ = 200f;
         public float Height = 0f;
         public float MinI = 0f;
         public float MaxI = 0f;
+
+        private const float NearDist = 0.15f;
+        private const float NearDistSQ = 0.0225f;
+        private Vector2[] poly;
+        private Vector2 x1 = default(Vector2);
+        private Vector2 x2 = default(Vector2);
+        private Vector2 oldPoint = default(Vector2);
+        private Vector2 newPoint = default(Vector2);
+        private bool inside = false;
 
 
         public Construction2DRect(Vector2 _P1, Vector2 _P2, Vector2 _P3, Vector2 _P4, float tHeight = 0f)
@@ -270,24 +276,21 @@ namespace RoadArchitect
         }
 
 
-
-        private Vector2 x1 = default(Vector2);
-        private Vector2 x2 = default(Vector2);
-        private Vector2 oldPoint = default(Vector2);
-        private Vector2 newPoint = default(Vector2);
-        private bool inside = false;
-
-        //				public bool Contains(ref Vector2 p){
-        //					return Contains_Do(ref p);
-        //				}
-        public bool Contains(ref Vector2 p)
+        /// <summary> Returns true if _p is inside the rect </summary>
+        public bool Contains(ref Vector2 _p)
         {
-            //					if(Vector2.Distance(p,P1) > MaxDistance){ return false; }
-            if (Vector2.SqrMagnitude(p - P1) > MaxDistanceSQ)
+            //if(Vector2.Distance(_p,P1) > MaxDistance)
+            //{
+            //  return false;
+            //}
+            if (Vector2.SqrMagnitude(_p - P1) > MaxDistanceSQ)
             {
                 return false;
             }
-            //					if(poly.Length != 4){ return false; }
+            //if(poly.Length != 4)
+            //{
+            //  return false;
+            //}
 
             inside = false;
             oldPoint = new Vector2(poly[4 - 1].x, poly[4 - 1].y);
@@ -304,7 +307,7 @@ namespace RoadArchitect
                     x1 = newPoint;
                     x2 = oldPoint;
                 }
-                if ((newPoint.x < p.x) == (p.x <= oldPoint.x) && (p.y - x1.y) * (x2.x - x1.x) < (x2.y - x1.y) * (p.x - x1.x))
+                if ((newPoint.x < _p.x) == (_p.x <= oldPoint.x) && (_p.y - x1.y) * (x2.x - x1.x) < (x2.y - x1.y) * (_p.x - x1.x))
                 {
                     inside = !inside;
                 }
@@ -314,6 +317,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns true if _vect is near the P1-P4 values </summary>
         public bool Near(ref Vector2 _vect, out Vector2 _nearVect)
         {
             if (Vector2.SqrMagnitude(_vect - P1) > MaxDistanceSQ)
@@ -357,5 +361,4 @@ namespace RoadArchitect
             return ("P1:" + P1.ToString() + " P2:" + P2.ToString() + " P3:" + P3.ToString() + " P4:" + P4.ToString());
         }
     }
-
 }

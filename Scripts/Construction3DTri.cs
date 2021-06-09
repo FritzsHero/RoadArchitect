@@ -53,15 +53,15 @@ namespace RoadArchitect
 
             normal = Vector3.Cross((P3 - P1), (P2 - P1));
 
-            ////				//This creates middle point:
-            //				Vector3 tMiddle1 = ((P3-P1)*0.5f)+P1;
-            //				Vector3 tMiddle2 = ((P2-P1)*0.5f)+P1;
-            //				pMiddle = ((tMiddle2-tMiddle1)*0.5f)+tMiddle1;
+            //////This creates middle point:
+            //Vector3 tMiddle1 = ((P3 - P1) * 0.5f) + P1;
+            //Vector3 tMiddle2 = ((P2 - P1) * 0.5f) + P1;
+            //pMiddle = ((tMiddle2 - tMiddle1) * 0.5f) + tMiddle1;
         }
 
 
-        //Get the intersection between a line and a plane. 
-        //If the line and plane are not parallel, the function outputs true, otherwise false.
+        /// <summary> Get the intersection between a line and a plane. 
+        /// If the line and plane are not parallel, the function outputs true, otherwise false. </summary>
         public Vector3 LinePlaneIntersection(ref Vector3 _F1)
         {
             _F1.y = 0f;
@@ -84,8 +84,8 @@ namespace RoadArchitect
         }
 
 
-        //Convert a plane defined by 3 points to a plane defined by a vector and a point. 
-        //The plane point is the middle of the triangle defined by the 3 points.
+        /// <summary> Convert a plane defined by 3 points to a plane defined by a vector and a point. 
+        /// The plane point is the middle of the triangle defined by the 3 points. </summary>
         public static void PlaneFrom3Points(out Vector3 _planeNormal, out Vector3 _planePoint, Vector3 _pointA, Vector3 _pointB, Vector3 _pointC)
         {
             _planeNormal = Vector3.zero;
@@ -115,12 +115,11 @@ namespace RoadArchitect
         }
 
 
-        //Two non-parallel lines which may or may not touch each other have a point on each line which are closest
-        //to each other. This function finds those two points. If the lines are not parallel, the function 
-        //outputs true, otherwise false.
+        /// <summary> Two non-parallel lines which may or may not touch each other have a point on each line which are closest
+        /// to each other. This function finds those two points. If the lines are not parallel, the function 
+        /// outputs true, otherwise false. </summary>
         public static bool ClosestPointsOnTwoLines(out Vector3 _closestPointLine1, out Vector3 _closestPointLine2, Vector3 _linePoint1, Vector3 _lineVec1, Vector3 _linePoint2, Vector3 _lineVec2)
         {
-
             _closestPointLine1 = Vector3.zero;
             _closestPointLine2 = Vector3.zero;
 
@@ -146,7 +145,6 @@ namespace RoadArchitect
 
                 return true;
             }
-
             else
             {
                 return false;
@@ -154,10 +152,9 @@ namespace RoadArchitect
         }
 
 
-        //create a vector of direction "_vector" with length "_size"
+        /// <summary> Creates a vector of direction _vector with length _size </summary>
         public static Vector3 SetVectorLength(Vector3 _vector, float _size)
         {
-
             //normalize the vector
             Vector3 vectorNormalized = Vector3.Normalize(_vector);
 
@@ -166,28 +163,28 @@ namespace RoadArchitect
         }
 
 
-        //public bool Contains2D(ref Vector2 p)
-        //{
-        //	return Contains2D_Do(ref p);
-        //}
-
-
+        /// <summary> Returns true if _p is contained in this </summary>
         public bool Contains2D(ref Vector2 _p)
         {
             if (Vector2.SqrMagnitude(_p - poly2D[0]) > MaxDistanceSq)
             {
                 return false;
             }
-            //				if(Vector2.Distance(p,P1) > MaxDistance){ return false; }
-            //				if(poly2D.Length != 3){ return false; }
+            //if(Vector2.Distance(p,P1) > MaxDistance)
+            //{
+            //  return false;
+            //}
+            //if(poly2D.Length != 3)
+            //{
+            //  return false;
+            //}
 
-            Vector2 x1 = default(Vector2);
-            Vector2 x2 = default(Vector2);
-            Vector2 oldPoint = default(Vector2);
-            Vector2 newPoint = default(Vector2);
+            Vector2 x1;
+            Vector2 x2;
+            Vector2 oldPoint;
+            Vector2 newPoint;
             bool inside = false;
 
-            inside = false;
             oldPoint = new Vector2(poly2D[3 - 1].x, poly2D[3 - 1].y);
             for (int index = 0; index < 3; index++)
             {
@@ -212,6 +209,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns true if Vector2(_p.x, _p.z) is contained in this </summary>
         public bool Contains2D(ref Vector3 _p)
         {
             Vector2 tVect = new Vector2(_p.x, _p.z);
@@ -219,6 +217,7 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns true if _vect is near the P1-P3 values </summary>
         public bool Near(ref Vector3 _vect, out Vector3 _nearVect)
         {
             if (Vector3.SqrMagnitude(_vect - P1) > MaxDistanceSq)
