@@ -628,7 +628,6 @@ Road Architect's primary game objects:
 		<div><span class="b">Shoulders enabled:</span> Enables or disables shoulders.</div>
 		<div><span class="b">Shoulders width:</span> Modify the width of shoulders, in meters.</div>
 		<div><span class="b">Road definition:</span> The meter spacing between mesh triangles on the road and shoulder.</div>
-		<div><span class="b">Use default materials:</span> When enabled will use default materials for the road system, allowing certain aspects of generation to automatically determine the correct materials to utilize.</div>
 		<div><span class="b">Max grade enforced:</span> When enabled enforces a maximum grade on a per node basis.</div>
 		<div><span class="b">Max road grade:</span> The maximum road grade allowed on a per node basis.</div>
 		<div><span class="b">Multithreading:</span> When enabled allows for multi-threaded road generation.</div>
@@ -714,7 +713,8 @@ Road Architect's primary game objects:
         <div><img class="w" src="ManualImages/RoadObject5.png" alt="RoadObject5 UI image" /></div>
     </td><td class="tocTCc">
     		<div>These default materials will be applied by default to their respective generated meshes. If using split roads and or shoulders, you can specific specific materials to use on them (on the mesh renderers of the cuts) and they will be used instead of the default materials listed above.</div>
-			<div><span class="b">Road base material</span> is UV mapped on a world vector basis for seamless tiles.</div>
+            <div><span class="b">Use default materials:</span> When enabled will use default materials for the road system, allowing certain aspects of generation to automatically determine the correct materials to utilize.</div>
+            <div><span class="b">Road base material</span> is UV mapped on a world vector basis for seamless tiles.</div>
 			<div><span class="b">Road marker material</span> is UV mapped to fit roads. Use these materials to place road lines and other road texture details. Note: if using road cuts, these are the materials which will be placed by default at the initial generation.</div>
 			<div><span class="b">Shoulder base material</span> is UV mapped on a world vector basis for seamless tiles.</div>
 			<div><span class="b">Shoulder marker material</span> is UV mapped on a world vector basis for seamless tiles. For intended use with transparent shadow receiving shaders. Marker materials are applied, optionally, on shoulder cuts.</div>

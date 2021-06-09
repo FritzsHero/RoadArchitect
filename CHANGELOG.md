@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Version: 2.0.0] - 2021.xx.xx
+## [Version: x.x.x] - xxxx.xx.xx
+### Improvements
+
+
+## [Version: 2.0.0] - 2021.06.09
 ### Improvements
 - Refactor of Editor code
 - Removed "Buffers" from Scripts
@@ -62,6 +66,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated supported folder locations
 - Fixed regression with versions prior to 2018.1
 - Improved cross platform compatibility
+- Fixed StreetLight positions and updates
+- Disabled horizontal collider on traffic lights
+- Fixed traffic light positioning (Bug #14)
+- Fixed update of intersection street light values
 
 
 ## [Version: 1.9_FH] - 2019.04.22

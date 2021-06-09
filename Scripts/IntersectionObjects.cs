@@ -487,6 +487,8 @@ namespace RoadArchitect
 
             //Create the actual lights:
             CreateTrafficLightMains(_masterGameObj, tObjRR, tObjRL, tObjLL, tObjLR);
+
+            intersection.TogglePointLights(intersection.isLightsEnabled);
         }
 
 

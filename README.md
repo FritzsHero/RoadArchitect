@@ -1,19 +1,18 @@
 # RoadArchitect
-[![GitHub release](https://img.shields.io/github/release/FritzsHero/RoadArchitect.svg)](https://github.com/FritzsHero/RoadArchitect/releases/tag/v1.9_FH)
+[![GitHub release](https://img.shields.io/github/release/FritzsHero/RoadArchitect.svg)](https://github.com/FritzsHero/RoadArchitect/releases/tag/2.0.0)
 [![Github All Releases](https://img.shields.io/github/downloads/FritzsHero/RoadArchitect/total.svg)](https://github.com/FritzsHero/RoadArchitect/releases)
 [![GitHub contributors](https://img.shields.io/github/contributors/FritzsHero/RoadArchitect.svg)](https://github.com/FritzsHero/RoadArchitect/graphs/contributors)
 [![Chat](https://img.shields.io/badge/chat-on%20discord-lightgrey.svg)](https://discord.gg/cevveEr)
 
 
-Road Architect for Unity. Road architect is a professional quality road system creator featuring dynamic intersections, bridges and many other road objects.
+Road Architect for Unity. Road Architect is a professional quality road system creator featuring dynamic intersections, bridges and many other road objects.
 
-Road Architect is currently being developed with Unity 2019.2.0b9 and is working with most of the previous versions. If interested in contributing please open an issue or pull request.
+Road Architect is currently being developed with the latest Unity LTS release 2020.3 and is working with most of the previous versions. If interested in contributing please open an issue or pull request.
 
-- Currently, I recommend downloading the main git repository by either using `git clone https://github.com/FritzsHero/RoadArchitect.git` or using the Releases downloading a ZIP from GitHub.
-- The resulting folder should be copied to the root of your Assets directory and may need to be renamed to RoadArchitect (instead of RoadArchitect-master).
-- A preview for upcoming versions should be availible under downloads
+- It is recommend to download a release from the Releases tab
+- The resulting folder should be copied to the root of your Assets directory and named RoadArchitect
 - https://github.com/FritzsHero/RoadArchitect/releases
-- Documentation https://github.com/embeddedt/RoadArchitect/wiki/Documentation
+- Documentation: https://github.com/FritzsHero/RoadArchitect/wiki
    - Note: The Road Architect menu is located under the "Window" menu.
 
 ## Videos
@@ -59,5 +58,5 @@ NOTE: This screenshot has no other assets besides RoadArchitect.
 
 ## Quality
 ![Quality](ManualImages/Extra/quality_road.PNG)
-- **Speed** - All mesh extrusion, bridge extrusion and road asset placement actions are instantaneous. Optimized road generation results in an average 100ms per (2km road + 1 intersection). Multithreaded support.
-- **Quality** - Most road textures at least 1024x1024 resolution. Most materials include normal and specular maps. Most assets created to federal or state specification.
+- **Speed** - All mesh extrusion, bridge extrusion and road asset placement actions are instantaneous. Multithreaded support.
+- **Quality** - Most road textures at least 1024x1024 resolution. Materials include normal and specular maps. Most assets created to federal or state specification.
