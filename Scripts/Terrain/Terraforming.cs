@@ -465,67 +465,71 @@ namespace RoadArchitect
             {
                 foreach (RoadTerrain TID in TIDs)
                 {
-                    if (TID.UID == TTD.uID)
+                    if (TID.UID != TTD.uID)
                     {
-                        terrain = TID.transform.gameObject.GetComponent<Terrain>();
-                        if (terrain != null)
+                        continue;
+                    }
+
+                    terrain = TID.transform.gameObject.GetComponent<Terrain>();
+                    if (terrain == null)
+                    {
+                        continue;
+                    }
+
+                    //Details:
+                    if (_spline.road.isDetailModificationEnabled)
+                    {
+                        for (int index = 0; index < TTD.DetailLayersCount; index++)
                         {
-                            //Details:
-                            if (_spline.road.isDetailModificationEnabled)
+                            //if(TTD.DetailLayersSkip.Contains(i) || TTD.DetailValues[i] == null)
+                            //{
+                            //  continue;
+                            //}
+                            //if(TTD.DetailsI[i] > 0)
+                            //{
+                            //	tTerrain.terrainData.SetDetailLayer(0, 0, i, TTD.DetailValues[i]);	
+                            //}
+
+                            if (TTD.DetailLayersSkip.Contains(index) || TTD.MainDetailsX == null || TTD.MainDetailsX.Count < 1)
                             {
-                                for (int index = 0; index < TTD.DetailLayersCount; index++)
+                                continue;
+                            }
+                            tDetails = terrain.terrainData.GetDetailLayer(0, 0, TTD.DetailMaxIndex, TTD.DetailMaxIndex, index);
+
+                            int MaxCount = TTD.MainDetailsX.Count;
+                            for (int j = 0; j < MaxCount; j++)
+                            {
+                                IntBufferX = TTD.MainDetailsX[j];
+                                IntBufferY = TTD.MainDetailsY[j];
+                                tVal = tDetails[IntBufferX, IntBufferY];
+                                if (tVal > 0)
                                 {
-                                    //if(TTD.DetailLayersSkip.Contains(i) || TTD.DetailValues[i] == null)
-                                    //{
-                                    //  continue;
-                                    //}
-                                    //if(TTD.DetailsI[i] > 0)
-                                    //{
-                                    //	tTerrain.terrainData.SetDetailLayer(0, 0, i, TTD.DetailValues[i]);	
-                                    //}
-
-                                    if (TTD.DetailLayersSkip.Contains(index) || TTD.MainDetailsX == null || TTD.MainDetailsX.Count < 1)
-                                    {
-                                        continue;
-                                    }
-                                    tDetails = terrain.terrainData.GetDetailLayer(0, 0, TTD.DetailMaxIndex, TTD.DetailMaxIndex, index);
-
-                                    int MaxCount = TTD.MainDetailsX.Count;
-                                    for (int j = 0; j < MaxCount; j++)
-                                    {
-                                        IntBufferX = TTD.MainDetailsX[j];
-                                        IntBufferY = TTD.MainDetailsY[j];
-                                        tVal = tDetails[IntBufferX, IntBufferY];
-                                        if (tVal > 0)
-                                        {
-                                            TTD.DetailsX[index].Add((ushort)IntBufferX);
-                                            TTD.DetailsY[index].Add((ushort)IntBufferY);
-                                            TTD.OldDetailsValue[index].Add((ushort)tVal);
-                                            tDetails[IntBufferX, IntBufferY] = 0;
-                                        }
-                                    }
-                                    TTD.detailsCount[index] = TTD.DetailsX[index].Count;
-
-                                    terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
-                                    tDetails = null;
-                                    TTD.DetailHasProcessed = null;
+                                    TTD.DetailsX[index].Add((ushort)IntBufferX);
+                                    TTD.DetailsY[index].Add((ushort)IntBufferY);
+                                    TTD.OldDetailsValue[index].Add((ushort)tVal);
+                                    tDetails[IntBufferX, IntBufferY] = 0;
                                 }
-                                TTD.MainDetailsX = null;
-                                TTD.MainDetailsY = null;
-                                System.GC.Collect();
                             }
-                            //Trees:
-                            if (_spline.road.isTreeModificationEnabled && TTD.TreesCurrent != null && TTD.treesCount > 0)
-                            {
-                                terrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
-                            }
-                            //Heights:
-                            if (_spline.road.isHeightModificationEnabled && TTD.heights != null && TTD.Count > 0)
-                            {
-                                //Do heights last to trigger collisions and stuff properly:
-                                terrain.terrainData.SetHeights(0, 0, TTD.heights);
-                            }
+                            TTD.detailsCount[index] = TTD.DetailsX[index].Count;
+
+                            terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
+                            tDetails = null;
+                            TTD.DetailHasProcessed = null;
                         }
+                        TTD.MainDetailsX = null;
+                        TTD.MainDetailsY = null;
+                        System.GC.Collect();
+                    }
+                    //Trees:
+                    if (_spline.road.isTreeModificationEnabled && TTD.TreesCurrent != null && TTD.treesCount > 0)
+                    {
+                        terrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
+                    }
+                    //Heights:
+                    if (_spline.road.isHeightModificationEnabled && TTD.heights != null && TTD.Count > 0)
+                    {
+                        //Do heights last to trigger collisions and stuff properly:
+                        terrain.terrainData.SetHeights(0, 0, TTD.heights);
                     }
                 }
             }
