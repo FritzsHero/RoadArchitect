@@ -920,7 +920,8 @@ namespace RoadArchitect
             string transformName = "";
             for (int i = 0; i < childCount; i++)
             {
-                if(!transform.GetChild(i).TryGetComponent<MeshRenderer>(out childMesh))
+                childMesh = transform.GetChild(i).GetComponent<MeshRenderer>();
+                if(childMesh == null)
                 {
                     continue;
                 }
