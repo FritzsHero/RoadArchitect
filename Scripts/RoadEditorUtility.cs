@@ -12,6 +12,8 @@ namespace RoadArchitect
 {
     public static class RoadEditorUtility
     {
+        private static string basePath = "";
+
         private static readonly string[] validFolders =
         {
             "Assets/RoadArchitect",
@@ -24,13 +26,26 @@ namespace RoadArchitect
         /// <summary> Returns the relative base of the RoadArchitect folder </summary>
         public static string GetBasePath()
         {
+            if (basePath != "")
+            {
+                return basePath;
+            }
+
             #if UNITY_EDITOR
+            string path = AssetDatabase.GUIDToAssetPath("e9c7aa1199abeb64c82a4831b3c7286f");
+            if (path != "" && path.Contains("RoadArchitect.asmdef"))
+            {
+                basePath = Path.GetDirectoryName(path);
+                return basePath;
+            }
+
             if ('/' != Path.DirectorySeparatorChar && '/' != Path.AltDirectorySeparatorChar)
             {
                 foreach (string folder in validFolders)
                 {
                     if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, folder.Replace('/', Path.DirectorySeparatorChar))))
                     {
+                        basePath = folder;
                         return folder;
                     }
                 }
@@ -41,12 +56,16 @@ namespace RoadArchitect
                 {
                     if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, folder)))
                     {
+                        basePath = folder;
                         return folder;
                     }
                 }
             }
 
-            throw new Exception("RoadArchitect must be placed in one of the valid folders. You can change these suppoted folders by modifiying validFolders on top of this script");
+
+            throw new Exception("GUID of RoadArchitect.asmdef was changed. " +
+                "Alternatively RoadArchitect can be placed in one of the valid folders. " +
+                "You can change these suppoted folders by modifiying validFolders on top of this script");
             #else
             return "";
             #endif
@@ -59,7 +78,7 @@ namespace RoadArchitect
             string basePath = GetBasePath();
             if('/' != Path.DirectorySeparatorChar && '/' != Path.AltDirectorySeparatorChar)
             {
-                basePath.Replace('/', Path.DirectorySeparatorChar);
+                return basePath.Replace('/', Path.DirectorySeparatorChar);
             }
             return basePath;
         }
