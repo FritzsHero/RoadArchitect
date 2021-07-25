@@ -85,6 +85,10 @@ namespace RoadArchitect.EdgeObjects
         // Custom Rotation
         [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
         public Vector3 customRotation = default(Vector3);
+        public bool isRotationAligning = true;
+        public bool isXRotationLocked = true;
+        public bool isYRotationLocked = false;
+        public bool isZRotationLocked = false;
         [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
         public bool isOncomingRotation = true;
 
@@ -188,6 +192,10 @@ namespace RoadArchitect.EdgeObjects
             }
 
             EOM.customRotation = customRotation;
+            EOM.isRotationAligning = isRotationAligning;
+            EOM.isXRotationLocked = isXRotationLocked;
+            EOM.isYRotationLocked = isYRotationLocked;
+            EOM.isZRotationLocked = isZRotationLocked;
             EOM.isOncomingRotation = isOncomingRotation;
             EOM.isStatic = isStatic;
             EOM.isSingle = isSingle;
@@ -435,6 +443,10 @@ namespace RoadArchitect.EdgeObjects
 
             [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
             public Vector3 customRotation = default(Vector3);
+            public bool isRotationAligning = true;
+            public bool isXRotationLocked = true;
+            public bool isYRotationLocked = false;
+            public bool isZRotationLocked = false;
 
             [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
             public float startTime = 0f;
@@ -483,6 +495,10 @@ namespace RoadArchitect.EdgeObjects
                 isMatchingTerrain = _EOM.isMatchingTerrain;
 
                 customRotation = _EOM.customRotation;
+                isRotationAligning = _EOM.isRotationAligning;
+                isXRotationLocked = _EOM.isXRotationLocked;
+                isYRotationLocked = _EOM.isYRotationLocked;
+                isZRotationLocked = _EOM.isZRotationLocked;
                 isOncomingRotation = _EOM.isOncomingRotation;
                 isStatic = _EOM.isStatic;
                 isSingle = _EOM.isSingle;
@@ -531,6 +547,10 @@ namespace RoadArchitect.EdgeObjects
                 _EOM.isMatchingTerrain = isMatchingTerrain;
 
                 _EOM.customRotation = customRotation;
+                _EOM.isRotationAligning = isRotationAligning;
+                _EOM.isXRotationLocked = isXRotationLocked;
+                _EOM.isYRotationLocked = isYRotationLocked;
+                _EOM.isZRotationLocked = isZRotationLocked;
                 _EOM.isOncomingRotation = isOncomingRotation;
                 _EOM.isStatic = isStatic;
                 _EOM.isSingle = isSingle;
@@ -616,6 +636,10 @@ namespace RoadArchitect.EdgeObjects
             public Vector3 customScale = new Vector3(1f, 1f, 1f);
             [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
             public Vector3 customRotation = default(Vector3);
+            public bool isRotationAligning = true;
+            public bool isXRotationLocked = true;
+            public bool isYRotationLocked = false;
+            public bool isZRotationLocked = false;
 
             // Start and EndTime
             [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
@@ -664,6 +688,10 @@ namespace RoadArchitect.EdgeObjects
 
                 // Rotation
                 customRotation = _EOM.customRotation;
+                isRotationAligning = _EOM.isRotationAligning;
+                isXRotationLocked = _EOM.isXRotationLocked;
+                isYRotationLocked = _EOM.isYRotationLocked;
+                isZRotationLocked = _EOM.isZRotationLocked;
                 isOncomingRotation = _EOM.isOncomingRotation;
 
                 customScale = _EOM.customScale;
@@ -707,6 +735,10 @@ namespace RoadArchitect.EdgeObjects
                 _EOM.isMatchingTerrain = isMatchingTerrain;
 
                 _EOM.customRotation = customRotation;
+                _EOM.isRotationAligning = isRotationAligning;
+                _EOM.isXRotationLocked = isXRotationLocked;
+                _EOM.isYRotationLocked = isYRotationLocked;
+                _EOM.isZRotationLocked = isZRotationLocked;
                 _EOM.customScale = customScale;
                 _EOM.isOncomingRotation = isOncomingRotation;
                 _EOM.isStatic = isStatic;
@@ -789,6 +821,22 @@ namespace RoadArchitect.EdgeObjects
                 }
 
                 if (_EOM.customRotation != customRotation)
+                {
+                    return false;
+                }
+                if (_EOM.isRotationAligning != isRotationAligning)
+                {
+                    return false;
+                }
+                if (_EOM.isXRotationLocked != isXRotationLocked)
+                {
+                    return false;
+                }
+                if (_EOM.isYRotationLocked != isYRotationLocked)
+                {
+                    return false;
+                }
+                if (_EOM.isZRotationLocked != isZRotationLocked)
                 {
                     return false;
                 }
@@ -949,12 +997,38 @@ namespace RoadArchitect.EdgeObjects
                         tObj = GameObject.Instantiate(edgeObject);
                         #endif
                         tObj.transform.position = edgeObjectLocations[j];
-                        tObj.transform.rotation = Quaternion.LookRotation(edgeObjectRotations[j]);
+                        if(isRotationAligning)
+                        {
+                            tObj.transform.rotation = Quaternion.LookRotation(edgeObjectRotations[j]);
+                        }
+                        else
+                        {
+                            Quaternion rotation = Quaternion.LookRotation(edgeObjectRotations[j]);
+                            Vector3 eulerRotation = rotation.eulerAngles;
+
+                            if(isXRotationLocked)
+                            {
+                                eulerRotation.x = 0;
+                            }
+                            if (isYRotationLocked)
+                            {
+                                eulerRotation.y = 0;
+                            }
+                            if (isZRotationLocked)
+                            {
+                                eulerRotation.z = 0;
+                            }
+
+                            rotation = Quaternion.Euler(eulerRotation);
+                            tObj.transform.rotation = rotation;
+                        }
                         _errorObjs.Add(tObj);
                     }
                     //OrigRot = tObj.transform.rotation;
                     tObj.transform.rotation *= xRot;
                     tObj.transform.localScale = customScale;
+
+                    // Turn object by 180 for other side of road
                     if (isOncomingRotation && subType == SignPlacementSubTypeEnum.Left)
                     {
                         Quaternion tRot = new Quaternion(0f, 0f, 0f, 0f);

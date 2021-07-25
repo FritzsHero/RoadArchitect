@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Improvements
 
 
+## [Version: 2.1.0] - 2021.07.25
+### Improvements
+- Implemented GUID based GetBasePath
+- Cache base path
+- Fixed cross platform GetBasePathForIO
+- Fixed oncoming rotation of edge objects
+- Implemented rotation locking
+
+
+## [Version: 2.0.2] - 2021.07.04
+### Improvements
+- Fixed meta file of RigidBody
+- Fixed regression with versions prior to 2019.2
+
+
 ## [Version: 2.0.0] - 2021.06.09
 ### Improvements
 - Refactor of Editor code

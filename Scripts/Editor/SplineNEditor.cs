@@ -1777,7 +1777,19 @@ namespace RoadArchitect
                 EOM.edgeMaker.customRotation.y = EditorGUILayout.Slider("y-axis: ", EOM.customRotation.y, -360f, 360f);
                 EOM.edgeMaker.customRotation.z = EditorGUILayout.Slider("z-axis: ", EOM.customRotation.z, -360f, 360f);
                 EditorGUILayout.EndVertical();
-                EditorGUILayout.BeginVertical("box"); /* scale */
+
+                EditorGUILayout.BeginVertical();
+                EditorGUILayout.LabelField("Lock align rotation: ");
+                EOM.edgeMaker.isRotationAligning = EditorGUILayout.Toggle("Align objects to road rotation: ", EOM.isRotationAligning);
+                if(!EOM.edgeMaker.isRotationAligning)
+                {
+                    EOM.edgeMaker.isXRotationLocked = EditorGUILayout.Toggle("Lock x axis: ", EOM.isXRotationLocked);
+                    EOM.edgeMaker.isYRotationLocked = EditorGUILayout.Toggle("Lock y axis: ", EOM.isYRotationLocked);
+                    EOM.edgeMaker.isZRotationLocked = EditorGUILayout.Toggle("Lock z axis: ", EOM.isZRotationLocked);
+                }
+                EditorGUILayout.EndVertical();
+
+                EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
                 float scale = EditorGUILayout.Slider("Custom scale: ", EOM.customScale.x, 1f, 10f);
                 EOM.edgeMaker.customScale = new Vector3(scale, scale, scale);
@@ -1786,7 +1798,7 @@ namespace RoadArchitect
                     EOM.edgeMaker.customScale = new Vector3(1f, 1f, 1f);
                 }
                 EditorGUILayout.EndHorizontal();
-                EditorGUILayout.EndVertical(); /* scale */
+                EditorGUILayout.EndVertical();
                 EditorGUILayout.EndVertical();
                 #endregion
             }
