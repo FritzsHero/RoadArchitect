@@ -1758,6 +1758,11 @@ namespace RoadArchitect
                 if (EOM.horizontalSep < 0f)
                 {
                     EOM.edgeMaker.isOncomingRotation = EditorGUILayout.Toggle("Auto rotate oncoming objects: ", EOM.isOncomingRotation);
+                    EOM.edgeMaker.subType = SignPlacementSubTypeEnum.Left;
+                }
+                else
+                {
+                    EOM.edgeMaker.subType = SignPlacementSubTypeEnum.Right;
                 }
 
                 EditorGUILayout.BeginHorizontal();
