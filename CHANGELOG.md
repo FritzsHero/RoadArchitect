@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Improvements
 
 
+## [Version: 2.2.0] - 2021.07.29
+### Improvements
+- Upgraded materials to use standard shader
+
+
 ## [Version: 2.1.0] - 2021.07.25
 ### Improvements
 - Implemented GUID based GetBasePath
