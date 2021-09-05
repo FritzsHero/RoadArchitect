@@ -1730,24 +1730,27 @@ namespace RoadArchitect
 
         private void DestroyIntersection(SplineN _node)
         {
-            if (_node != null)
+            if (_node == null)
             {
-                if (_node.isEndPoint)
-                {
-                    if (_node.idOnSpline == 1 && _node.spline.nodes[0].isSpecialEndNodeIsStart)
-                    {
-                        Object.DestroyImmediate(_node.spline.nodes[0].transform.gameObject);
-                        _node.spline.isSpecialStartControlNode = false;
-                    }
-                    else if (_node.idOnSpline == _node.spline.GetNodeCount() - 2 && _node.spline.nodes[_node.spline.GetNodeCount() - 1].isSpecialEndNodeIsEnd)
-                    {
-                        Object.DestroyImmediate(_node.spline.nodes[_node.spline.GetNodeCount() - 1].transform.gameObject);
-                        _node.spline.isSpecialEndControlNode = false;
-                    }
-                }
-                _node.isIntersection = false;
-                _node.isSpecialIntersection = false;
+                return;
             }
+
+            if (_node.isEndPoint)
+            {
+                if (_node.idOnSpline == 1 && _node.spline.nodes[0].isSpecialEndNodeIsStart)
+                {
+                    Object.DestroyImmediate(_node.spline.nodes[0].transform.gameObject);
+                    _node.spline.isSpecialStartControlNode = false;
+                }
+                else if (_node.idOnSpline == _node.spline.GetNodeCount() - 2 && _node.spline.nodes[_node.spline.GetNodeCount() - 1].isSpecialEndNodeIsEnd)
+                {
+                    Object.DestroyImmediate(_node.spline.nodes[_node.spline.GetNodeCount() - 1].transform.gameObject);
+                    _node.spline.isSpecialEndControlNode = false;
+                }
+            }
+            _node.isIntersection = false;
+            _node.isSpecialIntersection = false;
+
 
             if (_node.intersectionOtherNode != null)
             {
@@ -1766,29 +1769,13 @@ namespace RoadArchitect
                 }
                 _node.intersectionOtherNode.isIntersection = false;
                 _node.intersectionOtherNode.isSpecialIntersection = false;
-            }
 
-            if (_node != null && _node.intersectionOtherNode != null)
-            {
+
+                _node.spline.road.isUpdatingSpline = true;
                 if (_node.spline != _node.intersectionOtherNode.spline)
                 {
-                    if (_node != null)
-                    {
-                        _node.spline.road.isUpdatingSpline = true;
-                    }
-                    if (_node.intersectionOtherNode != null)
-                    {
-                        _node.intersectionOtherNode.spline.road.isUpdatingSpline = true;
-                    }
+                    _node.intersectionOtherNode.spline.road.isUpdatingSpline = true;
                 }
-                else
-                {
-                    _node.spline.road.isUpdatingSpline = true;
-                }
-            }
-            else if (_node != null)
-            {
-                _node.spline.road.isUpdatingSpline = true;
             }
         }
         #endregion

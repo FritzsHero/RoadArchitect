@@ -60,3 +60,7 @@ NOTE: This screenshot has no other assets besides RoadArchitect.
 ![Quality](ManualImages/Extra/quality_road.PNG)
 - **Speed** - All mesh extrusion, bridge extrusion and road asset placement actions are instantaneous. Multithreaded support.
 - **Quality** - Most road textures at least 1024x1024 resolution. Materials include normal and specular maps. Most assets created to federal or state specification.
+
+## Origin
+- We respect the creators and their decision on open sourcing this asset.
+- The original repository can be found here: https://github.com/MicroGSD/RoadArchitect
