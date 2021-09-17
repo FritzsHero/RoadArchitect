@@ -295,14 +295,6 @@ namespace RoadArchitect
         private void EditorUpdate()
         {
             #if UNITY_EDITOR
-            if (!Application.isEditor)
-            {
-                UnityEditor.EditorApplication.update -= delegate
-                {
-                    EditorUpdate();
-                };
-            }
-
             if (this == null)
             {
                 UnityEditor.EditorApplication.update -= delegate
@@ -387,7 +379,7 @@ namespace RoadArchitect
             }
             else
             {
-                if (isUpdateRequired && !isEditorConstructing)
+                if (isUpdateRequired)
                 {
                     isUpdateRequired = false;
                     spline.TriggerSetup();
@@ -401,7 +393,7 @@ namespace RoadArchitect
 
 
             #if UNITY_EDITOR
-            if (!Application.isPlaying && isUpdatingSpline && !UnityEditor.EditorApplication.isPlaying)
+            if (!Application.isPlaying && isUpdatingSpline)
             {
                 editorTimerSpline += 1;
                 if (editorTimerSpline > editorTimerSplineMax)
@@ -474,7 +466,7 @@ namespace RoadArchitect
 
 
             #if UNITY_EDITOR
-            if (UnityEditor.EditorApplication.isPlaying)
+            if (Application.isPlaying)
             {
                 if (editorPlayCamera != null)
                 {
@@ -538,34 +530,31 @@ namespace RoadArchitect
         private void HierarchyWindowChanged()
         {
             #if UNITY_EDITOR
-            if (!Application.isEditor)
-            {
-                #if UNITY_2018_1_OR_NEWER
-                UnityEditor.EditorApplication.hierarchyChanged -= delegate { HierarchyWindowChanged(); };
-                #else
-                UnityEditor.EditorApplication.hierarchyWindowChanged -= delegate { HierarchyWindowChanged(); };
-                #endif
-            }
+            #if UNITY_2018_1_OR_NEWER
+            UnityEditor.EditorApplication.hierarchyChanged -= delegate { HierarchyWindowChanged(); };
+            #else
+            UnityEditor.EditorApplication.hierarchyWindowChanged -= delegate { HierarchyWindowChanged(); };
+            #endif
             #endif
 
             if (Application.isPlaying || !Application.isEditor)
             {
                 return;
             }
-            if (Application.isEditor)
-            {
-                #if UNITY_EDITOR
-                if(UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
-                {
-                    return;
-                }
+ 
 
-                if(UnityEditor.EditorApplication.isPlaying)
-                {
-                    return;
-                }
-                #endif
+            #if UNITY_EDITOR
+            if(UnityEditor.EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                return;
             }
+
+            if(UnityEditor.EditorApplication.isPlaying)
+            {
+                return;
+            }
+            #endif
+      
 
             int count = 0;
             if (spline != null && spline.nodes != null)
@@ -1626,19 +1615,6 @@ namespace RoadArchitect
                 //UnityEditor.EditorUtility.SetSelectedWireframeHidden(_MRs[i], !isGizmosEnabled);
                 UnityEditor.EditorUtility.SetSelectedRenderState(_MRs[i], isGizmosEnabled ? UnityEditor.EditorSelectedRenderState.Wireframe : UnityEditor.EditorSelectedRenderState.Hidden);
             }
-            #endif
-        }
-
-
-        private void Start()
-        {
-            #if UNITY_EDITOR
-            if (Application.isPlaying)
-            {
-                CleanRunTime();
-            }
-            #else
-            this.enabled = false;
             #endif
         }
 

@@ -2013,12 +2013,6 @@ namespace RoadArchitect
         /// <summary> Creates a conncetion between first and last node </summary>
         public void ActivateEndNodeConnection(SplineN _node1, SplineN _node2)
         {
-            ActivateEndNodeConnectionDo(_node1, _node2);
-        }
-
-
-        private void ActivateEndNodeConnectionDo(SplineN _node1, SplineN _node2)
-        {
             SplineC spline = _node2.spline;
             int nodeCount = spline.GetNodeCount();
             int mCount = GetNodeCount();

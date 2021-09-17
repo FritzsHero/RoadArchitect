@@ -227,14 +227,8 @@ namespace RoadArchitect
 
 
         #region "Traffic light bases"
-        public static void CreateTrafficLightBases(GameObject _masterGameObj, bool _isTrafficLight1 = true)
-        {
-            CreateTrafficLightBasesDo(ref _masterGameObj, _isTrafficLight1);
-        }
-
-
         /// <summary> Creates and rotates the traffic light bases </summary>
-        private static void CreateTrafficLightBasesDo(ref GameObject _masterGameObj, bool _isTrafficLight1)
+        public static void CreateTrafficLightBases(GameObject _masterGameObj, bool _isTrafficLight1 = true)
         {
             RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = intersection.node1.spline;
@@ -1096,22 +1090,18 @@ namespace RoadArchitect
             TrafficLightController LM = new TrafficLightController(ref tLeft, ref tRight, ref tLanes, ref MR_Left, ref MR_Right, ref MR_Mains);
             if (_corner == 0)
             {
-                intersection.lightsRR = null;
                 intersection.lightsRR = LM;
             }
             else if (_corner == 1)
             {
-                intersection.lightsRL = null;
                 intersection.lightsRL = LM;
             }
             else if (_corner == 2)
             {
-                intersection.lightsLL = null;
                 intersection.lightsLL = LM;
             }
             else if (_corner == 3)
             {
-                intersection.lightsLR = null;
                 intersection.lightsLR = LM;
             }
         }
