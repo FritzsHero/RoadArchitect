@@ -38,7 +38,6 @@ namespace RoadArchitect.Threading
             Vector3 RampR_L = default(Vector3);
             Vector3 RampL_R = default(Vector3);
             Vector3 RampL_L = default(Vector3);
-#pragma warning disable CS0219
 
             //Previous temp storage values:
             Vector3 tVect_Prev = default(Vector3);
@@ -66,7 +65,6 @@ namespace RoadArchitect.Threading
             float heightAdded = 0f;
             Vector3 gHeight = default(Vector3);
 
-#pragma warning disable CS0219
             //Bridge variables:
             bool isBridge = false;
             bool isTempbridge = false;
@@ -194,7 +192,6 @@ namespace RoadArchitect.Threading
             //Unused for now, for later partial construction methods:
             bool isInterseOn = _road.RCS.isInterseOn;
             isInterseOn = true;
-#pragma warning restore CS0219
             #endregion
 
 
@@ -2867,10 +2864,6 @@ namespace RoadArchitect.Threading
             Vector3 POS = default(Vector3);
             bool isPastInter = false;
             bool isOldMethod = false;
-            //bool bCancel = false; if (bTempCancel) { }
-#pragma warning disable CS0219
-            bool isTempCancel = false;
-#pragma warning restore CS0219
 
             //If left collides with left, etc
 
@@ -2885,7 +2878,6 @@ namespace RoadArchitect.Threading
             SplineN iNode = null;
             for (int j = 0; j < nodeCount; j++)
             {
-                isTempCancel = false;
                 if (spline.nodes[j].isIntersection)
                 {
                     iNode = spline.nodes[j];
@@ -3824,7 +3816,6 @@ namespace RoadArchitect.Threading
         private static void AddIntersectionBounds(ref Road _road, ref RoadConstructorBufferMaker _RCS)
         {
             #region "Vars"
-#pragma warning disable CS0219
             bool isBridge = false;
             bool isTempBridge = false;
 
@@ -3857,7 +3848,6 @@ namespace RoadArchitect.Threading
             Vector3 RampL_R = default(Vector3);
             Vector3 RampL_L = default(Vector3);
 
-#pragma warning restore CS0219
             Vector3 ShoulderR_PrevLVect = default(Vector3);
             Vector3 ShoulderL_PrevRVect = default(Vector3);
             Vector3 ShoulderR_PrevRVect = default(Vector3);
