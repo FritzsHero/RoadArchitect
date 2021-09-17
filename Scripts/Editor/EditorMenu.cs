@@ -9,7 +9,7 @@ using RoadArchitect;
 namespace RoadArchitect
 {
     /// <summary> Provides the menu items inside the editor  </summary>
-    public class RoadSystemEditorMenu
+    public class EditorMenu
     {
         /// <summary> Creates the road system. </summary>
         [MenuItem("Window/Road Architect/Create road system")]
