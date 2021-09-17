@@ -511,24 +511,24 @@ namespace RoadArchitect
                 return;
             }
             int meshCount = mainMRStorage.Length;
-            if (meshCount == 0)
+            if (meshCount <= 1)
             {
                 return;
             }
-            if (meshCount > 1)
+            if (isUsingSharedMaterial)
             {
                 for (int index = 1; index < meshCount; index++)
                 {
-                    if (isUsingSharedMaterial)
-                    {
-                        mainMRStorage[index].sharedMaterial = mainMR.sharedMaterial;
-                    }
-                    else
-                    {
-                        Material[] materials = new Material[1];
-                        materials[0] = mainMR.materials[0];
-                        mainMRStorage[index].materials = materials;
-                    }
+                    mainMRStorage[index].sharedMaterial = mainMR.sharedMaterial;
+                }
+            }
+            else
+            {
+                Material[] materials = new Material[1];
+                materials[0] = mainMR.materials[0];
+                for (int index = 1; index < meshCount; index++)
+                {
+                    mainMRStorage[index].materials = materials;
                 }
             }
         }
