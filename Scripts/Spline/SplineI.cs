@@ -454,17 +454,5 @@ namespace RoadArchitect
         {
             return nodes.Count;
         }
-
-
-        #region "Start"
-        private void Start()
-        {
-            #if UNITY_EDITOR
-            //Do nothing.
-            #else
-            this.enabled = false;
-            #endif
-        }
-        #endregion
     }
 }

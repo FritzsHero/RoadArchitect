@@ -1865,16 +1865,6 @@ namespace RoadArchitect
         #endregion
 
 
-        private void Start()
-        {
-            #if UNITY_EDITOR
-            //Do nothing.
-            #else
-            this.enabled = false;
-            #endif
-        }
-
-
         /// <summary> Hide or unhide this node in hierarchy </summary>
         public void ToggleHideFlags(bool _isHidden)
         {

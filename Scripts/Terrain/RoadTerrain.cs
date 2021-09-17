@@ -108,16 +108,11 @@ namespace RoadArchitect
 
         private void Start()
         {
-            #if UNITY_EDITOR
-            this.enabled = true;
             CheckID();
             if (!terrain)
             {
                 terrain = transform.gameObject.GetComponent<Terrain>();
             }
-            #else
-		    this.enabled = false;
-            #endif
         }
     }
 }

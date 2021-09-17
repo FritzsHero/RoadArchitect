@@ -540,7 +540,7 @@ namespace RoadArchitect
             }
             nodes[0].tangent = GetSplineValueSkipOpt(0f, true);
             nodes[nodeCount - 1].tangent = GetSplineValueSkipOpt(1f, true);
-            
+
             nodes[0].dist = 0f;
 
             step = distance / cachedPointsSeperation;
@@ -2422,18 +2422,6 @@ namespace RoadArchitect
         {
             connectedIDs = null;
             connectedIDs = new List<int>();
-        }
-        #endregion
-
-
-        #region "Start"
-        private void Start()
-        {
-            #if UNITY_EDITOR
-            //CachedPoints = null;
-            #else
-            this.enabled = false;
-            #endif
         }
         #endregion
     }
