@@ -289,7 +289,7 @@ namespace RoadArchitect
 
             //Node1:
             //RL:
-            tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+            tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
             //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
@@ -319,7 +319,7 @@ namespace RoadArchitect
                 {
                     Object.DestroyImmediate(tObjRL);
                 }
-                tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+                tObjRL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
                 //xDir = (intersection.cornerRL - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotRL(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
@@ -336,7 +336,7 @@ namespace RoadArchitect
             tObjRL.transform.name = "TrafficLightRL";
             AddRigidbodyToTrafficLight(tObjRL, isRB);
             //LR:
-            tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+            tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
             //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
@@ -366,7 +366,7 @@ namespace RoadArchitect
                 {
                     Object.DestroyImmediate(tObjLR);
                 }
-                tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+                tObjLR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
                 //xDir = (intersection.cornerLR - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotLR(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
@@ -384,7 +384,7 @@ namespace RoadArchitect
             AddRigidbodyToTrafficLight(tObjLR, isRB);
             //Node2:
             //RR:
-            tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+            tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
             //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
@@ -414,7 +414,7 @@ namespace RoadArchitect
                 {
                     Object.DestroyImmediate(tObjRR);
                 }
-                tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+                tObjRR = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
                 //xDir = (intersection.cornerRR - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotRR(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)
@@ -432,7 +432,7 @@ namespace RoadArchitect
             AddRigidbodyToTrafficLight(tObjRR, isRB);
 
             //LL:
-            tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+            tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
             //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
             tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
             if (tDir == zeroVect)
@@ -462,7 +462,7 @@ namespace RoadArchitect
                 {
                     Object.DestroyImmediate(tObjLL);
                 }
-                tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.roadSystem.isSavingMeshes);
+                tObjLL = CreateTrafficLight(TLDistance, true, true, MaxDistanceStart, intersection.isTrafficPoleStreetLight, spline.road.isSavingMeshes);
                 //xDir = (intersection.cornerLL - intersection.transform.position).normalized;
                 tDir = TrafficLightBaseGetRotLL(intersection, spline, DistFromCorner);
                 if (tDir == zeroVect)

@@ -2542,7 +2542,7 @@ namespace RoadArchitect
         /// <summary> Saves Mesh as an asset </summary>
         private static void SaveMesh(SaveMeshTypeEnum _saveType, Mesh _mesh, Road _road, string _name)
         {
-            if (!_road.roadSystem.isSavingMeshes)
+            if (!_road.isSavingMeshes)
             {
                 return;
             }

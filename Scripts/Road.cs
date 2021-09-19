@@ -1100,7 +1100,7 @@ namespace RoadArchitect
 
 
             #if UNITY_EDITOR
-            if (roadSystem.isSavingMeshes)
+            if (isSavingMeshes)
             {
                 UnityEditor.AssetDatabase.SaveAssets();
             }

@@ -348,7 +348,7 @@ namespace RoadArchitect.EdgeObjects
         /// <summary> Saves _mesh as an asset into /Mesh/Generated/CombinedEdgeObj folder beside the /Asset folder </summary>
         private void SaveMesh(Mesh _mesh, bool _isCollider)
         {
-            if (!node.spline.road.roadSystem.isSavingMeshes)
+            if (!node.spline.road.isSavingMeshes)
             {
                 return;
             }
@@ -1206,7 +1206,7 @@ namespace RoadArchitect.EdgeObjects
                     }
                 }
 
-                if (node.spline.road.roadSystem.isSavingMeshes && MF != null && isCombinedMesh)
+                if (node.spline.road.isSavingMeshes && MF != null && isCombinedMesh)
                 {
                     SaveMesh(MF.sharedMesh, false);
                     if (MC != null)
