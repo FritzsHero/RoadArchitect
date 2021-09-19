@@ -98,7 +98,7 @@ namespace RoadArchitect
 
         //Workaround for submission rules:
         /// <summary> Writes isMultithreaded into roads of this system </summary>
-        public void UpdateAllRoadsMultiThreadedOption()
+        public void UpdateAllRoadsMultiThreadedOption(bool _isMultithreaded)
         {
             Road[] roads = GetComponentsInChildren<Road>();
             int roadsCount = roads.Length;
@@ -108,7 +108,7 @@ namespace RoadArchitect
                 road = roads[i];
                 if (road != null)
                 {
-                    road.isUsingMultithreading = isMultithreaded;
+                    road.isUsingMultithreading = _isMultithreaded;
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace RoadArchitect
 
         //Workaround for submission rules:
         /// <summary> Writes isSavingMeshes into roads of this system </summary>
-        public void UpdateAllRoadsSavingMeshesOption()
+        public void UpdateAllRoadsSavingMeshesOption(bool _isSavingMeshes)
         {
             Road[] roads = GetComponentsInChildren<Road>();
             int roadsCount = roads.Length;
@@ -126,7 +126,7 @@ namespace RoadArchitect
                 road = roads[i];
                 if (road != null)
                 {
-                    road.isSavingMeshes = isSavingMeshes;
+                    road.isSavingMeshes = _isSavingMeshes;
                 }
             }
         }

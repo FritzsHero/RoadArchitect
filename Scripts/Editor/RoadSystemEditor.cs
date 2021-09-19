@@ -19,8 +19,6 @@ namespace RoadArchitect
         private SerializedProperty isTempSaveMeshAssets;
 
         //Editor only variables:
-        private bool isUpdateGlobalMultithread = false;
-        private bool isUpdateGlobalSaveMesh = false;
         private bool isInitialized;
 
         //	//Editor only camera variables:
@@ -58,9 +56,6 @@ namespace RoadArchitect
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-
-            isUpdateGlobalMultithread = false;
-            isUpdateGlobalSaveMesh = false;
             EditorStyles.label.wordWrap = true;
             
             if(!isInitialized)
@@ -87,16 +82,16 @@ namespace RoadArchitect
             isTempMultithreading.boolValue = EditorGUILayout.Toggle("Multi-threading enabled", roadSystem.isMultithreaded);
             if (isTempMultithreading.boolValue != roadSystem.isMultithreaded)
             {
-                isUpdateGlobalMultithread = true;
+                roadSystem.UpdateAllRoadsMultiThreadedOption(isTempMultithreading.boolValue);
             }
 
             //Save mesh assets input:
             isTempSaveMeshAssets.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", roadSystem.isSavingMeshes);
             if (isTempSaveMeshAssets.boolValue != roadSystem.isSavingMeshes)
             {
-                isUpdateGlobalSaveMesh = true;
+                roadSystem.UpdateAllRoadsSavingMeshesOption(isTempSaveMeshAssets.boolValue);
             }
-            if (roadSystem.isSavingMeshes || isTempSaveMeshAssets.boolValue)
+            if (roadSystem.isSavingMeshes)
             {
                 GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", warningLabelStyle);
             }
@@ -139,18 +134,6 @@ namespace RoadArchitect
             if (GUI.changed)
             {
                 serializedObject.ApplyModifiedProperties();
-
-                //Multithreading global change:
-                if (isUpdateGlobalMultithread)
-                {
-                    roadSystem.UpdateAllRoadsMultiThreadedOption();
-                }
-
-                //Save mesh assets global change:
-                if (isUpdateGlobalSaveMesh)
-                {
-                    roadSystem.UpdateAllRoadsSavingMeshesOption();
-                }
             }
         }
 
