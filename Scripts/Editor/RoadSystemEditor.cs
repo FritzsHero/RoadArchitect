@@ -2,6 +2,7 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 #endregion
 
 
@@ -22,18 +23,17 @@ namespace RoadArchitect
         private bool isInitialized;
 
         //	//Editor only camera variables:
-        //	private RoadIntersection[] tInters = null;
-        //	private int tInterIndex = 0;
-        //	private SplineN[] tBridges = null;
-        //	private int tBridgesIndex = 0;
-        //	private bool bHasBridgeInit = false;
-        //	private bool bHasInterInit = false;
-        //	private bool bHasDoneEither = false;
-        //	private bool bFlipEditorCamera = false;
-        //	private float CameraZoomFactor = 1f;
-        //	private float CameraHeightOffset = 1f;
-        //	private bool bCameraCustomRot = false;
-        //	private Vector3 CameraCustomRot = new Vector3(0.5f,0f,-0.5f);
+        private RoadIntersection[] intersections = null;
+        private int intersectionIndex = 0;
+        private SplineN[] bridges = null;
+        private int bridgesIndex = 0;
+        private bool isBridgeInitialized = false;
+        private bool isIntersectionInitialized = false;
+        private bool isEditorCameraFlipped = false;
+        private float cameraZoomFactor = 1f;
+        private float cameraHeightOffset = 1f;
+        private bool isCameraCustomRotated = false;
+        private Vector3 customCameraRotation = new Vector3(0.5f, 0f, -0.5f);
 
         //Editor only graphic variables:
         private Texture2D loadButtonBG = null;
@@ -116,17 +116,15 @@ namespace RoadArchitect
             }
             RoadArchitect.EditorUtilities.DrawLine();
 
-            //bHasDoneEither = false;
-
-            ////View intersection
-            //DoInter();
-
+            //View intersection
+            IntersectionView();
             //View bridges
-            //DoBridges();
-            //if(bHasDoneEither)
-            //{
-            //	EditorGUILayout.LabelField("* Hotkeys only function when this RoadArchitectSystem object is selected", EditorStyles.miniLabel);
-            //}
+            BridgeView();
+            if(bridges.Length > 0 || intersections.Length > 0)
+            {
+                EditorGUILayout.LabelField("* Hotkeys only work when this RoadArchitectSystem object is selected and the scene view has focus", EditorStyles.miniLabel);
+            }
+
 
             //Hotkey check:
             DoHotKeyCheck();
@@ -134,6 +132,7 @@ namespace RoadArchitect
             if (GUI.changed)
             {
                 serializedObject.ApplyModifiedProperties();
+                EditorUtility.SetDirty(roadSystem);
             }
         }
 
@@ -174,21 +173,16 @@ namespace RoadArchitect
         }
 
 
-        /*
-        private void DoInter()
+
+        private void IntersectionView()
         {
             //View intersection
-            if (!bHasInterInit)
+            if (!isIntersectionInitialized)
             {
-                bHasInterInit = true;
-                tInters = GameObject.FindObjectsOfType<RoadIntersection>();
-                if (tInters == null || tInters.Length < 1)
-                {
-                    tInterIndex = -1;
-                    tInters = null;
-                }
+                isIntersectionInitialized = true;
+                intersections = roadSystem.GetComponentsInChildren<RoadIntersection>();
             }
-            if (tInters != null && tInters.Length > 0 && tInterIndex > -1)
+            if (intersections.Length > 0)
             {
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("View next intersection", GUILayout.Width(150f)))
@@ -197,50 +191,44 @@ namespace RoadArchitect
                 }
                 EditorGUILayout.LabelField("Hotkey K");
                 EditorGUILayout.EndHorizontal();
-                bHasDoneEither = true;
             }
         }
 
 
         private void IncrementIntersection()
         {
-            if (tInters != null && tInters.Length > 0)
+            if (intersections.Length > 0)
             {
-                tInterIndex += 1;
-                if (tInterIndex >= tInters.Length)
+                intersectionIndex += 1;
+                if (intersectionIndex >= intersections.Length)
                 {
-                    tInterIndex = 0;
+                    intersectionIndex = 0;
                 }
-                ShowIntersection(tInterIndex);
+                ShowIntersection();
             }
         }
 
 
-        private void DoBridges()
+        private void BridgeView()
         {
             //View bridges
-            if (!bHasBridgeInit)
+            if (!isBridgeInitialized)
             {
-                bHasBridgeInit = true;
-                SplineN[] tSplineN = GameObject.FindObjectsOfType<SplineN>();
-                List<SplineN> tSplineNList = new List<SplineN>();
-                foreach (SplineN tNode in tSplineN)
+                isBridgeInitialized = true;
+                SplineN[] nodes = roadSystem.transform.GetComponentsInChildren<SplineN>();
+                List<SplineN> nodeList = new List<SplineN>();
+                foreach (SplineN node in nodes)
                 {
-                    if (tNode.bIsBridgeStart && tNode.bIsBridgeMatched)
+                    if (node.isBridgeStart && node.isBridgeMatched)
                     {
-                        tSplineNList.Add(tNode);
+                        nodeList.Add(node);
                     }
                 }
-                tBridges = tSplineNList.ToArray();
-                tBridgesIndex = 0;
-                if (tBridges == null || tBridges.Length < 1)
-                {
-                    tBridgesIndex = -1;
-                    tBridges = null;
-                }
+                bridges = nodeList.ToArray();
+                bridgesIndex = 0;
             }
 
-            if (tBridges != null && tBridges.Length > 0 && tBridgesIndex > -1)
+            if (bridges.Length > 0)
             {
                 EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button("View next bridge", GUILayout.Width(150f)))
@@ -251,117 +239,112 @@ namespace RoadArchitect
                 EditorGUILayout.EndHorizontal();
                 if (EditorApplication.isPlaying)
                 {
-                    bool bChangeChecker = EditorGUILayout.Toggle("Flip camera Y:", bFlipEditorCamera);
-                    if (bChangeChecker != bFlipEditorCamera)
+                    bool isCameraFlipped = EditorGUILayout.Toggle("Flip camera Y:", isEditorCameraFlipped);
+                    if (isCameraFlipped != isEditorCameraFlipped)
                     {
-                        bFlipEditorCamera = bChangeChecker;
-                        ShowBridge(tBridgesIndex);
-                    }
-                }
-
-                if (EditorApplication.isPlaying)
-                {
-                    float ChangeChecker = EditorGUILayout.Slider("Zoom factor:", CameraZoomFactor, 0.02f, 10f);
-                    if (!RootUtils.IsApproximately(ChangeChecker, CameraZoomFactor, 0.001f))
-                    {
-                        CameraZoomFactor = ChangeChecker;
-                        ShowBridge(tBridgesIndex);
-                    }
-                    ChangeChecker = EditorGUILayout.Slider("Height offset:", CameraHeightOffset, 0f, 8f);
-                    if (!RootUtils.IsApproximately(ChangeChecker, CameraHeightOffset, 0.001f))
-                    {
-                        CameraHeightOffset = ChangeChecker;
-                        ShowBridge(tBridgesIndex);
+                        isEditorCameraFlipped = isCameraFlipped;
+                        ShowBridge();
                     }
 
-                    bool bChangeChecker = EditorGUILayout.Toggle("Custom camera rot:", bCameraCustomRot);
-                    if (bChangeChecker != bCameraCustomRot)
+                    float changeChecker = EditorGUILayout.Slider("Zoom factor:", cameraZoomFactor, 0.02f, 10f);
+                    if (!RootUtils.IsApproximately(changeChecker, cameraZoomFactor, 0.001f))
                     {
-                        bCameraCustomRot = bChangeChecker;
-                        ShowBridge(tBridgesIndex);
+                        cameraZoomFactor = changeChecker;
+                        ShowBridge();
                     }
-                    if (bCameraCustomRot)
+                    changeChecker = EditorGUILayout.Slider("Height offset:", cameraHeightOffset, 0f, 8f);
+                    if (!RootUtils.IsApproximately(changeChecker, cameraHeightOffset, 0.001f))
                     {
-                        Vector3 vChangeChecker = default(Vector3);
-                        vChangeChecker.x = EditorGUILayout.Slider("Rotation X:", CameraCustomRot.x, -1f, 1f);
-                        vChangeChecker.z = EditorGUILayout.Slider("Rotation Z:", CameraCustomRot.z, -1f, 1f);
+                        cameraHeightOffset = changeChecker;
+                        ShowBridge();
+                    }
 
-                        if (vChangeChecker != CameraCustomRot)
+                    bool isCustomRotated = EditorGUILayout.Toggle("Custom camera rot:", isCameraCustomRotated);
+                    if (isCustomRotated != isCameraCustomRotated)
+                    {
+                        isCameraCustomRotated = isCustomRotated;
+                        ShowBridge();
+                    }
+                    if (isCameraCustomRotated)
+                    {
+                        Vector3 changedRotation = default(Vector3);
+                        changedRotation.x = EditorGUILayout.Slider("Rotation X:", customCameraRotation.x, -1f, 1f);
+                        changedRotation.z = EditorGUILayout.Slider("Rotation Z:", customCameraRotation.z, -1f, 1f);
+
+                        if (changedRotation != customCameraRotation)
                         {
-                            CameraCustomRot = vChangeChecker;
-                            ShowBridge(tBridgesIndex);
+                            customCameraRotation = changedRotation;
+                            ShowBridge();
                         }
                     }
                 }
-
-                bHasDoneEither = true;
             }
         }
 
 
         private void IncrementBridge()
         {
-            if (tBridges != null && tBridges.Length > 0)
+            if (bridges.Length > 0)
             {
-                tBridgesIndex += 1;
-                if (tBridgesIndex >= tBridges.Length)
+                bridgesIndex += 1;
+                if (bridgesIndex >= bridges.Length)
                 {
-                    tBridgesIndex = 0;
+                    bridgesIndex = 0;
                 }
-                ShowBridge(tBridgesIndex);
+                ShowBridge();
             }
         }
 
 
-        private void ShowIntersection(int i)
+        private void ShowIntersection()
         {
-            if (EditorApplication.isPlaying && roadSystem.EditorPlayCamera != null)
+            if (EditorApplication.isPlaying && roadSystem.editorPlayCamera != null)
             {
-                roadSystem.EditorPlayCamera.transform.position = tInters[i].transform.position + new Vector3(-40f, 20f, -40f);
-                roadSystem.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tInters[i].transform.position - (tInters[i].transform.position + new Vector3(-40f, 20f, -40f)));
+                roadSystem.editorPlayCamera.transform.position = intersections[intersectionIndex].transform.position + new Vector3(-40f, 20f, -40f);
+                roadSystem.editorPlayCamera.transform.rotation = Quaternion.LookRotation(intersections[intersectionIndex].transform.position - (intersections[intersectionIndex].transform.position + new Vector3(-40f, 20f, -40f)));
             }
             else
             {
-                SceneView.lastActiveSceneView.pivot = tInters[i].transform.position;
+                SceneView.lastActiveSceneView.pivot = intersections[intersectionIndex].transform.position;
                 SceneView.lastActiveSceneView.Repaint();
             }
         }
 
 
-        private void ShowBridge(int i)
+        private void ShowBridge()
         {
-            if (EditorApplication.isPlaying && roadSystem.EditorPlayCamera != null)
+            if (EditorApplication.isPlaying && roadSystem.editorPlayCamera != null)
             {
-                Vector3 tBridgePos = ((tBridges[i].pos - tBridges[i].BridgeCounterpartNode.pos) * 0.5f) + tBridges[i].BridgeCounterpartNode.pos;
-                float tBridgeLength = Vector3.Distance(tBridges[i].pos, tBridges[i].BridgeCounterpartNode.pos);
+                Vector3 bridgePosition = ((bridges[bridgesIndex].pos - bridges[bridgesIndex].bridgeCounterpartNode.pos) * 0.5f) + bridges[bridgesIndex].bridgeCounterpartNode.pos;
+                float bridgeLength = Vector3.Distance(bridges[bridgesIndex].pos, bridges[bridgesIndex].bridgeCounterpartNode.pos);
 
                 //Rotation:
-                Vector3 tCameraRot = Vector3.Cross((tBridges[i].pos - tBridges[i].BridgeCounterpartNode.pos), Vector3.up);
-                if (bCameraCustomRot)
+                Vector3 cameraRotation = Vector3.Cross((bridges[bridgesIndex].pos - bridges[bridgesIndex].bridgeCounterpartNode.pos), Vector3.up);
+                if (isCameraCustomRotated)
                 {
-                    tCameraRot = CameraCustomRot;
+                    cameraRotation = customCameraRotation;
                 }
                 else
                 {
-                    tCameraRot = tCameraRot.normalized;
+                    cameraRotation = cameraRotation.normalized;
                 }
 
                 //Calc offset:
-                Vector3 tBridgeOffset = tCameraRot * (tBridgeLength * 0.5f * CameraZoomFactor);
+                Vector3 bridgeOffset = cameraRotation * (bridgeLength * 0.5f * cameraZoomFactor);
 
                 //Height offset:
-                tBridgeOffset.y = Mathf.Lerp(20f, 120f, (tBridgeLength * 0.001f)) * CameraZoomFactor * CameraHeightOffset;
+                bridgeOffset.y = Mathf.Lerp(20f, 120f, (bridgeLength * 0.001f)) * cameraZoomFactor * cameraHeightOffset;
 
-                roadSystem.EditorPlayCamera.transform.position = tBridgePos + tBridgeOffset;
-                roadSystem.EditorPlayCamera.transform.rotation = Quaternion.LookRotation(tBridgePos - (tBridgePos + tBridgeOffset));
+                roadSystem.editorPlayCamera.transform.position = bridgePosition + bridgeOffset;
+                roadSystem.editorPlayCamera.transform.rotation = Quaternion.LookRotation(bridgePosition - (bridgePosition + bridgeOffset));
             }
             else
             {
-                SceneView.lastActiveSceneView.pivot = tBridges[i].transform.position;
+                SceneView.lastActiveSceneView.pivot = bridges[bridgesIndex].transform.position;
                 SceneView.lastActiveSceneView.Repaint();
             }
         }
-        */
+
 
 
         public void OnSceneGUI()
@@ -372,37 +355,18 @@ namespace RoadArchitect
 
         private void DoHotKeyCheck()
         {
-            bool isUsed = false;
             Event current = Event.current;
-            int controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
 
-            //if(current.type == EventType.KeyDown)
-            //{
-            //	if(current.keyCode == KeyCode.K)
-            //  {
-            //		IncrementIntersection();
-            //		bUsed = true;
-            //	}
-            //  else if(current.keyCode == KeyCode.L)
-            //  {
-            //		IncrementBridge();
-            //		bUsed = true;
-            //	}
-            //}
-
-            if (isUsed)
+            if (current.type == EventType.KeyDown)
             {
-                switch (current.type)
+                if (current.keyCode == KeyCode.K)
                 {
-                    case EventType.Layout:
-                        HandleUtility.AddDefaultControl(controlID);
-                        break;
+                    IncrementIntersection();
                 }
-            }
-
-            if (GUI.changed)
-            {
-                EditorUtility.SetDirty(roadSystem);
+                else if (current.keyCode == KeyCode.L)
+                {
+                    IncrementBridge();
+                }
             }
         }
     }
