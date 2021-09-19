@@ -326,53 +326,46 @@ namespace RoadArchitect
 
             if (isEditorConstructing)
             {
-                if (roadSystem != null)
+                if (isUsingMultithreading)
                 {
-                    if (roadSystem.isMultithreaded)
+                    editorTimer += 1;
+                    if (editorTimer > editorTimerMax)
                     {
-                        editorTimer += 1;
-                        if (editorTimer > editorTimerMax)
+                        if ((Time.realtimeSinceStartup - EditorConstructionStartTime) > 180f)
                         {
-                            if ((Time.realtimeSinceStartup - EditorConstructionStartTime) > 180f)
-                            {
-                                isEditorConstructing = false;
+                            isEditorConstructing = false;
+                            #if UNITY_EDITOR
+                            UnityEditor.EditorUtility.ClearProgressBar();
+                            #endif
+                            Debug.Log("Update shouldn't take longer than 180 seconds. Aborting update.");
+                        }
+                        editorTimer = 0;
+                        if (isEditorError)
+                        {
+                            isEditorConstructing = false;
+                            #if UNITY_EDITOR
+                            UnityEditor.EditorUtility.ClearProgressBar();
+                            #endif
 
-                                #if UNITY_EDITOR
-                                UnityEditor.EditorUtility.ClearProgressBar();
-                                #endif
-
-                                Debug.Log("Update shouldn't take longer than 180 seconds. Aborting update.");
-                            }
-
-                            editorTimer = 0;
-                            if (isEditorError)
+                            isEditorError = false;
+                            if (exceptionError != null)
                             {
-                                isEditorConstructing = false;
-                                
-                                #if UNITY_EDITOR
-                                UnityEditor.EditorUtility.ClearProgressBar();
-                                #endif
+                                Debug.LogError(exceptionError.StackTrace);
+                                throw exceptionError;
+                            }
+                        }
 
-                                isEditorError = false;
-                                if (exceptionError != null)
-                                {
-                                    Debug.LogError(exceptionError.StackTrace);
-                                    throw exceptionError;
-                                }
-                            }
-
-                            if (TerrainCalcsJob != null && TerrainCalcsJob.Update())
-                            {
-                                ConstructRoad2();
-                            }
-                            else if (RoadCalcsJob1 != null && RoadCalcsJob1.Update())
-                            {
-                                ConstructRoad3();
-                            }
-                            else if (RoadCalcsJob2 != null && RoadCalcsJob2.Update())
-                            {
-                                ConstructRoad4();
-                            }
+                        if (TerrainCalcsJob != null && TerrainCalcsJob.Update())
+                        {
+                            ConstructRoad2();
+                        }
+                        else if (RoadCalcsJob1 != null && RoadCalcsJob1.Update())
+                        {
+                            ConstructRoad3();
+                        }
+                        else if (RoadCalcsJob2 != null && RoadCalcsJob2.Update())
+                        {
+                            ConstructRoad4();
                         }
                     }
                 }
@@ -626,7 +619,7 @@ namespace RoadArchitect
             #endif
 
             isProfiling = true;
-            if (roadSystem.isMultithreaded)
+            if (isUsingMultithreading)
             {
                 isProfiling = false;
             }
@@ -825,7 +818,7 @@ namespace RoadArchitect
                 roadSystem = transform.parent.GetComponent<RoadSystem>();
             }
             //Compatibility update.
-            if (roadSystem.isMultithreaded)
+            if (isUsingMultithreading)
             {
                 isEditorConstructing = true;
             }
@@ -861,7 +854,7 @@ namespace RoadArchitect
             terrain = null;
 
             RootUtils.EndProfiling(this);
-            if (roadSystem.isMultithreaded)
+            if (isUsingMultithreading)
             {
                 if (RCS.isTerrainOn || TerrainHistory == null)
                 {
