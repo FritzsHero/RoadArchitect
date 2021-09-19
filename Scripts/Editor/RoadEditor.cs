@@ -397,16 +397,8 @@ namespace RoadArchitect
             }
 
             //Option: Save meshes as unity assets options:
-            if (road.roadSystem.isSavingMeshes != road.isSavingMeshes)
-            {
-                road.roadSystem.isSavingMeshes = road.isSavingMeshes;
-                road.roadSystem.UpdateAllRoadsSavingMeshesOption();
-            }
-            if (road.roadSystem != null)
-            {
-                isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.roadSystem.isSavingMeshes);
-            }
-            if (road.roadSystem.isSavingMeshes)
+            isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.isSavingMeshes);
+            if (road.isSavingMeshes)
             {
                 GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", warningLabelStyle);
             }
@@ -710,7 +702,6 @@ namespace RoadArchitect
             bool isGizmoChanged = false;
             bool isLaneChanged = false;
             bool isMultithreadedChanged = false;
-            bool isSaveMeshChanged = false;
             bool isTerrainHistoryChanged = false;
             bool isEditorCameraSpeedChanged = false;
 
@@ -737,11 +728,6 @@ namespace RoadArchitect
                     {
                         road.roadSystem.isMultithreaded = isUsingMultithreading.boolValue;
                         isMultithreadedChanged = true;
-                    }
-                    if (isSavingMeshes.boolValue != road.roadSystem.isSavingMeshes)
-                    {
-                        road.roadSystem.isSavingMeshes = isSavingMeshes.boolValue;
-                        isSaveMeshChanged = true;
                     }
                 }
 
@@ -784,12 +770,6 @@ namespace RoadArchitect
                 if (isMultithreadedChanged)
                 {
                     road.roadSystem.UpdateAllRoadsMultiThreadedOption();
-                }
-
-                //Option: Save meshes as unity assets options:
-                if (isSaveMeshChanged)
-                {
-                    road.roadSystem.UpdateAllRoadsSavingMeshesOption();
                 }
 
                 //Option: terrain history save type:
