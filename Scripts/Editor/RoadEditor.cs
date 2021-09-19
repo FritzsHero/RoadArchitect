@@ -375,26 +375,14 @@ namespace RoadArchitect
             }
 
             //Mesh colliders:
-            if (road.roadSystem != null)
-            {
-                isUsingMeshColliders.boolValue = EditorGUILayout.Toggle("Use mesh colliders: ", road.isUsingMeshColliders);
-            }
-
+            isUsingMeshColliders.boolValue = EditorGUILayout.Toggle("Use mesh colliders: ", road.isUsingMeshColliders);
             //Option: Multi-threading option: workaround for UAS submission rules:
-            if (road.roadSystem.isMultithreaded != road.isUsingMultithreading)
-            {
-                road.roadSystem.isMultithreaded = road.isUsingMultithreading;
-                road.roadSystem.UpdateAllRoadsMultiThreadedOption();
-            }
-            if (road.roadSystem != null)
-            {
-                isUsingMultithreading.boolValue = EditorGUILayout.Toggle("Multithreading: ", road.roadSystem.isMultithreaded);
-                //Static:
-                isStatic.boolValue = EditorGUILayout.Toggle("Static: ", road.isStatic);
-                //Used for lightmapping:
-                isLightmapped.boolValue = EditorGUILayout.Toggle("Lightmapped: ", road.isLightmapped);
-                desiredRampHeight.floatValue = EditorGUILayout.FloatField("Ramp Height:", road.desiredRampHeight);
-            }
+            isUsingMultithreading.boolValue = EditorGUILayout.Toggle("Multithreading: ", road.isUsingMultithreading);
+            //Static:
+            isStatic.boolValue = EditorGUILayout.Toggle("Static: ", road.isStatic);
+            //Used for lightmapping:
+            isLightmapped.boolValue = EditorGUILayout.Toggle("Lightmapped: ", road.isLightmapped);
+            desiredRampHeight.floatValue = EditorGUILayout.FloatField("Ramp Height:", road.desiredRampHeight);
 
             //Option: Save meshes as unity assets options:
             isSavingMeshes.boolValue = EditorGUILayout.Toggle("Save mesh assets: ", road.isSavingMeshes);
@@ -701,7 +689,6 @@ namespace RoadArchitect
 
             bool isGizmoChanged = false;
             bool isLaneChanged = false;
-            bool isMultithreadedChanged = false;
             bool isTerrainHistoryChanged = false;
             bool isEditorCameraSpeedChanged = false;
 
@@ -719,16 +706,6 @@ namespace RoadArchitect
                 {
                     isNeedingRoadUpdate = true;
                     isLaneChanged = true;
-                }
-
-                //Option pre-handle for multithread and save mesh:
-                if (road.roadSystem != null)
-                {
-                    if (isUsingMultithreading.boolValue != road.roadSystem.isMultithreaded)
-                    {
-                        road.roadSystem.isMultithreaded = isUsingMultithreading.boolValue;
-                        isMultithreadedChanged = true;
-                    }
                 }
 
                 //Option pre-handle for terrain history:
@@ -764,12 +741,6 @@ namespace RoadArchitect
                         road.SetDefaultMats();
                         road.SetAllCutsToCurrentMaterials();
                     }
-                }
-
-                //Option: Multithreading
-                if (isMultithreadedChanged)
-                {
-                    road.roadSystem.UpdateAllRoadsMultiThreadedOption();
                 }
 
                 //Option: terrain history save type:
