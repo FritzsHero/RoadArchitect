@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Improvements
 
 
+## [Version: 2.4.0] - 2021.09.22
+### Improvements
+- Added automatic rename of edge objects (Feature #29)
+- Added automatic rename of splinated objects (Feature #29)
+
+
+## [Version: 2.3.0] - 2021.09.19
+### Improvements
+- Removed runtime blockers
+- Removed unused Notification script
+- Changed EditorMenu namespace to RoadArchitect
+- Renamed EditorMenu
+- Changed Road to use its own settings instead of RoadSystem settings
+- Implemented bridge and intersection view
+
+
 ## [Version: 2.2.0] - 2021.07.29
 ### Improvements
 - Upgraded materials to use standard shader

@@ -171,6 +171,37 @@ namespace RoadArchitect
         }
 
 
+        public void CheckRenameEdgeObject(EdgeObjectMaker _eom)
+        {
+            // We have _eom already in EdgeObjects
+            List<string> names = new List<string>(EdgeObjects.Count - 1);
+            for (int i = 0; i < EdgeObjects.Count; i++)
+            {
+                if (ReferenceEquals(_eom, EdgeObjects[i]))
+                {
+                    continue;
+                }
+
+                names.Add(EdgeObjects[i].objectName);
+            }
+
+            bool isNotUnique = true;
+            string name = _eom.objectName;
+            int counter = 1;
+            while (isNotUnique)
+            {
+                if (names.Contains(_eom.objectName))
+                {
+                    _eom.objectName = name + counter.ToString();
+                    counter++;
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+
         public void EdgeObjectQuickAdd(string _name)
         {
             EdgeObjectMaker EOM = AddEdgeObject();
@@ -229,6 +260,7 @@ namespace RoadArchitect
         {
             EdgeObjectMaker EOM = EdgeObjects[_index].Copy();
             EdgeObjects.Add(EOM);
+            CheckRenameEdgeObject(EOM);
             SetupEdgeObjects();
         }
 
@@ -345,6 +377,37 @@ namespace RoadArchitect
         }
 
 
+        public void CheckRenameSplinatedObject(SplinatedMeshMaker _smm)
+        {
+            // We have _smm already in SplinatedObjects
+            List<string> names = new List<string>(SplinatedObjects.Count - 1);
+            for(int i = 0; i < SplinatedObjects.Count; i++)
+            {
+                if (ReferenceEquals(_smm, SplinatedObjects[i]))
+                {
+                    continue;
+                }
+                
+                names.Add(SplinatedObjects[i].objectName);
+            }
+
+            bool isNotUnique = true;
+            string name = _smm.objectName;
+            int counter = 1;
+            while(isNotUnique)
+            {
+                if (names.Contains(_smm.objectName))
+                {
+                    _smm.objectName = name + counter.ToString();
+                    counter++;
+                    continue;
+                }
+
+                break;
+            }
+        }
+
+
         public void SplinatedObjectQuickAdd(string _name)
         {
             SplinatedMeshMaker SMM = AddSplinatedObject();
@@ -375,6 +438,7 @@ namespace RoadArchitect
         {
             SplinatedMeshMaker SMM = _SMM.Copy();
             SplinatedObjects.Add(SMM);
+            CheckRenameSplinatedObject(SMM);
             SetupSplinatedMeshes();
         }
 
