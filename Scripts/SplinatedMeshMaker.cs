@@ -529,18 +529,9 @@ namespace RoadArchitect.Splination
         /// <summary> Destroys Output, EndCapStartOutput and EndCapEndOutput </summary>
         public void Kill()
         {
-            if (Output != null)
-            {
-                Object.DestroyImmediate(Output);
-            }
-            if (EndCapStartOutput != null)
-            {
-                Object.DestroyImmediate(EndCapStartOutput);
-            }
-            if (EndCapEndOutput != null)
-            {
-                Object.DestroyImmediate(EndCapEndOutput);
-            }
+            Object.DestroyImmediate(Output);
+            Object.DestroyImmediate(EndCapStartOutput);
+            Object.DestroyImmediate(EndCapEndOutput);
         }
 
 
@@ -1983,10 +1974,7 @@ namespace RoadArchitect.Splination
                 {
                     for (int index = 0; index < 5; index++)
                     {
-                        if (objects[index] != null)
-                        {
-                            Object.DestroyImmediate(objects[index]);
-                        }
+                        Object.DestroyImmediate(objects[index]);
                     }
                 }
                 throw exception;
@@ -2544,10 +2532,7 @@ namespace RoadArchitect.Splination
                 {
                     Debug.LogWarning("Start cap error (still processing extrusion, ignoring start cap). No matching vertices found for start cap. Most likely the cap mesh is aligned improperly or along the wrong axis relative to the main mesh.");
 
-                    if (Cap1 != null)
-                    {
-                        Object.DestroyImmediate(Cap1);
-                    }
+                    Object.DestroyImmediate(Cap1);
                     CapMesh1 = null;
                     CapOrigMVL1 = 0;
                     CapTriCount1 = 0;
@@ -2574,10 +2559,7 @@ namespace RoadArchitect.Splination
                 {
                     Debug.LogError("End cap error (still processing extrusion, ignoring end cap). No matching vertices found for end cap. Most likely the cap mesh is aligned improperly or along the wrong axis relative to the main mesh.");
 
-                    if (Cap2 != null)
-                    {
-                        Object.DestroyImmediate(Cap2);
-                    }
+                    Object.DestroyImmediate(Cap2);
                     CapMesh2 = null;
                     CapOrigMVL2 = 0;
                     CapTriCount2 = 0;
@@ -3917,18 +3899,9 @@ namespace RoadArchitect.Splination
             EndPos = spline.GetSplineValue(EndTime);
 
             //Destroy the instantiated prefab:
-            if (tObj != null)
-            {
-                Object.DestroyImmediate(tObj);
-            }
-            if (Cap1 != null)
-            {
-                Object.DestroyImmediate(Cap1);
-            }
-            if (Cap2 != null)
-            {
-                Object.DestroyImmediate(Cap2);
-            }
+            Object.DestroyImmediate(tObj);
+            Object.DestroyImmediate(Cap1);
+            Object.DestroyImmediate(Cap2);
 
             Material[] fMats = MR.sharedMaterials;
 

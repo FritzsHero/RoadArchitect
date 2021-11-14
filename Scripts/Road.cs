@@ -763,50 +763,17 @@ namespace RoadArchitect
             if (nodeCount < 2)
             {
                 //Delete old objs and return:
-                if (MainMeshes != null)
-                {
-                    Object.DestroyImmediate(MainMeshes);
-                }
-                if (MeshRoad != null)
-                {
-                    Object.DestroyImmediate(MeshRoad);
-                }
-                if (MeshShoR != null)
-                {
-                    Object.DestroyImmediate(MeshShoR);
-                }
-                if (MeshShoL != null)
-                {
-                    Object.DestroyImmediate(MeshShoL);
-                }
-                if (MeshiLanes != null)
-                {
-                    Object.DestroyImmediate(MeshiLanes);
-                }
-                if (MeshiLanes0 != null)
-                {
-                    Object.DestroyImmediate(MeshiLanes0);
-                }
-                if (MeshiLanes1 != null)
-                {
-                    Object.DestroyImmediate(MeshiLanes1);
-                }
-                if (MeshiLanes2 != null)
-                {
-                    Object.DestroyImmediate(MeshiLanes2);
-                }
-                if (MeshiLanes3 != null)
-                {
-                    Object.DestroyImmediate(MeshiLanes3);
-                }
-                if (MeshiMainPlates != null)
-                {
-                    Object.DestroyImmediate(MeshiMainPlates);
-                }
-                if (MeshiMarkerPlates != null)
-                {
-                    Object.DestroyImmediate(MeshiMarkerPlates);
-                }
+                Object.DestroyImmediate(MainMeshes);
+                Object.DestroyImmediate(MeshRoad);
+                Object.DestroyImmediate(MeshShoR);
+                Object.DestroyImmediate(MeshShoL);
+                Object.DestroyImmediate(MeshiLanes);
+                Object.DestroyImmediate(MeshiLanes0);
+                Object.DestroyImmediate(MeshiLanes1);
+                Object.DestroyImmediate(MeshiLanes2);
+                Object.DestroyImmediate(MeshiLanes3);
+                Object.DestroyImmediate(MeshiMainPlates);
+                Object.DestroyImmediate(MeshiMarkerPlates);
                 RootUtils.EndProfiling(this);
                 return;
             }

@@ -906,10 +906,7 @@ namespace RoadArchitect.EdgeObjects
                     int objCount = errorObjs.Count;
                     for (int index = 0; index < objCount; index++)
                     {
-                        if (errorObjs[index] != null)
-                        {
-                            Object.DestroyImmediate(errorObjs[index]);
-                        }
+                        Object.DestroyImmediate(errorObjs[index]);
                     }
                     throw exception;
                 }
@@ -1176,10 +1173,7 @@ namespace RoadArchitect.EdgeObjects
                 }
 
                 BoxCollider BC = xObj.GetComponent<BoxCollider>();
-                if (BC != null)
-                {
-                    Object.DestroyImmediate(BC);
-                }
+                Object.DestroyImmediate(BC);
                 int cCount = xObj.transform.childCount;
                 int spamc = 0;
                 while (cCount > 0 && spamc < 10)
@@ -1199,11 +1193,8 @@ namespace RoadArchitect.EdgeObjects
                 }
                 else
                 {
-                    if (MC != null)
-                    {
-                        Object.DestroyImmediate(MC);
-                        MC = null;
-                    }
+                    Object.DestroyImmediate(MC);
+                    MC = null;
                 }
 
                 if (node.spline.road.isSavingMeshes && MF != null && isCombinedMesh)
@@ -1511,10 +1502,7 @@ namespace RoadArchitect.EdgeObjects
                     }
                 }
             }
-            if (masterObject != null)
-            {
-                Object.DestroyImmediate(masterObject);
-            }
+            Object.DestroyImmediate(masterObject);
         }
         #endregion
 

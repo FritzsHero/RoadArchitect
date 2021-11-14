@@ -20,10 +20,7 @@ namespace RoadArchitect
         private void Awake()
         {
             rigidBody = transform.GetComponent<Rigidbody>();
-            if (rigidBody != null)
-            {
-                DestroyImmediate(rigidBody);
-            }
+            DestroyImmediate(rigidBody);
         }
 
 

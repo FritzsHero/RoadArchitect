@@ -627,10 +627,7 @@ namespace RoadArchitect
             //MeshToFile(MF, RoadEditorUtility.GetBasePath() + "/Mesh/Intersections/" + name +".obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
-            if (MC)
-            {
-                Object.DestroyImmediate(MC);
-            }
+            Object.DestroyImmediate(MC);
             //if(!MC){ MC = iObj.AddComponent<MeshCollider>(); }
             //MC.sharedMesh = MF.sharedMesh;
 
@@ -768,10 +765,7 @@ namespace RoadArchitect
             //MeshToFile(MF, RoadEditorUtility.GetBasePath() + "/Mesh/Intersections/" + name +"-overlay.obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
-            if (MC)
-            {
-                Object.DestroyImmediate(MC);
-            }
+            Object.DestroyImmediate(MC);
             //if(!MC){ MC = iObj.AddComponent<MeshCollider>(); }
             //MC.sharedMesh = MF.sharedMesh;
 
