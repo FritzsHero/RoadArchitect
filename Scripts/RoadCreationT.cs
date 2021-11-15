@@ -2875,17 +2875,43 @@ namespace RoadArchitect.Threading
                 PreInter_RoadWidthMod = 5.5f;
             }
             float preInterDistance = (spline.RoadWidth * PreInter_RoadWidthMod) / spline.distance;
-            SplineN iNode = null;
+            SplineN iNode;
             for (int j = 0; j < nodeCount; j++)
             {
-                if (spline.nodes[j].isIntersection)
+                if (!spline.nodes[j].isIntersection)
                 {
-                    iNode = spline.nodes[j];
-                    //First node set min / max float:
-                    if (iNode.intersectionConstruction == null)
-                    {
-                        iNode.intersectionConstruction = new iConstructionMaker();
-                    }
+                    continue;
+                }
+
+                iNode = spline.nodes[j];
+                //First node set min / max float:
+                if (iNode.intersectionConstruction == null)
+                {
+                    iNode.intersectionConstruction = new iConstructionMaker();
+                }
+                if (!iNode.intersectionConstruction.isTempConstructionProcessedInter1)
+                {
+                    preInterDistance = (iNode.spline.RoadWidth * PreInter_RoadWidthMod) / iNode.spline.distance;
+                    iNode.intersectionConstruction.tempconstruction_InterStart = iNode.time - preInterDistance;
+                    iNode.intersectionConstruction.tempconstruction_InterEnd = iNode.time + preInterDistance;
+
+                    iNode.intersectionConstruction.ClampConstructionValues();
+
+                    iNode.intersectionConstruction.isTempConstructionProcessedInter1 = true;
+                }
+
+                if (string.Compare(iNode.uID, iNode.intersection.node1.uID) == 0)
+                {
+                    iNode = iNode.intersection.node2;
+                }
+                else
+                {
+                    iNode = iNode.intersection.node1;
+                }
+
+                //Grab other intersection node and set min / max float	
+                try
+                {
                     if (!iNode.intersectionConstruction.isTempConstructionProcessedInter1)
                     {
                         preInterDistance = (iNode.spline.RoadWidth * PreInter_RoadWidthMod) / iNode.spline.distance;
@@ -2896,34 +2922,10 @@ namespace RoadArchitect.Threading
 
                         iNode.intersectionConstruction.isTempConstructionProcessedInter1 = true;
                     }
-
-                    if (string.Compare(iNode.uID, iNode.intersection.node1.uID) == 0)
-                    {
-                        iNode = iNode.intersection.node2;
-                    }
-                    else
-                    {
-                        iNode = iNode.intersection.node1;
-                    }
-
-                    //Grab other intersection node and set min / max float	
-                    try
-                    {
-                        if (!iNode.intersectionConstruction.isTempConstructionProcessedInter1)
-                        {
-                            preInterDistance = (iNode.spline.RoadWidth * PreInter_RoadWidthMod) / iNode.spline.distance;
-                            iNode.intersectionConstruction.tempconstruction_InterStart = iNode.time - preInterDistance;
-                            iNode.intersectionConstruction.tempconstruction_InterEnd = iNode.time + preInterDistance;
-                            
-                            iNode.intersectionConstruction.ClampConstructionValues();
-
-                            iNode.intersectionConstruction.isTempConstructionProcessedInter1 = true;
-                        }
-                    }
-                    catch
-                    {
-                        //Do nothing
-                    }
+                }
+                catch
+                {
+                    //Do nothing
                 }
             }
 
