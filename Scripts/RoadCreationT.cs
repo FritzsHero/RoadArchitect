@@ -1354,40 +1354,8 @@ namespace RoadArchitect.Threading
                     //					uIndex = -1;
 
                     xHeight = new Vector3(0f, -0.1f, 0f);
-                    isSpecAddedL = false;
-                    isSpecAddedR = false;
-
-                    if (isFirstInterNode)
-                    {
-                        isSpecAddedL = (is0LAdded || isf0LAdded);
-                        if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
-                        {
-                            isSpecAddedR = (is1RAdded || isf1LAdded);
-                        }
-                        else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
-                        {
-                            isSpecAddedR = (is2RAdded || isf2LAdded);
-                        }
-                        else if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
-                        {
-                            isSpecAddedR = (is3RAdded || isf3LAdded);
-                        }
-                    }
-
                     float tempRoadDef = Mathf.Clamp(_road.laneWidth, 3f, 5f);
 
-                    if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
-                    {
-
-                    }
-                    else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
-                    {
-
-                    }
-                    else if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
-                    {
-
-                    }
 
                     //RR:
                     if (intersection.evenAngle > 90f)
