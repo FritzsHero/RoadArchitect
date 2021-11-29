@@ -74,9 +74,9 @@ namespace RoadArchitect.Threading
             bool isTunnel = false;
             bool isTempTunnel = false;
 
-            //Intersection variables:
-            float tIntHeight = 0f;
-            float tIntStrength = 0f;
+            # region Intersection variables:
+            float intersectionHeight = 0f;
+            float intersectionStrength = 0f;
             //float tIntStrength_temp = 0f;
             RoadIntersection intersection = null;
             bool isPastInter = false;
@@ -192,6 +192,7 @@ namespace RoadArchitect.Threading
             //Unused for now, for later partial construction methods:
             bool isInterseOn = _road.RCS.isInterseOn;
             isInterseOn = true;
+            #endregion
             #endregion
 
 
@@ -484,16 +485,16 @@ namespace RoadArchitect.Threading
                 {
                     //If past intersection
                     isPastInter = false;
-                    tIntStrength = _road.spline.IntersectionStrength(ref tVect, ref tIntHeight, ref intersection, ref isPastInter, ref i, ref xNode);
+                    intersectionStrength = _road.spline.IntersectionStrength(ref tVect, ref intersectionHeight, ref intersection, ref isPastInter, ref i, ref xNode);
                     //1f strength = max intersection
-                    isMaxIntersection = (tIntStrength >= 1f);
+                    isMaxIntersection = (intersectionStrength >= 1f);
                     isFirstInterNode = false;
                 }
 
-                //Outer widths:
+                //Outer widths of intersection:
                 if (isMaxIntersection && isInterseOn)
                 {
-                    intersection.signHeight = tIntHeight;
+                    intersection.signHeight = intersectionHeight;
                     xNode.intersectionConstruction.isBLane0DoneFinalThisRound = false;
                     xNode.intersectionConstruction.isBLane1DoneFinalThisRound = false;
                     xNode.intersectionConstruction.isBLane2DoneFinalThisRound = false;
@@ -658,30 +659,30 @@ namespace RoadArchitect.Threading
                             {
                                 if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                                 {
-                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerLLCornerLR[4], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerLLCornerLR[4], intersectionHeight));
                                 }
                                 else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                                 {
-                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerLR[3], intersectionHeight));
                                 }
                                 else if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                                 {
-                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], tIntHeight));
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerLR[0], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerLR[1], intersectionHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerLR[2], intersectionHeight));
                                 }
                             }
                             else
@@ -690,60 +691,60 @@ namespace RoadArchitect.Threading
                                 {
                                     if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[4], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[4], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], intersectionHeight));
                                     }
                                     else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[3], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], intersectionHeight));
                                     }
                                     else if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerLLCornerRL[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerLLCornerRL[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerLLCornerRL[0], intersectionHeight));
                                     }
                                 }
                                 else if (isRLtoRR)
                                 {
                                     if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[4], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[4], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], intersectionHeight));
                                     }
                                     else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[3], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], intersectionHeight));
                                     }
                                     else if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                                     {
-                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], tIntHeight));
-                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], tIntHeight));
+                                        xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(intersection.cornerRLCornerRR[2], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(intersection.cornerRLCornerRR[1], intersectionHeight));
+                                        xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(intersection.cornerRLCornerRR[0], intersectionHeight));
                                     }
                                 }
                             }
@@ -769,7 +770,7 @@ namespace RoadArchitect.Threading
                         xNode.intersectionConstruction.f0LAttempt = rightVector;
                         if (!xNode.intersectionConstruction.isFLane0Done && !intersection.Contains(ref rightVector))
                         {
-                            xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rightVector, tIntHeight));
+                            xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rightVector, intersectionHeight));
                             isf0LAdded = true;
                         }
 
@@ -782,9 +783,9 @@ namespace RoadArchitect.Threading
                             {
                                 if (isf0LAdded)
                                 {
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 }
-                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 isf1LAdded = true;
                             }
                             else
@@ -803,9 +804,9 @@ namespace RoadArchitect.Threading
                             {
                                 if (isf0LAdded)
                                 {
-                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 }
-                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 isf1LAdded = true;
                             }
                             else
@@ -830,7 +831,7 @@ namespace RoadArchitect.Threading
                             {
                                 if (isf1LAdded)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 }
                             }
                             else
@@ -850,9 +851,9 @@ namespace RoadArchitect.Threading
                             {
                                 if (isf1LAdded)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 }
-                                xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 isf2LAdded = true;
                             }
                             else
@@ -877,13 +878,13 @@ namespace RoadArchitect.Threading
                             if (!xNode.intersectionConstruction.isFLane3Done && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(leftVector, tempIVect))
                             {
 
-                                xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 isf3LAdded = true;
-                                xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(leftVector, tIntHeight));
+                                xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(leftVector, intersectionHeight));
                                 //if(bIsNextInter && roadIntersection.iType == RoadIntersection.IntersectionTypeEnum.FourWay){
                                 if (isf2LAdded)
                                 {
-                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 }
                                 //}
                             }
@@ -902,7 +903,7 @@ namespace RoadArchitect.Threading
                             tempIVect = (tVect + new Vector3(((laneWidth * 0.5f) + roadSeperation) * -POS.normalized.z, 0, ((laneWidth * 0.5f) + roadSeperation) * POS.normalized.x));
                             if (isf2LAdded && !intersection.Contains(ref tempIVect) && !intersection.ContainsLine(rightVector, tempIVect))
                             {
-                                xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                             }
                             else if (isf2LAdded)
                             {
@@ -932,65 +933,65 @@ namespace RoadArchitect.Threading
                             rVect_Next = (tVect_Next + new Vector3(roadSeperation * POS_Next.normalized.z, 0, roadSeperation * -POS_Next.normalized.x));
                             lVect_Next = (tVect_Next + new Vector3(roadSeperation * -POS_Next.normalized.z, 0, roadSeperation * POS_Next.normalized.x));
 
-                            xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rVect_Next, tIntHeight));
-                            xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tVect_Next, tIntHeight));
+                            xNode.intersectionConstruction.iFLane0L.Add(ReplaceHeight(rVect_Next, intersectionHeight));
+                            xNode.intersectionConstruction.iFLane0R.Add(ReplaceHeight(tVect_Next, intersectionHeight));
                             if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                             {
-                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, tIntHeight));
+                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, intersectionHeight));
                                 if (_road.laneAmount == 2)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.475f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.475f) + lVect_Next, intersectionHeight));
                                 }
                                 else if (_road.laneAmount == 4)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.488f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.488f) + lVect_Next, intersectionHeight));
                                 }
                                 else if (_road.laneAmount == 6)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.492f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.492f) + lVect_Next, intersectionHeight));
                                 }
 
                                 if (_road.laneAmount == 2)
                                 {
-                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.03f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.03f) + lVect_Next, intersectionHeight));
                                 }
                                 else if (_road.laneAmount == 4)
                                 {
-                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.015f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.015f) + lVect_Next, intersectionHeight));
                                 }
                                 else if (_road.laneAmount == 6)
                                 {
-                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.01f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.01f) + lVect_Next, intersectionHeight));
                                 }
 
-                                xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(lVect_Next, tIntHeight));
-                                //xNode.intersectionConstruction.iFLane2L.Add(GVC(tVect_Next,tIntHeight));	
-                                //xNode.intersectionConstruction.iFLane2R.Add(GVC(lVect_Next,tIntHeight));
+                                xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(lVect_Next, intersectionHeight));
+                                //xNode.intersectionConstruction.iFLane2L.Add(GVC(tVect_Next,intersectionHeight));	
+                                //xNode.intersectionConstruction.iFLane2R.Add(GVC(lVect_Next,intersectionHeight));
 
                             }
                             else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                             {
-                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, tIntHeight));
+                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, intersectionHeight));
                                 if (_road.laneAmount == 2)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.475f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.475f) + lVect_Next, intersectionHeight));
                                 }
                                 else if (_road.laneAmount == 4)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.488f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.488f) + lVect_Next, intersectionHeight));
                                 }
                                 else if (_road.laneAmount == 6)
                                 {
-                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.492f) + lVect_Next, tIntHeight));
+                                    xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(((rVect_Next - lVect_Next) * 0.492f) + lVect_Next, intersectionHeight));
                                 }
-                                xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(tVect_Next, tIntHeight));
-                                xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(lVect_Next, tIntHeight));
+                                xNode.intersectionConstruction.iFLane2L.Add(ReplaceHeight(tVect_Next, intersectionHeight));
+                                xNode.intersectionConstruction.iFLane2R.Add(ReplaceHeight(lVect_Next, intersectionHeight));
 
                             }
                             else if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                             {
-                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, tIntHeight));
-                                xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(lVect_Next, tIntHeight));
+                                xNode.intersectionConstruction.iFLane1L.Add(ReplaceHeight(tVect_Next, intersectionHeight));
+                                xNode.intersectionConstruction.iFLane1R.Add(ReplaceHeight(lVect_Next, intersectionHeight));
                             }
                             isShrinkRoadFNext = true;
                             //bShrinkRoadF = true;
@@ -1069,13 +1070,13 @@ namespace RoadArchitect.Threading
                         }
                         if (!xNode.intersectionConstruction.isBLane0Done && !intersection.Contains(ref tempIVect) && isLine)
                         {
-                            xNode.intersectionConstruction.iBLane0L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                            xNode.intersectionConstruction.iBLane0L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                             is0LAdded = true;
                         }
                         else if (!xNode.intersectionConstruction.isBLane0DoneFinal)
                         {
                             //Finalize lane 0:
-                            InterFinalizeiBLane0(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode);
+                            InterFinalizeiBLane0(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode);
                         }
 
                         //Line 1:
@@ -1084,7 +1085,7 @@ namespace RoadArchitect.Threading
                             if (xNode.intersectionConstruction.iBLane0L.Count == 2)
                             {
                                 tempIVect = (tVect + new Vector3((laneWidth * 0.5f) * -POS.normalized.z, 0, (laneWidth * 0.5f) * POS.normalized.x));
-                                xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                             }
                         }
                         tempIVect_Prev = tempIVect;
@@ -1111,23 +1112,23 @@ namespace RoadArchitect.Threading
                         {
                             if (is0LAdded && (xNode.intersectionConstruction.iBLane0L.Count != 2 || intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane))
                             {
-                                xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iBLane0R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                             }
-                            xNode.intersectionConstruction.iBLane1L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                            xNode.intersectionConstruction.iBLane1L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                             is1LAdded = true;
                         }
                         else if (!xNode.intersectionConstruction.isBLane1DoneFinal)
                         {
                             //Finalize lane 1:
-                            InterFinalizeiBLane1(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is0LAdded, ref is1RAdded);
+                            InterFinalizeiBLane1(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is0LAdded, ref is1RAdded);
                         }
 
                         //Line 2:
                         if (xNode.intersectionConstruction.iBLane1R.Count == 0 && xNode.intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
-                            xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tVect, tIntHeight));
+                            xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tVect, intersectionHeight));
                             is1RAdded = true;
-                            xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tVect, tIntHeight));
+                            xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tVect, intersectionHeight));
                             is2LAdded = true;
                             is2LAdded = true;
                         }
@@ -1150,15 +1151,15 @@ namespace RoadArchitect.Threading
                             {
                                 if (is1LAdded)
                                 {
-                                    xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                     is1RAdded = true;
                                 }
-                                xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 is2LAdded = true;
                             }
                             else if (!xNode.intersectionConstruction.isBLane2DoneFinal)
                             {
-                                InterFinalizeiBLane2(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
+                                InterFinalizeiBLane2(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
                             }
                         }
 
@@ -1170,21 +1171,21 @@ namespace RoadArchitect.Threading
                         }
                         if (!xNode.intersectionConstruction.isBLane3Done && !intersection.ContainsLine(rightVector, tempIVect) && !intersection.ContainsLine(rightVector, leftVector))
                         {
-                            xNode.intersectionConstruction.iBLane3L.Add(ReplaceHeight(tempIVect, tIntHeight));
-                            xNode.intersectionConstruction.iBLane3R.Add(ReplaceHeight(rightVector, tIntHeight));
+                            xNode.intersectionConstruction.iBLane3L.Add(ReplaceHeight(tempIVect, intersectionHeight));
+                            xNode.intersectionConstruction.iBLane3R.Add(ReplaceHeight(rightVector, intersectionHeight));
                             is3RAdded = true;
                             if (!isFirst123 && intersection.intersectionType == RoadIntersection.IntersectionTypeEnum.FourWay)
                             {
                                 if (is2LAdded)
                                 {
-                                    xNode.intersectionConstruction.iBLane2R.Add(ReplaceHeight(tempIVect, tIntHeight));
+                                    xNode.intersectionConstruction.iBLane2R.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                     is2RAdded = true;
                                 }
                             }
                         }
                         else if (!xNode.intersectionConstruction.isBLane3DoneFinal)
                         {
-                            InterFinalizeiBLane3(ref xNode, ref intersection, ref tIntHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
+                            InterFinalizeiBLane3(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
                         }
 
                     }
@@ -1228,81 +1229,81 @@ namespace RoadArchitect.Threading
                 }
 
 
-                if (tIntStrength >= 1f)
+                if (intersectionStrength >= 1f)
                 {
                     tVect.y -= tInterSubtract;
                     tLastInterHeight = tVect.y;
                     rightVector.y -= tInterSubtract;
                     leftVector.y -= tInterSubtract;
 
-                    ShoulderL_rVect.y = tIntHeight;
-                    ShoulderR_lVect.y = tIntHeight;
-                    ShoulderR_rVect.y = tIntHeight;
-                    ShoulderL_lVect.y = tIntHeight;
+                    ShoulderL_rVect.y = intersectionHeight;
+                    ShoulderR_lVect.y = intersectionHeight;
+                    ShoulderR_rVect.y = intersectionHeight;
+                    ShoulderL_lVect.y = intersectionHeight;
 
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_rVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //  ShoulderL_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_rVect.y);
+                    //  ShoulderL_rVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*ShoulderL_rVect.y);
                     //}
                     //					
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_lVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //  ShoulderR_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_lVect.y);
+                    //  ShoulderR_lVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*ShoulderR_lVect.y);
                     //}
                     //					
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //  ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y);
+                    //  ShoulderR_rVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y);
                     //}
                     //					
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //  ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y);
+                    //  ShoulderL_lVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y);
                     //}
                 }
-                else if (tIntStrength > 0f)
+                else if (intersectionStrength > 0f)
                 {
 
-                    rightVector.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * rightVector.y);
+                    rightVector.y = (intersectionStrength * intersectionHeight) + ((1 - intersectionStrength) * rightVector.y);
                     ShoulderR_lVect = rightVector;
-                    leftVector.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * leftVector.y);
+                    leftVector.y = (intersectionStrength * intersectionHeight) + ((1 - intersectionStrength) * leftVector.y);
                     ShoulderL_rVect = leftVector;
-                    ShoulderR_rVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * ShoulderR_rVect.y);
-                    ShoulderL_lVect.y = (tIntStrength * tIntHeight) + ((1 - tIntStrength) * ShoulderL_lVect.y);
+                    ShoulderR_rVect.y = (intersectionStrength * intersectionHeight) + ((1 - intersectionStrength) * ShoulderR_rVect.y);
+                    ShoulderL_lVect.y = (intersectionStrength * intersectionHeight) + ((1 - intersectionStrength) * ShoulderL_lVect.y);
 
-                    //if(!Mathf.Approximately(tIntStrength,0f))
+                    //if (!Mathf.Approximately(intersectionStrength, 0f))
                     //{
-                    //  tVect.y = (tIntStrength*tIntHeight) + ((1-tIntStrength)*tVect.y);
+                    //  tVect.y = (intersectionStrength * intersectionHeight) + ((1 - intersectionStrength) * tVect.y);
                     //}
                     //
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
-                    //if(!Mathf.Approximately(tIntStrength_temp,0f))
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref rVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //if (!Mathf.Approximately(tIntStrength_temp, 0f))
                     //{
-                    //  rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*rVect.y);
+                    //  rVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*rVect.y);
                     //  ShoulderR_lVect = rVect;
                     //}
                     //					
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref lVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //  lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*lVect.y);
+                    //  lVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*lVect.y);
                     //  ShoulderL_rVect = lVect;
                     //}
                     //					
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderR_rVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //  ShoulderR_rVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y);
+                    //  ShoulderR_rVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*ShoulderR_rVect.y);
                     //}
                     //					
-                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref tIntHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
+                    //tIntStrength_temp = tRoad.spline.IntersectionStrength(ref ShoulderL_lVect,ref intersectionHeight, ref roadIntersection,ref bIsPastInter,ref i, ref xNode);
                     //if(!Mathf.Approximately(tIntStrength_temp,0f))
                     //{
-                    //ShoulderL_lVect.y = (tIntStrength_temp*tIntHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y);
+                    //ShoulderL_lVect.y = (tIntStrength_temp*intersectionHeight) + ((1-tIntStrength_temp)*ShoulderL_lVect.y);
                     //}
                 }
 
@@ -1479,9 +1480,9 @@ namespace RoadArchitect.Threading
                             eList = null;
                         }
 
-                        ShoulderR_lVect = new Vector3(CornerRR.x, tIntHeight, CornerRR.y);
-                        ShoulderR_rVect = new Vector3(intersection.cornerRROuter.x, tIntHeight, intersection.cornerRROuter.z);
-                        RampR_Override = new Vector3(intersection.cornerRRRampOuter.x, tIntHeight, intersection.cornerRRRampOuter.z);
+                        ShoulderR_lVect = new Vector3(CornerRR.x, intersectionHeight, CornerRR.y);
+                        ShoulderR_rVect = new Vector3(intersection.cornerRROuter.x, intersectionHeight, intersection.cornerRROuter.z);
+                        RampR_Override = new Vector3(intersection.cornerRRRampOuter.x, intersectionHeight, intersection.cornerRRRampOuter.z);
                         isRecordShoulderForNormals = true;
                     }
                     else
@@ -1523,9 +1524,9 @@ namespace RoadArchitect.Threading
                                 eList = null;
                             }
 
-                            ShoulderL_rVect = new Vector3(CornerRR.x, tIntHeight, CornerRR.y);
-                            ShoulderL_lVect = new Vector3(intersection.cornerRROuter.x, tIntHeight, intersection.cornerRROuter.z);
-                            RampL_Override = new Vector3(intersection.cornerRRRampOuter.x, tIntHeight, intersection.cornerRRRampOuter.z);
+                            ShoulderL_rVect = new Vector3(CornerRR.x, intersectionHeight, CornerRR.y);
+                            ShoulderL_lVect = new Vector3(intersection.cornerRROuter.x, intersectionHeight, intersection.cornerRROuter.z);
+                            RampL_Override = new Vector3(intersection.cornerRRRampOuter.x, intersectionHeight, intersection.cornerRRRampOuter.z);
                             isRecordShoulderLForNormals = true;
                         }
                     }
@@ -1626,9 +1627,9 @@ namespace RoadArchitect.Threading
                             eList = null;
                         }
 
-                        ShoulderR_lVect = new Vector3(CornerRL.x, tIntHeight, CornerRL.y);
-                        ShoulderR_rVect = new Vector3(intersection.cornerRLOuter.x, tIntHeight, intersection.cornerRLOuter.z);
-                        RampR_Override = new Vector3(intersection.cornerRLRampOuter.x, tIntHeight, intersection.cornerRLRampOuter.z);
+                        ShoulderR_lVect = new Vector3(CornerRL.x, intersectionHeight, CornerRL.y);
+                        ShoulderR_rVect = new Vector3(intersection.cornerRLOuter.x, intersectionHeight, intersection.cornerRLOuter.z);
+                        RampR_Override = new Vector3(intersection.cornerRLRampOuter.x, intersectionHeight, intersection.cornerRLRampOuter.z);
                         isRecordShoulderForNormals = true;
                     }
                     else
@@ -1688,9 +1689,9 @@ namespace RoadArchitect.Threading
                                 eList = null;
                             }
 
-                            ShoulderL_rVect = new Vector3(CornerRL.x, tIntHeight, CornerRL.y);
-                            ShoulderL_lVect = new Vector3(intersection.cornerRLOuter.x, tIntHeight, intersection.cornerRLOuter.z);
-                            RampL_Override = new Vector3(intersection.cornerRLRampOuter.x, tIntHeight, intersection.cornerRLRampOuter.z);
+                            ShoulderL_rVect = new Vector3(CornerRL.x, intersectionHeight, CornerRL.y);
+                            ShoulderL_lVect = new Vector3(intersection.cornerRLOuter.x, intersectionHeight, intersection.cornerRLOuter.z);
+                            RampL_Override = new Vector3(intersection.cornerRLRampOuter.x, intersectionHeight, intersection.cornerRLRampOuter.z);
                             isRecordShoulderLForNormals = true;
                         }
                     }
@@ -1760,9 +1761,9 @@ namespace RoadArchitect.Threading
                             eList = null;
                         }
 
-                        ShoulderR_lVect = new Vector3(CornerLR.x, tIntHeight, CornerLR.y);
-                        ShoulderR_rVect = new Vector3(intersection.cornerLROuter.x, tIntHeight, intersection.cornerLROuter.z);
-                        RampR_Override = new Vector3(intersection.cornerLRRampOuter.x, tIntHeight, intersection.cornerLRRampOuter.z);
+                        ShoulderR_lVect = new Vector3(CornerLR.x, intersectionHeight, CornerLR.y);
+                        ShoulderR_rVect = new Vector3(intersection.cornerLROuter.x, intersectionHeight, intersection.cornerLROuter.z);
+                        RampR_Override = new Vector3(intersection.cornerLRRampOuter.x, intersectionHeight, intersection.cornerLRRampOuter.z);
                         isRecordShoulderForNormals = true;
                     }
                     else
@@ -1839,9 +1840,9 @@ namespace RoadArchitect.Threading
                                 eList = null;
                             }
 
-                            ShoulderL_rVect = new Vector3(CornerLR.x, tIntHeight, CornerLR.y);
-                            ShoulderL_lVect = new Vector3(intersection.cornerLROuter.x, tIntHeight, intersection.cornerLROuter.z);
-                            RampL_Override = new Vector3(intersection.cornerLRRampOuter.x, tIntHeight, intersection.cornerLRRampOuter.z);
+                            ShoulderL_rVect = new Vector3(CornerLR.x, intersectionHeight, CornerLR.y);
+                            ShoulderL_lVect = new Vector3(intersection.cornerLROuter.x, intersectionHeight, intersection.cornerLROuter.z);
+                            RampL_Override = new Vector3(intersection.cornerLRRampOuter.x, intersectionHeight, intersection.cornerLRRampOuter.z);
                             isRecordShoulderLForNormals = true;
                         }
                     }
@@ -1888,9 +1889,9 @@ namespace RoadArchitect.Threading
                             eList = null;
                         }
 
-                        ShoulderR_lVect = new Vector3(CornerLL.x, tIntHeight, CornerLL.y);
-                        ShoulderR_rVect = new Vector3(intersection.cornerLLOuter.x, tIntHeight, intersection.cornerLLOuter.z);
-                        RampR_Override = new Vector3(intersection.cornerLLRampOuter.x, tIntHeight, intersection.cornerLLRampOuter.z);
+                        ShoulderR_lVect = new Vector3(CornerLL.x, intersectionHeight, CornerLL.y);
+                        ShoulderR_rVect = new Vector3(intersection.cornerLLOuter.x, intersectionHeight, intersection.cornerLLOuter.z);
+                        RampR_Override = new Vector3(intersection.cornerLLRampOuter.x, intersectionHeight, intersection.cornerLLRampOuter.z);
                         isRecordShoulderForNormals = true;
                     }
                     else
@@ -1966,9 +1967,9 @@ namespace RoadArchitect.Threading
                                 eList = null;
                             }
 
-                            ShoulderL_rVect = new Vector3(CornerLL.x, tIntHeight, CornerLL.y);
-                            ShoulderL_lVect = new Vector3(intersection.cornerLLOuter.x, tIntHeight, intersection.cornerLLOuter.z);
-                            RampL_Override = new Vector3(intersection.cornerLLRampOuter.x, tIntHeight, intersection.cornerLLRampOuter.z);
+                            ShoulderL_rVect = new Vector3(CornerLL.x, intersectionHeight, CornerLL.y);
+                            ShoulderL_lVect = new Vector3(intersection.cornerLLOuter.x, intersectionHeight, intersection.cornerLLOuter.z);
+                            RampL_Override = new Vector3(intersection.cornerLLRampOuter.x, intersectionHeight, intersection.cornerLLRampOuter.z);
                             isRecordShoulderLForNormals = true;
                         }
                     }
