@@ -1086,19 +1086,10 @@ namespace RoadArchitect
                     {
                         MeshCollider tMC = road.MeshRoad.GetComponent<MeshCollider>();
                         MeshRenderer tMR = road.MeshRoad.GetComponent<MeshRenderer>();
-                        if (tMC != null)
-                        {
-                            Object.DestroyImmediate(tMC);
-                        }
-                        if (tMR != null)
-                        {
-                            Object.DestroyImmediate(tMR);
-                        }
+                        Object.DestroyImmediate(tMC);
+                        Object.DestroyImmediate(tMR);
                     }
-                    if (tMesh != null)
-                    {
-                        Object.DestroyImmediate(tMesh);
-                    }
+                    Object.DestroyImmediate(tMesh);
                 }
 
 
@@ -1230,15 +1221,8 @@ namespace RoadArchitect
                         tMesh_SLCuts[index] = null;
                     }
 
-                    if (road.MeshShoR != null)
-                    {
-                        Object.DestroyImmediate(road.MeshShoR);
-                    }
-
-                    if (road.MeshShoL != null)
-                    {
-                        Object.DestroyImmediate(road.MeshShoL);
-                    }
+                    Object.DestroyImmediate(road.MeshShoR);
+                    Object.DestroyImmediate(road.MeshShoL);
                 }
 
                 string basePath = RoadEditorUtility.GetBasePath();
@@ -1305,34 +1289,13 @@ namespace RoadArchitect
                 MeshSetup2Intersections();
             }
 
-            if (road.MeshiLanes != null)
-            {
-                Object.DestroyImmediate(road.MeshiLanes);
-            }
-            if (road.MeshiLanes0 != null)
-            {
-                Object.DestroyImmediate(road.MeshiLanes0);
-            }
-            if (road.MeshiLanes1 != null)
-            {
-                Object.DestroyImmediate(road.MeshiLanes1);
-            }
-            if (road.MeshiLanes2 != null)
-            {
-                Object.DestroyImmediate(road.MeshiLanes2);
-            }
-            if (road.MeshiLanes3 != null)
-            {
-                Object.DestroyImmediate(road.MeshiLanes3);
-            }
-            if (road.MeshiMainPlates != null)
-            {
-                Object.DestroyImmediate(road.MeshiMainPlates);
-            }
-            if (road.MeshiMarkerPlates != null)
-            {
-                Object.DestroyImmediate(road.MeshiMarkerPlates);
-            }
+            Object.DestroyImmediate(road.MeshiLanes);
+            Object.DestroyImmediate(road.MeshiLanes0);
+            Object.DestroyImmediate(road.MeshiLanes1);
+            Object.DestroyImmediate(road.MeshiLanes2);
+            Object.DestroyImmediate(road.MeshiLanes3);
+            Object.DestroyImmediate(road.MeshiMainPlates);
+            Object.DestroyImmediate(road.MeshiMarkerPlates);
 
             //Updates the road and shoulder cut materials if necessary.
             //Note: Cycling through all nodes in case the road cuts and shoulder cut numbers don't match.
@@ -1350,40 +1313,22 @@ namespace RoadArchitect
         private void RemoveMainMeshes()
         {
             //Remove main mesh stuff if necessary:
-            if (tMesh_SR != null)
-            {
-                Object.DestroyImmediate(tMesh_SR);
-            }
-            if (tMesh_SL != null)
-            {
-                Object.DestroyImmediate(tMesh_SL);
-            }
+            Object.DestroyImmediate(tMesh_SR);
+            Object.DestroyImmediate(tMesh_SL);
 
             if (road.MeshShoR != null)
             {
                 MeshCollider tMC = road.MeshShoR.GetComponent<MeshCollider>();
                 MeshRenderer tMR = road.MeshShoR.GetComponent<MeshRenderer>();
-                if (tMC != null)
-                {
-                    Object.DestroyImmediate(tMC);
-                }
-                if (tMR != null)
-                {
-                    Object.DestroyImmediate(tMR);
-                }
+                Object.DestroyImmediate(tMC);
+                Object.DestroyImmediate(tMR);
             }
             if (road.MeshShoL != null)
             {
                 MeshCollider tMC = road.MeshShoL.GetComponent<MeshCollider>();
                 MeshRenderer tMR = road.MeshShoL.GetComponent<MeshRenderer>();
-                if (tMC != null)
-                {
-                    Object.DestroyImmediate(tMC);
-                }
-                if (tMR != null)
-                {
-                    Object.DestroyImmediate(tMR);
-                }
+                Object.DestroyImmediate(tMC);
+                Object.DestroyImmediate(tMR);
             }
         }
 
@@ -2188,17 +2133,12 @@ namespace RoadArchitect
                 tObj.isStatic = true;
             }
 
-
             if (_isMainPlates)
             {
                 MeshCollider MC = tObj.AddComponent<MeshCollider>();
                 MC.sharedMesh = MF.sharedMesh;
                 MC.material = road.RoadPhysicMaterial;
                 MC.material.name = MC.material.name.Replace(" (Instance)", "");
-            }
-
-            if (_isMainPlates && tCenter != null)
-            {
                 Object.DestroyImmediate(tCenter);
             }
 
