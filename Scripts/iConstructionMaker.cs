@@ -183,19 +183,12 @@ namespace RoadArchitect
             NullifyList(iFMarkerPlateL);
             NullifyList(iFMarkerPlateR);
 
-
-            if (tempconstruction_R != null)
-            {
-                tempconstruction_R = null;
-            }
-            if (tempconstruction_L != null)
-            {
-                tempconstruction_L = null;
-            }
+            NullifyList(tempconstruction_R);
+            NullifyList(tempconstruction_L);
         }
 
 
-        private void NullifyList(List<Vector3> _constructionMaker)
+        private void NullifyList<T>(List<T> _constructionMaker)
         {
             if (_constructionMaker != null)
             {
