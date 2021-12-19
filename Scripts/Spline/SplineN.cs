@@ -137,7 +137,6 @@ namespace RoadArchitect
         #endregion
 
 
-
         #region "Edge Objects"
         public List<EdgeObjectMaker> EdgeObjects;
 
@@ -1071,32 +1070,22 @@ namespace RoadArchitect
         public GameObject shoulderCutRWorld = null;
         [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_world")]
         public GameObject shoulderCutLWorld = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("RoadCut_world_Mats")]
-        public Material[] roadCutWorldMats;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutR_world_Mats")]
-        public Material[] shoulderCutRWorldMats;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_world_Mats")]
-        public Material[] shoulderCutLWorldMats;
-
         [UnityEngine.Serialization.FormerlySerializedAs("RoadCut_marker")]
         public GameObject roadCutMarker = null;
         [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutR_marker")]
         public GameObject shoulderCutRMarker = null;
         [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_marker")]
         public GameObject shoulderCutLMarker = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("RoadCut_marker_Mats")]
-        public Material[] roadCutMarkerMats;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutR_marker_Mats")]
-        public Material[] shoulderCutRMarkerMats;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_marker_Mats")]
-        public Material[] shoulderCutLMarkerMats;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("RoadCut_PhysicMat")]
-        public PhysicMaterial roadCutPhysicMat;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutR_PhysicMat")]
-        public PhysicMaterial shoulderCutRPhysicMat;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_PhysicMat")]
-        public PhysicMaterial shoulderCutLPhysicMat;
+        private Material[] roadCutWorldMats;
+        private Material[] shoulderCutRWorldMats;
+        private Material[] shoulderCutLWorldMats;
+        private Material[] roadCutMarkerMats;
+        private Material[] shoulderCutRMarkerMats;
+        private Material[] shoulderCutLMarkerMats;
+        private PhysicMaterial roadCutPhysicMat;
+        private PhysicMaterial shoulderCutRPhysicMat;
+        private PhysicMaterial shoulderCutLPhysicMat;
 
 
         /// <summary> Stores the cut materials. For use in UpdateCuts(). See UpdateCuts() in this code file for further description of this system. </summary>
