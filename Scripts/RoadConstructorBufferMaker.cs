@@ -554,66 +554,20 @@ namespace RoadArchitect
             tMesh = null;
             tMesh_SR = null;
             tMesh_SL = null;
-            if (tMesh_iBLanes0 != null)
-            {
-                tMesh_iBLanes0.Clear();
-                tMesh_iBLanes0 = null;
-            }
-            if (tMesh_iBLanes1 != null)
-            {
-                tMesh_iBLanes1.Clear();
-                tMesh_iBLanes1 = null;
-            }
-            if (tMesh_iBLanes2 != null)
-            {
-                tMesh_iBLanes2.Clear();
-                tMesh_iBLanes2 = null;
-            }
-            if (tMesh_iBLanes3 != null)
-            {
-                tMesh_iBLanes3.Clear();
-                tMesh_iBLanes3 = null;
-            }
-            if (tMesh_iFLanes0 != null)
-            {
-                tMesh_iFLanes0.Clear();
-                tMesh_iFLanes0 = null;
-            }
-            if (tMesh_iFLanes1 != null)
-            {
-                tMesh_iFLanes1.Clear();
-                tMesh_iFLanes1 = null;
-            }
-            if (tMesh_iFLanes2 != null)
-            {
-                tMesh_iFLanes2.Clear();
-                tMesh_iFLanes2 = null;
-            }
-            if (tMesh_iFLanes3 != null)
-            {
-                tMesh_iFLanes3.Clear();
-                tMesh_iFLanes3 = null;
-            }
-            if (tMesh_iBMainPlates != null)
-            {
-                tMesh_iBMainPlates.Clear();
-                tMesh_iBMainPlates = null;
-            }
-            if (tMesh_iFMainPlates != null)
-            {
-                tMesh_iFMainPlates.Clear();
-                tMesh_iFMainPlates = null;
-            }
-            if (tMesh_iBMarkerPlates != null)
-            {
-                tMesh_iBMarkerPlates.Clear();
-                tMesh_iBMarkerPlates = null;
-            }
-            if (tMesh_iFMarkerPlates != null)
-            {
-                tMesh_iFMarkerPlates.Clear();
-                tMesh_iFMarkerPlates = null;
-            }
+
+            RootUtils.NullifyList(ref tMesh_iBLanes0);
+            RootUtils.NullifyList(ref tMesh_iBLanes1);
+            RootUtils.NullifyList(ref tMesh_iBLanes2);
+            RootUtils.NullifyList(ref tMesh_iBLanes3);
+            RootUtils.NullifyList(ref tMesh_iFLanes0);
+            RootUtils.NullifyList(ref tMesh_iFLanes1);
+            RootUtils.NullifyList(ref tMesh_iFLanes2);
+            RootUtils.NullifyList(ref tMesh_iFLanes3);
+            RootUtils.NullifyList(ref tMesh_iBMainPlates);
+            RootUtils.NullifyList(ref tMesh_iFMainPlates);
+            RootUtils.NullifyList(ref tMesh_iBMarkerPlates);
+            RootUtils.NullifyList(ref tMesh_iFMarkerPlates);
+
             tMesh_RoadConnections = null;
 
             iFLane1s_IsMiddleLane = null;
@@ -625,37 +579,12 @@ namespace RoadArchitect
             RoadConnections_uv = null;
             RoadConnections_tangents = null;
 
-            if (cut_uv_world != null)
-            {
-                cut_uv_world.Clear();
-                cut_uv_world = null;
-            }
-            if (cut_uv_SR_world != null)
-            {
-                cut_uv_SR_world.Clear();
-                cut_uv_SR_world = null;
-            }
-            if (cut_uv_SL_world != null)
-            {
-                cut_uv_SL_world.Clear();
-                cut_uv_SL_world = null;
-            }
-            if (cut_tangents_world != null)
-            {
-                cut_tangents_world.Clear();
-                cut_tangents_world = null;
-            }
-            if (cut_tangents_SR_world != null)
-            {
-                cut_tangents_SR_world.Clear();
-                cut_tangents_SR_world = null;
-            }
-            if (cut_tangents_SL_world != null)
-            {
-                cut_tangents_SL_world.Clear();
-                cut_tangents_SL_world = null;
-            }
-
+            RootUtils.NullifyList(ref cut_uv_world);
+            RootUtils.NullifyList(ref cut_uv_SR_world);
+            RootUtils.NullifyList(ref cut_uv_SL_world);
+            RootUtils.NullifyList(ref cut_tangents_world);
+            RootUtils.NullifyList(ref cut_tangents_SR_world);
+            RootUtils.NullifyList(ref cut_tangents_SL_world);
 
             tMesh = null;
             tMesh_SR = null;

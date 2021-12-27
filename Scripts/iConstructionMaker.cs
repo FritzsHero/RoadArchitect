@@ -158,43 +158,33 @@ namespace RoadArchitect
         public void Nullify()
         {
             //Intersection construction:
-            NullifyList(iBLane0L);
-            NullifyList(iBLane0R);
-            NullifyList(iBLane1L);
-            NullifyList(iBLane1R);
-            NullifyList(iBLane2L);
-            NullifyList(iBLane2R);
-            NullifyList(iBLane3L);
-            NullifyList(iBLane3R);
-            NullifyList(iFLane0L);
-            NullifyList(iFLane0R);
-            NullifyList(iFLane1L);
-            NullifyList(iFLane1R);
-            NullifyList(iFLane2L);
-            NullifyList(iFLane2R);
-            NullifyList(iFLane3L);
-            NullifyList(iFLane3R);
-            NullifyList(iBMainPlateL);
-            NullifyList(iBMainPlateR);
-            NullifyList(iFMainPlateL);
-            NullifyList(iFMainPlateR);
-            NullifyList(iBMarkerPlateL);
-            NullifyList(iBMarkerPlateR);
-            NullifyList(iFMarkerPlateL);
-            NullifyList(iFMarkerPlateR);
+            RootUtils.NullifyList(ref iBLane0L);
+            RootUtils.NullifyList(ref iBLane0R);
+            RootUtils.NullifyList(ref iBLane1L);
+            RootUtils.NullifyList(ref iBLane1R);
+            RootUtils.NullifyList(ref iBLane2L);
+            RootUtils.NullifyList(ref iBLane2R);
+            RootUtils.NullifyList(ref iBLane3L);
+            RootUtils.NullifyList(ref iBLane3R);
+            RootUtils.NullifyList(ref iFLane0L);
+            RootUtils.NullifyList(ref iFLane0R);
+            RootUtils.NullifyList(ref iFLane1L);
+            RootUtils.NullifyList(ref iFLane1R);
+            RootUtils.NullifyList(ref iFLane2L);
+            RootUtils.NullifyList(ref iFLane2R);
+            RootUtils.NullifyList(ref iFLane3L);
+            RootUtils.NullifyList(ref iFLane3R);
+            RootUtils.NullifyList(ref iBMainPlateL);
+            RootUtils.NullifyList(ref iBMainPlateR);
+            RootUtils.NullifyList(ref iFMainPlateL);
+            RootUtils.NullifyList(ref iFMainPlateR);
+            RootUtils.NullifyList(ref iBMarkerPlateL);
+            RootUtils.NullifyList(ref iBMarkerPlateR);
+            RootUtils.NullifyList(ref iFMarkerPlateL);
+            RootUtils.NullifyList(ref iFMarkerPlateR);
 
-            NullifyList(tempconstruction_R);
-            NullifyList(tempconstruction_L);
-        }
-
-
-        private void NullifyList<T>(List<T> _constructionMaker)
-        {
-            if (_constructionMaker != null)
-            {
-                _constructionMaker.Clear();
-                _constructionMaker = null;
-            }
+            RootUtils.NullifyList(ref tempconstruction_R);
+            RootUtils.NullifyList(ref tempconstruction_L);
         }
 
 

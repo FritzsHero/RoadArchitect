@@ -101,6 +101,16 @@ namespace RoadArchitect
         }
 
 
+        public static void NullifyList<T>(ref System.Collections.Generic.List<T> _list)
+        {
+            if (_list != null)
+            {
+                _list.Clear();
+                _list = null;
+            }
+        }
+
+
         #region "Float comparisons"
         public static bool IsApproximately(float _a, float _b, float _tolerance = 0.01f)
         {
