@@ -326,13 +326,6 @@ namespace RoadArchitect
                 Selection.activeGameObject = Intersections.CreateIntersection(node1, node2);
                 return;
             }
-
-
-            if (Event.current.type != EventType.Layout && node.isQuitGUI)
-            {
-                node.isQuitGUI = false;
-                return;
-            }
             #endregion
 
 

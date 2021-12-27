@@ -55,8 +55,6 @@ namespace RoadArchitect
         public float minSplination = 0f;
         [UnityEngine.Serialization.FormerlySerializedAs("MaxSplination")]
         public float maxSplination = 1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bQuitGUI")]
-        public bool isQuitGUI = false;
 
         public int idOnSpline = -1;
         [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]

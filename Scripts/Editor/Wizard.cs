@@ -225,7 +225,6 @@ namespace RoadArchitect
                     {
                         thisNode.LoadWizardObjectsFromLibrary(objectList[i].fileName, objectList[i].isDefault, objectList[i].isBridge);
                     }
-                    thisNode.isQuitGUI = true;
                     objectList.Clear();
                     objectList = null;
                     EditorGUILayout.EndHorizontal();
