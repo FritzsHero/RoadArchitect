@@ -972,28 +972,21 @@ namespace RoadArchitect.EdgeObjects
                 MeshRenderer OrigMR = edgeObject.GetComponent<MeshRenderer>();
                 for (int j = 0; j < lCount; j++)
                 {
+                    #if UNITY_EDITOR
+                    // Instantiate prefab instead of object
+                    tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
+                    #else
+                    // Line to instantiate the object instead of an prefab
+                    tObj = GameObject.Instantiate(edgeObject);
+                    #endif
+                    tObj.transform.position = edgeObjectLocations[j];
+
                     if (edgeObjectRotations[j] == default(Vector3))
                     {
-                        #if UNITY_EDITOR
-                        // Instantiate prefab instead of object
-                        tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
-                        #else
-                        // Line to instantiate the object instead of an prefab
-                        tObj = GameObject.Instantiate(edgeObject);
-                        #endif
                         _errorObjs.Add(tObj);
-                        tObj.transform.position = edgeObjectLocations[j];
                     }
                     else
                     {
-                        #if UNITY_EDITOR
-                        // Instantiate prefab instead of object
-                        tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
-                        #else
-                        // Line to instantiate the object instead of an prefab
-                        tObj = GameObject.Instantiate(edgeObject);
-                        #endif
-                        tObj.transform.position = edgeObjectLocations[j];
                         if(isRotationAligning)
                         {
                             tObj.transform.rotation = Quaternion.LookRotation(edgeObjectRotations[j]);
@@ -1122,12 +1115,9 @@ namespace RoadArchitect.EdgeObjects
                     //UV copy:
                     System.Array.Copy(kUV, hUV[j], OrigMVL);
 
-                    Vector3 tVect = default(Vector3);
                     for (int index = 0; index < OrigMVL; index++)
                     {
-                        tVect = hVerts[j][index];
-                        hVerts[j][index] = tTrans.rotation * tVect;
-                        hVerts[j][index] += tTrans.localPosition;
+                        hVerts[j][index] = (tTrans.rotation * hVerts[j][index]) + tTrans.localPosition;
                     }
                 }
 
