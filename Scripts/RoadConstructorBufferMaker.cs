@@ -979,6 +979,7 @@ namespace RoadArchitect
                     //If road cuts, change it to one material (pavement) with world mapping
                     int cCount = cut_RoadVectors.Count;
                     //Vector2[] tUV;
+                    bool bHasMats;
                     GameObject CreatedMainObj;
                     GameObject CreatedMarkerObj;
                     for (int i = 0; i < cCount; i++)
@@ -993,7 +994,6 @@ namespace RoadArchitect
 
                         CreatedMarkerObj = null;
                         MeshMarkerBuffer = tMesh_RoadCuts[i];
-                        bool bHasMats = false;
                         if (MeshMarkerBuffer != null)
                         {
                             bHasMats = MeshSetup2HelperRoadCuts(i, ref MeshMarkerBuffer, cut_uv[i], cut_tangents[i], ref CreatedMainObj, true, out CreatedMarkerObj, markerMaterialsField, roadMaterialsField);
@@ -1043,12 +1043,12 @@ namespace RoadArchitect
                     }
                     else
                     {
+                        bool bHasMats;
                         GameObject CreatedMainObj;
                         GameObject CreatedMarkerObj;
                         int rCount = cut_ShoulderR_Vectors.Count;
                         for (int index = 0; index < rCount; index++)
                         {
-                            bool bHasMats = false;
                             CreatedMainObj = null;
                             MeshMainBuffer = tMesh_SRCuts_world[index];
                             if (MeshMainBuffer != null)
@@ -1078,7 +1078,6 @@ namespace RoadArchitect
                         int lCount = cut_ShoulderL_Vectors.Count;
                         for (int index = 0; index < lCount; index++)
                         {
-                            bool bHasMats = false;
                             CreatedMainObj = null;
                             MeshMainBuffer = tMesh_SLCuts_world[index];
                             if (MeshMainBuffer != null)
@@ -1119,36 +1118,33 @@ namespace RoadArchitect
                 {
                     RemoveMainMeshes();
 
-
-                    Mesh tBuffer = null;
                     int xCount = tMesh_SRCuts_world.Count;
                     for (int index = 0; index < xCount; index++)
                     {
-                        tBuffer = tMesh_SRCuts_world[index];
-                        Object.DestroyImmediate(tBuffer);
-                        tMesh_SRCuts_world[index] = null;
+                        Object.DestroyImmediate(tMesh_SRCuts_world[index]);
                     }
+                    tMesh_SRCuts_world.Clear();
+
                     xCount = tMesh_SRCuts.Count;
                     for (int index = 0; index < xCount; index++)
                     {
-                        tBuffer = tMesh_SRCuts[index];
-                        Object.DestroyImmediate(tBuffer);
-                        tMesh_SRCuts[index] = null;
+                        Object.DestroyImmediate(tMesh_SRCuts[index]);
                     }
+                    tMesh_SRCuts.Clear();
+
                     xCount = tMesh_SLCuts_world.Count;
                     for (int index = 0; index < xCount; index++)
                     {
-                        tBuffer = tMesh_SLCuts_world[index];
-                        Object.DestroyImmediate(tBuffer);
-                        tMesh_SLCuts_world[index] = null;
+                        Object.DestroyImmediate(tMesh_SLCuts_world[index]);
                     }
+                    tMesh_SLCuts_world.Clear();
+
                     xCount = tMesh_SLCuts.Count;
                     for (int index = 0; index < xCount; index++)
                     {
-                        tBuffer = tMesh_SLCuts[index];
-                        Object.DestroyImmediate(tBuffer);
-                        tMesh_SLCuts[index] = null;
+                        Object.DestroyImmediate(tMesh_SLCuts[index]);
                     }
+                    tMesh_SLCuts.Clear();
 
                     Object.DestroyImmediate(road.MeshShoR);
                     Object.DestroyImmediate(road.MeshShoL);
@@ -1743,22 +1739,20 @@ namespace RoadArchitect
                     #endif
 
 
-                    int cCount = tNode.intersection.transform.childCount;
-                    List<GameObject> GOToDelete = new List<GameObject>();
-                    for (int j = 0; j < cCount; j++)
+                    Transform intersectionChild;
+                    int cCount = tNode.intersection.transform.childCount - 1;
+                    for (int j = cCount; j >= 0; j--)
                     {
-                        if (tNode.intersection.transform.GetChild(j).name.ToLower() == "tcenter")
+                        intersectionChild = tNode.intersection.transform.GetChild(j);
+                        if (intersectionChild.name.ToLower() == "tcenter")
                         {
-                            GOToDelete.Add(tNode.intersection.transform.GetChild(j).gameObject);
+                            Object.DestroyImmediate(intersectionChild.gameObject);
+                            continue;
                         }
-                        if (tNode.intersection.transform.GetChild(j).name.ToLower() == "markcenter")
+                        if (intersectionChild.name.ToLower() == "markcenter")
                         {
-                            GOToDelete.Add(tNode.intersection.transform.GetChild(j).gameObject);
+                            Object.DestroyImmediate(intersectionChild.gameObject);
                         }
-                    }
-                    for (int j = GOToDelete.Count - 1; j >= 0; j--)
-                    {
-                        Object.DestroyImmediate(GOToDelete[j]);
                     }
 
                     GameObject tCenter = new GameObject("tCenter");
@@ -1968,23 +1962,21 @@ namespace RoadArchitect
                 return;
             }
             _name = road.name + "-" + _name;
+            Transform child;
             GameObject tCenter = null;
-            int cCount = _valuePair.Key.transform.childCount;
-            List<GameObject> GOToDelete = new List<GameObject>();
-            for (int index = 0; index < cCount; index++)
+            int cCount = _valuePair.Key.transform.childCount - 1;
+            for (int index = cCount; index >= 0; index--)
             {
-                if (_valuePair.Key.transform.GetChild(index).name.ToLower() == _name.ToLower())
+                child = _valuePair.Key.transform.GetChild(index);
+                if (child.name.ToLower() == _name.ToLower())
                 {
-                    GOToDelete.Add(_valuePair.Key.transform.GetChild(index).gameObject);
+                    Object.DestroyImmediate(child.gameObject);
+                    continue;
                 }
-                if (_isMainPlates && _valuePair.Key.transform.GetChild(index).name.ToLower() == "tcenter")
+                if (_isMainPlates && child.name.ToLower() == "tcenter")
                 {
-                    tCenter = _valuePair.Key.transform.GetChild(index).gameObject;
+                    tCenter = child.gameObject;
                 }
-            }
-            for (int index = GOToDelete.Count - 1; index >= 0; index--)
-            {
-                Object.DestroyImmediate(GOToDelete[index]);
             }
 
             int CombineCount = vCount;
