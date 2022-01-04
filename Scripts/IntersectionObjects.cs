@@ -9,26 +9,26 @@ namespace RoadArchitect
         /// <summary> Destroy all intersection objects </summary>
         public static void CleanupIntersectionObjects(GameObject _masterGameObj)
         {
-            int childCount = _masterGameObj.transform.childCount;
-            if (childCount == 0)
+            int childCount = _masterGameObj.transform.childCount - 1;
+            if (childCount < 0)
             {
                 return;
             }
-            List<GameObject> objectsToDelete = new List<GameObject>();
-            for (int index = 0; index < childCount; index++)
+
+            Transform child;
+            for (int index = childCount; index >= 0; index--)
             {
-                if (_masterGameObj.transform.GetChild(index).name.ToLower().Contains("stopsign"))
+                child = _masterGameObj.transform.GetChild(index);
+
+                if (child.name.ToLower().Contains("stopsign"))
                 {
-                    objectsToDelete.Add(_masterGameObj.transform.GetChild(index).gameObject);
+                    Object.DestroyImmediate(child.gameObject);
+                    continue;
                 }
-                if (_masterGameObj.transform.GetChild(index).name.ToLower().Contains("trafficlight"))
+                if (child.name.ToLower().Contains("trafficlight"))
                 {
-                    objectsToDelete.Add(_masterGameObj.transform.GetChild(index).gameObject);
+                    Object.DestroyImmediate(child.gameObject);
                 }
-            }
-            for (int index = (objectsToDelete.Count - 1); index >= 0; index--)
-            {
-                Object.DestroyImmediate(objectsToDelete[index]);
             }
         }
 
