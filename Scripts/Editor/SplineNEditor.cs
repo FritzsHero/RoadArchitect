@@ -87,6 +87,8 @@ namespace RoadArchitect
         private bool isBridgeEnd = false;
         private bool isRoadCut = false;
 
+        private bool isSingleTemp;
+
         private string[] HorizMatchSubTypeDescriptions;
         #endregion
 
@@ -454,7 +456,6 @@ namespace RoadArchitect
             if (GUI.changed)
             {
                 //Set snapshot for undo:
-
                 Undo.RecordObject(node, "Modify node");
 
                 //Option: Gizmo options, Convoluted due to submission compliance for undo rules:
@@ -587,8 +588,7 @@ namespace RoadArchitect
             {
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f)))
-                { }
+                GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f));
                 EditorGUILayout.LabelField("= Extrusion objects", EditorStyles.miniLabel);
                 EditorGUILayout.LabelField("");
                 EditorGUILayout.EndHorizontal();
@@ -597,8 +597,7 @@ namespace RoadArchitect
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(edgeButtonTexture, imageButton, GUILayout.Width(32f)))
-                { }
+                GUILayout.Button(edgeButtonTexture, imageButton, GUILayout.Width(32f));
                 EditorGUILayout.LabelField("= Edge objects", EditorStyles.miniLabel);
                 EditorGUILayout.LabelField("");
                 EditorGUILayout.EndHorizontal();
@@ -607,40 +606,35 @@ namespace RoadArchitect
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
-                { }
+                GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f));
                 EditorGUILayout.LabelField("= Saves object config to library for use on other nodes.", EditorStyles.miniLabel);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f)))
-                { }
+                GUILayout.Button(copyButtonTexture, imageButton, GUILayout.Width(16f));
                 EditorGUILayout.LabelField("= Duplicates object onto current node.", EditorStyles.miniLabel);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f)))
-                { }
+                GUILayout.Button(deleteButtonTexture, imageButton, GUILayout.Width(16f));
                 EditorGUILayout.LabelField("= Deletes object.", EditorStyles.miniLabel);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
-                { }
+                GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f));
                 EditorGUILayout.LabelField("= Refreshes object.", EditorStyles.miniLabel);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
-                if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
-                { }
+                GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f));
                 EditorGUILayout.LabelField("= Resets setting(s) to default.", EditorStyles.miniLabel);
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
@@ -761,11 +755,7 @@ namespace RoadArchitect
 
                 SMM.isToggled = EditorGUILayout.Foldout(SMM.isToggled, "#" + currentCount.ToString() + ": " + SMM.objectName);
 
-                if (GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f)))
-                {
-
-                }
-
+                GUILayout.Button(extrudeButtonTexture, imageButton, GUILayout.Width(32f));
                 if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     SMM.Setup();
@@ -1363,15 +1353,9 @@ namespace RoadArchitect
             for (int index = 0; index < node.EdgeObjects.Count; index++)
             {
                 EOM = node.EdgeObjects[index];
-                if (EOM.edgeMaker == null)
-                {
-                    EOM.edgeMaker = new EdgeObjects.EdgeObjectMaker.EdgeObjectEditorMaker();
-                }
-                EOM.edgeMaker.Setup(EOM);
 
                 currentCount += 1;
                 EditorGUILayout.BeginVertical("TextArea");
-
 
                 if (EOM.isRequiringUpdate)
                 {
@@ -1383,10 +1367,7 @@ namespace RoadArchitect
 
                 EOM.isToggled = EditorGUILayout.Foldout(EOM.isToggled, "#" + currentCount.ToString() + ": " + EOM.objectName);
 
-                if (GUILayout.Button(edgeButtonTexture, imageButton, GUILayout.Width(32f)))
-                {
-
-                }
+                GUILayout.Button(edgeButtonTexture, imageButton, GUILayout.Width(32f));
                 if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
                     EOM.Setup();
@@ -1422,99 +1403,23 @@ namespace RoadArchitect
 
                 EditorGUILayout.BeginVertical("box");
                 //Name:
-                EOM.edgeMaker.objectName = EditorGUILayout.TextField("Name: ", EOM.objectName);
+                EOM.objectName = EditorGUILayout.TextField("Name: ", EOM.objectName);
 
                 //Edge object:
-                EOM.edgeMaker.edgeObject = (GameObject)EditorGUILayout.ObjectField("Edge object: ", EOM.edgeObject, typeof(GameObject), false);
-                if (EOM.edgeMaker.edgeObject != EOM.edgeObject)
-                {
-                    EOM.isEdgeSignLabelInit = false;
-                    EOM.isEdgeSignLabel = false;
-                }
-
+                EOM.edgeObject = (GameObject)EditorGUILayout.ObjectField("Edge object: ", EOM.edgeObject, typeof(GameObject), false);
 
                 #region "Material override"
-                EOM.edgeMaker.isMaterialOverriden = EditorGUILayout.Toggle("Material override: ", EOM.isMaterialOverriden);
+                EOM.isMaterialOverriden = EditorGUILayout.Toggle("Material override: ", EOM.isMaterialOverriden);
                 if (!EOM.isMaterialOverriden)
                 {
-                    EOM.edgeMaker.edgeMaterial1 = null;
-                    EOM.edgeMaker.edgeMaterial2 = null;
-                }
-
-                if (!EOM.isEdgeSignLabelInit && EOM.edgeMaker.edgeObject != null)
-                {
-                    EOM.isEdgeSignLabel = false;
-                    if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "SignDiamond") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-diamond";
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "SignSquare-Small") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-Square";
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "SignSquare") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-Square";
-
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign988-Small") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-988";
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign988") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-988";
-
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign861-Small") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-861";
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign861") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-861";
-
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign617-Small") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-617";
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign617") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-617";
-
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign396") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-396";
-
-                    }
-                    else if (string.CompareOrdinal(EOM.edgeMaker.edgeObject.name, "Sign330") == 0)
-                    {
-                        EOM.isEdgeSignLabel = true;
-                        EOM.edgeSignLabel = "FedSign-330";
-                    }
+                    EOM.edgeMaterial1 = null;
+                    EOM.edgeMaterial2 = null;
                 }
 
                 if (EOM.isMaterialOverriden)
                 {
-                    if (EOM.isEdgeSignLabel)
-                    {
-                        EditorGUILayout.TextField("Material search term: ", EOM.edgeSignLabel);
-                    }
-
-                    EOM.edgeMaker.edgeMaterial1 = (Material)EditorGUILayout.ObjectField("Override mat #1: ", EOM.edgeMaterial1, typeof(Material), false);
-                    EOM.edgeMaker.edgeMaterial2 = (Material)EditorGUILayout.ObjectField("Override mat #2: ", EOM.edgeMaterial2, typeof(Material), false);
+                    EOM.edgeMaterial1 = (Material)EditorGUILayout.ObjectField("Override mat #1: ", EOM.edgeMaterial1, typeof(Material), false);
+                    EOM.edgeMaterial2 = (Material)EditorGUILayout.ObjectField("Override mat #2: ", EOM.edgeMaterial2, typeof(Material), false);
                 }
                 #endregion
 
@@ -1522,71 +1427,64 @@ namespace RoadArchitect
                 #region "Combine Mesh / MeshCollider"
                 if (EOM.isSingle)
                 {
-                    EOM.edgeMaker.isCombinedMesh = false;
+                    EOM.isCombinedMesh = false;
                 }
                 else
                 {
-                    EOM.edgeMaker.isCombinedMesh = EditorGUILayout.Toggle("Combine meshes: ", EOM.isCombinedMesh);
+                    EOM.isCombinedMesh = EditorGUILayout.Toggle("Combine meshes: ", EOM.isCombinedMesh);
 
                     if (EOM.isCombinedMesh)
                     {
-                        EOM.edgeMaker.isCombinedMeshCollider = EditorGUILayout.Toggle("Combined mesh collider: ", EOM.isCombinedMeshCollider);
+                        EOM.isCombinedMeshCollider = EditorGUILayout.Toggle("Combined mesh collider: ", EOM.isCombinedMeshCollider);
                     }
                 }
                 #endregion
 
 
                 #region "SingleObject"
-                EOM.edgeMaker.isSingle = EditorGUILayout.Toggle("Single object only: ", EOM.isSingle);
-                if (EOM.edgeMaker.isSingle != EOM.isSingle)
+                isSingleTemp = EditorGUILayout.Toggle("Single object only: ", EOM.isSingle);
+                if (isSingleTemp != EOM.isSingle)
                 {
-                    EOM.edgeMaker.endTime = node.nextTime;
-                    //EOM.edgeMaker.EndPos = node.spline.GetSplineValue(EOM.edgeMaker.endTime, false);
-                    EOM.edgeMaker.singlePosition = node.time + 0.025f;
-                    if (EOM.edgeMaker.isSingle)
+                    EOM.endTime = node.nextTime;
+                    //EOM.endPos = node.spline.GetSplineValue(EOM.endTime, false);
+                    EOM.singlePosition = node.time + 0.025f;
+
+                    EOM.isSingle = isSingleTemp;
+
+                    if (EOM.isSingle)
                     {
-                        EOM.edgeMaker.isCombinedMesh = false;
+                        EOM.isCombinedMesh = false;
                     }
                 }
 
                 if (EOM.isSingle)
                 {
-                    EOM.edgeMaker.singlePosition = EditorGUILayout.Slider("Single location: ", EOM.singlePosition, node.time, 1f);
+                    EOM.singlePosition = EditorGUILayout.Slider("Single location: ", EOM.singlePosition, node.time, 1f);
 
                     if (node.isBridgeStart && node.isBridgeMatched)
                     {
-                        EOM.edgeMaker.singleOnlyBridgePercent = EditorGUILayout.Slider("Bridge %: ", EOM.singleOnlyBridgePercent, 0f, 1f);
-                        if (!RootUtils.IsApproximately(EOM.singleOnlyBridgePercent, EOM.edgeMaker.singleOnlyBridgePercent, 0.001f))
-                        {
-                            EOM.edgeMaker.singleOnlyBridgePercent = Mathf.Clamp(EOM.edgeMaker.singleOnlyBridgePercent, 0f, 1f);
-                            float dist = (EOM.edgeMaker.singleOnlyBridgePercent * (node.bridgeCounterpartNode.dist - node.dist) + node.dist);
-                            EOM.edgeMaker.singlePosition = node.spline.TranslateDistBasedToParam(dist);
-                        }
+                        EOM.singleOnlyBridgePercent = EditorGUILayout.Slider("Bridge %: ", EOM.singleOnlyBridgePercent, 0f, 1f);
+                        float dist = (EOM.singleOnlyBridgePercent * (node.bridgeCounterpartNode.dist - node.dist) + node.dist);
+                        EOM.singlePosition = node.spline.TranslateDistBasedToParam(dist);
                     }
                 }
                 #endregion
 
 
-                EOM.edgeMaker.isStatic = EditorGUILayout.Toggle("Static: ", EOM.isStatic);
-
-
-                EOM.edgeMaker.isMatchingTerrain = EditorGUILayout.Toggle("Match ground height: ", EOM.isMatchingTerrain);
+                EOM.isStatic = EditorGUILayout.Toggle("Static: ", EOM.isStatic);
+                EOM.isMatchingTerrain = EditorGUILayout.Toggle("Match ground height: ", EOM.isMatchingTerrain);
 
                 if (!EOM.isSingle)
                 {
-                    EOM.edgeMaker.meterSep = EditorGUILayout.Slider("Dist between objects: ", EOM.meterSep, 1f, 256f);
+                    EOM.meterSep = EditorGUILayout.Slider("Dist between objects: ", EOM.meterSep, 1f, 256f);
                 }
 
 
                 #region "Match Road"
-                EOM.edgeMaker.isStartMatchingRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", EOM.isStartMatchRoadDefinition);
+                EOM.isStartMatchRoadDefinition = EditorGUILayout.Toggle("Match road definition: ", EOM.isStartMatchRoadDefinition);
                 if (EOM.isStartMatchRoadDefinition)
                 {
-                    EOM.edgeMaker.startMatchRoadDef = EditorGUILayout.Slider("Position fine tuning: ", EOM.startMatchRoadDef, 0f, 1f);
-                    if (!RootUtils.IsApproximately(EOM.edgeMaker.startMatchRoadDef, EOM.startMatchRoadDef, 0.001f))
-                    {
-                        EOM.edgeMaker.startMatchRoadDef = Mathf.Clamp(EOM.edgeMaker.startMatchRoadDef, 0f, 1f);
-                    }
+                    EOM.startMatchRoadDef = EditorGUILayout.Slider("Position fine tuning: ", EOM.startMatchRoadDef, 0f, 1f);
                 }
                 #endregion
 
@@ -1594,29 +1492,29 @@ namespace RoadArchitect
                 // Multi placed edge objects
                 if (!EOM.isSingle)
                 {
-                    if (EOM.edgeMaker.startTime < node.minSplination)
+                    if (EOM.startTime < node.minSplination)
                     {
-                        EOM.edgeMaker.startTime = node.minSplination;
+                        EOM.startTime = node.minSplination;
                     }
-                    if (EOM.edgeMaker.endTime > node.maxSplination)
+                    if (EOM.endTime > node.maxSplination)
                     {
-                        EOM.edgeMaker.endTime = node.maxSplination;
+                        EOM.endTime = node.maxSplination;
                     }
 
 
                     #region "Start param"
                     EditorGUILayout.BeginHorizontal();
-                    EOM.edgeMaker.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, node.minSplination, EOM.endTime);
+                    EOM.startTime = EditorGUILayout.Slider("Start param: ", EOM.startTime, node.minSplination, EOM.endTime);
 
-                    if (EOM.edgeMaker.endTime < EOM.edgeMaker.startTime)
+                    if (EOM.endTime < EOM.startTime)
                     {
-                        EOM.edgeMaker.endTime = Mathf.Clamp(EOM.startTime + 0.01f, 0f, 1f);
+                        EOM.endTime = Mathf.Clamp(EOM.startTime + 0.01f, 0f, 1f);
                     }
 
 
                     if (GUILayout.Button("match node", EditorStyles.miniButton, GUILayout.Width(80f)))
                     {
-                        EOM.edgeMaker.startTime = node.time;
+                        EOM.startTime = node.time;
                     }
                     EditorGUILayout.EndHorizontal();
                     #endregion
@@ -1624,24 +1522,22 @@ namespace RoadArchitect
 
                     #region "End param"
                     EditorGUILayout.BeginHorizontal();
-                    EOM.edgeMaker.endTime = EditorGUILayout.Slider("End param: ", EOM.endTime, EOM.startTime, node.maxSplination);
+                    EOM.endTime = EditorGUILayout.Slider("End param: ", EOM.endTime, EOM.startTime, node.maxSplination);
                     //Mathf.Clamp(EditorGUILayout.Slider( "End param: ", EOM.EndTime, 0f/*EOM.StartTime*/, 1f/*tNode.MaxSplination*/ ), 0f, 1f);
                     // FH EXPERIMENTAL fix for EdgeObjects???
 
-                    if (EOM.edgeMaker.startTime > EOM.edgeMaker.endTime)
+                    if (EOM.startTime > EOM.endTime)
                     {
-                        EOM.edgeMaker.startTime = Mathf.Clamp(EOM.endTime - 0.01f, 0f, 1f);
+                        EOM.startTime = Mathf.Clamp(EOM.endTime - 0.01f, 0f, 1f);
                     }
 
                     if (GUILayout.Button("match next", EditorStyles.miniButton, GUILayout.Width(80f)))
                     {
-                        EOM.edgeMaker.endTime = node.nextTime;
+                        EOM.endTime = node.nextTime;
                     }
                     EditorGUILayout.EndHorizontal();
                     #endregion
                 }
-
-
                 EditorGUILayout.EndVertical();
 
 
@@ -1650,10 +1546,10 @@ namespace RoadArchitect
                 EditorGUILayout.BeginVertical("box");
 
                 EditorGUILayout.BeginHorizontal();
-                EOM.edgeMaker.verticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", EOM.verticalRaise, -512f, 512f);
+                EOM.verticalRaise = EditorGUILayout.Slider("Vertical raise magnitude:", EOM.verticalRaise, -512f, 512f);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    EOM.edgeMaker.verticalRaise = 0f;
+                    EOM.verticalRaise = 0f;
                 }
                 EditorGUILayout.EndHorizontal();
 
@@ -1662,10 +1558,10 @@ namespace RoadArchitect
                     EnforceCurve(ref EOM.verticalCurve);
                 }
                 EditorGUILayout.BeginHorizontal();
-                EOM.edgeMaker.verticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.verticalCurve);
+                EOM.verticalCurve = EditorGUILayout.CurveField("Curve: ", EOM.verticalCurve);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    ResetCurve(ref EOM.edgeMaker.verticalCurve);
+                    ResetCurve(ref EOM.verticalCurve);
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
@@ -1681,64 +1577,57 @@ namespace RoadArchitect
                 {
                     if (horizMatching == HorizMatchingDefaultsEnum.MatchCenter)
                     {
-                        EOM.edgeMaker.horizontalSep = 0f;
+                        EOM.horizontalSep = 0f;
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadLeft)
                     {
-                        EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f) * -1;
+                        EOM.horizontalSep = (node.spline.road.RoadWidth() * 0.5f) * -1;
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderLeft)
                     {
                         if (node.spline.road.isShouldersEnabled)
                         {
-                            EOM.edgeMaker.horizontalSep = ((node.spline.road.RoadWidth() * 0.5f) + node.spline.road.shoulderWidth) * -1;
+                            EOM.horizontalSep = ((node.spline.road.RoadWidth() * 0.5f) + node.spline.road.shoulderWidth) * -1;
                         }
                         else
                         {
-                            EOM.edgeMaker.horizontalSep = ((node.spline.road.RoadWidth() * 0.5f)) * -1;
+                            EOM.horizontalSep = ((node.spline.road.RoadWidth() * 0.5f)) * -1;
                         }
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchRoadRight)
                     {
-                        EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f);
+                        EOM.horizontalSep = (node.spline.road.RoadWidth() * 0.5f);
                     }
                     else if (horizMatching == HorizMatchingDefaultsEnum.MatchShoulderRight)
                     {
                         if (node.spline.road.isShouldersEnabled)
                         {
-                            EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f) + node.spline.road.shoulderWidth;
+                            EOM.horizontalSep = (node.spline.road.RoadWidth() * 0.5f) + node.spline.road.shoulderWidth;
                         }
                         else
                         {
-                            EOM.edgeMaker.horizontalSep = (node.spline.road.RoadWidth() * 0.5f);
+                            EOM.horizontalSep = (node.spline.road.RoadWidth() * 0.5f);
                         }
                     }
                     horizMatching = HorizMatchingDefaultsEnum.None;
                 }
-                if (!RootUtils.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
-                {
-                    EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
-                }
-
 
                 EditorGUILayout.BeginHorizontal();
-                EOM.edgeMaker.horizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
+                EOM.horizontalSep = EditorGUILayout.Slider("Horiz offset magnitude:", EOM.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    EOM.edgeMaker.horizontalSep = 0f;
-                }
-                if (!RootUtils.IsApproximately(EOM.edgeMaker.horizontalSep, EOM.horizontalSep))
-                {
-                    EOM.edgeMaker.horizontalSep = Mathf.Clamp(EOM.edgeMaker.horizontalSep, (-1f * horizRoadMax), horizRoadMax);
+                    EOM.horizontalSep = 0f;
                 }
                 EditorGUILayout.EndHorizontal();
                 if (EOM.horizontalCurve == null || EOM.horizontalCurve.keys.Length < 2)
-                { EnforceCurve(ref EOM.horizontalCurve); }
+                {
+                    EnforceCurve(ref EOM.horizontalCurve);
+                }
                 EditorGUILayout.BeginHorizontal();
-                EOM.edgeMaker.horizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.horizontalCurve);
+                EOM.horizontalCurve = EditorGUILayout.CurveField("Curve: ", EOM.horizontalCurve);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    ResetCurve(ref EOM.edgeMaker.horizontalCurve);
+                    ResetCurve(ref EOM.horizontalCurve);
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
@@ -1750,45 +1639,45 @@ namespace RoadArchitect
                 EditorGUILayout.BeginVertical("box");
                 if (EOM.horizontalSep < 0f)
                 {
-                    EOM.edgeMaker.isOncomingRotation = EditorGUILayout.Toggle("Auto rotate oncoming objects: ", EOM.isOncomingRotation);
-                    EOM.edgeMaker.subType = SignPlacementSubTypeEnum.Left;
+                    EOM.isOncomingRotation = EditorGUILayout.Toggle("Auto rotate oncoming objects: ", EOM.isOncomingRotation);
+                    EOM.subType = SignPlacementSubTypeEnum.Left;
                 }
                 else
                 {
-                    EOM.edgeMaker.subType = SignPlacementSubTypeEnum.Right;
+                    EOM.subType = SignPlacementSubTypeEnum.Right;
                 }
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Custom rotation: ");
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    EOM.edgeMaker.customRotation = new Vector3(0f, 0f, 0f);
+                    EOM.customRotation = new Vector3(0f, 0f, 0f);
                 }
                 EditorGUILayout.EndHorizontal();
 
-                EOM.edgeMaker.customRotation.x = EditorGUILayout.Slider("x-axis: ", EOM.customRotation.x, -360f, 360f);
-                EOM.edgeMaker.customRotation.y = EditorGUILayout.Slider("y-axis: ", EOM.customRotation.y, -360f, 360f);
-                EOM.edgeMaker.customRotation.z = EditorGUILayout.Slider("z-axis: ", EOM.customRotation.z, -360f, 360f);
+                EOM.customRotation.x = EditorGUILayout.Slider("x-axis: ", EOM.customRotation.x, -360f, 360f);
+                EOM.customRotation.y = EditorGUILayout.Slider("y-axis: ", EOM.customRotation.y, -360f, 360f);
+                EOM.customRotation.z = EditorGUILayout.Slider("z-axis: ", EOM.customRotation.z, -360f, 360f);
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.BeginVertical();
                 EditorGUILayout.LabelField("Lock align rotation: ");
-                EOM.edgeMaker.isRotationAligning = EditorGUILayout.Toggle("Align objects to road rotation: ", EOM.isRotationAligning);
-                if(!EOM.edgeMaker.isRotationAligning)
+                EOM.isRotationAligning = EditorGUILayout.Toggle("Align objects to road rotation: ", EOM.isRotationAligning);
+                if (!EOM.isRotationAligning)
                 {
-                    EOM.edgeMaker.isXRotationLocked = EditorGUILayout.Toggle("Lock x axis: ", EOM.isXRotationLocked);
-                    EOM.edgeMaker.isYRotationLocked = EditorGUILayout.Toggle("Lock y axis: ", EOM.isYRotationLocked);
-                    EOM.edgeMaker.isZRotationLocked = EditorGUILayout.Toggle("Lock z axis: ", EOM.isZRotationLocked);
+                    EOM.isXRotationLocked = EditorGUILayout.Toggle("Lock x axis: ", EOM.isXRotationLocked);
+                    EOM.isYRotationLocked = EditorGUILayout.Toggle("Lock y axis: ", EOM.isYRotationLocked);
+                    EOM.isZRotationLocked = EditorGUILayout.Toggle("Lock z axis: ", EOM.isZRotationLocked);
                 }
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.BeginVertical("box");
                 EditorGUILayout.BeginHorizontal();
                 float scale = EditorGUILayout.Slider("Custom scale: ", EOM.customScale.x, 1f, 10f);
-                EOM.edgeMaker.customScale = new Vector3(scale, scale, scale);
+                EOM.customScale = new Vector3(scale, scale, scale);
                 if (GUILayout.Button(defaultButtonTexture, imageButton, GUILayout.Width(16f)))
                 {
-                    EOM.edgeMaker.customScale = new Vector3(1f, 1f, 1f);
+                    EOM.customScale = new Vector3(1f, 1f, 1f);
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.EndVertical();
@@ -1808,16 +1697,8 @@ namespace RoadArchitect
             for (int index = 0; index < node.EdgeObjects.Count; index++)
             {
                 EOM = node.EdgeObjects[index];
-                if (EOM.edgeMaker != null)
-                {
-                    if (!EOM.edgeMaker.IsEqual(EOM))
-                    {
-                        EOM.edgeMaker.LoadTo(EOM);
-                        EOM.UpdatePositions();
-                        EOM.Setup();
-                        //Debug.Log ("Setup EOM"); 
-                    }
-                }
+                EOM.UpdatePositions();
+                EOM.Setup();
             }
         }
 
