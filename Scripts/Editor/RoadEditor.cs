@@ -108,7 +108,6 @@ namespace RoadArchitect
 
         //Buffers:
         private bool isNeedingRoadUpdate = false;
-        private bool isUsingDefaultMats = false;
         private bool isApplyingMaterialsCheck = false;
         private bool isApplyingMatsCheck = false;
         #endregion
@@ -243,7 +242,6 @@ namespace RoadArchitect
             serializedObject.Update();
 
             isNeedingRoadUpdate = false;
-            isUsingDefaultMats = false;
             //Graphic null checks:
             if (!isInitialized)
             {
@@ -757,13 +755,6 @@ namespace RoadArchitect
                     road.spline.TriggerSetup();
                 }
 
-                //Option: Set mats to defaults:
-                if (isUsingDefaultMats)
-                {
-                    road.SetDefaultMats();
-                    road.SetAllCutsToCurrentMaterials();
-                }
-
                 //Option: Apply above materials to entire road:
                 if (isApplyingMatsCheck)
                 {
@@ -781,11 +772,12 @@ namespace RoadArchitect
         {
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Road base material(s) defaults:");
-            //Option: Set mats to defaults:
-            isUsingDefaultMats = false;
+
+            //Option: Set materials to default:
             if (GUILayout.Button(refreshButtonTexture, imageButton, GUILayout.Width(16f)))
             {
-                isUsingDefaultMats = true;
+                road.SetDefaultMats();
+                road.SetAllCutsToCurrentMaterials();
             }
             EditorGUILayout.EndHorizontal();
 
