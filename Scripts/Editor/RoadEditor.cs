@@ -693,7 +693,7 @@ namespace RoadArchitect
             {
                 if (isGizmosEnabled.boolValue != road.isGizmosEnabled)
                 {
-                    road.WireframesToggle();
+                    road.ToggleWireframes();
                     SceneView.RepaintAll();
                 }
                 //Option pre-handle: Lane count:

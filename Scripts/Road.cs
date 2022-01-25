@@ -1552,23 +1552,22 @@ namespace RoadArchitect
 
 
         /// <summary> Toggles render state of every mesh of this road </summary>
-        public void WireframesToggle()
+        public void ToggleWireframes()
         {
-            MeshRenderer[] MRs = transform.GetComponentsInChildren<MeshRenderer>();
-            WireframesToggleHelp(ref MRs);
+            ToggleWireframesHelper(transform);
 
             if (spline != null)
             {
-                MRs = spline.transform.GetComponentsInChildren<MeshRenderer>();
-                WireframesToggleHelp(ref MRs);
+                ToggleWireframesHelper(spline.transform);
             }
         }
 
 
         /// <summary>  Toggles render state of each mesh in _MRs through isGizmosEnabled </summary>
-        private void WireframesToggleHelp(ref MeshRenderer[] _MRs)
+        private void ToggleWireframesHelper(Transform _transform)
         {
             #if UNITY_EDITOR
+            MeshRenderer[] _MRs = _transform.GetComponentsInChildren<MeshRenderer>();
             int meshRenderersCount = _MRs.Length;
             for (int i = 0; i < meshRenderersCount; i++)
             {
