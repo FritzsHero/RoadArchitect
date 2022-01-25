@@ -98,8 +98,6 @@ namespace RoadArchitect
         public List<SplineN> connectedNode;
         [UnityEngine.Serialization.FormerlySerializedAs("bIgnore")]
         public bool isIgnore = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_GizmosEnabled")]
-        public bool isGizmosEnabled = true;
 
 
         #region "Tunnels"

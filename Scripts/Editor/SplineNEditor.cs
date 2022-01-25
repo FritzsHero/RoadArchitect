@@ -355,17 +355,6 @@ namespace RoadArchitect
             #endregion
 
 
-            #region Option: Gizmo options, Convoluted due to submission compliance for undo rules:
-            if (node.spline.road.isGizmosEnabled != node.isGizmosEnabled)
-            {
-                node.spline.road.isGizmosEnabled = node.isGizmosEnabled;
-                node.spline.road.UpdateGizmoOptions();
-                node.spline.road.WireframesToggle();
-            }
-            isGizmosEnabled = EditorGUILayout.Toggle("Gizmos: ", node.spline.road.isGizmosEnabled);
-            #endregion
-
-
             #region "Option: Manual road cut"
             if (node.idOnSpline > 0 && node.idOnSpline < (node.spline.GetNodeCount() - 1) && !node.isIntersection && !node.isSpecialEndNode)
             {
@@ -457,15 +446,6 @@ namespace RoadArchitect
             {
                 //Set snapshot for undo:
                 Undo.RecordObject(node, "Modify node");
-
-                //Option: Gizmo options, Convoluted due to submission compliance for undo rules:
-                if (isGizmosEnabled != node.spline.road.isGizmosEnabled)
-                {
-                    node.spline.road.isGizmosEnabled = isGizmosEnabled;
-                    node.spline.road.UpdateGizmoOptions();
-                    node.spline.road.WireframesToggle();
-                    SceneView.RepaintAll();
-                }
 
                 //Option: Manual cut:
                 if (node.idOnSpline > 0 && node.idOnSpline < (node.spline.GetNodeCount() - 1) && !node.isIntersection && !node.isSpecialEndNode)

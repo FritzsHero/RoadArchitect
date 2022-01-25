@@ -1579,28 +1579,6 @@ namespace RoadArchitect
         }
 
 
-        //For compliance on submission rules:
-        /// <summary> Writes isGizmosEnabled into every node </summary>
-        public void UpdateGizmoOptions()
-        {
-            if (spline == null)
-            {
-                return;
-            }
-            SplineN node;
-
-            int nodeCount = spline.GetNodeCount();
-            for (int i = 0; i < nodeCount; i++)
-            {
-                node = spline.nodes[i];
-                if (node != null)
-                {
-                    node.isGizmosEnabled = isGizmosEnabled;
-                }
-            }
-        }
-
-
         public void DuplicateRoad()
         {
             GameObject roadObj = roadSystem.AddRoad();

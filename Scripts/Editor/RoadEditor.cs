@@ -687,17 +687,14 @@ namespace RoadArchitect
             EditorGUILayout.LabelField("Total nodes: " + road.MostRecentNodeCount.ToString());
             EditorGUILayout.EndVertical();
 
-            bool isGizmoChanged = false;
             bool isLaneChanged = false;
             bool isTerrainHistoryChanged = false;
             bool isEditorCameraSpeedChanged = false;
 
             if (GUI.changed)
             {
-                //Option pre-handle: Gizmos:
                 if (isGizmosEnabled.boolValue != road.isGizmosEnabled)
                 {
-                    isGizmoChanged = true;
                     road.WireframesToggle();
                     SceneView.RepaintAll();
                 }
@@ -722,14 +719,6 @@ namespace RoadArchitect
 
                 //Apply serialization:
                 serializedObject.ApplyModifiedProperties();
-
-
-                //Handle after effects:
-                if (isGizmoChanged)
-                {
-                    road.WireframesToggle();
-                    SceneView.RepaintAll();
-                }
 
 
                 //Option: Lane count:
