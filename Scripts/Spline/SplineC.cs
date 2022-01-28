@@ -338,8 +338,6 @@ namespace RoadArchitect
             {
                 node = nodes[i];
                 node.name = "Node" + node.idOnSpline;
-                node.transform.gameObject.name = node.name;
-                node.editorDisplayString = road.transform.name + "-" + node.name;
             }
         }
 

@@ -340,7 +340,7 @@ namespace RoadArchitect
             EditorUtilities.DrawLine();
 
             #region "Manuals on Top of SplineN Scripts"
-            EditorGUILayout.LabelField(node.editorDisplayString, EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(node.spline.road.name + "-" + node.name, EditorStyles.boldLabel);
 
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(128f)))
             {

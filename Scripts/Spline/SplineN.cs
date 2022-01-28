@@ -27,8 +27,6 @@ namespace RoadArchitect
         public Vector3 nextTan = default(Vector3);
         [UnityEngine.Serialization.FormerlySerializedAs("OldTime")]
         public float oldTime = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorDisplayString")]
-        public string editorDisplayString = "";
 
         public float tempSegmentTime = 0f;
         [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode")]
