@@ -62,10 +62,6 @@ namespace RoadArchitect
         public string uID;
         [UnityEngine.Serialization.FormerlySerializedAs("Intersection_OtherNode")]
         public SplineN intersectionOtherNode;
-        #if UNITY_EDITOR
-        [UnityEngine.Serialization.FormerlySerializedAs("bEditorSelected")]
-        public bool isEditorSelected = false;
-        #endif
         [UnityEngine.Serialization.FormerlySerializedAs("GradeToNext")]
         public string gradeToNext;
         [UnityEngine.Serialization.FormerlySerializedAs("GradeToPrev")]

@@ -78,9 +78,8 @@ namespace RoadArchitect
 
         private bool isSceneRectSet = false;
         private Rect sceneRect = default(Rect);
-
+        private Event currentEvent;
         private bool isInitialized = false;
-        private bool isGizmosEnabled = false;
 
         // Bridge
         private bool isBridgeStart = false;
@@ -2033,9 +2032,7 @@ namespace RoadArchitect
 
         public void OnSceneGUI()
         {
-            Event current = Event.current;
-            int controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
-            bool isUsed = false;
+            currentEvent = Event.current;
 
             if (!isSceneRectSet)
             {
@@ -2050,24 +2047,14 @@ namespace RoadArchitect
                 isSceneRectSet = true;
             }
 
-            if (!node.isEditorSelected)
+            if (currentEvent.type == EventType.ValidateCommand)
             {
-                node.isEditorSelected = true;
-            }
-
-            if (current.type == EventType.ValidateCommand)
-            {
-                switch (current.commandName)
+                switch (currentEvent.commandName)
                 {
                     case "UndoRedoPerformed":
                         UpdateSplineObjectsOnUndo();
                         break;
                 }
-            }
-
-            if (controlID != node.GetHashCode())
-            {
-                node.isEditorSelected = false;
             }
 
             //Drag with left click:
@@ -2098,7 +2085,6 @@ namespace RoadArchitect
                             node.transform.position = xNode.transform.position;
                             //Activate special end node for tnode
                             TriggerRoadConnection(node, xNode);
-                            isUsed = true;
                             break;
                         }
                         if (xNode.isIntersection)
@@ -2123,7 +2109,6 @@ namespace RoadArchitect
                         }
                         node.transform.position = xNode.transform.position;
                         TriggerIntersection(node, xNode);
-                        isUsed = true;
                         break;
                     }
                     else
@@ -2140,11 +2125,9 @@ namespace RoadArchitect
                         node.EnsureGradeValidity();
                     }
                     TriggerRoadUpdate();
-                    isUsed = true;
                 }
                 isMouseDragProcessed = true;
                 node.isDrawingIntersectionHighlightGizmos = false;
-                isUsed = true;
             }
 
             //Enforce maximum road grade:
@@ -2161,24 +2144,14 @@ namespace RoadArchitect
                     }
                     TriggerRoadUpdate();
                 }
-                isUsed = true;
             }
 
             if (Selection.activeGameObject == node.transform.gameObject)
             {
-                if (current.keyCode == KeyCode.F5)
+                if (currentEvent.keyCode == KeyCode.F5)
                 {
                     TriggerRoadUpdate();
                 }
-            }
-
-            if (isUsed)
-            {
-                //			switch(current.type){
-                //				case EventType.layout:
-                //			        HandleUtility.AddDefaultControl(controlID);
-                //			    break;
-                //			}
             }
 
             if (GUI.changed)
