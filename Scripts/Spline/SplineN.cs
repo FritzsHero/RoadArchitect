@@ -672,8 +672,6 @@ namespace RoadArchitect
 
         public List<Construction3DTri> tTriList;
         public List<Vector3> tHMList;
-        [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDrawIntersectionHighlight")]
-        public bool isDrawingIntersectionHighlightGizmos = false;
 
 
         private void OnDrawGizmos()
@@ -690,15 +688,7 @@ namespace RoadArchitect
 
         private void DrawGizmos(bool _isSelected)
         {
-            if (spline == null)
-            {
-                return;
-            }
-            if (spline.road == null)
-            {
-                return;
-            }
-            if (!spline.road.isGizmosEnabled)
+            if (!spline?.road?.isGizmosEnabled ?? true)
             {
                 return;
             }
@@ -722,23 +712,12 @@ namespace RoadArchitect
 
             if (_isSelected)
             {
-                if (isDrawingIntersectionHighlightGizmos && !isSpecialEndNode && isIntersection)
-                {
-                    Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
-                    Gizmos.DrawCube(transform.position + new Vector3(0f, 2f, 0f), new Vector3(32f, 4f, 32f));
-                }
                 Gizmos.color = spline.road.selectedColor;
                 Gizmos.DrawCube(transform.position + new Vector3(0f, 6.25f, 0f), new Vector3(3.5f, 12.5f, 3.5f));
                 return;
             }
 
             // Not Selected
-            if (isDrawingIntersectionHighlightGizmos && !isSpecialEndNode && isIntersection)
-            {
-                Gizmos.color = spline.road.Color_NodeInter;
-                Gizmos.DrawCube(transform.position + new Vector3(0f, 2f, 0f), new Vector3(32f, 4f, 32f));
-                return;
-            }
             if (isSpecialRoadConnPrimary)
             {
                 Gizmos.color = spline.road.Color_NodeConnColor;

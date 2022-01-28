@@ -2061,7 +2061,6 @@ namespace RoadArchitect
             if (Event.current.type == EventType.MouseDrag && Event.current.button == 0)
             {
                 isMouseDragProcessed = false;
-                node.isDrawingIntersectionHighlightGizmos = true;
             }
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
@@ -2127,7 +2126,6 @@ namespace RoadArchitect
                     TriggerRoadUpdate();
                 }
                 isMouseDragProcessed = true;
-                node.isDrawingIntersectionHighlightGizmos = false;
             }
 
             //Enforce maximum road grade:

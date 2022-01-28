@@ -232,8 +232,6 @@ namespace RoadArchitect
         public Color defaultNodeColor = new Color(0f, 1f, 1f, 0.75f);
         /// <summary> Connection node color </summary>
         public readonly Color Color_NodeConnColor = new Color(0f, 1f, 0f, 0.75f);
-        /// <summary> Intersection node color </summary>
-        public readonly Color Color_NodeInter = new Color(0f, 1f, 0f, 0.75f);
         /// <summary> The color of the nodes when they are selected </summary>
         public Color selectedColor = Color.yellow;
         /// <summary> Color of the node preview when adding a new node </summary>
