@@ -23,7 +23,6 @@ namespace RoadArchitect
         private int currentCount = 0;
         public bool isSplinatedObjectHelp = false;
         public bool isEdgeObjectHelp = false;
-        private bool isMouseDragProcessed = true;
         private bool isRemovingAll = false;
         private float horizRoadMax = 0;
 
@@ -505,26 +504,16 @@ namespace RoadArchitect
 
         private void DoExtAndEdgeOverview()
         {
-            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Extrusion & edge objects", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("");
-            EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            if (isEdgeObjectHelp)
-            {
-                isEdgeObjectHelp = EditorGUILayout.Foldout(isEdgeObjectHelp, "Hide quick help");
-            }
-            else
-            {
-                isEdgeObjectHelp = EditorGUILayout.Foldout(isEdgeObjectHelp, "Show quick help");
-            }
             EditorGUILayout.LabelField("");
 
             if (GUILayout.Button("Save group", EditorStyles.miniButton, GUILayout.Width(108f)) || GUILayout.Button(saveButtonTexture, imageButton, GUILayout.Width(16f)))
             {
                 SaveWindow saveWindow = EditorWindow.GetWindow<SaveWindow>();
                 if (node.isBridge)
+                // Todo: needs to be updated, currently only saves groups as bridges?!
                 {
                     saveWindow.Initialize(ref sceneRect, SaveWindow.WindowTypeEnum.BridgeWizard, node);
                 }
@@ -565,7 +554,7 @@ namespace RoadArchitect
             
             
             GUILayout.Space(4f);
-
+            isEdgeObjectHelp = EditorGUILayout.Foldout(isEdgeObjectHelp, "Quick help");
             if (isEdgeObjectHelp)
             {
                 EditorGUILayout.BeginVertical("box");
@@ -623,10 +612,7 @@ namespace RoadArchitect
 
                 EditorUtilities.DrawLine();
             }
-            currentCount = 0;
-
-            GUILayout.Space(2f);
-
+            GUILayout.Space(4f);
 
             if (node.CanSplinate())
             {
@@ -709,6 +695,7 @@ namespace RoadArchitect
 
             }
 
+            currentCount = 0;
             for (int index = 0; index < node.SplinatedObjects.Count; index++)
             {
                 currentCount += 1;
@@ -2057,11 +2044,6 @@ namespace RoadArchitect
                 }
             }
 
-            //Drag with left click:
-            if (Event.current.type == EventType.MouseDrag && Event.current.button == 0)
-            {
-                isMouseDragProcessed = false;
-            }
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
             {
@@ -2116,26 +2098,10 @@ namespace RoadArchitect
                     }
                 }
 
-                if (!isMouseDragProcessed)
+                //Enforce maximum road grade:
+                if (VectorDiff(node.transform.position, node.pos))
                 {
-                    //Enforce maximum road grade:
-                    if (node.IsLegitimate() && node.spline.road.isMaxGradeEnabled)
-                    {
-                        node.EnsureGradeValidity();
-                    }
-                    TriggerRoadUpdate();
-                }
-                isMouseDragProcessed = true;
-            }
-
-            //Enforce maximum road grade:
-            if (isMouseDragProcessed)
-            {
-
-                Vector3 vChangeChecker = node.transform.position;
-                if (VectorDiff(vChangeChecker, node.pos))
-                {
-                    node.pos = vChangeChecker;
+                    node.pos = node.transform.position;
                     if (node.IsLegitimate() && node.spline.road.isMaxGradeEnabled)
                     {
                         node.EnsureGradeValidity();
