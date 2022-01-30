@@ -15,28 +15,20 @@ namespace RoadArchitect
         {
             Extrusion,
             Edge,
+            Groups,
             BridgeComplete,
-            Groups
         };
 
 
-        public enum WindowTypeEnumShort
-        {
-            Extrusion,
-            Edge,
-            Groups
-        };
-
-
-        private static string[] WindowTypeDescBridge = new string[]{
+        private readonly string[] WindowTypeDescBridge = new string[]{
             "Extrusion items",
             "Edge objects",
+            "Other groups",
             "Complete bridges",
-            "Other groups"
         };
 
 
-        private static string[] WindowTypeDesc = new string[]{
+        private readonly string[] WindowTypeDesc = new string[]{
             "Extrusion items",
             "Edge objects",
             "Other groups"
@@ -44,10 +36,8 @@ namespace RoadArchitect
 
 
         #region "Vars"
-        private WindowTypeEnum tWindowType = WindowTypeEnum.Extrusion;
-        private WindowTypeEnum xWindowType = WindowTypeEnum.Extrusion;
-        private WindowTypeEnumShort StWindowType = WindowTypeEnumShort.Extrusion;
-        private WindowTypeEnumShort SxWindowType = WindowTypeEnumShort.Extrusion;
+        private WindowTypeEnum windowType = WindowTypeEnum.Extrusion;
+        private WindowTypeEnum windowTypePrevious = WindowTypeEnum.Extrusion;
         private static string path = "";
 
         private GUIStyle thumbStyle;
@@ -80,56 +70,22 @@ namespace RoadArchitect
             GUILayout.Space(4f);
             EditorGUILayout.BeginHorizontal();
 
-            if (thisNode.isBridgeStart)
+            string[] options = thisNode.isBridgeStart ? WindowTypeDescBridge : WindowTypeDesc;
+            if (!thisNode.isBridgeStart && windowType == WindowTypeEnum.BridgeComplete)
             {
-                xWindowType = (WindowTypeEnum)EditorGUILayout.Popup("Category: ", (int)tWindowType, WindowTypeDescBridge, GUILayout.Width(312f));
+                // Prevent category error when changing from bridge to normal node
+                windowType = WindowTypeEnum.Extrusion;
             }
-            else
+            windowType = (WindowTypeEnum)EditorGUILayout.Popup("Category: ", (int)windowType, options, GUILayout.Width(312f));
+
+            if (windowType != windowTypePrevious)
             {
-
-                if (xWindowType == WindowTypeEnum.Edge)
-                {
-                    SxWindowType = WindowTypeEnumShort.Edge;
-                }
-                else if (xWindowType == WindowTypeEnum.Extrusion)
-                {
-                    SxWindowType = WindowTypeEnumShort.Extrusion;
-                }
-                else
-                {
-                    SxWindowType = WindowTypeEnumShort.Groups;
-                }
-
-                SxWindowType = (WindowTypeEnumShort)EditorGUILayout.Popup("Category: ", (int)StWindowType, WindowTypeDesc, GUILayout.Width(312f));
-
-                if (SxWindowType == WindowTypeEnumShort.Extrusion)
-                {
-                    xWindowType = WindowTypeEnum.Extrusion;
-                }
-                else if (SxWindowType == WindowTypeEnumShort.Edge)
-                {
-                    xWindowType = WindowTypeEnum.Edge;
-                }
-                else
-                {
-                    xWindowType = WindowTypeEnum.Groups;
-                }
-                StWindowType = SxWindowType;
+                windowTypePrevious = windowType;
+                InitWindow();
             }
-
-            if (xWindowType != tWindowType)
-            {
-                Initialize(xWindowType, thisNode);
-                EditorGUILayout.EndHorizontal();
-                return;
-            }
-
-
 
             EditorGUILayout.LabelField("");
             EditorGUILayout.LabelField("Single-click items to load", EditorStyles.boldLabel, GUILayout.Width(200f));
-
-
 
             EditorGUILayout.EndHorizontal();
             if (objectList.Count == 0)
@@ -199,7 +155,7 @@ namespace RoadArchitect
 
                 if (isClicked)
                 {
-                    if (tWindowType == WindowTypeEnum.Extrusion)
+                    if (windowType == WindowTypeEnum.Extrusion)
                     {
                         Splination.SplinatedMeshMaker SMM = thisNode.AddSplinatedObject();
                         SMM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
@@ -208,7 +164,7 @@ namespace RoadArchitect
                         SMM.isDefault = objectList[i].isDefault;
                         SMM.Setup(true);
                     }
-                    else if (tWindowType == WindowTypeEnum.Edge)
+                    else if (windowType == WindowTypeEnum.Edge)
                     {
                         EdgeObjects.EdgeObjectMaker EOM = thisNode.AddEdgeObject();
                         EOM.SetDefaultTimes(thisNode.isEndPoint, thisNode.time, thisNode.nextTime, thisNode.idOnSpline, thisNode.spline.distance);
@@ -217,11 +173,11 @@ namespace RoadArchitect
                         EOM.isDefault = objectList[i].isDefault;
                         EOM.Setup();
                     }
-                    else if (tWindowType == WindowTypeEnum.Groups)
+                    else if (windowType == WindowTypeEnum.Groups)
                     {
                         thisNode.LoadWizardObjectsFromLibrary(objectList[i].fileName, objectList[i].isDefault, objectList[i].isBridge);
                     }
-                    else if (tWindowType == WindowTypeEnum.BridgeComplete)
+                    else if (windowType == WindowTypeEnum.BridgeComplete)
                     {
                         thisNode.LoadWizardObjectsFromLibrary(objectList[i].fileName, objectList[i].isDefault, objectList[i].isBridge);
                     }
@@ -285,7 +241,8 @@ namespace RoadArchitect
             }
 
             position = rect;
-            tWindowType = _windowType;
+            windowType = _windowType;
+            windowTypePrevious = _windowType;
             thisNode = _node;
             InitWindow();
             Show();
@@ -300,22 +257,22 @@ namespace RoadArchitect
                 objectList = null;
             }
             objectList = new List<WizardObject>();
-            if (tWindowType == WindowTypeEnum.Extrusion)
+            if (windowType == WindowTypeEnum.Extrusion)
             {
                 titleContent.text = "Extrusion";
                 InitObjs();
             }
-            else if (tWindowType == WindowTypeEnum.Edge)
+            else if (windowType == WindowTypeEnum.Edge)
             {
                 titleContent.text = "Edge objects";
                 InitObjs();
             }
-            else if (tWindowType == WindowTypeEnum.BridgeComplete)
+            else if (windowType == WindowTypeEnum.BridgeComplete)
             {
                 titleContent.text = "Bridges";
                 InitGroups(true);
             }
-            else if (tWindowType == WindowTypeEnum.Groups)
+            else if (windowType == WindowTypeEnum.Groups)
             {
                 titleContent.text = "Groups";
                 InitGroups(false);
@@ -527,7 +484,7 @@ namespace RoadArchitect
             string[] paths = null;
 
             //Load user custom ones first:
-            if (tWindowType == WindowTypeEnum.Extrusion)
+            if (windowType == WindowTypeEnum.Extrusion)
             {
                 Splination.SplinatedMeshMaker.GetLibraryFiles(out names, out paths, false);
             }
@@ -539,7 +496,7 @@ namespace RoadArchitect
 
 
             //Load RoadArchitect ones last:
-            if (tWindowType == WindowTypeEnum.Extrusion)
+            if (windowType == WindowTypeEnum.Extrusion)
             {
                 Splination.SplinatedMeshMaker.GetLibraryFiles(out names, out paths, true);
             }
@@ -566,7 +523,7 @@ namespace RoadArchitect
                 isBridge = false;
                 path = _paths[i];
 
-                if (tWindowType == WindowTypeEnum.Extrusion)
+                if (windowType == WindowTypeEnum.Extrusion)
                 {
                     Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = RootUtils.LoadXML<Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker>(ref path);
                     if (SLM == null)
@@ -579,7 +536,7 @@ namespace RoadArchitect
                     thumbString = SLM.thumbString;
                     isBridge = SLM.isBridge;
                 }
-                else if (tWindowType == WindowTypeEnum.Edge)
+                else if (windowType == WindowTypeEnum.Edge)
                 {
                     EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker>(ref path);
                     if (ELM == null)
@@ -594,7 +551,7 @@ namespace RoadArchitect
                 }
 
                 //Don't continue if bridge pieces and this is not a bridge piece:
-                if (tWindowType == WindowTypeEnum.Extrusion && isBridge)
+                if (windowType == WindowTypeEnum.Extrusion && isBridge)
                 {
                     continue;
                 }
@@ -633,7 +590,7 @@ namespace RoadArchitect
                 tO.isDefault = _isDefault;
 
                 #region "Add descriptions and display names"
-                if (_isDefault && tWindowType == WindowTypeEnum.Edge)
+                if (_isDefault && windowType == WindowTypeEnum.Edge)
                 {
                     if (tO.displayName.Contains("KRail Blinder"))
                     {
@@ -710,7 +667,7 @@ namespace RoadArchitect
                     }
                 }
 
-                if (_isDefault && tWindowType == WindowTypeEnum.Extrusion)
+                if (_isDefault && windowType == WindowTypeEnum.Extrusion)
                 {
                     if (tO.displayName.Contains("GSDKRailCurvedR"))
                     {
