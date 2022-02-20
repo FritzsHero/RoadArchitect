@@ -256,8 +256,6 @@ namespace RoadArchitect.Threading
             int kCount = 0;
             int vCount = kCount;
             int kFinalCount = spline.RoadDefKeysArray.Length;
-            int spamcheckmax1 = 18000;
-            int spamcheck1 = 0;
 
             if (RootUtils.IsApproximately(StartMin, 0f, 0.0001f))
             {
@@ -277,10 +275,8 @@ namespace RoadArchitect.Threading
                 StartMinIndex1 = 1;
             }
 
-            while (!isFinalEnd && spamcheck1 < spamcheckmax1)
+            while (!isFinalEnd)
             {
-                spamcheck1++;
-
                 if (kSkip)
                 {
                     i = StartMin;
@@ -318,14 +314,13 @@ namespace RoadArchitect.Threading
                 }
                 else if (i > FinalMax)
                 {
+                    isFinalEnd = true;
                     if (spline.isSpecialEndControlNode)
                     {
                         i = FinalMax;
-                        isFinalEnd = true;
                     }
                     else
                     {
-                        isFinalEnd = true;
                         break;
                     }
                 }
@@ -374,7 +369,6 @@ namespace RoadArchitect.Threading
                         }
                     }
                 }
-
 
                 //If different than the previous node id, we store the RoadVectorsHeights in initialRoadHeight
                 if (currentNodeID != previousNodeID)
@@ -5191,17 +5185,13 @@ namespace RoadArchitect.Threading
                 ProcessRoadUVsIntersections(ref _RCS);
             }
 
-            //throw new System.Exception("FFFFFFFF");
-
+            
             // Update type full, intersection or bridge
             if (_RCS.isRoadOn)
             {
                 if (!_RCS.tMeshSkip)
                 {
                     _RCS.tangents = RootUtils.ProcessTangents(_RCS.tris, _RCS.normals, _RCS.uv, _RCS.RoadVectors.ToArray());
-                }
-                if (!_RCS.tMeshSkip)
-                {
                     _RCS.tangents2 = RootUtils.ProcessTangents(_RCS.tris, _RCS.normals, _RCS.uv2, _RCS.RoadVectors.ToArray());
                 }
                 if (!_RCS.tMesh_SRSkip)

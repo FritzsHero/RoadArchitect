@@ -1084,125 +1084,121 @@ namespace RoadArchitect
         #endregion
 
 
+        /// <summary> Calculates and assigns the corner positions of the intersections </summary>
         public static void GetFourPoints(RoadIntersection _roadIntersection, out Vector3 _posRR, out Vector3 _posRL, out Vector3 _posLL, out Vector3 _posLR, float _distFromCorner)
         {
-            GetFourPointsDo(ref _roadIntersection, out _posRR, out _posRL, out _posLL, out _posLR, _distFromCorner);
-        }
-
-
-        private static void GetFourPointsDo(ref RoadIntersection _roadIntersection, out Vector3 _posRR, out Vector3 _posRL, out Vector3 _posLL, out Vector3 _posLR, float _distFromCorner)
-        {
             //Get four points:
-            float tPos1 = 0f;
-            float tPos2 = 0f;
-            Vector3 tTan1 = default(Vector3);
-            Vector3 tTan2 = default(Vector3);
-            float Node1Width = -1f;
-            float Node2Width = -1f;
-            Vector3 tVectRR = _roadIntersection.cornerRR;
-            Vector3 tVectRL = _roadIntersection.cornerRL;
-            Vector3 tVectLR = _roadIntersection.cornerLR;
-            Vector3 tVectLL = _roadIntersection.cornerLL;
-            Vector3 tDir = default(Vector3);
-            float ShoulderWidth1 = _roadIntersection.node1.spline.road.shoulderWidth;
-            float ShoulderWidth2 = _roadIntersection.node2.spline.road.shoulderWidth;
+            float pos1 = 0f;
+            float pos2 = 0f;
+            Vector3 tan1 = default(Vector3);
+            Vector3 tan2 = default(Vector3);
+            float node1Width = -1f;
+            float node2Width = -1f;
+            Vector3 vectorRR = _roadIntersection.cornerRR;
+            Vector3 vectorRL = _roadIntersection.cornerRL;
+            Vector3 vectorLR = _roadIntersection.cornerLR;
+            Vector3 vectorLL = _roadIntersection.cornerLL;
+            Vector3 direction = default(Vector3);
+            float shoulderWidth1 = _roadIntersection.node1.spline.road.shoulderWidth;
+            float shoulderWidth2 = _roadIntersection.node2.spline.road.shoulderWidth;
 
             if (!_roadIntersection.isFlipped)
             {
                 //RR:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerRR, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerRR, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time - Node1Width;
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true) * -1f;
-                tPos2 = _roadIntersection.node2.time + Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true);
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posRR = tVectRR + (tDir * _distFromCorner);
+                node1Width = (Vector3.Distance(vectorRR, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorRR, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time - node1Width;
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true) * -1f;
+                pos2 = _roadIntersection.node2.time + node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true);
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posRR = vectorRR + (direction * _distFromCorner);
                 //RL:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time + Node1Width;
+                node1Width = (Vector3.Distance(vectorRL, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorRL, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time + node1Width;
                 if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
-                    tPos1 = _roadIntersection.node1.time;
+                    pos1 = _roadIntersection.node1.time;
                 }
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true);
-                tPos2 = _roadIntersection.node2.time + Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true);
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posRL = tVectRL + (tDir * _distFromCorner);
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true);
+                pos2 = _roadIntersection.node2.time + node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true);
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posRL = vectorRL + (direction * _distFromCorner);
                 //LL:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time + Node1Width;
+                node1Width = (Vector3.Distance(vectorLL, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorLL, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time + node1Width;
                 if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
-                    tPos1 = _roadIntersection.node1.time;
+                    pos1 = _roadIntersection.node1.time;
                 }
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true);
-                tPos2 = _roadIntersection.node2.time - Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true) * -1f;
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posLL = tVectLL + (tDir * _distFromCorner);
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true);
+                pos2 = _roadIntersection.node2.time - node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true) * -1f;
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posLL = vectorLL + (direction * _distFromCorner);
                 //LR:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerLR, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerLR, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time - Node1Width;
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true) * -1f;
-                tPos2 = _roadIntersection.node2.time - Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true) * -1f;
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posLR = tVectLR + (tDir * _distFromCorner);
+                node1Width = (Vector3.Distance(vectorLR, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorLR, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time - node1Width;
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true) * -1f;
+                pos2 = _roadIntersection.node2.time - node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true) * -1f;
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posLR = vectorLR + (direction * _distFromCorner);
             }
             else
             {
                 //RR:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerRR, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerRR, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time - Node1Width;
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true) * -1f;
-                tPos2 = _roadIntersection.node2.time - Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true) * -1f;
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posRR = tVectRR + (tDir * _distFromCorner);
+                node1Width = (Vector3.Distance(vectorRR, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorRR, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time - node1Width;
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true) * -1f;
+                pos2 = _roadIntersection.node2.time - node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true) * -1f;
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posRR = vectorRR + (direction * _distFromCorner);
                 //RL:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerRL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time + Node1Width;
+                node1Width = (Vector3.Distance(vectorRL, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorRL, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time + node1Width;
                 if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
-                    tPos1 = _roadIntersection.node1.time;
+                    pos1 = _roadIntersection.node1.time;
                 }
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true);
-                tPos2 = _roadIntersection.node2.time - Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true) * -1f;
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posRL = tVectRL + (tDir * _distFromCorner);
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true);
+                pos2 = _roadIntersection.node2.time - node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true) * -1f;
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posRL = vectorRL + (direction * _distFromCorner);
                 //LL:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerLL, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time + Node1Width;
+                node1Width = (Vector3.Distance(vectorLL, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorLL, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time + node1Width;
                 if (_roadIntersection.intersectionType == RoadIntersection.IntersectionTypeEnum.ThreeWay)
                 {
-                    tPos1 = _roadIntersection.node1.time;
+                    pos1 = _roadIntersection.node1.time;
                 }
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true);
-                tPos2 = _roadIntersection.node2.time + Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true);
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posLL = tVectLL + (tDir * _distFromCorner);
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true);
+                pos2 = _roadIntersection.node2.time + node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true);
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posLL = vectorLL + (direction * _distFromCorner);
                 //LR:
-                Node1Width = (Vector3.Distance(_roadIntersection.cornerLR, _roadIntersection.node1.pos) + ShoulderWidth1) / _roadIntersection.node1.spline.distance;
-                Node2Width = (Vector3.Distance(_roadIntersection.cornerLR, _roadIntersection.node2.pos) + ShoulderWidth2) / _roadIntersection.node2.spline.distance;
-                tPos1 = _roadIntersection.node1.time - Node1Width;
-                tTan1 = _roadIntersection.node1.spline.GetSplineValue(tPos1, true) * -1f;
-                tPos2 = _roadIntersection.node2.time + Node2Width;
-                tTan2 = _roadIntersection.node2.spline.GetSplineValue(tPos2, true);
-                tDir = (tTan1.normalized + tTan2.normalized).normalized;
-                _posLR = tVectLR + (tDir * _distFromCorner);
+                node1Width = (Vector3.Distance(vectorLR, _roadIntersection.node1.pos) + shoulderWidth1) / _roadIntersection.node1.spline.distance;
+                node2Width = (Vector3.Distance(vectorLR, _roadIntersection.node2.pos) + shoulderWidth2) / _roadIntersection.node2.spline.distance;
+                pos1 = _roadIntersection.node1.time - node1Width;
+                tan1 = _roadIntersection.node1.spline.GetSplineValue(pos1, true) * -1f;
+                pos2 = _roadIntersection.node2.time + node2Width;
+                tan2 = _roadIntersection.node2.spline.GetSplineValue(pos2, true);
+                direction = (tan1.normalized + tan2.normalized).normalized;
+                _posLR = vectorLR + (direction * _distFromCorner);
             }
 
 
+            // Todo: Remove this limitation in future
             // Prevent corners of intersections to have different heights
             _posRR.y = _roadIntersection.signHeight;
             _posRL.y = _roadIntersection.signHeight;
