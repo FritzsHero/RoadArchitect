@@ -738,6 +738,36 @@ namespace RoadArchitect.Tests
             unitSystem9.isAllowingRoadUpdates = true;
             unitSystem9.UpdateAllRoads();
         }
+
+
+        /// <summary> Creates a self closed road; road loop </summary>
+        public static void RoadArchitectUnitTest10()
+        {
+            CleanupTest(10);
+
+            //Create base road:
+            Road road;
+            List<Vector3> nodeLocations = new List<Vector3>();
+
+            nodeLocations.Add(new Vector3(480f, 0.03f, 178f));
+            nodeLocations.Add(new Vector3(412f, 0.03f, 246f));
+            nodeLocations.Add(new Vector3(357f, 0.03f, 202f));
+            nodeLocations.Add(new Vector3(364f, 0.03f, 140f));
+            nodeLocations.Add(new Vector3(418f, 0.03f, 142f));
+            nodeLocations.Add(new Vector3(412f, 0.03f, 246f));
+
+
+            GameObject unitSystem10Object = new GameObject("RoadArchitectSystem10");
+            RoadSystem unitSystem10 = unitSystem10Object.AddComponent<RoadSystem>();
+            unitSystem10.isAllowingRoadUpdates = false;
+            road = RoadAutomation.CreateRoadProgrammatically(unitSystem10, ref nodeLocations);
+            road.laneAmount = 2;
+            UnitTestIntersectionHelper(road, road, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
+
+            //Turn updates back on and update road:
+            unitSystem10.isAllowingRoadUpdates = true;
+            unitSystem10.UpdateAllRoads();
+        }
     }
 #endif
 }

@@ -150,6 +150,16 @@ namespace RoadArchitect
         }
 
 
+        [MenuItem("Window/Road Architect/Testing/Run unit test 10 (caution)")]
+        public static void Test10()
+        {
+            if (EditorUtility.DisplayDialog("Warning !", "This will delete your RoadArchitectSystem10 and will create test roads.", "OK", "Cancel"))
+            {
+                RoadArchitect.Tests.UnitTests.RoadArchitectUnitTest10();
+            }
+        }
+
+
         /// <summary> WARNING: Only call this on an empty scene that has some terrains on it. We are not responsbile for data loss if this function is called by the user. </summary>
         [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
         public static void TestCleanup()
