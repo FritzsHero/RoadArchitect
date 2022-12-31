@@ -292,24 +292,25 @@ namespace RoadArchitect
                 isSameSpline = true;
             }
 
-            if (isSameSpline)
-            {
-                if (_node1.idOnSpline < _node2.idOnSpline)
-                {
-                    node1 = _node1;
-                    node2 = _node2;
-                }
-                else
-                {
-                    node1 = _node2;
-                    node2 = _node1;
-                }
-            }
-            else
-            {
-                node1 = _node1;
-                node2 = _node2;
-            }
+			if (_node1.idOnSpline < _node2.idOnSpline || _node1.isEndPoint || (!isSameSpline && !_node2.isEndPoint))
+			{
+				node1 = _node1;
+				node2 = _node2;
+			}
+			else
+			{
+				node1 = _node2;
+				node2 = _node1;
+			}
+
+			if (node1.isEndPoint || node2.isEndPoint)
+			{
+				intersectionType = IntersectionTypeEnum.ThreeWay;
+			}
+			else
+			{
+				intersectionType = IntersectionTypeEnum.FourWay;
+			}
 
             node1.intersectionOtherNode = node2;
             node2.intersectionOtherNode = node1;
