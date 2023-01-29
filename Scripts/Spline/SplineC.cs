@@ -2166,7 +2166,9 @@ namespace RoadArchitect
                 _node1.isSpecialRoadConnPrimary = true;
                 NodeCreated1.isSpecialRoadConnPrimary = true;
                 if (_node1.spline.road.laneAmount == 4)
-                { xWidth *= 2f; }
+                {
+                    xWidth *= 2f;
+                }
                 tDelay = (_node2.spline.road.laneAmount - _node1.spline.road.laneAmount) * xWidth;
                 if (tDelay < 10f)
                 {

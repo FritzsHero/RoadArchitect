@@ -112,6 +112,7 @@ namespace RoadArchitect
 
 
         #region "Float comparisons"
+        /// <summary> Returns true if _a - _b is smaller then _tolerance </summary>
         public static bool IsApproximately(float _a, float _b, float _tolerance = 0.01f)
         {
             return Mathf.Abs(_a - _b) < _tolerance;

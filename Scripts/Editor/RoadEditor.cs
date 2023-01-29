@@ -1467,20 +1467,6 @@ namespace RoadArchitect
             objects[0] = road.transform.gameObject;
             Selection.objects = objects;
         }
-
-
-        #region "Progress bar"
-        /// <summary> Creates progress bar. </summary>
-        /// <param name='_value'> Value of the progress bar. </param>
-        /// <param name='_text'> Label of the progress bar. </param>
-        private void ProgressBar(float _value, string _text)
-        {
-            // Get a rect for the progress bar using the same margins as a textfield:
-            Rect rect = GUILayoutUtility.GetRect(18, 18, "TextField");
-            EditorGUI.ProgressBar(rect, _value, _text);
-            EditorGUILayout.Space();
-        }
-        #endregion
     }
 }
 #endif
