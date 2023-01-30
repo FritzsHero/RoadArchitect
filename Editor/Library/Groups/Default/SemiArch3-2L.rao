@@ -6,6 +6,7 @@
   <isDefault>true</isDefault>
   <isBridge>true</isBridge>
   <fileName>SemiArch3-2L</fileName>
+  <sortID>42</sortID>
 </WizardObjectLibrary>
 #### RoadArchitect ####
 ﻿<?xml version="1.0" encoding="utf-8"?>

@@ -335,66 +335,6 @@ namespace RoadArchitect
                 tO.fileName = _names[index];
                 tO.FullPath = path;
 
-                if (tO.isDefault && _isBridge)
-                {
-                    if (tO.displayName.Contains("Large Suspension"))
-                    {
-                        tO.sortID = 11;
-                    }
-                    else if (tO.displayName.Contains("Small Suspension"))
-                    {
-                        tO.sortID = 10;
-                    }
-                    else if (tO.displayName.Contains("SemiArch 80 Degree"))
-                    {
-                        tO.sortID = 40;
-                    }
-                    else if (tO.displayName.Contains("SemiArch 80 Girder"))
-                    {
-                        tO.sortID = 41;
-                    }
-                    else if (tO.displayName.Contains("SemiArch 180 Degree"))
-                    {
-                        tO.sortID = 42;
-                    }
-                    else if (tO.displayName.Contains("Arch 12m Beams"))
-                    {
-                        tO.sortID = 0;
-                    }
-                    else if (tO.displayName.Contains("Arch 24m Beams"))
-                    {
-                        tO.sortID = 1;
-                    }
-                    else if (tO.displayName.Contains("Arch 48m Beams"))
-                    {
-                        tO.sortID = 3;
-                    }
-                    else if (tO.displayName.Contains("Grid Steel"))
-                    {
-                        tO.sortID = 30;
-                    }
-                    else if (tO.displayName.Contains("Steel Beam"))
-                    {
-                        tO.sortID = 4;
-                    }
-                    else if (tO.displayName.Contains("Causeway Federal"))
-                    {
-                        tO.sortID = 5;
-                    }
-                    else if (tO.displayName.Contains("Causeway Overpass"))
-                    {
-                        tO.sortID = 8;
-                    }
-                    else if (tO.displayName.Contains("Causeway Classic"))
-                    {
-                        tO.sortID = 7;
-                    }
-                    else if (tO.displayName.Contains("Causeway Highway"))
-                    {
-                        tO.sortID = 6;
-                    }
-                }
-
                 objectList.Add(tO);
             }
             oListSort();
@@ -516,7 +456,7 @@ namespace RoadArchitect
             string desc = "";
             string displayName = "";
             string thumbString = "";
-            bool isBridge = false;
+            bool isBridge;
 
             for (int i = 0; i < namesCount; i++)
             {
@@ -556,8 +496,8 @@ namespace RoadArchitect
                     continue;
                 }
 
-                #region "Thumbs"
                 WizardObject tO = new WizardObject();
+                #region "Image"
                 try
                 {
                     tO.thumb = AssetDatabase.LoadAssetAtPath<Texture2D>(thumbString);
@@ -572,7 +512,7 @@ namespace RoadArchitect
                 {
                     try
                     {
-                        GameObject xObj = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(stringPath);
+                        GameObject xObj = AssetDatabase.LoadAssetAtPath<GameObject>(stringPath);
                         tO.thumb = AssetPreview.GetAssetPreview(xObj);
                     }
                     catch
@@ -582,113 +522,11 @@ namespace RoadArchitect
                 }
                 #endregion
 
-
                 tO.displayName = displayName;
                 tO.fileName = _names[i];
                 tO.FullPath = path;
                 tO.desc = desc;
                 tO.isDefault = _isDefault;
-
-                #region "Add descriptions and display names"
-                if (_isDefault && windowType == WindowTypeEnum.Edge)
-                {
-                    if (tO.displayName.Contains("KRail Blinder"))
-                    {
-                        tO.sortID = 5;
-                    }
-                    else if (tO.displayName.Contains("Con Barrels Static"))
-                    {
-                        tO.sortID = 3;
-                    }
-                    else if (tO.displayName.Contains("Con Barrels Rigid"))
-                    {
-                        tO.sortID = 3;
-                    }
-                    else if (tO.displayName.Contains("Traffic cones Static"))
-                    {
-                        tO.sortID = 4;
-                    }
-                    else if (tO.displayName.Contains("Traffic cones Rigid"))
-                    {
-                        tO.sortID = 4;
-                    }
-                    else if (tO.displayName.Contains("Road reflectors"))
-                    {
-                        tO.sortID = 4;
-                    }
-                    else if (tO.displayName.Contains("Right turn only"))
-                    {
-                        tO.sortID = 4;
-                    }
-
-                    else if (tO.displayName.Contains("Signs 330"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs 396"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs 617 small"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs 617"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs 861 small"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Sign type 861"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs 988 small"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs 988"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs diamond"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs square small"))
-                    {
-                        tO.sortID = 21;
-                    }
-                    else if (tO.displayName.Contains("Signs square"))
-                    {
-                        tO.sortID = 21;
-                    }
-                }
-
-                if (_isDefault && windowType == WindowTypeEnum.Extrusion)
-                {
-                    if (tO.displayName.Contains("GSDKRailCurvedR"))
-                    {
-                        tO.displayName = "KRail Curved Right";
-                        tO.desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with curved ends for right shoulder.";
-                    }
-                    else if (tO.displayName.Contains("GSDKRailCurvedL"))
-                    {
-                        tO.displayName = "KRail Curved Left";
-                        tO.desc = "Federal spec cement KRailing (also known as Jersey Barriers). Variant with curved ends for left shoulder.";
-                    }
-                    else if (tO.displayName.Contains("Cable barrier 10m"))
-                    {
-                        tO.sortID = 20;
-                    }
-                    else if (tO.displayName.Contains("Cable barrier 5m"))
-                    {
-                        tO.sortID = 20;
-                    }
-                }
-                #endregion
 
                 objectList.Add(tO);
             }
