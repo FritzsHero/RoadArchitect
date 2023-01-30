@@ -27,13 +27,7 @@ namespace RoadArchitect
         /// <summary> Returns closest terrain to _vect </summary>
         public static Terrain GetTerrain(Vector3 _vect)
         {
-            return GetTerrainDo(ref _vect);
-        }
-
-
-        /// <summary> Returns closest terrain to _vect </summary>
-        private static Terrain GetTerrainDo(ref Vector3 _vect)
-        {
+            Terrain terrain;
             //Sphere cast 5m first. Then raycast down 1000m, then up 1000m.
             Collider[] colliders = Physics.OverlapSphere(_vect, 10f);
             if (colliders != null)
@@ -41,11 +35,11 @@ namespace RoadArchitect
                 int collidersLength = colliders.Length;
                 for (int index = 0; index < collidersLength; index++)
                 {
-                    Terrain tTerrain = colliders[index].transform.GetComponent<Terrain>();
-                    if (tTerrain)
+                    terrain = colliders[index].transform.GetComponent<Terrain>();
+                    if (terrain)
                     {
                         colliders = null;
-                        return tTerrain;
+                        return terrain;
                     }
                 }
                 colliders = null;
@@ -59,11 +53,11 @@ namespace RoadArchitect
                 hitsLength = hits.Length;
                 for (int index = 0; index < hitsLength; index++)
                 {
-                    Terrain tTerrain = hits[index].collider.transform.GetComponent<Terrain>();
-                    if (tTerrain)
+                    terrain = hits[index].collider.transform.GetComponent<Terrain>();
+                    if (terrain)
                     {
                         hits = null;
-                        return tTerrain;
+                        return terrain;
                     }
                 }
                 hits = null;
@@ -75,11 +69,11 @@ namespace RoadArchitect
                 hitsLength = hits.Length;
                 for (int i = 0; i < hitsLength; i++)
                 {
-                    Terrain tTerrain = hits[i].collider.transform.GetComponent<Terrain>();
-                    if (tTerrain)
+                    terrain = hits[i].collider.transform.GetComponent<Terrain>();
+                    if (terrain)
                     {
                         hits = null;
-                        return tTerrain;
+                        return terrain;
                     }
                 }
                 hits = null;
@@ -91,20 +85,25 @@ namespace RoadArchitect
         #region "Terrain history"
         public static void ConstructRoadStoreTerrainHistory(ref Road _road)
         {
-            Object[] TIDs = GameObject.FindObjectsOfType<RoadTerrain>();
+            Object[] allTerrains = GameObject.FindObjectsOfType<RoadTerrain>();
 
-            HashSet<int> tTIDS = new HashSet<int>();
-            foreach (RoadTerrain TID in TIDs)
+            HashSet<int> terrainIDs = new HashSet<int>();
+            foreach (RoadTerrain terrain in allTerrains)
             {
-                tTIDS.Add(TID.UID);
+                terrainIDs.Add(terrain.UID);
             }
 
-            if (_road.TerrainHistory != null && _road.TerrainHistory.Count > 0)
+            if (_road.TerrainHistory == null)
+            {
+                _road.TerrainHistory = new List<TerrainHistoryMaker>();
+            }
+
+            if (_road.TerrainHistory.Count > 0)
             {
                 //Delete unnecessary terrain histories:
                 foreach (TerrainHistoryMaker THMaker in _road.TerrainHistory)
                 {
-                    if (!tTIDS.Contains(THMaker.terrainID))
+                    if (!terrainIDs.Contains(THMaker.terrainID))
                     {
                         THMaker.Nullify();
                         _road.TerrainHistory.Remove(THMaker);
@@ -112,28 +111,22 @@ namespace RoadArchitect
                 }
             }
 
-            if (_road.TerrainHistory == null)
-            {
-                _road.TerrainHistory = new List<TerrainHistoryMaker>();
-            }
+
+            TerrainHistoryMaker TH;
+            RoadTerrain roadTerrain;
             foreach (Terraforming.TempTerrainData TTD in _road.EditorTTDList)
             {
-                TerrainHistoryMaker TH = null;
-                RoadTerrain TID = null;
+                roadTerrain = null;
                 //Get terrainID:
-                foreach (RoadTerrain _TID in TIDs)
+                foreach (RoadTerrain terrain in allTerrains)
                 {
-                    if (_TID.UID == TTD.uID)
+                    if (terrain.UID == TTD.uID)
                     {
-                        TID = _TID;
+                        roadTerrain = terrain;
                     }
                 }
 
-                if (_road.TerrainHistory == null)
-                {
-                    _road.TerrainHistory = new List<TerrainHistoryMaker>();
-                }
-                if (TID == null)
+                if (roadTerrain == null)
                 {
                     continue;
                 }
@@ -142,7 +135,7 @@ namespace RoadArchitect
                 bool isContainingTID = false;
                 for (int index = 0; index < THCount; index++)
                 {
-                    if (_road.TerrainHistory[index].terrainID == TID.UID)
+                    if (_road.TerrainHistory[index].terrainID == roadTerrain.UID)
                     {
                         isContainingTID = true;
                         break;
@@ -152,14 +145,14 @@ namespace RoadArchitect
                 if (!isContainingTID)
                 {
                     TerrainHistoryMaker THMaker = new TerrainHistoryMaker();
-                    THMaker.terrainID = TID.UID;
+                    THMaker.terrainID = roadTerrain.UID;
                     _road.TerrainHistory.Add(THMaker);
                 }
 
                 TH = null;
                 for (int index = 0; index < THCount; index++)
                 {
-                    if (_road.TerrainHistory[index].terrainID == TID.UID)
+                    if (_road.TerrainHistory[index].terrainID == roadTerrain.UID)
                     {
                         TH = _road.TerrainHistory[index];
                         break;
@@ -192,6 +185,7 @@ namespace RoadArchitect
                     TH.height = null;
                     TH.Count = 0;
                 }
+
                 //Details:
                 if (_road.isDetailModificationEnabled)
                 {
@@ -206,7 +200,7 @@ namespace RoadArchitect
                     TH.detailsOldValue = new int[TotalSize];
 
                     int RunningIndex = 0;
-                    int cLength = 0;
+                    int cLength;
                     for (int index = 0; index < TTD.DetailLayersCount; index++)
                     {
                         cLength = TTD.detailsCount[index];
@@ -234,6 +228,7 @@ namespace RoadArchitect
                     TH.detailsCount = null;
                     TH.detailLayersCount = 0;
                 }
+
                 //Trees:
                 if (_road.isTreeModificationEnabled)
                 {
@@ -268,17 +263,14 @@ namespace RoadArchitect
 
         public static void SaveNodeObjects(ref Splination.SplinatedMeshMaker[] _splinatedObjects, ref EdgeObjects.EdgeObjectMaker[] _edgeObjects, ref WizardObject _wizardObj)
         {
-            int sCount = _splinatedObjects.Length;
-            int eCount = _edgeObjects.Length;
             //Splinated objects first:
-            Splination.SplinatedMeshMaker SMM = null;
             RootUtils.CheckCreateSpecialLibraryDirs();
             string libraryPath = RootUtils.GetDirLibrary();
-            string tPath = Path.Combine(Path.Combine(libraryPath, "Groups"), _wizardObj.fileName + ".rao");
+            string filePath = Path.Combine(Path.Combine(libraryPath, "Groups"), _wizardObj.fileName + ".rao");
             if (_wizardObj.isDefault)
             {
-                tPath = Path.Combine(Path.Combine(libraryPath, "Groups"), "Default");
-                tPath = Path.Combine(tPath, _wizardObj.fileName + ".rao");
+                filePath = Path.Combine(Path.Combine(libraryPath, "Groups"), "Default");
+                filePath = Path.Combine(filePath, _wizardObj.fileName + ".rao");
             }
             StringBuilder builder = new StringBuilder(32768);
 
@@ -286,6 +278,8 @@ namespace RoadArchitect
             builder.Append(_wizardObj.ConvertToString());
             builder.Append(FileSepString);
 
+            int sCount = _splinatedObjects.Length;
+            Splination.SplinatedMeshMaker SMM = null;
             for (int index = 0; index < sCount; index++)
             {
                 SMM = _splinatedObjects[index];
@@ -293,6 +287,7 @@ namespace RoadArchitect
                 builder.Append(FileSepString);
             }
 
+            int eCount = _edgeObjects.Length;
             EdgeObjects.EdgeObjectMaker EOM = null;
             for (int index = 0; index < eCount; index++)
             {
@@ -301,14 +296,14 @@ namespace RoadArchitect
                 builder.Append(FileSepString);
             }
 
-            System.IO.File.WriteAllText(tPath, builder.ToString());
+            File.WriteAllText(filePath, builder.ToString());
         }
 
 
         /// <summary> Loads splinated objects for this _node </summary>
         public static void LoadNodeObjects(string _fileName, SplineN _node, bool _isDefault = false, bool _isBridge = false)
         {
-            string filePath = "";
+            string filePath;
             RootUtils.CheckCreateSpecialLibraryDirs();
             string libraryPath = RootUtils.GetDirLibrary();
             if (_isDefault)
@@ -321,22 +316,21 @@ namespace RoadArchitect
                 filePath = Path.Combine(Path.Combine(libraryPath, "Groups"), _fileName + ".rao");
             }
 
-            string fileData = System.IO.File.ReadAllText(filePath);
-            string[] tSep = new string[2];
-            tSep[0] = FileSepString;
-            tSep[1] = FileSepStringCRLF;
-            string[] tSplit = fileData.Split(tSep, System.StringSplitOptions.RemoveEmptyEntries);
+            string fileData = File.ReadAllText(filePath);
+            string[] seperators = new string[2];
+            seperators[0] = FileSepString;
+            seperators[1] = FileSepStringCRLF;
+            string[] fileSplitted = fileData.Split(seperators, System.StringSplitOptions.RemoveEmptyEntries);
 
-            Splination.SplinatedMeshMaker SMM = null;
-            Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM = null;
-            EdgeObjects.EdgeObjectMaker EOM = null;
-            EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM = null;
-            int tSplitCount = tSplit.Length;
+            Splination.SplinatedMeshMaker SMM;
+            Splination.SplinatedMeshMaker.SplinatedMeshLibraryMaker SLM;
+            EdgeObjects.EdgeObjectMaker EOM;
+            EdgeObjects.EdgeObjectMaker.EdgeObjectLibraryMaker ELM;
+            int fileSplitCount = fileSplitted.Length;
 
-            for (int index = 0; index < tSplitCount; index++)
+            for (int index = 0; index < fileSplitCount; index++)
             {
-                SLM = null;
-                SLM = Splination.SplinatedMeshMaker.SLMFromData(tSplit[index]);
+                SLM = Splination.SplinatedMeshMaker.SLMFromData(fileSplitted[index]);
                 if (SLM != null)
                 {
                     SMM = _node.AddSplinatedObject();
@@ -352,8 +346,7 @@ namespace RoadArchitect
                     continue;
                 }
 
-                ELM = null;
-                ELM = EdgeObjects.EdgeObjectMaker.ELMFromData(tSplit[index]);
+                ELM = EdgeObjects.EdgeObjectMaker.ELMFromData(fileSplitted[index]);
                 if (ELM != null)
                 {
                     EOM = _node.AddEdgeObject();
@@ -386,42 +379,44 @@ namespace RoadArchitect
         /// <summary> Returns a splat map texture encoded as png </summary>
         public static byte[] MakeSplatMap(Terrain _terrain, Color _BG, Color _FG, int _width, int _height, float _splatWidth, bool _isSkippingBridge, bool _isSkippingTunnel, string _roadUID = "")
         {
-            Texture2D tTexture = new Texture2D(_width, _height, TextureFormat.RGB24, false);
+            Texture2D texture = new Texture2D(_width, _height, TextureFormat.RGB24, false);
 
             //Set background color:
-            Color[] tColorsBG = new Color[_width * _height];
-            int tBGCount = tColorsBG.Length;
-            for (int i = 0; i < tBGCount; i++)
+            Color[] backgroundColors = new Color[_width * _height];
+            int backgroundCount = backgroundColors.Length;
+            for (int i = 0; i < backgroundCount; i++)
             {
-                tColorsBG[i] = _BG;
+                backgroundColors[i] = _BG;
             }
-            tTexture.SetPixels(0, 0, _width, _height, tColorsBG);
-            tColorsBG = null;
+            texture.SetPixels(0, 0, _width, _height, backgroundColors);
 
-            Object[] tRoads = null;
+
+            Object[] roadObjects;
             if (_roadUID != "")
             {
-                tRoads = new Object[1];
+                roadObjects = new Object[1];
                 Object[] roads = GameObject.FindObjectsOfType<Road>();
                 foreach (Road road in roads)
                 {
                     if (string.CompareOrdinal(road.UID, _roadUID) == 0)
                     {
-                        tRoads[0] = road;
+                        roadObjects[0] = road;
                         break;
                     }
                 }
             }
             else
             {
-                tRoads = GameObject.FindObjectsOfType<Road>();
+                roadObjects = GameObject.FindObjectsOfType<Road>();
             }
-            Vector3 tPos = _terrain.transform.position;
-            Vector3 tSize = _terrain.terrainData.size;
-            foreach (Road tRoad in tRoads)
+
+
+            Vector3 terrainPos = _terrain.transform.position;
+            Vector3 terrainSize = _terrain.terrainData.size;
+            foreach (Road road in roadObjects)
             {
-                SplineC tSpline = tRoad.spline;
-                int tCount = tSpline.RoadDefKeysArray.Length;
+                SplineC spline = road.spline;
+                int tCount = spline.RoadDefKeysArray.Length;
 
                 Vector3 POS1 = default(Vector3);
                 Vector3 POS2 = default(Vector3);
@@ -444,19 +439,19 @@ namespace RoadArchitect
                 int yDiff = -1;
                 float p1 = 0f;
                 float p2 = 0f;
-                bool bXBad = false;
-                bool bYBad = false;
+                bool isXBad = false;
+                bool isYBad = false;
                 for (int i = 0; i < (tCount - 1); i++)
                 {
-                    bXBad = false;
-                    bYBad = false;
-                    p1 = tSpline.TranslateInverseParamToFloat(tSpline.RoadDefKeysArray[i]);
-                    p2 = tSpline.TranslateInverseParamToFloat(tSpline.RoadDefKeysArray[i + 1]);
+                    isXBad = false;
+                    isYBad = false;
+                    p1 = spline.TranslateInverseParamToFloat(spline.RoadDefKeysArray[i]);
+                    p2 = spline.TranslateInverseParamToFloat(spline.RoadDefKeysArray[i + 1]);
 
                     //Skip bridges:
                     if (_isSkippingBridge)
                     {
-                        if (tSpline.IsInBridgeTerrain(p1))
+                        if (spline.IsInBridgeTerrain(p1))
                         {
                             continue;
                         }
@@ -465,29 +460,29 @@ namespace RoadArchitect
                     //Skip tunnels:
                     if (_isSkippingTunnel)
                     {
-                        if (tSpline.IsInTunnelTerrain(p1))
+                        if (spline.IsInTunnelTerrain(p1))
                         {
                             continue;
                         }
                     }
 
-                    tSpline.GetSplineValueBoth(p1, out tVect, out POS1);
-                    tSpline.GetSplineValueBoth(p2, out tVect2, out POS2);
+                    spline.GetSplineValueBoth(p1, out tVect, out POS1);
+                    spline.GetSplineValueBoth(p2, out tVect2, out POS2);
                     lVect1 = (tVect + new Vector3(_splatWidth * -POS1.normalized.z, 0, _splatWidth * POS1.normalized.x));
                     rVect1 = (tVect + new Vector3(_splatWidth * POS1.normalized.z, 0, _splatWidth * -POS1.normalized.x));
                     lVect2 = (tVect2 + new Vector3(_splatWidth * -POS2.normalized.z, 0, _splatWidth * POS2.normalized.x));
                     rVect2 = (tVect2 + new Vector3(_splatWidth * POS2.normalized.z, 0, _splatWidth * -POS2.normalized.x));
 
-                    TranslateWorldVectToCustom(_width, _height, lVect1, ref tPos, ref tSize, out x1, out y1);
+                    TranslateWorldVectToCustom(_width, _height, lVect1, ref terrainPos, ref terrainSize, out x1, out y1);
                     tX[0] = x1;
                     tY[0] = y1;
-                    TranslateWorldVectToCustom(_width, _height, rVect1, ref tPos, ref tSize, out x1, out y1);
+                    TranslateWorldVectToCustom(_width, _height, rVect1, ref terrainPos, ref terrainSize, out x1, out y1);
                     tX[1] = x1;
                     tY[1] = y1;
-                    TranslateWorldVectToCustom(_width, _height, lVect2, ref tPos, ref tSize, out x1, out y1);
+                    TranslateWorldVectToCustom(_width, _height, lVect2, ref terrainPos, ref terrainSize, out x1, out y1);
                     tX[2] = x1;
                     tY[2] = y1;
-                    TranslateWorldVectToCustom(_width, _height, rVect2, ref tPos, ref tSize, out x1, out y1);
+                    TranslateWorldVectToCustom(_width, _height, rVect2, ref terrainPos, ref terrainSize, out x1, out y1);
                     tX[3] = x1;
                     tY[3] = y1;
 
@@ -499,39 +494,47 @@ namespace RoadArchitect
 
                     if (MinX < 0)
                     {
-                        MinX = 0; bXBad = true;
+                        MinX = 0;
+                        isXBad = true;
                     }
                     if (MaxX < 0)
                     {
-                        MaxX = 0; bXBad = true;
+                        MaxX = 0;
+                        isXBad = true;
                     }
                     if (MinY < 0)
                     {
-                        MinY = 0; bYBad = true;
+                        MinY = 0;
+                        isYBad = true;
                     }
                     if (MaxY < 0)
                     {
-                        MaxY = 0; bYBad = true;
+                        MaxY = 0;
+                        isYBad = true;
                     }
 
                     if (MinX > (_width - 1))
                     {
-                        MinX = (_width - 1); bXBad = true;
+                        MinX = (_width - 1);
+                        isXBad = true;
                     }
                     if (MaxX > (_width - 1))
                     {
-                        MaxX = (_width - 1); bXBad = true;
+                        MaxX = (_width - 1);
+                        isXBad = true;
                     }
                     if (MinY > (_height - 1))
                     {
-                        MinY = (_height - 1); bYBad = true;
+                        MinY = (_height - 1);
+                        isYBad = true;
                     }
                     if (MaxY > (_height - 1))
                     {
-                        MaxY = (_height - 1); bYBad = true;
+                        MaxY = (_height - 1);
+                        isYBad = true;
                     }
 
-                    if (bXBad && bYBad)
+                    if (isXBad && isYBad)
                     {
                         continue;
                     }
@@ -539,24 +542,24 @@ namespace RoadArchitect
                     xDiff = MaxX - MinX;
                     yDiff = MaxY - MinY;
 
-                    Color[] tColors = new Color[xDiff * yDiff];
-                    int cCount = tColors.Length;
-                    for (int j = 0; j < cCount; j++)
+                    Color[] colors = new Color[xDiff * yDiff];
+                    int colorCount = colors.Length;
+                    for (int j = 0; j < colorCount; j++)
                     {
-                        tColors[j] = _FG;
+                        colors[j] = _FG;
                     }
 
                     if (xDiff > 0 && yDiff > 0)
                     {
-                        tTexture.SetPixels(MinX, MinY, xDiff, yDiff, tColors);
+                        texture.SetPixels(MinX, MinY, xDiff, yDiff, colors);
                     }
                 }
             }
 
-            tTexture.Apply();
-            byte[] tBytes = tTexture.EncodeToPNG();
-            Object.DestroyImmediate(tTexture);
-            return tBytes;
+            texture.Apply();
+            byte[] imageBytes = texture.EncodeToPNG();
+            Object.DestroyImmediate(texture);
+            return imageBytes;
         }
 
 
