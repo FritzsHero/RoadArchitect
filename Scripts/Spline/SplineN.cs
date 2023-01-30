@@ -236,11 +236,14 @@ namespace RoadArchitect
 
         public void RemoveAllEdgeObjects(bool _isSkippingUpdate = false)
         {
-            int SpamCheck = 0;
-            while (EdgeObjects.Count > 0 && SpamCheck < 1000)
+            if (EdgeObjects == null)
+            {
+                return;
+            }
+
+            while (EdgeObjects.Count > 0)
             {
                 RemoveEdgeObject(-1, _isSkippingUpdate);
-                SpamCheck += 1;
             }
         }
 
@@ -472,14 +475,14 @@ namespace RoadArchitect
 
         public void RemoveAllSplinatedObjects(bool _isSkippingUpdate = false)
         {
-            int SpamCheck = 0;
-            if (SplinatedObjects != null)
+            if (SplinatedObjects == null)
             {
-                while (SplinatedObjects.Count > 0 && SpamCheck < 1000)
-                {
-                    RemoveSplinatedObject(-1, _isSkippingUpdate);
-                    SpamCheck += 1;
-                }
+                return;
+            }
+
+            while (SplinatedObjects.Count > 0)
+            {
+                RemoveSplinatedObject(-1, _isSkippingUpdate);
             }
         }
 

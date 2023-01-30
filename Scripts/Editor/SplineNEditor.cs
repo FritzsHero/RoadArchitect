@@ -637,23 +637,20 @@ namespace RoadArchitect
             }
             EditorGUILayout.EndHorizontal();
 
-            if (node.SplinatedObjects.Count > 20 || node.EdgeObjects.Count > 20)
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("");
+            isRemovingAll = EditorGUILayout.Toggle(isRemovingAll, GUILayout.Width(20f));
+            if (GUILayout.Button("Remove all", EditorStyles.miniButton, GUILayout.Width(100f)))
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("");
-                isRemovingAll = EditorGUILayout.Toggle(isRemovingAll, GUILayout.Width(20f));
-                if (GUILayout.Button("Remove all", EditorStyles.miniButton, GUILayout.Width(100f)))
+                if (isRemovingAll)
                 {
-                    if (isRemovingAll)
-                    {
-                        node.RemoveAllSplinatedObjects();
-                        node.RemoveAllEdgeObjects();
-                        isRemovingAll = false;
-                    }
+                    node.RemoveAllSplinatedObjects();
+                    node.RemoveAllEdgeObjects();
+                    isRemovingAll = false;
                 }
-
-                EditorGUILayout.EndHorizontal();
             }
+
+            EditorGUILayout.EndHorizontal();
             EditorUtilities.DrawLine();
         }
 
