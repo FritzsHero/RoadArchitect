@@ -131,6 +131,7 @@ namespace RoadArchitect
                     continue;
                 }
 
+                TH = null;
                 int THCount = _road.TerrainHistory.Count;
                 bool isContainingTID = false;
                 for (int index = 0; index < THCount; index++)
@@ -138,6 +139,7 @@ namespace RoadArchitect
                     if (_road.TerrainHistory[index].terrainID == roadTerrain.UID)
                     {
                         isContainingTID = true;
+                        TH = _road.TerrainHistory[index];
                         break;
                     }
                 }
@@ -147,17 +149,10 @@ namespace RoadArchitect
                     TerrainHistoryMaker THMaker = new TerrainHistoryMaker();
                     THMaker.terrainID = roadTerrain.UID;
                     _road.TerrainHistory.Add(THMaker);
+                    TH = THMaker;
                 }
 
-                TH = null;
-                for (int index = 0; index < THCount; index++)
-                {
-                    if (_road.TerrainHistory[index].terrainID == roadTerrain.UID)
-                    {
-                        TH = _road.TerrainHistory[index];
-                        break;
-                    }
-                }
+                
                 if (TH == null)
                 {
                     continue;
