@@ -389,11 +389,6 @@ namespace RoadArchitect
                 GUILayout.Label("WARNING: Saving meshes as assets is very slow and can increase road generation time by several minutes.", warningLabelStyle);
             }
 
-            if (GUILayout.Button("Duplicate road", EditorStyles.miniButton, GUILayout.Width(120f)))
-            {
-                road.DuplicateRoad();
-            }
-
 
             RenderRoadHelpDialog();
 
