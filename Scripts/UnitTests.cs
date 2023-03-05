@@ -24,7 +24,7 @@ namespace RoadArchitect.Tests
             roadSystem = roadSystemObject.AddComponent<RoadSystem>();
             roadSystem.isAllowingRoadUpdates = false;
 
-            int numTests = 9;
+            int numTests = 10;
             double totalTestTime = 0f;
             for (int index = 1; index <= numTests; index++)
             {
@@ -109,6 +109,10 @@ namespace RoadArchitect.Tests
                     // 3 Intersections with end nodes
                     RoadArchitectUnitTest9();
                     break;
+                case 10:
+                    // Road Intersection with itself
+                    RoadArchitectUnitTest10();
+                    break;
             }
             stopwatch.Stop();
             long testTime = stopwatch.ElapsedMilliseconds;
@@ -125,6 +129,7 @@ namespace RoadArchitect.Tests
             CleanupTest(7);
             CleanupTest(8);
             CleanupTest(9);
+            CleanupTest(10);
         }
 
 
@@ -505,37 +510,13 @@ namespace RoadArchitect.Tests
         {
             CleanupTest(7);
 
-
             GameObject unitSystem7Object = new GameObject("RoadArchitectSystem7");
             RoadSystem unitSystem7 = unitSystem7Object.AddComponent<RoadSystem>();
             unitSystem7.isAllowingRoadUpdates = false;
 
-
             Road road1;
             Road road2;
             Road road3;
-
-            // Road1
-            new Vector3(678f, 0.03f, 244f);
-            new Vector3(660f, 0.03f, 347f);
-            new Vector3(639f, 0.03f, 401f);
-            new Vector3(577f, 0.03f, 398f);  //Intersection1
-            new Vector3(406f, 0.03f, 396f);  //Intersection2
-            new Vector3(402f, 0.03f, 516f);
-            new Vector3(417f, 0.03f, 626f);
-
-            // Road2
-            new Vector3(581f, 0.03f, 237f);
-            new Vector3(580f, 0.03f, 360f);
-            //Intersection1
-            new Vector3(551f, 0.03f, 440f);
-            new Vector3(564f, 0.03f, 485f);
-
-            // Road3
-            new Vector3(357f, 0.03f, 347f);
-            //Intersection2
-            new Vector3(494f, 0.03f, 450f);
-
 
             //Create base road:
             List<Vector3> nodeLocations = new List<Vector3>();
@@ -543,43 +524,40 @@ namespace RoadArchitect.Tests
             nodeLocations.Add(new Vector3(678f, 0.03f, 244f));
             nodeLocations.Add(new Vector3(660f, 0.03f, 347f));
             nodeLocations.Add(new Vector3(639f, 0.03f, 401f));
+            //Intersection1
             nodeLocations.Add(new Vector3(577f, 0.03f, 398f));
+            //Intersection2
             nodeLocations.Add(new Vector3(406f, 0.03f, 396f));
             nodeLocations.Add(new Vector3(402f, 0.03f, 516f));
             nodeLocations.Add(new Vector3(417f, 0.03f, 626f));
 
-
             road1 = RoadAutomation.CreateRoadProgrammatically(unitSystem7, ref nodeLocations);
             road1.laneAmount = 2;
-
 
             //Get road system, create road #1:
             nodeLocations.Clear();
 
             nodeLocations.Add(new Vector3(581f, 0.03f, 237f));
             nodeLocations.Add(new Vector3(580f, 0.03f, 360f));
-            nodeLocations.Add(new Vector3(577f, 0.03f, 398f));  //Intersection1
+            //Intersection1
+            nodeLocations.Add(new Vector3(577f, 0.03f, 398f));
             nodeLocations.Add(new Vector3(551f, 0.03f, 440f));
             nodeLocations.Add(new Vector3(564f, 0.03f, 485f));
-
 
             road2 = RoadAutomation.CreateRoadProgrammatically(unitSystem7, ref nodeLocations);
             road2.laneAmount = 2;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
-
             //Get road system, create road #2:
             nodeLocations.Clear();
-
             nodeLocations.Add(new Vector3(357f, 0.03f, 347f));
-            nodeLocations.Add(new Vector3(406f, 0.03f, 396f));//Intersection2
+            //Intersection2
+            nodeLocations.Add(new Vector3(406f, 0.03f, 396f));
             nodeLocations.Add(new Vector3(494f, 0.03f, 450f));
-
 
             road3 = RoadAutomation.CreateRoadProgrammatically(unitSystem7, ref nodeLocations);
             road3.laneAmount = 2;
             UnitTestIntersectionHelper(road1, road3, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
-
 
             //Turn updates back on and update road:
             unitSystem7.isAllowingRoadUpdates = true;
@@ -592,19 +570,8 @@ namespace RoadArchitect.Tests
         {
             CleanupTest(8);
 
-
-            Road road;
-
-            // Road1
-            new Vector3(575f, 0.03f, 550f);
-            new Vector3(475f, 0.03f, 650f);
-            new Vector3(575f, 0.03f, 750f);
-            new Vector3(675f, 0.03f, 650f);
-            new Vector3(575f, 0.03f, 550f);
-
-
-
             //Create base road:
+            Road road;
             List<Vector3> nodeLocations = new List<Vector3>();
 
             nodeLocations.Add(new Vector3(575f, 0.03f, 550f));
@@ -612,7 +579,6 @@ namespace RoadArchitect.Tests
             nodeLocations.Add(new Vector3(575f, 0.03f, 650f));
             nodeLocations.Add(new Vector3(625f, 0.03f, 600f));
             nodeLocations.Add(new Vector3(575f, 0.03f, 550f));
-
 
             GameObject unitSystem8Object = new GameObject("RoadArchitectSystem8");
             RoadSystem unitSystem8 = unitSystem8Object.AddComponent<RoadSystem>();
@@ -625,7 +591,6 @@ namespace RoadArchitect.Tests
 
             road.spline.ActivateEndNodeConnection(road.spline.nodes[road.spline.nodes.Count - 1], road.spline.nodes[0]);
 
-
             //Turn updates back on and update road:
             unitSystem8.isAllowingRoadUpdates = true;
             unitSystem8.UpdateAllRoads();
@@ -637,47 +602,16 @@ namespace RoadArchitect.Tests
         {
             CleanupTest(9);
 
-
             GameObject unitSystem9Object = new GameObject("RoadArchitectSystem9");
             RoadSystem unitSystem9 = unitSystem9Object.AddComponent<RoadSystem>();
             unitSystem9.isAllowingRoadUpdates = false;
-
 
             Road road1;
             Road road2;
             Road road3;
             Road road4;
 
-            // Road1
-            new Vector3(724f, 0.03f, 220f);
-            //Intersection1
-            new Vector3(711f, 0.03f, 345f);
-            //Intersection2
-            new Vector3(686f, 0.03f, 475f);
-            //Intersection3
-            new Vector3(679f, 0.03f, 560f);
-
-            // Road2
-            new Vector3(760f, 0.03f, 345f);
-            new Vector3(735f, 0.03f, 345f);
-            //Intersection1
-            new Vector3(711f, 0.03f, 345f);
-
-            // Road3
-            new Vector3(615f, 0.03f, 475f);
-            new Vector3(640f, 0.03f, 475f);
-            //Intersection2
-            new Vector3(686f, 0.03f, 475f);
-
-            // Road4
-            new Vector3(615f, 0.03f, 545f);
-            new Vector3(640f, 0.03f, 549f);
-            //Intersection3
-            new Vector3(679f, 0.03f, 553f);
-            new Vector3(725f, 0.03f, 560f);
-
-
-            //Create base road:
+            //Create base road #1:
             List<Vector3> nodeLocations = new List<Vector3>();
 
             nodeLocations.Add(new Vector3(724f, 0.03f, 220f));
@@ -685,12 +619,10 @@ namespace RoadArchitect.Tests
             nodeLocations.Add(new Vector3(686f, 0.03f, 475f));
             nodeLocations.Add(new Vector3(679f, 0.03f, 560f));
 
-
             road1 = RoadAutomation.CreateRoadProgrammatically(unitSystem9, ref nodeLocations);
             road1.laneAmount = 2;
 
-
-            //Get road system, create road #1:
+            //Get road system, create road #2:
             nodeLocations.Clear();
 
             nodeLocations.Add(new Vector3(762f, 0.03f, 345f));
@@ -698,13 +630,11 @@ namespace RoadArchitect.Tests
             //Intersection1
             nodeLocations.Add(new Vector3(711f, 0.03f, 345f));
 
-
             road2 = RoadAutomation.CreateRoadProgrammatically(unitSystem9, ref nodeLocations);
             road2.laneAmount = 2;
             UnitTestIntersectionHelper(road1, road2, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
-
-            //Get road system, create road #2:
+            //Get road system, create road #3:
             nodeLocations.Clear();
 
             nodeLocations.Add(new Vector3(615f, 0.03f, 475f));
@@ -712,27 +642,21 @@ namespace RoadArchitect.Tests
             //Intersection2
             nodeLocations.Add(new Vector3(686f, 0.03f, 475f));
 
-
             road3 = RoadAutomation.CreateRoadProgrammatically(unitSystem9, ref nodeLocations);
             road3.laneAmount = 2;
             UnitTestIntersectionHelper(road1, road3, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
 
-
-            //Get road system, create road #3:
+            //Get road system, create road #4:
             nodeLocations.Clear();
-
             nodeLocations.Add(new Vector3(615f, 0.03f, 560f));
             nodeLocations.Add(new Vector3(640f, 0.03f, 560f));
             //Intersection3
             nodeLocations.Add(new Vector3(679f, 0.03f, 560f));
             nodeLocations.Add(new Vector3(725f, 0.03f, 560f));
 
-
             road4 = RoadAutomation.CreateRoadProgrammatically(unitSystem9, ref nodeLocations);
             road4.laneAmount = 2;
             UnitTestIntersectionHelper(road1, road4, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
-
-
 
             //Turn updates back on and update road:
             unitSystem9.isAllowingRoadUpdates = true;
