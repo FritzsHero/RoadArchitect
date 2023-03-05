@@ -691,7 +691,7 @@ namespace RoadArchitect
 
         private void DrawGizmos(bool _isSelected)
         {
-            if (!spline?.road?.isGizmosEnabled ?? true)
+            if (!spline.road.isGizmosEnabled == true)
             {
                 return;
             }
