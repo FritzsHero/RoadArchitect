@@ -4127,16 +4127,16 @@ namespace RoadArchitect.Threading
         #region "Intersection Prelim Finalization"		
         private static void RoadJobPrelimFinalizeInter(ref Road _road)
         {
-            int mCount = _road.spline.GetNodeCount();
-            SplineN tNode;
-            for (int index = 0; index < mCount; index++)
+            int nodeCount = _road.spline.GetNodeCount();
+            SplineN node;
+            for (int index = 0; index < nodeCount; index++)
             {
-                tNode = _road.spline.nodes[index];
-                if (tNode.isIntersection)
+                node = _road.spline.nodes[index];
+                if (node.isIntersection)
                 {
-                    Inter_OrganizeVertices(ref tNode, ref _road);
-                    tNode.intersectionConstruction.Nullify();
-                    tNode.intersectionConstruction = null;
+                    Inter_OrganizeVertices(ref node, ref _road);
+                    node.intersectionConstruction.Nullify();
+                    node.intersectionConstruction = null;
                 }
             }
         }
