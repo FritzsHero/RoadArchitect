@@ -565,7 +565,11 @@ namespace RoadArchitect.EdgeObjects
             List<GameObject> errorObjs = new List<GameObject>();
             try
             {
-                SetupDo(_isCollecting, ref errorObjs);
+                SetupDo(ref errorObjs);
+                if (_isCollecting)
+                {
+                    node.spline.road.isTriggeringGC = true;
+                }
             }
             catch (System.Exception exception)
             {
@@ -582,7 +586,7 @@ namespace RoadArchitect.EdgeObjects
         }
 
 
-        private void SetupDo(bool _isCollecting, ref List<GameObject> _errorObjs)
+        private void SetupDo(ref List<GameObject> _errorObjs)
         {
             if (edgeObjects == null)
             {
@@ -871,21 +875,8 @@ namespace RoadArchitect.EdgeObjects
             }
 
             //Zero these out, as they are not needed anymore:
-            if (edgeObjectLocations != null)
-            {
-                edgeObjectLocations.Clear();
-                edgeObjectLocations = null;
-            }
-            if (edgeObjectRotations != null)
-            {
-                edgeObjectRotations.Clear();
-                edgeObjectRotations = null;
-            }
-
-            if (_isCollecting)
-            {
-                node.spline.road.isTriggeringGC = true;
-            }
+            RootUtils.NullifyList(ref edgeObjectLocations);
+            RootUtils.NullifyList(ref edgeObjectRotations);
         }
 
 
@@ -929,17 +920,9 @@ namespace RoadArchitect.EdgeObjects
             //Destroy old objects:
             ClearEOM();
             //Make sure old locs and rots are fresh:
-            if (edgeObjectLocations != null)
-            {
-                edgeObjectLocations.Clear();
-                edgeObjectLocations = null;
-            }
+            RootUtils.NullifyList(ref edgeObjectLocations);
+            RootUtils.NullifyList(ref edgeObjectRotations);
             edgeObjectLocations = new List<Vector3>();
-            if (edgeObjectRotations != null)
-            {
-                edgeObjectRotations.Clear();
-                edgeObjectRotations = null;
-            }
             edgeObjectRotations = new List<Vector3>();
             bool bIsCenter = RootUtils.IsApproximately(horizontalSep, 0f, 0.02f);
 
