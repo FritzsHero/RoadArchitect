@@ -117,10 +117,6 @@ namespace RoadArchitect.Threading
             bool isf0LAdded = false;
             bool isf1LAdded = false;
             bool isf2LAdded = false;
-            bool isf3LAdded = false;
-            bool is1RAdded = false;
-            bool is2RAdded = false;
-            bool is3RAdded = false;
             bool isShoulderSkipR = false;
             bool isShoulderSkipL = false;
             bool isShrinkRoadB = false;
@@ -151,8 +147,6 @@ namespace RoadArchitect.Threading
             bool isLine = false;
             bool isImmuneR = false;
             bool isImmuneL = false;
-            bool isSpecAddedL = false;
-            bool isSpecAddedR = false;
             bool isTriggerInterAddition = false;
             bool isSpecialThreeWayIgnoreR = false;
             bool isSpecialThreeWayIgnoreL = false;
@@ -396,12 +390,6 @@ namespace RoadArchitect.Threading
                 isf0LAdded = false;
                 isf1LAdded = false;
                 isf2LAdded = false;
-                isf3LAdded = false;
-                is1RAdded = false;
-                is2RAdded = false;
-                is3RAdded = false;
-                isShoulderSkipR = false;
-                isShoulderSkipL = false;
                 isShrinkRoadB = false;
                 isShrinkRoadF = false;
                 isNextInter = false;
@@ -873,7 +861,6 @@ namespace RoadArchitect.Threading
                             {
 
                                 xNode.intersectionConstruction.iFLane3L.Add(ReplaceHeight(tempIVect, intersectionHeight));
-                                isf3LAdded = true;
                                 xNode.intersectionConstruction.iFLane3R.Add(ReplaceHeight(leftVector, intersectionHeight));
                                 //if(bIsNextInter && roadIntersection.iType == RoadIntersection.IntersectionTypeEnum.FourWay){
                                 if (isf2LAdded)
@@ -1114,14 +1101,13 @@ namespace RoadArchitect.Threading
                         else if (!xNode.intersectionConstruction.isBLane1DoneFinal)
                         {
                             //Finalize lane 1:
-                            InterFinalizeiBLane1(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is0LAdded, ref is1RAdded);
+                            InterFinalizeiBLane1(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is0LAdded);
                         }
 
                         //Line 2:
                         if (xNode.intersectionConstruction.iBLane1R.Count == 0 && xNode.intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
                         {
                             xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tVect, intersectionHeight));
-                            is1RAdded = true;
                             xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tVect, intersectionHeight));
                             is2LAdded = true;
                             is2LAdded = true;
@@ -1146,14 +1132,13 @@ namespace RoadArchitect.Threading
                                 if (is1LAdded)
                                 {
                                     xNode.intersectionConstruction.iBLane1R.Add(ReplaceHeight(tempIVect, intersectionHeight));
-                                    is1RAdded = true;
                                 }
                                 xNode.intersectionConstruction.iBLane2L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                                 is2LAdded = true;
                             }
                             else if (!xNode.intersectionConstruction.isBLane2DoneFinal)
                             {
-                                InterFinalizeiBLane2(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
+                                InterFinalizeiBLane2(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded);
                             }
                         }
 
@@ -1167,19 +1152,17 @@ namespace RoadArchitect.Threading
                         {
                             xNode.intersectionConstruction.iBLane3L.Add(ReplaceHeight(tempIVect, intersectionHeight));
                             xNode.intersectionConstruction.iBLane3R.Add(ReplaceHeight(rightVector, intersectionHeight));
-                            is3RAdded = true;
                             if (!isFirst123 && intersection.intersectionType == RoadIntersection.IntersectionTypeEnum.FourWay)
                             {
                                 if (is2LAdded)
                                 {
                                     xNode.intersectionConstruction.iBLane2R.Add(ReplaceHeight(tempIVect, intersectionHeight));
-                                    is2RAdded = true;
                                 }
                             }
                         }
                         else if (!xNode.intersectionConstruction.isBLane3DoneFinal)
                         {
-                            InterFinalizeiBLane3(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded, ref is1RAdded);
+                            InterFinalizeiBLane3(ref xNode, ref intersection, ref intersectionHeight, isLRtoRR, isLLtoLR, isFirstInterNode, ref is2LAdded, ref is1LAdded, ref is0LAdded);
                         }
 
                     }
@@ -1562,21 +1545,6 @@ namespace RoadArchitect.Threading
                                             if (!(RootUtils.IsApproximately(vList[m].x, intersection.cornerRL.x) && RootUtils.IsApproximately(vList[m].z, intersection.cornerRL.z)))
                                             {
                                                 eList.Add(m);
-                                                if (m == vList.Count - 1)
-                                                {
-                                                    if (intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
-                                                    {
-                                                        is1RAdded = false;
-                                                    }
-                                                    else if (intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
-                                                    {
-                                                        is2RAdded = false;
-                                                    }
-                                                    else if (intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
-                                                    {
-                                                        is3RAdded = false;
-                                                    }
-                                                }
                                             }
                                         }
                                     }
@@ -2657,7 +2625,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane1(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is0LAdded, ref bool _is1RAdded)
+        private static void InterFinalizeiBLane1(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is0LAdded)
         {
             if (_node.intersectionConstruction.isBLane1DoneFinal)
             {
@@ -2714,7 +2682,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane2(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded, ref bool _is1RAdded)
+        private static void InterFinalizeiBLane2(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded)
         {
             if (_node.intersectionConstruction.isBLane2DoneFinal)
             {
@@ -2725,7 +2693,7 @@ namespace RoadArchitect.Threading
             {
                 _node.intersectionConstruction.iBLane1L.RemoveAt(_node.intersectionConstruction.iBLane1L.Count - 1);
                 _is1LAdded = false;
-                InterFinalizeiBLane1(ref _node, ref _intersection, ref _intHeight, _isLRtoRR, _isLLtoLR, _isFirstInterNode, ref _is0LAdded, ref _is1RAdded);
+                InterFinalizeiBLane1(ref _node, ref _intersection, ref _intHeight, _isLRtoRR, _isLLtoLR, _isFirstInterNode, ref _is0LAdded);
             }
             _node.intersectionConstruction.isBLane1Done = true;
             _node.intersectionConstruction.isBLane2Done = true;
@@ -2769,13 +2737,13 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane3(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded, ref bool _is1RAdded)
+        private static void InterFinalizeiBLane3(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded)
         {
             if (_is2LAdded && !_node.intersectionConstruction.isBLane2DoneFinal)
             {
                 _node.intersectionConstruction.iBLane2L.RemoveAt(_node.intersectionConstruction.iBLane2L.Count - 1);
                 _is2LAdded = false;
-                InterFinalizeiBLane2(ref _node, ref _intersection, ref _intHeight, _isLRtoRR, _isLLtoLR, _isFirstInterNode, ref _is2LAdded, ref _is1LAdded, ref _is0LAdded, ref _is1RAdded);
+                InterFinalizeiBLane2(ref _node, ref _intersection, ref _intHeight, _isLRtoRR, _isLLtoLR, _isFirstInterNode, ref _is2LAdded, ref _is1LAdded, ref _is0LAdded);
             }
             _node.intersectionConstruction.isBLane2Done = true;
             _node.intersectionConstruction.isBLane3Done = true;
@@ -4178,7 +4146,6 @@ namespace RoadArchitect.Threading
         {
             List<Vector3> PrimaryList;
             List<Vector3> SecondaryList;
-
             List<Vector3> tList1New;
             List<Vector3> tList2New;
 
