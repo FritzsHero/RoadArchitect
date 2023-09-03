@@ -4142,7 +4142,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static bool InterOrganizeVerticesMatchEdges(ref List<Vector3> _list1, ref List<Vector3> _list2, bool _isSkip1 = false, bool _isSkippingFirstListOne = false, bool _isSkippingBoth = false)
+        private static bool InterOrganizeVerticesMatchEdges(ref List<Vector3> _list1, ref List<Vector3> _list2, string _warning, bool _isSkip1 = false, bool _isSkippingFirstListOne = false, bool _isSkippingBoth = false)
         {
             List<Vector3> PrimaryList;
             List<Vector3> SecondaryList;
@@ -4212,10 +4212,10 @@ namespace RoadArchitect.Threading
 
             if (SecondaryList == null || SecondaryList.Count == 0)
             {
+                Debug.LogWarning(_warning);
                 return true;
             }
             SecondaryList.Clear();
-            SecondaryList = null;
             SecondaryList = new List<Vector3>();
             for (int index = 0; index < PrimaryList.Count; index++)
             {
@@ -4348,16 +4348,16 @@ namespace RoadArchitect.Threading
             {
                 isSkipF = true;
             }
-            bool bSkipB = false;
+            bool isSkipB = false;
             if (iCon.iBLane0L.Count == 0)
             {
-                bSkipB = true;
+                isSkipB = true;
             }
 
             //Is primary node and is first node on a spline, meaning t junction: It does not have a B:
             if (_node.idOnSpline == 0 && string.CompareOrdinal(roadIntersection.node1uID, _node.uID) == 0)
             {
-                bSkipB = true;
+                isSkipB = true;
             }
             //Is primary node and is last node on a spline, meaning t junction: It does not have a F:
             if (_node.idOnSpline == (_node.spline.GetNodeCount() - 1) && string.CompareOrdinal(roadIntersection.node1uID, _node.uID) == 0)
@@ -4401,7 +4401,7 @@ namespace RoadArchitect.Threading
                 }
             }
 
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 if (roadIntersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                 {
@@ -4420,7 +4420,7 @@ namespace RoadArchitect.Threading
                 }
             }
 
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 InterOrganizeVerticesMatchShoulder(ref _road.RCS.ShoulderL_Vectors, ref iCon.iBLane0L, iCon.shoulderBLStartIndex, ref iCon.shoulderStartBL, ref iCon.shoulderEndBL, roadIntersection.height);
                 if (roadIntersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
@@ -4454,107 +4454,71 @@ namespace RoadArchitect.Threading
                 }
             }
 
-            bool bError = false;
-            string tWarning = "Intersection " + roadIntersection.intersectionName + " in road " + _road.roadName + " at too extreme angle to process this intersection type. Reduce angle or reduce lane count.";
-
+            string warning = "Intersection " + roadIntersection.intersectionName + " in road " + _road.roadName + " at too extreme angle to process this intersection type. Reduce angle or reduce lane count.";
             if (roadIntersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iBLane0R, ref iCon.iBLane1L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iBLane0R, ref iCon.iBLane1L, warning);
                 }
                 if (!isSkipF)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iFLane0R, ref iCon.iFLane1L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iFLane0R, ref iCon.iFLane1L, warning);
                 }
             }
             else if (roadIntersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iBLane0R, ref iCon.iBLane1L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iBLane0R, ref iCon.iBLane1L, warning);
                 }
                 if (!isSkipF)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iFLane0R, ref iCon.iFLane1L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iFLane0R, ref iCon.iFLane1L, warning);
                 }
 
-                if (!bSkipB)
+                if (!isSkipB)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iBLane1R, ref iCon.iBLane2L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iBLane1R, ref iCon.iBLane2L, warning);
                 }
                 if (!isSkipF)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iFLane1R, ref iCon.iFLane2L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iFLane1R, ref iCon.iFLane2L, warning);
                 }
             }
             else if (roadIntersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iBLane0R, ref iCon.iBLane1L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iBLane0R, ref iCon.iBLane1L, warning);
                 }
                 if (!isSkipF)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iFLane0R, ref iCon.iFLane1L);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iFLane0R, ref iCon.iFLane1L, warning);
                 }
 
-                if (!bSkipB)
+                if (!isSkipB)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iBLane1R, ref iCon.iBLane2L, true, true);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iBLane1R, ref iCon.iBLane2L, warning, true, true);
                 }
                 if (!isSkipF)
                 {
-                    bError = InterOrganizeVerticesMatchEdges(ref iCon.iFLane1R, ref iCon.iFLane2L, true, true);
-                    if (bError)
-                    {
-                        Debug.Log(tWarning);
-                    }
+                    InterOrganizeVerticesMatchEdges(ref iCon.iFLane1R, ref iCon.iFLane2L, warning, true, true);
                 }
 
-                //				if(!bSkipB){ bError = Inter_OrganizeVerticesMatchEdges(ref iCon.iBLane2R, ref iCon.iBLane3L,true,false); if(bError){ Debug.Log(tWarning); } }
-                //				if(!bSkipF){ bError = Inter_OrganizeVerticesMatchEdges(ref iCon.iFLane2R, ref iCon.iFLane3L,true,false); if(bError){ Debug.Log(tWarning); } }
+                //if (!isSkipB)
+                //{
+                //  Inter_OrganizeVerticesMatchEdges(ref iCon.iBLane2R, ref iCon.iBLane3L, warning, true, false);
+                //}
+                //if (!isSkipF)
+                //{
+                //  Inter_OrganizeVerticesMatchEdges(ref iCon.iFLane2R, ref iCon.iFLane3L, warning, true, false);
+                //}
             }
 
             //Back main plate left:
             int mCount = -1;
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 mCount = iCon.iBLane0L.Count;
                 for (int m = 0; m < mCount; m++)
@@ -4573,7 +4537,7 @@ namespace RoadArchitect.Threading
             }
 
             //Back main plate right:
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 if (_node.intersection.roadType == RoadIntersection.RoadTypeEnum.NoTurnLane)
                 {
@@ -4727,15 +4691,15 @@ namespace RoadArchitect.Threading
                 tVect = _road.RCS.RoadVectors[i];
                 for (int j = 0; j < 1; j++)
                 {
-                    if (biBLane0L && Vector3.SqrMagnitude(tVect - iCon.iBLane0L[j]) < 0.01f && !bSkipB)
+                    if (biBLane0L && Vector3.SqrMagnitude(tVect - iCon.iBLane0L[j]) < 0.01f && !isSkipB)
                     {
                         iCon.iBLane0L[j] = tVect;
                     }
-                    if (biBMainPlateL && Vector3.SqrMagnitude(tVect - iCon.iBMainPlateL[j]) < 0.01f && !bSkipB)
+                    if (biBMainPlateL && Vector3.SqrMagnitude(tVect - iCon.iBMainPlateL[j]) < 0.01f && !isSkipB)
                     {
                         iCon.iBMainPlateL[j] = tVect;
                     }
-                    if (biBMainPlateR && Vector3.SqrMagnitude(tVect - iCon.iBMainPlateR[j]) < 0.01f && !bSkipB)
+                    if (biBMainPlateR && Vector3.SqrMagnitude(tVect - iCon.iBMainPlateR[j]) < 0.01f && !isSkipB)
                     {
                         iCon.iBMainPlateR[j] = tVect;
                     }
@@ -4753,11 +4717,11 @@ namespace RoadArchitect.Threading
                     }
                     if (_node.intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
                     {
-                        if (biBLane3L && Vector3.SqrMagnitude(tVect - iCon.iBLane3L[j]) < 0.01f && !bSkipB)
+                        if (biBLane3L && Vector3.SqrMagnitude(tVect - iCon.iBLane3L[j]) < 0.01f && !isSkipB)
                         {
                             iCon.iBLane3L[j] = tVect;
                         }
-                        if (biBLane3R && Vector3.SqrMagnitude(tVect - iCon.iBLane3R[j]) < 0.01f && !bSkipB)
+                        if (biBLane3R && Vector3.SqrMagnitude(tVect - iCon.iBLane3R[j]) < 0.01f && !isSkipB)
                         {
                             iCon.iBLane3R[j] = tVect;
                         }
@@ -4772,11 +4736,11 @@ namespace RoadArchitect.Threading
                     }
                     else if (_node.intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
                     {
-                        if (biBLane2L && Vector3.SqrMagnitude(tVect - iCon.iBLane2L[j]) < 0.01f && !bSkipB)
+                        if (biBLane2L && Vector3.SqrMagnitude(tVect - iCon.iBLane2L[j]) < 0.01f && !isSkipB)
                         {
                             iCon.iBLane2L[j] = tVect;
                         }
-                        if (biBLane2R && Vector3.SqrMagnitude(tVect - iCon.iBLane2R[j]) < 0.01f && !bSkipB)
+                        if (biBLane2R && Vector3.SqrMagnitude(tVect - iCon.iBLane2R[j]) < 0.01f && !isSkipB)
                         {
                             iCon.iBLane2R[j] = tVect;
                         }
@@ -4795,22 +4759,22 @@ namespace RoadArchitect.Threading
             //			float b0 = -1f;
             //			float f0 = -1f;
             //			
-            //			if(!bSkipB){ b0 = iCon.iBMainPlateL[0].y; }
+            //			if(!isSkipB){ b0 = iCon.iBMainPlateL[0].y; }
             //			if(!bSkipF){ f0 = iCon.iFMainPlateL[0].y; }
             //			
             //			if(iCon.iBLane0R == null || iCon.iBLane0R.Count == 0){
-            //				bSkipB = true;	
+            //				isSkipB = true;	
             //			}
             if (iCon.iBMainPlateR == null || iCon.iBMainPlateR.Count == 0)
             {
-                bSkipB = true;
+                isSkipB = true;
             }
             if (iCon.iBMainPlateL == null || iCon.iBMainPlateL.Count == 0)
             {
-                bSkipB = true;
+                isSkipB = true;
             }
 
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 iCon.iBLane0R[0] = ((iCon.iBMainPlateR[0] - iCon.iBMainPlateL[0]) * 0.5f + iCon.iBMainPlateL[0]);
             }
@@ -4820,7 +4784,7 @@ namespace RoadArchitect.Threading
             }
 
             //			if(tNode.roadIntersection.rType != RoadIntersection.RoadTypeEnum.NoTurnLane){ 
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 iCon.iBLane1L[0] = iCon.iBLane0R[0];
                 iCon.iBLane1R[0] = new Vector3(iCon.iBLane1R[0].x, iCon.iBLane1L[0].y, iCon.iBLane1R[0].z);
@@ -4835,7 +4799,7 @@ namespace RoadArchitect.Threading
 
             if (_node.intersection.roadType == RoadIntersection.RoadTypeEnum.BothTurnLanes)
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
                     iCon.iBLane3L[0] = new Vector3(iCon.iBLane3L[0].x, iCon.iBLane3R[0].y, iCon.iBLane3L[0].z);
                 }
@@ -4846,7 +4810,7 @@ namespace RoadArchitect.Threading
             }
             else if (_node.intersection.roadType == RoadIntersection.RoadTypeEnum.TurnLane)
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
                     iCon.iBLane2L[0] = new Vector3(iCon.iBLane2L[0].x, iCon.iBLane2R[0].y, iCon.iBLane2L[0].z);
                 }
@@ -4860,7 +4824,7 @@ namespace RoadArchitect.Threading
             List<Vector3> iBLane1 = null;
             List<Vector3> iBLane2 = null;
             List<Vector3> iBLane3 = null;
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 iBLane0 = InterVertices(iCon.iBLane0L, iCon.iBLane0R, _node.intersection.height);
                 iBLane1 = InterVertices(iCon.iBLane1L, iCon.iBLane1R, _node.intersection.height);
@@ -4896,7 +4860,7 @@ namespace RoadArchitect.Threading
             //Main plates:
             List<Vector3> iBMainPlate = null;
             List<Vector3> iFMainPlate = null;
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 iBMainPlate = InterVertices(iCon.iBMainPlateL, iCon.iBMainPlateR, _node.intersection.height);
             }
@@ -4909,7 +4873,7 @@ namespace RoadArchitect.Threading
             //			List<Vector3> iFMarkerPlate = InterVertices(iCon.iFMarkerPlateL,iCon.iFMarkerPlateR, tNode.roadIntersection.Height);
             //			
             //Now add these to RCS:
-            if (!bSkipB)
+            if (!isSkipB)
             {
                 _road.RCS.iBLane0s.Add(iBLane0.ToArray());
                 _road.RCS.iBLane0s_tID.Add(roadIntersection);
@@ -4956,7 +4920,7 @@ namespace RoadArchitect.Threading
                 }
             }
             //Main plates:
-            if (iBMainPlate != null && !bSkipB)
+            if (iBMainPlate != null && !isSkipB)
             {
                 _road.RCS.iBMainPlates.Add(iBMainPlate.ToArray());
                 _road.RCS.iBMainPlates_tID.Add(roadIntersection);
@@ -4975,7 +4939,7 @@ namespace RoadArchitect.Threading
 
             if (_node.intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
                     _road.RCS.iBLane1s_IsMiddleLane.Add(true);
                 }
@@ -4986,7 +4950,7 @@ namespace RoadArchitect.Threading
             }
             else
             {
-                if (!bSkipB)
+                if (!isSkipB)
                 {
                     _road.RCS.iBLane1s_IsMiddleLane.Add(false);
                 }
