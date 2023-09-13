@@ -300,7 +300,7 @@ namespace RoadArchitect
                     EditorUpdate();
                 };
                 isEditorConstructing = false;
-                UnityEditor.EditorUtility.ClearProgressBar();
+                EngineIntegration.ClearProgressBar();
                 return;
             }
             #endif
@@ -332,18 +332,14 @@ namespace RoadArchitect
                         if ((Time.realtimeSinceStartup - EditorConstructionStartTime) > 180f)
                         {
                             isEditorConstructing = false;
-                            #if UNITY_EDITOR
-                            UnityEditor.EditorUtility.ClearProgressBar();
-                            #endif
+                            EngineIntegration.ClearProgressBar();
                             Debug.Log("Update shouldn't take longer than 180 seconds. Aborting update.");
                         }
                         editorTimer = 0;
                         if (isEditorError)
                         {
                             isEditorConstructing = false;
-                            #if UNITY_EDITOR
-                            UnityEditor.EditorUtility.ClearProgressBar();
-                            #endif
+                            EngineIntegration.ClearProgressBar();
 
                             isEditorError = false;
                             if (exceptionError != null)
@@ -573,7 +569,7 @@ namespace RoadArchitect
             else if (isEditorProgressBar)
             {
                 isEditorProgressBar = false;
-                UnityEditor.EditorUtility.ClearProgressBar();
+                EngineIntegration.ClearProgressBar();
             }
             #endif
         }
@@ -611,10 +607,7 @@ namespace RoadArchitect
             }
 
             CheckMats();
-
-            #if UNITY_EDITOR
-            UnityEditor.EditorUtility.ClearProgressBar();
-            #endif
+            EngineIntegration.ClearProgressBar();
 
             isProfiling = true;
             if (isUsingMultithreading)
@@ -1063,19 +1056,13 @@ namespace RoadArchitect
                 RCS = null;
             }
 
-
-            #if UNITY_EDITOR
             if (isSavingMeshes)
             {
-                UnityEditor.AssetDatabase.SaveAssets();
+                EngineIntegration.SaveAssets();
             }
-            #endif
 
             isEditorProgressBar = false;
-
-            #if UNITY_EDITOR
-            UnityEditor.EditorUtility.ClearProgressBar();
-            #endif
+            EngineIntegration.ClearProgressBar();
 
             //Make sure terrain history out of memory if necessary (redudant but keep):
             if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
@@ -1564,15 +1551,13 @@ namespace RoadArchitect
         /// <summary>  Toggles render state of each mesh in _MRs through isGizmosEnabled </summary>
         private void ToggleWireframesHelper(Transform _transform)
         {
-            #if UNITY_EDITOR
             MeshRenderer[] _MRs = _transform.GetComponentsInChildren<MeshRenderer>();
             int meshRenderersCount = _MRs.Length;
             for (int i = 0; i < meshRenderersCount; i++)
             {
                 //UnityEditor.EditorUtility.SetSelectedWireframeHidden(_MRs[i], !isGizmosEnabled);
-                UnityEditor.EditorUtility.SetSelectedRenderState(_MRs[i], isGizmosEnabled ? UnityEditor.EditorSelectedRenderState.Wireframe : UnityEditor.EditorSelectedRenderState.Hidden);
+                EngineIntegration.SetSelectedRenderState(_MRs[i], isGizmosEnabled);
             }
-            #endif
         }
 
 

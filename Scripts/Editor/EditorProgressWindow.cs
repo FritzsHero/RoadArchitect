@@ -44,7 +44,7 @@ namespace RoadArchitect
             }
             else
             {
-                EditorUtility.ClearProgressBar();
+                EngineIntegration.ClearProgressBar();
             }
 
             progress = (float)(EditorApplication.timeSinceStartup - startValue);

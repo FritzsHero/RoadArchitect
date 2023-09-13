@@ -81,22 +81,16 @@ namespace RoadArchitect
         public static string GetPrefabString(GameObject _object)
         {
             string path = "";
-            #if UNITY_EDITOR
             if (_object != null)
             {
-                path = UnityEditor.AssetDatabase.GetAssetPath(_object);
+                path = EngineIntegration.GetAssetPath(_object);
                 if (path == null || path.Length < 1)
                 {
                     Object parentObject;
-                    #if UNITY_2018_2_OR_NEWER
-                    parentObject = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(_object);
-                    #else
-                    parentObject = UnityEditor.PrefabUtility.GetPrefabParent(_object);
-                    #endif
-                    path = UnityEditor.AssetDatabase.GetAssetPath(parentObject);
+                    parentObject = EngineIntegration.GetObjectFromSource(_object);
+                    path = EngineIntegration.GetAssetPath(parentObject);
                 }
             }
-            #endif
             return path;
         }
 

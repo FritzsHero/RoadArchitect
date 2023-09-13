@@ -9,6 +9,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Improvements
 
 
+## [Version: 2.5.0] - 2023.09.14
+### Improvements
+- Refactored DestroyImmediate usage
+- Changed temporary material variables to private
+- Added an option to disable road updates
+- Refactored NullifyList method
+- Refactored clamping of construction values
+- Refactored setup of edge object maker
+- Refactored deletion in road constructor
+- Refactored deletion in intersection cleanup
+- Removed redundant EdgeObjectEditorMaker
+- Removed redundant SplinatedMeshEditorMaker
+- Removed gizmo toggle on nodes
+- Refactored road materials reset
+- Refactored ToggleWireframes
+- Removed editorDisplayString in node
+- Removed isEditorSelected in node
+- Removed unused intersection gizmos
+- Refactored wizard window type
+- Refactored node dragging in editor
+- Added unit test 10
+- Removed unused ProgressBar
+- Changed Remove all button
+- Refactored RemoveAllEdgeObjects
+- Refactored RemoveAllSplinatedObjects
+- Added OnDrawGizmosSelected for intersections
+- Refactored ConstructRoadStoreTerrainHistory
+- Simplified ConstructRoadStoreTerrainHistory
+- Removed sortID code
+- Moved editor specific code into EngineIntegration
+
+
 ## [Version: 2.4.0] - 2021.09.22
 ### Improvements
 - Added automatic rename of edge objects (Feature #29)

@@ -50,7 +50,7 @@ namespace RoadArchitect
             if (temp2D2 != temp2D)
             {
                 temp2D = temp2D2;
-                thumbString = AssetDatabase.GetAssetPath(temp2D);
+                thumbString = EngineIntegration.GetAssetPath(temp2D);
             }
 
             if (path.Length < 5)

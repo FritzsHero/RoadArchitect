@@ -326,7 +326,7 @@ namespace RoadArchitect
                 }
                 try
                 {
-                    tO.thumb = AssetDatabase.LoadAssetAtPath<Texture2D>(tO.thumbString);
+                    tO.thumb = EngineIntegration.LoadAssetFromPath<Texture2D>(tO.thumbString);
                 }
                 catch
                 {
@@ -500,7 +500,7 @@ namespace RoadArchitect
                 #region "Image"
                 try
                 {
-                    tO.thumb = AssetDatabase.LoadAssetAtPath<Texture2D>(thumbString);
+                    tO.thumb = EngineIntegration.LoadAssetFromPath<Texture2D>(thumbString);
                 }
                 catch
                 {
@@ -512,7 +512,7 @@ namespace RoadArchitect
                 {
                     try
                     {
-                        GameObject xObj = AssetDatabase.LoadAssetAtPath<GameObject>(stringPath);
+                        GameObject xObj = EngineIntegration.LoadAssetFromPath<GameObject>(stringPath);
                         tO.thumb = AssetPreview.GetAssetPreview(xObj);
                     }
                     catch

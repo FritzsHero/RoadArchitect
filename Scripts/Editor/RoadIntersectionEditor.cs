@@ -1072,9 +1072,7 @@ namespace RoadArchitect
                     int count = meshRenderers.Length;
                     for (int i = 0; i < count; i++)
                     {
-                        //EditorUtility.SetSelectedWireframeHidden(tMRs[i], !tInter.bDrawGizmo);
-                        EditorUtility.SetSelectedRenderState(meshRenderers[i], intersection.isDrawingGizmo ? EditorSelectedRenderState.Wireframe : EditorSelectedRenderState.Hidden);
-
+                        EngineIntegration.SetSelectedRenderState(meshRenderers[i], intersection.isDrawingGizmo);
                     }
                     SceneView.RepaintAll();
                 }

@@ -87,7 +87,7 @@ namespace RoadArchitect
 
                     if (materials[material].mainTexture)
                     {
-                        objMaterial.textureName = AssetDatabase.GetAssetPath(materials[material].mainTexture);
+                        objMaterial.textureName = EngineIntegration.GetAssetPath(materials[material].mainTexture);
                     }
                     else
                     {

@@ -1713,7 +1713,7 @@ namespace RoadArchitect
             }
 
             SMM.objectName = tName;
-            SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(tBridgeTopBaseToAdd);
+            SMM.currentSplination = EngineIntegration.LoadAssetFromPath<GameObject>(tBridgeTopBaseToAdd);
             SMM.horizontalSep = _horizSep;
             SMM.verticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
@@ -1893,7 +1893,7 @@ namespace RoadArchitect
                 tBridgeBottomBaseToAdd = _overridePrefab;
             }
 
-            SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(tBridgeBottomBaseToAdd);
+            SMM.currentSplination = EngineIntegration.LoadAssetFromPath<GameObject>(tBridgeBottomBaseToAdd);
             SMM.horizontalSep = _horizSep;
             SMM.verticalRaise = _vertRaise;
             SMM.isMaterialOverriden = true;
@@ -1976,7 +1976,7 @@ namespace RoadArchitect
         private void ExtrudeHelper(string _path, string _name, float DefaultHoriz, Splination.AxisTypeEnum _axisType = Splination.AxisTypeEnum.Z, bool _isHorizOverriden = false, float _horizSep = 0f, bool _isVertOverriden = false, float _vertRaise = 0f, bool _isFlippingRot = false)
         {
             SMM = node.AddSplinatedObject();
-            SMM.currentSplination = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(_path);
+            SMM.currentSplination = EngineIntegration.LoadAssetFromPath<GameObject>(_path);
 
             if (_isHorizOverriden)
             {
@@ -2257,7 +2257,7 @@ namespace RoadArchitect
                 return null;
             }
 
-            return UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            return EngineIntegration.LoadAssetFromPath<GameObject>(path);
         }
     }
 }

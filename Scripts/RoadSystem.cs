@@ -28,9 +28,7 @@ namespace RoadArchitect
             //Road:
             GameObject roadObj = new GameObject("Road" + newRoadNumber.ToString());
 
-            #if UNITY_EDITOR
-            UnityEditor.Undo.RegisterCreatedObjectUndo(roadObj, "Created road");
-            #endif
+            EngineIntegration.RegisterUndo(roadObj, "Created road");
 
             roadObj.transform.parent = transform;
             Road road = roadObj.AddComponent<Road>();
@@ -47,12 +45,7 @@ namespace RoadArchitect
 
             road.ResetTerrainHistory();
 
-            #if UNITY_EDITOR
-            if (_isForceSelected)
-            {
-                UnityEditor.Selection.activeGameObject = roadObj;
-            }
-            #endif
+            EngineIntegration.SetActiveGameObject(roadObj, _isForceSelected);
 
             return roadObj;
         }

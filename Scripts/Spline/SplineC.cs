@@ -2017,9 +2017,7 @@ namespace RoadArchitect
             //Don't allow connection with less than 3 nodes:
             if (mCount < 3 || nodeCount < 3)
             {
-                #if UNITY_EDITOR
-                UnityEditor.EditorUtility.DisplayDialog("Cannot connect roads", "Roads must have at least 3 nodes to be connected.", "ok");
-                #endif
+                EngineIntegration.DisplayDialog("Cannot connect roads", "Roads must have at least 3 nodes to be connected.", "ok");
 
                 return;
             }
@@ -2241,9 +2239,7 @@ namespace RoadArchitect
             previewSpline.isDrawingGizmos = false;
             spline.previewSpline.isDrawingGizmos = false;
 
-            #if UNITY_EDITOR
-            UnityEditor.SceneView.RepaintAll();
-            #endif
+            EngineIntegration.RepaintAllSceneView();
         }
         #endregion
 

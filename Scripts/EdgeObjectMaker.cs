@@ -133,9 +133,7 @@ namespace RoadArchitect.EdgeObjects
 
             EOM.edgeObjectString = edgeObjectString;
 
-            #if UNITY_EDITOR
-            EOM.edgeObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(edgeObjectString);
-            #endif
+            EOM.edgeObject = EngineIntegration.LoadAssetFromPath<GameObject>(edgeObjectString);
 
             EOM.isDefault = isDefault;
 
@@ -367,15 +365,9 @@ namespace RoadArchitect.EdgeObjects
                 Directory.CreateDirectory(path);
             }
 
-
-            #if UNITY_EDITOR
-            // Unity works with forward slash so we convert
-            // If you want to implement your own Asset creation and saving you should just use finalName
-            finalName = finalName.Replace(Path.DirectorySeparatorChar, '/');
-            finalName = finalName.Replace(Path.AltDirectorySeparatorChar, '/');
-            UnityEditor.AssetDatabase.CreateAsset(_mesh, finalName);
-            UnityEditor.AssetDatabase.SaveAssets();
-            #endif
+            finalName = EngineIntegration.GetUnityFilePath(finalName);
+            EngineIntegration.CreateAsset(_mesh, finalName);
+            EngineIntegration.SaveAssets();
         }
 
 
@@ -508,18 +500,16 @@ namespace RoadArchitect.EdgeObjects
             public void LoadTo(EdgeObjectMaker _EOM)
             {
                 _EOM.edgeObjectString = edgeObjectString;
-                #if UNITY_EDITOR
-                _EOM.edgeObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(edgeObjectString);
+                _EOM.edgeObject = EngineIntegration.LoadAssetFromPath<GameObject>(edgeObjectString);
 
                 if (edgeMaterial1String.Length > 0)
                 {
-                    _EOM.edgeMaterial1 = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(edgeMaterial1String);
+                    _EOM.edgeMaterial1 = EngineIntegration.LoadAssetFromPath<Material>(edgeMaterial1String);
                 }
                 if (edgeMaterial2String.Length > 0)
                 {
-                    _EOM.edgeMaterial2 = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(edgeMaterial2String);
+                    _EOM.edgeMaterial2 = EngineIntegration.LoadAssetFromPath<Material>(edgeMaterial2String);
                 }
-                #endif
 
                 _EOM.isMaterialOverriden = isMaterialOverriden;
 
@@ -611,16 +601,14 @@ namespace RoadArchitect.EdgeObjects
 
             edgeObjectString = RootUtils.GetPrefabString(edgeObject);
 
-            #if UNITY_EDITOR
             if (edgeMaterial1 != null)
             {
-                edgeMaterial1String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial1);
+                edgeMaterial1String = EngineIntegration.GetAssetPath(edgeMaterial1);
             }
             if (edgeMaterial2 != null)
             {
-                edgeMaterial2String = UnityEditor.AssetDatabase.GetAssetPath(edgeMaterial2);
+                edgeMaterial2String = EngineIntegration.GetAssetPath(edgeMaterial2);
             }
-            #endif
 
             edgeObjects = new List<GameObject>();
 
@@ -644,13 +632,7 @@ namespace RoadArchitect.EdgeObjects
                 MeshRenderer OrigMR = edgeObject.GetComponent<MeshRenderer>();
                 for (int j = 0; j < lCount; j++)
                 {
-                    #if UNITY_EDITOR
-                    // Instantiate prefab instead of object
-                    tObj = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(edgeObject);
-                    #else
-                    // Line to instantiate the object instead of an prefab
-                    tObj = GameObject.Instantiate(edgeObject);
-                    #endif
+                    tObj = EngineIntegration.InstantiatePrefab(edgeObject);
                     tObj.transform.position = edgeObjectLocations[j];
 
                     if (edgeObjectRotations[j] == default(Vector3))

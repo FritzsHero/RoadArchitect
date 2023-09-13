@@ -114,24 +114,14 @@ namespace RoadArchitect
         /// <summary> Returns the Material from _assetPath </summary>
         public static Material LoadMaterial(string _assetPath)
         {
-            #if UNITY_EDITOR
-            return AssetDatabase.LoadAssetAtPath<Material>(_assetPath);
-            #else
-            // Here you can return your material loaded at runtime
-            return null;
-            #endif
+            return EngineIntegration.LoadAssetFromPath<Material>(_assetPath);
         }
 
 
         /// <summary> Returns the PhysicsMaterial from _assetPath </summary>
         public static PhysicMaterial LoadPhysicsMaterial(string _assetPath)
         {
-            #if UNITY_EDITOR
-            return AssetDatabase.LoadAssetAtPath<PhysicMaterial>(_assetPath);
-            #else
-            // Here you can return your physics material loaded at runtime
-            return null;
-            #endif
+            return EngineIntegration.LoadAssetFromPath<PhysicMaterial>(_assetPath);
         }
     }
 }
