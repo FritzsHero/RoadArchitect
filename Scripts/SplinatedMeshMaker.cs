@@ -17,101 +17,61 @@ namespace RoadArchitect.Splination
     public class SplinatedMeshMaker
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("UID")]
         public string uID = "";
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bNeedsUpdate")]
         public bool isRequiringUpdate = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
         public bool isDefault = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
         public bool isMaterialOverriden = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bExactSplination")]
         public bool isExactSplination = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadDefinition")]
         public bool isMatchingRoadDefinition = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadIncrements")]
         public bool isMatchingRoadIncrements = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTrimEnd")]
         public bool isTrimEnd = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTrimStart")]
         public bool isTrimStart = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
         public bool isToggled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
         public bool isMatchingTerrain = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         public bool isBridge = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsStretch")]
         public bool isStretched = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bStretchLocOffset")]
         public bool isStretchedOffset = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
         public bool isStretchedSize = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
         public bool isBoxColliderFlippedOnX = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
         public bool isBoxColliderFlippedOnZ = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
         public bool isStraightLineMatchStartEnd = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bFlipRotation")]
         public bool isFlippingRotation = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
         public bool isStatic = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bNoCenterMode")]
         public bool isNotCenterMode = true;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("MasterObjTrans")]
         public Transform masterObjTrans = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplination")]
         public GameObject currentSplination = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap1")]
         public GameObject currentSplinationCap1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap2")]
         public GameObject currentSplinationCap2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationString")]
         public string currentSplinationString = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap1String")]
         public string currentSplinationCap1String = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("CurrentSplinationCap2String")]
         public string currentSplinationCap2String = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("CapHeightOffset1")]
         public float capHeightOffset1 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("CapHeightOffset2")]
         public float capHeightOffset2 = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MinMaxMod")]
         public float minMaxMod = 0.002f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VertexMatchingPrecision")]
         public float vertexMatchingPrecision = 0.005f;
-        [UnityEngine.Serialization.FormerlySerializedAs("Stretch_UVThreshold")]
         public float stretchUVThreshold = 0.05f;
 
         public GameObject Output = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("tMesh")]
         public Mesh mesh = null;
         public Material SplinatedMaterial1 = null;
         public Material SplinatedMaterial2 = null;
         public string SplinatedMaterial1String = "";
         public string SplinatedMaterial2String = "";
 
-        [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_LocOffset")]
         public Vector3 boxColliderOffset = default(Vector3);
-        [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_Size")]
         public Vector3 boxColliderSize = default(Vector3);
 
 
         #region "Horizontal offsets"
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
         public AnimationCurve horizontalCurve;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
         public float horizontalSep = 0f;
         #endregion
 
 
         #region "Vertical offsets"
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
         public AnimationCurve verticalCurve;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
         public float verticalRaise = 0f;
         #endregion
 
@@ -119,13 +79,9 @@ namespace RoadArchitect.Splination
         #region "Vertical cutoff"
         public float VerticalCutoff = 0f;
         public float VerticalMeshCutoffOffset = 0.04f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff")]
         public bool isVerticalCutoff = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoffDownwards")]
         public bool isVerticalCutoffDownwards = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalMeshCutoff_OppositeDir")]
         public bool isVerticalMeshCutoffOppositeDir = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff_MatchZero")]
         public bool isVerticalCutoffMatchingZero = false;
         #endregion
 
@@ -143,9 +99,7 @@ namespace RoadArchitect.Splination
         public Vector3 CustomRotation = default(Vector3);
         public Vector3 StartPos = default(Vector3);
         public Vector3 EndPos = default(Vector3);
-        [UnityEngine.Serialization.FormerlySerializedAs("tSpline")]
         public SplineC spline = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
         public SplineN node = null;
         public AxisTypeEnum Axis = AxisTypeEnum.X;
 
@@ -159,9 +113,7 @@ namespace RoadArchitect.Splination
         public GameObject EndCapEndOutput = null;
         public string EndCapStartString = "";
         public string EndCapEndString = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("bEndCapCustomMatchStart")]
         public bool isEndCapCustomMatchStart = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEndObjectsMatchGround")]
         public bool isEndObjectsMatchingGround = false;
         public Vector3 EndCapCustomOffsetStart = default(Vector3);
         public Vector3 EndCapCustomOffsetEnd = default(Vector3);
@@ -171,30 +123,20 @@ namespace RoadArchitect.Splination
 
 
         #region "Endings down"
-        [UnityEngine.Serialization.FormerlySerializedAs("bStartDown")]
         public bool isStartDown = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bStartTypeDownOverride")]
         public bool isStartTypeDownOverriden = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("StartTypeDownOverride")]
         public float startTypeDownOverride = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEndDown")]
         public bool isEndDown = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEndTypeDownOverride")]
         public bool isEndTypeDownOverriden = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("EndTypeDownOverride")]
         public float endTypeDownOverride = 0f;
         #endregion
 
 
         #region "Collision"
         public CollisionTypeEnum CollisionType = CollisionTypeEnum.SimpleMeshTriangle;
-        [UnityEngine.Serialization.FormerlySerializedAs("bCollisionConvex")]
         public bool isCollisionConvex = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSimpleCollisionAutomatic")]
         public bool isSimpleCollisionAutomatic = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bCollisionExtrude")]
         public bool isCollisionExtrude = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bCollisionTrigger")]
         public bool isCollisionTrigger = false;
 
         // Bottom Left
@@ -212,13 +154,9 @@ namespace RoadArchitect.Splination
         #endregion
 
 
-        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
         public string objectName = "ExtrudedObject";
-        [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
         public string thumbString = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
         public string desc = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
         public string displayName = "";
         #endregion
 
@@ -539,83 +477,54 @@ namespace RoadArchitect.Splination
             public string CurrentSplinationString = "";
             public string CurrentSplinationCap1String = "";
             public string CurrentSplinationCap2String = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
             public bool isDefault = false;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
             public bool isMaterialOverriden = false;
             public string SplinatedMaterial1String = "";
             public string SplinatedMaterial2String = "";
             public float CapHeightOffset1 = 0f;
             public float CapHeightOffset2 = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("bExactSplination")]
             public bool isExactSplination = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadDefinition")]
             public bool isMatchingRoadDefinition = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bMatchRoadIncrements")]
             public bool isMatchingRoadIncrements = true;
-            [UnityEngine.Serialization.FormerlySerializedAs("bTrimStart")]
             public bool isTrimStart = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bTrimEnd")]
             public bool isTrimEnd = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
             public bool isToggled = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
             public bool isMatchingTerrain = false;
             public float MinMaxMod = 0.002f;
             public float VertexMatchingPrecision = 0.005f;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsStretch")]
             public bool isStretched = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bStretchLocOffset")]
             public bool isStretchedLocOffset = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bStretchSize")]
             public bool isStretchedSize = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_LocOffset")]
             public Vector3 boxColliderOffset = default(Vector3);
-            [UnityEngine.Serialization.FormerlySerializedAs("StretchBC_Size")]
             public Vector3 boxColliderSize = default(Vector3);
-            [UnityEngine.Serialization.FormerlySerializedAs("Stretch_UVThreshold")]
             public float stretchUVThreshold = 0.05f;
-            [UnityEngine.Serialization.FormerlySerializedAs("bStraightLineMatchStartEnd")]
             public bool isStraightLineMatchingStartEnd = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipX")]
             public bool isBoxColliderFlippedOnX = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bBCFlipZ")]
             public bool isBoxColliderFlippedOnZ = false;
 
             //Horizontal offsets:
-            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
             public float horizontalSep = 5f;
-            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
             public AnimationCurve horizontalCurve;
             //Vertical offsets:
-            [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
             public float verticalRaise = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
             public AnimationCurve verticalCurve;
             //Vertical cutoff:
             public float VerticalCutoff = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff")]
             public bool isVerticalCutoff = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoffDownwards")]
             public bool isVerticalCutoffDownwards = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalMeshCutoff_OppositeDir")]
             public bool isVerticalMeshCutoffOppositeDir = false;
             public float VerticalMeshCutoffOffset = 0.04f;
-            [UnityEngine.Serialization.FormerlySerializedAs("bVerticalCutoff_MatchZero")]
             public bool isVerticalCutoffMatchingZero = false;
 
             public float RoadRaise = 0f;
             public Vector3 CustomRotation = default(Vector3);
-            [UnityEngine.Serialization.FormerlySerializedAs("bFlipRotation")]
             public bool isFlippedRotation = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
             public bool isStatic = true;
             public float StartTime = 0f;
             public float EndTime = 1f;
             public int Axis = 0;
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
             public bool isBridge = false;
 
             public float mMaxX = -1f;
@@ -626,39 +535,29 @@ namespace RoadArchitect.Splination
             public float mMinZ = -1f;
 
             public int RepeatUVType = 0;
-            [UnityEngine.Serialization.FormerlySerializedAs("bNoCenterMode")]
             public bool isNotCenterMode = true;
 
             //End objects:
             public string EndCapStartString = "";
             public string EndCapEndString = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("bEndCapCustomMatchStart")]
             public bool isEndCapCustomMatchStart = true;
             public Vector3 EndCapCustomOffsetStart = default(Vector3);
             public Vector3 EndCapCustomOffsetEnd = default(Vector3);
             public Vector3 EndCapCustomRotOffsetStart = default(Vector3);
             public Vector3 EndCapCustomRotOffsetEnd = default(Vector3);
-            [UnityEngine.Serialization.FormerlySerializedAs("bEndObjectsMatchGround")]
             public bool isEndObjectsMatchingGround = false;
             //Endings down:
-            [UnityEngine.Serialization.FormerlySerializedAs("bStartDown")]
             public bool isStartDown = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bStartTypeDownOverride")]
             public bool isStartTypeDownOverriden = false;
             public float StartTypeDownOverride = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("bEndDown")]
             public bool isEndDown = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bEndTypeDownOverride")]
             public bool isEndTypeDownOverriden = false;
             public float EndTypeDownOverride = 0f;
 
             //Collision:
             public int CollisionType = 0;
-            [UnityEngine.Serialization.FormerlySerializedAs("bCollisionConvex")]
             public bool isCollisionConvex = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bSimpleCollisionAutomatic")]
             public bool isSimpleCollisionAutomatic = true;
-            [UnityEngine.Serialization.FormerlySerializedAs("bCollisionTrigger")]
             public bool isCollisionTrigger = false;
 
             public Vector3 CollisionBoxBL = default(Vector3);
@@ -670,13 +569,9 @@ namespace RoadArchitect.Splination
             public Vector3 CollisionTriBR = default(Vector3);
             public Vector3 CollisionTriT = default(Vector3);
 
-            [UnityEngine.Serialization.FormerlySerializedAs("tName")]
             public string objectName = "ExtrudedObject";
-            [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
             public string thumbString = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
             public string desc = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
             public string displayName = "";
             #endregion
 

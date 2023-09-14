@@ -8,11 +8,8 @@ namespace RoadArchitect
     public class RoadSystem : MonoBehaviour
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bMultithreading")]
         public bool isMultithreaded = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bSaveMeshes")]
         public bool isSavingMeshes = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bAllowRoadUpdates")]
         public bool isAllowingRoadUpdates = true;
 
         public Camera editorPlayCamera = null;

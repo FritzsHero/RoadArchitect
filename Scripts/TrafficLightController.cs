@@ -17,59 +17,35 @@ namespace RoadArchitect
 
 
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("LightLeftObj")]
         public GameObject lightLeftObject;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightRightObj")]
         public GameObject lightRightObject;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightsObj")]
         public GameObject[] lightsObjects;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("MR_Left")]
         public MeshRenderer leftMR;
-        [UnityEngine.Serialization.FormerlySerializedAs("MR_Right")]
         public MeshRenderer rightMR;
-        [UnityEngine.Serialization.FormerlySerializedAs("MR_MainsStorage")]
         public MeshRenderer[] mainMRStorage;
-        [UnityEngine.Serialization.FormerlySerializedAs("MR_Main")]
         public MeshRenderer mainMR;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("LightLeft_R")]
         public Light lightLeftR;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightLeft_Y")]
         public Light lightLeftY;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightLeft_G")]
         public Light lightLeftG;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("LightRight_R")]
         public Light lightRightR;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightRight_Y")]
         public Light lightRightY;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightRight_G")]
         public Light lightRightG;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("Lights_R")]
         public Light[] lightsR;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lights_Y")]
         public Light[] lightsY;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lights_G")]
         public Light[] lightsG;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("iLightStatus")]
         public iLightStatusEnum lightStatus = iLightStatusEnum.Red;
-        [UnityEngine.Serialization.FormerlySerializedAs("iLightSubStatus")]
         public iLightSubStatusEnum lightSubStatus = iLightSubStatusEnum.Green;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bLeft")]
         private bool isLeft = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bRight")]
         private bool isRight = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bMain")]
         private bool isMain = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bUseSharedMaterial")]
         private bool isUsingSharedMaterial = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bLeftTurnYieldOnGreen")]
         private bool isLeftTurnYieldOnGreen = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bLightsEnabled")]
         private bool isLightsEnabled = true;
         #endregion
 

@@ -9,39 +9,30 @@ namespace RoadArchitect
     public class SplineC : MonoBehaviour
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
         public List<SplineN> nodes = new List<SplineN>();
-        [UnityEngine.Serialization.FormerlySerializedAs("mSplineRoot")]
         public GameObject splineRoot;
-        [UnityEngine.Serialization.FormerlySerializedAs("tRoad")]
         public Road road;
         public float distance = -1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("CachedPoints")]
         public Vector3[] cachedPoints;
         private const float cachedPointsSeperation = 1f;
 
         //Editor preview splines for add and insert:
-        [UnityEngine.Serialization.FormerlySerializedAs("PreviewSpline")]
         public SplineF previewSpline;
-        [UnityEngine.Serialization.FormerlySerializedAs("PreviewSplineInsert")]
         public SplineI previewSplineInsert;
 
 
         #region "Nav data Vars"
         public float RoadWidth;
         public int Lanes;
-        [UnityEngine.Serialization.FormerlySerializedAs("id_connected")]
         public List<int> connectedIDs;
         public int id = 0;
         //Unique ID
-        [UnityEngine.Serialization.FormerlySerializedAs("UID")]
         public string uID;
         public List<KeyValuePair<float, float>> BridgeParams;
         public List<KeyValuePair<float, float>> TunnelParams;
         public List<KeyValuePair<float, float>> HeightHistory;
         public int[] RoadDefKeysArray;
         public float[] RoadDefValuesArray;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorOnly_LastNode_TimeSinceStartup")]
         public double editorOnlyLastNodeTimeSinceStartup = -1f;
         #endregion
 
@@ -58,25 +49,15 @@ namespace RoadArchitect
 
 
         #region "Road connections and 3-way intersections"
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialStartControlNode")]
         public bool isSpecialStartControlNode = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndControlNode")]
         public bool isSpecialEndControlNode = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsStart_Delay")]
         public bool isSpecialEndNodeIsStartDelay = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsEnd_Delay")]
         public bool isSpecialEndNodeIsEndDelay = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_Start")]
         public float specialEndNodeDelayStart = 10f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_Start_Result")]
         public float specialEndNodeDelayStartResult = 10f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End")]
         public float specialEndNodeDelayEnd = 10f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNodeDelay_End_Result")]
         public float specialEndNodeDelayEndResult = 10f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_Start_OtherSpline")]
         public SplineC specialEndNodeStartOtherSpline = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialEndNode_End_OtherSpline")]
         public SplineC specialEndNodeEndOtherSpline = null;
         #endregion
 

@@ -2,13 +2,9 @@ namespace RoadArchitect
 {
     public class TrafficLightSequence
     {
-        [UnityEngine.Serialization.FormerlySerializedAs("bLightMasterPath1")]
         public bool isLightMasterPath1 = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("iLightController")]
         public TrafficLightController.iLightControllerEnum lightController = TrafficLightController.iLightControllerEnum.Regular;
-        [UnityEngine.Serialization.FormerlySerializedAs("iLightSubcontroller")]
         public TrafficLightController.iLightSubStatusEnum lightSubcontroller = TrafficLightController.iLightSubStatusEnum.Green;
-        [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
         public float time = 10f;
 
 

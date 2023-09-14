@@ -7,13 +7,9 @@ namespace RoadArchitect
 {
     public class RigidBody : MonoBehaviour
     {
-        [UnityEngine.Serialization.FormerlySerializedAsAttribute("MinCollVelocity")]
         public float minCollisionVelocity = 2f;
-        //[UnityEngine.Serialization.FormerlySerializedAsAttribute("bIsForcedSleeping")]
         //bool isForcedSleeping = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("RB")]
         private Rigidbody rigidBody;
-        //[UnityEngine.Serialization.FormerlySerializedAsAttribute("bIgnoreRB")]
         //bool isIgnoringRigidBody = false;
 
 

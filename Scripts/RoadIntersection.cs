@@ -10,254 +10,142 @@ namespace RoadArchitect
     public class RoadIntersection : MonoBehaviour
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("Node1")]
         public SplineN node1;
-        [UnityEngine.Serialization.FormerlySerializedAs("Node2")]
         public SplineN node2;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("Node1UID")]
         public string node1uID;
-        [UnityEngine.Serialization.FormerlySerializedAs("Node2UID")]
         public string node2uID;
 
         //Unique ID
-        [UnityEngine.Serialization.FormerlySerializedAs("UID")]
         protected string uID;
-        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
         public string intersectionName = "";
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bSameSpline")]
         public bool isSameSpline = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bDrawGizmo")]
         public bool isDrawingGizmo = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bFlipped")]
         public bool isFlipped = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bUseDefaultMaterials")]
         public bool isUsingDefaultMaterials = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_AutoUpdateIntersections")]
         public bool isAutoUpdatingIntersection = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bNode2B_LeftTurnLane")]
         public bool isNode2BLeftTurnLane = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bNode2B_RightTurnLane")]
         public bool isNode2BRightTurnLane = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bNode2F_LeftTurnLane")]
         public bool isNode2FLeftTurnLane = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bNode2F_RightTurnLane")]
         public bool isNode2FRightTurnLane = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bFirstSpecial_First")]
         public bool isFirstSpecialFirst = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bFirstSpecial_Last")]
         public bool isFirstSpecialLast = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSecondSpecial_First")]
         public bool isSecondSpecialFirst = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSecondSpecial_Last")]
         public bool isSecondSpecialLast = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRR1")]
         public bool isCornerRR1Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRR2")]
         public bool isCornerRR2Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRL1")]
         public bool isCornerRL1Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRL2")]
         public bool isCornerRL2Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLR1")]
         public bool isCornerLR1Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLR2")]
         public bool isCornerLR2Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLL1")]
         public bool isCornerLL1Enabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLL2")]
         public bool isCornerLL2Enabled = false;
 
         #region "Marker materials"
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter1")]
         public Material markerCenter1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter2")]
         public Material markerCenter2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerCenter3")]
         public Material markerCenter3 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Stretch1")]
         public Material markerExtStretch1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Stretch2")]
         public Material markerExtStretch2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Stretch3")]
         public Material markerExtStretch3 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled1")]
         public Material markerExtTiled1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled2")]
         public Material markerExtTiled2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("MarkerExt_Tiled3")]
         public Material markerExtTiled3 = null;
         #endregion
 
         #region "Lane materials"
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane0Mat1")]
         public Material lane0Mat1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane0Mat2")]
         public Material lane0Mat2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat1")]
         public Material lane1Mat1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat2")]
         public Material lane1Mat2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1")]
         public Material lane2Mat1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2")]
         public Material lane2Mat2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat1")]
         public Material lane3Mat1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat2")]
         public Material lane3Mat2 = null;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat1_Disabled")]
         public Material lane1Mat1Disabled = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat2_Disabled")]
         public Material lane1Mat2Disabled = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat1_DisabledActive")]
         public Material lane1Mat1DisabledActive = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane1Mat2_DisabledActive")]
         public Material lane1Mat2DisabledActive = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1_Disabled")]
         public Material lane2Mat1Disabled = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2_Disabled")]
         public Material lane2Mat2Disabled = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1_DisabledActive")]
         public Material lane2Mat1DisabledActive = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2_DisabledActive")]
         public Material lane2Mat2DisabledActive = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat1_DisabledActiveR")]
         public Material lane2Mat1DisabledActiveR = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane2Mat2_DisabledActiveR")]
         public Material lane2Mat2DisabledActiveR = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat1_Disabled")]
         public Material lane3Mat1Disabled = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("Lane3Mat2_Disabled")]
         public Material lane3Mat2Disabled = null;
         #endregion
 
         //Width of the largest of road connected
         /// <summary> 10 * 1.25f = intersectionWidth; Never written, only read </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("IntersectionWidth")]
         public int intersectionWidth = 10;
         /// <summary> Amount of lanes from road of node1 </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("Lanes")]
         public int lanesAmount;
-        [UnityEngine.Serialization.FormerlySerializedAs("IgnoreSide")]
         public int ignoreSide = -1;
-        [UnityEngine.Serialization.FormerlySerializedAs("IgnoreCorner")]
         public int ignoreCorner = -1;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("iType")]
         public IntersectionTypeEnum intersectionType = IntersectionTypeEnum.FourWay;
-        [UnityEngine.Serialization.FormerlySerializedAs("iStopType")]
         public iStopTypeEnum intersectionStopType = iStopTypeEnum.StopSign_AllWay;
-        [UnityEngine.Serialization.FormerlySerializedAs("rType")]
         public RoadTypeEnum roadType = RoadTypeEnum.NoTurnLane;
-        [UnityEngine.Serialization.FormerlySerializedAs("lType")]
         public LightTypeEnum lightType = LightTypeEnum.Timed;
 
         #region "CalculationData"
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerPoints")]
         public CornerPositionMaker[] cornerPoints;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRR")]
         public Vector3 cornerRR;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRR_Outer")]
         public Vector3 cornerRROuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRR_RampOuter")]
         public Vector3 cornerRRRampOuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRL")]
         public Vector3 cornerRL;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRL_Outer")]
         public Vector3 cornerRLOuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRL_RampOuter")]
         public Vector3 cornerRLRampOuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLR")]
         public Vector3 cornerLR;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLR_Outer")]
         public Vector3 cornerLROuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLR_RampOuter")]
         public Vector3 cornerLRRampOuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLL")]
         public Vector3 cornerLL;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLL_Outer")]
         public Vector3 cornerLLOuter;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLL_RampOuter")]
         public Vector3 cornerLLRampOuter;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRR_2D")]
         public Vector2 cornerRR2D;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerRL_2D")]
         public Vector2 cornerRL2D;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLR_2D")]
         public Vector2 cornerLR2D;
-        [UnityEngine.Serialization.FormerlySerializedAs("CornerLL_2D")]
         public Vector2 cornerLL2D;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("fCornerLR_CornerRR")]
         public Vector3[] cornerLRCornerRR;
-        [UnityEngine.Serialization.FormerlySerializedAs("fCornerLL_CornerRL")]
         public Vector3[] cornerLLCornerRL;
-        [UnityEngine.Serialization.FormerlySerializedAs("fCornerLL_CornerLR")]
         public Vector3[] cornerLLCornerLR;
-        [UnityEngine.Serialization.FormerlySerializedAs("fCornerRL_CornerRR")]
         public Vector3[] cornerRLCornerRR;
         #endregion
 
-        [UnityEngine.Serialization.FormerlySerializedAs("GradeMod")]
         public float gradeMod = 0.375f;
-        [UnityEngine.Serialization.FormerlySerializedAs("GradeModNegative")]
         public float gradeModNegative = 0.75f;
-        [UnityEngine.Serialization.FormerlySerializedAs("ScalingSense")]
         public float scalingSense = 3f;
-        [UnityEngine.Serialization.FormerlySerializedAs("OddAngle")]
         public float oddAngle;
-        [UnityEngine.Serialization.FormerlySerializedAs("EvenAngle")]
         public float evenAngle;
-        [UnityEngine.Serialization.FormerlySerializedAs("MaxInterDistance")]
         public float maxInterDistance = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MaxInterDistanceSQ")]
         public float maxInterDistanceSQ = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("Height")]
         public float height = 50000f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SignHeight")]
         public float signHeight = -2000f;
 
         #region "Traffic Light Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("bLightsEnabled")]
         public bool isLightsEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bRegularPoleAlignment")]
         public bool isRegularPoleAlignment = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTrafficPoleStreetLight")]
         public bool isTrafficPoleStreetLight = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTrafficLightGray")]
         public bool isTrafficLightGray = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bLeftTurnYieldOnGreen")]
         public bool isLeftTurnYieldOnGreen = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("StreetLight_Range")]
         public float streetLightRange = 30f;
-        [UnityEngine.Serialization.FormerlySerializedAs("StreetLight_Intensity")]
         public float streetLightIntensity = 1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("StreetLight_Color")]
         public Color streetLightColor = new Color(1f, 0.7451f, 0.27451f, 1f);
-        [UnityEngine.Serialization.FormerlySerializedAs("FixedTimeIndex")]
         private int fixedTimeIndex = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightsRR")]
         public TrafficLightController lightsRR;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightsRL")]
         public TrafficLightController lightsRL;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightsLL")]
         public TrafficLightController lightsLL;
-        [UnityEngine.Serialization.FormerlySerializedAs("LightsLR")]
         public TrafficLightController lightsLR;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_RegularLightLength")]
         public float fixedTimeRegularLightLength = 10f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_LeftTurnLightLength")]
         public float fixedTimeLeftTurnLightLength = 5f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_AllRedLightLength")]
         public float fixedTimeAllRedLightLength = 1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_FixedTime_YellowLightLength")]
         public float fixedTimeYellowLightLength = 2f;
-        [UnityEngine.Serialization.FormerlySerializedAs("FixedTimeSequenceList")]
         public List<TrafficLightSequence> fixedTimeSequenceList;
         #endregion
         #endregion
@@ -274,12 +162,10 @@ namespace RoadArchitect
         {
             public Vector3 position;
             public Quaternion rotation;
-            [UnityEngine.Serialization.FormerlySerializedAs("DirectionFromCenter")]
             public Vector3 directionFromCenter;
         }
 
 
-        [UnityEngine.Serialization.FormerlySerializedAs("BoundsRect")]
         private Construction2DRect boundsRect;
 
 

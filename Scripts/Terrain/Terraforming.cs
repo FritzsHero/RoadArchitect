@@ -55,7 +55,6 @@ namespace RoadArchitect
 
             public Vector3 TerrainSize;
             public Vector3 TerrainPos;
-            [UnityEngine.Serialization.FormerlySerializedAs("GSDID")]
             public int uID;
 
 

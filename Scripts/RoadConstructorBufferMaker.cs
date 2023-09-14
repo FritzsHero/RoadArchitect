@@ -231,13 +231,9 @@ namespace RoadArchitect
 
         public RoadUpdateTypeEnum tUpdateType;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bRoadOn")]
         public bool isRoadOn = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTerrainOn")]
         public bool isTerrainOn = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bBridgesOn")]
         public bool isBridgesOn = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("bInterseOn")]
         public bool isInterseOn = true;
 
         public List<int> RoadCuts;

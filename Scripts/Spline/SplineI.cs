@@ -9,21 +9,14 @@ namespace RoadArchitect
     public class SplineI : MonoBehaviour
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("mNodes")]
         public List<SplinePreviewNode> nodes = new List<SplinePreviewNode>();
-        [UnityEngine.Serialization.FormerlySerializedAs("bClosed")]
         public bool isClosed = false;
         public float distance = -1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MousePos")]
         public Vector3 mousePos = new Vector3(0f, 0f, 0f);
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
         public SplineC spline;
-        [UnityEngine.Serialization.FormerlySerializedAs("ActionNode")]
         public SplinePreviewNode actionNode;
         // Gizmos
-        [UnityEngine.Serialization.FormerlySerializedAs("bGizmoDraw")]
         public bool isDrawingGizmos = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("GizmoDrawMeters")]
         private float gizmoDrawMeters = 1f;
         #endregion
 

@@ -5,21 +5,13 @@ namespace RoadArchitect
 {
     public class WizardObject
     {
-        [UnityEngine.Serialization.FormerlySerializedAs("Thumb")]
         public Texture2D thumb;
-        [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
         public string thumbString;
-        [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
         public string displayName;
-        [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
         public string desc;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsDefault")]
         public bool isDefault;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         public bool isBridge;
-        [UnityEngine.Serialization.FormerlySerializedAs("FileName")]
         public string fileName;
-        [UnityEngine.Serialization.FormerlySerializedAs("FullPath")]
         public string FullPath;
         public int sortID = 0;
 
@@ -69,17 +61,11 @@ namespace RoadArchitect
         [System.Serializable]
         public class WizardObjectLibrary
         {
-            [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
             public string thumbString;
-            [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
             public string displayName;
-            [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
             public string desc;
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsDefault")]
             public bool isDefault;
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
             public bool isBridge;
-            [UnityEngine.Serialization.FormerlySerializedAs("FileName")]
             public string fileName;
 
 

@@ -12,117 +12,75 @@ namespace RoadArchitect.EdgeObjects
     public class EdgeObjectMaker
     {
         #region "Vars"
-        [UnityEngine.Serialization.FormerlySerializedAs("bNeedsUpdate")]
         public bool isRequiringUpdate = false;
         public string UID = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("tNode")]
         public SplineN node = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
         public bool isDefault = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObject")]
         public GameObject edgeObject = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectString")]
         public string edgeObjectString = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
         public bool isMaterialOverriden = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1")]
         public Material edgeMaterial1 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2")]
         public Material edgeMaterial2 = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1String")]
         public string edgeMaterial1String = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2String")]
         public string edgeMaterial2String = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
         public bool isMatchingTerrain = true;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bCombineMesh")]
         public bool isCombinedMesh = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bCombineMeshCollider")]
         public bool isCombinedMeshCollider = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("MasterObj")]
         public GameObject masterObject = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectLocations")]
         public List<Vector3> edgeObjectLocations;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
         public List<Vector3> edgeObjectRotations;
-        [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjects")]
         public List<GameObject> edgeObjects;
-        [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
         public SignPlacementSubTypeEnum subType = SignPlacementSubTypeEnum.Right;
-        [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
         public float meterSep = 5f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
         public bool isToggled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         public bool isBridge = false;
 
 
         #region "Horizontal offsets"
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
         public float horizontalSep = 5f;
-        [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
         public AnimationCurve horizontalCurve;
         #endregion
 
 
         #region "Vertical offsets"
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
         public float verticalRaise = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
         public AnimationCurve verticalCurve;
         #endregion
 
 
         // Custom Rotation
-        [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
         public Vector3 customRotation = default(Vector3);
         public bool isRotationAligning = true;
         public bool isXRotationLocked = true;
         public bool isYRotationLocked = false;
         public bool isZRotationLocked = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
         public bool isOncomingRotation = true;
 
         // EdgeObject is static
-        [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
         public bool isStatic = true;
 
         // The CustomScale of the EdgeObject
-        [UnityEngine.Serialization.FormerlySerializedAs("CustomScale")]
         public Vector3 customScale = new Vector3(1f, 1f, 1f);
 
         // Start and EndTime
-        [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
         public float startTime = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("EndTime")]
         public float endTime = 1f;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("SingleOnlyBridgePercent")]
         public float singleOnlyBridgePercent = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("StartPos")]
         public Vector3 startPos = default(Vector3);
-        [UnityEngine.Serialization.FormerlySerializedAs("EndPos")]
         public Vector3 endPos = default(Vector3);
-        [UnityEngine.Serialization.FormerlySerializedAs("bSingle")]
         public bool isSingle = false;
 
         // Should it be only on a single position
-        [UnityEngine.Serialization.FormerlySerializedAs("SinglePosition")]
         public float singlePosition;
-        [UnityEngine.Serialization.FormerlySerializedAs("bStartMatchRoadDefinition")]
         public bool isStartMatchRoadDefinition = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("StartMatchRoadDef")]
         public float startMatchRoadDef = 0f;
 
         // EdgeObjectName
-        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
         public string objectName = "EdgeObject";
-        [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
         public string thumbString = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
         public string desc = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
         public string displayName = "";
         #endregion
 
@@ -376,81 +334,49 @@ namespace RoadArchitect.EdgeObjects
         public class EdgeObjectLibraryMaker
         {
             #region "Vars"
-            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectString")]
             public string edgeObjectString = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("bCombineMesh")]
             public bool isCombinedMesh = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bCombineMeshCollider")]
             public bool isCombinedMeshCollider = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectLocations")]
             public List<Vector3> edgeObjectLocations;
-            [UnityEngine.Serialization.FormerlySerializedAs("EdgeObjectRotations")]
             public List<Vector3> edgeObjectRotations;
-            [UnityEngine.Serialization.FormerlySerializedAs("SubType")]
             public SignPlacementSubTypeEnum subType = SignPlacementSubTypeEnum.Right;
-            [UnityEngine.Serialization.FormerlySerializedAs("MeterSep")]
             public float meterSep = 5f;
-            [UnityEngine.Serialization.FormerlySerializedAs("bToggle")]
             public bool isToggled = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
             public bool isBridge = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bIsGSD")]
             public bool isDefault = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("bOncomingRotation")]
             public bool isOncomingRotation = true;
-            [UnityEngine.Serialization.FormerlySerializedAs("bStatic")]
             public bool isStatic = true;
-            [UnityEngine.Serialization.FormerlySerializedAs("bMatchTerrain")]
             public bool isMatchingTerrain = true;
-            [UnityEngine.Serialization.FormerlySerializedAs("bSingle")]
             public bool isSingle = false;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("bMaterialOverride")]
             public bool isMaterialOverriden = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial1String")]
             public string edgeMaterial1String = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("EdgeMaterial2String")]
             public string edgeMaterial2String = "";
 
             //Horizontal offsets:
-            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalSep")]
             public float horizontalSep = 5f;
-            [UnityEngine.Serialization.FormerlySerializedAs("HorizontalCurve")]
             public AnimationCurve horizontalCurve;
             //Vertical offsets:
-            [UnityEngine.Serialization.FormerlySerializedAs("VerticalRaise")]
             public float verticalRaise = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("VerticalCurve")]
             public AnimationCurve verticalCurve;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("CustomRotation")]
             public Vector3 customRotation = default(Vector3);
             public bool isRotationAligning = true;
             public bool isXRotationLocked = true;
             public bool isYRotationLocked = false;
             public bool isZRotationLocked = false;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("StartTime")]
             public float startTime = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("EndTime")]
             public float endTime = 1f;
-            [UnityEngine.Serialization.FormerlySerializedAs("SingleOnlyBridgePercent")]
             public float singleOnlyBridgePercent = 0f;
-            [UnityEngine.Serialization.FormerlySerializedAs("SinglePosition")]
             public float singlePosition;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("bStartMatchRoadDefinition")]
             public bool isStartMatchingRoadDefinition = false;
-            [UnityEngine.Serialization.FormerlySerializedAs("StartMatchRoadDef")]
             public float startMatchRoadDef = 0f;
 
-            [UnityEngine.Serialization.FormerlySerializedAs("tName")]
             public string objectName = "EdgeObject";
-            [UnityEngine.Serialization.FormerlySerializedAs("ThumbString")]
             public string thumbString = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("Desc")]
             public string desc = "";
-            [UnityEngine.Serialization.FormerlySerializedAs("DisplayName")]
             public string displayName = "";
             #endregion
 

@@ -15,114 +15,70 @@ namespace RoadArchitect
         public Vector3 pos;
         public Quaternion rot;
         public Vector3 tangent;
-        [UnityEngine.Serialization.FormerlySerializedAs("EaseIO")]
         public Vector2 easeIO;
-        [UnityEngine.Serialization.FormerlySerializedAs("tDist")]
         public float dist = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("tTime")]
         public float time = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("NextTime")]
         public float nextTime = 1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("NextTan")]
         public Vector3 nextTan = default(Vector3);
-        [UnityEngine.Serialization.FormerlySerializedAs("OldTime")]
         public float oldTime = 0f;
 
         public float tempSegmentTime = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode")]
         public bool isSpecialEndNode = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart")]
         public SplineN specialNodeCounterpart = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("SpecialNodeCounterpart_Master")]
         public SplineN specialNodeCounterpartMaster = null;
         /// <summary> Connected nodes array </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("OriginalConnectionNodes")]
         public SplineN[] originalConnectionNodes = null;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsStart")]
         public bool isSpecialEndNodeIsStart = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialEndNode_IsEnd")]
         public bool isSpecialEndNodeIsEnd = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialIntersection")]
         public bool isSpecialIntersection = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSpecialRoadConnPrimary")]
         public bool isSpecialRoadConnPrimary = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bRoadCut")]
         public bool isRoadCut = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("MinSplination")]
         public float minSplination = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("MaxSplination")]
         public float maxSplination = 1f;
 
         public int idOnSpline = -1;
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
         public SplineC spline;
         //Unique ID
-        [UnityEngine.Serialization.FormerlySerializedAs("UID")]
         public string uID;
-        [UnityEngine.Serialization.FormerlySerializedAs("Intersection_OtherNode")]
         public SplineN intersectionOtherNode;
-        [UnityEngine.Serialization.FormerlySerializedAs("GradeToNext")]
         public string gradeToNext;
-        [UnityEngine.Serialization.FormerlySerializedAs("GradeToPrev")]
         public string gradeToPrev;
-        [UnityEngine.Serialization.FormerlySerializedAs("GradeToNextValue")]
         public float gradeToNextValue;
-        [UnityEngine.Serialization.FormerlySerializedAs("GradeToPrevValue")]
         public float gradeToPrevValue;
-        [UnityEngine.Serialization.FormerlySerializedAs("bInitialRoadHeight")]
         public float initialRoadHeight = -1f;
         //Navigation:
-        [UnityEngine.Serialization.FormerlySerializedAs("bNeverIntersect")]
         public bool isNeverIntersect = false;
         /// <summary> Is this node used by an intersection </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsIntersection")]
         public bool isIntersection = false;
         /// <summary> Defines end of road, if special end or start it is the second node/second last node </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsEndPoint")]
         public bool isEndPoint = false;
         public int id = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("id_intersection_othernode")]
         public int intersectionOtherNodeID = 0;
         /// <summary> Contains previous and next node ids </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("id_connected")]
         public List<int> connectedID;
         /// <summary> Contains previous and next node </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("node_connected")]
         public List<SplineN> connectedNode;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIgnore")]
         public bool isIgnore = false;
 
 
         #region "Tunnels"
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsTunnel")]
         public bool isTunnel = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsTunnelStart")]
         public bool isTunnelStart = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsTunnelEnd")]
         public bool isTunnelEnd = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsTunnelMatched")]
         public bool isTunnelMatched = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("TunnelCounterpartNode")]
         public SplineN tunnelCounterpartNode = null;
         #endregion
 
 
         //Bridges:
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridge")]
         public bool isBridge = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridgeStart")]
         public bool isBridgeStart = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridgeEnd")]
         public bool isBridgeEnd = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bIsBridgeMatched")]
         public bool isBridgeMatched = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("BridgeCounterpartNode")]
         public SplineN bridgeCounterpartNode = null;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDRI")]
         public RoadIntersection intersection = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("iConstruction")]
         public iConstructionMaker intersectionConstruction;
         #endregion
 
@@ -1036,17 +992,11 @@ namespace RoadArchitect
 
 
         #region "Cut materials storage and setting"
-        [UnityEngine.Serialization.FormerlySerializedAs("RoadCut_world")]
         public GameObject roadCutWorld = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutR_world")]
         public GameObject shoulderCutRWorld = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_world")]
         public GameObject shoulderCutLWorld = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("RoadCut_marker")]
         public GameObject roadCutMarker = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutR_marker")]
         public GameObject shoulderCutRMarker = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("ShoulderCutL_marker")]
         public GameObject shoulderCutLMarker = null;
 
         private Material[] roadCutWorldMats;

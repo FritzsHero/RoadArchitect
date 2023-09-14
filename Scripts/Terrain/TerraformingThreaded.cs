@@ -9,7 +9,6 @@ namespace RoadArchitect.Threading
         public class TerrainBoundsMaker
         {
             public List<Construction3DTri> triList;
-            [UnityEngine.Serialization.FormerlySerializedAs("tRect")]
             public Construction2DRect constructRect;
             public float MinI = 0f;
             public float MaxI = 1f;

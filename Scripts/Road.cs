@@ -35,16 +35,12 @@ namespace RoadArchitect
         [System.NonSerialized]
         public string editorTitleString = "";
 
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDSpline")]
         public SplineC spline;
 
         public int MostRecentNodeCount = -1;
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDSplineObj")]
         public GameObject splineObject;
-        [UnityEngine.Serialization.FormerlySerializedAs("GSDRS")]
         public RoadSystem roadSystem;
         public SplineC[] PiggyBacks = null;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEditorProgressBar")]
         public bool isEditorProgressBar = false;
         //Unique ID
         public string UID;
@@ -55,78 +51,45 @@ namespace RoadArchitect
         public bool isUpdatingSpline = false;
 
         //Road editor options:
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_LaneWidth")]
         public float laneWidth = 5f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bShouldersEnabled")]
         public bool isShouldersEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_ShoulderWidth")]
         public float shoulderWidth = 3f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_Lanes")]
         public int laneAmount = 2;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_RoadDefinition")]
         public float roadDefinition = 5f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_RoadCornerDefinition")]
         public bool roadCornerDefinition = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bRoadCuts")]
         public bool isRoadCutsEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bShoulderCuts")]
         public bool isShoulderCutsEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bDynamicCuts")]
         public bool isDynamicCutsEnabled = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bMaxGradeEnabled")]
         public bool isMaxGradeEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_MaxGrade")]
         public float maxGrade = 0.08f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_UseDefaultMaterials")]
         public bool isUsingDefaultMaterials = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_AutoUpdateInEditor")]
         public bool isAutoUpdatingInEditor = true;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_TerrainSubtract_Match")]
         public float matchTerrainSubtraction = 0.1f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bGSDRoadRaise")]
         public bool isRaisingRoad = false;
 
         /// <summary> Defines the width of height modification in meters </summary>
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_MatchHeightsDistance")]
         public float matchHeightsDistance = 50f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_ClearDetailsDistance")]
         public float clearDetailsDistance = 30f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_ClearDetailsDistanceHeight")]
         public float clearDetailsDistanceHeight = 5f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_ClearTreesDistance")]
         public float clearTreesDistance = 30f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_ClearTreesDistanceHeight")]
         public float clearTreesDistanceHeight = 50f;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_HeightModEnabled")]
         public bool isHeightModificationEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_DetailModEnabled")]
         public bool isDetailModificationEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_TreeModEnabled")]
         public bool isTreeModificationEnabled = true;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_SaveTerrainHistoryOnDisk")]
         public bool isSavingTerrainHistoryOnDisk = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_MagnitudeThreshold")]
         public float magnitudeThreshold = 300f;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_GizmosEnabled")]
         public bool isGizmosEnabled = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bMultithreading")]
         public bool isUsingMultithreading = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bSaveMeshes")]
         public bool isSavingMeshes = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bUseMeshColliders")]
         public bool isUsingMeshColliders = true;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bIsStatic")]
         public bool isStatic = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_bIsLightmapped")]
         public bool isLightmapped = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_desiredRampHeight")]
         public float desiredRampHeight = 0.35f;
 
 
-        [UnityEngine.Serialization.FormerlySerializedAs("opt_tRoadMaterialDropdown")]
         public RoadMaterialDropdownEnum roadMaterialDropdown = RoadMaterialDropdownEnum.Asphalt;
         public RoadMaterialDropdownEnum tRoadMaterialDropdownOLD = RoadMaterialDropdownEnum.Asphalt;
 
@@ -164,17 +127,12 @@ namespace RoadArchitect
         [System.NonSerialized]
         public RoadConstructorBufferMaker RCS;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("tName")]
         public string roadName = "";
-        [UnityEngine.Serialization.FormerlySerializedAs("bProfiling")]
         public bool isProfiling = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bSkipStore")]
         public bool isSkippingStore = true;
         [System.NonSerialized]
         public float EditorConstructionStartTime = 0f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEditorError")]
         public bool isEditorError = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("tError")]
         public System.Exception exceptionError = null;
 
 
@@ -184,17 +142,13 @@ namespace RoadArchitect
         private const int editorTimerSplineMax = 2;
         [System.NonSerialized]
         public int editorProgress = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("GizmoNodeTimerMax")]
         private const int gizmoNodeTimerMax = 2;
-        [UnityEngine.Serialization.FormerlySerializedAs("EditorUpdateMe")]
         public bool isUpdateRequired = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("bTriggerGC")]
         public bool isTriggeringGC = false;
         private bool isTriggeredGCExecuting;
         private float triggerGCEnd = 0f;
 
         [System.NonSerialized]
-        [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraMoving")]
         public bool isEditorCameraMoving = false;
         [System.NonSerialized]
         public float EditorCameraPos = 0f;
@@ -206,7 +160,6 @@ namespace RoadArchitect
         private float EditorCameraIncrementDistance = 0f;
         private float EditorCameraIncrementDistance_Full = 0f;
         public float EditorCameraMetersPerSecond = 60f;
-        [UnityEngine.Serialization.FormerlySerializedAs("bEditorCameraRotate")]
         public bool isEditorCameraRotated = false;
         private Vector3 EditorCameraV1 = default(Vector3);
         private Vector3 EditorCameraV2 = default(Vector3);
@@ -218,17 +171,11 @@ namespace RoadArchitect
 
         public List<Terraforming.TempTerrainData> EditorTTDList;
 
-        [UnityEngine.Serialization.FormerlySerializedAs("Editor_bIsConstructing")]
         public bool isEditorConstructing = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("Editor_bConstructionID")]
         public int editorConstructionID = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("Editor_bSelected")]
         public bool isEditorSelected = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("Editor_MouseTerrainHit")]
         public bool isEditorMouseHittingTerrain = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("Editor_MousePos")]
         public Vector3 editorMousePos = new Vector3(0f, 0f, 0f);
-        [UnityEngine.Serialization.FormerlySerializedAs("Color_NodeDefaultColor")]
         public Color defaultNodeColor = new Color(0f, 1f, 1f, 0.75f);
         /// <summary> Connection node color </summary>
         public readonly Color Color_NodeConnColor = new Color(0f, 1f, 0f, 0.75f);

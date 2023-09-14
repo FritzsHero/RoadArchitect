@@ -12,35 +12,23 @@ namespace RoadArchitect
         #region "Vars"
         [SerializeField]
         [HideInInspector]
-        [UnityEngine.Serialization.FormerlySerializedAs("mGSDID")]
         private int uID = -1;
 
         public int UID { get { return uID; } }
 
         [HideInInspector]
-        [UnityEngine.Serialization.FormerlySerializedAs("tTerrain")]
         public Terrain terrain;
 
         //Splat map:
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatResoWidth")]
         public int splatResoWidth = 1024;
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatResoHeight")]
         public int splatResoHeight = 1024;
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatBackground")]
         public Color splatBackground = new Color(0f, 0f, 0f, 1f);
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatForeground")]
         public Color splatForeground = new Color(1f, 1f, 1f, 1f);
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatWidth")]
         public float splatWidth = 30f;
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatSkipBridges")]
         public bool isSplatSkipBridges = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatSkipTunnels")]
         public bool isSplatSkipTunnels = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatSingleRoad")]
         public bool isSplatSingleRoad = false;
-        [UnityEngine.Serialization.FormerlySerializedAs("SplatSingleChoiceIndex")]
         public int splatSingleChoiceIndex = 0;
-        [UnityEngine.Serialization.FormerlySerializedAs("RoadSingleChoiceUID")]
         public string roadSingleChoiceUID = "";
         #endregion
 
