@@ -93,7 +93,7 @@ namespace RoadArchitect
         [MenuItem("Window/Road Architect/Testing/Run all unit tests (caution)")]
         public static void TestProgram()
         {
-            if (EditorUtility.DisplayDialog("Warning !", "This will delete your RoadSystem 1, 6, 7, 8 and 9 and will create a lot of test roads.", "OK", "Cancel"))
+            if (EditorUtility.DisplayDialog("Warning !", "This will delete your RoadSystem 1, 6, 7, 8, 9 and 10 and will create a lot of test roads.", "OK", "Cancel"))
             {
                 RoadArchitect.Tests.UnitTests.RoadArchitectUnitTests();
             }
@@ -164,7 +164,7 @@ namespace RoadArchitect
         [MenuItem("Window/Road Architect/Testing/Clean up tests (caution)")]
         public static void TestCleanup()
         {
-            if (EditorUtility.DisplayDialog("Warning !", "This will delete your RoadSystem 1, 6, 7, 8 and 9", "OK", "Cancel"))
+            if (EditorUtility.DisplayDialog("Warning !", "This will delete your RoadSystem 1, 6, 7, 8, 9 and 10", "OK", "Cancel"))
             {
                 RoadArchitect.Tests.UnitTests.CleanupAllTests();
             }
