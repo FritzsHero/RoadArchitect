@@ -119,9 +119,16 @@ namespace RoadArchitect
 
 
         /// <summary> Returns the PhysicsMaterial from _assetPath </summary>
+        #if UNITY_6000_0_OR_NEWER
+        public static PhysicsMaterial LoadPhysicsMaterial(string _assetPath)
+        {
+            return EngineIntegration.LoadAssetFromPath<PhysicsMaterial>(_assetPath);
+        }
+        #else
         public static PhysicMaterial LoadPhysicsMaterial(string _assetPath)
         {
             return EngineIntegration.LoadAssetFromPath<PhysicMaterial>(_assetPath);
         }
+        #endif
     }
 }

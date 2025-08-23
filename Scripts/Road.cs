@@ -111,8 +111,13 @@ namespace RoadArchitect
         public Material ShoulderMaterialMarker3;
         public Material ShoulderMaterialMarker4;
 
+        #if UNITY_6000_0_OR_NEWER
+        public PhysicsMaterial RoadPhysicMaterial;
+        public PhysicsMaterial ShoulderPhysicMaterial;
+        #else
         public PhysicMaterial RoadPhysicMaterial;
         public PhysicMaterial ShoulderPhysicMaterial;
+        #endif
         #endregion
 
 
