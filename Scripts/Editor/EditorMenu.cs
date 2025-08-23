@@ -15,7 +15,7 @@ namespace RoadArchitect
         [MenuItem("Window/Road Architect/Create road system")]
         public static void CreateRoadSystem()
         {
-            Object[] allRoadSystemObjects = GameObject.FindObjectsOfType<RoadSystem>();
+            Object[] allRoadSystemObjects = EngineIntegration.FindObjectsByType<RoadSystem>();
             int nextCount = (allRoadSystemObjects.Length + 1);
             allRoadSystemObjects = null;
 
@@ -33,7 +33,7 @@ namespace RoadArchitect
         [MenuItem("Window/Road Architect/Add road")]
         public static void AddRoad()
         {
-            Object[] allRoadSystemObjects = GameObject.FindObjectsOfType<RoadSystem>();
+            Object[] allRoadSystemObjects = EngineIntegration.FindObjectsByType<RoadSystem>();
             if (allRoadSystemObjects != null && allRoadSystemObjects.Length == 0)
             {
                 CreateRoadSystem();
@@ -51,7 +51,7 @@ namespace RoadArchitect
         [MenuItem("Window/Road Architect/Update All Roads")]
         public static void UpdateAllRoads()
         {
-            Road[] allRoadObjects = GameObject.FindObjectsOfType<Road>();
+            Road[] allRoadObjects = EngineIntegration.FindObjectsByType<Road>();
 
             int roadCount = allRoadObjects.Length;
 

@@ -60,7 +60,7 @@ namespace RoadArchitect
         /// <summary> Return new id preventing terrain id duplication </summary>
         private int GetNewID()
         {
-            Object[] allTerrainObjs = GameObject.FindObjectsOfType<RoadTerrain>();
+            Object[] allTerrainObjs = EngineIntegration.FindObjectsByType<RoadTerrain>();
             List<int> allIDS = new List<int>(allTerrainObjs.Length);
             foreach (RoadTerrain Terrain in allTerrainObjs)
             {

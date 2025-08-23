@@ -84,7 +84,7 @@ namespace RoadArchitect.Roads
         public static SplineN InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = GameObject.FindObjectsOfType<SplineN>();
+            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineN>();
             nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             //Set node location:
@@ -166,7 +166,7 @@ namespace RoadArchitect.Roads
              create intersection with above two nodes
             */
 
-            Object[] roadObjects = Object.FindObjectsOfType<Road>();
+            Object[] roadObjects = EngineIntegration.FindObjectsByType<Road>();
 
             //20m increments to gather collection of which roads intersect
             List<Road> roads = new List<Road>();
@@ -294,7 +294,7 @@ namespace RoadArchitect.Roads
                                 height = paramVector.y;
 
                                 //if any intersections already within 75m or 100m, dont create intersection here
-                                Object[] allInterectionObjects = Object.FindObjectsOfType<RoadIntersection>();
+                                Object[] allInterectionObjects = EngineIntegration.FindObjectsByType<RoadIntersection>();
                                 foreach (RoadIntersection roadIntersection in allInterectionObjects)
                                 {
                                     if (Vector2.Distance(new Vector2(roadIntersection.transform.position.x, roadIntersection.transform.position.z), intersectPoint2D) < 100f)

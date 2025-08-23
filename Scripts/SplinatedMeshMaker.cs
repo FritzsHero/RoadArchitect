@@ -2071,7 +2071,7 @@ namespace RoadArchitect.Splination
             //			if(bMatchTerrain){
             //				tTerrainRects = new List<RoadUtility.Construction2DRect>();
             //				xTerrains = new List<Terrain>();
-            //				Object[] tTerrains = GameObject.FindObjectsOfType<Terrain>();
+            //				Object[] tTerrains = EngineIntegration.FindObjectsByType<Terrain>();
             //				RoadUtility.Construction2DRect tTerrainRect = null;
             //				Vector2 tPos2D = default(Vector2);
             //				Vector2 P1,P2,P3,P4;

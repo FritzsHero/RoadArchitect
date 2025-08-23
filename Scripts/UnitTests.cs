@@ -160,7 +160,7 @@ namespace RoadArchitect.Tests
         /// <summary> Reset all terrains to 0,0 </summary>
         private static void FlattenTerrains()
         {
-            Terrain[] allTerrains = Object.FindObjectsOfType<Terrain>();
+            Terrain[] allTerrains = EngineIntegration.FindObjectsByType<Terrain>();
             foreach (Terrain terrain in allTerrains)
             {
                 terrain.terrainData.SetHeights(0, 0, new float[513, 513]);

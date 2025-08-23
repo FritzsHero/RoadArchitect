@@ -263,7 +263,7 @@ namespace RoadArchitect
         {
             roads = null;
             roadsString = null;
-            Object[] allRoads = GameObject.FindObjectsOfType<Road>();
+            Object[] allRoads = EngineIntegration.FindObjectsByType<Road>();
             int roadsCount = allRoads.Length;
             roads = new string[roadsCount];
             roadsString = new string[roadsCount];

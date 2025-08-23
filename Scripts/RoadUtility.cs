@@ -85,7 +85,7 @@ namespace RoadArchitect
         #region "Terrain history"
         public static void ConstructRoadStoreTerrainHistory(ref Road _road)
         {
-            Object[] allTerrains = GameObject.FindObjectsOfType<RoadTerrain>();
+            Object[] allTerrains = EngineIntegration.FindObjectsByType<RoadTerrain>();
 
             HashSet<int> terrainIDs = new HashSet<int>();
             foreach (RoadTerrain terrain in allTerrains)
@@ -390,7 +390,7 @@ namespace RoadArchitect
             if (_roadUID != "")
             {
                 roadObjects = new Object[1];
-                Object[] roads = GameObject.FindObjectsOfType<Road>();
+                Object[] roads = EngineIntegration.FindObjectsByType<Road>();
                 foreach (Road road in roads)
                 {
                     if (string.CompareOrdinal(road.UID, _roadUID) == 0)
@@ -402,7 +402,7 @@ namespace RoadArchitect
             }
             else
             {
-                roadObjects = GameObject.FindObjectsOfType<Road>();
+                roadObjects = EngineIntegration.FindObjectsByType<Road>();
             }
 
 

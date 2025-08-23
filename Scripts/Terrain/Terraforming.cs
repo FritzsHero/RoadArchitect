@@ -80,7 +80,7 @@ namespace RoadArchitect
         /// <summary> Checks all terrains and adds RoadTerrain if necessary </summary>
         private static void CheckAllTerrains()
         {
-            Object[] allTerrains = GameObject.FindObjectsOfType<Terrain>();
+            Object[] allTerrains = EngineIntegration.FindObjectsByType<Terrain>();
             RoadTerrain TID;
             GameObject terrainObj;
             foreach (Terrain terrain in allTerrains)
@@ -100,7 +100,8 @@ namespace RoadArchitect
         public static void CheckAllTerrainsHeight0()
         {
             CheckAllTerrains();
-            Object[] allTerrains = GameObject.FindObjectsOfType<Terrain>();
+            Object[] allTerrains = EngineIntegration.FindObjectsByType<Terrain>();
+            
             foreach (Terrain terrain in allTerrains)
             {
                 if (!RootUtils.IsApproximately(terrain.transform.position.y, 0f, 0.0001f))
@@ -137,7 +138,7 @@ namespace RoadArchitect
 
             Dictionary<Terrain, TempTerrainData> TempTerrainDict = new Dictionary<Terrain, TempTerrainData>();
             //Populate dictionary:
-            Object[] allTerrains = GameObject.FindObjectsOfType<Terrain>();
+            Object[] allTerrains = EngineIntegration.FindObjectsByType<Terrain>();
             RoadTerrain TID;
             int aSize = 0;
             int dSize = 0;
@@ -454,7 +455,7 @@ namespace RoadArchitect
                 //Exit if no mod taking place.
                 return;
             }
-            Object[] TIDs = GameObject.FindObjectsOfType<RoadTerrain>();
+            Object[] TIDs = EngineIntegration.FindObjectsByType<RoadTerrain>();
             Terrain terrain;
             int[,] tDetails = null;
             int IntBufferX = 0;
@@ -546,7 +547,7 @@ namespace RoadArchitect
                 return;
             }
 
-            Object[] TIDs = GameObject.FindObjectsOfType<RoadTerrain>();
+            Object[] TIDs = EngineIntegration.FindObjectsByType<RoadTerrain>();
             float[,] heights;
             int[,] tDetails;
             int ArrayCount;

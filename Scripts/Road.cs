@@ -441,7 +441,7 @@ namespace RoadArchitect
         {
             if (editorPlayCamera == null)
             {
-                Camera[] editorCameras = GameObject.FindObjectsOfType<Camera>();
+                Camera[] editorCameras = EngineIntegration.FindObjectsByType<Camera>();
                 if (editorCameras != null && editorCameras.Length == 1)
                 {
                     editorPlayCamera = editorCameras[0];
@@ -1601,7 +1601,7 @@ namespace RoadArchitect
 
 
             //Intersections (all):
-            markerObjs = FindObjectsOfType<MeshRenderer>();
+            markerObjs = EngineIntegration.FindObjectsByType<MeshRenderer>();
             foreach (MeshRenderer MR in markerObjs)
             {
                 if (MR.transform.name.Contains("-Inter") && MR.transform.name.Contains("-Lane"))

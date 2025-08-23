@@ -17,7 +17,7 @@ namespace RoadArchitect
 
         public static RoadTerrainInfo[] GetRoadTerrainInfos()
         {
-            Object[] tTerrainsObj = GameObject.FindObjectsOfType<Terrain>();
+            Object[] tTerrainsObj = EngineIntegration.FindObjectsByType<Terrain>();
             RoadTerrainInfo tInfo;
             List<RoadTerrainInfo> tInfos = new List<RoadTerrainInfo>();
             foreach (Terrain tTerrain in tTerrainsObj)

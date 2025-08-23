@@ -159,5 +159,15 @@ namespace RoadArchitect
             UnityEditor.Undo.RegisterCreatedObjectUndo(_objectToUndo, _name);
             #endif
         }
+
+
+        public static T[] FindObjectsByType<T>() where T : UnityEngine.Object
+        {
+            #if UNITY_2020_1_OR_NEWER
+            return(GameObject.FindObjectsByType<T>(FindObjectsSortMode.None));
+            #else
+            return(GameObject.FindObjectsOfType<T>());
+            #endif
+        }
     }
 }

@@ -2044,7 +2044,7 @@ namespace RoadArchitect
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
             {
-                Object[] nodeObjects = GameObject.FindObjectsOfType<SplineN>();
+                Object[] nodeObjects = EngineIntegration.FindObjectsByType<SplineN>();
                 foreach (SplineN xNode in nodeObjects)
                 {
                     if (Vector3.Distance(xNode.transform.position, node.transform.position) < 2f)
