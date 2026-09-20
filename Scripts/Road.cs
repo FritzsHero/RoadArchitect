@@ -567,8 +567,7 @@ namespace RoadArchitect
                 isProfiling = false;
             }
 
-            //Set all terrains to height 0:
-            Terraforming.CheckAllTerrainsHeight0();
+            Terraforming.CheckAllTerrains();
 
             editorProgress = 20;
             isEditorProgressBar = true;

@@ -78,7 +78,7 @@ namespace RoadArchitect
 
 
         /// <summary> Checks all terrains and adds RoadTerrain if necessary </summary>
-        private static void CheckAllTerrains()
+        public static void CheckAllTerrains()
         {
             Object[] allTerrains = EngineIntegration.FindObjectsByType<Terrain>();
             RoadTerrain TID;
@@ -96,21 +96,11 @@ namespace RoadArchitect
         }
 
 
-        /// <summary> Checks if every Terrain uses a RoadTerrain script and set it to 0 on y </summary>
+        [System.Obsolete("Just use CheckAllTerrains")]
+        /// <summary> Checks if every Terrain uses a RoadTerrain script </summary>
         public static void CheckAllTerrainsHeight0()
         {
             CheckAllTerrains();
-            Object[] allTerrains = EngineIntegration.FindObjectsByType<Terrain>();
-            
-            foreach (Terrain terrain in allTerrains)
-            {
-                if (!RootUtils.IsApproximately(terrain.transform.position.y, 0f, 0.0001f))
-                {
-                    Vector3 tVect = terrain.transform.position;
-                    tVect.y = 0f;
-                    terrain.transform.position = tVect;
-                }
-            }
         }
 
 

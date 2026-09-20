@@ -1064,7 +1064,12 @@ namespace RoadArchitect.Threading
                                 tHeight = 0f;
                             }
                             xVect.y = tHeight;
-                            tHeight = ((tHeight) / _TTD.TerrainSize.y);
+                            // Heightmap values are relative to the terrain transform.
+                            tHeight = (tHeight - _TTD.TerrainPos.y) / _TTD.TerrainSize.y;
+                            if (tHeight < 0f)
+                            {
+                                tHeight = 0f;
+                            }
 
                             //Set height values:
                             _TTD.tHeights[index, k] = true;
