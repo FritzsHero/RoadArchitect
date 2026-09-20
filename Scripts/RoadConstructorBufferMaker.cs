@@ -830,105 +830,28 @@ namespace RoadArchitect
                 return;
             }
 
-            int vCount = -1;
-            Mesh MeshBuffer = null;
-            Vector3[] tNormals = null;
-            int[] tTris = null;
-            // Back Lanes:
-            vCount = iBLane0s.Count;
-            for (int i = 0; i < vCount; i++)
-            {
-                tNormals = iBLane0s_normals[i];
-                tTris = iBLane0s_tris[i];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iBLane0s[i], ref tTris, ref tNormals);
-                tMesh_iBLanes0.Add(MeshBuffer);
-            }
-            vCount = iBLane1s.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iBLane1s_normals[index];
-                tTris = iBLane1s_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iBLane1s[index], ref tTris, ref tNormals);
-                tMesh_iBLanes1.Add(MeshBuffer);
-            }
-            vCount = iBLane2s.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iBLane2s_normals[index];
-                tTris = iBLane2s_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iBLane2s[index], ref tTris, ref tNormals);
-                tMesh_iBLanes2.Add(MeshBuffer);
-            }
-            vCount = iBLane3s.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iBLane3s_normals[index];
-                tTris = iBLane3s_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iBLane3s[index], ref tTris, ref tNormals);
-                tMesh_iBLanes3.Add(MeshBuffer);
-            }
-            // Front lanes:
-            vCount = iFLane0s.Count;
-            for (int i = 0; i < vCount; i++)
-            {
-                tNormals = iFLane0s_normals[i];
-                tTris = iFLane0s_tris[i];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iFLane0s[i], ref tTris, ref tNormals);
-                tMesh_iFLanes0.Add(MeshBuffer);
-            }
-            vCount = iFLane1s.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iFLane1s_normals[index];
-                tTris = iFLane1s_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iFLane1s[index], ref tTris, ref tNormals);
-                tMesh_iFLanes1.Add(MeshBuffer);
-            }
-            vCount = iFLane2s.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iFLane2s_normals[index];
-                tTris = iFLane2s_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iFLane2s[index], ref tTris, ref tNormals);
-                tMesh_iFLanes2.Add(MeshBuffer);
-            }
-            vCount = iFLane3s.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iFLane3s_normals[index];
-                tTris = iFLane3s_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iFLane3s[index], ref tTris, ref tNormals);
-                tMesh_iFLanes3.Add(MeshBuffer);
-            }
-            // Main plates:
-            vCount = iBMainPlates.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iBMainPlates_normals[index];
-                tTris = iBMainPlates_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iBMainPlates[index], ref tTris, ref tNormals);
-                tMesh_iBMainPlates.Add(MeshBuffer);
-            }
-            vCount = iFMainPlates.Count;
-            for (int index = 0; index < vCount; index++)
-            {
-                tNormals = iFMainPlates_normals[index];
-                tTris = iFMainPlates_tris[index];
-                MeshBuffer = new Mesh();
-                MeshBuffer = MeshSetup1Helper(ref MeshBuffer, iFMainPlates[index], ref tTris, ref tNormals);
-                tMesh_iFMainPlates.Add(MeshBuffer);
-            }
+            AddIntersectionMeshes(iBLane0s, iBLane0s_tris, iBLane0s_normals, tMesh_iBLanes0);
+            AddIntersectionMeshes(iBLane1s, iBLane1s_tris, iBLane1s_normals, tMesh_iBLanes1);
+            AddIntersectionMeshes(iBLane2s, iBLane2s_tris, iBLane2s_normals, tMesh_iBLanes2);
+            AddIntersectionMeshes(iBLane3s, iBLane3s_tris, iBLane3s_normals, tMesh_iBLanes3);
+            AddIntersectionMeshes(iFLane0s, iFLane0s_tris, iFLane0s_normals, tMesh_iFLanes0);
+            AddIntersectionMeshes(iFLane1s, iFLane1s_tris, iFLane1s_normals, tMesh_iFLanes1);
+            AddIntersectionMeshes(iFLane2s, iFLane2s_tris, iFLane2s_normals, tMesh_iFLanes2);
+            AddIntersectionMeshes(iFLane3s, iFLane3s_tris, iFLane3s_normals, tMesh_iFLanes3);
+            AddIntersectionMeshes(iBMainPlates, iBMainPlates_tris, iBMainPlates_normals, tMesh_iBMainPlates);
+            AddIntersectionMeshes(iFMainPlates, iFMainPlates_tris, iFMainPlates_normals, tMesh_iFMainPlates);
+        }
 
-            MeshBuffer = null;
+        private void AddIntersectionMeshes(List<Vector3[]> vertices, List<int[]> triangles, List<Vector3[]> normals, List<Mesh> meshes)
+        {
+            for (int index = 0; index < vertices.Count; index++)
+            {
+                int[] meshTriangles = triangles[index];
+                Vector3[] meshNormals = normals[index];
+                Mesh mesh = new Mesh();
+                mesh = MeshSetup1Helper(ref mesh, vertices[index], ref meshTriangles, ref meshNormals);
+                meshes.Add(mesh);
+            }
         }
         #endregion
 
