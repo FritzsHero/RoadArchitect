@@ -100,13 +100,14 @@ namespace RoadArchitect
 
             if (_road.TerrainHistory.Count > 0)
             {
-                //Delete unnecessary terrain histories:
-                foreach (TerrainHistoryMaker THMaker in _road.TerrainHistory)
+                // Delete unnecessary terrain histories:
+                for (int index = _road.TerrainHistory.Count - 1; index >= 0; index--)
                 {
+                    TerrainHistoryMaker THMaker = _road.TerrainHistory[index];
                     if (!terrainIDs.Contains(THMaker.terrainID))
                     {
                         THMaker.Nullify();
-                        _road.TerrainHistory.Remove(THMaker);
+                        _road.TerrainHistory.RemoveAt(index);
                     }
                 }
             }
@@ -117,7 +118,7 @@ namespace RoadArchitect
             foreach (Terraforming.TempTerrainData TTD in _road.EditorTTDList)
             {
                 roadTerrain = null;
-                //Get terrainID:
+                // Get terrainID:
                 foreach (RoadTerrain terrain in allTerrains)
                 {
                     if (terrain.UID == TTD.uID)
