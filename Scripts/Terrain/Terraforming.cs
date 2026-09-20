@@ -456,82 +456,99 @@ namespace RoadArchitect
                 return;
             }
             Object[] TIDs = EngineIntegration.FindObjectsByType<RoadTerrain>();
-            Terrain terrain;
-            int[,] tDetails = null;
-            int IntBufferX = 0;
-            int IntBufferY = 0;
-            int tVal = 0;
             foreach (TempTerrainData TTD in _TTDList)
             {
-                foreach (RoadTerrain TID in TIDs)
+                Terrain terrain = FindTerrain(TIDs, TTD.uID);
+                if (terrain == null)
                 {
-                    if (TID.UID != TTD.uID)
-                    {
-                        continue;
-                    }
-
-                    terrain = TID.transform.gameObject.GetComponent<Terrain>();
-                    if (terrain == null)
-                    {
-                        continue;
-                    }
-
-                    //Details:
-                    if (_spline.road.isDetailModificationEnabled)
-                    {
-                        for (int index = 0; index < TTD.DetailLayersCount; index++)
-                        {
-                            //if(TTD.DetailLayersSkip.Contains(i) || TTD.DetailValues[i] == null)
-                            //{
-                            //  continue;
-                            //}
-                            //if(TTD.DetailsI[i] > 0)
-                            //{
-                            //	tTerrain.terrainData.SetDetailLayer(0, 0, i, TTD.DetailValues[i]);	
-                            //}
-
-                            if (TTD.DetailLayersSkip.Contains(index) || TTD.MainDetailsX == null || TTD.MainDetailsX.Count < 1)
-                            {
-                                continue;
-                            }
-                            tDetails = terrain.terrainData.GetDetailLayer(0, 0, TTD.DetailMaxIndex, TTD.DetailMaxIndex, index);
-
-                            int MaxCount = TTD.MainDetailsX.Count;
-                            for (int j = 0; j < MaxCount; j++)
-                            {
-                                IntBufferX = TTD.MainDetailsX[j];
-                                IntBufferY = TTD.MainDetailsY[j];
-                                tVal = tDetails[IntBufferX, IntBufferY];
-                                if (tVal > 0)
-                                {
-                                    TTD.DetailsX[index].Add((ushort)IntBufferX);
-                                    TTD.DetailsY[index].Add((ushort)IntBufferY);
-                                    TTD.OldDetailsValue[index].Add((ushort)tVal);
-                                    tDetails[IntBufferX, IntBufferY] = 0;
-                                }
-                            }
-                            TTD.detailsCount[index] = TTD.DetailsX[index].Count;
-
-                            terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
-                            tDetails = null;
-                            TTD.DetailHasProcessed = null;
-                        }
-                        TTD.MainDetailsX = null;
-                        TTD.MainDetailsY = null;
-                        System.GC.Collect();
-                    }
-                    //Trees:
-                    if (_spline.road.isTreeModificationEnabled && TTD.TreesCurrent != null && TTD.treesCount > 0)
-                    {
-                        terrain.terrainData.treeInstances = TTD.TreesCurrent.ToArray();
-                    }
-                    //Heights:
-                    if (_spline.road.isHeightModificationEnabled && TTD.heights != null && TTD.Count > 0)
-                    {
-                        //Do heights last to trigger collisions and stuff properly:
-                        terrain.terrainData.SetHeights(0, 0, TTD.heights);
-                    }
+                    continue;
                 }
+
+                ApplyDetails(terrain, TTD, _spline.road.isDetailModificationEnabled);
+                ApplyTrees(terrain, TTD, _spline.road.isTreeModificationEnabled);
+                ApplyHeights(terrain, TTD, _spline.road.isHeightModificationEnabled);
+            }
+        }
+
+        private static Terrain FindTerrain(Object[] roadTerrains, int terrainId)
+        {
+            foreach (RoadTerrain roadTerrain in roadTerrains)
+            {
+                if (roadTerrain.UID == terrainId)
+                {
+                    return roadTerrain.transform.gameObject.GetComponent<Terrain>();
+                }
+            }
+            return null;
+        }
+
+        private static Terrain FindTerrainReference(Object[] roadTerrains, int terrainId)
+        {
+            foreach (RoadTerrain roadTerrain in roadTerrains)
+            {
+                if (roadTerrain.UID == terrainId)
+                {
+                    return roadTerrain.terrain;
+                }
+            }
+            return null;
+        }
+
+        private static void ApplyDetails(Terrain terrain, TempTerrainData terrainData, bool isEnabled)
+        {
+            if (!isEnabled || terrainData.MainDetailsX == null || terrainData.MainDetailsX.Count < 1)
+            {
+                return;
+            }
+
+            for (int layer = 0; layer < terrainData.DetailLayersCount; layer++)
+            {
+                if (terrainData.DetailLayersSkip.Contains(layer))
+                {
+                    continue;
+                }
+
+                int[,] details = terrain.terrainData.GetDetailLayer(0, 0, terrainData.DetailMaxIndex, terrainData.DetailMaxIndex, layer);
+                for (int index = 0; index < terrainData.MainDetailsX.Count; index++)
+                {
+                    int x = terrainData.MainDetailsX[index];
+                    int y = terrainData.MainDetailsY[index];
+                    int value = details[x, y];
+                    if (value <= 0)
+                    {
+                        continue;
+                    }
+
+                    terrainData.DetailsX[layer].Add((ushort)x);
+                    terrainData.DetailsY[layer].Add((ushort)y);
+                    terrainData.OldDetailsValue[layer].Add((ushort)value);
+                    details[x, y] = 0;
+                }
+
+                terrainData.detailsCount[layer] = terrainData.DetailsX[layer].Count;
+                terrain.terrainData.SetDetailLayer(0, 0, layer, details);
+                terrainData.DetailHasProcessed = null;
+            }
+
+            terrainData.MainDetailsX = null;
+            terrainData.MainDetailsY = null;
+            System.GC.Collect();
+        }
+
+        private static void ApplyTrees(Terrain terrain, TempTerrainData terrainData, bool isEnabled)
+        {
+            if (isEnabled && terrainData.TreesCurrent != null && terrainData.treesCount > 0)
+            {
+                terrain.terrainData.treeInstances = terrainData.TreesCurrent.ToArray();
+            }
+        }
+
+        // Trigger Height last for proper collisions
+        private static void ApplyHeights(Terrain terrain, TempTerrainData terrainData, bool isEnabled)
+        {
+            if (isEnabled && terrainData.heights != null && terrainData.Count > 0)
+            {
+                terrain.terrainData.SetHeights(0, 0, terrainData.heights);
             }
         }
 
@@ -548,19 +565,9 @@ namespace RoadArchitect
             }
 
             Object[] TIDs = EngineIntegration.FindObjectsByType<RoadTerrain>();
-            float[,] heights;
-            int[,] tDetails;
-            int ArrayCount;
             foreach (TerrainHistoryMaker TH in _road.TerrainHistory)
             {
-                Terrain terrain = null;
-                foreach (RoadTerrain TID in TIDs)
-                {
-                    if (TID.UID == TH.terrainID)
-                    {
-                        terrain = TID.terrain;
-                    }
-                }
+                Terrain terrain = FindTerrainReference(TIDs, TH.terrainID);
                 if (!terrain)
                 {
                     continue;
@@ -572,75 +579,74 @@ namespace RoadArchitect
                     continue;
                 }
 
-                //Heights:
-                if (TH.x1 != null)
-                {
-                    heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
-                    ArrayCount = TH.Count;
-                    for (int index = 0; index < ArrayCount; index++)
-                    {
-                        heights[TH.x1[index], TH.y1[index]] = TH.height[index];
-                    }
-                    terrain.terrainData.SetHeights(0, 0, heights);
-                }
-                //Details:
-                if (TH.detailsCount != null && TH.detailsX != null && TH.detailsY != null && TH.detailsOldValue != null)
-                {
-                    int RealLayerCount = terrain.terrainData.detailPrototypes.Length;
-                    int StartIndex = 0;
-                    int EndIndex = 0;
-                    for (int index = 0; index < TH.detailLayersCount; index++)
-                    {
-                        if (index >= RealLayerCount)
-                        {
-                            break;
-                        }
-                        if (TH.detailsX.Length <= index)
-                        {
-                            break;
-                        }
-                        if (TH.detailsY.Length <= index)
-                        {
-                            break;
-                        }
-                        if (TH.detailsX.Length < 1)
-                        {
-                            continue;
-                        }
-
-                        tDetails = terrain.terrainData.GetDetailLayer(0, 0, terrain.terrainData.detailWidth, terrain.terrainData.detailHeight, index);
-                        ArrayCount = TH.detailsCount[index];
-                        if (ArrayCount == 0)
-                        {
-                            continue;
-                        }
-                        EndIndex += ArrayCount;
-                        for (int j = StartIndex; j < EndIndex; j++)
-                        {
-                            tDetails[TH.detailsX[j], TH.detailsY[j]] = TH.detailsOldValue[j];
-                        }
-                        StartIndex = EndIndex;
-                        terrain.terrainData.SetDetailLayer(0, 0, index, tDetails);
-                        tDetails = null;
-                    }
-                }
-                //Trees:
-                TreeInstance[] xTress = TH.MakeTrees();
-                if (xTress != null)
-                {
-                    ArrayCount = xTress.Length;
-                    if (ArrayCount > 0 && TH.oldTrees != null)
-                    {
-                        int TerrainTreeCount = terrain.terrainData.treeInstances.Length;
-                        TreeInstance[] tTrees = new TreeInstance[ArrayCount + TerrainTreeCount];
-                        System.Array.Copy(terrain.terrainData.treeInstances, 0, tTrees, 0, TerrainTreeCount);
-                        System.Array.Copy(xTress, 0, tTrees, TerrainTreeCount, ArrayCount);
-                        terrain.terrainData.treeInstances = tTrees;
-                    }
-                    xTress = null;
-                }
+                RestoreHeights(terrain, TH);
+                RestoreDetails(terrain, TH);
+                RestoreTrees(terrain, TH);
             }
             System.GC.Collect();
+        }
+
+        private static void RestoreHeights(Terrain terrain, TerrainHistoryMaker history)
+        {
+            if (history.x1 == null)
+            {
+                return;
+            }
+
+            float[,] heights = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
+            for (int index = 0; index < history.Count; index++)
+            {
+                heights[history.x1[index], history.y1[index]] = history.height[index];
+            }
+            terrain.terrainData.SetHeights(0, 0, heights);
+        }
+
+        private static void RestoreDetails(Terrain terrain, TerrainHistoryMaker history)
+        {
+            if (history.detailsCount == null || history.detailsX == null || history.detailsY == null || history.detailsOldValue == null)
+            {
+                return;
+            }
+
+            int layerCount = terrain.terrainData.detailPrototypes.Length;
+            int startIndex = 0;
+            for (int layer = 0; layer < history.detailLayersCount && layer < layerCount; layer++)
+            {
+                if (history.detailsX.Length <= layer || history.detailsY.Length <= layer || history.detailsX.Length < 1)
+                {
+                    break;
+                }
+
+                int count = history.detailsCount[layer];
+                if (count == 0)
+                {
+                    continue;
+                }
+
+                int[,] details = terrain.terrainData.GetDetailLayer(0, 0, terrain.terrainData.detailWidth, terrain.terrainData.detailHeight, layer);
+                int endIndex = startIndex + count;
+                for (int index = startIndex; index < endIndex; index++)
+                {
+                    details[history.detailsX[index], history.detailsY[index]] = history.detailsOldValue[index];
+                }
+                terrain.terrainData.SetDetailLayer(0, 0, layer, details);
+                startIndex = endIndex;
+            }
+        }
+
+        private static void RestoreTrees(Terrain terrain, TerrainHistoryMaker history)
+        {
+            TreeInstance[] restoredTrees = history.MakeTrees();
+            if (restoredTrees == null || restoredTrees.Length == 0 || history.oldTrees == null)
+            {
+                return;
+            }
+
+            TreeInstance[] currentTrees = terrain.terrainData.treeInstances;
+            TreeInstance[] trees = new TreeInstance[restoredTrees.Length + currentTrees.Length];
+            System.Array.Copy(currentTrees, 0, trees, 0, currentTrees.Length);
+            System.Array.Copy(restoredTrees, 0, trees, currentTrees.Length, restoredTrees.Length);
+            terrain.terrainData.treeInstances = trees;
         }
     }
 }
