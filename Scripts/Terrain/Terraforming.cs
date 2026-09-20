@@ -612,7 +612,7 @@ namespace RoadArchitect
             int startIndex = 0;
             for (int layer = 0; layer < history.detailLayersCount && layer < layerCount; layer++)
             {
-                if (history.detailsX.Length <= layer || history.detailsY.Length <= layer || history.detailsX.Length < 1)
+                if (layer >= history.detailsCount.Length || history.detailsX.Length < 1 || history.detailsY.Length < 1 || history.detailsOldValue.Length < 1)
                 {
                     break;
                 }
@@ -623,11 +623,35 @@ namespace RoadArchitect
                     continue;
                 }
 
+                if (count < 0 || startIndex >= history.detailsX.Length || startIndex >= history.detailsY.Length || startIndex >= history.detailsOldValue.Length)
+                {
+                    break;
+                }
+
+                int availableCount = history.detailsX.Length - startIndex;
+                if (history.detailsY.Length - startIndex < availableCount)
+                {
+                    availableCount = history.detailsY.Length - startIndex;
+                }
+                if (history.detailsOldValue.Length - startIndex < availableCount)
+                {
+                    availableCount = history.detailsOldValue.Length - startIndex;
+                }
+                if (count > availableCount)
+                {
+                    count = availableCount;
+                }
+
                 int[,] details = terrain.terrainData.GetDetailLayer(0, 0, terrain.terrainData.detailWidth, terrain.terrainData.detailHeight, layer);
                 int endIndex = startIndex + count;
                 for (int index = startIndex; index < endIndex; index++)
                 {
-                    details[history.detailsX[index], history.detailsY[index]] = history.detailsOldValue[index];
+                    int x = history.detailsX[index];
+                    int y = history.detailsY[index];
+                    if (x >= 0 && x < details.GetLength(0) && y >= 0 && y < details.GetLength(1))
+                    {
+                        details[x, y] = history.detailsOldValue[index];
+                    }
                 }
                 terrain.terrainData.SetDetailLayer(0, 0, layer, details);
                 startIndex = endIndex;
