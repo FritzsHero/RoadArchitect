@@ -50,7 +50,6 @@ namespace RoadArchitect
         #endregion
 
 
-        #region "Constructor"
         public TrafficLightController(ref GameObject _LightLeft, ref GameObject _LightRight, ref GameObject[] _Lights, ref MeshRenderer _MR_Left, ref MeshRenderer _MR_Right, ref MeshRenderer[] MR_Mains)
         {
             lightLeftObject = _LightLeft;
@@ -62,71 +61,52 @@ namespace RoadArchitect
             mainMRStorage = MR_Mains;
             mainMR = MR_Mains[0];
 
-            Light[] tLights;
-            if (lightLeftObject != null)
+            FindDirectionalLights(lightLeftObject, out lightLeftR, out lightLeftY, out lightLeftG);
+            FindDirectionalLights(lightRightObject, out lightRightR, out lightRightY, out lightRightG);
+            CacheMainLights();
+        }
+
+
+        private static void FindDirectionalLights(GameObject lightObject, out Light red, out Light yellow, out Light green)
+        {
+            red = null;
+            yellow = null;
+            green = null;
+            if (lightObject == null)
             {
-                tLights = lightLeftObject.transform.GetComponentsInChildren<Light>();
-                foreach (Light tLight in tLights)
-                {
-                    if (tLight.transform.name.ToLower().Contains("redlight"))
-                    {
-                        lightLeftR = tLight;
-                    }
-                    if (tLight.transform.name.ToLower().Contains("yellowlight"))
-                    {
-                        lightLeftY = tLight;
-                    }
-                    if (tLight.transform.name.ToLower().Contains("greenl"))
-                    {
-                        lightLeftG = tLight;
-                    }
-                }
-            }
-            if (lightRightObject != null)
-            {
-                tLights = lightRightObject.transform.GetComponentsInChildren<Light>();
-                foreach (Light tLight in tLights)
-                {
-                    if (tLight.transform.name.ToLower().Contains("redlight"))
-                    {
-                        lightRightR = tLight;
-                    }
-                    if (tLight.transform.name.ToLower().Contains("yellowlight"))
-                    {
-                        lightRightY = tLight;
-                    }
-                    if (tLight.transform.name.ToLower().Contains("greenl"))
-                    {
-                        lightRightG = tLight;
-                    }
-                }
+                return;
             }
 
-            int mCount = lightsObjects.Length;
-            lightsR = new Light[mCount];
-            lightsY = new Light[mCount];
-            lightsG = new Light[mCount];
-            for (int index = 0; index < mCount; index++)
+            foreach (Light light in lightObject.transform.GetComponentsInChildren<Light>())
             {
-                tLights = lightsObjects[index].transform.GetComponentsInChildren<Light>();
-                foreach (Light tLight in tLights)
+                string lightName = light.transform.name.ToLower();
+                if (lightName.Contains("redlight"))
                 {
-                    if (tLight.transform.name.ToLower().Contains("redlight"))
-                    {
-                        lightsR[index] = tLight;
-                    }
-                    if (tLight.transform.name.ToLower().Contains("yellowlight"))
-                    {
-                        lightsY[index] = tLight;
-                    }
-                    if (tLight.transform.name.ToLower().Contains("greenl"))
-                    {
-                        lightsG[index] = tLight;
-                    }
+                    red = light;
+                }
+                if (lightName.Contains("yellowlight"))
+                {
+                    yellow = light;
+                }
+                if (lightName.Contains("greenlight"))
+                {
+                    green = light;
                 }
             }
         }
-        #endregion
+
+
+        private void CacheMainLights()
+        {
+            int lightCount = lightsObjects.Length;
+            lightsR = new Light[lightCount];
+            lightsY = new Light[lightCount];
+            lightsG = new Light[lightCount];
+            for (int index = 0; index < lightCount; index++)
+            {
+                FindDirectionalLights(lightsObjects[index], out lightsR[index], out lightsY[index], out lightsG[index]);
+            }
+        }
 
 
         #region "Update"
@@ -161,15 +141,7 @@ namespace RoadArchitect
         #region "Triggers"
         private void TriggerRegular()
         {
-            if (isMain)
-            {
-                MRChange(ref mainMR, lightSubStatus);
-                for (int index = 1; index < mainMRStorage.Length; index++)
-                {
-                    MRChange(ref mainMRStorage[index], lightSubStatus);
-                }
-                LightChange(0, lightSubStatus);
-            }
+            SetMainStatus(lightSubStatus);
             if (isLeft)
             {
                 if (isLeftTurnYieldOnGreen)
@@ -185,29 +157,19 @@ namespace RoadArchitect
                 }
                 else
                 {
-                    MRChange(ref leftMR, iLightSubStatusEnum.Red);
-                    LightChange(1, iLightSubStatusEnum.Red);
+                    SetLeftStatus(iLightSubStatusEnum.Red);
                 }
             }
             if (isRight)
             {
-                MRChange(ref rightMR, iLightSubStatusEnum.Red);
-                LightChange(2, iLightSubStatusEnum.Red);
+                SetRightStatus(iLightSubStatusEnum.Red);
             }
         }
 
 
         private void TriggerLeftTurn()
         {
-            if (isMain)
-            {
-                MRChange(ref mainMR, iLightSubStatusEnum.Red);
-                for (int i = 1; i < mainMRStorage.Length; i++)
-                {
-                    MRChange(ref mainMRStorage[i], iLightSubStatusEnum.Red);
-                }
-                LightChange(0, iLightSubStatusEnum.Red);
-            }
+            SetMainStatus(iLightSubStatusEnum.Red);
             if (isLeft)
             {
                 if (isLeftTurnYieldOnGreen)
@@ -224,29 +186,19 @@ namespace RoadArchitect
                 }
                 else
                 {
-                    MRChange(ref leftMR, lightSubStatus);
-                    LightChange(1, lightSubStatus);
+                    SetLeftStatus(lightSubStatus);
                 }
             }
             if (isRight)
             {
-                MRChange(ref rightMR, iLightSubStatusEnum.Red);
-                LightChange(2, iLightSubStatusEnum.Red);
+                SetRightStatus(iLightSubStatusEnum.Red);
             }
         }
 
 
         private void TriggerMasterLeft()
         {
-            if (isMain)
-            {
-                MRChange(ref mainMR, lightSubStatus);
-                for (int index = 1; index < mainMRStorage.Length; index++)
-                {
-                    MRChange(ref mainMRStorage[index], lightSubStatus);
-                }
-                LightChange(0, lightSubStatus);
-            }
+            SetMainStatus(lightSubStatus);
             if (isLeft)
             {
                 if (lightSubStatus == iLightSubStatusEnum.Green)
@@ -261,59 +213,68 @@ namespace RoadArchitect
             }
             if (isRight)
             {
-                MRChange(ref rightMR, lightSubStatus);
-                LightChange(2, lightSubStatus);
+                SetRightStatus(lightSubStatus);
             }
         }
 
 
         private void TriggerRightTurn()
         {
-            if (isMain)
-            {
-                MRChange(ref mainMR, iLightSubStatusEnum.Red);
-                for (int index = 1; index < mainMRStorage.Length; index++)
-                {
-                    MRChange(ref mainMRStorage[index], iLightSubStatusEnum.Red);
-                }
-                LightChange(0, iLightSubStatusEnum.Red);
-            }
+            SetMainStatus(iLightSubStatusEnum.Red);
             if (isLeft)
             {
-                MRChange(ref leftMR, iLightSubStatusEnum.Red);
-                LightChange(1, iLightSubStatusEnum.Red);
+                SetLeftStatus(iLightSubStatusEnum.Red);
             }
             if (isRight)
             {
-                MRChange(ref rightMR, lightSubStatus);
-                LightChange(2, lightSubStatus);
+                SetRightStatus(lightSubStatus);
             }
         }
 
 
         private void TriggerRed()
         {
-            if (isMain)
-            {
-                MRChange(ref mainMR, iLightSubStatusEnum.Red);
-                for (int index = 1; index < mainMRStorage.Length; index++)
-                {
-                    MRChange(ref mainMRStorage[index], iLightSubStatusEnum.Red);
-                }
-                LightChange(0, iLightSubStatusEnum.Red);
-            }
+            SetMainStatus(iLightSubStatusEnum.Red);
             if (isLeft)
             {
-                MRChange(ref leftMR, iLightSubStatusEnum.Red);
-                LightChange(1, iLightSubStatusEnum.Red);
+                SetLeftStatus(iLightSubStatusEnum.Red);
             }
             if (isRight)
             {
-                MRChange(ref rightMR, iLightSubStatusEnum.Red);
-                LightChange(2, iLightSubStatusEnum.Red);
+                SetRightStatus(iLightSubStatusEnum.Red);
             }
         }
         #endregion
+
+
+        private void SetMainStatus(iLightSubStatusEnum status)
+        {
+            if (!isMain)
+            {
+                return;
+            }
+
+            MRChange(ref mainMR, status);
+            for (int index = 1; index < mainMRStorage.Length; index++)
+            {
+                MRChange(ref mainMRStorage[index], status);
+            }
+            LightChange(0, status);
+        }
+
+
+        private void SetLeftStatus(iLightSubStatusEnum status)
+        {
+            MRChange(ref leftMR, status);
+            LightChange(1, status);
+        }
+
+
+        private void SetRightStatus(iLightSubStatusEnum status)
+        {
+            MRChange(ref rightMR, status);
+            LightChange(2, status);
+        }
 
 
         /// <summary> Changes _MR mainTextureOffset of the material based on _lightYieldSub </summary>
