@@ -3,17 +3,15 @@ using UnityEngine;
 
 namespace RoadArchitect.Threading
 {
-    public class RoadCalcs1 : ThreadedJob
+    public class RoadMeshSurfaceDataJob : ThreadedJob
     {
         private object handle = new object();
         private RoadConstructorBufferMaker RCS;
-        private Road road;
 
 
-        public void Setup(ref RoadConstructorBufferMaker _RCS, ref Road _road)
+        public void Setup(ref RoadConstructorBufferMaker _RCS)
         {
             RCS = _RCS;
-            road = _road;
         }
 
 
@@ -21,29 +19,27 @@ namespace RoadArchitect.Threading
         {
             try
             {
-                RoadCreationT.RoadJobPrelim(ref road);
-                RoadCreationT.RoadJob1(ref RCS);
+                RoadCreationT.RoadJob2(ref RCS);
             }
             catch (System.Exception exception)
             {
                 lock (handle)
                 {
-                    road.isEditorError = true;
-                    road.exceptionError = exception;
+                    RCS.road.isEditorError = true;
+                    RCS.road.exceptionError = exception;
                 }
-                throw exception;
             }
         }
 
 
         public RoadConstructorBufferMaker GetRCS()
         {
-            RoadConstructorBufferMaker refrenceRCS;
+            RoadConstructorBufferMaker tRCS;
             lock (handle)
             {
-                refrenceRCS = RCS;
+                tRCS = RCS;
             }
-            return refrenceRCS;
+            return tRCS;
         }
     }
 }

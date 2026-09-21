@@ -126,9 +126,9 @@ namespace RoadArchitect
         [System.NonSerialized]
         public Threading.TerrainCalcs TerrainCalcsJob;
         [System.NonSerialized]
-        public Threading.RoadCalcs1 RoadCalcsJob1;
+        public Threading.RoadMeshGeometryJob RoadMeshGeometryJob;
         [System.NonSerialized]
-        public Threading.RoadCalcs2 RoadCalcsJob2;
+        public Threading.RoadMeshSurfaceDataJob RoadMeshSurfaceDataJob;
         [System.NonSerialized]
         public RoadConstructorBufferMaker RCS;
 
@@ -305,11 +305,11 @@ namespace RoadArchitect
                         {
                             ConstructRoad2();
                         }
-                        else if (RoadCalcsJob1 != null && RoadCalcsJob1.Update())
+                        else if (RoadMeshGeometryJob != null && RoadMeshGeometryJob.Update())
                         {
                             ConstructRoad3();
                         }
-                        else if (RoadCalcsJob2 != null && RoadCalcsJob2.Update())
+                        else if (RoadMeshSurfaceDataJob != null && RoadMeshSurfaceDataJob.Update())
                         {
                             ConstructRoad4();
                         }
@@ -922,9 +922,9 @@ namespace RoadArchitect
             }
             Road road = this;
             editorProgress = 72;
-            RoadCalcsJob1 = new Threading.RoadCalcs1();
-            RoadCalcsJob1.Setup(ref RCS, ref road);
-            RoadCalcsJob1.Start();
+            RoadMeshGeometryJob = new Threading.RoadMeshGeometryJob();
+            RoadMeshGeometryJob.Setup(ref RCS, ref road);
+            RoadMeshGeometryJob.Start();
         }
 
 
@@ -933,14 +933,14 @@ namespace RoadArchitect
             editorProgress = 84;
             RCS.MeshSetup1();
             editorProgress = 96;
-            if (RoadCalcsJob1 != null)
+            if (RoadMeshGeometryJob != null)
             {
-                RoadCalcsJob1.Abort();
-                RoadCalcsJob1 = null;
+                RoadMeshGeometryJob.Abort();
+                RoadMeshGeometryJob = null;
             }
-            RoadCalcsJob2 = new Threading.RoadCalcs2();
-            RoadCalcsJob2.Setup(ref RCS);
-            RoadCalcsJob2.Start();
+            RoadMeshSurfaceDataJob = new Threading.RoadMeshSurfaceDataJob();
+            RoadMeshSurfaceDataJob.Setup(ref RCS);
+            RoadMeshSurfaceDataJob.Start();
             editorProgress = 98;
         }
 
@@ -960,15 +960,15 @@ namespace RoadArchitect
                 TerrainCalcsJob.Abort();
                 TerrainCalcsJob = null;
             }
-            if (RoadCalcsJob1 != null)
+            if (RoadMeshGeometryJob != null)
             {
-                RoadCalcsJob1.Abort();
-                RoadCalcsJob1 = null;
+                RoadMeshGeometryJob.Abort();
+                RoadMeshGeometryJob = null;
             }
-            if (RoadCalcsJob2 != null)
+            if (RoadMeshSurfaceDataJob != null)
             {
-                RoadCalcsJob2.Abort();
-                RoadCalcsJob2 = null;
+                RoadMeshSurfaceDataJob.Abort();
+                RoadMeshSurfaceDataJob = null;
             }
         }
 
