@@ -51,7 +51,7 @@ namespace RoadArchitect.Threading
                 //{
                 try
                 {
-                    TerrainModificationUtility.DoRects(spline, TTD);
+                    TerrainModificationUtility.ApplyTerrainModifications(spline, TTD);
                 }
                 catch (System.Exception e)
                 {

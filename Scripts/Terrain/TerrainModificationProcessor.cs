@@ -36,8 +36,8 @@ namespace RoadArchitect.Threading
 
                 //if(tRoad.opt_MatchTerrain)
                 //{
-                RootUtils.StartProfiling(_road, "DoRects");
-                TerrainModificationUtility.DoRects(_spline, TTD);
+                RootUtils.StartProfiling(_road, "ApplyTerrainModifications");
+                TerrainModificationUtility.ApplyTerrainModifications(_spline, TTD);
                 RootUtils.EndProfiling(_road);
                 //}
                 //else

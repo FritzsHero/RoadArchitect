@@ -146,14 +146,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        //Privatized for obfuscate:
-        public static void DoRects(SplineC _spline, Terraforming.TempTerrainData _TTD)
-        {
-            DoRectsDo(ref _spline, ref _TTD);
-        }
-
-
-        private static void DoRectsDo(ref SplineC _spline, ref Terraforming.TempTerrainData _TTD)
+        public static void ApplyTerrainModifications(SplineC _spline, Terraforming.TempTerrainData _TTD)
         {
             float Sep = _spline.road.RoadWidth() * 0.5f;
             float HeightSep = Sep + (_spline.road.matchHeightsDistance * 0.5f);
