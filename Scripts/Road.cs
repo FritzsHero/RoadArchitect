@@ -124,7 +124,7 @@ namespace RoadArchitect
         #region "Road Construction"
         #region "Vars"
         [System.NonSerialized]
-        public Threading.TerrainCalcs TerrainCalcsJob;
+        public Threading.TerrainModificationJob TerrainModificationJob;
         [System.NonSerialized]
         public Threading.RoadMeshGeometryJob RoadMeshGeometryJob;
         [System.NonSerialized]
@@ -301,7 +301,7 @@ namespace RoadArchitect
                             }
                         }
 
-                        if (TerrainCalcsJob != null && TerrainCalcsJob.Update())
+                        if (TerrainModificationJob != null && TerrainModificationJob.Update())
                         {
                             ConstructRoad2();
                         }
@@ -899,7 +899,7 @@ namespace RoadArchitect
         #endregion
 
 
-        /// <summary> Stores terrain history and nulls TerrainCalcsJob</summary>
+        /// <summary> Stores terrain history and nulls TerrainModificationJob</summary>
         private void ConstructRoad2()
         {
             editorProgress = 40;
@@ -915,10 +915,10 @@ namespace RoadArchitect
             }
             editorProgress = 60;
 
-            if (TerrainCalcsJob != null)
+            if (TerrainModificationJob != null)
             {
-                TerrainCalcsJob.Abort();
-                TerrainCalcsJob = null;
+                TerrainModificationJob.Abort();
+                TerrainModificationJob = null;
             }
             Road road = this;
             editorProgress = 72;
@@ -955,10 +955,10 @@ namespace RoadArchitect
 
         private void AbortJobs()
         {
-            if (TerrainCalcsJob != null)
+            if (TerrainModificationJob != null)
             {
-                TerrainCalcsJob.Abort();
-                TerrainCalcsJob = null;
+                TerrainModificationJob.Abort();
+                TerrainModificationJob = null;
             }
             if (RoadMeshGeometryJob != null)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RoadArchitect.Threading
 {
-    public static class TerraformingThreaded
+    public static class TerrainModificationUtility
     {
         public class TerrainBoundsMaker
         {

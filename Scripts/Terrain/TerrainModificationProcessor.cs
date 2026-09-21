@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RoadArchitect.Threading
 {
-    public static class TerrainCalcsStatic
+    public static class TerrainModificationProcessor
     {
         public static void RunMe(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _spline, Road _road)
         {
@@ -37,7 +37,7 @@ namespace RoadArchitect.Threading
                 //if(tRoad.opt_MatchTerrain)
                 //{
                 RootUtils.StartProfiling(_road, "DoRects");
-                TerraformingThreaded.DoRects(_spline, TTD);
+                TerrainModificationUtility.DoRects(_spline, TTD);
                 RootUtils.EndProfiling(_road);
                 //}
                 //else
@@ -58,7 +58,7 @@ namespace RoadArchitect.Threading
                 //			i = tFloat;
                 //		}
                 //		tSpline.GetSplineValue_Both(i,out tVect,out POS);
-                //		PrevHeight = TerraformingThreaded.ProcessLineHeights(tSpline,ref tVect,ref POS,tDistance,TTD,PrevHeight);
+                //		PrevHeight = TerrainModificationUtility.ProcessLineHeights(tSpline,ref tVect,ref POS,tDistance,TTD,PrevHeight);
                 //		tSpline.HeightHistory.Add(new KeyValuePair<float,float>(i,PrevHeight*TTD.TerrainSize.y));
                 //	}	
                 //					

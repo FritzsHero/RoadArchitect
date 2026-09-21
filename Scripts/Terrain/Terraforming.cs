@@ -379,14 +379,14 @@ namespace RoadArchitect
             _road.SetEditorTerrainCalcs(ref EditorTTDList);
             if (_isMultithreaded)
             {
-                Threading.TerrainCalcs terrainJob = new Threading.TerrainCalcs();
+                Threading.TerrainModificationJob terrainJob = new Threading.TerrainModificationJob();
                 terrainJob.Setup(ref EditorTTDList, _spline, _road);
-                _road.TerrainCalcsJob = terrainJob;
+                _road.TerrainModificationJob = terrainJob;
                 terrainJob.Start();
             }
             else
             {
-                Threading.TerrainCalcsStatic.RunMe(ref EditorTTDList, _spline, _road);
+                Threading.TerrainModificationProcessor.RunMe(ref EditorTTDList, _spline, _road);
             }
         }
 
