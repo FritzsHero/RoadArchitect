@@ -35,24 +35,24 @@ namespace RoadArchitect
         /// <summary> Saves the Terrain History to disk </summary>
         public static void SaveTerrainHistory(List<TerrainHistoryMaker> _obj, Road _road)
         {
-            string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
+            string path = GetHistoryPath(_road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
             {
                 return;
             }
-            Stream stream = File.Open(path, FileMode.Create);
-            BinaryFormatter bformatter = new BinaryFormatter();
-            bformatter.Binder = new VersionDeserializationBinder();
-            bformatter.Serialize(stream, _obj);
-            _road.TerrainHistoryByteSize = (stream.Length * 0.001f).ToString("n0") + " kb";
-            stream.Close();
+            using (Stream stream = File.Open(path, FileMode.Create))
+            {
+                BinaryFormatter bformatter = CreateFormatter();
+                bformatter.Serialize(stream, _obj);
+                _road.TerrainHistoryByteSize = (stream.Length * 0.001f).ToString("n0") + " kb";
+            }
         }
 
 
         /// <summary> Deletes the Terrain History from disk </summary>
         public static void DeleteTerrainHistory(Road _road)
         {
-            string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
+            string path = GetHistoryPath(_road);
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -63,7 +63,7 @@ namespace RoadArchitect
         /// <summary> Loads the Terrain History from disk </summary>
         public static List<TerrainHistoryMaker> LoadTerrainHistory(Road _road)
         {
-            string path = CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
+            string path = GetHistoryPath(_road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
             {
                 return null;
@@ -72,15 +72,25 @@ namespace RoadArchitect
             {
                 return null;
             }
-            List<TerrainHistoryMaker> result;
-            Stream stream = File.Open(path, FileMode.Open);
-            BinaryFormatter bFormatter = new BinaryFormatter();
-            bFormatter.Binder = new VersionDeserializationBinder();
+            using (Stream stream = File.Open(path, FileMode.Open))
+            {
+                BinaryFormatter bFormatter = CreateFormatter();
+                return (List<TerrainHistoryMaker>)bFormatter.Deserialize(stream);
+            }
+        }
 
-            result = (List<TerrainHistoryMaker>)bFormatter.Deserialize(stream);
 
-            stream.Close();
-            return result;
+        private static BinaryFormatter CreateFormatter()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Binder = new VersionDeserializationBinder();
+            return formatter;
+        }
+
+
+        private static string GetHistoryPath(Road _road)
+        {
+            return CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
         }
 
 
