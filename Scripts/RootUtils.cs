@@ -117,14 +117,13 @@ namespace RoadArchitect
         #region "XML"
         public static void CreateXML<T>(ref string _path, object _object)
         {
-            // New function to write better xml style with utf8 encoding
-            FileStream fs = new FileStream(_path, FileMode.Create);
             XmlSerializer xs = new XmlSerializer(typeof(T));
-            XmlTextWriter xmlTextWriter = new XmlTextWriter(fs, Encoding.UTF8);
-            xmlTextWriter.Formatting = Formatting.Indented;
-            xs.Serialize(xmlTextWriter, _object);
-
-            fs.Close();
+            using (FileStream stream = new FileStream(_path, FileMode.Create))
+            using (XmlTextWriter writer = new XmlTextWriter(stream, Encoding.UTF8))
+            {
+                writer.Formatting = Formatting.Indented;
+                xs.Serialize(writer, _object);
+            }
         }
 
 
@@ -139,9 +138,11 @@ namespace RoadArchitect
         /// <summary> Loads object from _path as T </summary>
         public static T LoadXML<T>(ref string _path)
         {
-            StreamReader reader = File.OpenText(_path);
-            string _info = reader.ReadToEnd();
-            reader.Close();
+            string _info;
+            using (StreamReader reader = File.OpenText(_path))
+            {
+                _info = reader.ReadToEnd();
+            }
             T loadedObject = DeserializeObject<T>(_info);
             return loadedObject;
         }
@@ -176,26 +177,24 @@ namespace RoadArchitect
 
         private static string SerializeObject<T>(ref object _object)
         {
-            string XmlizedString = null;
-            MemoryStream memoryStream = new MemoryStream();
-
             XmlSerializer xs = new XmlSerializer(typeof(T));
-            XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
-            xmlTextWriter.Formatting = Formatting.Indented;
-            xs.Serialize(xmlTextWriter, _object);
-
-            memoryStream = (MemoryStream) xmlTextWriter.BaseStream;
-            XmlizedString = UTF8ByteArrayToString(memoryStream.ToArray());
-
-            return XmlizedString;
+            using (MemoryStream memoryStream = new MemoryStream())
+            using (XmlTextWriter writer = new XmlTextWriter(memoryStream, Encoding.UTF8))
+            {
+                writer.Formatting = Formatting.Indented;
+                xs.Serialize(writer, _object);
+                return UTF8ByteArrayToString(memoryStream.ToArray());
+            }
         }
 
 
         private static T DeserializeObject<T>(string _xmlString)
         {
             XmlSerializer xs = new XmlSerializer(typeof(T));
-            MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(_xmlString));
-            return (T)xs.Deserialize(memoryStream);
+            using (MemoryStream memoryStream = new MemoryStream(StringToUTF8ByteArray(_xmlString)))
+            {
+                return (T)xs.Deserialize(memoryStream);
+            }
         }
 
 
