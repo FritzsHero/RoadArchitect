@@ -30,8 +30,17 @@ namespace RoadArchitect.Threading
 
         public virtual void Start()
         {
-            thread = new System.Threading.Thread(Run);
-            thread.Start();
+            lock (handle)
+            {
+                if (thread != null)
+                {
+                    throw new System.InvalidOperationException("This job has already been started.");
+                }
+
+                isDone = false;
+                thread = new System.Threading.Thread(Run);
+                thread.Start();
+            }
         }
 
 
