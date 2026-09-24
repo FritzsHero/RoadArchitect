@@ -8,7 +8,7 @@ using RoadArchitect.Threading;
 
 namespace RoadArchitect.Threading
 {
-    public static class RoadCreationT
+    public static class RoadConstruction
     {
         #region "Road Prelim"
         public static void RoadJobPrelim(ref Road _road)
