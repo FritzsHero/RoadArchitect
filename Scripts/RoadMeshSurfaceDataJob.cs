@@ -19,7 +19,7 @@ namespace RoadArchitect.Threading
         {
             try
             {
-                RoadConstruction.RoadJob2(ref RCS);
+                RoadConstruction.BuildSurfaceData(RCS);
             }
             catch (System.Exception exception)
             {

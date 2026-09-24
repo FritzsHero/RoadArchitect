@@ -21,8 +21,8 @@ namespace RoadArchitect.Threading
         {
             try
             {
-                RoadConstruction.RoadJobPrelim(ref road);
-                RoadConstruction.RoadJob1(ref RCS);
+                RoadConstruction.BuildPreliminaryGeometry(road);
+                RoadConstruction.BuildGeometry(RCS);
             }
             catch (System.Exception exception)
             {

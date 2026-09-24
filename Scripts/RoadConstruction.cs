@@ -11,7 +11,7 @@ namespace RoadArchitect.Threading
     public static class RoadConstruction
     {
         #region "Road Prelim"
-        public static void RoadJobPrelim(ref Road _road)
+        public static void BuildPreliminaryGeometry(Road _road)
         {
             #region "Vars"
             SplineC spline = _road.spline;
@@ -5015,7 +5015,7 @@ namespace RoadArchitect.Threading
 
         /// <summary> Handles most triangles and normals construction. In certain scenarios for efficiency reasons UV might also be processed. </summary>
         /// <param name='_RCS'> The road construction buffer, by reference. </param>/
-        public static void RoadJob1(ref RoadConstructorBufferMaker _RCS)
+        public static void BuildGeometry(RoadConstructorBufferMaker _RCS)
         {
             //Triangles and normals:
             //RootUtils.StartProfiling(RCS.tRoad, "ProcessRoad_IntersectionCleanup");
@@ -5044,7 +5044,7 @@ namespace RoadArchitect.Threading
         /// Handles most UV and tangent construction. Some scenarios might involve triangles and normals or lack UV construction for efficiency reasons.
         /// </summary>
         /// <param name='_RCS'> The road construction buffer, by reference. </param>
-        public static void RoadJob2(ref RoadConstructorBufferMaker _RCS)
+        public static void BuildSurfaceData(RoadConstructorBufferMaker _RCS)
         {
             //Bridge UV is processed with tris and normals.
 

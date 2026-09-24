@@ -886,16 +886,16 @@ namespace RoadArchitect
             RootUtils.StartProfiling(this, "RoadCon_RoadPrelim");
 
             editorProgress = 80;
-            Threading.RoadConstruction.RoadJobPrelim(ref road);
+            Threading.RoadConstruction.BuildPreliminaryGeometry(road);
             RootUtils.EndStartProfiling(this, "RoadCon_Road1");
             editorProgress = 90;
-            Threading.RoadConstruction.RoadJob1(ref RCS);
+            Threading.RoadConstruction.BuildGeometry(RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup1");
             editorProgress = 92;
             RCS.MeshSetup1();
             RootUtils.EndStartProfiling(this, "RoadCon_Road2");
             editorProgress = 94;
-            Threading.RoadConstruction.RoadJob2(ref RCS);
+            Threading.RoadConstruction.BuildSurfaceData(RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup2");
             editorProgress = 96;
             RCS.MeshSetup2();
