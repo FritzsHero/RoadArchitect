@@ -301,18 +301,7 @@ namespace RoadArchitect
                             }
                         }
 
-                        if (TerrainModificationJob != null && TerrainModificationJob.Update())
-                        {
-                            ConstructRoad2();
-                        }
-                        else if (RoadMeshGeometryJob != null && RoadMeshGeometryJob.Update())
-                        {
-                            ConstructRoad3();
-                        }
-                        else if (RoadMeshSurfaceDataJob != null && RoadMeshSurfaceDataJob.Update())
-                        {
-                            ConstructRoad4();
-                        }
+                        UpdateConstructionJobs();
                     }
                 }
             }
@@ -524,6 +513,23 @@ namespace RoadArchitect
                 EngineIntegration.ClearProgressBar();
             }
             #endif
+        }
+
+
+        private void UpdateConstructionJobs()
+        {
+            if (TerrainModificationJob != null && TerrainModificationJob.Update())
+            {
+                ConstructRoad2();
+            }
+            else if (RoadMeshGeometryJob != null && RoadMeshGeometryJob.Update())
+            {
+                ConstructRoad3();
+            }
+            else if (RoadMeshSurfaceDataJob != null && RoadMeshSurfaceDataJob.Update())
+            {
+                ConstructRoad4();
+            }
         }
 
 
