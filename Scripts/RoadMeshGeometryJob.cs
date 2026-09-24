@@ -31,7 +31,6 @@ namespace RoadArchitect.Threading
                     road.isEditorError = true;
                     road.exceptionError = exception;
                 }
-                throw exception;
             }
         }
 

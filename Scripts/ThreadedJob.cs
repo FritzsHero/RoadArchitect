@@ -69,8 +69,14 @@ namespace RoadArchitect.Threading
 
         private void Run()
         {
-            ThreadFunction();
-            IsDone = true;
+            try
+            {
+                ThreadFunction();
+            }
+            finally
+            {
+                IsDone = true;
+            }
         }
     }
 }

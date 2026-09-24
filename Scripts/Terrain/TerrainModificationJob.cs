@@ -60,7 +60,6 @@ namespace RoadArchitect.Threading
                         road.isEditorError = true;
                         road.exceptionError = e;
                     }
-                    throw e;
                 }
                 //}
                 //else
@@ -92,7 +91,6 @@ namespace RoadArchitect.Threading
                 //}
             }
             spline.HeightHistory.Sort(CompareKeys);
-            IsDone = true;
         }
 
 

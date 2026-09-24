@@ -296,8 +296,8 @@ namespace RoadArchitect
                             isEditorError = false;
                             if (exceptionError != null)
                             {
-                                Debug.LogError(exceptionError.StackTrace);
-                                throw exceptionError;
+                                Debug.LogException(exceptionError);
+                                exceptionError = null;
                             }
                         }
 
