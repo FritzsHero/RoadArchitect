@@ -599,7 +599,7 @@ namespace RoadArchitect.Threading
             }
             if (LastIndexToRemove >= 0)
             {
-                _terrainBoundsList.RemoveRange(0, LastIndexToRemove);
+                _terrainBoundsList.RemoveRange(0, LastIndexToRemove + 1);
             }
             //			
             //mCount = rectList.Count;
