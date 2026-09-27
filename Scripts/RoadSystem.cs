@@ -67,6 +67,11 @@ namespace RoadArchitect
         {
             Road[] allRoadObjs = GetComponentsInChildren<Road>();
             int roadCount = allRoadObjs.Length;
+            if (roadCount == 0)
+            {
+                return;
+            }
+
             SplineC[] piggys = null;
             if (roadCount > 1)
             {
