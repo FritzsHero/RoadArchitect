@@ -799,10 +799,18 @@ namespace RoadArchitect
             if (isSavingTerrainHistoryOnDisk && TerrainHistory != null && TerrainHistory.Count > 0)
             {
                 RootUtils.StartProfiling(this, "TerrainHistory_Save");
-                TerrainHistoryUtility.SaveTerrainHistory(TerrainHistory, this);
-                RootUtils.EndProfiling(this);
-                TerrainHistory.Clear();
-                TerrainHistory = null;
+                try
+                {
+                    if (TerrainHistoryUtility.SaveTerrainHistory(TerrainHistory, this))
+                    {
+                        TerrainHistory.Clear();
+                        TerrainHistory = null;
+                    }
+                }
+                finally
+                {
+                    RootUtils.EndProfiling(this);
+                }
             }
             else
             {

@@ -33,19 +33,21 @@ namespace RoadArchitect
 
 
         /// <summary> Saves the Terrain History to disk </summary>
-        public static void SaveTerrainHistory(List<TerrainHistoryMaker> _obj, Road _road)
+        public static bool SaveTerrainHistory(List<TerrainHistoryMaker> _obj, Road _road)
         {
             string path = GetHistoryPath(_road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
             {
-                return;
+                return false;
             }
             using (Stream stream = File.Open(path, FileMode.Create))
             {
                 BinaryFormatter bformatter = CreateFormatter();
                 bformatter.Serialize(stream, _obj);
+                stream.Flush();
                 _road.TerrainHistoryByteSize = (stream.Length * 0.001f).ToString("n0") + " kb";
             }
+            return true;
         }
 
 
@@ -98,7 +100,7 @@ namespace RoadArchitect
         private static string GetRoadTHFilename(ref Road _road)
         {
             string sceneName;
-            
+
             sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
