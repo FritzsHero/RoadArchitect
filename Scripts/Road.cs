@@ -652,9 +652,7 @@ namespace RoadArchitect
             name = transform.name;
 
             spline.RoadWidth = RoadWidth();
-            //RootUtils.StartProfiling(this, "SplineSetup");
             spline.Setup();
-            //RootUtils.EndProfiling(this);
             nodeCount = spline.GetNodeCount();
 
             if (spline == null || spline.nodes == null)
@@ -871,7 +869,7 @@ namespace RoadArchitect
         {
             if (isHeightModificationEnabled || isDetailModificationEnabled || isTreeModificationEnabled)
             {
-                RootUtils.StartProfiling(this, "RoadCon_Terrain");
+                RootUtils.StartProfiling(this, "ProcessRoadTerrainHooks");
                 if (RCS.isTerrainOn || TerrainHistory == null)
                 {
                     Terraforming.ProcessRoadTerrainHook1(spline, this, false);
@@ -891,17 +889,17 @@ namespace RoadArchitect
 
             editorProgress = 50;
             Road road = this;
-            RootUtils.StartProfiling(this, "RoadCon_RoadPrelim");
+            RootUtils.StartProfiling(this, "BuildPreliminaryGeometry");
 
             editorProgress = 80;
             Threading.RoadConstruction.BuildPreliminaryGeometry(road);
-            RootUtils.EndStartProfiling(this, "RoadCon_Road1");
+            RootUtils.EndStartProfiling(this, "BuildGeometry");
             editorProgress = 90;
             Threading.RoadConstruction.BuildGeometry(RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup1");
             editorProgress = 92;
             RCS.MeshSetup1();
-            RootUtils.EndStartProfiling(this, "RoadCon_Road2");
+            RootUtils.EndStartProfiling(this, "BuildSurfaceData");
             editorProgress = 94;
             Threading.RoadConstruction.BuildSurfaceData(RCS);
             RootUtils.EndStartProfiling(this, "MeshSetup2");

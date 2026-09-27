@@ -191,7 +191,7 @@ namespace RoadArchitect.Threading
 
 
             //Prelim intersection construction and profiling:
-            RootUtils.StartProfiling(_road, "RoadJob_Prelim_Inter");
+            RootUtils.StartProfiling(_road, "RoadJobPrelimInter");
             if (isInterseOn)
             {
                 RoadJobPrelimInter(ref _road);
@@ -5017,13 +5017,13 @@ namespace RoadArchitect.Threading
         /// <param name='_RCS'> The road construction buffer, by reference. </param>/
         public static void BuildGeometry(RoadConstructorBufferMaker _RCS)
         {
-            //Triangles and normals:
-            //RootUtils.StartProfiling(RCS.tRoad, "ProcessRoad_IntersectionCleanup");
+            // Triangles and normals:
+            RootUtils.StartProfiling(_RCS.road, "ProcessRoadIntersectionCleanup");
             if (_RCS.isInterseOn)
             {
                 ProcessRoadIntersectionCleanup(ref _RCS);
             }
-            //RootUtils.EndProfiling(RCS.tRoad);
+            RootUtils.EndProfiling(_RCS.road);
 
             ProcessRoadTrisBulk(ref _RCS);
 
@@ -5300,10 +5300,6 @@ namespace RoadArchitect.Threading
                         {
                             _vects[j] = new Vector3(_vects[j].x, tRect.Height, _vects[j].z);
                         }
-
-
-
-
 
                         //ImmuneVects.Add(tVects[j]);
 

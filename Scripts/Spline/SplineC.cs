@@ -89,13 +89,11 @@ namespace RoadArchitect
         /// <summary> Setup Spline values </summary>
         public void Setup()
         {
-            //Setup unique ID:
+            RootUtils.StartProfiling(road, "Setup");
             RootUtils.SetupUniqueIdentifier(ref uID);
-
-            //Set spline root:
             splineRoot = transform.gameObject;
 
-            //Create spline nodes:
+            // Create spline nodes:
             SplineN[] rawNodes = splineRoot.GetComponentsInChildren<SplineN>();
             List<SplineN> nodeList = new List<SplineN>();
             int rawNodesLength = rawNodes.Length;
@@ -125,9 +123,9 @@ namespace RoadArchitect
             //Setup spline length, if more than 1 node:
             if (GetNodeCount() > 1)
             {
-                //RootUtils.StartProfiling(road, "SplineSetupLength");
+                RootUtils.StartProfiling(road, "SetupSplineLength");
                 SetupSplineLength();
-                //RootUtils.EndProfiling(road);
+                RootUtils.EndProfiling(road);
             }
             else if (GetNodeCount() == 1)
             {
@@ -307,6 +305,7 @@ namespace RoadArchitect
             RoadV1 = new Vector3(maxX, minZ);
             RoadV2 = new Vector3(maxX, maxZ);
             RoadV3 = new Vector3(minX, maxZ);
+            RootUtils.EndProfiling(road);
         }
 
 
