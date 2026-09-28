@@ -19,6 +19,7 @@ namespace RoadArchitect
         private SerializedProperty isAllowingUpdates;
         private SerializedProperty isTempMultithreading;
         private SerializedProperty isTempSaveMeshAssets;
+        private SerializedProperty roadStyle;
 
         //Editor only variables:
         private bool isInitialized;
@@ -52,6 +53,7 @@ namespace RoadArchitect
             isAllowingUpdates = serializedObject.FindProperty("isAllowingRoadUpdates");
             isTempMultithreading = serializedObject.FindProperty("isMultithreaded");
             isTempSaveMeshAssets = serializedObject.FindProperty("isSavingMeshes");
+            roadStyle = serializedObject.FindProperty("roadStyle");
         }
 
 
@@ -80,6 +82,7 @@ namespace RoadArchitect
                 roadSystem.UpdateAllRoads();
             }
 
+            roadStyle.enumValueIndex = EditorGUILayout.Popup("Road style", roadStyle.enumValueIndex, roadStyle.enumDisplayNames);
             isAllowingUpdates.boolValue = EditorGUILayout.Toggle("Allow Roads to Update", roadSystem.isAllowingRoadUpdates);
 
             //Multi-threading input:

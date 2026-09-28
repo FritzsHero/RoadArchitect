@@ -34,28 +34,37 @@ namespace RoadArchitect
 
 
         #region "Stop Sign All Way"
-        public static void CreateStopSignsAllWay(GameObject _masterGameObj, bool _isRB = true)
+        public static void CreateStopSignsAllWay(GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB = true)
         {
-            CreateStopSignsAllWayDo(ref _masterGameObj, _isRB);
+            CreateStopSignsAllWayDo(ref _masterGameObj, _roadStyle, _isRB);
         }
 
 
         /// <summary> Adds a rigidbody to the stop signs </summary>
-        private static void AddRigidbodyToSign(GameObject _obj, bool _isRB)
+        private static void AddRigidbodyToSign(GameObject _obj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB)
         {
             if (_isRB)
             {
                 Rigidbody RB = _obj.AddComponent<Rigidbody>();
-                RB.mass = 100f;
-                RB.centerOfMass = new Vector3(0f, -10f, 0f);
-                RB.useGravity = false;
-                RB.isKinematic = true;
+                if (_roadStyle == RoadSystem.RoadStyleEnum.Realistic)
+                {
+                    RB.mass = 150f;
+                    RB.linearDamping = 20f;
+                }
+                else
+                {
+                    RB.mass = 20f;
+                    RB.linearDamping = 0.05f;
+                }
+                RB.centerOfMass = new Vector3(0f, 0.2f, 0f);
+                RB.useGravity = true;
+                RB.isKinematic = false;
             }
         }
 
 
         /// <summary> Creates the stop signs on a cross or T intersection </summary>
-        private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, bool _isRB)
+        private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB)
         {
             Object prefab;
             prefab = EngineIntegration.LoadAssetFromPath<GameObject>(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab");
@@ -87,7 +96,7 @@ namespace RoadArchitect
             //xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _isRB);
+            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
 
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosRR;
@@ -103,7 +112,7 @@ namespace RoadArchitect
             //xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _isRB);
+            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
 
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosLL;
@@ -119,7 +128,7 @@ namespace RoadArchitect
             //xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotRL(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _isRB);
+            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
 
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosRL;
@@ -135,7 +144,7 @@ namespace RoadArchitect
             //xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
             tDir = StopSignGetRotLR(roadIntersection, spline);
             tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _isRB);
+            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
 
             tObj.transform.parent = _masterGameObj.transform;
             tObj.transform.position = tPosLR;

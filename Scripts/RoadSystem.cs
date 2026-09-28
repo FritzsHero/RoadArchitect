@@ -11,9 +11,13 @@ namespace RoadArchitect
         public bool isMultithreaded = true;
         public bool isSavingMeshes = false;
         public bool isAllowingRoadUpdates = true;
+        public RoadStyleEnum roadStyle = RoadStyleEnum.Arcade;
 
         public Camera editorPlayCamera = null;
         #endregion
+
+
+        public enum RoadStyleEnum { Arcade, Realistic };
 
 
         /// <summary> Adds a new road to this RoadSystem </summary>
