@@ -49,6 +49,7 @@ namespace RoadArchitect
         private SerializedProperty lane3Mat2;
         private SerializedProperty roadType;
         private SerializedProperty intersectionStopType;
+        private SerializedProperty keepStopSignObjects;
         private SerializedProperty lightType;
 
 
@@ -150,6 +151,7 @@ namespace RoadArchitect
             lane3Mat2 = serializedObject.FindProperty("lane3Mat2");
             roadType = serializedObject.FindProperty("roadType");
             intersectionStopType = serializedObject.FindProperty("intersectionStopType");
+            keepStopSignObjects = serializedObject.FindProperty("keepStopSignObjects");
             lightType = serializedObject.FindProperty("lightType");
         }
 
@@ -254,6 +256,10 @@ namespace RoadArchitect
 
             //Option: Intersection stop type:
             intersectionStopType.enumValueIndex = (int)EditorGUILayout.Popup("Intersection stop type:", (int)intersection.intersectionStopType, iStopTypeEnumDescriptions);
+            if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.StopSign_AllWay)
+            {
+                keepStopSignObjects.boolValue = EditorGUILayout.Toggle("Keep stop sign objects:", intersection.keepStopSignObjects);
+            }
 
 
             if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1 || intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)

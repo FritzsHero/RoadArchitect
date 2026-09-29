@@ -791,22 +791,22 @@ namespace RoadArchitect
             // Cleanups:
             foreach (RoadIntersection intersection in roadIntersections)
             {
-                IntersectionObjects.CleanupIntersectionObjects(intersection.transform.gameObject);
                 if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.StopSign_AllWay)
                 {
-                    IntersectionObjects.CreateStopSignsAllWay(intersection.transform.gameObject, road.roadSystem.roadStyle, true);
+                    if (!intersection.keepStopSignObjects)
+                    {
+                        IntersectionObjects.CleanupIntersectionObjects(intersection.transform.gameObject);
+                        IntersectionObjects.CreateStopSignsAllWay(intersection.transform.gameObject, road.roadSystem.roadStyle, true);
+                    }
                 }
                 else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1)
                 {
+                    IntersectionObjects.CleanupIntersectionObjects(intersection.transform.gameObject);
                     IntersectionObjects.CreateTrafficLightBases(intersection.transform.gameObject, true);
                 }
-                else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight2)
+                else
                 {
-
-                }
-                else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.None)
-                {
-                    // Do nothing.
+                    IntersectionObjects.CleanupIntersectionObjects(intersection.transform.gameObject);
                 }
             }
         }

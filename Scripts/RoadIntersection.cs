@@ -23,6 +23,7 @@ namespace RoadArchitect
         public bool isSameSpline = false;
         public bool isDrawingGizmo = true;
         public bool isFlipped = false;
+        public bool keepStopSignObjects = false;
         public bool isUsingDefaultMaterials = true;
         public bool isAutoUpdatingIntersection = true;
         public bool isNode2BLeftTurnLane = true;
