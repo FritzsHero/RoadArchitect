@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System;
 #endregion
 
 
@@ -15,6 +16,7 @@ namespace RoadArchitect
 
         // === This is required to guarantee a fixed serialization assembly name, which Unity likes to randomize on each compile
         // Do not change this
+        [Obsolete("Use new Storage class. Storage.VersionDeserializationBinder")]
         public sealed class VersionDeserializationBinder : SerializationBinder
         {
             public override System.Type BindToType(string assemblyName, string typeName)
@@ -33,134 +35,58 @@ namespace RoadArchitect
 
 
         /// <summary> Saves the Terrain History to disk </summary>
+        [Obsolete("Use new Storage class. Storage.SaveTerrainHistory()")]
         public static bool SaveTerrainHistory(List<TerrainHistoryMaker> _obj, Road _road)
         {
-            string path = GetHistoryPath(_road);
-            if (string.IsNullOrEmpty(path) || path.Length < 2)
-            {
-                return false;
-            }
-            using (Stream stream = File.Open(path, FileMode.Create))
-            {
-                BinaryFormatter bformatter = CreateFormatter();
-                bformatter.Serialize(stream, _obj);
-                stream.Flush();
-                _road.TerrainHistoryByteSize = (stream.Length * 0.001f).ToString("n0") + " kb";
-            }
-            return true;
+            return Storage.SaveTerrainHistory(_obj, _road);
         }
 
 
         /// <summary> Deletes the Terrain History from disk </summary>
+        [Obsolete("Use new Storage class. Storage.DeleteTerrainHistory()")]
         public static void DeleteTerrainHistory(Road _road)
         {
-            string path = GetHistoryPath(_road);
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
+            Storage.DeleteTerrainHistory(_road);
         }
 
 
         /// <summary> Loads the Terrain History from disk </summary>
+        [Obsolete("Use new Storage class. Storage.LoadTerrainHistory()")]
         public static List<TerrainHistoryMaker> LoadTerrainHistory(Road _road)
         {
-            string path = GetHistoryPath(_road);
-            if (string.IsNullOrEmpty(path) || path.Length < 2)
-            {
-                return null;
-            }
-            if (!File.Exists(path))
-            {
-                return null;
-            }
-            using (Stream stream = File.Open(path, FileMode.Open))
-            {
-                BinaryFormatter bFormatter = CreateFormatter();
-                return (List<TerrainHistoryMaker>)bFormatter.Deserialize(stream);
-            }
-        }
-
-
-        private static BinaryFormatter CreateFormatter()
-        {
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Binder = new VersionDeserializationBinder();
-            return formatter;
-        }
-
-
-        private static string GetHistoryPath(Road _road)
-        {
-            return CheckNonAssetDirTH() + GetRoadTHFilename(ref _road);
-        }
-
-
-        /// <summary> Generates the Terrain History file name </summary>
-        private static string GetRoadTHFilename(ref Road _road)
-        {
-            string sceneName;
-
-            sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            sceneName = sceneName.Replace("/", "");
-            sceneName = sceneName.Replace(".", "");
-            string roadName = _road.roadSystem.transform.name.Replace("RoadArchitectSystem", "RAS") + "-" + _road.transform.name;
-            return sceneName + "-" + roadName + ".th";
+            return Storage.LoadTerrainHistory(_road);
         }
 
 
         /// <summary> Returns the path to the RoadArchitect folder where Terrain History is saved </summary>
+        [Obsolete("Use new Storage class. Storage.GetTerrainHistoryDirectory()")]
         public static string GetDirBase()
         {
-            return UnityEngine.Application.dataPath.Replace("/Assets", "/RoadArchitect/");
+            return Storage.GetTerrainHistoryDirectory();
         }
 
 
         /// <summary> Returns the path where Terrain History is saved </summary>
+        [Obsolete("Use new Storage class. Storage.GetTerrainHistoryDirectory()")]
         public static string GetTHDir()
         {
-            string path = GetDirBase() + "TerrainHistory/";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            return path;
+            return Storage.GetTerrainHistoryDirectory();
         }
 
 
         /// <summary> Checks if RoadArchitect folder exists </summary>
+        [Obsolete("Use new Storage class. Storage.CheckRoadArchitectDirectory()")]
         public static string CheckRoadArchitectDirectory()
         {
-            string path = GetDirBase();
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            if (Directory.Exists(path))
-            {
-                return path + "/";
-            }
-            else
-            {
-                return "";
-            }
+            return Storage.CheckRoadArchitectDirectory();
         }
 
 
         /// <summary> Returns RoadArchitect/TerrainHistory path or empty </summary>
+        [Obsolete("Use new Storage class. Storage.CheckNonAssetDirTH()")]
         public static string CheckNonAssetDirTH()
         {
-            CheckRoadArchitectDirectory();
-
-            string path = GetTHDir();
-            if (Directory.Exists(path))
-            {
-                return path;
-            }
-            else
-            {
-                return "";
-            }
+            return Storage.CheckNonAssetDirTH();
         }
     }
 }

@@ -799,7 +799,7 @@ namespace RoadArchitect
                 RootUtils.StartProfiling(this, "TerrainHistory_Save");
                 try
                 {
-                    if (TerrainHistoryUtility.SaveTerrainHistory(TerrainHistory, this))
+                    if (Storage.SaveTerrainHistory(TerrainHistory, this))
                     {
                         TerrainHistory.Clear();
                         TerrainHistory = null;
@@ -834,7 +834,7 @@ namespace RoadArchitect
             Road tRoad = this;
             if (isSavingTerrainHistoryOnDisk && TerrainHistory != null)
             {
-                TerrainHistoryUtility.DeleteTerrainHistory(this);
+                Storage.DeleteTerrainHistory(this);
             }
             else
             {
@@ -853,11 +853,11 @@ namespace RoadArchitect
                     TerrainHistory.Clear();
                     TerrainHistory = null;
                 }
-                TerrainHistory = TerrainHistoryUtility.LoadTerrainHistory(this);
+                TerrainHistory = Storage.LoadTerrainHistory(this);
             }
             if (_isForced)
             {
-                TerrainHistoryUtility.DeleteTerrainHistory(this);
+                Storage.DeleteTerrainHistory(this);
             }
         }
         #endregion

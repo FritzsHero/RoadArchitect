@@ -162,11 +162,11 @@ namespace RoadArchitect
             string path;
             if (_isExtrusion)
             {
-                path = Application.dataPath + "/RoadArchitect/Library/ESO" + _name + ".rao";
+                path = Storage.GetExtrudedSplineObjectLibraryFile(_name);
             }
             else
             {
-                path = Application.dataPath + "/RoadArchitect/Library/EOM" + _name + ".rao";
+                path = Storage.GetEdgeObjectLibraryFile(_name);
             }
             if (File.Exists(path))
             {
