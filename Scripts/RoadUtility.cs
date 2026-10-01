@@ -261,7 +261,7 @@ namespace RoadArchitect
         {
             //Splinated objects first:
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string libraryPath = RootUtils.GetDirLibrary();
+            string libraryPath = Storage.GetLibraryDirectory();
             string filePath = Path.Combine(Path.Combine(libraryPath, "Groups"), _wizardObj.fileName + ".rao");
             if (_wizardObj.isDefault)
             {
@@ -301,7 +301,7 @@ namespace RoadArchitect
         {
             string filePath;
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string libraryPath = RootUtils.GetDirLibrary();
+            string libraryPath = Storage.GetLibraryDirectory();
             if (_isDefault)
             {
                 filePath = Path.Combine(Path.Combine(libraryPath, "Groups"), "Default");

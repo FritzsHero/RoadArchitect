@@ -175,7 +175,7 @@ namespace RoadArchitect.EdgeObjects
             EdgeObjectLibraryMaker EOLM = new EdgeObjectLibraryMaker();
             EOLM.Setup(this);
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string libraryPath = RootUtils.GetDirLibrary();
+            string libraryPath = Storage.GetLibraryDirectory();
             string filePath = Path.Combine(libraryPath, "EOM" + objectName + ".rao");
             if (_fileName.Length > 0)
             {
@@ -196,7 +196,7 @@ namespace RoadArchitect.EdgeObjects
         public void LoadFromLibrary(string _fileName, bool _isQuickAdd = false)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string libraryPath = RootUtils.GetDirLibrary();
+            string libraryPath = Storage.GetLibraryDirectory();
             string filePath = Path.Combine(libraryPath, "EOM" + _fileName + ".rao");
             if (_isQuickAdd)
             {
@@ -211,7 +211,7 @@ namespace RoadArchitect.EdgeObjects
         public void LoadFromLibraryWizard(string _fileName)
         {
             RootUtils.CheckCreateSpecialLibraryDirs();
-            string libraryPath = RootUtils.GetDirLibrary();
+            string libraryPath = Storage.GetLibraryDirectory();
             string filePath = Path.Combine(Path.Combine(libraryPath, "W"), _fileName + ".rao");
             EdgeObjectLibraryMaker ELM = RootUtils.LoadXML<EdgeObjectLibraryMaker>(ref filePath);
             ELM.LoadTo(this);
@@ -254,7 +254,7 @@ namespace RoadArchitect.EdgeObjects
             _names = null;
             _paths = null;
             DirectoryInfo info;
-            string libraryPath = RootUtils.GetDirLibrary();
+            string libraryPath = Storage.GetLibraryDirectory();
             if (_isDefault)
             {
                 info = new DirectoryInfo(Path.Combine(libraryPath, "EdgeObjects"));

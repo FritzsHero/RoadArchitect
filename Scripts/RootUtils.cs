@@ -318,29 +318,25 @@ namespace RoadArchitect
 
         #region "Default directory for library etc"
         /// <summary> Gives the RoadArchitect Library </summary>
+        [System.Obsolete("Use new Storage class. Storage.GetLibraryDirectory()")]
         public static string GetDirLibraryBase()
         {
-            string libraryPath = Path.Combine(Path.Combine(RoadEditorUtility.GetBasePathForIO(), "Editor"), "Library");
-            return libraryPath;
+            return Storage.GetLibraryDirectory();
         }
 
 
         /// <summary> Returns relative RoadArchitect/Editor/Library with OS compatible directory separator </summary>
+        [System.Obsolete("Use new Storage class. Storage.GetLibraryDirectory()")]
         public static string GetDirLibrary()
         {
-            string path = GetDirLibraryBase();
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            return path;
+            return Storage.GetLibraryDirectory();
         }
 
 
         /// <summary> Checks for the existing Library folders or creates them if not present </summary>
         public static void CheckCreateSpecialLibraryDirs()
         {
-            string libraryPath = GetDirLibraryBase();
+            string libraryPath = Storage.GetLibraryDirectory();
             string directoryPath = Path.Combine(libraryPath, "EdgeObjects");
             if (!Directory.Exists(directoryPath))
             {

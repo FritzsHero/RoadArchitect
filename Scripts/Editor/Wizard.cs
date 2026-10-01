@@ -343,7 +343,7 @@ namespace RoadArchitect
 
         public static void GetGroupListing(out string[] _names, out string[] _paths, int _lanes, bool _isDefault = false)
         {
-            path = RootUtils.GetDirLibrary();
+            path = Storage.GetLibraryDirectory();
             Debug.Log(path);
 
             string laneText = "-2L";

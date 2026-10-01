@@ -182,5 +182,17 @@ namespace RoadArchitect
         {
             return Application.dataPath + "/RoadArchitect/Library/EOM" + _name + ".rao";
         }
+
+
+        /// <summary> Returns relative RoadArchitect/Editor/Library with OS compatible directory separator </summary>
+        public static string GetLibraryDirectory()
+        {
+            string path = Path.Combine(Path.Combine(RoadEditorUtility.GetBasePathForIO(), "Editor"), "Library");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return path;
+        }
     }
 }

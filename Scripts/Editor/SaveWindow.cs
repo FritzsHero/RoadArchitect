@@ -55,7 +55,7 @@ namespace RoadArchitect
 
             if (path.Length < 5)
             {
-                path = RootUtils.GetDirLibrary();
+                path = Storage.GetLibraryDirectory();
             }
 
             EditorGUILayout.LabelField("Short description (optional):");
@@ -286,7 +286,7 @@ namespace RoadArchitect
 
             if (path.Length < 5)
             {
-                path = RootUtils.GetDirLibrary();
+                path = Storage.GetLibraryDirectory();
             }
 
             CheckFileExistence();
