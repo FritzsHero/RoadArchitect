@@ -17,6 +17,7 @@ namespace RoadArchitect
     {
         public const char UnityPathSeparator = '/';
 
+        private const string ManualFileName = "RoadArchitectManual.htm";
         private static string baseDirectory = "";
         private static string assemblyFilePath = "";
 
@@ -234,7 +235,7 @@ namespace RoadArchitect
 
         public static string GetManualPath()
         {
-            return System.Environment.CurrentDirectory.Replace(@"\", "/") + "/" + GetRoadArchitectDirectory() + "/RoadArchitectManual.htm";
+            return Path.Combine(Environment.CurrentDirectory, GetRoadArchitectDirectory(), ManualFileName);
         }
 
 
