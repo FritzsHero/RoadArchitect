@@ -75,18 +75,18 @@ namespace RoadArchitect
 
 
         /// <summary> Checks if RoadArchitect folder exists </summary>
-        [Obsolete("Use new Storage class. Storage.CheckRoadArchitectDirectory()")]
+        [Obsolete("Use new Storage class. Storage.GetTerrainHistoryDirectory()")]
         public static string CheckRoadArchitectDirectory()
         {
-            return Storage.CheckRoadArchitectDirectory();
+            return Storage.GetTerrainHistoryDirectory();
         }
 
 
         /// <summary> Returns RoadArchitect/TerrainHistory path or empty </summary>
-        [Obsolete("Use new Storage class. Storage.CheckNonAssetDirTH()")]
+        [Obsolete("Use new Storage class. Storage.GetTerrainHistoryDirectory()")]
         public static string CheckNonAssetDirTH()
         {
-            return Storage.CheckNonAssetDirTH();
+            return Storage.GetTerrainHistoryDirectory();
         }
     }
 }

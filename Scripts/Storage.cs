@@ -79,18 +79,13 @@ namespace RoadArchitect
         }
 
 
+
+
         #region Terrain History
-        /// <summary> This is the RoadArchitect folder outside the Assets </summary>
-        private static string GetTerrainHistoryPath()
-        {
-            return UnityEngine.Application.dataPath.Replace("/Assets", "/RoadArchitect/");
-        }
-
-
-        /// <summary> Returns the path where Terrain History is saved </summary>
+        /// <summary> Returns the path where Terrain History is saved. This is the RoadArchitect folder outside the Assets. </summary>
         public static string GetTerrainHistoryDirectory()
         {
-            string path = GetTerrainHistoryPath() + "TerrainHistory/";
+            string path = Path.Combine(Environment.CurrentDirectory, "RoadArchitect", "TerrainHistory");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -99,39 +94,10 @@ namespace RoadArchitect
         }
 
 
-        /// <summary> Checks if RoadArchitect folder exists </summary>
-        public static string CheckRoadArchitectDirectory()
+        /// <summary> Returns the path where Terrain History of this Road is saved. This is the RoadArchitect folder outside the Assets. </summary>
+        private static string GetTerrainHistoryDirectory(Road _road)
         {
-            string path = GetTerrainHistoryPath();
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            if (Directory.Exists(path))
-            {
-                return path + "/";
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-
-        /// <summary> Returns RoadArchitect/TerrainHistory path or empty </summary>
-        public static string CheckNonAssetDirTH()
-        {
-            CheckRoadArchitectDirectory();
-
-            string path = GetTerrainHistoryDirectory();
-            if (Directory.Exists(path))
-            {
-                return path;
-            }
-            else
-            {
-                return "";
-            }
+            return Path.Combine(GetTerrainHistoryDirectory(), GetRoadTerrainHistoryFileName(ref _road));
         }
 
 
@@ -158,7 +124,7 @@ namespace RoadArchitect
         /// <summary> Saves the Terrain History to disk </summary>
         public static bool SaveTerrainHistory(List<TerrainHistoryMaker> _obj, Road _road)
         {
-            string path = GetTerrainHistoryPath(_road);
+            string path = GetTerrainHistoryDirectory(_road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
             {
                 return false;
@@ -177,7 +143,7 @@ namespace RoadArchitect
         /// <summary> Deletes the Terrain History from disk </summary>
         public static void DeleteTerrainHistory(Road _road)
         {
-            string path = GetTerrainHistoryPath(_road);
+            string path = GetTerrainHistoryDirectory(_road);
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -188,7 +154,7 @@ namespace RoadArchitect
         /// <summary> Loads the Terrain History from disk </summary>
         public static List<TerrainHistoryMaker> LoadTerrainHistory(Road _road)
         {
-            string path = GetTerrainHistoryPath(_road);
+            string path = GetTerrainHistoryDirectory(_road);
             if (string.IsNullOrEmpty(path) || path.Length < 2)
             {
                 return null;
@@ -210,12 +176,6 @@ namespace RoadArchitect
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Binder = new VersionDeserializationBinder();
             return formatter;
-        }
-
-
-        private static string GetTerrainHistoryPath(Road _road)
-        {
-            return CheckNonAssetDirTH() + GetRoadTerrainHistoryFileName(ref _road);
         }
 
 
