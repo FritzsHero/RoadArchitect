@@ -228,7 +228,7 @@ namespace RoadArchitect
 
         private void InitNullChecks()
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             RoadArchitect.EditorUtilities.LoadTexture(ref refreshButtonText, basePath + "/Editor/Icons/refresh2.png");
             RoadArchitect.EditorUtilities.LoadTexture(ref loadButtonBG, basePath + "/Editor/Icons/FlexBG.png");

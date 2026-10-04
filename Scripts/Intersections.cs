@@ -622,7 +622,7 @@ namespace RoadArchitect
                 MF = _obj.AddComponent<MeshFilter>();
             }
             MF.sharedMesh = tMesh;
-            //MeshToFile(MF, RoadEditorUtility.GetBasePath() + "/Mesh/Intersections/" + name +".obj");
+            // MeshToFile(MF, Storage.GetRoadArchitectDirectory() + "/Mesh/Intersections/" + name +".obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
             Object.DestroyImmediate(MC);
@@ -636,7 +636,7 @@ namespace RoadArchitect
             }
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             MR.receiveShadows = true;
-            RoadEditorUtility.SetRoadMaterial(RoadEditorUtility.GetBasePath() + "/Materials/RoadIntersection.mat", MR);
+            RoadEditorUtility.SetRoadMaterial(Storage.GetRoadArchitectDirectory() + "/Materials/RoadIntersection.mat", MR);
         }
 
 
@@ -760,7 +760,7 @@ namespace RoadArchitect
             }
             MF.sharedMesh = tMesh;
 
-            //MeshToFile(MF, RoadEditorUtility.GetBasePath() + "/Mesh/Intersections/" + name +"-overlay.obj");
+            // MeshToFile(MF, Storage.GetRoadArchitectDirectory() + "/Mesh/Intersections/" + name +"-overlay.obj");
 
             MeshCollider MC = _obj.GetComponent<MeshCollider>();
             Object.DestroyImmediate(MC);
@@ -774,7 +774,7 @@ namespace RoadArchitect
             }
             MR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             MR.receiveShadows = true;
-            RoadEditorUtility.SetRoadMaterial(RoadEditorUtility.GetBasePath() + "/Materials/InterText.mat", MR);
+            RoadEditorUtility.SetRoadMaterial(Storage.GetRoadArchitectDirectory() + "/Materials/InterText.mat", MR);
         }
 
 

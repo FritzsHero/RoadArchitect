@@ -3202,7 +3202,7 @@ namespace RoadArchitect.Splination
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
-            string folderName = Path.Combine(RoadEditorUtility.GetBasePath(),  "Mesh");
+            string folderName = Path.Combine(Storage.GetRoadArchitectDirectory(),  "Mesh");
             folderName = Path.Combine(folderName, "Generated");
             folderName = Path.Combine(folderName ,"Extrusions");
             string roadName = node.spline.road.transform.name;

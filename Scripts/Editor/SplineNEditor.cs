@@ -229,7 +229,7 @@ namespace RoadArchitect
             isInitialized = true;
             EditorStyles.label.wordWrap = true;
             EditorStyles.miniLabel.wordWrap = true;
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             EditorUtilities.LoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");
             EditorUtilities.LoadTexture(ref copyButtonTexture, basePath + "/Editor/Icons/copy.png");
@@ -1628,7 +1628,7 @@ namespace RoadArchitect
         #region "Quick adds"
         private void BridgeAddTopBase(float _horizSep = 0f, float _vertRaise = -0.01f, string _mat = "", bool _isOverridenPrefab = false, string _overridePrefab = "")
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (_mat == "")
             {
@@ -1734,7 +1734,7 @@ namespace RoadArchitect
 
         private void BridgeAddBottomBase(float _horizSep = 0f, float _vertRaise = -1.01f, string _mat = "", bool _isOverridenPrefab = false, string _overridePrefab = "")
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (_mat == "")
             {
@@ -2213,7 +2213,7 @@ namespace RoadArchitect
 
         private GameObject GetEndObjectQuickAdd()
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             string path = "";
             if (endObjectAdd == EndObjectsDefaultsEnum.WarningSign1_Static)

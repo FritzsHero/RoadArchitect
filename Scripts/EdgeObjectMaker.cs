@@ -304,7 +304,7 @@ namespace RoadArchitect.EdgeObjects
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
 
-            string folderName = Path.Combine(RoadEditorUtility.GetBasePath(), "Mesh");
+            string folderName = Path.Combine(Storage.GetRoadArchitectDirectory(), "Mesh");
             folderName = Path.Combine(folderName, "Generated");
             folderName = Path.Combine(folderName, "CombinedEdgeObj");
 

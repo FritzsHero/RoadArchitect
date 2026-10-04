@@ -1,10 +1,13 @@
 #region "Imports"
-using System.Collections.Generic;
+using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-using System.Dynamic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 #endregion
 
 
@@ -12,6 +15,69 @@ namespace RoadArchitect
 {
     public static class Storage
     {
+        public const char UnityPathSeparator = '/';
+
+        private static string baseDirectory = "";
+        private static string assemblyFilePath = "";
+
+
+        /// <summary> Returns the relative path of the RoadArchitect folder. For Example: Assets/RoadArchitect </summary>
+        public static string GetRoadArchitectDirectory()
+        {
+            #if UNITY_EDITOR
+            if (baseDirectory != "" && assemblyFilePath != "")
+            {
+                if (File.Exists(assemblyFilePath))
+                {
+                    return baseDirectory;
+                }
+            }
+
+            string currentDirectory = Environment.CurrentDirectory;
+            #if UNITY_2019_3_OR_NEWER
+            string[] assemblyDefinitions = AssetDatabase.FindAssets("t:AssemblyDefinitionAsset");
+            for (int index = 0; index < assemblyDefinitions.Length; index++)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(assemblyDefinitions[index]);
+                if (Path.GetFileName(path) == "RoadArchitect.asmdef")
+                {
+                    assemblyFilePath = path;
+                    baseDirectory = Path.GetRelativePath(currentDirectory, Path.GetDirectoryName(path));
+                    return baseDirectory;
+                }
+            }
+            #else
+            string[] assemblyDefinitionPaths = Directory.GetFiles(
+                dataPath,
+                "RoadArchitect.asmdef",
+                SearchOption.AllDirectories);
+            if (assemblyDefinitionPaths.Length > 0)
+            {
+                assemblyFilePath = assemblyDefinitionPaths[0];
+                baseDirectory = Path.GetRelativePath(currentDirectory, Path.GetDirectoryName(assemblyDefinitionPaths[0]));
+                return baseDirectory;
+            }
+            #endif
+
+            throw new Exception("Could not locate RoadArchitect.asmdef under the project's Assets folder.");
+            #else
+            return "";
+            #endif
+        }
+
+
+        /// <summary> Returns the relative base of the RoadArchitect folder with OS compatible directory separator </summary>
+        public static string GetRoadArchitectDirectoryCompatibleWithOS()
+        {
+            string baseDirectory = GetRoadArchitectDirectory();
+            if('/' != Path.DirectorySeparatorChar && '/' != Path.AltDirectorySeparatorChar)
+            {
+                return baseDirectory.Replace('/', Path.DirectorySeparatorChar);
+            }
+            return baseDirectory;
+        }
+
+
         #region Terrain History
         /// <summary> This is the RoadArchitect folder outside the Assets </summary>
         private static string GetTerrainHistoryPath()
@@ -168,7 +234,7 @@ namespace RoadArchitect
 
         public static string GetManualPath()
         {
-            return System.Environment.CurrentDirectory.Replace(@"\", "/") + "/" + RoadEditorUtility.GetBasePath() + "/RoadArchitectManual.htm";
+            return System.Environment.CurrentDirectory.Replace(@"\", "/") + "/" + GetRoadArchitectDirectory() + "/RoadArchitectManual.htm";
         }
 
 
@@ -187,7 +253,7 @@ namespace RoadArchitect
         /// <summary> Returns relative RoadArchitect/Editor/Library with OS compatible directory separator </summary>
         public static string GetLibraryDirectory()
         {
-            string path = Path.Combine(Path.Combine(RoadEditorUtility.GetBasePathForIO(), "Editor"), "Library");
+            string path = Path.Combine(GetRoadArchitectDirectoryCompatibleWithOS(), "Editor", "Library");
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

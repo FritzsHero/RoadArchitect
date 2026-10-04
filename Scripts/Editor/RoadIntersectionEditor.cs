@@ -1220,7 +1220,7 @@ namespace RoadArchitect
         {
             EditorStyles.label.wordWrap = true;
             isInitialized = true;
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             EditorUtilities.LoadTexture(ref refreshButtonTexture, basePath + "/Editor/Icons/refresh2.png");
             EditorUtilities.LoadTexture(ref deleteButtonTexture, basePath + "/Editor/Icons/delete.png");

@@ -67,7 +67,7 @@ namespace RoadArchitect
         private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB)
         {
             Object prefab;
-            prefab = EngineIntegration.LoadAssetFromPath<GameObject>(RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab");
+            prefab = EngineIntegration.LoadAssetFromPath<GameObject>(Storage.GetRoadArchitectDirectory() + "/Prefabs/Signs/StopSignAllway.prefab");
 
             RoadIntersection roadIntersection = _masterGameObj.GetComponent<RoadIntersection>();
             SplineC spline = roadIntersection.node1.spline;
@@ -525,7 +525,7 @@ namespace RoadArchitect
                 bXMod = true;
             }
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             Mesh xMesh;
             xMesh = EngineIntegration.LoadAssetFromPath<Mesh>(basePath + "/Mesh/Signs/TrafficLightBases/" + assetNameAsset);
@@ -796,7 +796,7 @@ namespace RoadArchitect
 
         private static void AdjustLightPrefab(GameObject _light)
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             foreach (Light light in _light.GetComponentsInChildren<Light>())
             {
@@ -941,7 +941,7 @@ namespace RoadArchitect
             MeshRenderer[] MR_Mains = new MeshRenderer[LanesHalf];
             int cCount = -1;
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (intersection.roadType != RoadIntersection.RoadTypeEnum.NoTurnLane)
             {

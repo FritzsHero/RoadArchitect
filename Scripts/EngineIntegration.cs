@@ -143,7 +143,7 @@ namespace RoadArchitect
 
         public static T LoadAssetFromPath<T>(string _path) where T: UnityEngine.Object
         {
-            //RoadEditorUtility.GetBasePath() + "/Prefabs/Signs/StopSignAllway.prefab"
+            // Storage.GetRoadArchitectDirectory() + "/Prefabs/Signs/StopSignAllway.prefab"
             #if UNITY_EDITOR
             return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(_path);
             #else

@@ -569,7 +569,7 @@ namespace RoadArchitect
                 }
             }
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
@@ -609,7 +609,7 @@ namespace RoadArchitect
                 lanesNumber = "-6L";
             }
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
@@ -638,7 +638,7 @@ namespace RoadArchitect
 
         public void ResetExtTiledMaterials(bool _isUpdate = true)
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (roadType == RoadTypeEnum.BothTurnLanes)
             {
@@ -678,7 +678,7 @@ namespace RoadArchitect
                 lanesNumber = "-6L";
             }
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (intersectionType == IntersectionTypeEnum.ThreeWay)
             {
@@ -938,7 +938,7 @@ namespace RoadArchitect
         #region "TrafficLights"
         public void ToggleTrafficLightPoleColor()
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             Material trafficLightMaterial = null;
             if (isTrafficLightGray)

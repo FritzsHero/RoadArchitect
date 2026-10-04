@@ -1106,7 +1106,7 @@ namespace RoadArchitect
                     Object.DestroyImmediate(road.MeshShoL);
                 }
 
-                string basePath = RoadEditorUtility.GetBasePath();
+                string basePath = Storage.GetRoadArchitectDirectory();
 
                 for (int index = 0; index < RoadConnections_tangents.Count; index++)
                 {
@@ -1315,7 +1315,7 @@ namespace RoadArchitect
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane3_Disabled = new Dictionary<RoadIntersection, List<MeshFilter>>();
             Dictionary<RoadIntersection, List<MeshFilter>> tCombineDict_Lane1_DisabledActive = new Dictionary<RoadIntersection, List<MeshFilter>>();
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             vCount = iBLane0s.Count;
             for (int index = 0; index < vCount; index++)
@@ -2324,7 +2324,7 @@ namespace RoadArchitect
             sceneName = sceneName.Replace("/", "");
             sceneName = sceneName.Replace(".", "");
 
-            string folderName = Path.Combine(RoadEditorUtility.GetBasePath(), "Mesh");
+            string folderName = Path.Combine(Storage.GetRoadArchitectDirectory(), "Mesh");
             folderName = Path.Combine(folderName, "Generated");
 
             if (_saveType == SaveMeshTypeEnum.Road)

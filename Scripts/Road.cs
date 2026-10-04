@@ -1135,7 +1135,7 @@ namespace RoadArchitect
                 return false;
             }
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             MeshRenderer[] MRs = MeshRoad.GetComponentsInChildren<MeshRenderer>();
             Material tMat2Lanes = RoadEditorUtility.LoadMaterial(basePath + "/Materials/Markers/WhiteYellowDouble.mat");
@@ -1361,7 +1361,7 @@ namespace RoadArchitect
                 return;
             }
 
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             if (!RoadMaterial1)
             {
@@ -1413,7 +1413,7 @@ namespace RoadArchitect
 
         public void SetDefaultMats()
         {
-            string basePath = RoadEditorUtility.GetBasePath();
+            string basePath = Storage.GetRoadArchitectDirectory();
 
             // Reset materials
             RoadMaterial1 = null;
