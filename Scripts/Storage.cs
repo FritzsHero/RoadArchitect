@@ -79,6 +79,12 @@ namespace RoadArchitect
         }
 
 
+        /// <summary> Returns the absolute path of the RoadArchitect folder with OS compatible directory separator </summary>
+        public static string GetAbsoluteRoadArchitectDirectory()
+        {
+            string relativeDirectory = GetRoadArchitectDirectoryCompatibleWithOS();
+            return Path.Combine(Environment.CurrentDirectory, relativeDirectory);
+        }
 
 
         #region Terrain History
@@ -195,23 +201,23 @@ namespace RoadArchitect
 
         public static string GetManualPath()
         {
-            return Path.Combine(Environment.CurrentDirectory, GetRoadArchitectDirectory(), ManualFileName);
+            return Path.Combine(GetAbsoluteRoadArchitectDirectory(), ManualFileName);
         }
 
 
         public static string GetExtrudedSplineObjectLibraryFile(string _name)
         {
-            return Application.dataPath + "/RoadArchitect/Library/ESO" + _name + ".rao";
+            return Path.Combine(GetAbsoluteRoadArchitectDirectory(), "Library", "ESO" + _name + ".rao");
         }
 
 
         public static string GetEdgeObjectLibraryFile(string _name)
         {
-            return Application.dataPath + "/RoadArchitect/Library/EOM" + _name + ".rao";
+            return Path.Combine(GetAbsoluteRoadArchitectDirectory(), "Library", "EOM" + _name + ".rao");
         }
 
 
-        /// <summary> Returns relative RoadArchitect/Editor/Library with OS compatible directory separator </summary>
+        /// <summary> Returns relative Assets/RoadArchitect/Editor/Library with OS compatible directory separator </summary>
         public static string GetLibraryDirectory()
         {
             string path = Path.Combine(GetRoadArchitectDirectoryCompatibleWithOS(), "Editor", "Library");
