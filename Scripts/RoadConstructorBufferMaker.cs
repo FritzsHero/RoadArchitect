@@ -793,11 +793,7 @@ namespace RoadArchitect
             {
                 if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.StopSign_AllWay)
                 {
-                    if (!intersection.keepStopSignObjects)
-                    {
-                        IntersectionObjects.CleanupIntersectionObjects(intersection.transform.gameObject);
-                        IntersectionObjects.CreateStopSignsAllWay(intersection.transform.gameObject, road.roadSystem.roadStyle, true);
-                    }
+                    IntersectionObjects.CreateStopSignsAllWay(intersection.transform.gameObject, road.roadSystem.roadStyle, true, true, !intersection.keepStopSignObjects);
                 }
                 else if (intersection.intersectionStopType == RoadIntersection.iStopTypeEnum.TrafficLight1)
                 {

@@ -34,9 +34,9 @@ namespace RoadArchitect
 
 
         #region "Stop Sign All Way"
-        public static void CreateStopSignsAllWay(GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB = true)
+        public static void CreateStopSignsAllWay(GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB = true, bool _isCleanup = true, bool _isCreatingOnlyMissing = false)
         {
-            CreateStopSignsAllWayDo(ref _masterGameObj, _roadStyle, _isRB);
+            CreateStopSignsAllWayDo(ref _masterGameObj, _roadStyle, _isRB, _isCleanup, _isCreatingOnlyMissing);
         }
 
 
@@ -64,7 +64,7 @@ namespace RoadArchitect
 
 
         /// <summary> Creates the stop signs on a cross or T intersection </summary>
-        private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB)
+        private static void CreateStopSignsAllWayDo(ref GameObject _masterGameObj, RoadSystem.RoadStyleEnum _roadStyle, bool _isRB, bool _isCleanup, bool _isCreatingOnlyMissing)
         {
             Object prefab;
             prefab = EngineIntegration.LoadAssetFromPath<GameObject>(Storage.GetRoadArchitectDirectory() + "/Prefabs/Signs/StopSignAllway.prefab");
@@ -79,8 +79,26 @@ namespace RoadArchitect
             //float laneWidth = spline.road.laneWidth;
             float ShoulderWidth = spline.road.shoulderWidth;
 
-            //Cleanup:
-            CleanupIntersectionObjects(_masterGameObj);
+            if (_isCleanup)
+            {
+                CleanupIntersectionObjects(_masterGameObj);
+            }
+
+            bool hasStopSignRR = false;
+            bool hasStopSignLL = false;
+            bool hasStopSignRL = false;
+            bool hasStopSignLR = false;
+            if (_isCreatingOnlyMissing)
+            {
+                for (int childIndex = 0; childIndex < _masterGameObj.transform.childCount; childIndex++)
+                {
+                    string childName = _masterGameObj.transform.GetChild(childIndex).name;
+                    hasStopSignRR |= childName.StartsWith("StopSignRR");
+                    hasStopSignLL |= childName.StartsWith("StopSignLL");
+                    hasStopSignRL |= childName.StartsWith("StopSignRL");
+                    hasStopSignLR |= childName.StartsWith("StopSignLR");
+                }
+            }
 
             //Get four points:
             float DistFromCorner = (ShoulderWidth * 0.45f);
@@ -90,68 +108,80 @@ namespace RoadArchitect
             Vector3 tPosLL = default(Vector3);
             GetFourPoints(roadIntersection, out tPosRR, out tPosRL, out tPosLL, out tPosLR, DistFromCorner);
 
-            //RR:
+            // RR:
             spline = roadIntersection.node1.spline;
-            tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
-            tDir = StopSignGetRotRR(roadIntersection, spline);
-            tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
-
-            tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosRR;
-            tObj.name = "StopSignRR";
-            if (roadIntersection.ignoreCorner == 0)
+            if (!hasStopSignRR)
             {
-                Object.DestroyImmediate(tObj);
+                tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+                // xDir = (roadIntersection.CornerRR - roadIntersection.transform.position).normalized;
+                tDir = StopSignGetRotRR(roadIntersection, spline);
+                tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+                AddRigidbodyToSign(tObj, _roadStyle, _isRB);
+
+                tObj.transform.parent = _masterGameObj.transform;
+                tObj.transform.position = tPosRR;
+                tObj.name = "StopSignRR";
+                if (roadIntersection.ignoreCorner == 0)
+                {
+                    Object.DestroyImmediate(tObj);
+                }
             }
 
-            //LL:
+            // LL:
             spline = roadIntersection.node1.spline;
-            tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
-            tDir = StopSignGetRotLL(roadIntersection, spline);
-            tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
-
-            tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosLL;
-            tObj.name = "StopSignLL";
-            if (roadIntersection.ignoreCorner == 2)
+            if (!hasStopSignLL)
             {
-                Object.DestroyImmediate(tObj);
+                tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+                // xDir = (roadIntersection.CornerLL - roadIntersection.transform.position).normalized;
+                tDir = StopSignGetRotLL(roadIntersection, spline);
+                tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+                AddRigidbodyToSign(tObj, _roadStyle, _isRB);
+
+                tObj.transform.parent = _masterGameObj.transform;
+                tObj.transform.position = tPosLL;
+                tObj.name = "StopSignLL";
+                if (roadIntersection.ignoreCorner == 2)
+                {
+                    Object.DestroyImmediate(tObj);
+                }
             }
 
-            //RL:
+            // RL:
             spline = roadIntersection.node2.spline;
-            tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
-            tDir = StopSignGetRotRL(roadIntersection, spline);
-            tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
-
-            tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosRL;
-            tObj.name = "StopSignRL";
-            if (roadIntersection.ignoreCorner == 1)
+            if (!hasStopSignRL)
             {
-                Object.DestroyImmediate(tObj);
+                tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+                // xDir = (roadIntersection.CornerRL - roadIntersection.transform.position).normalized;
+                tDir = StopSignGetRotRL(roadIntersection, spline);
+                tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+                AddRigidbodyToSign(tObj, _roadStyle, _isRB);
+
+                tObj.transform.parent = _masterGameObj.transform;
+                tObj.transform.position = tPosRL;
+                tObj.name = "StopSignRL";
+                if (roadIntersection.ignoreCorner == 1)
+                {
+                    Object.DestroyImmediate(tObj);
+                }
             }
 
-            //LR:
+            // LR:
             spline = roadIntersection.node2.spline;
-            tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
-            //xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
-            tDir = StopSignGetRotLR(roadIntersection, spline);
-            tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
-            AddRigidbodyToSign(tObj, _roadStyle, _isRB);
-
-            tObj.transform.parent = _masterGameObj.transform;
-            tObj.transform.position = tPosLR;
-            tObj.name = "StopSignLR";
-            if (roadIntersection.ignoreCorner == 3)
+            if (!hasStopSignLR)
             {
-                Object.DestroyImmediate(tObj);
+                tObj = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
+                // xDir = (roadIntersection.CornerLR - roadIntersection.transform.position).normalized;
+                tDir = StopSignGetRotLR(roadIntersection, spline);
+                tObj.transform.rotation = Quaternion.LookRotation(tDir) * Quaternion.Euler(0f, 180f, 0f);
+                AddRigidbodyToSign(tObj, _roadStyle, _isRB);
+
+                tObj.transform.parent = _masterGameObj.transform;
+                tObj.transform.position = tPosLR;
+                tObj.name = "StopSignLR";
+                if (roadIntersection.ignoreCorner == 3)
+                {
+                    Object.DestroyImmediate(tObj);
+                }
             }
         }
 
