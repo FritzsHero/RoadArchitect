@@ -302,7 +302,7 @@ namespace RoadArchitect.Tests
 
 
         /// <summary> This will create an intersection if two nodes overlap on the road. Only good if the roads only overlap once. </summary>
-        private static void UnitTestIntersectionHelper(Road _road1, Road _road2, RoadIntersection.iStopTypeEnum _iStopType, RoadIntersection.RoadTypeEnum _roadType)
+        private static RoadIntersection UnitTestIntersectionHelper(Road _road1, Road _road2, RoadIntersection.iStopTypeEnum _iStopType, RoadIntersection.RoadTypeEnum _roadType)
         {
             SplineN nodeInter1 = null;
             SplineN nodeInter2 = null;
@@ -322,14 +322,15 @@ namespace RoadArchitect.Tests
                 }
             }
 
-
+            RoadIntersection roadIntersction = null;
             if (nodeInter1 != null && nodeInter2 != null)
             {
                 GameObject IntersectionsObject = Intersections.CreateIntersection(nodeInter1, nodeInter2);
-                RoadIntersection roadIntersction = IntersectionsObject.GetComponent<RoadIntersection>();
+                roadIntersction = IntersectionsObject.GetComponent<RoadIntersection>();
                 roadIntersction.intersectionStopType = _iStopType;
                 roadIntersction.roadType = _roadType;
             }
+            return roadIntersction;
         }
 
 
@@ -656,7 +657,8 @@ namespace RoadArchitect.Tests
 
             road4 = RoadAutomation.CreateRoadProgrammatically(unitSystem9, ref nodeLocations);
             road4.laneAmount = 2;
-            UnitTestIntersectionHelper(road1, road4, RoadIntersection.iStopTypeEnum.None, RoadIntersection.RoadTypeEnum.NoTurnLane);
+            RoadIntersection roadIntersection = UnitTestIntersectionHelper(road1, road4, RoadIntersection.iStopTypeEnum.StopSign_AllWay, RoadIntersection.RoadTypeEnum.NoTurnLane);
+            roadIntersection.keepStopSignObjects = true;
 
             //Turn updates back on and update road:
             unitSystem9.isAllowingRoadUpdates = true;
