@@ -83,12 +83,12 @@ namespace RoadArchitect
             string path = "";
             if (_object != null)
             {
-                path = EngineIntegration.GetAssetPath(_object);
+                path = Storage.MakeAssetReference(EngineIntegration.GetAssetPath(_object));
                 if (path == null || path.Length < 1)
                 {
                     Object parentObject;
                     parentObject = EngineIntegration.GetObjectFromSource(_object);
-                    path = EngineIntegration.GetAssetPath(parentObject);
+                    path = Storage.MakeAssetReference(EngineIntegration.GetAssetPath(parentObject));
                 }
             }
             return path;

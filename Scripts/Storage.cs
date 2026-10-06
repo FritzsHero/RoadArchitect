@@ -17,6 +17,7 @@ namespace RoadArchitect
     {
         public const char UnityPathSeparator = '/';
 
+        private const string UnifiedPackagePath = "Assets/RoadArchitect/";
         private const string ManualFileName = "RoadArchitectManual.htm";
         private static string baseDirectory = "";
         private static string assemblyFilePath = "";
@@ -226,6 +227,47 @@ namespace RoadArchitect
                 Directory.CreateDirectory(path);
             }
             return path;
+        }
+
+
+        /// <summary> Stores package assets relative to the RoadArchitect folder and leaves external asset paths unchanged. </summary>
+        public static string MakeAssetReference(string _assetPath)
+        {
+            if (string.IsNullOrEmpty(_assetPath))
+            {
+                return "";
+            }
+
+            string packagePath = GetRoadArchitectDirectory().Replace('\\', UnityPathSeparator);
+            string assetPath = _assetPath.Replace('\\', UnityPathSeparator);
+            if (assetPath.StartsWith(UnifiedPackagePath, StringComparison.OrdinalIgnoreCase))
+            {
+                return assetPath;
+            }
+            else if (assetPath.StartsWith(packagePath, StringComparison.OrdinalIgnoreCase))
+            {
+                return UnifiedPackagePath + assetPath.Replace(packagePath, "").TrimStart(UnityPathSeparator);
+            }
+
+            return _assetPath;
+        }
+
+
+        /// <summary> Resolves versioned package-relative references and preserves legacy Unity asset paths. </summary>
+        public static string ResolveAssetReference(string _assetReference)
+        {
+            if (string.IsNullOrEmpty(_assetReference))
+            {
+                return _assetReference;
+            }
+
+            if (!_assetReference.StartsWith(UnifiedPackagePath, StringComparison.OrdinalIgnoreCase))
+            {
+                return _assetReference;
+            }
+
+            string packagePath = GetRoadArchitectDirectory().Replace('\\', UnityPathSeparator).TrimEnd(UnityPathSeparator);
+            return packagePath + UnityPathSeparator + _assetReference.Replace(UnifiedPackagePath, "");
         }
     }
 }

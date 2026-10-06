@@ -529,11 +529,11 @@ namespace RoadArchitect.EdgeObjects
 
             if (edgeMaterial1 != null)
             {
-                edgeMaterial1String = EngineIntegration.GetAssetPath(edgeMaterial1);
+                edgeMaterial1String = Storage.MakeAssetReference(EngineIntegration.GetAssetPath(edgeMaterial1));
             }
             if (edgeMaterial2 != null)
             {
-                edgeMaterial2String = EngineIntegration.GetAssetPath(edgeMaterial2);
+                edgeMaterial2String = Storage.MakeAssetReference(EngineIntegration.GetAssetPath(edgeMaterial2));
             }
 
             edgeObjects = new List<GameObject>();

@@ -1294,11 +1294,11 @@ namespace RoadArchitect.Splination
 
                 if (SplinatedMaterial1 != null)
                 {
-                    SplinatedMaterial1String = EngineIntegration.GetAssetPath(SplinatedMaterial1);
+                    SplinatedMaterial1String = Storage.MakeAssetReference(EngineIntegration.GetAssetPath(SplinatedMaterial1));
                 }
                 if (SplinatedMaterial2 != null)
                 {
-                    SplinatedMaterial2String = EngineIntegration.GetAssetPath(SplinatedMaterial2);
+                    SplinatedMaterial2String = Storage.MakeAssetReference(EngineIntegration.GetAssetPath(SplinatedMaterial2));
                 }
             }
 

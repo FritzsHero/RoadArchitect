@@ -145,7 +145,7 @@ namespace RoadArchitect
         {
             // Storage.GetRoadArchitectDirectory() + "/Prefabs/Signs/StopSignAllway.prefab"
             #if UNITY_EDITOR
-            return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(_path);
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(Storage.ResolveAssetReference(_path));
             #else
             // Get your prefab in your runtime build
             return null;
