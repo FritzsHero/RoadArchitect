@@ -19,7 +19,7 @@ namespace RoadArchitect
         private const float cachedPointsSeperation = 1f;
 
         //Editor preview splines for add and insert:
-        public SplineF previewSpline;
+        public SplineCreationPreview previewSpline;
         public SplineI previewSplineInsert;
 
 
@@ -138,7 +138,7 @@ namespace RoadArchitect
             //Setup preview spline:
             if (previewSpline == null)
             {
-                previewSpline = splineRoot.AddComponent<SplineF>();
+                previewSpline = splineRoot.AddComponent<SplineCreationPreview>();
                 previewSpline.spline = this;
             }
             //Setup preview spline for insertion mode:

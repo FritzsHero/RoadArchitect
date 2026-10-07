@@ -1,12 +1,14 @@
 #region "Imports"
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 using System.Collections.Generic;
 #endregion
 
 
 namespace RoadArchitect
 {
-    public class SplineF : MonoBehaviour
+    [MovedFrom(true, sourceClassName: "SplineF")]
+    public class SplineCreationPreview : MonoBehaviour
     {
         #region "Vars"
         public List<SplinePreviewNode> nodes = new List<SplinePreviewNode>();
