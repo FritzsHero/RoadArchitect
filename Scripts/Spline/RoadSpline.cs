@@ -20,7 +20,7 @@ namespace RoadArchitect
 
         //Editor preview splines for add and insert:
         public SplineCreationPreview previewSpline;
-        public SplineI previewSplineInsert;
+        public SplineInsertionPreview previewSplineInsert;
 
 
         #region "Nav data Vars"
@@ -144,7 +144,7 @@ namespace RoadArchitect
             //Setup preview spline for insertion mode:
             if (previewSplineInsert == null)
             {
-                previewSplineInsert = splineRoot.AddComponent<SplineI>();
+                previewSplineInsert = splineRoot.AddComponent<SplineInsertionPreview>();
                 previewSplineInsert.spline = this;
             }
 
