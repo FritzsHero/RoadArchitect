@@ -22,7 +22,7 @@ namespace RoadArchitect
         public float tempMinTime = 0f;
 
         public int idOnSpline;
-        public SplineC spline;
+        public RoadSpline spline;
         public bool isDestroyed = false;
         public bool isPreviewNode = false;
         #endregion

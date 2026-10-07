@@ -37,7 +37,7 @@ namespace RoadArchitect
             //Spline:
             GameObject splineObj = new GameObject("Spline");
             splineObj.transform.parent = road.transform;
-            road.spline = splineObj.AddComponent<SplineC>();
+            road.spline = splineObj.AddComponent<RoadSpline>();
             road.spline.splineRoot = splineObj;
             road.spline.road = road;
             road.splineObject = splineObj;
@@ -76,10 +76,10 @@ namespace RoadArchitect
                 return;
             }
 
-            SplineC[] piggys = null;
+            RoadSpline[] piggys = null;
             if (roadCount > 1)
             {
-                piggys = new SplineC[roadCount];
+                piggys = new RoadSpline[roadCount];
                 for (int i = 0; i < roadCount; i++)
                 {
                     piggys[i] = allRoadObjs[i].spline;

@@ -7,11 +7,11 @@ namespace RoadArchitect.Threading
     {
         private object handle = new object();
         private List<Terraforming.TempTerrainData> TTDList;
-        private SplineC spline;
+        private RoadSpline spline;
         private Road road;
 
 
-        public void Setup(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _tSpline, Road _tRoad)
+        public void Setup(ref List<Terraforming.TempTerrainData> _TTDList, RoadSpline _tSpline, Road _tRoad)
         {
             TTDList = _TTDList;
             spline = _tSpline;

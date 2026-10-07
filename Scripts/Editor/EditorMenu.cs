@@ -56,10 +56,10 @@ namespace RoadArchitect
             int roadCount = allRoadObjects.Length;
 
             Road singleRoad = null;
-            SplineC[] tPiggys = null;
+            RoadSpline[] tPiggys = null;
             if (roadCount > 1)
             {
-                tPiggys = new SplineC[roadCount - 1];
+                tPiggys = new RoadSpline[roadCount - 1];
             }
 
             for (int count = 0; count < roadCount; count++)

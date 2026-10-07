@@ -1,12 +1,14 @@
 #region "Imports"
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 using System.Collections.Generic;
 #endregion
 
 
 namespace RoadArchitect
 {
-    public class SplineC : MonoBehaviour
+    [MovedFrom(true, sourceClassName: "SplineC")]
+    public class RoadSpline : MonoBehaviour
     {
         #region "Vars"
         public List<SplineN> nodes = new List<SplineN>();
@@ -57,8 +59,8 @@ namespace RoadArchitect
         public float specialEndNodeDelayStartResult = 10f;
         public float specialEndNodeDelayEnd = 10f;
         public float specialEndNodeDelayEndResult = 10f;
-        public SplineC specialEndNodeStartOtherSpline = null;
-        public SplineC specialEndNodeEndOtherSpline = null;
+        public RoadSpline specialEndNodeStartOtherSpline = null;
+        public RoadSpline specialEndNodeEndOtherSpline = null;
         #endregion
 
 
@@ -115,7 +117,7 @@ namespace RoadArchitect
 
 
             nodeList.Sort(CompareListByID);
-            //tList.Sort(delegate(SplineC i1, Item i2) { return i1.name.CompareTo(i2.name); });
+            //tList.Sort(delegate(RoadSpline i1, Item i2) { return i1.name.CompareTo(i2.name); });
             rawNodes = nodeList.ToArray();
             nodeList = null;
             SetupNodes(ref rawNodes);
@@ -1991,7 +1993,7 @@ namespace RoadArchitect
         /// <summary> Creates a conncetion between first and last node </summary>
         public void ActivateEndNodeConnection(SplineN _node1, SplineN _node2)
         {
-            SplineC spline = _node2.spline;
+            RoadSpline spline = _node2.spline;
             int nodeCount = spline.GetNodeCount();
             int mCount = GetNodeCount();
             //Don't allow connection with less than 3 nodes:
@@ -2211,7 +2213,7 @@ namespace RoadArchitect
             {
                 if (_node1.spline != _node2.spline)
                 {
-                    _node1.spline.road.PiggyBacks = new SplineC[1];
+                    _node1.spline.road.PiggyBacks = new RoadSpline[1];
                     _node1.spline.road.PiggyBacks[0] = _node2.spline;
                 }
                 _node1.spline.road.isUpdateRequired = true;

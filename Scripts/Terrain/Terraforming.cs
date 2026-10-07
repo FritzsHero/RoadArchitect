@@ -105,13 +105,13 @@ namespace RoadArchitect
 
 
         /// <summary> Stores terrain infos and starts terrain calculations </summary>
-        public static void ProcessRoadTerrainHook1(SplineC _spline, Road _road, bool _isMultithreaded = true)
+        public static void ProcessRoadTerrainHook1(RoadSpline _spline, Road _road, bool _isMultithreaded = true)
         {
             ProcessRoadTerrainHook1Do(ref _spline, ref _road, _isMultithreaded);
         }
 
 
-        private static void ProcessRoadTerrainHook1Do(ref SplineC _spline, ref Road _road, bool _isMultithreaded)
+        private static void ProcessRoadTerrainHook1Do(ref RoadSpline _spline, ref Road _road, bool _isMultithreaded)
         {
             RootUtils.StartProfiling(_road, "ProcessRoadTerrainHook1");
             //First lets make sure all terrains have a RoadTerrain script:
@@ -430,7 +430,7 @@ namespace RoadArchitect
 
 
         /// <summary> Assign calculated values to terrains </summary>
-        public static void ProcessRoadTerrainHook2(SplineC _spline, ref List<TempTerrainData> _TTDList)
+        public static void ProcessRoadTerrainHook2(RoadSpline _spline, ref List<TempTerrainData> _TTDList)
         {
             RootUtils.StartProfiling(_spline.road, "ProcessRoadTerrainHook2");
             ProcessRoadTerrainHook2Do(ref _spline, ref _TTDList);
@@ -438,7 +438,7 @@ namespace RoadArchitect
         }
 
 
-        private static void ProcessRoadTerrainHook2Do(ref SplineC _spline, ref List<TempTerrainData> _TTDList)
+        private static void ProcessRoadTerrainHook2Do(ref RoadSpline _spline, ref List<TempTerrainData> _TTDList)
         {
             if (!_spline.road.isTreeModificationEnabled && !_spline.road.isHeightModificationEnabled && !_spline.road.isDetailModificationEnabled)
             {

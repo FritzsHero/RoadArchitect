@@ -19,7 +19,7 @@ namespace RoadArchitect.Threading
         private static Vector3 ProcessLineHeights_PrevVect = new Vector3(0f, 0f, 0f);
 
 
-        public static float ProcessLineHeights(SplineC tSpline, ref Vector3 tVect, ref Vector3 POS, float tDistance, Terraforming.TempTerrainData TTD, float PrevDesiredHeight)
+        public static float ProcessLineHeights(RoadSpline tSpline, ref Vector3 tVect, ref Vector3 POS, float tDistance, Terraforming.TempTerrainData TTD, float PrevDesiredHeight)
         {
             Vector3 ShoulderR_rVect = new Vector3(0f, 0f, 0f);
             Vector3 ShoulderL_lVect = new Vector3(0f, 0f, 0f);
@@ -105,7 +105,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static float ProcessLineHeights_GetDesiredHeight(Vector3 tVect, ref Terraforming.TempTerrainData TTD, ref SplineC tSpline)
+        private static float ProcessLineHeights_GetDesiredHeight(Vector3 tVect, ref Terraforming.TempTerrainData TTD, ref RoadSpline tSpline)
         {
             return ((((tVect - TTD.TerrainPos).y) - tSpline.tRoad.opt_TerrainSubtract_Alt) / TTD.TerrainSize.y);
         }
@@ -146,7 +146,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        public static void ApplyTerrainModifications(SplineC _spline, Terraforming.TempTerrainData _TTD)
+        public static void ApplyTerrainModifications(RoadSpline _spline, Terraforming.TempTerrainData _TTD)
         {
             float Sep = _spline.road.RoadWidth() * 0.5f;
             float HeightSep = Sep + (_spline.road.matchHeightsDistance * 0.5f);
@@ -694,7 +694,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref Terraforming.TempTerrainData _TTD, ref SplineC _spline)
+        private static Construction2DRect SetDetailCoords(float _param, ref Vector3 _vect1, ref Vector3 _POS1, ref Vector3 _vect2, ref Vector3 POS2, float _sep, float _treeSep, ref Terraforming.TempTerrainData _TTD, ref RoadSpline _spline)
         {
             Vector3 lVect1far = default(Vector3);
             Vector3 rVect1far = default(Vector3);
@@ -989,7 +989,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static float ProcessCoordinateGrabber(ref float _param, ref SplineC _spline, ref Terraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
+        private static float ProcessCoordinateGrabber(ref float _param, ref RoadSpline _spline, ref Terraforming.TempTerrainData _TTD, ref List<TerrainBoundsMaker> _terrainList, ref int[] _XY, bool _isBridge, bool _isTunnel)
         {
             int MinX = _XY[0];
             int MinY = _XY[1];

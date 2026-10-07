@@ -2,21 +2,23 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Scripting.APIUpdating;
 #endregion
 
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(SplineC))]
-    public class SplineCEditor : Editor
+    [CustomEditor(typeof(RoadSpline))]
+    [MovedFrom(true, sourceClassName: "SplineCEditor")]
+    public class RoadSplineEditor : Editor
     {
-        private SplineC spline;
+        private RoadSpline spline;
         private int browseNode = 0;
 
 
         private void OnEnable()
         {
-            spline = (SplineC)target;
+            spline = (RoadSpline)target;
         }
 
 

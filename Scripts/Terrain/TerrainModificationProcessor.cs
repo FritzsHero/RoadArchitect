@@ -5,7 +5,7 @@ namespace RoadArchitect.Threading
 {
     public static class TerrainModificationProcessor
     {
-        public static void RunMe(ref List<Terraforming.TempTerrainData> _TTDList, SplineC _spline, Road _road)
+        public static void RunMe(ref List<Terraforming.TempTerrainData> _TTDList, RoadSpline _spline, Road _road)
         {
             float Step = (_road.roadDefinition * 0.4f) / _spline.distance;
             if (Step > 2f)

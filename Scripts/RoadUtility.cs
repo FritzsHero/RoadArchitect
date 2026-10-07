@@ -411,7 +411,7 @@ namespace RoadArchitect
             Vector3 terrainSize = _terrain.terrainData.size;
             foreach (Road road in roadObjects)
             {
-                SplineC spline = road.spline;
+                RoadSpline spline = road.spline;
                 int tCount = spline.RoadDefKeysArray.Length;
 
                 Vector3 POS1 = default(Vector3);

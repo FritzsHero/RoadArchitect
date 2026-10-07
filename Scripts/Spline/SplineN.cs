@@ -38,7 +38,7 @@ namespace RoadArchitect
         public float maxSplination = 1f;
 
         public int idOnSpline = -1;
-        public SplineC spline;
+        public RoadSpline spline;
         //Unique ID
         public string uID;
         public SplineN intersectionOtherNode;

@@ -13,7 +13,7 @@ namespace RoadArchitect
         public bool isClosed = false;
         public float distance = -1f;
         public Vector3 mousePos = new Vector3(0f, 0f, 0f);
-        public SplineC spline;
+        public RoadSpline spline;
         // Gizmos
         public bool isDrawingGizmos = false;
         private float gizmoDrawMeters = 1f;

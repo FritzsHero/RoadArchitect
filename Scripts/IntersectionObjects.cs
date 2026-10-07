@@ -70,7 +70,7 @@ namespace RoadArchitect
             prefab = EngineIntegration.LoadAssetFromPath<GameObject>(Storage.GetRoadArchitectDirectory() + "/Prefabs/Signs/StopSignAllway.prefab");
 
             RoadIntersection roadIntersection = _masterGameObj.GetComponent<RoadIntersection>();
-            SplineC spline = roadIntersection.node1.spline;
+            RoadSpline spline = roadIntersection.node1.spline;
 
             GameObject tObj = null;
             //Vector3 xDir = default(Vector3);
@@ -187,7 +187,7 @@ namespace RoadArchitect
 
 
         /// <summary> Returns rotation for stop sign right right </summary>
-        private static Vector3 StopSignGetRotRR(RoadIntersection _intersection, SplineC _spline)
+        private static Vector3 StopSignGetRotRR(RoadIntersection _intersection, RoadSpline _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRL, _intersection.cornerRR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time - tDist, 0f, 1f);
@@ -197,7 +197,7 @@ namespace RoadArchitect
 
 
         /// <summary> Returns rotation for stop sign left left </summary>
-        private static Vector3 StopSignGetRotLL(RoadIntersection _intersection, SplineC _spline)
+        private static Vector3 StopSignGetRotLL(RoadIntersection _intersection, RoadSpline _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerLR, _intersection.cornerLL) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLL, _intersection.cornerRR))) / _spline.distance;
             float p = Mathf.Clamp(_intersection.node1.time + tDist, 0f, 1f);
@@ -207,7 +207,7 @@ namespace RoadArchitect
 
 
         /// <summary> Returns rotation for stop sign right left </summary>
-        private static Vector3 StopSignGetRotRL(RoadIntersection _intersetion, SplineC _spline)
+        private static Vector3 StopSignGetRotRL(RoadIntersection _intersetion, RoadSpline _spline)
         {
             float tDist = ((Vector3.Distance(_intersetion.cornerLL, _intersetion.cornerRL) / 2f) + (0.025f * Vector3.Distance(_intersetion.cornerLR, _intersetion.cornerRL))) / _spline.distance;
             float p = -1f;
@@ -233,7 +233,7 @@ namespace RoadArchitect
 
 
         /// <summary> Returns rotation for stop sign left right </summary>
-        private static Vector3 StopSignGetRotLR(RoadIntersection _intersection, SplineC _spline)
+        private static Vector3 StopSignGetRotLR(RoadIntersection _intersection, RoadSpline _spline)
         {
             float tDist = ((Vector3.Distance(_intersection.cornerRR, _intersection.cornerLR) / 2f) + (0.025f * Vector3.Distance(_intersection.cornerLR, _intersection.cornerRL))) / _spline.distance;
             float p = -1f;
@@ -264,7 +264,7 @@ namespace RoadArchitect
         public static void CreateTrafficLightBases(GameObject _masterGameObj, bool _isTrafficLight1 = true)
         {
             RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
-            SplineC spline = intersection.node1.spline;
+            RoadSpline spline = intersection.node1.spline;
             bool isRB = true;
 
             //float RoadWidth = spline.road.RoadWidth();
@@ -684,7 +684,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotRL(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotRL(RoadIntersection _intersection, RoadSpline _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -703,7 +703,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotLR(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotLR(RoadIntersection _intersection, RoadSpline _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -722,7 +722,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotRR(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotRR(RoadIntersection _intersection, RoadSpline _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -744,7 +744,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 TrafficLightBaseGetRotLL(RoadIntersection _intersection, SplineC _spline, float _distFromCorner, bool _isOverridingRegular = false)
+        private static Vector3 TrafficLightBaseGetRotLL(RoadIntersection _intersection, RoadSpline _spline, float _distFromCorner, bool _isOverridingRegular = false)
         {
             Vector3 rotation = default(Vector3);
             if (!_intersection.isRegularPoleAlignment && !_isOverridingRegular)
@@ -771,7 +771,7 @@ namespace RoadArchitect
         private static void CreateTrafficLightMains(GameObject _masterGameObj, GameObject _RR, GameObject _RL, GameObject _LL, GameObject _LR)
         {
             RoadIntersection roadIntersection = _masterGameObj.GetComponent<RoadIntersection>();
-            SplineC tSpline = roadIntersection.node1.spline;
+            RoadSpline tSpline = roadIntersection.node1.spline;
 
             float tDist = (Vector3.Distance(roadIntersection.cornerRL, roadIntersection.cornerRR) / 2f) / tSpline.distance;
             Vector3 tan = tSpline.GetSplineValue(roadIntersection.node1.time + tDist, true);
@@ -842,7 +842,7 @@ namespace RoadArchitect
         private static void ProcessPole(GameObject _masterGameObj, GameObject _obj, Vector3 _tan, int _corner, float _interDist)
         {
             RoadIntersection intersection = _masterGameObj.GetComponent<RoadIntersection>();
-            SplineC spline = intersection.node1.spline;
+            RoadSpline spline = intersection.node1.spline;
 
             //float RoadWidth = tSpline.road.RoadWidth();
             float LaneWidth = spline.road.laneWidth;
@@ -1441,7 +1441,7 @@ namespace RoadArchitect
         public static void GetCornerVectors_Test(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR)
         {
             SplineN tNode = null;
-            SplineC tSpline = null;
+            RoadSpline tSpline = null;
       
             tNode = roadIntersection.Node1;
             tSpline = tNode.spline;

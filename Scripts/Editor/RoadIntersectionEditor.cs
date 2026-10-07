@@ -1207,7 +1207,7 @@ namespace RoadArchitect
                 {
                     if (!intersection.isSameSpline)
                     {
-                        intersection.node1.spline.road.PiggyBacks = new SplineC[1];
+                        intersection.node1.spline.road.PiggyBacks = new RoadSpline[1];
                         intersection.node1.spline.road.PiggyBacks[0] = intersection.node2.spline;
                     }
                     intersection.node1.spline.road.isUpdateRequired = true;

@@ -14,7 +14,7 @@ namespace RoadArchitect.Threading
         public static void BuildPreliminaryGeometry(Road _road)
         {
             #region "Vars"
-            SplineC spline = _road.spline;
+            RoadSpline spline = _road.spline;
             //Road,shoulder,ramp and lane widths:
             float roadWidth = _road.RoadWidth();
             float shoulderWidth = _road.shoulderWidth;
@@ -2783,7 +2783,7 @@ namespace RoadArchitect.Threading
         #region "Intersection Prelim"
         private static void RoadJobPrelimInter(ref Road _road)
         {
-            SplineC spline = _road.spline;
+            RoadSpline spline = _road.spline;
             float roadWidth = _road.RoadWidth();
             float shoulderWidth = _road.shoulderWidth;
             float roadSeperation = roadWidth / 2f;
@@ -3793,7 +3793,7 @@ namespace RoadArchitect.Threading
             Vector3 RampR_PrevL = default(Vector3);
             Vector3 RampL_PrevR = default(Vector3);
             Vector3 RampL_PrevL = default(Vector3);
-            SplineC tSpline = _road.spline;
+            RoadSpline tSpline = _road.spline;
             //Road width:
             float RoadWidth = _road.RoadWidth();
             float ShoulderWidth = _road.shoulderWidth;
@@ -6890,7 +6890,7 @@ namespace RoadArchitect.Threading
 
 
         #region "Set vector heights"
-        private static void SetVectorHeight2(ref Vector3 _worldVector, ref float _p, ref List<KeyValuePair<float, float>> _list, ref SplineC _spline)
+        private static void SetVectorHeight2(ref Vector3 _worldVector, ref float _p, ref List<KeyValuePair<float, float>> _list, ref RoadSpline _spline)
         {
             int mCount = _list.Count;
             int index = 0;

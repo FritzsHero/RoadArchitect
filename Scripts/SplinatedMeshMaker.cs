@@ -99,7 +99,7 @@ namespace RoadArchitect.Splination
         public Vector3 CustomRotation = default(Vector3);
         public Vector3 StartPos = default(Vector3);
         public Vector3 EndPos = default(Vector3);
-        public SplineC spline = null;
+        public RoadSpline spline = null;
         public SplineN node = null;
         public AxisTypeEnum Axis = AxisTypeEnum.X;
 
@@ -161,7 +161,7 @@ namespace RoadArchitect.Splination
         #endregion
 
 
-        public void Init(SplineC _spline, SplineN _node, Transform _transform)
+        public void Init(RoadSpline _spline, SplineN _node, Transform _transform)
         {
             spline = _spline;
             node = _node;

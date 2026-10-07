@@ -251,7 +251,7 @@ namespace RoadArchitect
             {
                 if (!roadIntersection.isSameSpline)
                 {
-                    roadIntersection.node1.spline.road.PiggyBacks = new SplineC[4];
+                    roadIntersection.node1.spline.road.PiggyBacks = new RoadSpline[4];
                     roadIntersection.node1.spline.road.PiggyBacks[0] = roadIntersection.node2.spline;
 
                     roadIntersection.node1.spline.road.PiggyBacks[1] = roadIntersection.node1.spline;
@@ -271,7 +271,7 @@ namespace RoadArchitect
             Vector3[] tVects = new Vector3[4];
             SplineN tNode;
             tNode = _roadIntersection.node1;
-            SplineC tSpline = tNode.spline;
+            RoadSpline tSpline = tNode.spline;
 
             //RR = Node1 - 5, Node2 + 5
             //RL = Node1 + 5, Node2 + 5
@@ -417,7 +417,7 @@ namespace RoadArchitect
             {
                 tNode = _roadIntersection.node2;
             }
-            SplineC tSpline = tNode.spline;
+            RoadSpline tSpline = tNode.spline;
 
             float tOffset = 7f;
             float tPos1 = tNode.time - (tOffset / tSpline.distance);
@@ -448,7 +448,7 @@ namespace RoadArchitect
             {
                 tNode = _roadIntersection.node2;
             }
-            SplineC tSpline = tNode.spline;
+            RoadSpline tSpline = tNode.spline;
             Vector3 NodePos = tNode.transform.position;
 
             float tOffset = tNode.spline.road.RoadWidth();
@@ -846,10 +846,10 @@ namespace RoadArchitect
             }
 
             //Determine most relevant spline:
-            SplineC n1Spline = n1.spline;
-            SplineC n2Spline = n2.spline;
-            SplineC n3Spline = n3.spline;
-            SplineC n4Spline = null;
+            RoadSpline n1Spline = n1.spline;
+            RoadSpline n2Spline = n2.spline;
+            RoadSpline n3Spline = n3.spline;
+            RoadSpline n4Spline = null;
             if (n4 != null)
             {
                 n4Spline = n4.spline;
@@ -901,7 +901,7 @@ namespace RoadArchitect
 
 
         #region "Intersection creation helpers"
-        private static float GetLongestSplineDistance(SplineC _spline1, SplineC _spline2)
+        private static float GetLongestSplineDistance(RoadSpline _spline1, RoadSpline _spline2)
         {
             if (_spline1.distance > _spline2.distance)
             {
@@ -928,7 +928,7 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 GetFourCornerPoint(ref SplineC _spline, ref SplineN _node, RoadIntersection _roadIntersection)
+        private static Vector3 GetFourCornerPoint(ref RoadSpline _spline, ref SplineN _node, RoadIntersection _roadIntersection)
         {
             SplineN iNode;
             if (_node.connectedNode.Contains(_roadIntersection.node1))

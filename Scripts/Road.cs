@@ -35,12 +35,12 @@ namespace RoadArchitect
         [System.NonSerialized]
         public string editorTitleString = "";
 
-        public SplineC spline;
+        public RoadSpline spline;
 
         public int MostRecentNodeCount = -1;
         public GameObject splineObject;
         public RoadSystem roadSystem;
-        public SplineC[] PiggyBacks = null;
+        public RoadSpline[] PiggyBacks = null;
         public bool isEditorProgressBar = false;
         //Unique ID
         public string UID;
@@ -1056,13 +1056,13 @@ namespace RoadArchitect
 
                 if (PiggyBacks != null)
                 {
-                    SplineC tPiggy = PiggyBacks[0];
-                    SplineC[] NewPiggys = null;
+                    RoadSpline tPiggy = PiggyBacks[0];
+                    RoadSpline[] NewPiggys = null;
 
                     PiggyBacks[0] = null;
                     if (PiggyBacks.Length > 1)
                     {
-                        NewPiggys = new SplineC[PiggyBacks.Length - 1];
+                        NewPiggys = new RoadSpline[PiggyBacks.Length - 1];
                         for (int i = 1; i < PiggyBacks.Length; i++)
                         {
                             NewPiggys[i - 1] = PiggyBacks[i];
