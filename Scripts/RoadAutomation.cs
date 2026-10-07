@@ -47,12 +47,12 @@ namespace RoadArchitect.Roads
         /// </summary>
         /// <param name="RS">The road system to create nodes on.</param>
         /// <param name="_nodePosition">The location of the newly created node.</param>
-        public static SplineN CreateNodeProgrammatically(Road _road, Vector3 _nodePosition)
+        public static SplineNode CreateNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             int splineChildCount = _road.spline.transform.childCount;
             //Add the node
             GameObject nodeObj = new GameObject("Node" + (splineChildCount + 1).ToString());
-            SplineN node = nodeObj.AddComponent<SplineN>();
+            SplineNode node = nodeObj.AddComponent<SplineNode>();
 
             //Set node location:
             //Make sure it doesn't try to create a node below 0 height
@@ -81,10 +81,10 @@ namespace RoadArchitect.Roads
         /// </summary>
         /// <param name="_road">The road system to insert nodes in.</param>
         /// <param name="_nodePosition">The location of the newly inserted node.</param>
-        public static SplineN InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
+        public static SplineNode InsertNodeProgrammatically(Road _road, Vector3 _nodePosition)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineN>();
+            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineNode>();
             nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             //Set node location:
@@ -121,7 +121,7 @@ namespace RoadArchitect.Roads
             //Figure out where to insert the node:
             for (int index = 0; index < nodesCount; index++)
             {
-                SplineN node = _road.spline.nodes[index];
+                SplineNode node = _road.spline.nodes[index];
                 if (!isInsertZero && !isInsertEnded)
                 {
                     if (param > node.time)
@@ -135,7 +135,7 @@ namespace RoadArchitect.Roads
                 _road.spline.nodes[index].idOnSpline += 1;
             }
 
-            SplineN newNode = nodeObj.AddComponent<SplineN>();
+            SplineNode newNode = nodeObj.AddComponent<SplineNode>();
             newNode.spline = _road.spline;
             newNode.idOnSpline = start;
             newNode.pos = _nodePosition;
@@ -206,16 +206,16 @@ namespace RoadArchitect.Roads
             }
 
             //See if any end point nodes are on top of each other already since T might not intersect all the time.:
-            List<KeyValuePair<SplineN, SplineN>> keyValuePairs = new List<KeyValuePair<SplineN, SplineN>>();
+            List<KeyValuePair<SplineNode, SplineNode>> keyValuePairs = new List<KeyValuePair<SplineNode, SplineNode>>();
             foreach (Road road in roads)
             {
-                foreach (SplineN intersectionNode1 in _road.spline.nodes)
+                foreach (SplineNode intersectionNode1 in _road.spline.nodes)
                 {
                     if (intersectionNode1.isIntersection || !intersectionNode1.IsLegitimate())
                     {
                         continue;
                     }
-                    foreach (SplineN intersectionNode2 in road.spline.nodes)
+                    foreach (SplineNode intersectionNode2 in road.spline.nodes)
                     {
                         if (intersectionNode2.isIntersection || !intersectionNode2.IsLegitimate())
                         {
@@ -226,13 +226,13 @@ namespace RoadArchitect.Roads
                             //Only do T intersections and let the next algorithm handle the +, since T might not intersect all the time.
                             if (intersectionNode1.isEndPoint || intersectionNode2.isEndPoint)
                             {
-                                keyValuePairs.Add(new KeyValuePair<SplineN, SplineN>(intersectionNode1, intersectionNode2));
+                                keyValuePairs.Add(new KeyValuePair<SplineNode, SplineNode>(intersectionNode1, intersectionNode2));
                             }
                         }
                     }
                 }
             }
-            foreach (KeyValuePair<SplineN, SplineN> KVP in keyValuePairs)
+            foreach (KeyValuePair<SplineNode, SplineNode> KVP in keyValuePairs)
             {
                 // Creates fresh intersection
                 //Now create the fucking intersection:
@@ -303,13 +303,13 @@ namespace RoadArchitect.Roads
                                     }
                                 }
 
-                                SplineN IntersectionNode1 = null;
-                                SplineN IntersectionNode2 = null;
+                                SplineNode IntersectionNode1 = null;
+                                SplineNode IntersectionNode2 = null;
                                 Vector3 IntersectionPoint3D = new Vector3(intersectPoint2D.x, height, intersectPoint2D.y);
                                 //Debug.Log("Instersect found road: " + xRoad.transform.name + " at point: " + IntersectionPoint3D.ToString());
 
                                 //Check primary road if any nodes are nearby and usable for intersection
-                                foreach (SplineN node in _road.spline.nodes)
+                                foreach (SplineNode node in _road.spline.nodes)
                                 {
                                     if (node.IsLegitimate())
                                     {
@@ -324,7 +324,7 @@ namespace RoadArchitect.Roads
                                 }
 
                                 //Check secondary road if any nodes are nearby and usable for intersection
-                                foreach (SplineN node in road.spline.nodes)
+                                foreach (SplineNode node in road.spline.nodes)
                                 {
                                     if (node.IsLegitimate())
                                     {

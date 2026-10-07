@@ -1,5 +1,6 @@
 #region "Imports"
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 using System.Collections.Generic;
 using RoadArchitect.Splination;
 using RoadArchitect.EdgeObjects;
@@ -8,7 +9,8 @@ using RoadArchitect.EdgeObjects;
 
 namespace RoadArchitect
 {
-    public class SplineN : MonoBehaviour
+    [MovedFrom(true, sourceClassName: "SplineN")]
+    public class SplineNode : MonoBehaviour
     {
         #region "Vars"
         /// <summary> Stores the position data </summary>
@@ -24,10 +26,10 @@ namespace RoadArchitect
 
         public float tempSegmentTime = 0f;
         public bool isSpecialEndNode = false;
-        public SplineN specialNodeCounterpart = null;
-        public SplineN specialNodeCounterpartMaster = null;
+        public SplineNode specialNodeCounterpart = null;
+        public SplineNode specialNodeCounterpartMaster = null;
         /// <summary> Connected nodes array </summary>
-        public SplineN[] originalConnectionNodes = null;
+        public SplineNode[] originalConnectionNodes = null;
 
         public bool isSpecialEndNodeIsStart = false;
         public bool isSpecialEndNodeIsEnd = false;
@@ -41,7 +43,7 @@ namespace RoadArchitect
         public RoadSpline spline;
         //Unique ID
         public string uID;
-        public SplineN intersectionOtherNode;
+        public SplineNode intersectionOtherNode;
         public string gradeToNext;
         public string gradeToPrev;
         public float gradeToNextValue;
@@ -58,7 +60,7 @@ namespace RoadArchitect
         /// <summary> Contains previous and next node ids </summary>
         public List<int> connectedID;
         /// <summary> Contains previous and next node </summary>
-        public List<SplineN> connectedNode;
+        public List<SplineNode> connectedNode;
         public bool isIgnore = false;
 
 
@@ -67,7 +69,7 @@ namespace RoadArchitect
         public bool isTunnelStart = false;
         public bool isTunnelEnd = false;
         public bool isTunnelMatched = false;
-        public SplineN tunnelCounterpartNode = null;
+        public SplineNode tunnelCounterpartNode = null;
         #endregion
 
 
@@ -76,7 +78,7 @@ namespace RoadArchitect
         public bool isBridgeStart = false;
         public bool isBridgeEnd = false;
         public bool isBridgeMatched = false;
-        public SplineN bridgeCounterpartNode = null;
+        public SplineNode bridgeCounterpartNode = null;
 
         public RoadIntersection intersection = null;
         public iConstructionMaker intersectionConstruction;
@@ -793,8 +795,8 @@ namespace RoadArchitect
             {
                 return;
             }
-            SplineN PrevNode = null;
-            SplineN NextNode = null;
+            SplineNode PrevNode = null;
+            SplineNode NextNode = null;
 
             if (_isAddToEnd && spline.GetNodeCount() > 0)
             {
@@ -892,13 +894,13 @@ namespace RoadArchitect
             connectedID = null;
             connectedID = new List<int>();
             connectedNode = null;
-            connectedNode = new List<SplineN>();
+            connectedNode = new List<SplineNode>();
         }
 
 
         public void BreakConnection()
         {
-            SplineN tNode2 = specialNodeCounterpart;
+            SplineNode tNode2 = specialNodeCounterpart;
 
             if (isSpecialEndNodeIsStart)
             {
@@ -957,7 +959,7 @@ namespace RoadArchitect
             }
 
             //Figure out min splination:
-            SplineN node = null;
+            SplineNode node = null;
             minSplination = time;
             for (int index = idOnSpline; index >= 0; index--)
             {
@@ -1288,7 +1290,7 @@ namespace RoadArchitect
             if (isBridgeEnd)
             {
                 int nodeCount = spline.GetNodeCount();
-                SplineN node = null;
+                SplineNode node = null;
                 for (int i = 1; i < (nodeCount - 1); i++)
                 {
                     node = spline.nodes[i];
@@ -1336,7 +1338,7 @@ namespace RoadArchitect
             isBridgeMatched = false;
             bridgeCounterpartNode = null;
             int StartI = idOnSpline + 1;
-            SplineN tNode = null;
+            SplineNode tNode = null;
             for (int i = StartI; i < nodeCount; i++)
             {
                 tNode = spline.nodes[i];
@@ -1521,7 +1523,7 @@ namespace RoadArchitect
             if (isTunnelEnd)
             {
                 int nodeCount = spline.GetNodeCount();
-                SplineN node = null;
+                SplineNode node = null;
                 for (int index = 1; index < (nodeCount - 1); index++)
                 {
                     node = spline.nodes[index];
@@ -1569,7 +1571,7 @@ namespace RoadArchitect
             isTunnelMatched = false;
             tunnelCounterpartNode = null;
             int StartI = idOnSpline + 1;
-            SplineN node = null;
+            SplineNode node = null;
             for (int i = StartI; i < mCount; i++)
             {
                 node = spline.nodes[i];

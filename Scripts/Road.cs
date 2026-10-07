@@ -586,9 +586,9 @@ namespace RoadArchitect
 
             //In here for intersection patching purposes:
             int nodeCount = spline.GetNodeCount();
-            SplineN node = null;
-            SplineN node1 = null;
-            SplineN node2 = null;
+            SplineNode node = null;
+            SplineNode node1 = null;
+            SplineNode node2 = null;
 
 
             if (spline.CheckInvalidNodeCount())
@@ -992,7 +992,7 @@ namespace RoadArchitect
 
             isEditorConstructing = false;
             int nodeCount = spline.GetNodeCount();
-            SplineN node;
+            SplineNode node;
             for (int i = 0; i < nodeCount; i++)
             {
                 node = spline.nodes[i];

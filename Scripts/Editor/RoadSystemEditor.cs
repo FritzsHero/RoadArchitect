@@ -27,7 +27,7 @@ namespace RoadArchitect
         //	//Editor only camera variables:
         private RoadIntersection[] intersections = null;
         private int intersectionIndex = 0;
-        private SplineN[] bridges = null;
+        private SplineNode[] bridges = null;
         private int bridgesIndex = 0;
         private bool isBridgeInitialized = false;
         private bool isIntersectionInitialized = false;
@@ -222,9 +222,9 @@ namespace RoadArchitect
             if (!isBridgeInitialized)
             {
                 isBridgeInitialized = true;
-                SplineN[] nodes = roadSystem.transform.GetComponentsInChildren<SplineN>();
-                List<SplineN> nodeList = new List<SplineN>();
-                foreach (SplineN node in nodes)
+                SplineNode[] nodes = roadSystem.transform.GetComponentsInChildren<SplineNode>();
+                List<SplineNode> nodeList = new List<SplineNode>();
+                foreach (SplineNode node in nodes)
                 {
                     if (node.isBridgeStart && node.isBridgeMatched)
                     {

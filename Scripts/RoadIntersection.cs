@@ -10,8 +10,8 @@ namespace RoadArchitect
     public class RoadIntersection : MonoBehaviour
     {
         #region "Vars"
-        public SplineN node1;
-        public SplineN node2;
+        public SplineNode node1;
+        public SplineNode node2;
 
         public string node1uID;
         public string node2uID;
@@ -172,7 +172,7 @@ namespace RoadArchitect
 
         #region "Setup"
         /// <summary> Links nodes and intersection </summary>
-        public void Setup(SplineN _node1, SplineN _node2)
+        public void Setup(SplineNode _node1, SplineNode _node2)
         {
             if (_node1.spline == _node2.spline)
             {
@@ -215,7 +215,7 @@ namespace RoadArchitect
 
 
         /// <summary> Deletes Meshes based on road name and the centermarker if _node is intersections node1 </summary>
-        public void DeleteRelevantChildren(SplineN _node, string _string)
+        public void DeleteRelevantChildren(SplineNode _node, string _string)
         {
             Transform transformChild;
             int childCount = transform.childCount;

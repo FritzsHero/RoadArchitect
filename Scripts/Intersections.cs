@@ -6,7 +6,7 @@ namespace RoadArchitect
 {
     public static class Intersections
     {
-        public static GameObject CreateIntersection(SplineN _node1, SplineN _node2)
+        public static GameObject CreateIntersection(SplineNode _node1, SplineNode _node2)
         {
             float RoadMod = 10f;
             GameObject SystemObj = _node1.transform.parent.parent.parent.gameObject;
@@ -45,8 +45,8 @@ namespace RoadArchitect
             roadIntersection.isSecondSpecialFirst = false;
             roadIntersection.isSecondSpecialLast = false;
 
-            SplineN tNode1 = null;
-            SplineN tNode2 = null;
+            SplineNode tNode1 = null;
+            SplineNode tNode2 = null;
 
 
             // same spline
@@ -92,7 +92,7 @@ namespace RoadArchitect
                 roadIntersection.intersectionType = RoadIntersection.IntersectionTypeEnum.ThreeWay;
             }
 
-            SplineN zNode = null;
+            SplineNode zNode = null;
             if (tNode1.isEndPoint)
             {
                 bool isFirstNode = false;
@@ -269,7 +269,7 @@ namespace RoadArchitect
         public static Vector3[] GetCornerVectorsTest(RoadIntersection _roadIntersection)
         {
             Vector3[] tVects = new Vector3[4];
-            SplineN tNode;
+            SplineNode tNode;
             tNode = _roadIntersection.node1;
             RoadSpline tSpline = tNode.spline;
 
@@ -408,7 +408,7 @@ namespace RoadArchitect
         private static Vector3[] GetCornerVectors(RoadIntersection _roadIntersection, bool _isPrimary = true)
         {
             Vector3[] tVects = new Vector3[4];
-            SplineN tNode;
+            SplineNode tNode;
             if (_isPrimary)
             {
                 tNode = _roadIntersection.node1;
@@ -439,7 +439,7 @@ namespace RoadArchitect
         private static Vector3[] GetExtendedVectors(RoadIntersection _roadIntersection, bool _isPrimary = true)
         {
             Vector3[] tVects = new Vector3[4];
-            SplineN tNode;
+            SplineNode tNode;
             if (_isPrimary)
             {
                 tNode = _roadIntersection.node1;
@@ -810,10 +810,10 @@ namespace RoadArchitect
             }
 
             //Contains int IDs of connected nodes:			
-            List<SplineN> tList = new List<SplineN>();
+            List<SplineNode> tList = new List<SplineNode>();
             //Get all connected nodes on intersection node1:
             int cCount = _roadIntersection.node1.connectedID.Count;
-            SplineN tNode;
+            SplineNode tNode;
             for (int index = 0; index < cCount; index++)
             {
                 //tNode = GetNodeByID(_roadIntersection.node1.connectedID[index]);
@@ -835,7 +835,7 @@ namespace RoadArchitect
                 }
             }
             //Declare connected nodes:
-            SplineN n1, n2, n3, n4;
+            SplineNode n1, n2, n3, n4;
             n1 = tList[0];
             n2 = tList[1];
             n3 = tList[2];
@@ -914,10 +914,10 @@ namespace RoadArchitect
         }
 
 
-        private static SplineN GetNodeByID(int _ID)
+        private static SplineNode GetNodeByID(int _ID)
         {
-            Object[] SplineNodeObjects = EngineIntegration.FindObjectsByType<SplineN>();
-            foreach (SplineN tNode in SplineNodeObjects)
+            Object[] SplineNodeObjects = EngineIntegration.FindObjectsByType<SplineNode>();
+            foreach (SplineNode tNode in SplineNodeObjects)
             {
                 if (tNode.id == _ID)
                 {
@@ -928,9 +928,9 @@ namespace RoadArchitect
         }
 
 
-        private static Vector3 GetFourCornerPoint(ref RoadSpline _spline, ref SplineN _node, RoadIntersection _roadIntersection)
+        private static Vector3 GetFourCornerPoint(ref RoadSpline _spline, ref SplineNode _node, RoadIntersection _roadIntersection)
         {
-            SplineN iNode;
+            SplineNode iNode;
             if (_node.connectedNode.Contains(_roadIntersection.node1))
             {
                 iNode = _roadIntersection.node1;

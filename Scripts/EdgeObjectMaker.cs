@@ -14,7 +14,7 @@ namespace RoadArchitect.EdgeObjects
         #region "Vars"
         public bool isRequiringUpdate = false;
         public string UID = "";
-        public SplineN node = null;
+        public SplineNode node = null;
         public bool isDefault = false;
         public GameObject edgeObject = null;
         public string edgeObjectString = "";

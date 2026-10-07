@@ -2,6 +2,7 @@
 #region "Imports"
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Scripting.APIUpdating;
 using System.Collections.Generic;
 #endregion
 
@@ -14,11 +15,12 @@ using System.Collections.Generic;
 
 namespace RoadArchitect
 {
-    [CustomEditor(typeof(SplineN))]
-    public class SplineNEditor : Editor
+    [CustomEditor(typeof(SplineNode))]
+    [MovedFrom(true, sourceClassName: "SplineNEditor")]
+    public class SplineNodeEditor : Editor
     {
         #region "Vars"
-        private SplineN node;
+        private SplineNode node;
         private int count = -1;
         private int currentCount = 0;
         public bool isSplinatedObjectHelp = false;
@@ -26,8 +28,8 @@ namespace RoadArchitect
         private bool isRemovingAll = false;
         private float horizRoadMax = 0;
 
-        private SplineN node1 = null;
-        private SplineN node2 = null;
+        private SplineNode node1 = null;
+        private SplineNode node2 = null;
         private bool isCreatingIntersection = false;
 
 
@@ -220,7 +222,7 @@ namespace RoadArchitect
 
         private void OnEnable()
         {
-            node = (SplineN)target;
+            node = (SplineNode)target;
         }
 
 
@@ -337,7 +339,7 @@ namespace RoadArchitect
 
             EditorUtilities.DrawLine();
 
-            #region "Manuals on Top of SplineN Scripts"
+            #region "Manuals on Top of SplineNode Scripts"
             EditorGUILayout.LabelField(node.spline.road.name + "-" + node.name, EditorStyles.boldLabel);
 
             if (GUILayout.Button("Online manual", EditorStyles.miniButton, GUILayout.Width(128f)))
@@ -392,7 +394,7 @@ namespace RoadArchitect
             #endregion
 
 
-            if ((Selection.objects.Length == 1 && Selection.objects[0] is SplineN) || (node.specialNodeCounterpart == null && !node.isSpecialRoadConnPrimary))
+            if ((Selection.objects.Length == 1 && Selection.objects[0] is SplineNode) || (node.specialNodeCounterpart == null && !node.isSpecialRoadConnPrimary))
             {
                 //Do extrusion and edge objects overview:
                 DoExtAndEdgeOverview();
@@ -413,8 +415,8 @@ namespace RoadArchitect
                 EditorGUILayout.BeginVertical();
                 if (GUILayout.Button("Update road connection"))
                 {
-                    SplineN node1 = node.originalConnectionNodes[0];
-                    SplineN node2 = node.originalConnectionNodes[1];
+                    SplineNode node1 = node.originalConnectionNodes[0];
+                    SplineNode node2 = node.originalConnectionNodes[1];
                     node.specialNodeCounterpart.BreakConnection();
                     node.spline.road.UpdateRoad();
                     node1.spline.ActivateEndNodeConnection(node1, node2);
@@ -2044,8 +2046,8 @@ namespace RoadArchitect
             //Drag with left click release:
             if (Event.current.type == EventType.MouseUp && Event.current.button == 0)
             {
-                Object[] nodeObjects = EngineIntegration.FindObjectsByType<SplineN>();
-                foreach (SplineN xNode in nodeObjects)
+                Object[] nodeObjects = EngineIntegration.FindObjectsByType<SplineNode>();
+                foreach (SplineNode xNode in nodeObjects)
                 {
                     if (Vector3.Distance(xNode.transform.position, node.transform.position) < 2f)
                     {
@@ -2159,13 +2161,13 @@ namespace RoadArchitect
 
 
         #region "Triggers Intersections; Connections; Update"
-        private void TriggerRoadConnection(SplineN _node1, SplineN _node2)
+        private void TriggerRoadConnection(SplineNode _node1, SplineNode _node2)
         {
             node.spline.ActivateEndNodeConnection(_node1, _node2);
         }
 
 
-        private void TriggerIntersection(SplineN _node1, SplineN _node2)
+        private void TriggerIntersection(SplineNode _node1, SplineNode _node2)
         {
             isCreatingIntersection = true;
             node1 = _node1;

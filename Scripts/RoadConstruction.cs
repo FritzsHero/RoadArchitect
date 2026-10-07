@@ -82,7 +82,7 @@ namespace RoadArchitect.Threading
             bool isPastInter = false;
             bool isMaxIntersection = false;
             bool isWasPrevMaxInter = false;
-            SplineN xNode = null;
+            SplineNode xNode = null;
             float tInterSubtract = 4f;
             float tLastInterHeight = -4f;
             bool isOverridenRampR = false;
@@ -123,7 +123,7 @@ namespace RoadArchitect.Threading
             bool isShrinkRoadFNext = false;
             bool isShrinkRoadF = false;
             bool isNextInter = false;
-            SplineN currentNode = null;
+            SplineNode currentNode = null;
             int currentNodeID = -1;
             int previousNodeID = -1;
             int NodeCount = spline.GetNodeCount();
@@ -2581,7 +2581,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane0(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode)
+        private static void InterFinalizeiBLane0(ref SplineNode _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode)
         {
             if (_node.intersectionConstruction.isBLane0DoneFinal)
             {
@@ -2625,7 +2625,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane1(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is0LAdded)
+        private static void InterFinalizeiBLane1(ref SplineNode _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is0LAdded)
         {
             if (_node.intersectionConstruction.isBLane1DoneFinal)
             {
@@ -2682,7 +2682,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane2(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded)
+        private static void InterFinalizeiBLane2(ref SplineNode _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded)
         {
             if (_node.intersectionConstruction.isBLane2DoneFinal)
             {
@@ -2737,7 +2737,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void InterFinalizeiBLane3(ref SplineN _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded)
+        private static void InterFinalizeiBLane3(ref SplineNode _node, ref RoadIntersection _intersection, ref float _intHeight, bool _isLRtoRR, bool _isLLtoLR, bool _isFirstInterNode, ref bool _is2LAdded, ref bool _is1LAdded, ref bool _is0LAdded)
         {
             if (_is2LAdded && !_node.intersectionConstruction.isBLane2DoneFinal)
             {
@@ -2806,7 +2806,7 @@ namespace RoadArchitect.Threading
                 PreInter_RoadWidthMod = 5.5f;
             }
             float preInterDistance = (spline.RoadWidth * PreInter_RoadWidthMod) / spline.distance;
-            SplineN iNode;
+            SplineNode iNode;
             for (int j = 0; j < nodeCount; j++)
             {
                 if (!spline.nodes[j].isIntersection)
@@ -2861,8 +2861,8 @@ namespace RoadArchitect.Threading
             }
 
             //Now get the four points per intersection:
-            SplineN oNode1 = null;
-            SplineN oNode2 = null;
+            SplineNode oNode1 = null;
+            SplineNode oNode2 = null;
             float PreInterPrecision1 = -1f;
             float PreInterPrecision2 = -1f;
             Vector3 PreInterVect = default(Vector3);
@@ -3808,7 +3808,7 @@ namespace RoadArchitect.Threading
 
             float Step = _road.roadDefinition / tSpline.distance;
 
-            SplineN xNode = null;
+            SplineNode xNode = null;
             float tInterSubtract = 4f;
             float tLastInterHeight = -4f;
             #endregion
@@ -4128,7 +4128,7 @@ namespace RoadArchitect.Threading
         private static void RoadJobPrelimFinalizeInter(ref Road _road)
         {
             int nodeCount = _road.spline.GetNodeCount();
-            SplineN node;
+            SplineNode node;
             for (int index = 0; index < nodeCount; index++)
             {
                 node = _road.spline.nodes[index];
@@ -4337,7 +4337,7 @@ namespace RoadArchitect.Threading
         }
 
 
-        private static void Inter_OrganizeVertices(ref SplineN _node, ref Road _road)
+        private static void Inter_OrganizeVertices(ref SplineNode _node, ref Road _road)
         {
             iConstructionMaker iCon = _node.intersectionConstruction;
             RoadIntersection roadIntersection = _node.intersection;

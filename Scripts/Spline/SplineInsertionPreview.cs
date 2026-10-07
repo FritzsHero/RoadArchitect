@@ -31,7 +31,7 @@ namespace RoadArchitect
                 return;
             }
             SplinePreviewNode previewNode;
-            SplineN xNode;
+            SplineNode xNode;
             nodes.Clear();
             float tParam = spline.GetClosestParam(mousePos, false, true);
             bool bEndInsert = false;

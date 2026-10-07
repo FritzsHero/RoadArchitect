@@ -1440,7 +1440,7 @@ namespace RoadArchitect
 
         public static void GetCornerVectors_Test(RoadIntersection roadIntersection, out Vector3 tPosRR, out Vector3 tPosRL, out Vector3 tPosLL, out Vector3 tPosLR)
         {
-            SplineN tNode = null;
+            SplineNode tNode = null;
             RoadSpline tSpline = null;
       
             tNode = roadIntersection.Node1;

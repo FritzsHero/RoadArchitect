@@ -156,21 +156,21 @@ namespace RoadArchitect
         public List<RoadIntersection> iFMarkerPlates_tID;
 
         // Back lanes:
-        public List<SplineN> iBLane0s_nID;
-        public List<SplineN> iBLane1s_nID;
-        public List<SplineN> iBLane2s_nID;
-        public List<SplineN> iBLane3s_nID;
+        public List<SplineNode> iBLane0s_nID;
+        public List<SplineNode> iBLane1s_nID;
+        public List<SplineNode> iBLane2s_nID;
+        public List<SplineNode> iBLane3s_nID;
         // Front lanes:
-        public List<SplineN> iFLane0s_nID;
-        public List<SplineN> iFLane1s_nID;
-        public List<SplineN> iFLane2s_nID;
-        public List<SplineN> iFLane3s_nID;
+        public List<SplineNode> iFLane0s_nID;
+        public List<SplineNode> iFLane1s_nID;
+        public List<SplineNode> iFLane2s_nID;
+        public List<SplineNode> iFLane3s_nID;
         // Main plates:
-        public List<SplineN> iBMainPlates_nID;
-        public List<SplineN> iFMainPlates_nID;
+        public List<SplineNode> iBMainPlates_nID;
+        public List<SplineNode> iFMainPlates_nID;
         // Marker plates:
-        public List<SplineN> iBMarkerPlates_nID;
-        public List<SplineN> iFMarkerPlates_nID;
+        public List<SplineNode> iBMarkerPlates_nID;
+        public List<SplineNode> iFMarkerPlates_nID;
 
         // Back lanes:
         public List<Vector2[]> iBLane0s_uv;
@@ -252,11 +252,11 @@ namespace RoadArchitect
         public bool isInterseOn = true;
 
         public List<int> RoadCuts;
-        public List<SplineN> RoadCutNodes;
+        public List<SplineNode> RoadCutNodes;
         public List<int> ShoulderCutsR;
-        public List<SplineN> ShoulderCutsRNodes;
+        public List<SplineNode> ShoulderCutsRNodes;
         public List<int> ShoulderCutsL;
-        public List<SplineN> ShoulderCutsLNodes;
+        public List<SplineNode> ShoulderCutsLNodes;
         #endregion
 
 
@@ -310,9 +310,9 @@ namespace RoadArchitect
             cut_tangents_SR_world = new List<Vector4[]>();
             cut_tangents_SL_world = new List<Vector4[]>();
 
-            RoadCutNodes = new List<SplineN>();
-            ShoulderCutsRNodes = new List<SplineN>();
-            ShoulderCutsLNodes = new List<SplineN>();
+            RoadCutNodes = new List<SplineNode>();
+            ShoulderCutsRNodes = new List<SplineNode>();
+            ShoulderCutsLNodes = new List<SplineNode>();
 
             RoadConnections_verts = new List<Vector3[]>();
             RoadConnections_tris = new List<int[]>();
@@ -436,21 +436,21 @@ namespace RoadArchitect
             iBMarkerPlates_tID = new List<RoadIntersection>();
             iFMarkerPlates_tID = new List<RoadIntersection>();
 
-            iBLane0s_nID = new List<SplineN>();
-            iBLane1s_nID = new List<SplineN>();
-            iBLane2s_nID = new List<SplineN>();
-            iBLane3s_nID = new List<SplineN>();
+            iBLane0s_nID = new List<SplineNode>();
+            iBLane1s_nID = new List<SplineNode>();
+            iBLane2s_nID = new List<SplineNode>();
+            iBLane3s_nID = new List<SplineNode>();
             // Front lanes:
-            iFLane0s_nID = new List<SplineN>();
-            iFLane1s_nID = new List<SplineN>();
-            iFLane2s_nID = new List<SplineN>();
-            iFLane3s_nID = new List<SplineN>();
+            iFLane0s_nID = new List<SplineNode>();
+            iFLane1s_nID = new List<SplineNode>();
+            iFLane2s_nID = new List<SplineNode>();
+            iFLane3s_nID = new List<SplineNode>();
             // Main plates:
-            iBMainPlates_nID = new List<SplineN>();
-            iFMainPlates_nID = new List<SplineN>();
+            iBMainPlates_nID = new List<SplineNode>();
+            iFMainPlates_nID = new List<SplineNode>();
             // Marker plates:
-            iBMarkerPlates_nID = new List<SplineN>();
-            iFMarkerPlates_nID = new List<SplineN>();
+            iBMarkerPlates_nID = new List<SplineNode>();
+            iFMarkerPlates_nID = new List<SplineNode>();
             // }
 
             tTerrain = null;
@@ -1216,7 +1216,7 @@ namespace RoadArchitect
         //private void MeshSetup2IntersectionsFixNormals()
         //{
         //  int mCount = tRoad.spline.GetNodeCount();
-        //	SplineN tNode = null;
+        //	SplineNode tNode = null;
         //	RoadIntersection roadIntersection = null;
         //	float MaxDist = 0f;
         //	float[] tDists = new float[2];
@@ -1644,7 +1644,7 @@ namespace RoadArchitect
             }
 
             vCount = road.spline.GetNodeCount();
-            SplineN tNode = null;
+            SplineNode tNode = null;
             for (int index = 0; index < vCount; index++)
             {
                 tNode = road.spline.nodes[index];

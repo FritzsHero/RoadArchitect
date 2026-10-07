@@ -206,7 +206,7 @@ namespace RoadArchitect.Threading
             float tIntStrength = 0f;
             float tIntStrength2 = 0f;
             //bool bMaxIntersection = false;
-            SplineN xNode = null;
+            SplineNode xNode = null;
             float tIntHeight = 0f;
             float tIntHeight2 = 0f;
             RoadIntersection roadIntersection = null;

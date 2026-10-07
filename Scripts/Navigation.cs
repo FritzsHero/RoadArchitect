@@ -13,7 +13,7 @@ namespace RoadArchitect
             Object[] allSplines = EngineIntegration.FindObjectsByType<RoadSpline>();
 
             //Store connected spline nodes on each other:
-            SplineN node;
+            SplineNode node;
             foreach (RoadSpline spline in allSplines)
             {
                 int nodeCount = spline.nodes.Count;
@@ -43,7 +43,7 @@ namespace RoadArchitect
             Object[] allSplines = EngineIntegration.FindObjectsByType<RoadSpline>();
             foreach (RoadSpline spline in allSplines)
             {
-                foreach (SplineN node in spline.nodes)
+                foreach (SplineNode node in spline.nodes)
                 {
                     node.ResetNavigationData();
                 }

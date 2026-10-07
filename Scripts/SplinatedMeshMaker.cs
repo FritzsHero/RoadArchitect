@@ -100,7 +100,7 @@ namespace RoadArchitect.Splination
         public Vector3 StartPos = default(Vector3);
         public Vector3 EndPos = default(Vector3);
         public RoadSpline spline = null;
-        public SplineN node = null;
+        public SplineNode node = null;
         public AxisTypeEnum Axis = AxisTypeEnum.X;
 
         public RepeatUVTypeEnum RepeatUVType = RepeatUVTypeEnum.None;
@@ -161,7 +161,7 @@ namespace RoadArchitect.Splination
         #endregion
 
 
-        public void Init(RoadSpline _spline, SplineN _node, Transform _transform)
+        public void Init(RoadSpline _spline, SplineNode _node, Transform _transform)
         {
             spline = _spline;
             node = _node;
@@ -2062,7 +2062,7 @@ namespace RoadArchitect.Splination
             float tIntHeight = 0f;
             RoadIntersection roadIntersection = null;
             bool bIsPastInter = false;
-            SplineN xNode = null;
+            SplineNode xNode = null;
             List<float> tOrigHeights = new List<float>();
 
             //			List<Terrain> xTerrains = null;

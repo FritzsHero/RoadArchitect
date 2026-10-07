@@ -6,9 +6,9 @@ namespace RoadArchitect
     public static class Construction
     {
         /// <summary> Creates a node and performs validation checks </summary>
-        public static SplineN CreateNode(Road _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
+        public static SplineNode CreateNode(Road _road, bool _isSpecialEndNode = false, Vector3 _vectorSpecialLoc = default(Vector3), bool _isInterNode = false)
         {
-            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineN>();
+            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineNode>();
             GameObject nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
 
             if (!_isInterNode)
@@ -17,7 +17,7 @@ namespace RoadArchitect
             }
 
 
-            SplineN node = nodeObj.AddComponent<SplineN>();
+            SplineNode node = nodeObj.AddComponent<SplineNode>();
 
             if (_isSpecialEndNode)
             {
@@ -71,10 +71,10 @@ namespace RoadArchitect
         /// Determine which node is closest (up or down) on spline
         /// Place node, adjust all id on splines
         /// Setup spline </summary>
-        public static SplineN InsertNode(Road _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
+        public static SplineNode InsertNode(Road _road, bool _isForcedLoc = false, Vector3 _forcedLoc = default(Vector3), bool _isPreNode = false, int _insertIndex = -1, bool _isSpecialEndNode = false, bool _isInterNode = false)
         {
             GameObject nodeObj;
-            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineN>();
+            Object[] worldNodeCount = EngineIntegration.FindObjectsByType<SplineNode>();
             if (!_isForcedLoc)
             {
                 nodeObj = new GameObject("Node" + worldNodeCount.Length.ToString());
@@ -157,7 +157,7 @@ namespace RoadArchitect
             {
                 for (int index = 0; index < childCount; index++)
                 {
-                    SplineN xNode = _road.spline.nodes[index];
+                    SplineNode xNode = _road.spline.nodes[index];
                     if (!isZeroInsert && !isEndInsert)
                     {
                         if (param > xNode.time)
@@ -181,7 +181,7 @@ namespace RoadArchitect
             }
 
             // Create new node
-            SplineN node = nodeObj.AddComponent<SplineN>();
+            SplineNode node = nodeObj.AddComponent<SplineNode>();
             if (_isForcedLoc && !_isSpecialEndNode)
             {
                 node.isBridge = true;

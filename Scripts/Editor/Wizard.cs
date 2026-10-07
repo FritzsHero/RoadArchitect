@@ -42,7 +42,7 @@ namespace RoadArchitect
 
         private GUIStyle thumbStyle;
         private Vector2 scrollPos = new Vector2(0f, 25f);
-        private SplineN thisNode = null;
+        private SplineNode thisNode = null;
         private List<WizardObject> objectList = null;
         private bool isUsingNoGUI = false;
         public Rect rect;
@@ -230,7 +230,7 @@ namespace RoadArchitect
 
         #region "Init"
         /// <summary> Initializes the wizard </summary>
-        public void Initialize(WindowTypeEnum _windowType, SplineN _node)
+        public void Initialize(WindowTypeEnum _windowType, SplineNode _node)
         {
             if (rect.width < 1f && rect.height < 1f)
             {

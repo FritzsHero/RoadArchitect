@@ -286,7 +286,7 @@ namespace RoadArchitect.Tests
 
             //Now count road intersections, if not 5 throw error
             int intersctionsCount = 0;
-            foreach (SplineN node in road1.spline.nodes)
+            foreach (SplineNode node in road1.spline.nodes)
             {
                 if (node.isIntersection)
                 {
@@ -304,14 +304,14 @@ namespace RoadArchitect.Tests
         /// <summary> This will create an intersection if two nodes overlap on the road. Only good if the roads only overlap once. </summary>
         private static RoadIntersection UnitTestIntersectionHelper(Road _road1, Road _road2, RoadIntersection.iStopTypeEnum _iStopType, RoadIntersection.RoadTypeEnum _roadType)
         {
-            SplineN nodeInter1 = null;
-            SplineN nodeInter2 = null;
+            SplineNode nodeInter1 = null;
+            SplineNode nodeInter2 = null;
 
             // Loop through every node of _road1 and _road2
             // Finds the first nodes which are close enough for a intersection
-            foreach (SplineN node in _road1.spline.nodes)
+            foreach (SplineNode node in _road1.spline.nodes)
             {
-                foreach (SplineN node2 in _road2.spline.nodes)
+                foreach (SplineNode node2 in _road2.spline.nodes)
                 {
                     if (RootUtils.IsApproximately(Vector3.Distance(node.transform.position, node2.transform.position), 0f, 0.05f))
                     {
@@ -412,7 +412,7 @@ namespace RoadArchitect.Tests
 
             //Now count road intersections, if not 5 throw error
             int intersectionsCount = 0;
-            foreach (SplineN node in road1.spline.nodes)
+            foreach (SplineNode node in road1.spline.nodes)
             {
                 if (node.isIntersection)
                 {
