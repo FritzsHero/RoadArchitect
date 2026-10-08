@@ -16,7 +16,9 @@ using System.Collections.Generic;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(SplineNode))]
+    #if UNITY_2019_3_OR_NEWER
     [MovedFrom(true, sourceClassName: "SplineNEditor")]
+    #endif
     public class SplineNodeEditor : Editor
     {
         #region "Vars"

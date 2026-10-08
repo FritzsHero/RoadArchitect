@@ -8,7 +8,9 @@ using UnityEngine.Scripting.APIUpdating;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(SplineInsertionPreview))]
+    #if UNITY_2019_3_OR_NEWER
     [MovedFrom(true, sourceClassName: "SplineIEditor")]
+    #endif
     public class SplineInsertionPreviewEditor : Editor
     {
         private SplineInsertionPreview splineI;

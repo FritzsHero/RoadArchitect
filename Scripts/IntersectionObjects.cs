@@ -49,12 +49,16 @@ namespace RoadArchitect
                 if (_roadStyle == RoadSystem.RoadStyleEnum.Realistic)
                 {
                     RB.mass = 150f;
+                    #if UNITY_6000_0_OR_NEWER
                     RB.linearDamping = 20f;
+                    #endif
                 }
                 else
                 {
                     RB.mass = 20f;
+                    #if UNITY_6000_0_OR_NEWER
                     RB.linearDamping = 0.05f;
+                    #endif
                 }
                 RB.centerOfMass = new Vector3(0f, 0.2f, 0f);
                 RB.useGravity = true;

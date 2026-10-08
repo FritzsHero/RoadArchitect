@@ -49,14 +49,17 @@ namespace RoadArchitect
                 }
             }
             #else
-            string[] assemblyDefinitionPaths = Directory.GetFiles(
-                dataPath,
-                "RoadArchitect.asmdef",
-                SearchOption.AllDirectories);
+            string[] assemblyDefinitionPaths = Directory.GetFiles(Application.dataPath, "RoadArchitect.asmdef", SearchOption.AllDirectories);
             if (assemblyDefinitionPaths.Length > 0)
             {
                 assemblyFilePath = assemblyDefinitionPaths[0];
+                #if UNITY_2017_1_OR_NEWER
                 baseDirectory = Path.GetRelativePath(currentDirectory, Path.GetDirectoryName(assemblyDefinitionPaths[0]));
+                #else
+                var uri1 = new Uri(Path.GetFullPath(currentDirectory));
+                var uri2 = new Uri(Path.GetFullPath(Path.GetDirectoryName(assemblyDefinitionPaths[0])));
+                baseDirectory = uri1.MakeRelativeUri(uri2).ToString();
+                #endif
                 return baseDirectory;
             }
             #endif
@@ -92,7 +95,11 @@ namespace RoadArchitect
         /// <summary> Returns the path where Terrain History is saved. This is the RoadArchitect folder outside the Assets. </summary>
         public static string GetTerrainHistoryDirectory()
         {
+            #if UNITY_6000_0_OR_NEWER
             string path = Path.Combine(Environment.CurrentDirectory, "RoadArchitect", "TerrainHistory");
+            #else
+            string path = Path.Combine(Path.Combine(Environment.CurrentDirectory, "RoadArchitect"), "TerrainHistory");
+            #endif
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -208,20 +215,32 @@ namespace RoadArchitect
 
         public static string GetExtrudedSplineObjectLibraryFile(string _name)
         {
+            #if UNITY_6000_0_OR_NEWER
             return Path.Combine(GetAbsoluteRoadArchitectDirectory(), "Library", "ESO" + _name + ".rao");
+            #else
+            return Path.Combine(Path.Combine(GetAbsoluteRoadArchitectDirectory(), "Library"), "ESO" + _name + ".rao");
+            #endif
         }
 
 
         public static string GetEdgeObjectLibraryFile(string _name)
         {
+            #if UNITY_6000_0_OR_NEWER
             return Path.Combine(GetAbsoluteRoadArchitectDirectory(), "Library", "EOM" + _name + ".rao");
+            #else
+            return Path.Combine(Path.Combine(GetAbsoluteRoadArchitectDirectory(), "Library"), "EOM" + _name + ".rao");
+            #endif
         }
 
 
         /// <summary> Returns relative Assets/RoadArchitect/Editor/Library with OS compatible directory separator </summary>
         public static string GetLibraryDirectory()
         {
+            #if UNITY_6000_0_OR_NEWER
             string path = Path.Combine(GetRoadArchitectDirectoryCompatibleWithOS(), "Editor", "Library");
+            #else
+            string path = Path.Combine(Path.Combine(GetRoadArchitectDirectoryCompatibleWithOS(), "Editor"), "Library");
+            #endif
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

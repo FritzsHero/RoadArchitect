@@ -68,11 +68,10 @@ namespace RoadArchitect
             #if UNITY_2018_2_OR_NEWER
             return UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(_object);
             #else
-            return UnityEditor.PrefabUtility.GetPrefabParent(_object);
+            return (GameObject) UnityEditor.PrefabUtility.GetPrefabParent(_object);
             #endif
             #else
-            //TODO: Check if this is correct to do
-            //Return your object
+            // Return your object
             return null;
             #endif
         }

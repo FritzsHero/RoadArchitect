@@ -7,7 +7,9 @@ using System.Collections.Generic;
 
 namespace RoadArchitect
 {
+    #if UNITY_2019_3_OR_NEWER
     [MovedFrom(true, sourceClassName: "SplineI")]
+    #endif
     public class SplineInsertionPreview : MonoBehaviour
     {
         #region "Vars"

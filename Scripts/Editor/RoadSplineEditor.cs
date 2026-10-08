@@ -9,7 +9,9 @@ using UnityEngine.Scripting.APIUpdating;
 namespace RoadArchitect
 {
     [CustomEditor(typeof(RoadSpline))]
+    #if UNITY_2019_3_OR_NEWER
     [MovedFrom(true, sourceClassName: "SplineCEditor")]
+    #endif
     public class RoadSplineEditor : Editor
     {
         private RoadSpline spline;

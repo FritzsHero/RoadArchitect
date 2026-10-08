@@ -4,6 +4,64 @@ All notable changes to this RoadArchitect project will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Version: 4.0.0] - 2026.10.09
+### API Changes
+- Improved class names
+- Improved method names
+- Created Storage class
+- Deprecated TerrainHistoryUtility
+
+| Old Class     | New Class     | Info          |
+| ------------- | ------------- | ------------- |
+| `RoadTerrainInfo` |  | Removed unused class |
+| `SplineC` | `RoadSpline` | Added `MovedFrom` attribute for scene and prefab compatibility |
+| `SplineN` | `SplineNode` | Added `MovedFrom` attribute for scene and prefab compatibility |
+| `SplineF` | `SplineCreationPreview` | Added `MovedFrom` attribute for scene and prefab compatibility |
+| `SplineI` | `SplineInsertionPreview` | Added `MovedFrom` attribute for scene and prefab compatibility |
+| `SplineCEditor` | `RoadSplineEditor` | |
+| `SplineNEditor` | `SplineNodeEditor` | |
+| `SplineFEditor` | `SplineCreationPreviewEditor` | |
+| `SplineIEditor` | `SplineInsertionPreviewEditor` | |
+| `RoadCalcs1` | `RoadMeshGeometryJob` | |
+| `RoadCalcs2` | `RoadMeshSurfaceDataJob` | |
+| `RoadCreationT` | `RoadConstruction` | |
+| `TerrainCalcs` | `TerrainModificationJob` | |
+| `TerrainCalcsStatic` | `TerrainModificationProcessor` | |
+| `TerrainCalcsJob` | `TerrainModificationJob` | |
+| `TerraformingThreaded` | `TerrainModificationUtility` | |
+
+| Old Method    | New Method    |
+| ------------- | ------------- |
+| `TerrainModificationUtility.DoRects(...)` | `TerrainModificationUtility.ApplyTerrainModifications(...)` |
+| `RoadConstruction.RoadJobPrelim(...)` | `RoadConstruction.BuildPreliminaryGeometry(...)` |
+| `RoadConstruction.RoadJob1(...)` | `RoadConstruction.BuildGeometry(...)` |
+| `RoadConstruction.RoadJob2(...)` | `RoadConstruction.BuildSurfaceData(...)` |
+| `IntersectionObjects.CreateStopSignsAllWay(..., bool _isRB = true)` | `IntersectionObjects.CreateStopSignsAllWay(..., RoadSystem.RoadStyleEnum _roadStyle, bool _isRB = true)` |
+
+### Improvements
+- Updated PhysicsMaterial for Unity 6
+- Updated FindObjectsByType
+- Refactored TrafficLightController
+- Fixed TrafficLightController green lights
+- Refactored Terraforming
+- Fixed terrain history removal on update
+- Added safeguards for terrain history (Bug #61)
+- Removed 0 terrain height limitation (Feature #67)
+- Added ThreadedJob second Start prevention
+- Updated usage of disposable APIs
+- Improved exception handling
+- Fixed UpdateAllRoads with no Roads
+- Fixed removal of index itself in terrainBoundsList
+- Updated StoreTerrainHistory logic
+- Improved Stop Signs by using forces and gravity (Feature #12)
+- Added arcade and realistic road style options
+- Added keepStopSignObjects option (Feature #73)
+- Refactored GetLibraryDirectory into Storage
+- Refactored and moved GetRoadArchitectDirectory into Storage
+- Refactored GetTerrainHistoryDirectory
+- Refactored absolute directory into method
+- Fixed broken wizard when location is different (Bug #64)
+
 
 ## [Version: 3.0.0] - 2023.09.14
 ### Improvements

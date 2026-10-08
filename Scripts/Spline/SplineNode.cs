@@ -9,7 +9,9 @@ using RoadArchitect.EdgeObjects;
 
 namespace RoadArchitect
 {
+    #if UNITY_2019_3_OR_NEWER
     [MovedFrom(true, sourceClassName: "SplineN")]
+    #endif
     public class SplineNode : MonoBehaviour
     {
         #region "Vars"
